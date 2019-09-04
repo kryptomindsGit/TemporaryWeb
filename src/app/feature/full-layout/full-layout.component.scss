@@ -1,7 +1,8 @@
-// #page-content-wrapper {
-//     min-width: 100vw;
-// }
+@import "../../../assets/css/theme_colors";
 
-// .toggled #sidebar-wrapper {
-//     margin-left: 0;
-// }
+body{
+    width: 100%;
+    height: 100vh;
+    background: $bg-back-color;
+    color: $text-color;
+}

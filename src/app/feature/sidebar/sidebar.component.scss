@@ -1,7 +1,5 @@
-body {
-    overflow-x: hidden;
-  }
-  
+@import "../../../assets/css/theme_colors";
+
   #sidebar-wrapper {
     min-height: 100vh;
     margin-left: -15rem;
@@ -20,7 +18,36 @@ body {
     width: 15rem;
   }
   
+  // #sidebar-wrapper .list-group a i {
+  //   width: 1em;
+  //   height: 1em;
+  //   background: transparent;
+  //   margin-left: 20px;
+  // }
   
+  #sidebar-wrapper .sidebar-heading img{
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  #sidebar-wrapper .sidebar-heading h6{
+    margin-top: 1.5rem;
+    color: $text-color;
+    font-size: 1.2rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+  }
+
+  #sidebar-wrapper .list-group .text-color{
+    color: $text-color;
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  #sidebar-wrapper .list-group li{
+    text-decoration: none;
+  }
   
   @media (min-width: 768px) {
     #sidebar-wrapper {
