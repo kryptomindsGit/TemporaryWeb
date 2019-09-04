@@ -2,7 +2,7 @@
 
   #sidebar-wrapper {
     min-height: 100vh;
-    margin-left: -15rem;
+    font-family: "Neo Latina";
     -webkit-transition: margin .25s ease-out;
     -moz-transition: margin .25s ease-out;
     -o-transition: margin .25s ease-out;
@@ -20,17 +20,24 @@
   }
   
   #sidebar-wrapper .sidebar-heading img{
-    width: 3rem;
-    height: 3rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    float: left;
+    margin-top:0.5rem;
+    position: absolute;
   }
 
   #sidebar-wrapper .sidebar-heading h6{
-    margin-top: 1.5rem;
     color: $text-color;
-    font-size: 1.2rem;
+    font-size: 1rem;
+    margin-top:1.2rem;
+    margin-left:2.7rem;
+    margin-bottom: 1.2rem;
     font-weight: 400;
+    float: left;
     text-transform: uppercase;
     letter-spacing: 0.2rem;
+    position: relative;
   }
 
   #sidebar-wrapper .list-group-flush .list-group-item{

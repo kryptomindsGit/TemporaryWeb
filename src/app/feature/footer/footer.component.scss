@@ -8,7 +8,14 @@
     height:30px;
     width:100%;
     position:fixed;
+    font-family: 'Neo Latina';
 }
 .container small{
-    float: left;
+    float: right;
+    margin-right: 10rem;
+}
+
+.container small img{
+    width: 1rem;
+    height: 1rem;
 }

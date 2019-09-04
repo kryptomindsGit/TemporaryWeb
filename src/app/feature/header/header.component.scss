@@ -2,8 +2,7 @@
 
 nav{
     background: $bg-front-color;
-    // border-radius: 10px;
-    // box-shadow: 0px 0px 32px 0px rgba(0, 0, 0, 0.22);
+    font-family: 'Neo Latina';
 }
 
 .navbar-nav > li > .dropdown-menu 
@@ -13,8 +12,7 @@ nav{
 }
 
 .navbar-nav > li > .dropdown-menu > .dropdown-item
-{     
-    // background: $bg-front-color;
+{ 
     color: $text-color;
 }
 
@@ -26,12 +24,17 @@ nav{
 
 .navbar-nav > li > .dropdown-menu > .dropdown-divider
 {     
-    // background: $bg-back-color;
     color: $text-color;
 }
 .navbar-nav > li > .nav-link > img {
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 50%;
+}
+
+.navbar-nav > .nav-item > a > i{
+    border-radius: 50%;
+    font-size: 1.2rem;
+    margin:0.5rem;
 }
 
