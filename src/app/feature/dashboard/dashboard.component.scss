@@ -3,3 +3,15 @@
 .container-fluid{
     background: $bg-back-color;
 }
+
+.container-fluid .card{
+    background: $bg-front-color;
+    box-shadow: 0px 0px 32px 0px rgba(0, 0, 0, 0.22);
+}
+.container-fluid .card .chart{
+    text-align: center;
+}
+.container-fluid .card .chart img{
+    width: 10rem;
+    height: 10rem;
+}

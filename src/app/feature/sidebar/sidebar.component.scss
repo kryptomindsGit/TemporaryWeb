@@ -7,6 +7,7 @@
     -moz-transition: margin .25s ease-out;
     -o-transition: margin .25s ease-out;
     transition: margin .25s ease-out;
+    background: $bg-front-color;
   }
   
   #sidebar-wrapper .sidebar-heading {
@@ -18,16 +19,9 @@
     width: 15rem;
   }
   
-  // #sidebar-wrapper .list-group a i {
-  //   width: 1em;
-  //   height: 1em;
-  //   background: transparent;
-  //   margin-left: 20px;
-  // }
-  
   #sidebar-wrapper .sidebar-heading img{
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 3rem;
+    height: 3rem;
   }
 
   #sidebar-wrapper .sidebar-heading h6{
@@ -39,14 +33,21 @@
     letter-spacing: 0.2rem;
   }
 
-  #sidebar-wrapper .list-group .text-color{
+  #sidebar-wrapper .list-group-flush .list-group-item{
+    background: $bg-front-color;
     color: $text-color;
-    font-size: 16px;
-    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.1rem;
   }
 
-  #sidebar-wrapper .list-group li{
-    text-decoration: none;
+  #sidebar-wrapper .list-group-flush .list-group-item:hover{
+    background: $bg-back-color;
+    color: $text-color;
+    -webkit-transition: margin .25s ease-out;
+    -moz-transition: margin .25s ease-out;
+    -o-transition: margin .25s ease-out;
+    transition: margin .25s ease-out;
   }
   
   @media (min-width: 768px) {

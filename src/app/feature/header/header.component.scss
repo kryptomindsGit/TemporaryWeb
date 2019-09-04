@@ -1,0 +1,37 @@
+@import "../../../assets/css/theme_colors";
+
+nav{
+    background: $bg-front-color;
+    // border-radius: 10px;
+    // box-shadow: 0px 0px 32px 0px rgba(0, 0, 0, 0.22);
+}
+
+.navbar-nav > li > .dropdown-menu 
+{     
+    background: $bg-front-color;
+    color: $text-color;
+}
+
+.navbar-nav > li > .dropdown-menu > .dropdown-item
+{     
+    // background: $bg-front-color;
+    color: $text-color;
+}
+
+.navbar-nav > li > .dropdown-menu :hover
+{     
+    background: $bg-back-color;
+    color: $text-color;
+}
+
+.navbar-nav > li > .dropdown-menu > .dropdown-divider
+{     
+    // background: $bg-back-color;
+    color: $text-color;
+}
+.navbar-nav > li > .nav-link > img {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+}
+
