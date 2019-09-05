@@ -5,22 +5,25 @@ import { AppRoutingModule } from './app-routing.module';
 //Components
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { HttpClientModule } from '@angular/common/http';
 
 //Components
 const COMPONENTS =[
-  AppComponent
+  AppComponent,
+  PageNotFoundComponent
+
 ];
 
 //Modules
 const MODULES = [
   BrowserModule,
-  AppRoutingModule
+  AppRoutingModule,
+  HttpClientModule
 ];
 
 @NgModule({
   declarations: [
     ...COMPONENTS,
-    PageNotFoundComponent
   ],
   imports: [
     ...MODULES

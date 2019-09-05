@@ -5,6 +5,7 @@ import { SignUpComponent } from './component/sign-up/sign-up.component';
 import { AuthComponent } from './auth.component';
 import { UportSignUpComponent } from './component/uport-sign-up/uport-sign-up.component';
 import { PageNotFoundComponent } from '../page-not-found/page-not-found.component';
+import { UportLoginComponent } from './component/uport-login/uport-login.component';
 
 
 const routes: Routes = [
@@ -19,6 +20,10 @@ const routes: Routes = [
       {
         path:  'sign-up',
         component:  SignUpComponent
+      },
+      {
+        path:  'uport-login',
+        component:  UportLoginComponent
       },
       {
         path:  'uport-signup',

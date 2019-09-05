@@ -2,17 +2,23 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AuthRoutingModule } from './auth-routing.module';
-
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+//Components
 import { LoginComponent } from './component/login/login.component';
 import { SignUpComponent } from './component/sign-up/sign-up.component';
 import { UportSignUpComponent } from './component/uport-sign-up/uport-sign-up.component';
 import { AuthComponent } from './auth.component';
+import { UportLoginComponent } from './component/uport-login/uport-login.component';
 
 // module's
 
 const MODULES = [
   CommonModule,
-  AuthRoutingModule
+  AuthRoutingModule,
+  FormsModule,
+  ReactiveFormsModule,
+  HttpClientModule,
 ];
 
 // component's
@@ -26,7 +32,8 @@ const COMPONENTS = [
 
 @NgModule({
   declarations: [
-    ...COMPONENTS
+    ...COMPONENTS,
+    UportLoginComponent
      
   ],
   imports: [
