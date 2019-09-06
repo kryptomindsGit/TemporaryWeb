@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 //Components
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 //Components
 const COMPONENTS =[
@@ -14,7 +15,9 @@ const COMPONENTS =[
 //Modules
 const MODULES = [
   BrowserModule,
-  AppRoutingModule
+  AppRoutingModule,
+  OwlDateTimeModule, 
+  OwlNativeDateTimeModule 
 ];
 
 @NgModule({
