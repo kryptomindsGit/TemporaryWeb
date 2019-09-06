@@ -2,21 +2,23 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { throwError } from 'rxjs';
 
-//import URL from custome url file.
+
+//Constant URL
 import { BASE_URL } from '../../../../../constant/constant-url';
 import { BASE_URL_ADDRESS } from '../../../../../constant/constant-url';
 import { BLOCKCHAIN_URL } from '../../../../../constant/constant-url';
+import { UPORT_URL } from '../../../../../constant/constant-url';
 import { AWS_URL } from '../../../../../constant/constant-url';
 
 //CORS
-const httpOptions = { 
-  headers: new HttpHeaders({ 
-  'Access-Control-Allow-Origin':'*',
-  'enctype': 'multipart/form-data',
-  'Content-Type':'application/json',
-  'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT'
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Access-Control-Allow-Origin': '*',
+    'enctype': 'multipart/form-data',
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT'
   })
-}; 
+};
 
 @Injectable({
   providedIn: 'root'
@@ -24,23 +26,19 @@ const httpOptions = {
 
 export class EmpProfileService {
 
-  // baseUrl: string = 'http://192.168.0.14:3000/employers/';
-  // baseUrlEdit: string = 'http://192.168.0.14:3000/employer/';
-  // baseUrlFile: string = 'http://192.168.0.14:3000/employerfiles/';
-
   constructor(
     private __http: HttpClient
   ) { }
 
   // Blockchain POST API call
-  async postDocHashData(fileData: any, cognitoId: any, fileName: any){
+  async postDocHashData(fileData: any, cognitoId: any, fileName: any) {
     try {
-    let formData = new FormData();
-    formData.append('fileData', fileData);
-    formData.append('cognitoId', cognitoId);
-    formData.append('fileName', fileName);
-    
-    let res = await this.__http.post(`${BLOCKCHAIN_URL}/sendHash/`,formData, ).toPromise();  
+      let formData = new FormData();
+      formData.append('fileData', fileData);
+      formData.append('cognitoId', cognitoId);
+      formData.append('fileName', fileName);
+
+      let res = await this.__http.post(`${BLOCKCHAIN_URL}/sendHash/`, formData).toPromise();
       return res;
     } catch (error) {
       await this.handleError(error);
@@ -48,11 +46,11 @@ export class EmpProfileService {
   }
 
   // Blockchain GET API call
-  async getDocHashData(id):Promise<any> {
+  async getDocHashData(id): Promise<any> {
     try {
-      let res = await this.__http.get(`${BLOCKCHAIN_URL}/getHash/${id}`, 
-      {responseType: 'blob',observe: 'response' as 'body'}).toPromise();
-      
+      let res = await this.__http.get(`${BLOCKCHAIN_URL}/getHash/${id}`,
+        { responseType: 'blob', observe: 'response' as 'body' }).toPromise();
+
       return res;
     } catch (error) {
       await this.handleError(error);
@@ -68,7 +66,7 @@ export class EmpProfileService {
     }
   }
 
-  async getEmployer(){
+  async getEmployer() {
     try {
       let result = await this.__http.get(`${BASE_URL}/employers/`, httpOptions).toPromise();
       return result;
@@ -123,7 +121,7 @@ export class EmpProfileService {
       // server-side error
       errorMessage = `Server Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    console.log(" Error : ",errorMessage);
+    console.log(" Error : ", errorMessage);
     return throwError(errorMessage);
   }
 
