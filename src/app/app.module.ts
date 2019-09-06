@@ -4,18 +4,23 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 //Components
 import { AppComponent } from './app.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 //Components
 const COMPONENTS =[
-  AppComponent
+  AppComponent,
+  PageNotFoundComponent
+
 ];
 
 //Modules
 const MODULES = [
   BrowserModule,
   AppRoutingModule,
+  HttpClientModule,
   OwlDateTimeModule, 
   OwlNativeDateTimeModule 
 ];
@@ -23,7 +28,6 @@ const MODULES = [
 @NgModule({
   declarations: [
     ...COMPONENTS,
-    PageNotFoundComponent
   ],
   imports: [
     ...MODULES

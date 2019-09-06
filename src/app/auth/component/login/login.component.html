@@ -1,41 +1,44 @@
 <div class="section">
-    <div class="container">
-        <div class="card">
-          <div class="card-body">
-                <img src="../../../../assets/images/konnecteum_logo.png" alt="Konnecteum" class="center">
-                <h4>LOGIN</h4>
-              <form class="loginForm">
-              
-              <div class="form-group form-input">
-                <input type="text" name="name" id="name" value="" required/>
-                <label for="name" class="form-label">Email</label>
-              </div>
-    
-              <div class="form-group form-input">
-                <input type="text" name="name" id="name" value="" required/>
-                <label for="name" class="form-label">Password</label>
-              </div>
-    
-              <div class="checkbox">
-                <button type="button" class="btn" [disabled]="loginForm.pristine || loginForm.invalid" id="btn-30" (click)="onSubmit()">Login</button>
-                    <a href="#" id="forgetPassword"><i>Forgot Password ?</i></a>
-                    <hr class="hr-text" data-content="OR">
-                <button type="button" class="btn" id="btn-70" (click)="onuportSubmit()">Login ( Passwordless )</button> 
-              </div>
-    
-              </form>
-              <label id="option"> Don't have an account? </label>
-              <div class="row">
-                  <div class="col-md-6">
-                      <button type="button" class="btn" [routerLink]="['/auth/auth/sign-up']" (click)="onCognitoSignup()" id="btn-equal">Sign up ( with Password )</button>
-                    </div>
-                  <div class="col-md-6">
-                      <button type="button" class="btn" [routerLink]="['/auth/auth/sign-up']" (click)="onUportSignup()" id="btn-equal">Sign up ( Passwordless )</button>
-                  </div>   
-                </div>
-         
-            </div>
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <img src="../../../../assets/images/konnecteum_logo.png" alt="Konnecteum" class="center">
+        <h4>LOGIN</h4>
+        <form [formGroup]="loginForm" novalidate class="loginForm">
+
+          <div class="form-group form-input">
+            <input type="text" formControlName="email" name="name" id="name" value="" required />
+            <label for="name" class="form-label">Email</label>
+          </div>
+
+          <div class="form-group form-input">
+            <input type="text" formControlName="password" name="name" id="name" value="" required />
+            <label for="name" class="form-label">Password</label>
+          </div>
+
+          <!-- <div class="checkbox"> -->
+          <button type="button" class="btn" [disabled]="loginForm.pristine || loginForm.invalid" id="btn-30"
+            (click)="onSubmit()">Login</button>
+          <a href="#" id="forgetPassword"><i>Forgot Password ?</i></a>
+          <hr class="hr-text" data-content="OR">
+          <button type="button" class="btn" id="btn-70" [routerLink]="['/auth/auth/uport-login']">Login ( Passwordless
+            )</button>
+          <!-- </div> -->
+
+        </form>
+        <label id="option"> Don't have an account? </label>
+        <div class="row">
+          <div class="col-md-6">
+            <button type="button" class="btn" [routerLink]="['/auth/auth/sign-up']" id="btn-equal">Sign up ( with
+              Password )</button>
+          </div>
+          <div class="col-md-6">
+            <button type="button" class="btn" [routerLink]="['/auth/auth/uport-signup']" id="btn-equal">Sign up (
+              Passwordless )</button>
+          </div>
         </div>
+
       </div>
+    </div>
+  </div>
 </div>
-    
