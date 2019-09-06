@@ -30,7 +30,7 @@ export class AuthService {
   ) { }
 
   login(loginPayload): any {
-    return this.__http.post<{jwtToken: string}>(`${AWS_URL}login`, loginPayload, httpOptions)
+    return this.__http.post<{jwtToken: string}>(`${AWS_URL}/login`, loginPayload, httpOptions)
       .pipe(
         map(result => {
           localStorage.setItem('access_token', result.jwtToken);
@@ -79,27 +79,27 @@ export class AuthService {
     }
   }
 
-  async uportSignup(user:any){;
+  async uportSignup(user:any):Promise <any>{;
     try {
-      let result = await this.__http.post(`${BASE_URL}/uportsignup`, user, httpOptions);
+      let result = await this.__http.post(`${BASE_URL}/uportsignup`, user, httpOptions).toPromise();
       return result;
     } catch (error) {
       await this.handleError(error);
     } 
   }
 
-  getUportInfo(email:any):any{
+  async getUportInfo(email:any):Promise <any>{
     try {
-      let result = this.__http.get(`${BASE_URL}/uportsignup/${email}`,httpOptions);
+      let result = await this.__http.get(`${BASE_URL}/uportsignup/${email}`,httpOptions).toPromise();
       return result;
     } catch (error) {
-      
+      await this.handleError(error);
     }
   }
 
-  async updateDid(data:any){
+  async updateDid(data:any):Promise <any>{
     try {
-      let result = await this.__http.put(`${BASE_URL}/uportsignup`,data,httpOptions);
+      let result = await this.__http.put(`${BASE_URL}/uportsignup`,data,httpOptions).toPromise();
       return result;
     } catch (error) {
       await this.handleError(error)

@@ -81,9 +81,11 @@ export class LoginComponent implements OnInit {
 
           if (role == "Freelancer") {
             if(this.indepUserDetails == null){
-              this.__router.navigate(['/feature/independent/profile/indp-profile/add']);
+              this.__router.navigate(['/feature/feature/full-layout'])
+              // this.__router.navigate(['/feature/independent/profile/indp-profile/add']);
             }else{
-              this.__router.navigate(['/feature/independent/profile/indp-profile/view', this.emailID]);
+              this.__router.navigate(['/feature/feature/full-layout'])
+              // this.__router.navigate(['/feature/independent/profile/indp-profile/view', this.emailID]);
             }
           }else if (role == "Employer") {
             this.__router.navigate(['/feature/employer/profile/emp-profile/add']);

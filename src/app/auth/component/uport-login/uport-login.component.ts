@@ -1,7 +1,7 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { AuthService } from '../../shared/service/auth.service';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 //URL's
 import { AWS_URL } from '../../../constant/constant-url'
@@ -55,7 +55,7 @@ export class UportLoginComponent implements OnInit {
       this.tagId = data.tagID;     
       // this.URL = 'http://uport-ebs-webapp-dev.ap-south-1.elasticbeanstalk.com/events/' + this.tagId;
       this.URL = `${AWS_URL}/events/` + this.tagId;
-
+      console.log("TEST 1", this.URL);
       this.watch().subscribe( data => {
         let a=JSON.parse(JSON.stringify(data));
         console.log("watch response", a.email);
@@ -66,20 +66,23 @@ export class UportLoginComponent implements OnInit {
   }
 
   watch(): Observable<object> {
-   
     return Observable.create((observer) => {
+      console.log("TEST", this.URL);
       const eventSource  = new EventSource(this.URL );
-      this.eventName = 'event_' + `${this.tagId}`;
-      eventSource.addEventListener(this.eventName, (eventName: any) => this.zone.run(() =>{
-          observer.next(JSON.parse(eventName.data));
-          eventSource.close();
-      }));
+      this.eventName = 'event_' + this.tagId;
+     
+      eventSource.addEventListener(this.eventName, (event: any) => this.zone.run(() =>{
+        console.log("EVENTNAME:",event);
+        observer.next(JSON.parse(event.data));
+        eventSource.close();
+      }));  
       eventSource.onmessage = (event) => this.zone.run(() => {
-          console.log(event);
+          console.log("EVENT:",event);
           observer.next(JSON.parse(event.data));
         eventSource.close();
       });
       eventSource.onerror = error => this.zone.run(() => {
+        console.log("TEST dsgkjdsbngkdsfb" );
         if (eventSource.readyState === eventSource.CLOSED) {
           console.log('The stream has been closed by the server.');
           eventSource.close();
@@ -97,7 +100,7 @@ getuPortDetails(jwtdata :any) {
   
   console.log("email from JWT " + this.email);
   
-  this.__authService.getUportInfo(this.email).subscribe((data: any) => {
+  this.__authService.getUportInfo(this.email).then((data: any) => {
           console.log("data from database : " , data);
           
           if(data.length == 0){

@@ -13,39 +13,34 @@
                 </div>
     
                 <div class="form-group form-input">
-                    <input type="password" formControlName="password" name="name" id="password" value="" required/>
-                    <label for="password" class="form-label">Password</label>
-                </div>
-    
-                <div class="form-group form-input">
-                    <input type="text" formControlName="custom_country" name="name" id="country" value="" required/>
+                    <input type="text" formControlName="country" name="name" id="country" value="" required/>
                     <label for="country" class="form-label">Country</label>
                 </div>
     
                 <div class="form-group form-input">
-                    <input type="number" formControlName="phone_no" name="name" id="phone_number" value="" required/>
+                    <input type="text" formControlName="phone_no" name="name" id="phone_number" value="" required/>
                     <label for="phone_number" class="form-label">Phone Number</label>
                 </div>
     
                 <div class="form-group form-input row">
                     <div class="col-md-4"> 
                         <label class="radio-inline">
-                                <input type="radio" formControlName="custom_role" name="custom_role" value="Freelancer" class="radiobutton">Freelancer
+                                <input type="radio" formControlName="role" name="role" value="Freelancer" class="radiobutton">Freelancer
                         </label>
                     </div>
                 <div class="col-md-4">
                     <label class="radio-inline">
-                        <input type="radio" formControlName="custom_role" name="custom_role" value="Employer" class="radiobutton">Employer
+                        <input type="radio" formControlName="role" name="role" value="Employer" class="radiobutton">Employer
                     </label>
                 </div>
                 <div class="col-md-4">
                     <label class="radio-inline">
-                        <input type="radio" formControlName="custom_role" name="custom_role" value="Partner" class="radiobutton">Partner
+                        <input type="radio" formControlName="role" name="role" value="Partner" class="radiobutton">Partner
                     </label>
                 </div>
                 </div>
             
-                <button type="button" class="btn" [disabled]="signupForm.pristine || signupForm.invalid" (click)="onSubmit()" id="btn-30">Sign up</button>
+                <button type="button" class="btn" [disabled]="uportSignupForm.pristine || uportSignupForm.invalid" (click)="onSubmit()" id="btn-30">Sign up</button>
             </form> 
                     
     

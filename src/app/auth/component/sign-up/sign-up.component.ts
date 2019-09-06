@@ -59,9 +59,9 @@ export class SignUpComponent implements OnInit {
     this.__authService.register(signupPayload).then((resData: any) =>{
         this.showMsg= resData.message;
 
-        setTimeout(() => {
-          this.__router.navigate(['/auth/auth/login']);
-      }, 5000);
+      //   setTimeout(() => {
+      //     this.__router.navigate(['/auth/auth/login']);
+      // }, 5000);
         
     });
 

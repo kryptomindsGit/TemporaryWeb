@@ -34,10 +34,9 @@ export class UportSignUpComponent implements OnInit {
   valData(){
     this.uportSignupForm = this.__fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)] ],
       phone_no: ['', Validators.required],
-      custom_role: ['', Validators.required ],
-      custom_country: ['', [Validators.required, Validators.pattern('^[a-zA-Z \-\']+')]]
+      role: ['', Validators.required ],
+      country: ['', [Validators.required, Validators.pattern('^[a-zA-Z \-\']+')]]
     });
   }
 
@@ -49,15 +48,14 @@ export class UportSignUpComponent implements OnInit {
 
     const signupUportPayload = {
       email: this.uportSignupForm.controls.email.value,
-      password: this.uportSignupForm.controls.password.value,
       phone_no: this.uportSignupForm.controls.phone_no.value,
-      custom_role: this.uportSignupForm.controls.custom_role.value,
-      custom_country: this.uportSignupForm.controls.custom_country.value
+      role: this.uportSignupForm.controls.role.value,
+      country: this.uportSignupForm.controls.country.value
     }
 
     
 
-    this.__authService.getUportInfo(this.uportSignupForm.controls.email.value).subscribe((resData:any) =>{
+    this.__authService.getUportInfo(this.uportSignupForm.controls.email.value).then((resData:any) =>{
       console.log("res data :" , resData[0]);
       
       if(resData[0] == null || resData[0] == undefined){

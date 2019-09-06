@@ -210,7 +210,7 @@ export class IndeptProfileService {
     }
 
     // Independent Prof by email id GET API call
-    async getFreelancerByEmail(email: number) {
+    async getFreelancerByEmail(email: any) {
       try {
         let res = await this.__http.get(`${BASE_URL}/freelancer/freelancers/${email}`, httpOptions).toPromise();
         return res;
