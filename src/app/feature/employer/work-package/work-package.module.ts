@@ -7,6 +7,7 @@ import { AddComponent } from './component/add/add.component';
 import { ViewComponent } from './component/view/view.component';
 import { EditComponent } from './component/edit/edit.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [WorkPackageComponent, AddComponent, ViewComponent, EditComponent],
@@ -14,7 +15,14 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
     CommonModule,
     WorkPackageRoutingModule,
     OwlDateTimeModule, 
-    OwlNativeDateTimeModule 
+    OwlNativeDateTimeModule,
+    FormsModule, 
+    ReactiveFormsModule, 
   ]
 })
-export class WorkPackageModule { }
+export class WorkPackageModule { 
+
+
+
+  
+}

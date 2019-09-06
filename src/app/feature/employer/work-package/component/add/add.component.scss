@@ -8,11 +8,12 @@
   font: 14px "Montserrat", sans-serif;
   background-color: $bg-back-color;
   color: $text-color;
-  overflow: hidden;
+  overflow: scroll;
   font-weight: 400;
   width:100%;
   height:100vh;
   position: fixed;
+
 }
 
 p{
@@ -89,7 +90,7 @@ CARD CSS
 FORM CSS
 -------------------------------------------------------------------------*/
 form {
-  padding: 20px 20px 20px 20px; 
+  padding: 5px 5px 5px 5px; 
 }
 
 .form-group {
@@ -97,7 +98,8 @@ form {
   position: relative; }
 
 .form-input {
-  padding-top: 21px; }
+  padding-top: 21px; 
+}
 
 .form-label {
   position: absolute;
@@ -121,10 +123,9 @@ input ,textarea , select{
   -webkit-appearance: none; 
 }
 
-select{
-  margin-top : 1.3rem;
-}
-  input:focus + .form-label, input:valid + .form-label {
+  input:focus + .form-label, input:valid + .form-label ,textarea:focus + .form-label,textarea:valid + .form-label ,
+  select:focus + .form-label
+  {
     top: 1px;
     font-size: 11px;
     color: $blue-color;
@@ -203,13 +204,6 @@ input[type=checkbox] {
   -ms-appearance: checkbox !important; 
 }
 
-input[type=radio] {
-  appearance: radio !important;
-  -moz-appearance: radio !important;
-  -webkit-appearance: radio !important;
-  -o-appearance: radio !important;
-  -ms-appearance: radio !important; 
-}
 
 #btn-30{
   display: flex; 
@@ -319,3 +313,16 @@ a {
     margin-left:1rem;
     background: rgba(2, 41, 148, 0.966);
   }
+
+  .dropdown-menu{
+    background: #3e3f41 !important;
+    color:#ffffff !important;
+  }
+
+  .alert{
+    position:relative;
+    padding:.0rem !important;
+    margin-bottom:1rem;
+    border: 1px solid transparent;
+    border-radius:.25rem;
+    } 
