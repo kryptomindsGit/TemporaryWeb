@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<!-- <div class="container-fluid">
     <div class="personal-details-form" *ngIf="showMainContent == 1">
         <div class="card">
             <div class="card-header">
@@ -79,7 +79,7 @@
 
                     <div formArrayName="documents_personal">
                         <div *ngFor="let item of documentArr.controls; let i=index" formGroupName="{{i}}">
-                            <!-- <label for="quali">Documents :</label> -->
+
                             <div class="row">
                                 <div class="form-group form-input col-5">
                                     <input type="text" [(ngModel)]="item.value.file_type" formControlName="docType"
@@ -121,7 +121,7 @@
                 <form [formGroup]="qualificationDetails" novalidate>
                     <div formArrayName="qualification">
                         <div *ngFor="let item of qualfArr.controls; let i=index" [formGroupName]="i">
-                            <!-- <label for="quali">Education :</label> -->
+
                             <div class="row">
                                 <div class="form-group form-input col-3">
                                     <select (change)="setEduCatByID($event.target.value)"
@@ -224,14 +224,14 @@
                                     <input [owlDateTimeTrigger]="dt" formControlName="start_date"
                                         placeholder="Start Date" id="datePicker" [owlDateTime]="dt">
                                     <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
-                                    <!-- <label for="datePicker" class="form-label">Start Date</label> -->
+
                                 </div>
 
                                 <div class="form-group form-input col-3">
                                     <input [owlDateTimeTrigger]="dt2" formControlName="end_date" id="datePicker1"
                                         placeholder="End Date" [owlDateTime]="dt2">
                                     <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
-                                    <!-- <label for="datePicker1" class="form-label">End Date</label> -->
+
                                 </div>
 
                                 <div class="form-group form-input col-3">
@@ -503,4 +503,4 @@
 
     </div>
 
-</div>
+</div> -->

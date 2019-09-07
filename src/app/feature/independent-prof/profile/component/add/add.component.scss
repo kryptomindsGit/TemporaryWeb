@@ -338,3 +338,17 @@ a:not([href]):not([tabindex]):hover {
     background: $bg-front-color;
     text-decoration: none;
 }
+
+.btn_add {
+    background: #064d86;
+}
+
+.btn_remove {
+    background: #064d86;
+}
+
+input[type='file'] {
+    // color: #064d86;
+    background: 064d86;
+    font-size: 15px;
+}
