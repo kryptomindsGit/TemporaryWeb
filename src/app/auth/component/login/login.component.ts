@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
 
   //Form Group Object
   public loginForm: FormGroup;
-  
+
   //Variables
   public emailID: string;
 
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
    * @name valData
    * @description validate login form data
    */
-  valData(){
+  valData() {
     this.loginForm = this.__fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
    * @name getIndeptProfileDetails
    * @description get Independent user profile info
    */
-  getIndeptProfileDetails(){
+  getIndeptProfileDetails() {
     // this.__profileService.getIndeptProfileById(this.emailID).then((data: any) => {
     //   this.indepUserDetails = data[0];
     //   console.log(this.indepUserDetails);
@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
    * @name onSubmit
    * @description submit login info
    */
-  onSubmit(){
+  onSubmit() {
 
     const loginPayload = {
       email: this.loginForm.controls.email.value,
@@ -66,40 +66,40 @@ export class LoginComponent implements OnInit {
 
     this.__authService.login(loginPayload).subscribe((resData: any) => {
 
-      if(resData){
-        if(this.__authService.isAuthenticated()){
+      if (resData) {
+        if (this.__authService.isAuthenticated()) {
 
           let no = "false"
-          localStorage.setItem("uportuser", no );
-          
+          localStorage.setItem("uportuser", no);
+
           const user = this.__authService.decode();
-          console.log("User is  : " , user);
-          
+          console.log("User is  : ", user);
+
           this.emailID = user["cognito:username"];
           this.getIndeptProfileDetails();
           const role = resData.payload["custom:role"];
 
           if (role == "Freelancer") {
-            if(this.indepUserDetails == null){
-              this.__router.navigate(['/feature/feature/full-layout'])
-              // this.__router.navigate(['/feature/independent/profile/indp-profile/add']);
-            }else{
-              this.__router.navigate(['/feature/feature/full-layout'])
-              // this.__router.navigate(['/feature/independent/profile/indp-profile/view', this.emailID]);
+            if (this.indepUserDetails == null) {
+              // this.__router.navigate(['/feature/feature/full-layout'])
+              this.__router.navigate(['/feature/independent/profile/indp-profile/add']);
+            } else {
+              // this.__router.navigate(['/feature/feature/full-layout'])
+              this.__router.navigate(['/feature/independent/profile/indp-profile/view', this.emailID]);
             }
-          }else if (role == "Employer") {
+          } else if (role == "Employer") {
             this.__router.navigate(['/feature/employer/profile/emp-profile/add']);
-          }else if(role == "Partner") {
+          } else if (role == "Partner") {
             this.__router.navigate(['/feature/partner/profile/part-profile/add']);
-          }else{
+          } else {
             console.log("error in routing based User Role")
-          } 
+          }
         }
       }
 
     })
-    
+
   }
-  
+
 
 }

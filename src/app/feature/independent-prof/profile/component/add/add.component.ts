@@ -24,8 +24,12 @@ export class AddComponent implements OnInit {
   public yearArr = ['2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']
   public gradeArr = ['A', 'B', 'C', 'D', 'E', 'F'];
 
+  //skill variables.
+  keyword = 'skill_cat_name';
+  // skill: any = [];
+
   // Variable's
-  public showMainContent: number;
+  public showMainContent: number = 1;
   public isUportUser: string;
   public email: string;
   public country: string;
@@ -480,7 +484,7 @@ export class AddComponent implements OnInit {
 
       this.skillRateArr.push(this.__fb.group(
         {
-          skill: skill_id,
+          skill: skill,
           rate_hour: ''
         }
       ));
@@ -598,13 +602,13 @@ export class AddComponent implements OnInit {
       }
       console.log('Freelancer Payload Value : ', freelancerProfilePayload);
       this.__profileService.createFreelancer(freelancerProfilePayload).then((resData: any) => {
-        console.log("Successfully Profile Registered", resData);
-        this.__router.navigate(['/freelancer/free-profile/profile/view/', this.email]);
+        console.log(resData);
+        // this.__router.navigate(['/feature/independent/indp-profile/profile/view/', this.email]);
       });
     }
   }
 
-  ShowHideButton(index) {
+  ShowNextButton(index) {
     this.showMainContent = index;
     if (this.showMainContent === 1) {
       this.getDocumentsTypeCat(this.showMainContent);

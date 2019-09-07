@@ -1,1 +1,506 @@
-<p>edit works!</p>
+<div class="container-fluid">
+    <div class="personal-details-form" *ngIf="showMainContent == 1">
+        <div class="card">
+            <div class="card-header">
+                <h6>PROFILE DETAILS</h6>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="personalDetails" novalidate>
+                    <div class="row">
+                        <div class="form-group form-input col">
+                            <select class="formStyle" formControlName="prefix" [(ngModel)]="freelancerArr.prefix">
+                                <option disabled value="" selected>Prefix</option>
+                                <option id="option_txt" *ngFor="let prefix of prefixArr" [value]="prefix">{{prefix}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group form-input col">
+                            <input type="text" [(ngModel)]="freelancerArr.first_name" formcontrolName="first_name"
+                                id="first_name" required />
+                            <label for="first_name" class="form-label">First Name</label>
+                        </div>
+
+                        <div class="form-group form-input col">
+                            <input type="text" [(ngModel)]="freelancerArr.middle_name" formcontrolName="middle_name"
+                                id="middle_name" required />
+                            <label for="middle_name" class="form-label">Middle Name</label>
+                        </div>
+                        <div class="form-group form-input col">
+                            <input type="text" [(ngModel)]="freelancerArr.last_name" formcontrolName="last_name"
+                                id="last_name" required />
+                            <label for="last_name" class="form-label">Last Name</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group form-input col">
+                            <input type="text" [(ngModel)]="freelancerArr.line_1" formcontrolName="address_one"
+                                id="address_one" required />
+                            <label for="address_one" class="form-label">Address Line 1</label>
+                        </div>
+                        <div class="form-group form-input col">
+                            <input type="text" [(ngModel)]="freelancerArr.line_2" formcontrolName="address_two"
+                                id="address_two" required />
+                            <label for="address_two" class="form-label">Address Line 2</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group form-input col">
+                            <select class="formStyle" (change)="setCountryID($event.target.value)"
+                                [(ngModel)]="freelancerArr.country" formControlName="country">
+                                <option disabled value="">Country</option>
+                                <option *ngFor="let country of countryArr" [ngValue]="country.name">{{country.name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group form-input col">
+                            <select class="formStyle" (change)="setStateID($event.target.value)"
+                                [(ngModel)]="freelancerArr.state" formControlName="province">
+                                <option disabled value="">State</option>
+                                <option *ngFor="let state of stateArr" [ngValue]="state.name">{{state.name}}</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group form-input col">
+                            <select class="formStyle" [(ngModel)]="freelancerArr.city" formControlName="city">
+                                <option disabled value="">City</option>
+                                <option *ngFor="let city of cityArr" [ngValue]="city.name">{{city.name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group form-input col">
+                            <input type="text" [(ngModel)]="freelancerArr.code" formcontrolName="postal_code"
+                                id="postal_code" required />
+                            <label for="postal_code" class="form-label">Postal code</label>
+                        </div>
+                    </div>
+
+
+
+                    <div formArrayName="documents_personal">
+                        <div *ngFor="let item of documentArr.controls; let i=index" formGroupName="{{i}}">
+                            <!-- <label for="quali">Documents :</label> -->
+                            <div class="row">
+                                <div class="form-group form-input col-5">
+                                    <input type="text" [(ngModel)]="item.value.file_type" formControlName="docType"
+                                        #textInput (input)="setDocTypeCatType(textInput.value)" class="formStyle"
+                                        id="docType" required />
+                                    <label for="docType" class="form-label">Document Type</label>
+                                </div>
+                                <div class="form-group form-input col-5">
+                                    <div class="file-upload">
+                                        <div class="file-select" id="document_file">
+                                            <input type="file" class="document_name" name="chooseFile" id="chooseFile"
+                                                (change)="handleFileInput($event)" formControlName="chooseFile">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-2">
+                                    <div class="qualif_btn">
+                                        <button type="button" class="btn btn-secondary btn_add"
+                                            (click)="addDocument()">+</button> &nbsp;
+                                        <button type="button" class="btn btn-secondary btn_remove"
+                                            (click)="deleteDocument(i)">-</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btnNext" (click)="ShowNextButton(2)">Next</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="education-details-form" *ngIf="showMainContent == 2">
+        <div class="card">
+            <div class="card-header">
+                <h6>EDUCATION DETAILS</h6>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="qualificationDetails" novalidate>
+                    <div formArrayName="qualification">
+                        <div *ngFor="let item of qualfArr.controls; let i=index" [formGroupName]="i">
+                            <!-- <label for="quali">Education :</label> -->
+                            <div class="row">
+                                <div class="form-group form-input col-3">
+                                    <select (change)="setEduCatByID($event.target.value)"
+                                        [(ngModel)]="getCategoryValue(item.value.edu_cat_name)"
+                                        formControlName="edu_cat_id">
+                                        <option disabled value="">Category</option>
+                                        <option *ngFor="let eduCat of eduCatArr" [ngValue]="eduCat.edu_cat_name"
+                                            [selected]="eduCat.edu_cat_id == item.value.edu_cat_id">
+                                            {{eduCat.edu_cat_name}}</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group form-input col-3">
+                                    <select [(ngModel)]="item.value.edu_type_name" formControlName="edu_type_id">
+                                        <option disabled value="">Qualification</option>
+                                        <option *ngFor="let edu of eduArr" [ngValue]="edu.edu_name"
+                                            [selected]="edu.edu_type_id == item.value.edu_type_id">{{edu.edu_name}}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group form-input col-4">
+                                    <input type="text" [(ngModel)]="item.value.edu_type_name"
+                                        formcontrolName="university" id="university" required />
+                                    <label for="university" class="form-label">University</label>
+                                </div>
+
+                                <div class="form-group form-input col-2">
+                                    <select class="formStyle" formControlName="passing_year">
+                                        <option disabled value="">Passing year</option>
+                                        <option *ngFor="let year of yearArr" aria-placeholder="Passing Year"
+                                            [value]="year">{{year}}</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group form-input col-2">
+                                    <input type="text" formcontrolName="percentage" id="percentage" required />
+                                    <label for="percentage" class="form-label">Percentage</label>
+                                </div>
+
+                                <div class="form-group form-input col-2">
+                                    <select class="formStyle" formControlName="grade">
+                                        <option disabled value="">Grade</option>
+                                        <option *ngFor="let grades of gradeArr" aria-placeholder="Grade"
+                                            [value]="grades">{{grades}}</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group form-input col-6">
+                                    <div class="file-upload">
+                                        <div class="file-select">
+                                            <input type="file" class="document_name" name="chooseFile" id="chooseFile"
+                                                (change)="handleBlockChainQualFileData($event, i)"
+                                                [(ngModel)]="item.value.doc_name.doc_name" formControlName="doc_name" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-input col-2">
+                                    <button type="button" class="btn btn-secondary btn_add"
+                                        (click)="addQualification()">+</button> &nbsp;
+                                    <button type="button" class="btn btn-secondary btn_remove"
+                                        (click)="deleteQualification(i)">-</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btnPrevious" (click)="ShowNextButton(1)">Previous</button>
+
+                    <button type="button" class="btnNext" (click)="ShowNextButton(3)">Next</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="workexp-details-form" *ngIf="showMainContent == 3">
+        <div class="card">
+            <div class="card-header">
+                <h6>WORK EXPERIENCE DETAILS</h6>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="workExpDetails" novalidate>
+                    <div formArrayName="org_details">
+                        <div *ngFor="let item of orgArr.controls; let i=index" [formGroupName]="i">
+                            <div class="row">
+                                <div class="form-group form-input col-6">
+                                    <input type="text" formcontrolName="org_name" id="org_name" required />
+                                    <label for="org_name" class="form-label">Oragnization Name</label>
+                                </div>
+
+                                <div class="form-group form-input col-6">
+                                    <input type="text" formcontrolName="org_designation" id="org_designation"
+                                        required />
+                                    <label for="org_designation" class="form-label">Oragnization Designation</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group form-input col-3">
+                                    <input [owlDateTimeTrigger]="dt" formControlName="start_date"
+                                        placeholder="Start Date" id="datePicker" [owlDateTime]="dt">
+                                    <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+                                    <!-- <label for="datePicker" class="form-label">Start Date</label> -->
+                                </div>
+
+                                <div class="form-group form-input col-3">
+                                    <input [owlDateTimeTrigger]="dt2" formControlName="end_date" id="datePicker1"
+                                        placeholder="End Date" [owlDateTime]="dt2">
+                                    <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                                    <!-- <label for="datePicker1" class="form-label">End Date</label> -->
+                                </div>
+
+                                <div class="form-group form-input col-3">
+                                    <input type="text" formcontrolName="responsibilities" id="responsibilities"
+                                        required />
+                                    <label for="responsibilities" class="form-label">Oragnization Name</label>
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <button type="button" class="btn btn-secondary btn_add"
+                                        (click)="addResponsibility()">+</button> &nbsp;
+                                    <button type="button" class="btn btn-secondary btn_remove"
+                                        (click)="deleteResponsibility(i)">-</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-4">
+                            <div formArrayName="strength">
+                                <div *ngFor="let item of strengthArr.controls; let i=index" [formGroupName]="i">
+                                    <div class="row">
+                                        <div class="form-group form-input col-7">
+                                            <input type="text" formcontrolName="strength" id="strength" required />
+                                            <label for="strength" class="form-label">Strength</label>
+                                        </div>
+
+                                        <div class="col-5">
+                                            <button type="button" class="btn btn-secondary btn_add"
+                                                (click)="addStrength()">+</button> &nbsp;
+                                            <button type="button" class="btn btn-secondary btn_remove"
+                                                (click)="deleteStrength(i)">-</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div formArrayName="weakness">
+                                <div *ngFor="let item of weaknessArr.controls; let i=index" [formGroupName]="i">
+                                    <div class="row">
+                                        <div class="form-group form-input col-7">
+                                            <input type="text" formcontrolName="weakness" id="weakness" required />
+                                            <label for="weakness" class="form-label">Weakness</label>
+                                        </div>
+
+                                        <div class="col-5">
+                                            <button type="button" class="btn btn-secondary btn_add"
+                                                (click)="addWeakness()">+</button> &nbsp;
+                                            <button type="button" class="btn btn-secondary btn_remove"
+                                                (click)="deleteWeakness(i)">-</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div formArrayName="portfolios">
+                                <div *ngFor="let item of portfolioArr.controls; let i=index" [formGroupName]="i">
+                                    <div class="row">
+                                        <div class="form-group form-input col-7">
+                                            <input type="text" formcontrolName="portfolio" id="portfolio" required />
+                                            <label for="portfolio" class="form-label">Portfolio</label>
+                                        </div>
+
+                                        <div class="col-5">
+                                            <button type="button" class="btn btn-secondary btn_add"
+                                                (click)="addPortfolio()">+</button> &nbsp;
+                                            <button type="button" class="btn btn-secondary btn_remove"
+                                                (click)="deletePortfolio(i)">-</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="form-group form-input col">
+                            <input type="text" [(ngModel)]="freelancerArr.area_of_experties"
+                                formcontrolName="area_of_expertise" id="area_of_expertise" required />
+                            <label for="area_of_expertise" class="form-label">Area of expertise</label>
+                        </div>
+
+                        <div class="form-group form-input col">
+                            <input type="text" [(ngModel)]="freelancerArr.psyco_result" formcontrolName="psychomatric"
+                                id="psychomatric" required />
+                            <label for="psychomatric" class="form-label">Psychomatric</label>
+                        </div>
+                        <div class="form-group form-input col">
+                            <input type="text" [(ngModel)]="freelancerArr.reference" formcontrolName="references"
+                                id="references" required />
+                            <label for="references" class="form-label">References</label>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div formArrayName="documentWorkArray">
+                        <div *ngFor="let item of documentArr.controls; let i=index" formGroupName="{{i}}">
+                            <div class="row">
+                                <div class="form-group form-input col-4">
+                                    <input type="text" formControlName="docType" #textInput
+                                        (input)="setDocTypeCatType(textInput.value)" class="formStyle" id="docType"
+                                        required />
+                                    <label for="docType" class="form-label">Document Type</label>
+                                </div>
+                                <div class="form-group form-input col-6">
+                                    <div class="file-upload">
+                                        <div class="file-select" id="document_file">
+                                            <input type="file" class="document_name" name="chooseFile" id="chooseFile"
+                                                (change)="handleFileInput($event)" formControlName="chooseFile">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-2">
+                                    <div class="qualif_btn">
+                                        <button type="button" class="btn btn-secondary btn_add"
+                                            (click)="addDocument()">+</button> &nbsp;
+                                        <button type="button" class="btn btn-secondary btn_remove"
+                                            (click)="deleteDocument(i)">-</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btnPrevious" (click)="ShowNextButton(2)">Previous</button>
+
+                    <button type="button" class="btnNext" (click)="ShowNextButton(4)">Next</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="skill-details-form" *ngIf="showMainContent == 4">
+        <div class="card skill-container">
+            <div class="card-header">
+                <h6>SKILL DETAILS</h6>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="skillDetails">
+                    <div class="form-content">
+                        <div class="container container-skill">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="card skill-container">
+                                        <div class="card-header cardHeader">
+                                            <div class="form">
+                                                <div class="note">
+                                                    <p>Skills Category</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="ng-autocomplete">
+                                                        <ng-autocomplete [data]="categ" [searchKeyword]="keyword"
+                                                            (selected)='selectEvent($event)'
+                                                            (inputChanged)='onChangeSearch($event.target.value)'
+                                                            (inputFocused)='onFocused($event.target.value)'
+                                                            [itemTemplate]="itemTemplate"
+                                                            [notFoundTemplate]="notFoundTemplate">
+                                                        </ng-autocomplete>
+
+                                                        <ng-template #itemTemplate let-item>
+                                                            <a [innerHTML]="item.skill_cat_name"></a>
+                                                        </ng-template>
+
+                                                        <ng-template #notFoundTemplate let-notFound>
+                                                            <div [innerHTML]="notFound"></div>
+                                                        </ng-template>
+                                                    </div>
+                                                    <div>
+                                                        <table class="table">
+                                                            <tr *ngFor="let skill of categ; let i = index">
+                                                                <td>
+                                                                    <a id="link" (click)="selectEvent($event)" href="#">
+                                                                        {{skill.skill_cat_name}}</a>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card skill-container">
+                                        <div class="card-header cardHeader">
+                                            <div class="form">
+                                                <div class="note">
+                                                    <p>Skills</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <ul class="checkbox-grid-row">
+                                                <li>
+                                                    <label class="checkbox-grid-col"
+                                                        *ngFor="let item of skills; let i = index">
+                                                        <ng-container
+                                                            *ngIf="isCheck_skills[i] == item.skill_id; else second">
+                                                            <input type="checkbox" checked id="skillsName"
+                                                                (change)="onChange(item.skill_name,item.skill_id,$event.target.checked)">
+                                                            {{item.skill_name}}
+                                                        </ng-container>
+                                                        <ng-template #second>
+                                                            <ng-container>
+                                                                <input type="checkbox" id="skillsName"
+                                                                    (change)="onChange(item.skill_name,item.skill_id,$event.target.checked)">
+                                                                {{item.skill_name}}
+                                                            </ng-container>
+                                                        </ng-template>
+                                                    </label>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card skill-container">
+                                        <div class="card-header cardHeader">
+                                            <div class="form">
+                                                <div class="note">
+                                                    <p>Selected Skills</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+
+                                            <div formArrayName="skills">
+                                                <div *ngFor="let item of skillRateArr.controls; let i=index"
+                                                    [formGroupName]="i">
+                                                    <div class="row">
+                                                        <div class="form-group form-input col-6">
+                                                            <label for="skill_name" class="label-skill"
+                                                                formControlName="skill">
+                                                                {{item.value.skill}}
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-group form-input col-6">
+                                                            <input type="text" formControlName="rate_hour"
+                                                                id="rate_skill" required />
+                                                            <label for="rate_skill" class="form-label">Rate</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button class="button save_skills" (click)="onSaveSkill()">Save
+                                                Skill</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btnPrevious" (click)="ShowNextButton(2)">Previous</button>
+                        <button type="button" class="btnNext" (click)="onSubmitDetails()">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>

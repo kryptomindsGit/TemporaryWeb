@@ -57,7 +57,7 @@ export class PartProfileService {
 
   async getPartnerFileById(id: number) {
     try {
-      let result = this.__http.get(`${BASE_URL}/partnerfiles` + id).toPromise();
+      let result = this.__http.get(`${BASE_URL}/partnerfiles/` + id).toPromise();
       return result;
     } catch (error) {
 
@@ -67,7 +67,7 @@ export class PartProfileService {
 
   async getPartnerByEmailId(email: string) {
     try {
-      let res = await this.__http.get(`${BASE_URL}/partner` + email, httpOptions).toPromise();
+      let res = await this.__http.get(`${BASE_URL}/partner/` + email, httpOptions).toPromise();
       return res;
     } catch (error) {
       await this.handleError(error);
@@ -76,7 +76,7 @@ export class PartProfileService {
 
   async createPartner(partner: any) {
     try {
-      let result = this.__http.post(`${BASE_URL}/partners`, partner).toPromise();
+      let result = this.__http.post(`${BASE_URL}/partners/`, partner).toPromise();
       return result;
     } catch (error) {
 
@@ -86,7 +86,7 @@ export class PartProfileService {
 
   async updatePartner(id: number, partner: any) {
     try {
-      let result = this.__http.put(`${BASE_URL}/partner` + id, partner).toPromise();
+      let result = this.__http.put(`${BASE_URL}/partner/` + id, partner).toPromise();
       return result;
     } catch (error) {
 
@@ -96,7 +96,7 @@ export class PartProfileService {
 
   async deletePartner(id: number) {
     try {
-      let result = this.__http.delete(`${BASE_URL}/partners` + id).toPromise();
+      let result = this.__http.delete(`${BASE_URL}/partners/` + id).toPromise();
       return result;
     } catch (error) {
 

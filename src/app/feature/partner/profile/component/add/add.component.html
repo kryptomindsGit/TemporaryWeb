@@ -1,1 +1,115 @@
-<p>add works!</p>
+<div class="container-fuild">
+    <div class="card">
+        <div class="card-header">
+            <h6>PROFILE DETAILS</h6>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="partnerProfileForm" novalidate>
+                <div class="row">
+
+                    <div class="form-group form-input col">
+                        <input type="text" formcontrolName="comapany_name" id="comapany_name" required />
+                        <label for="comapany_name" class="form-label">Comapany Name</label>
+                    </div>
+
+                    <div class="form-group form-input col">
+                        <input type="text" formcontrolName="website_addr" id="website_addr" required />
+                        <label for="website_addr" class="form-label">Website Addr</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group form-input col">
+                        <input type="text" formcontrolName="address_line_one" id="address_line_one" required />
+                        <label for="address_line_one" class="form-label">Address line 1</label>
+                    </div>
+
+                    <div class="form-group form-input col">
+                        <input type="text" formcontrolName="address_line_two" id="address_line_two" required />
+                        <label for="address_line_two" class="form-label">Address line 2</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group form-input col">
+                        <input type="text" formcontrolName="country" id="country" required />
+                        <label for="country" class="form-label">Country</label>
+                    </div>
+
+                    <div class="form-group form-input col">
+                        <input type="text" formcontrolName="state" id="state" required />
+                        <label for="state" class="form-label">State</label>
+                    </div>
+
+                    <div class="form-group form-input col">
+                        <input type="text" formcontrolName="city" id="city" required />
+                        <label for="city" class="form-label">City</label>
+                    </div>
+                    <div class="form-group form-input col">
+                        <input type="text" formcontrolName="city" id="city" required />
+                        <label for="city" class="form-label">City</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group form-input col-6">
+                        <input type="text" formcontrolName="business_cat" id="business_cat" required />
+                        <label for="business_cat" class="form-label">Business Category</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group form-input col">
+                        <input type="text" formcontrolName="company_profile" id="company_profile" required />
+                        <label for="company_profile" class="form-label">Comapany Name</label>
+                    </div>
+
+                    <div class="form-group form-input col">
+                        <input type="text" formcontrolName="company_rep_det" id="company_rep_det" required />
+                        <label for="company_rep_det" class="form-label">Company Representative Detail</label>
+                    </div>
+                </div>
+                <div formArrayName="documents">
+                    <div *ngFor="let item of documentArr.controls; let i=index" formGroupName="{{i}}">
+                        <div class="row">
+                            <div class="form-group col-5">
+                                <input type="text" formControlName="docType" #textInput
+                                    (input)="setDocTypeCatType(textInput.value)" class="formStyle" id="docType"
+                                    required />
+                                <label for="docType" class="form-label">Document Type</label>
+                            </div>
+                            <div class="form-group col-5">
+                                <div class="file-upload">
+                                    <div class="file-select" id="document_file">
+                                        <input type="file" class="document_name" name="chooseFile" id="chooseFile"
+                                            (change)="handleFileInput($event)" formControlName="chooseFile">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-2">
+                                <div class="qualif_btn">
+                                    <button type="button" class="btn btn-secondary btn_add"
+                                        (click)="addDocument()">+</button> &nbsp;
+                                    <button type="button" class="btn btn-secondary btn_remove"
+                                        (click)="deleteDocument(i)">-</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-secondary"
+                            [disabled]="partnerProfileForm.pristine || partnerProfileForm.invalid" (click)="onSubmit()"
+                            id="signUpButton">Save</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-secondary" (click)="onCancel()"
+                            id="signUpButton">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

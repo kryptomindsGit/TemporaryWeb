@@ -24,13 +24,14 @@ export class EditComponent implements OnInit {
   public gradeArr = ['A', 'B', 'C', 'D', 'E', 'F'];
 
   // Variable's
-  public showMainContent: number;
+  public showMainContent: number = 1;
   public isUportUser: string;
   public email: string;
   public country: string;
   public doc_cat_id: number;
-  public id: number;
+  public __id: any;
   public checkMarked: string;
+  public edu_catId: number;
 
   // Array's
   public congnitoID: any = [];
@@ -47,6 +48,13 @@ export class EditComponent implements OnInit {
   public documentWorkArray: any = [];
   public freelancerArr: any = [];
   public stateByIdArr: any = [];
+  public freelancerSkillDetailsArr: any = [];
+  public skillArr: any = [];
+  public qualityArray: any = [];
+  public freelancerDocsArr: any = [];
+  public freelancerEduArr: any = [];
+  public freelancerOrgArr: any = [];
+  public freelancerPortArr: any = [];
 
 
 
@@ -57,7 +65,7 @@ export class EditComponent implements OnInit {
     private __router: Router,
     private __activatedRoute: ActivatedRoute,
   ) {
-    this.id = this.__activatedRoute.snapshot.params.id;
+    this.__id = this.__activatedRoute.snapshot.params.id;
   }
 
   ngOnInit() {
@@ -197,7 +205,7 @@ export class EditComponent implements OnInit {
 
 
   getFreelancerDetails() {
-    this.__profileService.getFreelancerById(this.id).then((data: any) => {
+    this.__profileService.getFreelancerById(this.__id).then((data: any) => {
       this.freelancerArr = data[0];
       console.log("Personal Details:", this.freelancerArr);
       for (let i = 0; i < this.countryArr.length; i++) {
@@ -222,23 +230,236 @@ export class EditComponent implements OnInit {
   }
 
   getFreelancerSkillDetails() {
+    this.__profileService.getFreelancerSkillById(this.__id).then((data: any) => {
+      this.freelancerSkillDetailsArr = data;
+      console.log(this.freelancerSkillDetailsArr);
+      let skillCat_ID = this.freelancerSkillDetailsArr[0].skill_cat_id;
+      console.log("skill cat id", skillCat_ID);
 
+      this.freelancerSkillDetailsArr.forEach(item => {
+        this.skillArr.push({
+          skill_id: item.skill_id,
+        });
+      });
+
+      this.getSkillsByID(skillCat_ID);
+
+      for (let index = 0; index < this.freelancerSkillDetailsArr.length; index++) {
+
+        this.skillRateArr.push(this.__fb.group(
+          {
+            skill: this.freelancerSkillDetailsArr[index].skill_name,
+            rate_hour: this.freelancerSkillDetailsArr[index].rate_per_hr,
+            skill_id: this.freelancerSkillDetailsArr[index].skill_id
+          }
+        ));
+      }
+      console.log("Skills ", this.skillRateArr);
+
+    });
   }
 
   getQualitiesById() {
+    this.__profileService.getFreelancerQuality(this.__id).then((data: any) => {
+      this.qualityArray = data;
+      console.log(this.qualityArray);
 
+      let strengthQual = this.qualityArray.filter(
+        function (item) {
+          return item.strengths != null;
+        }
+      );
+
+      let weaknessQual = this.qualityArray.filter(
+        function (item) {
+          return item.weaknesses != null;
+        }
+      );
+
+      strengthQual.forEach(item => {
+        this.strengthArr.push(
+          this.__fb.group({
+            strength: item.strengths,
+            quality_id: item.quality_id
+          })
+        )
+      });
+
+      console.log("Strengths ", this.strengthArr);
+
+      weaknessQual.forEach(item => {
+        this.weaknessArr.push(
+          this.__fb.group({
+            weakness: item.weaknesses,
+            quality_id: item.quality_id
+          })
+        )
+      });
+      console.log("Weaknesss ", this.weaknessArr);
+
+    });
   }
 
   getFreelancerDocuments() {
 
+    this.__profileService.getFreelancerDocumentById(this.__id).then((data: any) => {
+      this.freelancerDocsArr = data;
+      console.log(this.freelancerDocsArr);
+      // personal document
+      let isPersonal = this.freelancerDocsArr.filter(item => item.doc_cat_name == 'personal');
+      console.log(isPersonal);
+
+      if (isPersonal) {
+
+        isPersonal.forEach(item => {
+          this.documentArr.push(
+            this.__fb.group({
+              file_name: item.doc_name,
+              file_type: item.doc_type,
+              file_id: item.doc_type_id,
+              doc_id: item.doc_id
+            })
+          )
+        });
+
+        isPersonal.forEach(item => {
+          this.documentPersonalArray.push({
+            file_name: item.doc_name,
+            file_type: item.doc_type,
+            file_type_id: item.doc_type_id,
+            doc_id: item.doc_id
+          });
+        });
+
+        console.log(" Personal Doc", this.documentPersonalArray);
+        console.log("Personal Documents", this.documentArr);
+      }
+
+      // educational document
+      let isEducation = this.freelancerDocsArr.filter(item => item.doc_cat_name == 'educational');
+      console.log(isEducation);
+      isEducation.forEach(item => {
+        this.documentQualArray.push({
+          file_name: item.doc_name,
+          file_type: item.doc_type,
+          file_type_id: item.doc_type_id,
+          doc_id: item.doc_id
+        });
+      });
+      console.log("Qual Docs", this.documentQualArray);
+
+      this.getFreelancerEducation(isEducation);
+
+
+      // work exp document
+      let isProfessional = this.freelancerDocsArr.filter(item => item.doc_cat_name == 'professional');
+      console.log(isProfessional);
+
+      if (isProfessional) {
+
+        isProfessional.forEach(item => {
+          this.workdocumentArr.push(
+            this.__fb.group({
+              file_name: item.doc_name,
+              file_type: item.doc_type,
+              file_id: item.doc_type_id,
+              doc_id: item.doc_id
+            })
+          )
+        });
+        console.log("Work doc", this.workdocumentArr);
+
+        isProfessional.forEach(item => {
+          this.documentWorkArray.push({
+            file_name: item.doc_name,
+            file_type: item.doc_type,
+            file_type_id: item.doc_type_id,
+            doc_id: item.doc_id
+          });
+        });
+        console.log("WorkExp Doc", this.documentWorkArray);
+
+
+      }
+    });
+
+  }
+
+  getFreelancerEducation(document) {
+
+    let docName = document;
+    this.__profileService.getFreelancerEduById(this.__id).then((data: any) => {
+      this.freelancerEduArr = data;
+      console.log(this.freelancerEduArr);
+
+      for (let index = 0; index < this.freelancerEduArr.length; index++) {
+        this.edu_catId = this.freelancerEduArr[index].edu_cat_id;
+
+        this.qualfArr.push(this.__fb.group(
+          {
+            edu_cat_name: this.freelancerEduArr[index].edu_cat_name,
+            edu_type_name: this.freelancerEduArr[index].edu_name,
+            edu_cat_id: this.freelancerEduArr[index].edu_cat_id,
+            edu_type_id: this.freelancerEduArr[index].edu_type_id,
+            university: this.freelancerEduArr[index].university,
+            passing_year: this.freelancerEduArr[index].passing_year,
+            percentage: this.freelancerEduArr[index].percentage,
+            grade: this.freelancerEduArr[index].grade,
+            doc_name: docName,
+            edu_id: this.freelancerEduArr[index].edu_id
+          }
+        ));
+      }
+      console.log("Qualification :", this.qualfArr);
+
+      this.getAllEducation(this.edu_catId);
+    });
+  }
+
+  getAllEducation(eduCat_id) {
+    console.log("Edu Cat ", eduCat_id);
+    this.__profileService.getFreelancerEducname(eduCat_id).then((data: any) => {
+      this.eduArr = data;
+      console.log(this.eduArr)
+    })
   }
 
   getFreelancerOrganization() {
+    this.__profileService.getFreelancerOrgById(this.__id).then((data: any) => {
+      this.freelancerOrgArr = data;
+      console.log(this.freelancerOrgArr);
 
+      for (let index = 0; index < this.freelancerOrgArr.length; index++) {
+        this.orgArr.push(this.__fb.group(
+          {
+            org_name: this.freelancerOrgArr[index].org_name,
+            org_designation: this.freelancerOrgArr[index].org_designation,
+            start_date: this.freelancerOrgArr[index].start_date,
+            end_date: this.freelancerOrgArr[index].end_date,
+            responsibilities: this.freelancerOrgArr[index].responsibilities,
+            org_id: this.freelancerOrgArr[index].org_id
+          }
+        ));
+      }
+      console.log("Org Array ", this.orgArr);
+
+    });
   }
 
   getFreelancerPortfolio() {
+    this.__profileService.getFreelancerPortfolioById(this.__id).then((data: any) => {
+      this.freelancerPortArr = data;
+      console.log(this.freelancerPortArr);
 
+      let portflio = this.workExpDetails.get('portfolios') as FormArray;
+      for (let index = 0; index < this.freelancerPortArr.length; index++) {
+        portflio.push(this.__fb.group({
+          portfolio: this.freelancerPortArr[index].port_addr,
+          port_id: this.freelancerPortArr[index].port_id
+        }));
+      }
+
+    });
   }
 
 
@@ -665,7 +886,7 @@ export class EditComponent implements OnInit {
     }
   }
 
-  ShowHideButton(index) {
+  ShowNextButton(index) {
     this.showMainContent = index;
     if (this.showMainContent === 1) {
       this.getDocumentsTypeCat(this.showMainContent);

@@ -1,1 +1,83 @@
-<p>view works!</p>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header ">
+            <h6>View Profile</h6>
+        </div>
+        <div class="card-body ">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h3>Profile Details</h3>
+                </div>
+                <div class="col-md-12">
+                    <a class="btn btnSubmit float-right" (click)="editProfile()">Edit Profile</a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th width="30%">Name:</th>
+                                <td>
+                                    {{freelancerDetailsArr.prefix}} {{freelancerDetailsArr.first_name}}
+                                    {{freelancerDetailsArr.middle_name}} {{freelancerDetailsArr.last_name}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th width="30%">Address: </th>
+                                <td>
+                                    <li>Address Line 1 : {{freelancerDetailsArr.line_1}}</li>
+                                    <li>Address Line 1 : {{freelancerDetailsArr.line_2}}</li>
+                                    <li>City : {{freelancerDetailsArr.city}}, State : {{freelancerDetailsArr.state}},
+                                        Country : {{freelancerDetailsArr.country}}</li>
+                                    <li>Postal Code : {{freelancerDetailsArr.code}}</li>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th width="30%">Education:
+                                </th>
+                                <td>
+                                    <div *ngFor="let education of freelancerEduArr; let i=index">
+                                        <hr *ngIf="i>0">
+                                        <li>Degree : {{ education.edu_name }}</li>
+                                        <li>Grade : {{ education.grade }}, Passing Year : {{ education.passing_year }},
+                                            Percentage : {{ education.percentage }}</li>
+                                        <li>University : {{ education.university }}</li>
+
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th width="30%">Email: </th>
+                                <td>
+                                    {{email_addr}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th width="30%">Phone Number: </th>
+                                <td>
+                                    {{phone_number}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th width="30%">Country: </th>
+                                <td>
+                                    {{freelancerDetailsArr.country}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th width="30%">Skills: </th>
+                                <td>
+                                    <div *ngFor="let skill of freelancerSkillDetailsArr">
+                                        <li>{{ skill.skill_name }}</li>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

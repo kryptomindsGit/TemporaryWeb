@@ -12,7 +12,7 @@ import { PartProfileService } from '../../shared/service/profile.service';
 export class AddComponent implements OnInit {
 
   //FormGroup object
-  public partnerProfile: FormGroup;
+  public partnerProfileForm: FormGroup;
 
   //Variable's
   public email: string;
@@ -53,7 +53,7 @@ export class AddComponent implements OnInit {
    * @description validating the form fields
    */
   valPartProfile() {
-    this.partnerProfile = this.__fb.group({
+    this.partnerProfileForm = this.__fb.group({
       comapany_name: ['', Validators.required],
       website_addr: ['', Validators.required],
       address_line_one: ['', Validators.required],
@@ -79,7 +79,7 @@ export class AddComponent implements OnInit {
    */
 
   get documentArr() {
-    return this.partnerProfile.get('documents') as FormArray;
+    return this.partnerProfileForm.get('documents') as FormArray;
   }
 
   addDocument() {
@@ -121,17 +121,17 @@ export class AddComponent implements OnInit {
 
     const partnerProfileVal = {
       cognito_id: this.congnitoId,
-      company_name: this.partnerProfile.controls.comapany_name.value,
-      website_addr: this.partnerProfile.controls.website_addr.value,
-      address_line_one: this.partnerProfile.controls.address_line_one.value,
-      address_line_two: this.partnerProfile.controls.address_line_two.value,
-      country: this.partnerProfile.controls.country.value,
-      state: this.partnerProfile.controls.state.value,
-      city: this.partnerProfile.controls.city.value,
-      zipcode: this.partnerProfile.controls.zipcode.value,
-      company_profile: this.partnerProfile.controls.company_profile.value,
-      business_cat: this.partnerProfile.controls.business_cat.value,
-      company_rep_det: this.partnerProfile.controls.company_rep_det.value,
+      company_name: this.partnerProfileForm.controls.comapany_name.value,
+      website_addr: this.partnerProfileForm.controls.website_addr.value,
+      address_line_one: this.partnerProfileForm.controls.address_line_one.value,
+      address_line_two: this.partnerProfileForm.controls.address_line_two.value,
+      country: this.partnerProfileForm.controls.country.value,
+      state: this.partnerProfileForm.controls.state.value,
+      city: this.partnerProfileForm.controls.city.value,
+      zipcode: this.partnerProfileForm.controls.zipcode.value,
+      company_profile: this.partnerProfileForm.controls.company_profile.value,
+      business_cat: this.partnerProfileForm.controls.business_cat.value,
+      company_rep_det: this.partnerProfileForm.controls.company_rep_det.value,
       chooseFile: documentsFile
 
     }

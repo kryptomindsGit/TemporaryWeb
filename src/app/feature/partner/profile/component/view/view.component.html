@@ -1,1 +1,86 @@
-<p>view works!</p>
+<div class="container-fuild">
+    <div class="card">
+        <div class="card-header">
+
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-10 text-center">
+                    <h3>Profile Details</h3>
+                </div>
+                <div class="col-2">
+                    <a class="btn" (click)="editProfile()">Edit Profile</a>
+                </div>
+            </div>
+
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th width="50%">Name:
+                                    </th>
+                                    <td>
+                                        {{partnerDetailsArr.part_name}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="50%">Address line 1: </th>
+                                    <td>
+                                        {{partnerDetailsArr.part_addr}} {{partnerDetailsArr.city}}
+                                        {{partnerDetailsArr.state}} {{partnerDetailsArr.country}}
+                                        {{partnerDetailsArr.zipcode}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="50%">Address line 2: </th>
+                                    <td>
+                                        {{partnerDetailsArr.part_addr_2}}{{partnerDetailsArr.city}}
+                                        {{partnerDetailsArr.state}} {{partnerDetailsArr.country}}
+                                        {{partnerDetailsArr.zipcode}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="50%">Company Profile:
+                                    </th>
+                                    <td>
+                                        {{partnerDetailsArr.part_type}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="50%">Company Rep Details: </th>
+                                    <td>
+                                        {{partnerDetailsArr.part_reprentative}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="50%">Business Category: </th>
+                                    <td>
+                                        {{partnerDetailsArr.business_details}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="50%">Country: </th>
+                                    <td>
+                                        {{partnerDetailsArr.country}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width=30%>Documents</th>
+                                    <td>
+                                        <div *ngFor="let item of partnerFile">
+                                            <a style="color: #1051dd;" (click)="downloadFile(item)">{{ item }}</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

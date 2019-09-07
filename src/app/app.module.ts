@@ -1,17 +1,21 @@
+//import Module's
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-//Routing
 import { AppRoutingModule } from './app-routing.module';
-//Components
-import { AppComponent } from './app.component';
-
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { CommonModule } from '@angular/common';
+
+//import Component,s
+import { AppComponent } from './app.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 
 //Components
-const COMPONENTS =[
+const COMPONENTS = [
   AppComponent,
   PageNotFoundComponent
 
@@ -19,8 +23,15 @@ const COMPONENTS =[
 
 //Modules
 const MODULES = [
- // AppRoutingModule,
-  HttpClientModule
+  CommonModule,
+  BrowserModule,
+  BrowserAnimationsModule,
+  AppRoutingModule,
+  FormsModule,
+  ReactiveFormsModule,
+  HttpClientModule,
+  OwlDateTimeModule,
+  OwlNativeDateTimeModule
 ];
 
 @NgModule({
@@ -28,9 +39,7 @@ const MODULES = [
     ...COMPONENTS,
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule
-    
+    ...MODULES,
   ],
   providers: [],
   bootstrap: [AppComponent]

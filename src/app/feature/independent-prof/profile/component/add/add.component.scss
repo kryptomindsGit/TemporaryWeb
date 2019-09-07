@@ -1,0 +1,340 @@
+@import "../../../../../../assets/css/theme_colors";
+
+/*-----------------------------------------------------------------------
+      BASIC CSS
+-------------------------------------------------------------------------*/
+
+.container-fluid {
+    font: 14px "Montserrat", sans-serif;
+    background-color: $bg-back-color;
+    color: $text-color;
+    overflow: hidden;
+    font-weight: 400;
+    width: 100%;
+    height: 100vh;
+}
+
+.container-skill {
+    font: 14px "Montserrat", sans-serif;
+    // background-color: $bg-back-color;
+    color: $text-color;
+    overflow: hidden;
+    font-weight: 400;
+    width: 100%;
+    height: auto !important;
+}
+
+/*-----------------------------------------------------------------------
+  CARD CSS
+  -------------------------------------------------------------------------*/
+
+.card {
+    margin: 0 auto;
+    /* Added */
+    float: none;
+    /* Added */
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    /* Added */
+    border-radius: 10px;
+    box-shadow: 5px 5px 32px 5px rgba(0, 0, 0, 0.22);
+    background: $bg-front-color;
+    width: 70%;
+    height: auto !important;
+}
+
+.skill-container {
+    border-radius: 10px;
+    box-shadow: 5px 5px 32px 5px rgba(0, 0, 0, 0.22);
+    background: $bg-front-color;
+    width: 100%;
+    height: auto !important;
+    // margin: 1rem auto;
+    margin-bottom: 1rem;
+}
+
+.skill-container .card-body {
+    flex: 1 1 auto;
+    padding: 0.5rem;
+}
+
+.ng-autocomplete {
+    width: 100%;
+    padding: 0.1rem 0.2rem !important;
+}
+
+.table td,
+.table th {
+    padding: .75rem;
+    vertical-align: top;
+    border: none !important;
+}
+
+.card .card-body img {
+    width: 5rem;
+    height: 5rem;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.card-body h4 {
+    text-align: center;
+    margin: 1rem auto;
+    letter-spacing: 0.1em
+}
+
+/*-----------------------------------------------------------------------
+  FORM CSS
+  -------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------
+FORM CSS
+-------------------------------------------------------------------------*/
+form {
+    padding: 20px 40px 20px 40px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.form-input {
+    padding-top: 20px;
+}
+
+.form-label {
+    position: absolute;
+    transition: 0.25s ease;
+    -moz-transition: 0.25s ease;
+    -webkit-transition: 0.25s ease;
+    -o-transition: 0.25s ease;
+    -ms-transition: 0.25s ease;
+    color: $text-color;
+    left: 1rem;
+    top: 23px;
+}
+
+input {
+    transition: 0.3s ease;
+    -moz-transition: 0.3s ease;
+    -webkit-transition: 0.3s ease;
+    -o-transition: 0.3s ease;
+    -ms-transition: 0.3s ease;
+    padding-top: 10px;
+    -webkit-appearance: none;
+}
+
+input:focus+.form-label,
+input:valid+.form-label {
+    top: 1px;
+    font-size: 11px;
+    color: $blue-color;
+    background: transparent !important;
+}
+
+input,
+select {
+    box-sizing: border-box;
+    width: 100%;
+    display: block;
+    border: none;
+    font-family: Montserrat;
+    color: $text-color;
+    background: transparent;
+    border-bottom: 1px solid $text-color;
+    padding: 4px 0;
+}
+
+input:focus,
+select:focus {
+    border-bottom: 1px solid $blue-color;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px transparent inset;
+}
+
+input::-webkit-input-placeholder {
+    color: $text-color;
+}
+
+input::-moz-placeholder {
+    color: $text-color;
+}
+
+input:-ms-input-placeholder {
+    color: $text-color;
+}
+
+input:-moz-placeholder {
+    color: $text-color;
+}
+
+input,
+select,
+textarea {
+    outline: none;
+    appearance: unset !important;
+    -moz-appearance: unset !important;
+    -webkit-appearance: unset !important;
+    -o-appearance: unset !important;
+    -ms-appearance: unset !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    appearance: none !important;
+    -moz-appearance: none !important;
+    -webkit-appearance: none !important;
+    -o-appearance: none !important;
+    -ms-appearance: none !important;
+    margin: 0;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -o-box-shadow: none !important;
+    -ms-box-shadow: none !important;
+}
+
+input[type=checkbox] {
+    appearance: checkbox !important;
+    -moz-appearance: checkbox !important;
+    -webkit-appearance: checkbox !important;
+    -o-appearance: checkbox !important;
+    -ms-appearance: checkbox !important;
+}
+
+input[type=radio] {
+    appearance: radio !important;
+    -moz-appearance: radio !important;
+    -webkit-appearance: radio !important;
+    -o-appearance: radio !important;
+    -ms-appearance: radio !important;
+}
+
+#btn-30 {
+    display: flex;
+    justify-content: center;
+    margin: 1rem auto;
+    width: 30%;
+    background: $blue-color;
+    font-size: 15px;
+    color: #9e9d9d;
+    border: none
+}
+
+#btn-30:hover {
+    color: #000;
+    background: $blue-color;
+}
+
+#btn-70 {
+    display: flex;
+    justify-content: center;
+    margin: 1rem auto;
+    width: 70%;
+    background: #064d86;
+    font-size: 15px;
+    color: #9e9d9d;
+    border: none
+}
+
+#btn-70:hover {
+    color: #000;
+    background: #064d86;
+}
+
+#btn-equal {
+    display: flex;
+    justify-content: center;
+    margin: 1rem auto;
+    width: 100%;
+    background: #064d86;
+    font-size: 15px;
+    color: #9e9d9d;
+    border: none
+}
+
+#btn-equal:hover {
+    color: #000;
+    background: $blue-color;
+}
+
+.btnNext {
+    border: none;
+    border-radius: 2rem;
+    padding: 1%;
+    width: 8rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: #064d86;
+    color: #fff;
+    float: right;
+    margin-bottom: 20px;
+}
+
+.btnPrevious {
+    border: none;
+    border-radius: 2rem;
+    padding: 1%;
+    width: 8rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: #064d86;
+    color: #fff;
+    float: left;
+    margin-bottom: 20px;
+}
+
+.checkbox-grid-row {
+    overflow: hidden;
+    // padding: 10px;
+}
+
+.checkbox-grid-col {
+    float: left;
+    // padding: 5px;
+    // margin-right: 5px;
+    width: 30%;
+    color: #898989;
+}
+
+.save_skills {
+    border: none;
+    border-radius: 1.5rem;
+    padding: 3% 4%;
+    width: 50%;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: #064d86;
+    color: #fff;
+    float: right;
+    margin-bottom: 20px;
+    align-content: center;
+}
+
+.autocomplete-container .suggestions-container {
+    position: absolute;
+    width: 100%;
+    background: $bg-back-color;
+    height: auto;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
+    box-sizing: border-box;
+}
+
+a:not([href]):not([tabindex]):hover {
+    color: $text-color;
+    background: $bg-front-color;
+    text-decoration: none;
+}
