@@ -16,12 +16,21 @@ export class AddComponent implements OnInit {
 
   //Variable's
   public congnitoId: string;
+  public fileName: string;
+  public fileObj: any;
+  public doc_cat_id: any;
+  public FileArrData: any;
 
   //Static Array's
   prefixArr = ['Mr', 'Mrs', 'Miss'];
 
   //Array's
-  documentFileArr: any = [];
+  public documentFileArr: any = [];
+  public stateArr: any = [];
+  public countryArr: any = [];
+  public cityArr: any = [];
+  public fileType: any;
+
 
   constructor(
     private __fb: FormBuilder,
@@ -34,8 +43,10 @@ export class AddComponent implements OnInit {
     const userInfo = this.__authService.decode();
     this.congnitoId = userInfo["cognito:username"];
 
+
     //Calling Function's
     this.valEmpProfile();
+    this.getAllCountry();
   }
 
   /**
@@ -80,11 +91,94 @@ export class AddComponent implements OnInit {
     this.documentArr.removeAt(index);
   }
 
-  /**
-   * @name 
-   * @description file handler
-   */
 
+  /**
+  * @method getAllCountry
+  * @description get all country values.
+  */
+  getAllCountry() {
+    this.__profileService.getEmpCountry().then((resData: any) => {
+      this.countryArr = resData;
+    })
+  }
+
+  /**
+   * @method setCountryID
+   * @param country_id
+   * @description get the selected country id and pass to getStateByID method.
+   */
+  setCountryID(country_id) {
+    this.getStateByID(country_id)
+  }
+
+  /**
+   * @method getStateByID
+   * @param country_id
+   * @description get the all state values based on selected country id.
+   */
+  getStateByID(country_id) {
+    this.__profileService.getEmpStateByID(country_id).then((resData: any) => {
+      this.stateArr = resData;
+    })
+  }
+
+  /**
+   * @method setStateID
+   * @param state_id
+   * @description get the selected state id and pass to getCityByID method.
+   */
+  setStateID(state_id) {
+    this.getCityByID(state_id)
+  }
+
+  /**
+   * @method getCityByID
+   * @param state_id
+   * @description get the all city values based on selected state id.
+   */
+  getCityByID(state_id) {
+    this.__profileService.getEmpCityByID(state_id).then((resData: any) => {
+      this.cityArr = resData;
+      console.log(this.cityArr)
+    })
+  }
+
+  /**
+    * @name 
+    * @description file handler
+    */
+  setDocTypeCatType(inputValue) {
+    console.log(inputValue);
+    this.fileType = inputValue
+  }
+
+  handleFileInput(event) {
+    if (event.target.files.length > 0) {
+
+      const file = event.target.files[0];
+      this.fileName = file.name;
+      console.log("File name:", file.name);
+
+      this.fileObj = file;
+    }
+  }
+
+
+  uploadFile() {
+
+    // this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((event) => {
+    //   this.FileArrData = event;
+    //   console.log("File Resp:", this.FileArrData);
+    // });
+    this.FileArrData = "jkdhfjkhkdjshfkjhdskjfh"
+
+    this.documentFileArr.push(
+      {
+        'file_name': this.FileArrData,
+        'file_type': this.fileType
+      });
+    console.log(this.documentFileArr);
+  }
 
 
   /**
@@ -92,7 +186,7 @@ export class AddComponent implements OnInit {
    * @description submit the form fileds values
    */
   onSubmit() {
-
+    console.log(this.employerProfileForm);
     let documensFile: any = [
       'file_name',
       'file_type'
@@ -104,6 +198,7 @@ export class AddComponent implements OnInit {
 
     const employerProfileVal = {
       cognito_id: this.congnitoId,
+      uid: 33,
       company_name: this.employerProfileForm.controls.comapany_name.value,
       website_addr: this.employerProfileForm.controls.website_addr.value,
       address_line_1: this.employerProfileForm.controls.address_line_one.value,

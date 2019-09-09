@@ -3,7 +3,7 @@ import { HttpHeaders } from '@angular/common/http';
 
 //Constant URL
 import { BASE_URL } from '../../../../../constant/constant-url';
-import { BASE_URL_ADDRESS } from '../../../../../constant/constant-url';
+// import { BASE_URL_ADDRESS } from '../../../../../constant/constant-url';
 import { BLOCKCHAIN_URL } from '../../../../../constant/constant-url';
 import { UPORT_URL } from '../../../../../constant/constant-url';
 import { AWS_URL } from '../../../../../constant/constant-url';

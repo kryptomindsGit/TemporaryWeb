@@ -5,7 +5,7 @@ import { throwError } from 'rxjs';
 
 //Constant URL
 import { BASE_URL } from '../../../../../constant/constant-url';
-import { BASE_URL_ADDRESS } from '../../../../../constant/constant-url';
+// import { BASE_URL_ADDRESS } from '../../../../../constant/constant-url';
 import { BLOCKCHAIN_URL } from '../../../../../constant/constant-url';
 import { UPORT_URL } from '../../../../../constant/constant-url';
 import { AWS_URL } from '../../../../../constant/constant-url';
@@ -106,6 +106,36 @@ export class EmpProfileService {
     try {
       let result = await this.__http.delete(`${BASE_URL}/employer/` + id, httpOptions).toPromise();
       return result;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
+  // Employer country GET API call
+  async getEmpCountry() {
+    try {
+      let res = await this.__http.get(`${BASE_URL}/countries`, httpOptions).toPromise();
+      return res;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
+  // Employer state by country id GET API call
+  async getEmpStateByID(id: number) {
+    try {
+      let res = await this.__http.get(`${BASE_URL}/states/${id}`, httpOptions).toPromise();
+      return res;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
+  // Employer city by state id GET API call
+  async getEmpCityByID(id: number) {
+    try {
+      let res = await this.__http.get(`${BASE_URL}/cities/${id}`, httpOptions).toPromise();
+      return res;
     } catch (error) {
       await this.handleError(error);
     }

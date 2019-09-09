@@ -4,7 +4,7 @@ import { throwError } from 'rxjs';
 
 //Constant URL
 import { BASE_URL } from '../../../../../constant/constant-url';
-import { BASE_URL_ADDRESS } from '../../../../../constant/constant-url';
+// import { BASE_URL_ADDRESS } from '../../../../../constant/constant-url';
 import { BLOCKCHAIN_URL } from '../../../../../constant/constant-url';
 import { UPORT_URL } from '../../../../../constant/constant-url';
 import { AWS_URL } from '../../../../../constant/constant-url';
@@ -183,7 +183,7 @@ export class IndeptProfileService {
   // Independent Prof country GET API call
   async getFreelancerCountry() {
     try {
-      let res = await this.__http.get(`${BASE_URL_ADDRESS}/countries`, httpOptions).toPromise();
+      let res = await this.__http.get(`${BASE_URL}/countries`, httpOptions).toPromise();
       return res;
     } catch (error) {
       await this.handleError(error);
@@ -193,7 +193,7 @@ export class IndeptProfileService {
   // Independent Prof state by country id GET API call
   async getFreelancerStateByID(id: number) {
     try {
-      let res = await this.__http.get(`${BASE_URL_ADDRESS}/states/${id}`, httpOptions).toPromise();
+      let res = await this.__http.get(`${BASE_URL}/states/${id}`, httpOptions).toPromise();
       return res;
     } catch (error) {
       await this.handleError(error);
@@ -203,7 +203,7 @@ export class IndeptProfileService {
   // Independent Prof city by state id GET API call
   async getFreelancerCityByID(id: number) {
     try {
-      let res = await this.__http.get(`${BASE_URL_ADDRESS}/cities/${id}`, httpOptions).toPromise();
+      let res = await this.__http.get(`${BASE_URL}/cities/${id}`, httpOptions).toPromise();
       return res;
     } catch (error) {
       await this.handleError(error);

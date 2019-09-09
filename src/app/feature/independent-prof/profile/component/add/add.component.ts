@@ -26,7 +26,6 @@ export class AddComponent implements OnInit {
 
   //skill variables.
   keyword = 'skill_cat_name';
-  // skill: any = [];
 
   // Variable's
   public showMainContent: number = 1;
@@ -34,6 +33,13 @@ export class AddComponent implements OnInit {
   public email: string;
   public country: string;
   public doc_cat_id: number;
+
+  public fileType: any;
+  public fileName: any;
+  public fileObj: any;
+  public FileArrData: any;
+
+
 
   // Array's
   public congnitoID: any = [];
@@ -48,6 +54,7 @@ export class AddComponent implements OnInit {
   public documentPersonalArray: any = [];
   public documentQualArray: any = [];
   public documentWorkArray: any = [];
+  public documentFileArr: any = [];
 
 
 
@@ -506,6 +513,38 @@ export class AddComponent implements OnInit {
    * @description File Handler
    */
 
+  setDocTypeCatType(inputValue) {
+    console.log(inputValue);
+    this.fileType = inputValue
+  }
+
+  handleFileInput(event) {
+    if (event.target.files.length > 0) {
+
+      const file = event.target.files[0];
+      this.fileName = file.name;
+      console.log("File name:", file.name);
+
+      this.fileObj = file;
+    }
+  }
+
+
+  uploadFile() {
+
+    // this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((event) => {
+    //   this.FileArrData = event;
+    //   console.log("File Resp:", this.FileArrData);
+    // });
+    this.FileArrData = "jkdhfjkhkdjshfkjhdskjfh"
+
+    this.documentFileArr.push(
+      {
+        'file_name': this.FileArrData,
+        'file_type': this.fileType
+      });
+    console.log(this.documentFileArr);
+  }
 
 
   /**

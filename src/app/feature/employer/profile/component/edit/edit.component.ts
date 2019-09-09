@@ -17,14 +17,22 @@ export class EditComponent implements OnInit {
   //Variable's
   public congnitoId: string;
   public emailId: string;
-  public id: number;
-  public fileType: any;
+  public id: any;
+  public fileName: string;
+  public fileObj: any;
+  public doc_cat_id: any;
+  public FileArrData: any;
 
   //Static Array's
   prefixArr = ['Mr', 'Mrs', 'Miss'];
 
   //Array's
-  documentFileArr: any = [];
+  public documentFileArr: any = [];
+  public stateArr: any = [];
+  public countryArr: any = [];
+  public cityArr: any = [];
+  public fileType: any;
+
   employerArr: any = [];
   employerFileArr: any = [];
 
@@ -37,13 +45,17 @@ export class EditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.id = this.__activatedRoute.snapshot.params.id;
+    console.log(this.id);
+
     const userInfo = this.__authService.decode();
     this.congnitoId = userInfo["cognito:username"];
 
     //Calling Function's
-    this.valEmpProfile();
+
     this.getEmplyeeDetails();
-    this.getEmplyeeFileDetails();
+    // this.getEmplyeeFileDetails();
+
   }
 
   /**
@@ -51,22 +63,36 @@ export class EditComponent implements OnInit {
    * @description validating the form fields
    */
   valEmpProfile() {
+    console.log("kbhhoiuhiuhui", this.employerArr.cmp_name);
+
     this.employerProfileForm = this.__fb.group({
-      comapany_name: ['', Validators.required],
-      website_addr: ['', Validators.required],
-      address_line_one: ['', Validators.required],
-      address_line_two: ['', Validators.required],
-      country: ['', Validators.required],
-      state: ['', Validators.required],
-      city: ['', Validators.required],
-      zipcode: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      business_cat: ['', Validators.required],
-      company_profile: ['', Validators.required],
-      company_rep_det: ['', Validators.required],
+      jo: ['TEST'],
+      website_addr: [(this.employerArr == null || this.employerArr.cmp_website == null) ? '' :
+        this.employerArr.cmp_website, Validators.required],
+      comapany_name: [(this.employerArr == null || this.employerArr.cmp_name == null) ? 'JYOTIIII' :
+        this.employerArr.cmp_name, Validators.required],
+      address_line_one: [(this.employerArr == null || this.employerArr.cmp_addr == null) ? '' :
+        this.employerArr.cmp_addr, Validators.required],
+      address_line_two: [(this.employerArr == null || this.employerArr.cmp_addr_2 == null) ? '' :
+        this.employerArr.cmp_addr_2, Validators.required],
+      country: [(this.employerArr == null || this.employerArr.country == null) ? '' :
+        this.employerArr.country, Validators.required],
+      state: [(this.employerArr == null || this.employerArr.state == null) ? '' :
+        this.employerArr.state, Validators.required],
+      city: [(this.employerArr == null || this.employerArr.city == null) ? '' :
+        this.employerArr.city, Validators.required],
+      zipcode: [(this.employerArr == null || this.employerArr.zipcode == null) ? '' :
+        this.employerArr.zipcode, [Validators.required, Validators.pattern('^[0-9]*$')]],
+      business_cat: [(this.employerArr == null || this.employerArr.business_cat == null) ? '' :
+        this.employerArr.business_cat, Validators.required],
+      company_profile: [(this.employerArr == null || this.employerArr.cpm_profile == null) ? '' :
+        this.employerArr.cpm_profile, Validators.required],
+      company_rep_det: [(this.employerArr == null || this.employerArr.cmp_reprentative == null) ? '' :
+        this.employerArr.cmp_reprentative, Validators.required],
       documents: this.__fb.array([this.__fb.group(
         { chooseFile: '' },
         { docType: '' }
-      )]),
+      )])
     })
   }
 
@@ -75,19 +101,14 @@ export class EditComponent implements OnInit {
    * @description call get API for employer file details 
    */
   getEmplyeeDetails() {
-    this.emailId = this.__activatedRoute.snapshot.params.id;
+
     this.__profileService.getEmployerByEmailId(this.emailId).then((data: any) => {
       this.employerArr = data[0];
       console.log(this.employerArr);
-    });
-  }
 
-  /**
-   * @name getEmplyeeFileDetails
-   * @description call get API for employer file details 
-   */
-  getEmplyeeFileDetails() {
-    this.id = this.__activatedRoute.snapshot.params.id;
+      this.valEmpProfile();
+    });
+
     this.__profileService.getEmployerFileById(this.id).then((resData: any) => {
       this.employerFileArr = resData;
       console.log(this.employerFileArr);
@@ -102,8 +123,34 @@ export class EditComponent implements OnInit {
           }));
       }
       console.log(this.documentArr);
+      this.valEmpProfile();
     });
+
+
   }
+
+  /**
+   * @name getEmplyeeFileDetails
+   * @description call get API for employer file details 
+   */
+  // getEmplyeeFileDetails() {
+
+  //   this.__profileService.getEmployerFileById(this.id).then((resData: any) => {
+  //     this.employerFileArr = resData;
+  //     console.log(this.employerFileArr);
+
+  //     for (let index = 0; index < this.employerFileArr.length; index++) {
+  //       this.documentArr.push(this.__fb.group(
+  //         {
+  //           file_name: this.employerFileArr[index].file_name,
+  //           file_type: this.employerFileArr[index].file_type,
+  //           file_id: this.employerFileArr[index].file_id,
+  //           part_id: this.employerFileArr[index].part_id
+  //         }));
+  //     }
+  //     console.log(this.documentArr);
+  //   });
+  // }
 
   /**
   * @description FormArray (Dynamicaly create input)
@@ -123,16 +170,96 @@ export class EditComponent implements OnInit {
     this.documentArr.removeAt(index);
   }
 
+
+
+  /**
+  * @method getAllCountry
+  * @description get all country values.
+  */
+  getAllCountry() {
+    this.__profileService.getEmpCountry().then((resData: any) => {
+      this.countryArr = resData;
+    })
+  }
+
+  /**
+   * @method setCountryID
+   * @param country_id
+   * @description get the selected country id and pass to getStateByID method.
+   */
+  setCountryID(country_id) {
+    this.getStateByID(country_id)
+  }
+
+  /**
+   * @method getStateByID
+   * @param country_id
+   * @description get the all state values based on selected country id.
+   */
+  getStateByID(country_id) {
+    this.__profileService.getEmpStateByID(country_id).then((resData: any) => {
+      this.stateArr = resData;
+    })
+  }
+
+  /**
+   * @method setStateID
+   * @param state_id
+   * @description get the selected state id and pass to getCityByID method.
+   */
+  setStateID(state_id) {
+    this.getCityByID(state_id)
+  }
+
+  /**
+   * @method getCityByID
+   * @param state_id
+   * @description get the all city values based on selected state id.
+   */
+  getCityByID(state_id) {
+    this.__profileService.getEmpCityByID(state_id).then((resData: any) => {
+      this.cityArr = resData;
+      console.log(this.cityArr)
+    })
+  }
+
+
+  /**
+     * @name 
+     * @description file handler
+     */
+
   setDocTypeCatType(inputValue) {
     console.log(inputValue);
     this.fileType = inputValue
   }
+  handleFileInput(event) {
+    if (event.target.files.length > 0) {
 
-  /**
-   * @name 
-   * @description file handler
-   */
+      const file = event.target.files[0];
+      this.fileName = file.name;
+      console.log("File name:", file.name);
 
+      this.fileObj = file;
+    }
+  }
+
+
+  uploadFile() {
+
+    // this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((event) => {
+    //   this.FileArrData = event;
+    //   console.log("File Resp:", this.FileArrData);
+    // });
+    this.FileArrData = "jkdhfjkhkdjshfkjhdskjfh"
+
+    this.documentFileArr.push(
+      {
+        'file_name': this.FileArrData,
+        'file_type': this.fileType
+      });
+    console.log(this.documentFileArr);
+  }
 
 
   /**

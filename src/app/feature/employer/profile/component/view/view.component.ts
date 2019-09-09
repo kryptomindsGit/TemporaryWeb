@@ -25,7 +25,7 @@ export class ViewComponent implements OnInit {
     private __router: Router,
     private __activatedRoute: ActivatedRoute,
   ) {
-    this.id = this.__activatedRoute.snapshot.params.id;
+    this.emailId = this.__activatedRoute.snapshot.params.id;
   }
 
   ngOnInit() {
@@ -63,5 +63,12 @@ export class ViewComponent implements OnInit {
 
     });
   }
+
+  editProfile() {
+    console.log("Edit calling");
+
+    this.__router.navigate(['/feature/feature/full-layout/employer/profile/emp-profile/edit/', this.emailId]);
+  }
+
 
 }

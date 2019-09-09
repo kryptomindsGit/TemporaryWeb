@@ -1,29 +1,30 @@
 <body>
 
-    <div class="d-flex " id="wrapper">
-  
-        <!-- Sidebar -->
-        <app-sidebar></app-sidebar>
-        <!-- /#sidebar-wrapper -->
-  
-      <!-- Page Content -->
-      <div id="page-content-wrapper">
-          
-        <!-- Navbar -->
-        <app-header></app-header>
-        <!-- /#navbar-wrapper -->
-  
-        <!-- Dashboard -->
-        <app-dashboard></app-dashboard>
-        <!-- /#dashboard-wrapper -->
+  <div class="d-flex " id="wrapper">
 
-        <!-- Footer -->
-        <!-- <app-footer></app-footer> -->
-        <!-- /#Footer-wrapper -->
-      </div>
-      <!-- /#page-content-wrapper -->
-  
+    <!-- Sidebar -->
+    <app-sidebar></app-sidebar>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <!-- Navbar -->
+      <app-header></app-header>
+      <!-- /#navbar-wrapper -->
+
+      <!-- Dashboard -->
+      <!-- <app-dashboard></app-dashboard> -->
+      <!-- /#dashboard-wrapper -->
+      <router-outlet></router-outlet>
+
+      <!-- Footer -->
+      <!-- <app-footer></app-footer> -->
+      <!-- /#Footer-wrapper -->
     </div>
-    <!-- /#wrapper -->
-  
-  </body>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+</body>

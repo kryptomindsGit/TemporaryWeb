@@ -12,7 +12,7 @@ export class ViewComponent implements OnInit {
 
   //Variable's
   public id: number;
-  public emailId: string;
+  public email_id: any;
 
   //Array's
   public congnitoID: any = [];
@@ -25,7 +25,7 @@ export class ViewComponent implements OnInit {
     private __authService: AuthService,
     private __router: Router
   ) {
-    this.id = this.__activatedRoute.snapshot.params.id;
+    this.email_id = this.__activatedRoute.snapshot.params.id;
   }
 
   ngOnInit() {
@@ -42,7 +42,7 @@ export class ViewComponent implements OnInit {
    * @description call get API for partner details 
    */
   getPartnerDetails() {
-    this.__profileService.getPartnerByEmailId(this.emailId).then((resData: any) => {
+    this.__profileService.getPartnerByEmailId(this.email_id).then((resData: any) => {
       this.partnerDetailsArr = resData[0];
       console.log(this.partnerDetailsArr);
     });
@@ -70,7 +70,9 @@ export class ViewComponent implements OnInit {
    * @description redirect to edit profile page 
    */
   editProfile() {
-    this.__router.navigate(['partner/part-profile/profile/edit/', this.congnitoID]);
+    console.log("edit button call");
+
+    this.__router.navigate(['/feature/feature/full-layout/partner/profile/part-profile/edit/irshad@kryptominds.com']);
   }
 
   /**

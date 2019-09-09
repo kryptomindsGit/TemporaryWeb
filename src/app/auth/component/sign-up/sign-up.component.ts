@@ -12,10 +12,10 @@ export class SignUpComponent implements OnInit {
 
   //Form Group object
   public signupForm: FormGroup;
-  
+
   //Variables
   public showMsg: string;
-  
+
   constructor(
     private __fb: FormBuilder,
     private __authService: AuthService,
@@ -30,12 +30,12 @@ export class SignUpComponent implements OnInit {
    * @name valData
    * @description validate sign-up form data
    */
-  valData(){
+  valData() {
     this.signupForm = this.__fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)] ],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       phone_no: ['', Validators.required],
-      custom_role: ['', Validators.required ],
+      custom_role: ['', Validators.required],
       custom_country: ['', [Validators.required, Validators.pattern('^[a-zA-Z \-\']+')]]
     });
   }
@@ -44,7 +44,7 @@ export class SignUpComponent implements OnInit {
    * @name onSubmit
    * @description submit sipn-up info
    */
-  onSubmit(){
+  onSubmit() {
 
     const signupPayload = {
       email: this.signupForm.controls.email.value,
@@ -55,14 +55,30 @@ export class SignUpComponent implements OnInit {
     }
 
     console.log("Sing up Data:", signupPayload);
-    
-    this.__authService.register(signupPayload).then((resData: any) =>{
-        this.showMsg= resData.message;
+
+    this.__authService.register(signupPayload).then((resData: any) => {
+      this.showMsg = resData;
+
+      const cognitoPayload = {
+        flag: "N",
+        email: signupPayload.email,
+        phone_no: signupPayload.phone_no,
+        role: signupPayload.custom_role,
+        country: signupPayload.custom_country,
+        // cognito_id: "resData"
+      }
+
+
+      this.__authService.uportSignup(cognitoPayload).then((resData: any) => {
+        this.showMsg = resData;
+        this.__router.navigate(['/auth/auth/login']);
+
+      });
 
       //   setTimeout(() => {
       //     this.__router.navigate(['/auth/auth/login']);
       // }, 5000);
-        
+
     });
 
   }

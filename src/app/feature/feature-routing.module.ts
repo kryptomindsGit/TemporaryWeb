@@ -14,46 +14,50 @@ import { PageNotFoundComponent } from '../page-not-found/page-not-found.componen
 const routes: Routes = [
   {
     path: 'feature',
-    component:  FeatureComponent,
+    component: FeatureComponent,
     children: [
-      {
-        path: 'dashboard',
-        component:  DashboardComponent
-      },
-      {
-        path: 'header',
-        component: HeaderComponent
-      },
-      {
-        path: 'sidebar',
-        component:  SidebarComponent
-      },
+      // {
+      //   path: 'dashboard',
+      //   component: DashboardComponent
+      // },
+      // {
+      //   path: 'header',
+      //   component: HeaderComponent
+      // },
+      // {
+      //   path: 'sidebar',
+      //   component: SidebarComponent
+      // },
       {
         path: 'full-layout',
-        component:  FullLayoutComponent
-      },
-      {
-        path: 'footer',
-        component:  FooterComponent
-      },
+        component: FullLayoutComponent,
+        children: [
+          {
+            path: 'employer',
+            loadChildren: () => import(`./employer/employer.module`).then(module => module.EmployerModule)
+          },
+          {
+            path: 'partner',
+            loadChildren: () => import(`./partner/partner.module`).then(module => module.PartnerModule)
+          },
+          {
+            path: 'independent',
+            loadChildren: () => import(`./independent-prof/independent-prof.module`).then(module => module.IndependentProfModule)
+          }
+        ]
+      }
+      // {
+      //   path: 'footer',
+      //   component: FooterComponent
+      // }
+
       // {
       //   path: '**',
       //   component: PageNotFoundComponent
       // }
     ]
-  },
-  { 
-    path: 'employer', 
-    loadChildren: () => import(`./employer/employer.module`).then(module => module.EmployerModule) 
-  },
-  { 
-    path: 'partner', 
-    loadChildren: () => import(`./partner/partner.module`).then(module => module.PartnerModule) 
-  },
-  { 
-    path: 'independent', 
-    loadChildren: () => import(`./independent-prof/independent-prof.module`).then(module => module.IndependentProfModule) 
   }
+
 ];
 
 @NgModule({

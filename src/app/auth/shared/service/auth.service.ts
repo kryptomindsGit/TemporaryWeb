@@ -82,7 +82,7 @@ export class AuthService {
   }
 
   async uportSignup(user: any): Promise<any> {
-    ;
+
     try {
       let result = await this.__http.post(`${BASE_URL}/uportsignup`, user, httpOptions).toPromise();
       return result;

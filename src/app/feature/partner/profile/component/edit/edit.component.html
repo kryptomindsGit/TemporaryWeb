@@ -1,4 +1,4 @@
-<div class="container-fuild">
+<div class="section">
     <div class="card">
         <div class="card-header">
             <h6>PROFILE DETAILS</h6>
@@ -6,47 +6,47 @@
         <div class="card-body">
             <form [formGroup]="partnerProfileForm" novalidate>
                 <div class="row">
+                    <!-- funny workaround -->
+                    <div class="form-group form-input col" hidden>
+                        <input type="text" formControlName="jo" id="jo" required />
+                        <label for="jo" class="form-label">jo Name</label>
+                    </div>
                     <div class="form-group form-input col">
-                        <input type="text" [(ngModel)]="partnerArr.part_name" formcontrolName="comapany_name"
-                            id="comapany_name" required />
+                        <input type="text" formcontrolName="comapany_name" id="comapany_name" required />
                         <label for="comapany_name" class="form-label">Comapany Name</label>
                     </div>
 
                     <div class="form-group form-input col">
-                        <input type="text" [(ngModel)]="partnerArr.part_website" formcontrolName="website_addr"
-                            id="website_addr" required />
+                        <input type="text" formcontrolName="website_addr" id="website_addr" required />
                         <label for="website_addr" class="form-label">Website Addr</label>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group form-input col">
-                        <input type="text" [(ngModel)]="partnerArr.part_addr" formcontrolName="address_line_one"
-                            id="address_line_one" required />
+                        <input type="text" formcontrolName="address_line_one" id="address_line_one" required />
                         <label for="address_line_one" class="form-label">Address line 1</label>
                     </div>
 
                     <div class="form-group form-input col">
-                        <input type="text" [(ngModel)]="partnerArr.part_addr_2" formcontrolName="address_line_two"
-                            id="address_line_two" required />
+                        <input type="text" formcontrolName="address_line_two" id="address_line_two" required />
                         <label for="address_line_two" class="form-label">Address line 2</label>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group form-input col">
-                        <input type="text" [(ngModel)]="partnerArr.country" formcontrolName="country" id="country"
-                            required />
+                        <input type="text" formcontrolName="country" id="country" required />
                         <label for="country" class="form-label">Country</label>
                     </div>
 
                     <div class="form-group form-input col">
-                        <input type="text" [(ngModel)]="partnerArr.state" formcontrolName="state" id="state" required />
+                        <input type="text" formcontrolName="state" id="state" required />
                         <label for="state" class="form-label">State</label>
                     </div>
 
                     <div class="form-group form-input col">
-                        <input type="text" [(ngModel)]="partnerArr.city" formcontrolName="city" id="city" required />
+                        <input type="text" formcontrolName="city" id="city" required />
                         <label for="city" class="form-label">City</label>
                     </div>
 
@@ -58,22 +58,19 @@
                 </div>
                 <div class="row">
                     <div class="form-group form-input col-6">
-                        <input type="text" [(ngModel)]="partnerArr.business_details" formcontrolName="business_cat"
-                            id="business_cat" required />
+                        <input type="text" formcontrolName="business_cat" id="business_cat" required />
                         <label for="business_cat" class="form-label">Business Category</label>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group form-input col">
-                        <input type="text" [(ngModel)]="partnerArr.part_type" formcontrolName="company_profile"
-                            id="company_profile" required />
+                        <input type="text" formcontrolName="company_profile" id="company_profile" required />
                         <label for="company_profile" class="form-label">Company Profile</label>
                     </div>
 
                     <div class="form-group form-input col">
-                        <input type="text" [(ngModel)]="partnerArr.part_reprentative" formcontrolName="company_rep_det"
-                            id="company_rep_det" required />
+                        <input type="text" formcontrolName="company_rep_det" id="company_rep_det" required />
                         <label for="company_rep_det" class="form-label">Company Representative Detail</label>
                     </div>
                 </div>
@@ -81,15 +78,15 @@
                     <div *ngFor="let item of documentArr.controls; let i=index" formGroupName="{{i}}">
                         <div class="row">
                             <div class="form-group col-md-5">
-                                <input type="text" [(ngModel)]="item.value.file_type" formControlName="docType"
+                                <input type="text" formControlName="docType"
                                     (input)="setDocTypeCatType(textInput.value)" id="docType" required />
                                 <label for="docType" class="form-label">Document Type</label>
                             </div>
                             <div class="form-group col-md-5">
                                 <div class="file-upload">
                                     <div class="file-select" id="document_file">
-                                        <input type="file" (ngModel)]="item.value.file_name" id="chooseFile"
-                                            (change)="handleFileInput($event)" formControlName="chooseFile" />
+                                        <input type="file" id="chooseFile" (change)="handleFileInput($event)"
+                                            formControlName="chooseFile" />
                                     </div>
                                 </div>
                             </div>

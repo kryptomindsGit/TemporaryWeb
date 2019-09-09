@@ -15,27 +15,27 @@
                             </select>
                         </div>
                         <div class="form-group form-input col">
-                            <input type="text" formcontrolName="first_name" id="first_name" required />
+                            <input type="text" formControlName="first_name" id="first_name" required />
                             <label for="first_name" class="form-label">First Name</label>
                         </div>
 
                         <div class="form-group form-input col">
-                            <input type="text" formcontrolName="middle_name" id="middle_name" required />
+                            <input type="text" formControlName="middle_name" id="middle_name" required />
                             <label for="middle_name" class="form-label">Middle Name</label>
                         </div>
                         <div class="form-group form-input col">
-                            <input type="text" formcontrolName="last_name" id="last_name" required />
+                            <input type="text" formControlName="last_name" id="last_name" required />
                             <label for="last_name" class="form-label">Last Name</label>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="form-group form-input col">
-                            <input type="text" formcontrolName="address_one" id="address_one" required />
+                            <input type="text" formControlName="address_one" id="address_one" required />
                             <label for="address_one" class="form-label">Address Line 1</label>
                         </div>
                         <div class="form-group form-input col">
-                            <input type="text" formcontrolName="address_two" id="address_two" required />
+                            <input type="text" formControlName="address_two" id="address_two" required />
                             <label for="address_two" class="form-label">Address Line 2</label>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
                             </select>
                         </div>
                         <div class="form-group form-input col">
-                            <input type="text" formcontrolName="postal_code" id="postal_code" required />
+                            <input type="text" formControlName="postal_code" id="postal_code" required />
                             <label for="postal_code" class="form-label">Postal code</label>
                         </div>
                     </div>
@@ -76,10 +76,16 @@
                             <!-- <label for="quali">Documents :</label> -->
                             <div class="row">
                                 <div class="form-group form-input col-5">
-                                    <input type="text" formControlName="docType" #textInput
+                                    <select class="formStyle" (change)="setDocTypeCatID($event.target.value)"
+                                        formControlName="file_type">
+                                        <option disabled value="">Document type</option>
+                                        <option id="option_txt" *ngFor="let docType of docTypeArr"
+                                            [value]="docType.doc_type_id">{{docType.doc_type}}</option>
+                                    </select>
+                                    <!-- <input type="text" formControlName="docType" #textInput
                                         (input)="setDocTypeCatType(textInput.value)" class="formStyle" id="docType"
                                         required />
-                                    <label for="docType" class="form-label">Document Type</label>
+                                    <label for="docType" class="form-label">Document Type</label> -->
                                 </div>
                                 <div class="form-group form-input col-5">
                                     <div class="file-upload">
@@ -134,7 +140,7 @@
                                 </div>
 
                                 <div class="form-group form-input col-4">
-                                    <input type="text" formcontrolName="university" id="university" required />
+                                    <input type="text" formControlName="university" id="university" required />
                                     <label for="university" class="form-label">University</label>
                                 </div>
 
@@ -147,7 +153,7 @@
                                 </div>
 
                                 <div class="form-group form-input col-2">
-                                    <input type="text" formcontrolName="percentage" id="percentage" required />
+                                    <input type="text" formControlName="percentage" id="percentage" required />
                                     <label for="percentage" class="form-label">Percentage</label>
                                 </div>
 
@@ -198,12 +204,12 @@
                         <div *ngFor="let item of orgArr.controls; let i=index" [formGroupName]="i">
                             <div class="row">
                                 <div class="form-group form-input col-6">
-                                    <input type="text" formcontrolName="org_name" id="org_name" required />
+                                    <input type="text" formControlName="org_name" id="org_name" required />
                                     <label for="org_name" class="form-label">Oragnization Name</label>
                                 </div>
 
                                 <div class="form-group form-input col-6">
-                                    <input type="text" formcontrolName="org_designation" id="org_designation"
+                                    <input type="text" formControlName="org_designation" id="org_designation"
                                         required />
                                     <label for="org_designation" class="form-label">Oragnization Designation</label>
                                 </div>
@@ -224,7 +230,7 @@
                                 </div>
 
                                 <div class="form-group form-input col-3">
-                                    <input type="text" formcontrolName="responsibilities" id="responsibilities"
+                                    <input type="text" formControlName="responsibilities" id="responsibilities"
                                         required />
                                     <label for="responsibilities" class="form-label">Oragnization Name</label>
                                 </div>
@@ -247,7 +253,7 @@
                                 <div *ngFor="let item of strengthArr.controls; let i=index" [formGroupName]="i">
                                     <div class="row">
                                         <div class="form-group form-input col-7">
-                                            <input type="text" formcontrolName="strength" id="strength" required />
+                                            <input type="text" formControlName="strength" id="strength" required />
                                             <label for="strength" class="form-label">Strength</label>
                                         </div>
 
@@ -266,7 +272,7 @@
                                 <div *ngFor="let item of weaknessArr.controls; let i=index" [formGroupName]="i">
                                     <div class="row">
                                         <div class="form-group form-input col-7">
-                                            <input type="text" formcontrolName="weakness" id="weakness" required />
+                                            <input type="text" formControlName="weakness" id="weakness" required />
                                             <label for="weakness" class="form-label">Weakness</label>
                                         </div>
 
@@ -285,7 +291,7 @@
                                 <div *ngFor="let item of portfolioArr.controls; let i=index" [formGroupName]="i">
                                     <div class="row">
                                         <div class="form-group form-input col-7">
-                                            <input type="text" formcontrolName="portfolio" id="portfolio" required />
+                                            <input type="text" formControlName="portfolio" id="portfolio" required />
                                             <label for="portfolio" class="form-label">Portfolio</label>
                                         </div>
 
@@ -304,29 +310,35 @@
                     <br>
                     <div class="row">
                         <div class="form-group form-input col">
-                            <input type="text" formcontrolName="area_of_expertise" id="area_of_expertise" required />
+                            <input type="text" formControlName="area_of_expertise" id="area_of_expertise" required />
                             <label for="area_of_expertise" class="form-label">Area of expertise</label>
                         </div>
 
                         <div class="form-group form-input col">
-                            <input type="text" formcontrolName="psychomatric" id="psychomatric" required />
+                            <input type="text" formControlName="psychomatric" id="psychomatric" required />
                             <label for="psychomatric" class="form-label">Psychomatric</label>
                         </div>
                         <div class="form-group form-input col">
-                            <input type="text" formcontrolName="references" id="references" required />
+                            <input type="text" formControlName="references" id="references" required />
                             <label for="references" class="form-label">References</label>
                         </div>
                     </div>
                     <br>
 
-                    <div formArrayName="documentWorkArray">
+                    <div formArrayName="documents_work">
                         <div *ngFor="let item of documentArr.controls; let i=index" formGroupName="{{i}}">
                             <div class="row">
                                 <div class="form-group form-input col-4">
-                                    <input type="text" formControlName="docType" #textInput
+                                    <select class="formStyle" (change)="setDocTypeCatID($event.target.value)"
+                                        formControlName="file_type">
+                                        <option disabled value="">Document type</option>
+                                        <option id="option_txt" *ngFor="let docType of docTypeArr"
+                                            [value]="docType.doc_type_id">{{docType.doc_type}}</option>
+                                    </select>
+                                    <!-- <input type="text" formControlName="docType" #textInput
                                         (input)="setDocTypeCatType(textInput.value)" class="formStyle" id="docType"
                                         required />
-                                    <label for="docType" class="form-label">Document Type</label>
+                                    <label for="docType" class="form-label">Document Type</label> -->
                                 </div>
                                 <div class="form-group form-input col-6">
                                     <div class="file-upload">
@@ -348,9 +360,17 @@
                         </div>
                     </div>
 
-                    <button type="button" class="btnPrevious" (click)="ShowNextButton(2)">Previous</button>
+                    <div class="row col-6">
+                        <label> Would you like to be an Interviewer? </label> &nbsp;&nbsp;
+                        <label class="radio-inline radiobutton"><input checked type="radio" value="Y"
+                                name="isFreelancer" formControlName="isFreelancer">Yes</label> &nbsp;&nbsp;&nbsp;
+                        <label class="radio-inline radiobutton"><input type="radio" value="N" name="isFreelancer"
+                                formControlName="isFreelancer">No</label>
+                    </div>
 
-                    <button type="button" class="btnNext" (click)="ShowNextButton(4)">Next</button>
+                    <button type="button" class="btnPrevious" (click)="ShowNextButton(3)">Previous</button>
+
+                    <button type=" button" class="btnNext" (click)="ShowNextButton(4)">Next</button>
 
                 </form>
             </div>
@@ -470,7 +490,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="button" class="btnPrevious" (click)="ShowNextButton(2)">Previous</button>
+                        <button type="button" class="btnPrevious" (click)="ShowNextButton(3)">Previous</button>
                         <button type="button" class="btnNext" (click)="onSubmitDetails()">Save</button>
                     </div>
                 </form>

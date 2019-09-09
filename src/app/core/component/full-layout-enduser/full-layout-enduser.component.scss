@@ -1,0 +1,301 @@
+html {
+    overflow-y: scroll;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+body {
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    background: #000 !important;
+    font-family: "Roboto" !important;
+    font-size: 14px;
+}
+
+a,
+abbr,
+acronym,
+address,
+applet,
+article,
+aside,
+audio,
+b,
+big,
+blockquote,
+body,
+caption,
+canvas,
+center,
+cite,
+code,
+dd,
+del,
+details,
+dfn,
+dialog,
+div,
+dl,
+dt,
+em,
+embed,
+fieldset,
+figcaption,
+figure,
+form,
+footer,
+header,
+hgroup,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+html,
+i,
+iframe,
+img,
+ins,
+kbd,
+label,
+legend,
+li,
+mark,
+menu,
+nav,
+object,
+ol,
+output,
+p,
+pre,
+q,
+ruby,
+s,
+samp,
+section,
+small,
+span,
+strike,
+strong,
+sub,
+summary,
+sup,
+tt,
+table,
+tbody,
+textarea,
+tfoot,
+thead,
+time,
+tr,
+th,
+td,
+u,
+ul,
+var,
+video {
+    font-family: inherit;
+    font-size: 100%;
+    font-weight: inherit;
+    font-style: inherit;
+    vertical-align: baseline;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+.navbar-inverse {
+    position: relative;
+    z-index: 99999;
+    background: #18191c !important;
+    /* background: -webkit-linear-gradient(90deg, #000000, #000000);
+    background: -o-linear-gradient(90deg, #000000, #000000);
+    background: -moz-linear-gradient(90deg, #000000, #000000);
+    background: linear-gradient(90deg, #000000, #000000); */
+}
+
+/* .navbar-inverse:hover{
+	background: #18191c !important;
+} */
+.navbar-header {
+    width: 100%;
+    height: auto;
+}
+
+.navbar-header .left-navbar {
+    float: left;
+    width: 100%;
+}
+
+.navbar-header .right-navbar {
+    float: right;
+    margin-right: 20px;
+}
+
+.navbar-header .login-btn {
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-right: 0px;
+}
+
+.navbar-header .login-btn:hover {
+    color: #064d86;
+    margin-bottom: 10px;
+}
+
+.navbar-header .right-navbar .button-login .login-btn {
+    padding-right: 15px;
+}
+
+.navbar-brand img {
+    width: 100px;
+}
+
+.left-navbar .title_konnecteum {
+    font-size: 15px;
+    font-weight: bold;
+    color: #064d86 !important;
+}
+
+#landing_section {
+    width: 100%;
+    height: auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+#landing_section .brand_img img {
+    width: 70%;
+    height: auto;
+}
+
+.embed-responsive {
+    width: 100%;
+    height: auto;
+    margin: 10px;
+}
+
+
+/* CSS for landing page*/
+#landing_page {
+    margin-top: 50px;
+    margin-left: 50px;
+}
+
+#landing_page .welcome_box {
+    color: #fff;
+}
+
+#landing_page .welcome_box p {
+    font-size: 14px;
+    margin-bottom: 30px;
+    font-weight: normal !important;
+    font-family: "Roboto"
+}
+
+#landing_page h2 {
+    color: #064d86;
+    font-size: 20px;
+    font-weight: normal !important;
+}
+
+#landing_page .btn_read_more {
+    width: 500px;
+    height: 100px;
+    padding: 10px 20px;
+    background: #064d86;
+    color: #FFFFFF;
+    border: 1px solid #fff;
+    border-radius: 2px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: normal !important;
+}
+
+#landing_page .btn_read_more:hover {
+    color: #000;
+    background: #fff;
+    border: 1px solid #064d86;
+}
+
+#landing_page .landing_image_right img {
+    width: 500px;
+    height: auto;
+    float: right;
+    align-content: center;
+    margin-left: 100px;
+}
+
+/* #landing_page .landing_image_right img{
+    width: 400px;
+    margin-top: 80px;
+    height: 400px;
+    float: right;
+} */
+
+/* CSS for section user select*/
+#selction-user {
+    background: #18191c;
+    margin-top: 30px;
+    padding-left: 50px;
+}
+
+#selction-user .user {
+    display: inline-block;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+#selction-user .user img {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    margin-top: 100px;
+}
+
+#selction-user .user .figure_caption {
+    text-transform: uppercase;
+    font-size: 12px;
+    margin-top: 20px;
+    color: #fff;
+}
+
+#selction-user .user p {
+    font-size: 12px;
+    margin-top: 20px;
+    color: #fff;
+}
+
+.lead {
+    color: #000;
+}

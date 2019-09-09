@@ -1,9 +1,6 @@
 // base URL of USER's local (shefali)
 export const BASE_URL = 'http://192.168.0.14:3000';
 
-// base URL for address local (shefali)
-export const BASE_URL_ADDRESS = 'http://192.168.0.14:3000';
-
 // base URL for Blockchain
 export const BLOCKCHAIN_URL = 'http://54.242.103.217:5000';
 
