@@ -18,10 +18,13 @@ export class AddComponent implements OnInit {
   complexityArr = ['High','Medium','Low'];
   skillLevelArr = ['Moderrate','Intermediate','Begginer'];
   projectTypeArr = ['Full-time','Part-time'];
+  currencyArr=['$' , 'Rs'];
+  countries=['India','America'];
 
   //Date 
   today = new Date();
-  todayDate: any ="abcd";
+  todayDate: string ;
+  employerId:number = 123456789;
 
   constructor(
     private fb:FormBuilder
@@ -49,16 +52,29 @@ export class AddComponent implements OnInit {
       proj_durationFrom:['',[Validators.required]],
       proj_durationTo:['',[Validators.required]],
       proj_start_date:['',[Validators.required]],
+      budgetAmt:['',[Validators.required]],
+      currency:['',[Validators.required]],
+      estimatedCost:['',[Validators.required]],
     });
   }
 
   createSkillForm(){
     this.basicForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)] ],
-      phone_no: ['', Validators.required],
-      custom_role: ['', Validators.required ],
-      custom_country: ['', [Validators.required, Validators.pattern('^[a-zA-Z \-\']+')]]
+      skill:['',[Validators.required]],
+      skillLevel:['',[Validators.required]],
+      projectType:['',[Validators.required]],
+      country:['',[Validators.required]],
+      rate:['',[Validators.required]],
+      avgRate:['',[Validators.required]],
+      currency:['',[Validators.required]],
+      skill_start_date:['',[Validators.required]],
+      skill_end_date:['',[Validators.required]],
     });
+  }
+
+  onSubmit(){
+    const workPackagePayload = {
+      
+    }
   }
 }

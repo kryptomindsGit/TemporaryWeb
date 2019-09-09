@@ -1,0 +1,157 @@
+<div class="section">
+    <div class="container">
+        <h5>Payment</h5>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="row">
+                            <label><span class="text-muted"> Project ID :</span> 8475665658396</label>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="row">
+                            <label><span class="text-muted"> Project Name :</span> Create an app for Online Shopping</label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="row">
+                            <label><span class="text-muted"> Employer ID :</span>565656565656</label>
+                        </div>
+                    </div>
+                </div>
+                 <form [formGroup]="contractForm">
+                    <div class="form-content">
+                        <div class="row">
+
+                    <div class="col-3">
+                        <select  formControlName="teamMember" (change)="onMemberSelect($event)" (change)="show = !show" ng-model="show" id="teamMember">
+                            <option>select Team Member</option>
+                            <option id="option_type" *ngFor="let  teamMember of  teamMemberArr" [value]=" teamMember.memberId">{{teamMember.memberId}}</option>
+                        </select>            
+                    </div>
+                    <div class="col-2">
+                        <label><span class="text-muted1" > Contract Status :</span>{{contractStatus}}</label>
+                    </div>
+    
+                </div>
+            </div>
+                    </form>
+               
+            </div>
+        </div>
+
+        <h5 *ngIf="show" id="divshow">Milestones</h5>
+        <div class="card"  *ngIf="show" id="divshow">
+            <div class="card-body">
+                    <form class="table-responsive" >
+                        <div class="row">
+                            <div class="col-11">
+                                
+                            </div>
+                        </div>
+                            <table class="table table-dark  table-bordered worktable">
+                                <thead>
+                                    <tr>
+                                    <th>Milestone</th>
+                                    <th class="setWidth">Start Date </th>
+                                    <th class="setWidth">End Date</th>
+                                    <th >Completion Criteria</th>
+                                    <th class="setWidth">Team Member</th>
+                                    <th class="setWidth">Amount Payble</th>
+                                    <th>Upload </th>
+                                   
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                    <td ><input type="text" placeholder="Enter Milestone"></td>
+                                    <td><input type="text" placeholder="Start Date"></td>
+                                    <td><input type="text" placeholder="End Date"></td>
+                                    <td><input type="text" placeholder="Criteria"></td>
+                                    <td><select  formControlName="teamMember"  id="teamMember">
+                                            <option>select Team Member</option>
+                                            <option id="option_type" *ngFor="let  teamMember of  teamMemberArr" [value]=" teamMember.memberId">{{teamMember.memberId}}</option>
+                                        </select> 
+                                    </td>
+                                    <td><input type="text" placeholder="Amount "></td>
+                                    <td><button class="btn viewprofile1" (click)="onSearch()">Upload Contract</button></td>
+                                   
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td> </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td> 
+                                        </tr>
+                                </tbody>
+                                  <!-- <button class="btn increment">+</button>
+                            <button class="btn increment">-</button> -->
+                            </table>
+                        </form>   
+            </div>
+        </div>
+
+        <h5 *ngIf="show" id="divshow">Payment shedule</h5>
+        <div class="card" *ngIf="show" id="divshow">
+                <div class="card-body">
+                        <form class="table-responsive" >
+                                <table class="table table-dark  table-bordered worktable">
+                                    <thead>
+                                        <tr>
+                                        <th>Milestone</th>
+                                        <th >Payment Method</th>  
+                                        <th >Payer Name</th>
+                                        <th >Payer Account</th>
+                                        <th >Payee Name</th>
+                                        <th >Payee Account</th>
+                                        <th >Payment Condition</th>
+                                        <th >Payment Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                        <td ><input type="text" placeholder="Enter Milestone"></td>
+                                        <td>
+                                            <select  formControlName="paymentMethod" (change)="onMemberSelect($event)" (change)="show = !show" ng-model="show" id="paymentMethod">
+                                                <option>Select Payment Method</option>
+                                                <option id="option_type" *ngFor="let  paymentMethod of  paymentMethodArr" [value]=" paymentMethod">{{paymentMethod}}</option>
+                                            </select> 
+                                        </td>
+                                        <td><input type="text" placeholder="Payer Name"></td>
+                                        <td><input type="text" placeholder="Payer Account"></td>
+                                        <td><input type="text" placeholder="Payee Name"></td>
+                                        <td><input type="text" placeholder="Payee Account"></td>
+                                        <td>
+                                                <label class="checkbox-inline"><input type="checkbox" value="">Approved by Employer</label><br>
+                                                <label class="checkbox-inline"><input type="checkbox" value="">Approved by Reviewer</label><br>
+                                                <label class="checkbox-inline"><input type="checkbox" value="">On Date</label><br>
+
+                                        <td><input type="text" placeholder="Payee Ammount"></td>
+                                       
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td> </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>   
+                                            </tr>
+                                    </tbody>
+                                </table>
+                            </form>   
+                          
+                </div>
+               
+            </div>
+            <button class="btn viewprofile" *ngIf="show" id="divshow" (click)="onSearch()">Save Changes</button>
+            <button class="btn viewprofile" *ngIf="show" id="divshow" (click)="onSearch()">Submit Contract</button>
+    </div> 
+  
+</div>  

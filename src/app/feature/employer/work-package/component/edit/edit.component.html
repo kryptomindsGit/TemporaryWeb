@@ -1,1 +1,63 @@
-<p>edit works!</p>
+<div class="container">
+        <h2>Basic Table</h2>
+        <p>Angular 7 open bootstrap 4 modal popup with dynamic data on click on bootstrap table row</p>            
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Firstname</th>
+              <th>Lastname</th>
+              <th>Email</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="table-primary">
+              <td id="firstname1">John</td>
+              <td id="lastname1">Doe</td>
+              <td id="email1">john@example.com</td>
+              <td id="1" (click)="onClick($event)" style="cursor: pointer;font-weight: bold;">Show</td>
+      
+            </tr>
+            <tr class="table-success">
+              <td id="firstname2">Mary</td>
+              <td id="lastname2">Moe</td>
+              <td id="email2">mary@example.com</td>
+              <td id="2" (click)="onClick($event)" style="cursor: pointer;font-weight: bold;">Show</td>
+            </tr>
+            <tr class="table-danger">
+              <td id="firstname3">July</td>
+              <td id="lastname3">Dooley</td>
+              <td id="email3">july@example.com</td>
+              <td id="3" (click)="onClick($event)" style="cursor: pointer;font-weight: bold;">Show</td>
+            </tr>
+          </tbody>
+        </table>
+      
+        <!-- The Modal -->
+        <div class="modal" id="myModal" [style.display]="showModal ? 'block' : 'none'">
+          <div class="modal-dialog">
+            <div class="modal-content">
+            
+              <!-- Modal Header -->
+              <div class="modal-header">
+                <h4 class="modal-title">User Details:</h4>
+                <button type="button" class="close" data-dismiss="modal" (click) = "hide()">&times;</button>
+              </div>
+              
+              <!-- Modal body -->
+              <div class="modal-body">
+               <p>User Id : {{UserId}}</p>
+               <p>Firstname : {{Firstname}}</p>
+               <p>Lastname : {{Lastname}}</p>
+               <p>Email : {{Email}}</p>
+              </div>
+              
+              <!-- Modal footer -->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click) = "hide()">Close</button>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>

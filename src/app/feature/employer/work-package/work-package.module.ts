@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import{NgxUsefulSwiperModule} from 'ngx-useful-swiper';
 import { WorkPackageRoutingModule } from './work-package-routing.module';
 import { WorkPackageComponent } from './work-package.component';
 import { AddComponent } from './component/add/add.component';
@@ -17,7 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     OwlDateTimeModule, 
     OwlNativeDateTimeModule,
     FormsModule, 
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
+    NgxUsefulSwiperModule  
   ]
 })
 export class WorkPackageModule { 

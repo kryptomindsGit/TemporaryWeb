@@ -1,4 +1,4 @@
-@import "../../../../../../assets/css/theme_colors";
+@import "../../../../assets/css/theme_colors";
      
 /*-----------------------------------------------------------------------
       BASIC CSS
@@ -71,9 +71,14 @@ CARD CSS
 
 
 .text-muted {
-  font-size: 0.80rem;
   color: #6c757d!important;
-  float: left;
+  margin-right:20px;
+}
+
+.text-muted1{
+  color: #6c757d!important;
+  // margin-right:20px;
+  // margin-top:10rem;
 }
 .center {
   display: block;
@@ -97,7 +102,8 @@ form {
 
 .form-group {
   margin-bottom: 10px;
-  position: relative; }
+  position: relative;
+ }
 
 .form-input {
   padding-top: 21px; 
@@ -134,7 +140,7 @@ input ,textarea , select{
     background: transparent !important;
   }
 
-input, select , textarea {
+input[type="text"], select , textarea {
   box-sizing: border-box;
   width: 100%;
   display: block;
@@ -240,7 +246,9 @@ input[type=checkbox] {
     background-color: #ffffff;
 }
 
-
+span{
+  margin-left : 1rem;
+}
 
 #option{
   display: flex; 
@@ -256,18 +264,21 @@ input[type=checkbox] {
   .viewprofile{
     font-size: 0.6rem;
     color: #ffffff;
-    border-radius:1rem;
+    border-radius:0.5rem;
     margin-left:1rem;
+    margin-top:1rem;
+    margin-bottom:1rem;
     background: rgba(2, 41, 148, 0.966);
+    width:10%;
+    float: right;
   }
   
   .viewprofile1{
     font-size: 0.6rem;
     color: #ffffff;
     border-radius:1rem;
-    margin-left:1rem;
-    margin-top: 1rem;
     background: rgba(2, 41, 148, 0.966);
+    padding: none !important;
   }
 
 
@@ -297,7 +308,7 @@ input[type=checkbox] {
     } 
 
     .setwidth{
-      width: 7rem;
+      width: 1rem;
     }
     .increment{
       border-radius: 50%;

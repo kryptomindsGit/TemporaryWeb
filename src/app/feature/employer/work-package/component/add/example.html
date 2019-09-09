@@ -1,0 +1,258 @@
+<div class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+           <div class="card">
+                <div class="card-header">
+                  <!-- <h6>Basic Project Information <i class="fa fa-arrows-alt" id="fullscreen" aria-hidden="true"> </i></h6> -->
+                  <h6>Basic Project Information </h6>
+                </div>
+                <div class="card-body">
+                  <form class="workpackage" [formGroup]="basicForm">
+                     <small class="text-muted">Posted by ( Employer ID ):</small><br>
+                      <p>Emp_123456789
+                        <button class="btn viewprofile">View Profile</button>
+                      </p>
+                      <hr>
+
+                      <small class="text-muted">Posted Date :</small><br>
+                      <p>06-09-2019 04:09:11 PM</p>
+                      <hr>  
+
+                  </form>
+                </div>
+              </div>
+        </div>
+         <div class="col-md-8">
+            <div class="card">
+               <div class="card-header">
+                  <h6>Project Details </h6>
+               </div>
+                <div class="card-body">
+                  <form class="workpackage" [formGroup]="projectForm" >    
+                      <div class="row">                        
+                          <div class="col-md-6">
+                              <div class="form-group form-input">
+                                  <input type="text"formControlName="proj_name" id="proj_name" value="" required/>
+                              </div>
+                           </div>   
+                           
+                           <div class="col-md-6">
+                              <!-- <label for="complexity" class="form-label"> Select Complexity  </label>
+                              <select formControlName="complexity" class="complexity" id="complexity">
+                               <option value="complexity" >Select Complexity</option>
+                               <option id="option_txt" *ngFor="let complexity of complexityArr" [value]="complexity">{{complexity}}</option>
+                              </select> -->
+                             
+                              <div class="dropdown">
+                                  <div class="form-group form-input">
+                                  <input type="text" class="dropdown-toggle" data-toggle="dropdown" formControlName="complexity" id="complexity" value="" required/>
+                                  <label for="complexity" class="form-label">Select Complexity  </label>
+                                  <ul class="dropdown-menu">
+                                    <li class="dropdown-item"  [value]="1" selected>One</li>
+                                    <li class="dropdown-item"   [value]="2">two</li>
+                                    <li class="dropdown-item"   [value]="3">One</li>
+                                    <li id="option_complex" *ngFor="let complexity of complexityArr" [value]="complexity">{{complexity}}</li> 
+                                  </ul>
+                                </div>
+                              </div>
+
+
+                              <div *ngIf="projectForm.controls['complexity'].invalid && (projectForm.controls['complexity'].dirty || projectForm.controls['complexity'].touched)" class="alert">
+                                  <div *ngIf="projectForm.controls['complexity'].errors.required">
+                                    Please Select Complexity Level , It's required.
+                                  </div>
+                              </div>
+                            </div>                        
+                      </div>                 
+                     
+                      <div class="form-group form-input">
+                        <textarea type="text"formControlName="proj_desc" id="proj_desc" value="" required></textarea>
+                        <label for="proj_desc" class="form-label">Project Description</label>
+                        <div *ngIf="projectForm.controls['proj_desc'].invalid && (projectForm.controls['proj_desc'].dirty || projectForm.controls['proj_desc'].touched)" class="alert">
+                            <div *ngIf="projectForm.controls['proj_desc'].errors.required">
+                              Project Description is required.
+                            </div>
+                          </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group form-input">
+                                <input type="text" [owlDateTimeTrigger]="dt" id="datePicker" [owlDateTime]="dt"  id="proj_durationFrom" value="" required/>
+                                <label for="proj_durationFrom" class="form-label">Project Duration : From  
+                                  <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+                                </label>
+                                <div *ngIf="projectForm.controls['proj_durationFrom'].invalid && (projectForm.controls['proj_durationFrom'].dirty || projectForm.controls['proj_durationFrom'].Fromuched)" class="alert">
+                                    <div *ngIf="projectForm.controls['proj_durationFrom'].errors.required">
+                                      Please select From-date, it's required.
+                                    </div>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group form-input">
+                                <input type="text" [owlDateTimeTrigger]="dt" id="datePicker" [owlDateTime]="dt"  id="proj_durationTo" value="" required/>
+                                <label for="proj_durationTo" class="form-label">Project Duration : To  
+                                  <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+                                </label>
+                                <div *ngIf="projectForm.controls['proj_durationTo'].invalid && (projectForm.controls['proj_durationTo'].dirty || projectForm.controls['proj_durationTo'].Fromuched)" class="alert">
+                                    <div *ngIf="projectForm.controls['proj_durationTo'].errors.required">
+                                      Please select To-date, it's required.
+                                    </div>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group form-input">
+                                <input type="text" [owlDateTimeTrigger]="dt" id="datePicker" [owlDateTime]="dt"  id="proj_start_date" value="" required/>
+                                <label for="proj_start_date" class="form-label">Start Date 
+                                  <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+                                </label>
+                                <div *ngIf="projectForm.controls['proj_start_date'].invalid && (projectForm.controls['proj_start_date'].dirty || projectForm.controls['proj_start_date'].Fromuched)" class="alert">
+                                    <div *ngIf="projectForm.controls['proj_start_date'].errors.required">
+                                      Please select Starting date, it's required.
+                                    </div>
+                                  </div>
+                            </div>`
+                        </div>
+                      </div>
+                  </form>
+                </div>
+              </div>
+         </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                  <!-- <h6>Basic Project Information <i class="fa fa-arrows-alt" id="fullscreen" aria-hidden="true"> </i></h6> -->
+                  <h6>Project Budget Details </h6>
+                </div>
+                <div class="card-body">
+                  <form class="workpackage" [formGroup]="basicForm">
+                     <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group form-input">
+                                <input type="text" name="proj_duration" id="proj_duration" value="" required/>
+                                <label for="proj_budget" class="form-label">Amount</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-input">
+                                <select name="skill" id="skill">
+                                    <option>Select Skills</option>
+                                    <option>Select Skills</option>
+                                  </select>
+                            </div>
+                         </div>
+                        
+                      </div>
+                  </form>
+                </div>
+              </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                  <!-- <h6>Basic Project Information <i class="fa fa-arrows-alt" id="fullscreen" aria-hidden="true"> </i></h6> -->
+                  <h6>Estimated Cost Details</h6>
+                </div>
+                <div class="card-body">
+                  <form class="workpackage" [formGroup]="basicForm">
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="form-group form-input">
+                                <input type="text" name="proj_duration" id="proj_duration" value="" required/>
+                                <label for="proj_budget" class="form-label">Cost</label>
+                            </div>   
+                        </div>
+                        <div class="col-md-6">
+                            <button class="btn viewprofile">Calculate</button>
+                         </div>
+                      </div>
+                  </form>
+                </div>
+              </div>
+          </div>
+      </div>
+      
+
+       <div class="card">
+                <div class="card-header" >
+                  <!-- <h6>Basic Project Information <i class="fa fa-arrows-alt" id="fullscreen" aria-hidden="true"> </i></h6> -->
+                  <h6>Required-Skill Details</h6>
+                </div>
+                <div class="card-body ">
+                  <form class="workpackage table-responsive" [formGroup]="projectForm">
+                      <table class="table table-dark  table-bordered worktable">
+                          <thead>
+                            <tr>
+                              <th>Skill</th>
+                              <th>Expertise</th>  
+                              <th>Project Type</th>
+                              <th>No. of team members</th>
+                              <th>Regional Preference</th>
+                              <th>Rate/hour</th>
+                              <th>Avg. Rate/hour</th>
+                              <th>Currency</th>
+                              <th>Start Date </th>
+                              <th>End Date</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <select name="skill" id="skill">
+                                  <option>Select Skills</option>
+                                </select>
+                              </td>
+                              <td>
+                                  <select name=" skillLevel" id=" skillLevel" >
+                                      <option>Select Level</option>
+                                      <option id="option_level" *ngFor="let skillLevel of skillLevelArr" [value]="skillLevel">{{skillLevel}}</option>
+                                    </select>
+                              </td>
+                              <td>
+                                  <select name="type" id="type">
+                                      <option>Select Project Type</option>
+                                      <option id="option_type" *ngFor="let skillLevel of skillLevelArr" [value]="skillLevel">{{skillLevel}}</option>
+                                    </select>
+                              </td>
+                              <td>
+                                  <input type="text">
+                                </td>
+                                <td>
+                                    <select name="type" id="type">
+                                        <option>Select City</option>
+                                      </select>
+                                </td>
+                                <td>
+                                    <input type="text">
+                                </td>
+                                <td>
+                                    <input type="text">
+                                  </td>
+                                  <td>
+                                      <select name="type" id="type">
+                                          <option>Select country</option>
+                                        </select>
+                                  </td>
+                                  <td>
+                                      <label>
+                                          <input placeholder="Start Date" formControlName="start_date" id="datePicker" >
+                                        </label> 
+                                      </td>
+                                  <td>
+                                      <input type="text">
+                                  </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                  </form>
+                </div>
+              </div>       
+    </div>
+</div>
+    
