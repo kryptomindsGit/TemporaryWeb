@@ -208,6 +208,7 @@ export class AddComponent implements OnInit {
 
     const partnerProfileVal = {
       cognito_id: this.congnitoId,
+      email: this.email,
       uid: 35,
       company_name: this.partnerProfileForm.controls.comapany_name.value,
       website_addr: this.partnerProfileForm.controls.website_addr.value,

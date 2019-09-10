@@ -3,11 +3,15 @@ import { AuthService } from '../../shared/service/auth.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
-//URL's
-import { AWS_URL } from '../../../constant/constant-url'
+//Import service's
 import { EmpProfileService } from 'src/app/feature/employer/profile/shared/service/profile.service';
 import { PartProfileService } from 'src/app/feature/partner/profile/shared/service/profile.service';
 import { IndeptProfileService } from 'src/app/feature/independent-prof/profile/shared/service/profile.service';
+
+//Constant URL's
+import { AWS_URL } from '../../../constant/constant-url';
+import { UPORT_URL } from '../../../constant/constant-url';
+
 
 @Component({
   selector: 'app-uport-login',
@@ -54,7 +58,7 @@ export class UportLoginComponent implements OnInit {
       this.qrData = data.image;
       this.tagId = data.tagID;
       // this.URL = 'http://uport-ebs-webapp-dev.ap-south-1.elasticbeanstalk.com/events/' + this.tagId;
-      this.URL = `http://192.168.0.18:3000/events/` + this.tagId;
+      this.URL = `${UPORT_URL}/events/` + this.tagId;
       this.watch().subscribe(data => {
         let a = JSON.parse(JSON.stringify(data));
         console.log("watch response", a.email);
@@ -119,41 +123,44 @@ export class UportLoginComponent implements OnInit {
         localStorage.setItem("phone_no", phone);
 
         if (this.uPortDetailsArr.role == "Freelancer") {
+          console.log("Freelancer In");
+
           this.__indeptProfileService.getFreelancerByEmail(this.email).then((freelancerdata: any) => {
             this.profileDetailsArr = freelancerdata[0];
             console.log("Freelancer Data From Database : ", this.profileDetailsArr);
 
             if (this.profileDetailsArr == null || this.profileDetailsArr.length == 0) {
-              this.__router.navigate(['/feature/feature/full-layout'])
-              // this.__router.navigate(['/feature/independent/profile/indp-profile/add']);
+              this.__router.navigate(['/feature/feature/full-layout/independent/profile/indp-profile/add']);
             } else {
-              this.__router.navigate(['/feature/feature/full-layout'])
-              // this.__router.navigate(['/feature/independent/profile/indp-profile/view', this.email]);
+              this.__router.navigate(['/feature/feature/full-layout/independent/profile/indp-profile/view', this.email]);
             }
           });
         }
 
         else if (this.uPortDetailsArr.role == "Employer") {
+          console.log("Employer In");
           this.__empProfileService.getEmployerByEmailId(this.email).then((employerdata: any) => {
             this.profileDetailsArr = employerdata[0];
             if (this.profileDetailsArr == null || this.profileDetailsArr.length == 0) {
-              this.__router.navigate(['/feature/employer/profile/emp-profile/add']);
+              this.__router.navigate(['/feature/feature/full-layout/employer/profile/emp-profile/add']);
             } else {
-              this.__router.navigate(['/feature/employer/profile/emp-profile/view', this.email]);
+              this.__router.navigate(['/feature/feature/full-layout/employer/profile/emp-profile/view', this.email]);
             }
           });
         }
 
         else if (this.uPortDetailsArr.role == "Partner") {
+          console.log("Partner In");
+
           this.__partProfileService.getPartnerByEmailId(this.email).then((partnerdata: any) => {
             this.profileDetailsArr = partnerdata[0];
             if (this.profileDetailsArr == null || this.profileDetailsArr.length == 0) {
-              this.__router.navigate(['/feature/partner/profile/part-profile/add']);
+              this.__router.navigate(['/feature/feature/full-layout/partner/profile/part-profile/add']);
             } else {
-              this.__router.navigate(['/feature/partner/profile/part-profile/view', this.email]);
+              this.__router.navigate(['/feature/feature/full-layout/partner/profile/part-profile/view', this.email]);
             }
           });
-          this.__router.navigate(['/feature/partner/profile/part-profile/add']);
+          // this.__router.navigate(['/feature/feature/full-layout/partner/profile/part-profile/add']);
         } else {
           console.log("error in routing based User Role");
         }
