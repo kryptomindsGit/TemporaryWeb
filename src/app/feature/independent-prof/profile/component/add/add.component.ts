@@ -39,8 +39,6 @@ export class AddComponent implements OnInit {
   public fileObj: any;
   public FileArrData: any;
 
-
-
   // Array's
   public congnitoID: any = [];
   public eduCatArr: any = [];
@@ -55,8 +53,6 @@ export class AddComponent implements OnInit {
   public documentQualArray: any = [];
   public documentWorkArray: any = [];
   public documentFileArr: any = [];
-
-
 
   constructor(
     private __fb: FormBuilder,
@@ -530,7 +526,7 @@ export class AddComponent implements OnInit {
   }
 
 
-  uploadFile() {
+  uploadPersonalFile() {
 
     // this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((event) => {
     //   this.FileArrData = event;
@@ -538,12 +534,44 @@ export class AddComponent implements OnInit {
     // });
     this.FileArrData = "jkdhfjkhkdjshfkjhdskjfh"
 
-    this.documentFileArr.push(
+    this.documentPersonalArray.push(
       {
         'file_name': this.FileArrData,
-        'file_type': this.fileType
+        'file_type': this.doc_cat_id
       });
-    console.log(this.documentFileArr);
+    console.log(this.documentPersonalArray);
+  }
+
+  uploadEducationFile() {
+
+    // this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((event) => {
+    //   this.FileArrData = event;
+    //   console.log("File Resp:", this.FileArrData);
+    // });
+    this.FileArrData = "jkdhfjkhkdjshfkjhdskjfh"
+
+    this.documentQualArray.push(
+      {
+        'file_name': this.FileArrData,
+        'file_type': 4
+      });
+    console.log(this.documentQualArray);
+  }
+
+  uploadWorkExpFile() {
+
+    // this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((event) => {
+    //   this.FileArrData = event;
+    //   console.log("File Resp:", this.FileArrData);
+    // });
+    this.FileArrData = "jkdhfjkhkdjshfkjhdskjfh"
+
+    this.documentWorkArray.push(
+      {
+        'file_name': this.FileArrData,
+        'file_type': this.doc_cat_id
+      });
+    console.log(this.documentWorkArray);
   }
 
 
@@ -640,10 +668,10 @@ export class AddComponent implements OnInit {
         uid: 0
       }
       console.log('Freelancer Payload Value : ', freelancerProfilePayload);
-      this.__profileService.createFreelancer(freelancerProfilePayload).then((resData: any) => {
-        console.log(resData);
-        // this.__router.navigate(['/feature/independent/indp-profile/profile/view/', this.email]);
-      });
+      // this.__profileService.createFreelancer(freelancerProfilePayload).then((resData: any) => {
+      //   console.log(resData);
+      // this.__router.navigate(['/feature/independent/indp-profile/profile/view/', this.email]);
+      // });
     }
   }
 
