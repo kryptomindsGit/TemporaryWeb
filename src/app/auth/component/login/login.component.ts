@@ -100,7 +100,11 @@ export class LoginComponent implements OnInit {
 
       if (resData) {
         this.__authService.getUportInfo(loginPayload.email).then((data: any) => {
-          console.log("Res:", data);
+          console.log("Res:", data[0]);
+
+          // localStorage.setItem('cognito_id', data[0].cognito:username)
+          localStorage.setItem('uid', data[0].uid);
+          localStorage.setItem('email', data[0].email);
           this.__router.navigate(['/feature/feature/full-layout'])
         })
       }

@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { IndeptProfileService } from '../../shared/service/profile.service';
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-add',
@@ -33,6 +34,7 @@ export class AddComponent implements OnInit {
   public email: string;
   public country: string;
   public doc_cat_id: number;
+  public uid: any;
 
   public fileType: any;
   public fileName: any;
@@ -72,15 +74,18 @@ export class AddComponent implements OnInit {
       const user = this.__authService.decode();
       this.congnitoID = user["cognito:username"];
       this.email = user["email"];
+      this.uid = user["uid"];
       this.country = user["custom:country"];
 
     } else {
-
+      this.congnitoID = localStorage.getItem("cognito_id");
+      this.uid = localStorage.getItem("uid");
       this.email = localStorage.getItem("email");
       this.country = localStorage.getItem("country");
-      console.log("Email Id is : " + this.email);
-
     }
+
+    console.log("Email Id is : " + this.email);
+    console.log("User ID is : " + this.uid);
 
     //Call val funtion's
 
@@ -487,7 +492,7 @@ export class AddComponent implements OnInit {
 
       this.skillRateArr.push(this.__fb.group(
         {
-          skill: skill,
+          skill: skill_id,
           rate_hour: ''
         }
       ));
@@ -592,7 +597,6 @@ export class AddComponent implements OnInit {
       'weakness'
     ];
 
-    console.log(documentArr.legth);
 
 
     documentArr = [...this.documentPersonalArray, ...this.documentWorkArray, ...this.documentQualArray];
@@ -610,8 +614,9 @@ export class AddComponent implements OnInit {
     const freelancerProfilePayload = {};
     if (this.isUportUser == "false") {
       const freelancerProfilePayload = {
-        cognito_id: this.congnitoID,
+        cognito_id: '32d00d9f-1f45-4bf3-97c5-4b03ab75348b',
         email: this.email,
+        uid: this.uid,
         prefix: this.personalDetails.controls.prefix.value,
         first_name: this.personalDetails.controls.first_name.value,
         middle_name: this.personalDetails.controls.middle_name.value,
@@ -631,8 +636,7 @@ export class AddComponent implements OnInit {
         area_of_experties: this.workExpDetails.controls.area_of_expertise.value,
         psychomatric: this.workExpDetails.controls.psychomatric.value,
         is_interviewer: this.workExpDetails.controls.isFreelancer.value,
-        skills: this.skillRateArr.value,
-        uid: 0
+        skills: this.skillRateArr.value
       }
       console.log('Freelancer Payload Value : ', freelancerProfilePayload);
       this.__profileService.createFreelancer(freelancerProfilePayload).then((resData: any) => {
@@ -643,8 +647,9 @@ export class AddComponent implements OnInit {
     else {
 
       const freelancerProfilePayload = {
-        cognito_id: this.email,
+        cognito_id: '32d00d9f-1f45-4bf3-97c5-4b03ab75348b',
         email: this.email,
+        uid: this.uid,
         prefix: this.personalDetails.controls.prefix.value,
         first_name: this.personalDetails.controls.first_name.value,
         middle_name: this.personalDetails.controls.middle_name.value,
@@ -664,14 +669,18 @@ export class AddComponent implements OnInit {
         area_of_experties: this.workExpDetails.controls.area_of_expertise.value,
         psychomatric: this.workExpDetails.controls.psychomatric.value,
         is_interviewer: this.workExpDetails.controls.isFreelancer.value,
-        skills: this.skillRateArr.value,
-        uid: 0
+        skills: this.skillRateArr.value
       }
       console.log('Freelancer Payload Value : ', freelancerProfilePayload);
-      // this.__profileService.createFreelancer(freelancerProfilePayload).then((resData: any) => {
-      //   console.log(resData);
-      // this.__router.navigate(['/feature/independent/indp-profile/profile/view/', this.email]);
-      // });
+      this.__profileService.createFreelancer(freelancerProfilePayload).then((resData: any) => {
+        console.log(resData);
+        if (resData) {
+          this.__router.navigate(['/feature/independent/indp-profile/profile/view/', this.email]);
+        } else {
+          console.log("Freelancer add res Waitting...");
+
+        }
+      });
     }
   }
 

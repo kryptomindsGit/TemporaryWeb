@@ -47,7 +47,10 @@ export class HeaderComponent implements OnInit {
   }
 
   userRoleInfo() {
+    console.log("Indise userRoleInfo");
+
     if (this.userRole == "Freelancer") {
+      console.log("Inside Freelancer");
       this.__idptProfileService.getFreelancerByEmail(this.email_id).then((resData: any) => {
         this.freelancerDetailsArr = resData[0];
         console.log(this.freelancerDetailsArr);
@@ -55,10 +58,11 @@ export class HeaderComponent implements OnInit {
       // if (this.indepUserDetails == null) {
       this.__router.navigate(['/feature/feature/full-layout/independent/profile/indp-profile/add']);
       // } else {
-      //   this.__router.navigate(['/feature/feature/full-layout/independent/profile/indp-profile/view', this.email_id]);
+      this.__router.navigate(['/feature/feature/full-layout/independent/profile/indp-profile/view', this.email_id]);
       // }
     }
     else if (this.userRole == "Employer") {
+      console.log("Inside Employer");
       this.__empProfileService.getEmployerByEmailId(this.email_id).then((resData: any) => {
         this.employerDetailsArr = resData[0];
         console.log(this.employerDetailsArr);
@@ -70,6 +74,8 @@ export class HeaderComponent implements OnInit {
       }
     }
     else if (this.userRole == "Partner") {
+      console.log("Inside Partner");
+
       this.__partProfileService.getPartnerByEmailId(this.email_id).then((resData: any) => {
         this.partnerDetailsArr = resData[0];
         console.log(this.partnerDetailsArr);

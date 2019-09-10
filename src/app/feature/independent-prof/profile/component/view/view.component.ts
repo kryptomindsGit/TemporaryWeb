@@ -19,13 +19,13 @@ export class ViewComponent implements OnInit {
 
   //Array's
   public congnitoID: any = [];
-  public freelancerDetailsArr: any = [];
-  public freelancerSkillDetailsArr: any = [];
+  public freeDetailsArr: any = [];
+  public freeSkillDetailsArr: any = [];
   public qualityArray: any = [];
   public strengthArr: any = [];
   public weaknessArr: any = [];
-  public freelancerDocsArr: any = [];
-  public freelancerEduArr: any = [];
+  public freeDocsArr: any = [];
+  public freeEduArr: any = [];
 
   constructor(
     private __fb: FormBuilder,
@@ -34,7 +34,7 @@ export class ViewComponent implements OnInit {
     private __router: Router,
     private __activatedRoute: ActivatedRoute,
   ) {
-    this.__id = this.__activatedRoute.snapshot.params.id;
+    this.email_addr = this.__activatedRoute.snapshot.params.id;
   }
 
   ngOnInit() {
@@ -53,6 +53,9 @@ export class ViewComponent implements OnInit {
       this.phone_number = localStorage.getItem("phone_no");
     }
 
+    console.log("Email:", this.email_addr);
+
+
     // get API call function's
     this.getFreelancerDetails();
     this.getFreelancerDocuments();
@@ -64,15 +67,15 @@ export class ViewComponent implements OnInit {
 
   getFreelancerDetails() {
     this.__profileService.getFreelancerByEmail(this.email_addr).then((resData: any) => {
-      this.freelancerDetailsArr = resData[0];
-      console.log(this.freelancerDetailsArr);
+      this.freeDetailsArr = resData[0];
+      console.log("Basic Details", this.freeDetailsArr);
     });
   }
 
   getFreelancerSkillDetails() {
     this.__profileService.getFreelancerSkillById(this.email_addr).then((resData: any) => {
-      this.freelancerSkillDetailsArr = resData;
-      console.log(this.freelancerSkillDetailsArr);
+      this.freeSkillDetailsArr = resData;
+      console.log("Skills", this.freeSkillDetailsArr);
     });
   }
 
@@ -81,22 +84,34 @@ export class ViewComponent implements OnInit {
       this.qualityArray = resData;
 
       this.strengthArr = this.qualityArray.map(function (a) { return a["strengths"]; });
+      console.log("Strength:", this.strengthArr);
+
 
       this.weaknessArr = this.qualityArray.map(function (a) { return a["weaknesses"]; });
+      console.log("Strength:", this.weaknessArr);
     });
   }
 
   getFreelancerDocuments() {
-    this.__profileService.getFreelancerDocumentById(this.__id).then((resData: any) => {
-      this.freelancerDocsArr = resData;
+    this.__profileService.getFreelancerDocumentById(this.email_addr).then((resData: any) => {
+      this.freeDocsArr = resData;
+      console.log("Documents:", this.freeDocsArr);
+
     });
   }
 
   getFreelancerEducation() {
     this.__profileService.getFreelancerEduById(this.email_addr).then((resData: any) => {
-      this.freelancerEduArr = resData;
-      console.log(this.freelancerEduArr);
+      this.freeEduArr = resData;
+      console.log("Education:", this.freeEduArr);
     });
+  }
+
+
+  editProfile() {
+    console.log("indise edit btn");
+    this.__router.navigate(['/feature/feature/full-layout/independent/profile/indp-profile/edit', this.email_addr]);
+
   }
 
 

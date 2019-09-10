@@ -201,3 +201,32 @@ a:not([href]):not([tabindex]):hover {
     background: $bg-front-color;
     text-decoration: none;
 }
+
+table tbody {
+    width: 100%;
+    padding: 0%;
+}
+
+table tbody tr {
+    color: $text-color;
+    background: transparent !important;
+}
+
+li {
+    list-style-type: none;
+
+}
+
+.btnBlue {
+    border: none;
+    border-radius: 2rem;
+    padding: 0.2rem;
+    width: 8rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: #064d86;
+    color: #9e9d9d;
+    float: center;
+    font-size: 15px;
+    margin-right: 1rem;
+}

@@ -55,7 +55,7 @@ export class PartProfileService {
     }
   }
 
-  async getPartnerFileById(id: number) {
+  async getPartnerFileById(id: any) {
     try {
       let result = this.__http.get(`${BASE_URL}/partnerfiles/` + id).toPromise();
       return result;
@@ -84,7 +84,7 @@ export class PartProfileService {
     }
   }
 
-  async updatePartner(id: number, partner: any) {
+  async updatePartner(id: any, partner: any) {
     try {
       let result = this.__http.put(`${BASE_URL}/partner/` + id, partner).toPromise();
       return result;

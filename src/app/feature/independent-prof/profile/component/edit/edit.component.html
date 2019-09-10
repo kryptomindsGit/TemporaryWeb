@@ -1,4 +1,4 @@
-<!-- <div class="container-fluid">
+<div class="container-fluid">
     <div class="personal-details-form" *ngIf="showMainContent == 1">
         <div class="card">
             <div class="card-header">
@@ -8,39 +8,34 @@
                 <form [formGroup]="personalDetails" novalidate>
                     <div class="row">
                         <div class="form-group form-input col">
-                            <select class="formStyle" formControlName="prefix" [(ngModel)]="freelancerArr.prefix">
+                            <select class="formStyle" formControlName="prefix">
                                 <option disabled value="" selected>Prefix</option>
                                 <option id="option_txt" *ngFor="let prefix of prefixArr" [value]="prefix">{{prefix}}
                                 </option>
                             </select>
                         </div>
                         <div class="form-group form-input col">
-                            <input type="text" [(ngModel)]="freelancerArr.first_name" formcontrolName="first_name"
-                                id="first_name" required />
+                            <input type="text" formControlName="first_name" id="first_name" required />
                             <label for="first_name" class="form-label">First Name</label>
                         </div>
 
                         <div class="form-group form-input col">
-                            <input type="text" [(ngModel)]="freelancerArr.middle_name" formcontrolName="middle_name"
-                                id="middle_name" required />
+                            <input type="text" formControlName="middle_name" id="middle_name" required />
                             <label for="middle_name" class="form-label">Middle Name</label>
                         </div>
                         <div class="form-group form-input col">
-                            <input type="text" [(ngModel)]="freelancerArr.last_name" formcontrolName="last_name"
-                                id="last_name" required />
+                            <input type="text" formControlName="last_name" id="last_name" required />
                             <label for="last_name" class="form-label">Last Name</label>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="form-group form-input col">
-                            <input type="text" [(ngModel)]="freelancerArr.line_1" formcontrolName="address_one"
-                                id="address_one" required />
+                            <input type="text" formControlName="address_one" id="address_one" required />
                             <label for="address_one" class="form-label">Address Line 1</label>
                         </div>
                         <div class="form-group form-input col">
-                            <input type="text" [(ngModel)]="freelancerArr.line_2" formcontrolName="address_two"
-                                id="address_two" required />
+                            <input type="text" formControlName="address_two" id="address_two" required />
                             <label for="address_two" class="form-label">Address Line 2</label>
                         </div>
                     </div>
@@ -48,7 +43,7 @@
                     <div class="row">
                         <div class="form-group form-input col">
                             <select class="formStyle" (change)="setCountryID($event.target.value)"
-                                [(ngModel)]="freelancerArr.country" formControlName="country">
+                                formControlName="country">
                                 <option disabled value="">Country</option>
                                 <option *ngFor="let country of countryArr" [ngValue]="country.name">{{country.name}}
                                 </option>
@@ -56,21 +51,20 @@
                         </div>
                         <div class="form-group form-input col">
                             <select class="formStyle" (change)="setStateID($event.target.value)"
-                                [(ngModel)]="freelancerArr.state" formControlName="province">
+                                formControlName="province">
                                 <option disabled value="">State</option>
                                 <option *ngFor="let state of stateArr" [ngValue]="state.name">{{state.name}}</option>
                             </select>
                         </div>
 
                         <div class="form-group form-input col">
-                            <select class="formStyle" [(ngModel)]="freelancerArr.city" formControlName="city">
+                            <select class="formStyle" formControlName="city">
                                 <option disabled value="">City</option>
                                 <option *ngFor="let city of cityArr" [ngValue]="city.name">{{city.name}}</option>
                             </select>
                         </div>
                         <div class="form-group form-input col">
-                            <input type="text" [(ngModel)]="freelancerArr.code" formcontrolName="postal_code"
-                                id="postal_code" required />
+                            <input type="text" formControlName="postal_code" id="postal_code" required />
                             <label for="postal_code" class="form-label">Postal code</label>
                         </div>
                     </div>
@@ -82,9 +76,9 @@
 
                             <div class="row">
                                 <div class="form-group form-input col-5">
-                                    <input type="text" [(ngModel)]="item.value.file_type" formControlName="docType"
-                                        #textInput (input)="setDocTypeCatType(textInput.value)" class="formStyle"
-                                        id="docType" required />
+                                    <input type="text" formControlName="docType" #textInput
+                                        (input)="setDocTypeCatType(textInput.value)" class="formStyle" id="docType"
+                                        required />
                                     <label for="docType" class="form-label">Document Type</label>
                                 </div>
                                 <div class="form-group form-input col-5">
@@ -124,9 +118,7 @@
 
                             <div class="row">
                                 <div class="form-group form-input col-3">
-                                    <select (change)="setEduCatByID($event.target.value)"
-                                        [(ngModel)]="getCategoryValue(item.value.edu_cat_name)"
-                                        formControlName="edu_cat_id">
+                                    <select (change)="setEduCatByID($event.target.value)" formControlName="edu_cat_id">
                                         <option disabled value="">Category</option>
                                         <option *ngFor="let eduCat of eduCatArr" [ngValue]="eduCat.edu_cat_name"
                                             [selected]="eduCat.edu_cat_id == item.value.edu_cat_id">
@@ -135,7 +127,7 @@
                                 </div>
 
                                 <div class="form-group form-input col-3">
-                                    <select [(ngModel)]="item.value.edu_type_name" formControlName="edu_type_id">
+                                    <select formControlName="edu_type_id">
                                         <option disabled value="">Qualification</option>
                                         <option *ngFor="let edu of eduArr" [ngValue]="edu.edu_name"
                                             [selected]="edu.edu_type_id == item.value.edu_type_id">{{edu.edu_name}}
@@ -144,8 +136,7 @@
                                 </div>
 
                                 <div class="form-group form-input col-4">
-                                    <input type="text" [(ngModel)]="item.value.edu_type_name"
-                                        formcontrolName="university" id="university" required />
+                                    <input type="text" formControlName="university" id="university" required />
                                     <label for="university" class="form-label">University</label>
                                 </div>
 
@@ -158,7 +149,7 @@
                                 </div>
 
                                 <div class="form-group form-input col-2">
-                                    <input type="text" formcontrolName="percentage" id="percentage" required />
+                                    <input type="text" formControlName="percentage" id="percentage" required />
                                     <label for="percentage" class="form-label">Percentage</label>
                                 </div>
 
@@ -209,12 +200,12 @@
                         <div *ngFor="let item of orgArr.controls; let i=index" [formGroupName]="i">
                             <div class="row">
                                 <div class="form-group form-input col-6">
-                                    <input type="text" formcontrolName="org_name" id="org_name" required />
+                                    <input type="text" formControlName="org_name" id="org_name" required />
                                     <label for="org_name" class="form-label">Oragnization Name</label>
                                 </div>
 
                                 <div class="form-group form-input col-6">
-                                    <input type="text" formcontrolName="org_designation" id="org_designation"
+                                    <input type="text" formControlName="org_designation" id="org_designation"
                                         required />
                                     <label for="org_designation" class="form-label">Oragnization Designation</label>
                                 </div>
@@ -235,7 +226,7 @@
                                 </div>
 
                                 <div class="form-group form-input col-3">
-                                    <input type="text" formcontrolName="responsibilities" id="responsibilities"
+                                    <input type="text" formControlName="responsibilities" id="responsibilities"
                                         required />
                                     <label for="responsibilities" class="form-label">Oragnization Name</label>
                                 </div>
@@ -257,7 +248,7 @@
                                 <div *ngFor="let item of strengthArr.controls; let i=index" [formGroupName]="i">
                                     <div class="row">
                                         <div class="form-group form-input col-7">
-                                            <input type="text" formcontrolName="strength" id="strength" required />
+                                            <input type="text" formControlName="strength" id="strength" required />
                                             <label for="strength" class="form-label">Strength</label>
                                         </div>
 
@@ -276,7 +267,7 @@
                                 <div *ngFor="let item of weaknessArr.controls; let i=index" [formGroupName]="i">
                                     <div class="row">
                                         <div class="form-group form-input col-7">
-                                            <input type="text" formcontrolName="weakness" id="weakness" required />
+                                            <input type="text" formControlName="weakness" id="weakness" required />
                                             <label for="weakness" class="form-label">Weakness</label>
                                         </div>
 
@@ -295,7 +286,7 @@
                                 <div *ngFor="let item of portfolioArr.controls; let i=index" [formGroupName]="i">
                                     <div class="row">
                                         <div class="form-group form-input col-7">
-                                            <input type="text" formcontrolName="portfolio" id="portfolio" required />
+                                            <input type="text" formControlName="portfolio" id="portfolio" required />
                                             <label for="portfolio" class="form-label">Portfolio</label>
                                         </div>
 
@@ -314,19 +305,16 @@
                     <br>
                     <div class="row">
                         <div class="form-group form-input col">
-                            <input type="text" [(ngModel)]="freelancerArr.area_of_experties"
-                                formcontrolName="area_of_expertise" id="area_of_expertise" required />
+                            <input type="text" formControlName="area_of_expertise" id="area_of_expertise" required />
                             <label for="area_of_expertise" class="form-label">Area of expertise</label>
                         </div>
 
                         <div class="form-group form-input col">
-                            <input type="text" [(ngModel)]="freelancerArr.psyco_result" formcontrolName="psychomatric"
-                                id="psychomatric" required />
+                            <input type="text" formControlName="psychomatric" id="psychomatric" required />
                             <label for="psychomatric" class="form-label">Psychomatric</label>
                         </div>
                         <div class="form-group form-input col">
-                            <input type="text" [(ngModel)]="freelancerArr.reference" formcontrolName="references"
-                                id="references" required />
+                            <input type="text" formControlName="references" id="references" required />
                             <label for="references" class="form-label">References</label>
                         </div>
                     </div>
@@ -499,8 +487,5 @@
                 </form>
             </div>
         </div>
-
-
     </div>
-
-</div> -->
+</div>

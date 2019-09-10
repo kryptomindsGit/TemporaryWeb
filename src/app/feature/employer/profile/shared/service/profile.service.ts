@@ -93,7 +93,7 @@ export class EmpProfileService {
     }
   }
 
-  async updateEmployer(id: number, employerData: any) {
+  async updateEmployer(id: any, employerData: any) {
     try {
       let result = await this.__http.put(`${BASE_URL}/employer/` + id, employerData, httpOptions).toPromise();
       return result;

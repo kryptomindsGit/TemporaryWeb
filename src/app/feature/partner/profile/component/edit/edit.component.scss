@@ -232,3 +232,55 @@ input[type=radio] {
     color: #000;
     background: $blue-color;
 }
+
+.btnBlue {
+    border: none;
+    border-radius: 2rem;
+    padding: 0.5rem 1rem;
+    width: 6rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: #064d86;
+    color: #9e9d9d;
+    float: center;
+    margin: 20px auto;
+}
+
+.btnadd {
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.3rem;
+    width: 2.5rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: #064d86;
+    color: #9e9d9d;
+    float: right;
+    margin-left: 0.2rem;
+}
+
+.btnCancel {
+    border: none;
+    border-radius: 2rem;
+    padding: 1%;
+    width: 8rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: #064d86;
+    color: #9e9d9d;
+    float: center;
+    margin: 20px auto;
+}
+
+.btnSave {
+    border: none;
+    border-radius: 2rem;
+    padding: 1%;
+    width: 8rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: #064d86;
+    color: #9e9d9d;
+    float: center;
+    margin: 20px auto;
+}

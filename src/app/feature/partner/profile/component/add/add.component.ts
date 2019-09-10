@@ -15,12 +15,13 @@ export class AddComponent implements OnInit {
   public partnerProfileForm: FormGroup;
 
   //Variable's
-  public email: string;
+  public email_id: any;
   public country: string;
   public fileType: any;
   public fileName: any;
   public FileArrData: any;
   public fileObj: any;
+  public uid: any;
 
 
   //Array's
@@ -38,15 +39,22 @@ export class AddComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    const user = this.__authService.decode();
+    this.uid = localStorage.getItem("uid");
+    console.log("uid :", this.uid);
+    this.congnitoId = user["cognito:username"];
+
     let isUportUser = localStorage.getItem("uportUser");
     if (isUportUser == "false") {
-      const user = this.__authService.decode();
       this.congnitoId = user["cognito:username"];
-      this.email = user["email"];
+      this.email_id = user["email"];
     } else {
-      this.email = localStorage.getItem("email");
+
+      this.email_id = localStorage.getItem("email");
       this.country = localStorage.getItem("country");
     }
+    console.log("Email id:", this.email_id);
+
 
     //Call function
     this.valPartProfile();
@@ -208,8 +216,8 @@ export class AddComponent implements OnInit {
 
     const partnerProfileVal = {
       cognito_id: this.congnitoId,
-      email: this.email,
-      uid: 35,
+      email: this.email_id,
+      uid: this.uid,
       company_name: this.partnerProfileForm.controls.comapany_name.value,
       website_addr: this.partnerProfileForm.controls.website_addr.value,
       address_line_one: this.partnerProfileForm.controls.address_line_one.value,

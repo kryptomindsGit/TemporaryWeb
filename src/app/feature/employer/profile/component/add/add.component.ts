@@ -15,6 +15,9 @@ export class AddComponent implements OnInit {
   public employerProfileForm: FormGroup;
 
   //Variable's
+  public uid: any;
+  public email_id: any;
+  public country: any;
   public congnitoId: string;
   public fileName: string;
   public fileObj: any;
@@ -40,8 +43,19 @@ export class AddComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const userInfo = this.__authService.decode();
-    this.congnitoId = userInfo["cognito:username"];
+    const user = this.__authService.decode();
+    this.uid = localStorage.getItem("uid");
+    console.log("uid :", this.uid);
+
+    let isUportUser = localStorage.getItem("uportUser");
+    if (isUportUser == "false") {
+      this.congnitoId = user["cognito:username"];
+      this.email_id = user["email"];
+    } else {
+      this.email_id = localStorage.getItem("email");
+      this.country = localStorage.getItem("country");
+    }
+    console.log("Email id:", this.email_id);
 
 
     //Calling Function's
@@ -198,7 +212,8 @@ export class AddComponent implements OnInit {
 
     const employerProfileVal = {
       cognito_id: this.congnitoId,
-      uid: 33,
+      uid: this.uid,
+      email: this.email_id,
       company_name: this.employerProfileForm.controls.comapany_name.value,
       website_addr: this.employerProfileForm.controls.website_addr.value,
       address_line_1: this.employerProfileForm.controls.address_line_one.value,

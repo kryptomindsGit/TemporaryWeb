@@ -59,7 +59,7 @@ export class IndeptProfileService {
   }
 
   // Independent Prof files by id GET API call
-  async getFreelancerFiles(id: number): Promise<any> {
+  async getFreelancerFiles(id: any): Promise<any> {
     try {
       let res = await this.__http.get(`${BASE_URL}/freelancerfile/${id}`, { responseType: 'arraybuffer' }).toPromise();
       return res;
@@ -69,7 +69,7 @@ export class IndeptProfileService {
   }
 
   // Independent Prof quality by id GET API call
-  async getFreelancerQuality(id: number): Promise<any> {
+  async getFreelancerQuality(id: any): Promise<any> {
     try {
       let res = await this.__http.get(`${BASE_URL}/freelancer/freelancerquality/${id}`, httpOptions).toPromise();
       return res;
@@ -89,7 +89,7 @@ export class IndeptProfileService {
   }
 
   // Independent Prof education by id GET API call
-  async getFreelancerEducname(id: number): Promise<any> {
+  async getFreelancerEducname(id: any): Promise<any> {
     try {
       let res = await this.__http.get(`${BASE_URL}/freelancer/education/${id}`, httpOptions).toPromise();
       return res;
@@ -109,7 +109,7 @@ export class IndeptProfileService {
   }
 
   // Independent Prof skills by id GET API call
-  async getFreelancerSkills(id: number): Promise<any> {
+  async getFreelancerSkills(id: any): Promise<any> {
     try {
       let res = await this.__http.get(`${BASE_URL}/freelancer/skills/${id}`, httpOptions).toPromise();
       return res;
@@ -129,7 +129,7 @@ export class IndeptProfileService {
   }
 
   // Independent Prof documents by id GET API call
-  async getFreelancerDocumentByCat(id: number) {
+  async getFreelancerDocumentByCat(id: any) {
     try {
       console.log("doc cat id : " + id);
 
@@ -141,9 +141,9 @@ export class IndeptProfileService {
   }
 
   // Independent Prof documents by id GET API call
-  async getFreelancerDocumentById(id: number) {
+  async getFreelancerDocumentById(id: any) {
     try {
-      let res = await this.__http.get(`${BASE_URL}/freelancerfile/${id}`, httpOptions).toPromise();
+      let res = await this.__http.get(`${BASE_URL}/freelancer/freelancerfile/${id}`, httpOptions).toPromise();
       return res;
     } catch (error) {
       await this.handleError(error);
@@ -161,9 +161,9 @@ export class IndeptProfileService {
   }
 
   // Independent Prof portfolio by id GET API call
-  async getFreelancerPortfolioById(id: number) {
+  async getFreelancerPortfolioById(id: any) {
     try {
-      let res = await this.__http.get(`${BASE_URL}/portfolio/${id}`, httpOptions).toPromise();
+      let res = await this.__http.get(`${BASE_URL}/freelancer/portfolio/${id}`, httpOptions).toPromise();
       return res;
     } catch (error) {
       await this.handleError(error);
@@ -171,9 +171,9 @@ export class IndeptProfileService {
   }
 
   // Independent Prof organization by id GET API call
-  async getFreelancerOrgById(id: number) {
+  async getFreelancerOrgById(id: any) {
     try {
-      let res = await this.__http.get(`${BASE_URL}/org/${id}`, httpOptions).toPromise();
+      let res = await this.__http.get(`${BASE_URL}/freelancer/org/${id}`, httpOptions).toPromise();
       return res;
     } catch (error) {
       await this.handleError(error);
@@ -191,7 +191,7 @@ export class IndeptProfileService {
   }
 
   // Independent Prof state by country id GET API call
-  async getFreelancerStateByID(id: number) {
+  async getFreelancerStateByID(id: any) {
     try {
       let res = await this.__http.get(`${BASE_URL}/states/${id}`, httpOptions).toPromise();
       return res;
@@ -201,7 +201,7 @@ export class IndeptProfileService {
   }
 
   // Independent Prof city by state id GET API call
-  async getFreelancerCityByID(id: number) {
+  async getFreelancerCityByID(id: any) {
     try {
       let res = await this.__http.get(`${BASE_URL}/cities/${id}`, httpOptions).toPromise();
       return res;
@@ -220,7 +220,7 @@ export class IndeptProfileService {
     }
   }
 
-  async getFreelancerById(id: number) {
+  async getFreelancerById(id: any) {
     try {
       let res = await this.__http.get(`${BASE_URL}/freelancer/freelancers/${id}`, httpOptions).toPromise();
       return res;
@@ -260,7 +260,7 @@ export class IndeptProfileService {
     }
   }
 
-  async deleteFreelancer(id: number) {
+  async deleteFreelancer(id: any) {
     try {
       let res = await this.__http.delete(`${BASE_URL}/freelancers/${id}`, httpOptions).toPromise();
       return res;

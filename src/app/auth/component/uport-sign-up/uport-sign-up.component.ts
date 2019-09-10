@@ -78,7 +78,6 @@ export class UportSignUpComponent implements OnInit {
           console.log("uportSignup ", resData);
           this.showMsg = resData.message;
           this.__router.navigate(['/auth/auth/uport-login']);
-
         });
       } else {
         console.log("Your have signed up already with this email id please login...!!!");

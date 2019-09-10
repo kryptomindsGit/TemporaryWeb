@@ -16,12 +16,13 @@ export class EditComponent implements OnInit {
 
   //Variable's
   public congnitoId: string;
-  public emailId: string;
+  public emailId: any;
   public id: any;
   public fileName: string;
   public fileObj: any;
   public doc_cat_id: any;
   public FileArrData: any;
+  public uid: any;
 
   //Static Array's
   prefixArr = ['Mr', 'Mrs', 'Miss'];
@@ -45,8 +46,11 @@ export class EditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.id = this.__activatedRoute.snapshot.params.id;
-    console.log(this.id);
+    this.emailId = this.__activatedRoute.snapshot.params.id;
+    const user = this.__authService.decode();
+    this.uid = localStorage.getItem("uid");
+    this.congnitoId = user["cognito:username"];
+
 
     const userInfo = this.__authService.decode();
     this.congnitoId = userInfo["cognito:username"];
@@ -62,37 +66,58 @@ export class EditComponent implements OnInit {
    * @name valEmpProfile
    * @description validating the form fields
    */
-  valEmpProfile() {
-    console.log("kbhhoiuhiuhui", this.employerArr.cmp_name);
+  // valEmpProfile() {
+  //   console.log("kbhhoiuhiuhui", this.employerArr.cmp_name);
 
+  //   this.employerProfileForm = this.__fb.group({
+  //     jo: ['TEST'],
+  //     website_addr: [(this.employerArr == null || this.employerArr.cmp_website == null) ? '' :
+  //       this.employerArr.cmp_website, Validators.required],
+  //     comapany_name: [(this.employerArr == null || this.employerArr.cmp_name == null) ? 'JYOTIIII' :
+  //       this.employerArr.cmp_name, Validators.required],
+  //     address_line_one: [(this.employerArr == null || this.employerArr.cmp_addr == null) ? '' :
+  //       this.employerArr.cmp_addr, Validators.required],
+  //     address_line_two: [(this.employerArr == null || this.employerArr.cmp_addr_2 == null) ? '' :
+  //       this.employerArr.cmp_addr_2, Validators.required],
+  //     country: [(this.employerArr == null || this.employerArr.country == null) ? '' :
+  //       this.employerArr.country, Validators.required],
+  //     state: [(this.employerArr == null || this.employerArr.state == null) ? '' :
+  //       this.employerArr.state, Validators.required],
+  //     city: [(this.employerArr == null || this.employerArr.city == null) ? '' :
+  //       this.employerArr.city, Validators.required],
+  //     zipcode: [(this.employerArr == null || this.employerArr.zipcode == null) ? '' :
+  //       this.employerArr.zipcode, [Validators.required, Validators.pattern('^[0-9]*$')]],
+  //     business_cat: [(this.employerArr == null || this.employerArr.business_cat == null) ? '' :
+  //       this.employerArr.business_cat, Validators.required],
+  //     company_profile: [(this.employerArr == null || this.employerArr.cpm_profile == null) ? '' :
+  //       this.employerArr.cpm_profile, Validators.required],
+  //     company_rep_det: [(this.employerArr == null || this.employerArr.cmp_reprentative == null) ? '' :
+  //       this.employerArr.cmp_reprentative, Validators.required],
+  //     documents: this.__fb.array([this.__fb.group(
+  //       { chooseFile: '' },
+  //       { docType: '' }
+  //     )])
+  //   })
+  // }
+
+  valEmpProfile() {
     this.employerProfileForm = this.__fb.group({
-      jo: ['TEST'],
-      website_addr: [(this.employerArr == null || this.employerArr.cmp_website == null) ? '' :
-        this.employerArr.cmp_website, Validators.required],
-      comapany_name: [(this.employerArr == null || this.employerArr.cmp_name == null) ? 'JYOTIIII' :
-        this.employerArr.cmp_name, Validators.required],
-      address_line_one: [(this.employerArr == null || this.employerArr.cmp_addr == null) ? '' :
-        this.employerArr.cmp_addr, Validators.required],
-      address_line_two: [(this.employerArr == null || this.employerArr.cmp_addr_2 == null) ? '' :
-        this.employerArr.cmp_addr_2, Validators.required],
-      country: [(this.employerArr == null || this.employerArr.country == null) ? '' :
-        this.employerArr.country, Validators.required],
-      state: [(this.employerArr == null || this.employerArr.state == null) ? '' :
-        this.employerArr.state, Validators.required],
-      city: [(this.employerArr == null || this.employerArr.city == null) ? '' :
-        this.employerArr.city, Validators.required],
-      zipcode: [(this.employerArr == null || this.employerArr.zipcode == null) ? '' :
-        this.employerArr.zipcode, [Validators.required, Validators.pattern('^[0-9]*$')]],
-      business_cat: [(this.employerArr == null || this.employerArr.business_cat == null) ? '' :
-        this.employerArr.business_cat, Validators.required],
-      company_profile: [(this.employerArr == null || this.employerArr.cpm_profile == null) ? '' :
-        this.employerArr.cpm_profile, Validators.required],
-      company_rep_det: [(this.employerArr == null || this.employerArr.cmp_reprentative == null) ? '' :
-        this.employerArr.cmp_reprentative, Validators.required],
+      // jo: ['TEST'],
+      comapany_name: ['', Validators.required],
+      website_addr: ['', Validators.required],
+      address_line_one: ['', Validators.required],
+      address_line_two: ['', Validators.required],
+      country: ['', Validators.required],
+      state: ['', Validators.required],
+      city: ['', Validators.required],
+      zipcode: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      business_cat: ['', Validators.required],
+      company_profile: ['', Validators.required],
+      company_rep_det: ['', Validators.required],
       documents: this.__fb.array([this.__fb.group(
         { chooseFile: '' },
         { docType: '' }
-      )])
+      )]),
     })
   }
 
@@ -106,7 +131,20 @@ export class EditComponent implements OnInit {
       this.employerArr = data[0];
       console.log(this.employerArr);
 
-      this.valEmpProfile();
+      this.employerProfileForm.patchValue({
+        comapany_name: this.employerArr.cmp_name,
+        website_addr: this.employerArr.cmp_website,
+        address_line_one: this.employerArr.cmp_addr,
+        address_line_two: this.employerArr.cmp_addr_2,
+        country: this.employerArr.country,
+        state: this.employerArr.state,
+        city: this.employerArr.city,
+        zipcode: this.employerArr.zipcode,
+        business_cat: this.employerArr.business_cat,
+        company_profile: this.employerArr.cpm_profile,
+        company_rep_det: this.employerArr.cmp_reprentative
+      });
+
     });
 
     this.__profileService.getEmployerFileById(this.id).then((resData: any) => {
@@ -279,6 +317,8 @@ export class EditComponent implements OnInit {
 
     const employerProfileVal = {
       cognito_id: this.congnitoId,
+      email: this.emailId,
+      uid: this.uid,
       company_name: this.employerProfileForm.controls.comapany_name.value,
       website_addr: this.employerProfileForm.controls.website_addr.value,
       address_line_1: this.employerProfileForm.controls.address_line_one.value,
@@ -294,7 +334,7 @@ export class EditComponent implements OnInit {
     }
     console.log(" Submit values:", employerProfileVal);
 
-    this.__profileService.updateEmployer(this.id, employerProfileVal).then((data: any) => {
+    this.__profileService.updateEmployer(this.emailId, employerProfileVal).then((data: any) => {
       console.log(data);
     });
 
