@@ -1,12 +1,338 @@
 <div class="section">
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                
-            </div>
-            <div  class="card-body">
-
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <label for="workPackage" class="headinglable">Work Package</label>
+        </div>
+        <div class="col-4">
+            <button class="btn btnSearch">Search Freelancers</button>
         </div>
     </div>
+
+            <div class="card">
+              
+                <div class="card-body">
+                    <div class="row ">
+                        <div class="col-2">
+                            <label class="text-muted">Project Name :</label>
+                        </div>
+                        <div class="col-6">
+                            <h6> {{projectName}} </h6>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label class="text-muted"> Description :</label>
+                        </div>
+                        <div class="col-9">
+                            <h6>{{projectDesc}}</h6>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label class="text-muted">Budget :</label>
+                                </div>
+                                <div class="col-6">
+                                    <h6>{{budget}}</h6>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label class="text-muted">Estimated cost :</label>
+                                </div>
+                                <div class="col-6">
+                                    <h6>{{estimatedCost}}</h6>
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <div class="col-md-4">
+                                <div class="row">
+                                        <div class="col-6">
+                                            <label class="text-muted">Complexity Level:</label>
+                                        </div>
+                                        <div class="col-6">
+                                            <h6>{{complexity}}</h6>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                            <div class="col-6">
+                                                <label class="text-muted">start Date :</label>
+                                            </div>
+                                            <div class="col-6">
+                                                <h6>{{startDate}}</h6>
+                                            </div>
+                                        </div>
+                          
+                        </div>  
+                        <div class="col-md-4">
+                                
+                            <div class="row">
+                                <div class="col-6">
+                                    <label class="text-muted">Duration From :</label>
+                                </div>
+                                <div class="col-6">
+                                    <h6>{{fromDate}}</h6>
+                                </div>
+                            </div>
+                            <div class="row">
+                                    <div class="col-6">
+                                        <label class="text-muted">Duration To :</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <h6>{{toDate}}</h6>
+                                    </div>
+                                </div>
+                        </div>    
+                    </div>
+                </div>
+            </div>
+            
+
+       
+                   
+       
+            <label for="workPackage" class="headinglable1">Skill Details</label>
+            <div class="card">   
+                <div class="card-body">     
+                    <form class="table-responsive">
+                        <table class="table table-dark  table-bordered worktable">
+                            <thead>
+                                <tr>
+                                <th>Skill</th>
+                                <th class="setWidth">Expertise</th>  
+                                <th class="setWidth">Project Type</th>
+                                <th class="setWidth">No. of team members</th>
+                                <th class="setWidth">Regional Preference</th>
+                                <th class="setWidth">Rate/hour</th>
+                                <th class="setWidth">Avg. Rate/hour</th>
+                                <th class="setWidth">Currency</th>
+                                <th class="setWidth">Start Date </th>
+                                <th class="setWidth">End Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td> </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </form>    
+                    </div>
+            </div>
+           
+            <label class="headinglable">Recommendations</label> 
+           
+            <swiper [config]="config">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                       
+                        <div class="row">
+                            <div class="col-md-2">
+                                
+                                <div class="card zoom">
+                                    <div  class="card-body ">                    
+                                        <div class="center">
+                                            <div class="img-center">
+                                                <img class="img-circle" src="../../../../../../assets/images/irshad.jpeg">   
+                                            </div>
+                                            <h6>Irshad Hukkeri</h6>
+                                            <label>irshad@gmail.com</label> 
+                                            <label>Rate / Hour : $200</label> 
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6 leftcol">
+                                                <button class="btn viewprofile" type="button" (click)="onClick($event)">View </button>
+                                            </div>
+                                            <div class="col-6">
+                                                    <button class="btn viewprofile">Invite</button>
+                                            </div>
+                                        </div>
+                                        <hr> 
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-2">
+                                <div class="card zoom">
+                                    <div  class="card-body ">
+                                        <div class="center">
+                                            <div class="img-center">
+                                                <img class="img-circle" src="../../../../../../assets/images/12.jpg">   
+                                            </div>
+                                            <h6>Isha Johari</h6>
+                                            <label>isha@gmail.com</label> 
+                                            <label>Rate / Hour : $200</label> 
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6 leftcol">
+                                                <button class="btn viewprofile">View </button>
+                                            </div>
+                                            <div class="col-6">
+                                                <button class="btn viewprofile">Invite</button>
+                                            </div>
+                                        </div>
+                                        <hr> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="card zoom">
+                                    <div  class="card-body ">
+                                        <div class="center">
+                                            <div class="img-center">
+                                                <img class="img-circle" src="../../../../../../assets/images/45.jpg">   
+                                            </div>
+                                            <h6>Jhon Disuza</h6>
+                                            <label>jhon@gmail.com</label> 
+                                            <label>Rate / Hour : $200</label> 
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6 leftcol">
+                                                <button class="btn viewprofile">View </button>
+                                            </div>
+                                            <div class="col-6">
+                                                <button class="btn viewprofile">Invite</button>
+                                            </div>
+                                        </div>
+                                        <hr> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="card zoom">
+                                    <div  class="card-body ">
+                                        <div class="center">
+                                            <div class="img-center">
+                                                <img class="img-circle" src="../../../../../../assets/images/45.jpg">   
+                                            </div>
+                                            <h6>Jhon Disuza</h6>
+                                            <label>jhon@gmail.com</label> 
+                                            <label>Rate / Hour : $200</label> 
+                                        </div>  
+                                        <div class="row">
+                                            <div class="col-6 leftcol">
+                                                <button class="btn viewprofile"  >View </button>
+                                            </div>
+                                            <div class="col-6">
+                                                <button class="btn viewprofile">Invite</button>
+                                            </div>
+                                        </div>
+                                        <hr> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 ">
+                                <div class="card zoom">
+                                    <div  class="card-body ">                                       
+                                        <div class="center">
+                                            <div class="img-center">
+                                                <img class="img-circle" src="../../../../../../assets/images/12.jpg">   
+                                            </div>
+                                            <h6>Isha Johari</h6>
+                                            <label>isha@gmail.com</label> 
+                                            <label>Rate / Hour : $200</label> 
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6 leftcol">
+                                                    <button class="btn viewprofile">View </button>
+                                            </div>
+                                            <div class="col-6">
+                                                    <button class="btn viewprofile">Invite</button>
+                                            </div>
+                                        </div>
+                                        <hr> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 ">
+                                <div class="card zoom">
+                                    <div  class="card-body ">                                              
+                                        <div class="center">
+                                            <div class="img-center">
+                                                <img class="img-circle" src="../../../../../../assets/images/45.jpg">   
+                                            </div>
+                                            <h6>Jhon Disuza</h6>
+                                            <label>jhon@gmail.com</label> 
+                                            <label>Rate / Hour : $200</label> 
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6 leftcol">
+                                                    <button class="btn viewprofile">View </button>
+                                            </div>
+                                            <div class="col-6">
+                                                    <button class="btn viewprofile">Invite</button>
+                                            </div>
+                                        </div>
+                                        <hr> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- Add Arrows -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </swiper>
+
+            <div class="modal" id="myModal" [style.display]="showModal ? 'block' : 'none'">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="center">
+                                <div class="img-center">
+                                    <img class="img-circle" src="../../../../../../assets/images/45.jpg">   
+                                </div>
+                                <h6>Jhon Disuza</h6>
+                                <label>jhon@gmail.com</label> 
+                            </div>
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+
+                        <!-- <h4 class="modal-title">User Details:</h4> -->
+                    </div>
+                    
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <p>User Id : {{UserId}}</p>
+                        <p>Firstname : {{Firstname}}</p>
+                        <p>Lastname : {{Lastname}}</p>
+                        <p>Email : {{Email}}</p>
+                    </div>
+                    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal" (click) = "hide()">Close</button>
+                    </div>
+                    
+                    </div>
+                </div>
+            </div>
+    </div>     
 </div>

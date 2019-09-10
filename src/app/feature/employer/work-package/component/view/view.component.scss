@@ -13,7 +13,15 @@
   width:100%;
   height:100vh;
   position: fixed;
+}
 
+.scrollbody{
+  overflow-y: auto;
+  max-height: 100vh;
+}
+.container{
+max-width: 90% !important;
+position: relative;
 }
 
 p{
@@ -35,22 +43,27 @@ CARD CSS
 .card {
   widows: 70%; 
   height: auto !important;
-  // margin: 1rem auto !important;
   margin-top:0.3rem;;
   float: none; 
-  // border-radius: 10px;
-  // box-shadow: 0px 0px 32px 0px rgba(0, 0, 0, 0.22);
-  // background: $bg-front-color;
-  
   border: 0px;
-  background: transparent !important; 
+  background: #282b2f;
 }
 
 
-.card .card-header{
+.card-header{
   background: transparent !important;
-    padding: .72rem .30rem;
+  height :5rem;
+}
 
+
+.card-header1{
+  background: transparent !important;
+  height: 3rem;
+  text-align: center;
+}
+.card-header1 h6{
+  margin-top:1rem;
+  color: #04afda;
 }
 
 .worktable{
@@ -60,6 +73,7 @@ CARD CSS
 
 
 .card-body{
+  width:100%;
   border-radius: 3px;
     font-weight: 400;
     color: #a5a8ad;
@@ -69,21 +83,9 @@ CARD CSS
 
 
 .text-muted {
-  font-size: 0.80rem;
+  font-size: 0.9rem;
   color: #6c757d!important;
   float: left;
-}
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-}
-
-.card-body h4{
-  text-align: center;
-  margin: 1rem auto;
-  letter-spacing: 0.1em
 }
 
 /*-----------------------------------------------------------------------
@@ -95,234 +97,185 @@ form {
 
 .form-group {
   margin-bottom: 10px;
-  position: relative; }
-
-.form-input {
-  padding-top: 21px; 
+  position: relative; 
 }
 
-.form-label {
-  position: absolute;
-  transition: 0.25s ease;
-  -moz-transition: 0.25s ease;
-  -webkit-transition: 0.25s ease;
-  -o-transition: 0.25s ease;
-  -ms-transition: 0.25s ease;
-  color: $text-color;
-  left: 0;
-  top: 23px; 
-}
+  //View Work Package 
 
-input ,textarea , select{
-  transition: 0.3s ease;
-  -moz-transition: 0.3s ease;
-  -webkit-transition: 0.3s ease;
-  -o-transition: 0.3s ease;
-  -ms-transition: 0.3s ease;
-  padding-top: 10px;
-  -webkit-appearance: none; 
-}
-
-  input:focus + .form-label, input:valid + .form-label ,textarea:focus + .form-label,textarea:valid + .form-label ,
-  select:focus + .form-label
-  {
-    top: 1px;
-    font-size: 11px;
-    color: $blue-color;
-    background: transparent !important;
-  }
-
-input, select , textarea {
-  box-sizing: border-box;
-  width: 100%;
-  display: block;
-  border: none;
-  font-family: Montserrat;
-  color: $text-color;
-  background: transparent;
-  border-bottom: 1px solid $text-color;
-  padding: 4px 0; 
-}
-
-input:focus, select:focus ,textarea:focus {
-  border-bottom: 1px solid $blue-color; 
-}
-
-input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 30px transparent inset; 
-}
-
-input::-webkit-input-placeholder {
-  color: $text-color; 
-}
-
-input::-moz-placeholder {
-  color: $text-color; 
-}
-
-input:-ms-input-placeholder {
-  color: $text-color; 
-}
-
-input:-moz-placeholder {
-  color: $text-color; 
-}
-  
-
-input, select, textarea {
-  outline: none;
-  appearance: unset !important;
-  -moz-appearance: unset !important;
-  -webkit-appearance: unset !important;
-  -o-appearance: unset !important;
-  -ms-appearance: unset !important; 
-}
-
-input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
-  appearance: none !important;
-  -moz-appearance: none !important;
-  -webkit-appearance: none !important;
-  -o-appearance: none !important;
-  -ms-appearance: none !important;
-  margin: 0; 
-}
-
-input:focus, select:focus, textarea:focus {
-  outline: none;
-  box-shadow: none !important;
-  -moz-box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-  -o-box-shadow: none !important;
-  -ms-box-shadow: none !important; 
-}
-
-input[type=checkbox] {
-  appearance: checkbox !important;
-  -moz-appearance: checkbox !important;
-  -webkit-appearance: checkbox !important;
-  -o-appearance: checkbox !important;
-  -ms-appearance: checkbox !important; 
-}
-
-
-#btn-30{
-  display: flex; 
-  justify-content: center; 
-  margin: 1rem auto; 
-  width: 30%;
-  background: $blue-color;
-  font-size:15px;
-  color: #9e9d9d;
-  border: none
-}
-
-#btn-30:hover{
-  color: #000;
-  background: $blue-color;
-}
-
-#btn-70{
-  display: flex; 
-  justify-content: center; 
-  margin: 1rem auto; 
-  width: 70%;
-  background: #064d86;
-  font-size:15px;
-  color: #9e9d9d;
-  border: none
-}
-
-#btn-70:hover{
-  color: #000;
-  background: #064d86;
-}
-
-#btn-equal{
-  display: flex; 
-  justify-content: center; 
-  margin: 1rem auto; 
-  width: 100%;
-  background: #064d86;
-  font-size:15px;
-  color: #9e9d9d;
-  border: none
-}
-
-#btn-equal:hover{
-  color: #000;
-  background: $blue-color;
-}
-
-.hr-text {
-  line-height: 1em;
-  position: relative;
-  outline: 0;
-  border: 0;
-  color: black;
-  text-align: center;
-  height: 1.5em;
-  opacity: .5;
-}
-
-
-.hr-text:before {
-    content: '';
-    background: linear-gradient(to right, transparent, #818078, transparent);
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 100%;
-    height: 1px;
-}
-
-.hr-text:after {
-    content: attr(data-content);
-    position: relative;
-    display: inline-block;
-    color: black;
-    padding: 0 .5em;
-    line-height: 1.5em;
-    color: #818078;
-    background-color: #ffffff;
-}
-
-a {
-  display: flex; 
-  justify-content: center;
-  margin: 0.5rem auto;
-  font-size: 12px;
-  color: $blue-color;
-  text-decoration: none; 
-}
-
-#option{
-  display: flex; 
-  justify-content: center;
-  font-size: 12px;
-  font-weight: 300px;
-  color: $text-color;
-}
-    
-  // Work Pacakage
 
 
   .viewprofile{
     font-size: 0.6rem;
     color: #ffffff;
-    border-radius:1rem;
-    margin-left:1rem;
-    background: rgba(2, 41, 148, 0.966);
+    border-color:  rgba(178, 183, 196, 0.966) ;
+    background: transparent !important;
+    width: 100%;
+    margin-top:1rem;
   }
 
-  .dropdown-menu{
-    background: #3e3f41 !important;
-    color:#ffffff !important;
+  .viewprofile:hover{
+    border-color:  rgba(47, 105, 250, 0.966) ;
   }
 
-  .alert{
-    position:relative;
-    padding:.0rem !important;
-    margin-bottom:1rem;
-    border: 1px solid transparent;
-    border-radius:.25rem;
-    } 
+  .viewprofile1{
+    font-size: 0.6rem;
+    color: #ffffff;
+    border-color:  rgba(178, 183, 196, 0.966) ;
+    background: transparent !important;
+    width: 100%;
+    margin-top:1.5rem;
+  }
+
+  .viewprofile1:hover{
+    border-color:  rgba(47, 105, 250, 0.966) ;
+  }
+
+
+.center{
+ text-align: center !important;
+ font-family: "Bookman Old Style";
+}
+
+.setlabel{
+  text-align: center !important;
+}
+.rightcol{
+  float: right;
+}
+
+.leftcol{
+  float: left;
+}
+.img-center{
+  transition:all 0.3s ease-in-out;
+  margin:0 auto;
+width:5rem;
+height:5rem;
+border-radius: 50%;
+margin-bottom:0.5rem;
+}
+
+img{
+  width: 4.0rem;
+  height: 4.0rem;
+  border-radius: 50%;
+  border:2px solid;
+  padding:3px;
+  border-color: #f5aa48;
+  margin-top:0.1rem;
+}
+
+img:hover{
+  border:6px solid;
+  border-color: #cc7401;
+
+
+}
+
+.headinglable{
+  margin-top:2rem;
+  color:#04afda;
+
+}
+
+.headinglable1{
+  margin-top:1rem;
+  color:#04afda;
+}
+
+.carousel-control-next, .carousel-control-prev{
+align-items: unset !important;
+width: unset !important;
+}
+
+.cardrow{
+  margin-top:2rem;
+  margin-left:2rem;
+  margin-right:2rem;
+}
+
+.setWidth{
+  width : 7rem;
+}
+
+
+
+.swiper {
+  height: 300px;
+  width: 400px;
+}
+.swiper-wrapper {
+  box-sizing: border-box;
+}
+.zoom {
+  transition: transform .3s; /* Animation */
+}
+
+.zoom:hover {
+  transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+.ribbon {
+  width: 100%;
+  color: white;
+  background: transparent !important;
+}
+.ribbon:nth-child(even) {
+  margin-right: 4%;
+}
+@media (max-width: 500px) {
+  .ribbon {
+    width: 100%;
+  }
+  .ribbon:nth-child(even) {
+    margin-right: 0%;
+  }
+}
+.ribbon3 {
+  width: 11rem;
+  height: 50px;
+  line-height: 50px;
+  padding-left: 15px;
+  position: absolute;
+  left: -8px;
+  top: 20px;
+  background: rgb(0, 66, 141);
+}
+.ribbon3:before, .ribbon3:after {
+  content: "";
+  position: absolute;
+}
+.ribbon3:before {
+  height: 0;
+  width: 0;
+  top: -8.5px;
+  left: 0.1px;
+  border-bottom: 9px solid black;
+  border-left: 9px solid transparent;
+}
+.ribbon3:after {
+  height: 0;
+  width: 0;
+  right: -14.5px;
+  border-top: 25px solid transparent;
+  border-bottom: 25px solid transparent;
+  border-left: 15px solid rgb(0, 66, 141);
+}
+
+.btnSearch{
+  float:right;
+  margin-top:0.9rem;
+  font-size: .8rem;
+  color:rgb(58, 56, 56);
+  background: rgb(221, 181, 3);
+  font-weight:600;
+}
+
+.modal-header , .modal-body , .modal-footer , .modal-content{
+  background-color:#292828 !important;
+} 
+
+.seth6{
+margin-top:1rem;
+float:left;
+}

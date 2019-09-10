@@ -3,13 +3,17 @@ import { CommonModule } from '@angular/common';
 
 import { EmployerRoutingModule } from './employer-routing.module';
 import { EmployerComponent } from './employer.component';
+import { SmartContractPaymentComponent } from './smart-contract-payment/smart-contract-payment.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 @NgModule({
-  declarations: [EmployerComponent],
+  declarations: [EmployerComponent, SmartContractPaymentComponent],
   imports: [
     CommonModule,
-    EmployerRoutingModule
+    EmployerRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class EmployerModule { }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { SmartContractPaymentComponent } from './smart-contract-payment/smart-contract-payment.component';
 
 
 const routes: Routes = [
@@ -10,6 +11,10 @@ const routes: Routes = [
   { 
     path: 'workpackage', 
     loadChildren: () => import(`./work-package/work-package.module`).then(module => module.WorkPackageModule) 
+  },
+  { 
+    path: 'smartpayment',
+    component: SmartContractPaymentComponent
   }
 ];
 

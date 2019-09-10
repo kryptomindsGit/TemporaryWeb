@@ -9,6 +9,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { FullLayoutComponent } from './full-layout/full-layout.component';
+import { PaymentSmartcontractComponent } from './payment-smartcontract/payment-smartcontract.component';
 
 //Components
 const COMPONENTS = [
@@ -28,7 +29,8 @@ const MODULES = [
 
 @NgModule({
   declarations: [
-    ...COMPONENTS
+    ...COMPONENTS,
+    PaymentSmartcontractComponent
   ],
   imports: [
     ...MODULES
