@@ -6,8 +6,8 @@
             <div class="card-header">
               <h6>Basic Project Information</h6>
             </div>
-            <div class="card-body">
-              <form class="workpackage" [formGroup]="basicForm">
+            <div class="card-body" >
+              <form class="workpackage" [formGroup]="projectForm">
                 <small class="text-muted">Posted by ( Employer ID ):</small><br>
                 <p>{{employerId}}
                   <button class="btn viewprofile">View Profile</button>
@@ -17,10 +17,7 @@
                 <p>{{todayDate}}</p>
                 <hr>
                 <label>Do you require reviewer?</label><br>
-                <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider round"></span>
-                  </label>
+                  <input type="checkbox" formControlName="yes_reviewer" (change)="isReviewer()" [value]="true">Yes
                 <hr>  
               </form>
             </div>
@@ -36,7 +33,7 @@
               <div class="row">                        
                 <div class="col-md-6">
                   <div class="form-group form-input">
-                      <input type="text"formControlName="proj_name" id="proj_name" value="" required/>
+                      <input type="text" formControlName="proj_name" id="proj_name" value="" required/>
                       <label for="proj_desc" class="form-label">Project Name</label>
                       <div *ngIf="projectForm.controls['proj_name'].invalid && (projectForm.controls['proj_name'].dirty || projectForm.controls['proj_name'].touched)" class="alert">
                           <div *ngIf="projectForm.controls['proj_name'].errors.required">
@@ -80,17 +77,36 @@
                 
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="form-group form-input">
-                            <input type="text" formControlName="proj_durationFrom"  id="datePicker" value="" required/>
-                            <label for="proj_durationFrom" class="form-label">Project Duration : From</label>
-                            <div *ngIf="projectForm.controls['proj_durationFrom'].invalid && (projectForm.controls['proj_durationFrom'].dirty || projectForm.controls['proj_durationFrom'].Fromuched)" class="alert">
-                                <div *ngIf="projectForm.controls['proj_durationFrom'].errors.required">
-                                  Please select From-date, it's required.
-                                </div>
-                              </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group form-input">
+                                <input type="text" formControlName="duration" value="" required/>
+                                <label for="duration" class="form-label">Duartion</label>
+                                <div *ngIf="projectForm.controls['duration'].invalid && (projectForm.controls['duration'].dirty || projectForm.controls['duration'].Fromuched)" class="alert">
+                                    <div *ngIf="projectForm.controls['duration'].errors.required">
+                                      Please select From-date, it's required.
+                                    </div>
+                                  </div>
+                            </div> 
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-input">
+                                <select formControlName="duration_option" id="duration_option">
+                                    <option>Select</option>
+                                    <option id="option_txt" *ngFor="let duration_option of durationArr" [value]="duration_option">{{duration_option}}</option>
+                                  </select>
+                                <div *ngIf="projectForm.controls['duration_option'].invalid && (projectForm.controls['duration_option'].dirty || projectForm.controls['duration_option'].Fromuched)" class="alert">
+                                    <div *ngIf="projectForm.controls['duration_option'].errors.required">
+                                      Please select From-date, it's required.
+                                    </div>
+                                  </div>
+                            </div> 
+                        </div>
+                      </div>
+
+                        
                     </div>
-                    <div class="col-md-4">
+                    <!-- <div class="col-md-4">
                         <div class="form-group form-input">
                             <input type="text"  formControlName="proj_durationTo" required/>
                             <label for="proj_durationTo" class="form-label">Project Duration : To  
@@ -101,12 +117,15 @@
                                 </div>
                               </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-md-4">
                         <div class="form-group form-input">
-                            <input type="text" formControlName="proj_start_date" proj_durationTo="proj_start_date" value="" required/>
-                            <label for="proj_start_date" class="form-label">Start Date 
-                            </label>
+                            <input type=text [owlDateTimeTrigger]="dt3" formControlName="proj_start_date" id="datePicker3 "
+                            placeholder="End Date" [owlDateTime]="dt3">
+                        <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+                            <!-- <input type="text" formControlName="proj_start_date"  value="" required/> -->
+                            <!-- <label for="proj_start_date" class="form-label">Start Date  -->
+                            <!-- </label> -->
                             <div *ngIf="projectForm.controls['proj_start_date'].invalid && (projectForm.controls['proj_start_date'].dirty || projectForm.controls['proj_start_date'].Fromuched)" class="alert">
                                 <div *ngIf="projectForm.controls['proj_start_date'].errors.required">
                                   Please select Starting date, it's required.
@@ -165,6 +184,8 @@
             <div class="row">
               <div class="col-11">
                   <form class="workpackage table-responsive" [formGroup]="skillForm">
+                    <!-- <div formArrayName="skillDetails">
+                      <div *ngFor="let item of skillDetailsArr.controls; let i=index" [formGroupName]="i"> -->
                       <table class="table table-dark  table-bordered worktable">
                           <thead>
                             <tr>
@@ -181,31 +202,31 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
+                              <tr>
                               <td>
                                 <select formControlName="skill" id="skill">
                                   <option>Select Skills</option>
                                 </select>
                               </td>
                               <td>
-                                  <select formControlName=" skillLevel" id=" skillLevel" >
+                                  <select formControlName="skillLevel" id=" skillLevel" >
                                       <option>Select Level</option>
                                       <option id="option_level" *ngFor="let skillLevel of skillLevelArr" [value]="skillLevel">{{skillLevel}}</option>
                                     </select>
                               </td>
                               <td>
-                                  <select formControlName=" projectType" id=" projectType">
+                                  <select formControlName="projectType" id=" projectType">
                                     <option>Select Project Type</option>
                                     <option id="option_type" *ngFor="let  projectType of  projectTypeArr" [value]=" projectType">{{ projectType}}</option>
                                   </select>
                               </td>
                               <td>
-                                  <input type="text">
+                                  <input type="text" formControlName="members">
                                 </td>
                                 <td>
                                     <select formControlName="country" id="country">
                                       <option>Select Country</option>
-                                      <option id="option_type" *ngFor="let  country of  countries" [value]=" country">{{ country}}</option>
+                                      <option id="option_type" *ngFor="let  country of  countries" [value]="country.name">{{country.name}}</option>
                                     </select>
                                       
                                 </td>
@@ -221,20 +242,24 @@
                                         </select>
                                   </td>
                                   <td>
-                                      <label>
-                                          <input [owlDateTimeTrigger]="dt" placeholder="Start Date" formControlName="skill_start_date" id="datePicker" [owlDateTime]="dt">
-                                          <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
-                                        </label> 
+                                      <input type=text [owlDateTimeTrigger]="dt1" formControlName="skill_start_date" id="datePicker1"
+                                      placeholder="End Date" [owlDateTime]="dt1">
+                                  <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                                    <!-- <input type="text" formControlName="skill_start_date" >  -->
                                       </td>
                                   <td>
-                                      <input type="text">
+                                      <input type=text [owlDateTimeTrigger]="dt2" formControlName="skill_end_date" id="datePicker2"
+                                      placeholder="End Date" [owlDateTime]="dt2">
+                                  <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                                    <!-- <input type="text" formControlName="skill_end_date" >  -->
+
                                   </td>
                             </tr>
       
                           </tbody>
       
                         </table>
-      
+                      <!-- </div></div> -->
                   </form>
               </div>
             
@@ -246,5 +271,5 @@
         </div>  
       
   </div>  
-  <button class="btn submit-button">Submit</button>
+  <button class="btn submit-button" (click)="onSubmit()">Submit</button>
 </div>
