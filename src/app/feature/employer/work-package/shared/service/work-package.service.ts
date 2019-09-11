@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { throwError } from 'rxjs/internal/observable/throwError';
 
 //Constant URL
 import { BASE_URL } from '../../../../../constant/constant-url';
@@ -7,7 +8,7 @@ import { BASE_URL } from '../../../../../constant/constant-url';
 import { BLOCKCHAIN_URL } from '../../../../../constant/constant-url';
 import { UPORT_URL } from '../../../../../constant/constant-url';
 import { AWS_URL } from '../../../../../constant/constant-url';
-
+import { SPRING_URL } from '../../../../../constant/constant-url';
 
 //CORS
 const httpOptions = {
@@ -27,5 +28,33 @@ export class WorkPackageService {
 
 
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
+
+  async postWorkPackageData(packageData : any):Promise<any> {
+    console.log("Package Data :" , packageData);
+    
+    try {
+      let res = await this.http.post(`${SPRING_URL}/workpackage/wp-save`, {responseType:'json'}).toPromise();
+      return res;
+    } catch (error) {
+      this.handleError(error);      
+    }
+  }
+
+  handleError(error) {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      // client-side error
+      errorMessage = `Client Error: ${error.error.message}`;
+    } else {
+      // server-side error
+      errorMessage = `Server Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.log(" Error : ",errorMessage);
+    return throwError(errorMessage);
+  }
+
 }
+ 
