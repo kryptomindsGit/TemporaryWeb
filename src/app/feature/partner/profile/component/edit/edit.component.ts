@@ -146,15 +146,31 @@ export class EditComponent implements OnInit {
       this.partnerArr = resData[0];
       console.log(this.partnerArr);
 
+      for (let i = 0; i < this.countryArr.length; i++) {
+        if (this.countryArr[i].name == this.partnerArr.country) {
+          let countryID = this.countryArr[i].id;
+          console.log("Country Id", countryID);
+          this.getStateByID(countryID);
+        }
+      }
+
+      for (let i = 0; i < this.stateArr.length; i++) {
+        if (this.stateArr[i].name == this.partnerArr.state) {
+          let stateID = this.stateArr[i].id;
+          console.log("State Id", stateID);
+          this.getCityByID(stateID);
+        }
+      }
+
       this.partnerProfileForm.patchValue({
         comapany_name: this.partnerArr.part_name,
         website_addr: this.partnerArr.part_website,
         address_line_one: this.partnerArr.part_addr,
         address_line_two: this.partnerArr.part_addr_2,
         country: this.partnerArr.country,
-        state: this.partnerArr.state,
-        city: this.partnerArr.city,
-        zipcode: this.partnerArr.zipcode,
+        // state: this.partnerArr.state,
+        // city: this.partnerArr.city,
+        // zipcode: this.partnerArr.zipcode,
         business_cat: this.partnerArr.business_details,
         company_profile: this.partnerArr.part_type,
         company_rep_det: this.partnerArr.part_reprentative

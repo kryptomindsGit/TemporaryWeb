@@ -92,8 +92,8 @@ export class EditComponent implements OnInit {
     }
 
     /**
-     * @description validate all form's fileds
-     */
+    * @description validate all form's fileds
+    */
     this.valPersonalProfile();
     this.valQualificationProfile();
     this.valWorlExpProfile();
@@ -114,6 +114,8 @@ export class EditComponent implements OnInit {
     this.getFreelancerOrganization();
     this.getFreelancerPortfolio();
     // this.setAllFreelancerData();
+
+
   }
 
   /**
@@ -202,22 +204,25 @@ export class EditComponent implements OnInit {
 
       this.checkMarked = this.freelancerArr.is_interviewer;
       console.log(this.checkMarked);
+      console.log("this.stateArr", this.stateArr);
 
-      for (let i = 0; i < this.stateByIdArr.length; i++) {
-        if (this.stateByIdArr[i].name == this.freelancerArr.state) {
-          let stateID = this.stateByIdArr[i].id;
+
+      for (let i = 0; i < this.stateArr.length; i++) {
+        if (this.stateArr[i].name == this.freelancerArr.state) {
+          let stateID = this.stateArr[i].id;
           console.log("State Id", stateID);
           this.getCityByID(stateID);
         }
       }
+      console.log("this.freelancerArr.city", this.cityArr);
 
-      for (let i = 0; i < this.cityByIdArr.length; i++) {
-        if (this.cityByIdArr[i].name == this.freelancerArr.city) {
-          let cityID = this.cityByIdArr[i].id;
-          console.log("City Id", cityID);
-          // this.getCityByID(cityID);
-        }
-      }
+      // for (let i = 0; i < this.cityByIdArr.length; i++) {
+      //   if (this.cityByIdArr[i].name == this.freelancerArr.city) {
+      //     let cityID = this.cityByIdArr[i].id;
+      //     console.log("City Id", cityID);
+      //     this.getCityByID(cityID);
+      //   }
+      // }
 
       this.personalDetails.patchValue({
         prefix: this.freelancerArr.prefix,
@@ -436,23 +441,7 @@ export class EditComponent implements OnInit {
           }
         ));
 
-        // this.qualificationDetails.patchValue({
-        //   prefix: this.freelancerArr.prefix,
-        //   first_name: this.freelancerArr.first_name,
-        //   middle_name: this.freelancerArr.middle_name,
-        //   last_name: this.freelancerArr.last_name,
-        //   address_one: this.freelancerArr.line_1,
-        //   address_two: this.freelancerArr.line_2,
-        //   country: this.freelancerArr.country,
-        //   province: this.freelancerArr.state,
-        //   city: this.freelancerArr.city,
-        //   zipcode: this.freelancerArr.code
-        // });
-
       }
-
-
-
       console.log("Qualification :", this.qualfArr);
 
       this.getAllEducation(this.edu_catId);
@@ -593,6 +582,8 @@ export class EditComponent implements OnInit {
   getStateByID(country_id) {
     this.__profileService.getFreelancerStateByID(country_id).then((resData: any) => {
       this.stateArr = resData;
+      console.log("this.stateArr", this.stateArr);
+
     })
   }
 
@@ -930,7 +921,7 @@ export class EditComponent implements OnInit {
         uid: 0
       }
       console.log('Freelancer Payload Value : ', freelancerProfilePayload);
-      this.__profileService.createFreelancer(freelancerProfilePayload).then((resData: any) => {
+      this.__profileService.updateFreelancer(this.email, freelancerProfilePayload).then((resData: any) => {
         console.log("Successfully Profile Registered", resData);
         this.__router.navigate(['/freelancer/free-profile/profile/view/', this.email]);
       });
