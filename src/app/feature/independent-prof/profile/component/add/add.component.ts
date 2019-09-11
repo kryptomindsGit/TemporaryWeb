@@ -46,6 +46,7 @@ export class AddComponent implements OnInit {
   public eduCatArr: any = [];
   public eduArr: any = [];
   public skills: any = [];
+  public skill: any = [];
   public categ: any = [];
   public countryArr: any = [];
   public stateArr: any = [];
@@ -489,6 +490,11 @@ export class AddComponent implements OnInit {
   onChange(skill: string, skill_id: number, isChecked: boolean) {
 
     if (isChecked && skill != null) {
+
+      // this.skill.push(
+      //   {
+      //     'skillname': skill,
+      //   });
 
       this.skillRateArr.push(this.__fb.group(
         {

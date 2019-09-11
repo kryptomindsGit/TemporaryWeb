@@ -67,7 +67,7 @@ export class EditComponent implements OnInit {
 
 
     //Call function
-
+    this.valPartProfile();
     this.getPartnerDetails();
     this.getAllCountry();
 
@@ -77,44 +77,63 @@ export class EditComponent implements OnInit {
    * @name valEmpProfile
    * @description validating the form fields
    */
+  // valPartProfile() {
+
+  //   this.partnerProfileForm = this.__fb.group({
+
+  //     jo: ['TEST'],
+  //     comapany_name: [(this.partnerArr == null || this.partnerArr.part_name == null) ? '' :
+  //       this.partnerArr.part_name, Validators.required],
+  //     website_addr: [(this.partnerArr == null || this.partnerArr.part_website == null) ? '' :
+  //       this.partnerArr.part_website, Validators.required],
+  //     address_line_one: [(this.partnerArr == null || this.partnerArr.part_addr == null) ? '' :
+  //       this.partnerArr.part_addr, Validators.required],
+  //     address_line_two: [(this.partnerArr == null || this.partnerArr.part_addr_2 == null) ? '' :
+  //       this.partnerArr.part_addr_2, Validators.required],
+  //     country: [(this.partnerArr == null || this.partnerArr.country == null) ? '' :
+  //       this.partnerArr.country, Validators.required],
+  //     state: [(this.partnerArr == null || this.partnerArr.state == null) ? '' :
+  //       this.partnerArr.state, Validators.required],
+  //     city: [(this.partnerArr == null || this.partnerArr.city == null) ? '' :
+  //       this.partnerArr.city, Validators.required],
+  //     zipcode: [(this.partnerArr == null || this.partnerArr.zipcode == null) ? '' :
+  //       this.partnerArr.zipcode, [Validators.required, Validators.pattern('^[0-9]*$')]],
+  //     business_cat: [(this.partnerArr == null || this.partnerArr.business_details == null) ? '' :
+  //       this.partnerArr.business_details, Validators.required],
+  //     company_profile: [(this.partnerArr == null || this.partnerArr.part_type == null) ? '' :
+  //       this.partnerArr.part_type, Validators.required],
+  //     company_rep_det: [(this.partnerArr == null || this.partnerArr.part_reprentative == null) ? '' :
+  //       this.partnerArr.part_reprentative, Validators.required],
+  //     documents: this.__fb.array([this.__fb.group({
+  //       chooseFile: (this.partnerFileArr == null || this.partnerFileArr.file_name == null) ? '' :
+  //         this.partnerFileArr.file_name,
+  //       docType: (this.partnerFileArr == null || this.partnerFileArr.file_type == null) ? '' :
+  //         this.partnerFileArr.file_type
+  //     })])
+
+  //   })
+
+  // }
+
   valPartProfile() {
-
     this.partnerProfileForm = this.__fb.group({
-
-      jo: ['TEST'],
-      jo1: ['TEST'],
-      jo2: ['TEST'],
-      comapany_name: [(this.partnerArr == null || this.partnerArr.part_name == null) ? '' :
-        this.partnerArr.part_name, Validators.required],
-      website_addr: [(this.partnerArr == null || this.partnerArr.part_website == null) ? '' :
-        this.partnerArr.part_website, Validators.required],
-      address_line_one: [(this.partnerArr == null || this.partnerArr.part_addr == null) ? '' :
-        this.partnerArr.part_addr, Validators.required],
-      address_line_two: [(this.partnerArr == null || this.partnerArr.part_addr_2 == null) ? '' :
-        this.partnerArr.part_addr_2, Validators.required],
-      country: [(this.partnerArr == null || this.partnerArr.country == null) ? '' :
-        this.partnerArr.country, Validators.required],
-      state: [(this.partnerArr == null || this.partnerArr.state == null) ? '' :
-        this.partnerArr.state, Validators.required],
-      city: [(this.partnerArr == null || this.partnerArr.city == null) ? '' :
-        this.partnerArr.city, Validators.required],
-      zipcode: [(this.partnerArr == null || this.partnerArr.zipcode == null) ? '' :
-        this.partnerArr.zipcode, [Validators.required, Validators.pattern('^[0-9]*$')]],
-      business_cat: [(this.partnerArr == null || this.partnerArr.business_details == null) ? '' :
-        this.partnerArr.business_details, Validators.required],
-      company_profile: [(this.partnerArr == null || this.partnerArr.part_type == null) ? '' :
-        this.partnerArr.part_type, Validators.required],
-      company_rep_det: [(this.partnerArr == null || this.partnerArr.part_reprentative == null) ? '' :
-        this.partnerArr.part_reprentative, Validators.required],
+      comapany_name: ['', Validators.required],
+      website_addr: ['', Validators.required],
+      address_line_one: ['', Validators.required],
+      address_line_two: ['', Validators.required],
+      country: ['', Validators.required],
+      state: ['', Validators.required],
+      city: ['', Validators.required],
+      zipcode: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      business_cat: ['', Validators.required],
+      company_profile: ['', Validators.required],
+      company_rep_det: ['', Validators.required],
       documents: this.__fb.array([this.__fb.group({
-        chooseFile: (this.partnerFileArr == null || this.partnerFileArr.file_name == null) ? '' :
-          this.partnerFileArr.file_name,
-        docType: (this.partnerFileArr == null || this.partnerFileArr.file_type == null) ? '' :
-          this.partnerFileArr.file_type
+        chooseFile: '',
+        docType: ''
       })])
 
     })
-
   }
 
   /**
@@ -126,8 +145,20 @@ export class EditComponent implements OnInit {
     this.__profileService.getPartnerByEmailId(this.emailId).then((resData: any) => {
       this.partnerArr = resData[0];
       console.log(this.partnerArr);
-      this.valPartProfile();
 
+      this.partnerProfileForm.patchValue({
+        comapany_name: this.partnerArr.part_name,
+        website_addr: this.partnerArr.part_website,
+        address_line_one: this.partnerArr.part_addr,
+        address_line_two: this.partnerArr.part_addr_2,
+        country: this.partnerArr.country,
+        state: this.partnerArr.state,
+        city: this.partnerArr.city,
+        zipcode: this.partnerArr.zipcode,
+        business_cat: this.partnerArr.business_details,
+        company_profile: this.partnerArr.part_type,
+        company_rep_det: this.partnerArr.part_reprentative
+      });
     });
 
 

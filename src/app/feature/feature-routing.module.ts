@@ -33,6 +33,10 @@ const routes: Routes = [
         component: FullLayoutComponent,
         children: [
           {
+            path: 'dashboard',
+            component: DashboardComponent
+          },
+          {
             path: 'employer',
             loadChildren: () => import(`./employer/employer.module`).then(module => module.EmployerModule)
           },

@@ -81,8 +81,8 @@ export class AddComponent implements OnInit {
       company_profile: ['', Validators.required],
       company_rep_det: ['', Validators.required],
       documents: this.__fb.array([this.__fb.group(
-        { chooseFile: '' },
-        { docType: '' }
+        { chooseFile: ['', Validators.required] },
+        { docType: ['', Validators.required] }
       )]),
     })
   }

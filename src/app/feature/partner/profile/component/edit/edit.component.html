@@ -7,41 +7,53 @@
             <form [formGroup]="partnerProfileForm" novalidate>
                 <div class="row">
 
-                    <!--wordaround-->
-                    <div class="form-group form-input col" hidden>
-                        <input type="text" formControlName="jo" id="comapany_name" required />
-                        <label for="comapany_name" class="form-label">Comapany Name</label>
-                    </div>
-                    <div class="form-group form-input col" hidden>
-                        <input type="text" formControlName="jo1" id="comapany_name" required />
-                        <label for="comapany_name" class="form-label">Comapany Name</label>
-                    </div>
-                    <div class="form-group form-input col" hidden>
-                        <input type="text" formControlName="jo2" id="comapany_name" required />
-                        <label for="comapany_name" class="form-label">Comapany Name</label>
-                    </div>
-                    <!--wordaround-->
-
                     <div class="form-group form-input col">
                         <input type="text" formControlName="comapany_name" id="comapany_name" required />
-                        <label for="comapany_name" class="form-label">Comapany Name</label>
-                    </div>
+                        <label for="comapany_name" class="form-label">Company Name</label>
 
+                        <div *ngIf="partnerProfileForm.controls['comapany_name'].invalid && (partnerProfileForm.controls['comapany_name'].dirty || partnerProfileForm.controls['comapany_name'].touched)"
+                            class="text-danger error-msg">
+                            <div [hidden]="!partnerProfileForm.controls['comapany_name'].errors.required">Company name
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group form-input col">
                         <input type="text" formControlName="website_addr" id="website_addr" required />
                         <label for="website_addr" class="form-label">Website Addr</label>
+
+                        <div *ngIf="partnerProfileForm.controls['website_addr'].invalid && (partnerProfileForm.controls['website_addr'].dirty || partnerProfileForm.controls['website_addr'].touched)"
+                            class="text-danger error-msg">
+                            <div [hidden]="!partnerProfileForm.controls['website_addr'].errors.required">Website
+                                address
+                                is required.</div>
+                        </div>
                     </div>
+
                 </div>
 
                 <div class="row">
                     <div class="form-group form-input col">
                         <input type="text" formControlName="address_line_one" id="address_line_one" required />
                         <label for="address_line_one" class="form-label">Address line 1</label>
+
+                        <div *ngIf="partnerProfileForm.controls['address_line_one'].invalid && (partnerProfileForm.controls['address_line_one'].dirty || partnerProfileForm.controls['address_line_one'].touched)"
+                            class="text-danger error-msg">
+                            <div [hidden]="!partnerProfileForm.controls['address_line_one'].errors.required">Address
+                                line 1
+                                is required.</div>
+                        </div>
                     </div>
 
                     <div class="form-group form-input col">
                         <input type="text" formControlName="address_line_two" id="address_line_two" required />
                         <label for="address_line_two" class="form-label">Address line 2</label>
+
+                        <div *ngIf="partnerProfileForm.controls['address_line_two'].invalid && (partnerProfileForm.controls['address_line_two'].dirty || partnerProfileForm.controls['address_line_two'].touched)"
+                            class="text-danger error-msg">
+                            <div [hidden]="!partnerProfileForm.controls['address_line_two'].errors.required">Address
+                                line 2
+                                is required.</div>
+                        </div>
                     </div>
                 </div>
 
@@ -53,12 +65,24 @@
                             <option *ngFor="let country of countryArr" [ngValue]="country.name">{{country.name}}
                             </option>
                         </select>
+
+                        <div *ngIf="partnerProfileForm.controls['country'].invalid && (partnerProfileForm.controls['country'].dirty || partnerProfileForm.controls['country'].touched)"
+                            class="text-danger error-msg">
+                            <div [hidden]="!partnerProfileForm.controls['country'].errors.required">Country
+                                is required.</div>
+                        </div>
                     </div>
                     <div class="form-group form-input col">
                         <select class="formStyle" (change)="setStateID($event.target.value)" formControlName="state">
                             <option disabled value="">State</option>
                             <option *ngFor="let state of stateArr" [ngValue]="state.name">{{state.name}}</option>
                         </select>
+
+                        <div *ngIf="partnerProfileForm.controls['state'].invalid && (partnerProfileForm.controls['state'].dirty || partnerProfileForm.controls['state'].touched)"
+                            class="text-danger error-msg">
+                            <div [hidden]="!partnerProfileForm.controls['state'].errors.required">State
+                                is required.</div>
+                        </div>
                     </div>
 
                     <div class="form-group form-input col">
@@ -66,16 +90,35 @@
                             <option disabled value="">City</option>
                             <option *ngFor="let city of cityArr" [ngValue]="city.name">{{city.name}}</option>
                         </select>
+
+                        <div *ngIf="partnerProfileForm.controls['city'].invalid && (partnerProfileForm.controls['city'].dirty || partnerProfileForm.controls['city'].touched)"
+                            class="text-danger error-msg">
+                            <div [hidden]="!partnerProfileForm.controls['city'].errors.required">City
+                                is required.</div>
+                        </div>
                     </div>
                     <div class="form-group form-input col">
                         <input type="text" formControlName="zipcode" id="zipcode" required />
                         <label for="zipcode" class="form-label">Postal Code</label>
+
+                        <div *ngIf="partnerProfileForm.controls['zipcode'].invalid && (partnerProfileForm.controls['zipcode'].dirty || partnerProfileForm.controls['zipcode'].touched)"
+                            class="text-danger error-msg">
+                            <div [hidden]="!partnerProfileForm.controls['zipcode'].errors.required">Postal code
+                                is required.</div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group form-input col-6">
                         <input type="text" formControlName="business_cat" id="business_cat" required />
                         <label for="business_cat" class="form-label">Business Category</label>
+
+                        <div *ngIf="partnerProfileForm.controls['business_cat'].invalid && (partnerProfileForm.controls['business_cat'].dirty || partnerProfileForm.controls['business_cat'].touched)"
+                            class="text-danger error-msg">
+                            <div [hidden]="!partnerProfileForm.controls['business_cat'].errors.required">Business
+                                category
+                                is required.</div>
+                        </div>
                     </div>
                 </div>
 
@@ -83,11 +126,25 @@
                     <div class="form-group form-input col">
                         <input type="text" formControlName="company_profile" id="company_profile" required />
                         <label for="company_profile" class="form-label">Comapany Name</label>
+
+                        <div *ngIf="partnerProfileForm.controls['company_profile'].invalid && (partnerProfileForm.controls['company_profile'].dirty || partnerProfileForm.controls['company_profile'].touched)"
+                            class="text-danger error-msg">
+                            <div [hidden]="!partnerProfileForm.controls['company_profile'].errors.required">Comapany
+                                name
+                                is required.</div>
+                        </div>
                     </div>
 
                     <div class="form-group form-input col">
                         <input type="text" formControlName="company_rep_det" id="company_rep_det" required />
                         <label for="company_rep_det" class="form-label">Company Representative Detail</label>
+
+                        <div *ngIf="partnerProfileForm.controls['company_rep_det'].invalid && (partnerProfileForm.controls['company_rep_det'].dirty || partnerProfileForm.controls['company_rep_det'].touched)"
+                            class="text-danger error-msg">
+                            <div [hidden]="!partnerProfileForm.controls['company_rep_det'].errors.required">Company
+                                representative detail
+                                is required.</div>
+                        </div>
                     </div>
                 </div>
 
@@ -99,6 +156,8 @@
                                     (input)="setDocTypeCatType(textInput.value)" id="docType" required>
 
                                 <label for="file_type" class="form-label">Document Type</label>
+
+
                             </div>
                             <div class="form-group form-input col-3">
                                 <div class="file-upload">

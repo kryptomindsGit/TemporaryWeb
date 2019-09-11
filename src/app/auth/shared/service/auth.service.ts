@@ -59,7 +59,11 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('access_token');
+    // localStorage.removeItem('access_token');
+    // localStorage.removeItem('email');
+    // localStorage.removeItem('uid');
+    localStorage.clear();
+
   }
 
   decode() {

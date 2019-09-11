@@ -59,7 +59,7 @@ export class EditComponent implements OnInit {
 
     this.getEmplyeeDetails();
     // this.getEmplyeeFileDetails();
-
+    this.valEmpProfile();
   }
 
   /**
@@ -73,7 +73,7 @@ export class EditComponent implements OnInit {
   //     jo: ['TEST'],
   //     website_addr: [(this.employerArr == null || this.employerArr.cmp_website == null) ? '' :
   //       this.employerArr.cmp_website, Validators.required],
-  //     comapany_name: [(this.employerArr == null || this.employerArr.cmp_name == null) ? 'JYOTIIII' :
+  //     comapany_name: [(this.employerArr == null || this.employerArr.cmp_name == null) ? '' :
   //       this.employerArr.cmp_name, Validators.required],
   //     address_line_one: [(this.employerArr == null || this.employerArr.cmp_addr == null) ? '' :
   //       this.employerArr.cmp_addr, Validators.required],
@@ -102,7 +102,6 @@ export class EditComponent implements OnInit {
 
   valEmpProfile() {
     this.employerProfileForm = this.__fb.group({
-      // jo: ['TEST'],
       comapany_name: ['', Validators.required],
       website_addr: ['', Validators.required],
       address_line_one: ['', Validators.required],
@@ -114,10 +113,7 @@ export class EditComponent implements OnInit {
       business_cat: ['', Validators.required],
       company_profile: ['', Validators.required],
       company_rep_det: ['', Validators.required],
-      documents: this.__fb.array([this.__fb.group(
-        { chooseFile: '' },
-        { docType: '' }
-      )]),
+      // documents: this.__fb.array([]),
     })
   }
 
@@ -130,6 +126,7 @@ export class EditComponent implements OnInit {
     this.__profileService.getEmployerByEmailId(this.emailId).then((data: any) => {
       this.employerArr = data[0];
       console.log(this.employerArr);
+      // this.valEmpProfile();
 
       this.employerProfileForm.patchValue({
         comapany_name: this.employerArr.cmp_name,
@@ -147,22 +144,22 @@ export class EditComponent implements OnInit {
 
     });
 
-    this.__profileService.getEmployerFileById(this.id).then((resData: any) => {
-      this.employerFileArr = resData;
-      console.log(this.employerFileArr);
+    // this.__profileService.getEmployerFileById(this.id).then((resData: any) => {
+    //   this.employerFileArr = resData;
+    //   console.log(this.employerFileArr);
 
-      for (let index = 0; index < this.employerFileArr.length; index++) {
-        this.documentArr.push(this.__fb.group(
-          {
-            file_name: this.employerFileArr[index].file_name,
-            file_type: this.employerFileArr[index].file_type,
-            file_id: this.employerFileArr[index].file_id,
-            part_id: this.employerFileArr[index].part_id
-          }));
-      }
-      console.log(this.documentArr);
-      this.valEmpProfile();
-    });
+    //   for (let index = 0; index < this.employerFileArr.length; index++) {
+    //     this.documentArr.push(this.__fb.group(
+    //       {
+    //         file_name: this.employerFileArr[index].file_name,
+    //         file_type: this.employerFileArr[index].file_type,
+    //         file_id: this.employerFileArr[index].file_id,
+    //         part_id: this.employerFileArr[index].part_id
+    //       }));
+    //   }
+    //   console.log(this.documentArr);
+    //   this.valEmpProfile();
+    // });
 
 
   }

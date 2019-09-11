@@ -281,3 +281,11 @@ input[type=radio] {
     float: center;
     margin: 20px auto;
 }
+
+.error-msg {
+    display: block;
+    position: absolute;
+    font-size: 0.7rem;
+    bottom: -2em;
+    margin-bottom: 0.2rem;
+}

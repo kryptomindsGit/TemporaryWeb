@@ -48,6 +48,7 @@ export class EditComponent implements OnInit {
   public documentWorkArray: any = [];
   public freelancerArr: any = [];
   public stateByIdArr: any = [];
+  public cityByIdArr: any = [];
   public freelancerSkillDetailsArr: any = [];
   public skillArr: any = [];
   public qualityArray: any = [];
@@ -207,6 +208,14 @@ export class EditComponent implements OnInit {
           let stateID = this.stateByIdArr[i].id;
           console.log("State Id", stateID);
           this.getCityByID(stateID);
+        }
+      }
+
+      for (let i = 0; i < this.cityByIdArr.length; i++) {
+        if (this.cityByIdArr[i].name == this.freelancerArr.city) {
+          let cityID = this.cityByIdArr[i].id;
+          console.log("City Id", cityID);
+          // this.getCityByID(cityID);
         }
       }
 

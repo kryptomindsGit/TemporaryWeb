@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="section">
     <div class="personal-details-form" *ngIf="showMainContent == 1">
         <div class="card">
             <div class="card-header">
@@ -13,19 +13,45 @@
                                 <option id="option_txt" *ngFor="let prefix of prefixArr" [value]="prefix">{{prefix}}
                                 </option>
                             </select>
+                            <div *ngIf="personalDetails.controls['prefix'].invalid && (personalDetails.controls['prefix'].dirty || personalDetails.controls['prefix'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!personalDetails.controls['prefix'].errors.required">Prefix is required.
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group form-input col">
                             <input type="text" formControlName="first_name" id="first_name" required />
                             <label for="first_name" class="form-label">First Name</label>
+
+                            <div *ngIf="personalDetails.controls['first_name'].invalid && (personalDetails.controls['first_name'].dirty || personalDetails.controls['first_name'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!personalDetails.controls['first_name'].errors.required">First name is
+                                    required.
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group form-input col">
                             <input type="text" formControlName="middle_name" id="middle_name" required />
                             <label for="middle_name" class="form-label">Middle Name</label>
+
+                            <div *ngIf="personalDetails.controls['middle_name'].invalid && (personalDetails.controls['middle_name'].dirty || personalDetails.controls['middle_name'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!personalDetails.controls['middle_name'].errors.required">Middle name is
+                                    required.
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group form-input col">
                             <input type="text" formControlName="last_name" id="last_name" required />
                             <label for="last_name" class="form-label">Last Name</label>
+
+                            <div *ngIf="personalDetails.controls['last_name'].invalid && (personalDetails.controls['last_name'].dirty || personalDetails.controls['last_name'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!personalDetails.controls['last_name'].errors.required">Last name is
+                                    required.
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -33,10 +59,26 @@
                         <div class="form-group form-input col">
                             <input type="text" formControlName="address_one" id="address_one" required />
                             <label for="address_one" class="form-label">Address Line 1</label>
+
+                            <div *ngIf="personalDetails.controls['address_one'].invalid && (personalDetails.controls['address_one'].dirty || personalDetails.controls['address_one'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!personalDetails.controls['address_one'].errors.required">Address line 1
+                                    is
+                                    required.
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group form-input col">
                             <input type="text" formControlName="address_two" id="address_two" required />
                             <label for="address_two" class="form-label">Address Line 2</label>
+
+                            <div *ngIf="personalDetails.controls['address_two'].invalid && (personalDetails.controls['address_two'].dirty || personalDetails.controls['address_two'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!personalDetails.controls['address_two'].errors.required">Address line 2
+                                    is
+                                    required.
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -48,6 +90,13 @@
                                 <option *ngFor="let country of countryArr" [ngValue]="country.name">{{country.name}}
                                 </option>
                             </select>
+
+                            <div *ngIf="personalDetails.controls['country'].invalid && (personalDetails.controls['country'].dirty || personalDetails.controls['country'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!personalDetails.controls['country'].errors.required">Country is
+                                    required.
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group form-input col">
                             <select class="formStyle" (change)="setStateID($event.target.value)"
@@ -55,6 +104,13 @@
                                 <option disabled value="">State</option>
                                 <option *ngFor="let state of stateArr" [ngValue]="state.name">{{state.name}}</option>
                             </select>
+
+                            <div *ngIf="personalDetails.controls['province'].invalid && (personalDetails.controls['province'].dirty || personalDetails.controls['province'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!personalDetails.controls['province'].errors.required">State is
+                                    required.
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group form-input col">
@@ -62,10 +118,23 @@
                                 <option disabled value="">City</option>
                                 <option *ngFor="let city of cityArr" [ngValue]="city.name">{{city.name}}</option>
                             </select>
+
+                            <div *ngIf="personalDetails.controls['city'].invalid && (personalDetails.controls['city'].dirty || personalDetails.controls['city'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!personalDetails.controls['city'].errors.required">City is required.
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group form-input col">
                             <input type="text" formControlName="postal_code" id="postal_code" required />
                             <label for="postal_code" class="form-label">Postal code</label>
+
+                            <div *ngIf="personalDetails.controls['postal_code'].invalid && (personalDetails.controls['postal_code'].dirty || personalDetails.controls['postal_code'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!personalDetails.controls['postal_code'].errors.required">Postal code is
+                                    required.
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -126,6 +195,7 @@
                                         <option *ngFor="let eduCat of eduCatArr" [value]="eduCat.edu_cat_id">
                                             {{eduCat.edu_cat_name}}</option>
                                     </select>
+
                                 </div>
 
 
@@ -247,7 +317,6 @@
                     </div>
                     <br>
                     <br>
-                    <br>
                     <div class="row">
                         <div class="col-4">
                             <div formArrayName="strength">
@@ -313,15 +382,34 @@
                         <div class="form-group form-input col">
                             <input type="text" formControlName="area_of_expertise" id="area_of_expertise" required />
                             <label for="area_of_expertise" class="form-label">Area of expertise</label>
+                            <div *ngIf="workExpDetails.controls['area_of_expertise'].invalid && (workExpDetails.controls['area_of_expertise'].dirty || workExpDetails.controls['area_of_expertise'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!workExpDetails.controls['area_of_expertise'].errors.required">Area of
+                                    expertise is
+                                    required.
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group form-input col">
                             <input type="text" formControlName="psychomatric" id="psychomatric" required />
                             <label for="psychomatric" class="form-label">Psychomatric</label>
+                            <div *ngIf="workExpDetails.controls['psychomatric'].invalid && (workExpDetails.controls['psychomatric'].dirty || workExpDetails.controls['psychomatric'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!workExpDetails.controls['psychomatric'].errors.required">Psychomatric is
+                                    required.
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group form-input col">
                             <input type="text" formControlName="references" id="references" required />
                             <label for="references" class="form-label">References</label>
+                            <div *ngIf="workExpDetails.controls['references'].invalid && (workExpDetails.controls['references'].dirty || workExpDetails.controls['references'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!workExpDetails.controls['references'].errors.required">References is
+                                    required.
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <br>

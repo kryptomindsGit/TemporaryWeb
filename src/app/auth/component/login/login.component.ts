@@ -105,7 +105,7 @@ export class LoginComponent implements OnInit {
           // localStorage.setItem('cognito_id', data[0].cognito:username)
           localStorage.setItem('uid', data[0].uid);
           localStorage.setItem('email', data[0].email);
-          this.__router.navigate(['/feature/feature/full-layout'])
+          this.__router.navigate(['/feature/feature/full-layout/dashboard'])
         })
       }
 

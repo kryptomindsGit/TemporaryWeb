@@ -4,35 +4,63 @@
             <h6>PROFILE DETAILS</h6>
         </div>
         <div class="card-body">
-            <form [formGroup]="employerProfileForm" (ngSubmit)="onSubmit(employerProfileForm.value)">
+            <form [formGroup]="employerProfileForm">
                 <div class="row">
-                    <!-- funny workaround-->
+                    <!--Work around-->
                     <!-- <div class="form-group form-input col" hidden>
-                        <input type="text" formControlName="jo" id="jo" required />
-                        <label for="jo" class="form-label">jo Name</label>
+                        <input type="text" formControlName="jo" autocomplete="off" id="comapany_name" />
                     </div> -->
+                    <!--Work around-->
+
                     <div class="form-group form-input col">
-                        <input type="text" formControlName="comapany_name" id="comapany_name" required />
+                        <input type="text" formControlName="comapany_name" autocomplete="off" id="comapany_name"
+                            required />
                         <label for="comapany_name" class="form-label">Company Name</label>
+
+                        <div *ngIf="employerProfileForm.controls['comapany_name'].invalid && (employerProfileForm.controls['comapany_name'].dirty || employerProfileForm.controls['comapany_name'].touched)"
+                            class="text-danger error-msg">
+                            <div [hidden]="!employerProfileForm.controls['comapany_name'].errors.required">comapany name
+                                is required.</div>
+                        </div>
                     </div>
+
                     <div class="form-group form-input col">
-                        <input type="text" formControlName="website_addr" id="website_addr" required />
+                        <input type="text" formControlName="website_addr" autocomplete="off" id="website_addr"
+                            required />
                         <label for="website_addr" class="form-label">Website Addr</label>
+                        <div *ngIf="employerProfileForm.controls['website_addr'].invalid && (employerProfileForm.controls['website_addr'].dirty || employerProfileForm.controls['website_addr'].touched)"
+                            class="text-danger error-msg">
+                            <div [hidden]="!employerProfileForm.controls['website_addr'].errors.required">website
+                                address is required.</div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group form-input col">
-                        <input type="text" formControlName="address_line_one" id="address_line_one" required />
+                        <input type="text" formControlName="address_line_one" autocomplete="off" id="address_line_one"
+                            required />
                         <label for="address_line_one" class="form-label">Address line 1</label>
+                        <div *ngIf="employerProfileForm.controls['address_line_one'].invalid && (employerProfileForm.controls['address_line_one'].dirty || employerProfileForm.controls['address_line_one'].touched)"
+                            class="text-danger error-msg">
+                            <div [hidden]="!employerProfileForm.controls['address_line_one'].errors.required">address
+                                line one
+                                is required.</div>
+                        </div>
                     </div>
 
                     <div class="form-group form-input col">
-                        <input type="text" formControlName="address_line_two" id="address_line_two" required />
+                        <input type="text" formControlName="address_line_two" autocomplete="off" id="address_line_two"
+                            required />
                         <label for="address_line_two" class="form-label">Address line 2</label>
+                        <div *ngIf="employerProfileForm.controls['address_line_two'].invalid && (employerProfileForm.controls['address_line_two'].dirty || employerProfileForm.controls['address_line_two'].touched)"
+                            class="text-danger error-msg">
+                            <div [hidden]="!employerProfileForm.controls['address_line_two'].errors.required">address
+                                line two
+                                is required.</div>
+                        </div>
                     </div>
                 </div>
-
 
                 <div class="row">
                     <div class="form-group form-input col">
@@ -42,12 +70,22 @@
                             <option *ngFor="let country of countryArr" [ngValue]="country.name">{{country.name}}
                             </option>
                         </select>
+                        <div *ngIf="employerProfileForm.controls['country'].invalid && (employerProfileForm.controls['country'].dirty || employerProfileForm.controls['country'].touched)"
+                            class="text-danger error-msg">
+                            <div [hidden]="!employerProfileForm.controls['country'].errors.required">country
+                                is required.</div>
+                        </div>
                     </div>
                     <div class="form-group form-input col">
                         <select class="formStyle" (change)="setStateID($event.target.value)" formControlName="state">
                             <option disabled value="">State</option>
                             <option *ngFor="let state of stateArr" [ngValue]="state.name">{{state.name}}</option>
                         </select>
+                        <div *ngIf="employerProfileForm.controls['state'].invalid && (employerProfileForm.controls['state'].dirty || employerProfileForm.controls['state'].touched)"
+                            class="text-danger error-msg">
+                            <div [hidden]="!employerProfileForm.controls['state'].errors.required">state
+                                is required.</div>
+                        </div>
                     </div>
 
                     <div class="form-group form-input col">
@@ -55,63 +93,100 @@
                             <option disabled value="">City</option>
                             <option *ngFor="let city of cityArr" [ngValue]="city.name">{{city.name}}</option>
                         </select>
+                        <div *ngIf="employerProfileForm.controls['city'].invalid && (employerProfileForm.controls['city'].dirty || employerProfileForm.controls['city'].touched)"
+                            class="text-danger error-msg">
+                            <div [hidden]="!employerProfileForm.controls['city'].errors.required">city
+                                is required.</div>
+                        </div>
                     </div>
                     <div class="form-group form-input col">
-                        <input type="text" formControlName="zipcode" id="postal_code" required />
+                        <input type="text" formControlName="zipcode" autocomplete="off" id="postal_code" required />
                         <label for="postal_code" class="form-label">Postal code</label>
+                        <div *ngIf="employerProfileForm.controls['zipcode'].invalid && (employerProfileForm.controls['zipcode'].dirty || employerProfileForm.controls['zipcode'].touched)"
+                            class="text-danger error-msg">
+                            <div [hidden]="!employerProfileForm.controls['zipcode'].errors.required">postal code
+                                is required.</div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group form-input col-6">
-                        <input type="text" formControlName="business_cat" id="business_cat" required />
+                        <input type="text" formControlName="business_cat" autocomplete="off" id="business_cat"
+                            required />
                         <label for="business_cat" class="form-label">Business Category</label>
+                        <div *ngIf="employerProfileForm.controls['business_cat'].invalid && (employerProfileForm.controls['business_cat'].dirty || employerProfileForm.controls['business_cat'].touched)"
+                            class="text-danger error-msg">
+                            <div [hidden]="!employerProfileForm.controls['business_cat'].errors.required">business
+                                category
+                                is required.</div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group form-input col">
-                        <input type="text" formControlName="company_profile" id="company_profile" required />
-                        <label for="company_profile" class="form-label">Company Profile</label>
+                        <input type="text" formControlName="company_profile" autocomplete="off" id="company_profile"
+                            required />
+                        <label for="company_profile" class="form-label">Comapany Name</label>
+                        <div *ngIf="employerProfileForm.controls['company_profile'].invalid && (employerProfileForm.controls['company_profile'].dirty || employerProfileForm.controls['company_profile'].touched)"
+                            class="text-danger error-msg">
+                            <div [hidden]="!employerProfileForm.controls['company_profile'].errors.required">company
+                                profile
+                                is required.</div>
+                        </div>
                     </div>
 
                     <div class="form-group form-input col">
-                        <input type="text" formControlName="company_rep_det" id="company_rep_det" required />
+                        <input type="text" formControlName="company_rep_det" autocomplete="off" id="company_rep_det"
+                            required />
                         <label for="company_rep_det" class="form-label">Company Representative Detail</label>
+                        <div *ngIf="employerProfileForm.controls['company_rep_det'].invalid && (employerProfileForm.controls['company_rep_det'].dirty || employerProfileForm.controls['company_rep_det'].touched)"
+                            class="text-danger error-msg">
+                            <div [hidden]="!employerProfileForm.controls['company_rep_det'].errors.required">company
+                                representative details
+                                is required.</div>
+                        </div>
                     </div>
                 </div>
-                <div formArrayName="documents">
+                <!-- <div formArrayName="documents">
                     <div *ngFor="let item of documentArr.controls; let i=index" formGroupName="{{i}}">
                         <div class="row">
                             <div class="form-group form-input col-3">
-                                <input type="text" formControlName="docType"
-                                    (input)="setDocTypeCatType(textInput.value)" id="docType" required />
-                                <label for="docType" class="form-label">Document Type</label>
+                                <input type="text" formControlName="docType" autocomplete="off" #textInput
+                                    (input)="setDocTypeCatType(textInput.value)" id="docType" required>
+
+                                <label for="file_type" class="form-label">Document Type</label>
+                              
                             </div>
-                            <div class="form-group col-4">
+                            <div class="form-group form-input col-3">
                                 <div class="file-upload">
                                     <div class="file-select" id="document_file">
-                                        <input type="file" id="chooseFile" (change)="handleFileInput($event)"
-                                            formControlName="chooseFile" />
+                                        <input type="file" class="document_name" name="chooseFile" id="file_name"
+                                            (change)="handleFileInput($event)" formControlName="chooseFile">
                                     </div>
                                 </div>
+                                
                             </div>
                             <div class=col-2>
                                 <input type="button" class="btnBlue" id="upload" value="UPLOAD" (click)="uploadFile()">
                             </div>
                             <div class="form-group col-2">
                                 <button type="button" class="btn btnadd" (click)="addDocument()">+</button> &nbsp;
+                                &nbsp;
                                 <button type="button" class="btn btnadd" (click)="deleteDocument(i)">-</button>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="row">
                     <div class="col-3"></div>
                     <div class="col-3">
-                        <!-- [disabled]="employerProfileForm.pristine || employerProfileForm.invalid" -->
-                        <button type="button" class="btn btnSave" id="signUpButton">Save</button>
+
+                        <button type="button" class="btn btnSave"
+                            [disabled]="employerProfileForm.pristine || employerProfileForm.invalid"
+                            (click)="onSubmit()" id="signUpButton">Save</button>
                     </div>
                     <div class="col-3">
                         <button type="button" class="btn btnCancel" (click)="onCancel()"

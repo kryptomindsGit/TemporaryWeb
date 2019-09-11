@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="section">
     <div class="personal-details-form" *ngIf="showMainContent == 1">
         <div class="card">
             <div class="card-header">
@@ -13,19 +13,45 @@
                                 <option id="option_txt" *ngFor="let prefix of prefixArr" [value]="prefix">{{prefix}}
                                 </option>
                             </select>
+                            <div *ngIf="personalDetails.controls['prefix'].invalid && (personalDetails.controls['prefix'].dirty || personalDetails.controls['prefix'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!personalDetails.controls['prefix'].errors.required">Prefix is required.
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group form-input col">
                             <input type="text" formControlName="first_name" id="first_name" required />
                             <label for="first_name" class="form-label">First Name</label>
+
+                            <div *ngIf="personalDetails.controls['first_name'].invalid && (personalDetails.controls['first_name'].dirty || personalDetails.controls['first_name'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!personalDetails.controls['first_name'].errors.required">First name is
+                                    required.
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group form-input col">
                             <input type="text" formControlName="middle_name" id="middle_name" required />
                             <label for="middle_name" class="form-label">Middle Name</label>
+
+                            <div *ngIf="personalDetails.controls['middle_name'].invalid && (personalDetails.controls['middle_name'].dirty || personalDetails.controls['middle_name'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!personalDetails.controls['middle_name'].errors.required">Middle name is
+                                    required.
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group form-input col">
                             <input type="text" formControlName="last_name" id="last_name" required />
                             <label for="last_name" class="form-label">Last Name</label>
+
+                            <div *ngIf="personalDetails.controls['last_name'].invalid && (personalDetails.controls['last_name'].dirty || personalDetails.controls['last_name'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!personalDetails.controls['last_name'].errors.required">Last name is
+                                    required.
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -33,10 +59,26 @@
                         <div class="form-group form-input col">
                             <input type="text" formControlName="address_one" id="address_one" required />
                             <label for="address_one" class="form-label">Address Line 1</label>
+
+                            <div *ngIf="personalDetails.controls['address_one'].invalid && (personalDetails.controls['address_one'].dirty || personalDetails.controls['address_one'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!personalDetails.controls['address_one'].errors.required">Address line 1
+                                    is
+                                    required.
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group form-input col">
                             <input type="text" formControlName="address_two" id="address_two" required />
                             <label for="address_two" class="form-label">Address Line 2</label>
+
+                            <div *ngIf="personalDetails.controls['address_two'].invalid && (personalDetails.controls['address_two'].dirty || personalDetails.controls['address_two'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!personalDetails.controls['address_two'].errors.required">Address line 2
+                                    is
+                                    required.
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -48,6 +90,13 @@
                                 <option *ngFor="let country of countryArr" [ngValue]="country.name">{{country.name}}
                                 </option>
                             </select>
+
+                            <div *ngIf="personalDetails.controls['country'].invalid && (personalDetails.controls['country'].dirty || personalDetails.controls['country'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!personalDetails.controls['country'].errors.required">Country is
+                                    required.
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group form-input col">
                             <select class="formStyle" (change)="setStateID($event.target.value)"
@@ -55,6 +104,13 @@
                                 <option disabled value="">State</option>
                                 <option *ngFor="let state of stateArr" [ngValue]="state.name">{{state.name}}</option>
                             </select>
+
+                            <div *ngIf="personalDetails.controls['province'].invalid && (personalDetails.controls['province'].dirty || personalDetails.controls['province'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!personalDetails.controls['province'].errors.required">State is
+                                    required.
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group form-input col">
@@ -62,10 +118,23 @@
                                 <option disabled value="">City</option>
                                 <option *ngFor="let city of cityArr" [ngValue]="city.name">{{city.name}}</option>
                             </select>
+
+                            <div *ngIf="personalDetails.controls['city'].invalid && (personalDetails.controls['city'].dirty || personalDetails.controls['city'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!personalDetails.controls['city'].errors.required">City is required.
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group form-input col">
                             <input type="text" formControlName="postal_code" id="postal_code" required />
                             <label for="postal_code" class="form-label">Postal code</label>
+
+                            <div *ngIf="personalDetails.controls['postal_code'].invalid && (personalDetails.controls['postal_code'].dirty || personalDetails.controls['postal_code'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!personalDetails.controls['postal_code'].errors.required">Postal code is
+                                    required.
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -73,15 +142,17 @@
 
                     <div formArrayName="documents_personal">
                         <div *ngFor="let item of documentArr.controls; let i=index" formGroupName="{{i}}">
-
+                            <!-- <label for="quali">Documents :</label> -->
                             <div class="row">
-                                <div class="form-group form-input col-5">
-                                    <input type="text" formControlName="docType" #textInput
-                                        (input)="setDocTypeCatType(textInput.value)" class="formStyle" id="docType"
-                                        required />
-                                    <label for="docType" class="form-label">Document Type</label>
+                                <div class="form-group form-input col-3">
+                                    <select class="formStyle" (change)="setDocTypeCatID($event.target.value)"
+                                        formControlName="file_type">
+                                        <option disabled value="">Document type</option>
+                                        <option id="option_txt" *ngFor="let docType of docTypeArr"
+                                            [value]="docType.doc_type_id">{{docType.doc_type}}</option>
+                                    </select>
                                 </div>
-                                <div class="form-group form-input col-5">
+                                <div class="form-group form-input col-3">
                                     <div class="file-upload">
                                         <div class="file-select" id="document_file">
                                             <input type="file" class="document_name" name="chooseFile" id="chooseFile"
@@ -89,13 +160,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class=col-2>
+                                    <input type="button" class="btnBlue" id="upload" value="UPLOAD"
+                                        (click)="uploadPersonalFile()">
+                                </div>
                                 <div class="form-group col-2">
-                                    <div class="qualif_btn">
-                                        <button type="button" class="btn btn-secondary btn_add"
-                                            (click)="addDocument()">+</button> &nbsp;
-                                        <button type="button" class="btn btn-secondary btn_remove"
-                                            (click)="deleteDocument(i)">-</button>
-                                    </div>
+                                    <button type="button" class="btn btnadd" (click)="addDocument()">+</button>
+                                    &nbsp;
+                                    <button type="button" class="btn btnadd" (click)="deleteDocument(i)">-</button>
                                 </div>
                             </div>
                         </div>
@@ -115,22 +187,22 @@
                 <form [formGroup]="qualificationDetails" novalidate>
                     <div formArrayName="qualification">
                         <div *ngFor="let item of qualfArr.controls; let i=index" [formGroupName]="i">
-
+                            <!-- <label for="quali">Education :</label> -->
                             <div class="row">
                                 <div class="form-group form-input col-3">
                                     <select (change)="setEduCatByID($event.target.value)" formControlName="edu_cat_id">
                                         <option disabled value="">Category</option>
-                                        <option *ngFor="let eduCat of eduCatArr" [ngValue]="eduCat.edu_cat_name"
-                                            [selected]="eduCat.edu_cat_id == item.value.edu_cat_id">
+                                        <option *ngFor="let eduCat of eduCatArr" [value]="eduCat.edu_cat_id">
                                             {{eduCat.edu_cat_name}}</option>
                                     </select>
+
                                 </div>
+
 
                                 <div class="form-group form-input col-3">
                                     <select formControlName="edu_type_id">
                                         <option disabled value="">Qualification</option>
-                                        <option *ngFor="let edu of eduArr" [ngValue]="edu.edu_name"
-                                            [selected]="edu.edu_type_id == item.value.edu_type_id">{{edu.edu_name}}
+                                        <option *ngFor="let edu of eduArr" [value]="edu.edu_type_id">{{edu.edu_name}}
                                         </option>
                                     </select>
                                 </div>
@@ -161,20 +233,22 @@
                                     </select>
                                 </div>
 
-                                <div class="form-group form-input col-6">
+                                <div class="form-group form-input col-4">
                                     <div class="file-upload">
                                         <div class="file-select">
                                             <input type="file" class="document_name" name="chooseFile" id="chooseFile"
-                                                (change)="handleBlockChainQualFileData($event, i)"
-                                                [(ngModel)]="item.value.doc_name.doc_name" formControlName="doc_name" />
+                                                (change)="handleFileInput($event, i)" formControlName="doc_name" />
                                         </div>
                                     </div>
                                 </div>
+                                <div class=col-2>
+                                    <input type="button" class="btnBlue" id="upload" value="UPLOAD"
+                                        (click)="uploadEducationFile()">
+                                </div>
                                 <div class="form-group form-input col-2">
-                                    <button type="button" class="btn btn-secondary btn_add"
-                                        (click)="addQualification()">+</button> &nbsp;
-                                    <button type="button" class="btn btn-secondary btn_remove"
-                                        (click)="deleteQualification(i)">-</button>
+                                    <button type="button" class="btn btnadd" (click)="addQualification()">+</button>
+                                    &nbsp;
+                                    <button type="button" class="btn btnadd" (click)="deleteQualification(i)">-</button>
                                 </div>
                             </div>
                         </div>
@@ -215,14 +289,14 @@
                                     <input [owlDateTimeTrigger]="dt" formControlName="start_date"
                                         placeholder="Start Date" id="datePicker" [owlDateTime]="dt">
                                     <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
-
+                                    <!-- <label for="datePicker" class="form-label">Start Date</label> -->
                                 </div>
 
                                 <div class="form-group form-input col-3">
                                     <input [owlDateTimeTrigger]="dt2" formControlName="end_date" id="datePicker1"
                                         placeholder="End Date" [owlDateTime]="dt2">
                                     <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
-
+                                    <!-- <label for="datePicker1" class="form-label">End Date</label> -->
                                 </div>
 
                                 <div class="form-group form-input col-3">
@@ -232,9 +306,9 @@
                                 </div>
 
                                 <div class="form-group col-md-3">
-                                    <button type="button" class="btn btn-secondary btn_add"
-                                        (click)="addResponsibility()">+</button> &nbsp;
-                                    <button type="button" class="btn btn-secondary btn_remove"
+                                    <button type="button" class="btn btnadd" (click)="addResponsibility()">+</button>
+                                    &nbsp;
+                                    <button type="button" class="btn btnadd"
                                         (click)="deleteResponsibility(i)">-</button>
                                 </div>
                             </div>
@@ -253,9 +327,9 @@
                                         </div>
 
                                         <div class="col-5">
-                                            <button type="button" class="btn btn-secondary btn_add"
-                                                (click)="addStrength()">+</button> &nbsp;
-                                            <button type="button" class="btn btn-secondary btn_remove"
+                                            <button type="button" class="btn btnadd" (click)="addStrength()">+</button>
+                                            &nbsp;
+                                            <button type="button" class="btn btnadd"
                                                 (click)="deleteStrength(i)">-</button>
                                         </div>
                                     </div>
@@ -272,9 +346,9 @@
                                         </div>
 
                                         <div class="col-5">
-                                            <button type="button" class="btn btn-secondary btn_add"
-                                                (click)="addWeakness()">+</button> &nbsp;
-                                            <button type="button" class="btn btn-secondary btn_remove"
+                                            <button type="button" class="btn btnadd" (click)="addWeakness()">+</button>
+                                            &nbsp;
+                                            <button type="button" class="btn btnadd"
                                                 (click)="deleteWeakness(i)">-</button>
                                         </div>
                                     </div>
@@ -291,9 +365,9 @@
                                         </div>
 
                                         <div class="col-5">
-                                            <button type="button" class="btn btn-secondary btn_add"
-                                                (click)="addPortfolio()">+</button> &nbsp;
-                                            <button type="button" class="btn btn-secondary btn_remove"
+                                            <button type="button" class="btn btnadd" (click)="addPortfolio()">+</button>
+                                            &nbsp;
+                                            <button type="button" class="btn btnadd"
                                                 (click)="deletePortfolio(i)">-</button>
                                         </div>
                                     </div>
@@ -307,29 +381,50 @@
                         <div class="form-group form-input col">
                             <input type="text" formControlName="area_of_expertise" id="area_of_expertise" required />
                             <label for="area_of_expertise" class="form-label">Area of expertise</label>
+                            <div *ngIf="workExpDetails.controls['area_of_expertise'].invalid && (workExpDetails.controls['area_of_expertise'].dirty || workExpDetails.controls['area_of_expertise'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!workExpDetails.controls['area_of_expertise'].errors.required">Area of
+                                    expertise is
+                                    required.
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group form-input col">
                             <input type="text" formControlName="psychomatric" id="psychomatric" required />
                             <label for="psychomatric" class="form-label">Psychomatric</label>
+                            <div *ngIf="workExpDetails.controls['psychomatric'].invalid && (workExpDetails.controls['psychomatric'].dirty || workExpDetails.controls['psychomatric'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!workExpDetails.controls['psychomatric'].errors.required">Psychomatric is
+                                    required.
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group form-input col">
                             <input type="text" formControlName="references" id="references" required />
                             <label for="references" class="form-label">References</label>
+                            <div *ngIf="workExpDetails.controls['references'].invalid && (workExpDetails.controls['references'].dirty || workExpDetails.controls['references'].touched)"
+                                class="text-danger error-msg">
+                                <div [hidden]="!workExpDetails.controls['references'].errors.required">References is
+                                    required.
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <br>
 
-                    <div formArrayName="documentWorkArray">
+                    <div formArrayName="documents_work">
                         <div *ngFor="let item of documentArr.controls; let i=index" formGroupName="{{i}}">
                             <div class="row">
-                                <div class="form-group form-input col-4">
-                                    <input type="text" formControlName="docType" #textInput
-                                        (input)="setDocTypeCatType(textInput.value)" class="formStyle" id="docType"
-                                        required />
-                                    <label for="docType" class="form-label">Document Type</label>
+                                <div class="form-group form-input col-3">
+                                    <select class="formStyle" (change)="setDocTypeCatID($event.target.value)"
+                                        formControlName="file_type">
+                                        <option disabled value="">Document type</option>
+                                        <option id="option_txt" *ngFor="let docType of docTypeArr"
+                                            [value]="docType.doc_type_id">{{docType.doc_type}}</option>
+                                    </select>
                                 </div>
-                                <div class="form-group form-input col-6">
+                                <div class="form-group form-input col-3">
                                     <div class="file-upload">
                                         <div class="file-select" id="document_file">
                                             <input type="file" class="document_name" name="chooseFile" id="chooseFile"
@@ -337,21 +432,29 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class=col-2>
+                                    <input type="button" class="btnBlue" id="upload" value="UPLOAD"
+                                        (click)="uploadWorkExpFile()">
+                                </div>
                                 <div class="form-group col-2">
-                                    <div class="qualif_btn">
-                                        <button type="button" class="btn btn-secondary btn_add"
-                                            (click)="addDocument()">+</button> &nbsp;
-                                        <button type="button" class="btn btn-secondary btn_remove"
-                                            (click)="deleteDocument(i)">-</button>
-                                    </div>
+                                    <button type="button" class="btn btnAdd" (click)="addDocument()">+</button> &nbsp;
+                                    <button type="button" class="btn btnAdd" (click)="deleteDocument(i)">-</button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    <div class="row col-6">
+                        <label> Would you like to be an Interviewer? </label> &nbsp;&nbsp;
+                        <label class="radio-inline radiobutton"><input checked type="radio" value="Y"
+                                name="isFreelancer" formControlName="isFreelancer">Yes</label> &nbsp;&nbsp;&nbsp;
+                        <label class="radio-inline radiobutton"><input type="radio" value="N" name="isFreelancer"
+                                formControlName="isFreelancer">No</label>
+                    </div>
+
                     <button type="button" class="btnPrevious" (click)="ShowNextButton(2)">Previous</button>
 
-                    <button type="button" class="btnNext" (click)="ShowNextButton(4)">Next</button>
+                    <button type=" button" class="btnNext" (click)="ShowNextButton(4)">Next</button>
 
                 </form>
             </div>
@@ -426,19 +529,9 @@
                                                 <li>
                                                     <label class="checkbox-grid-col"
                                                         *ngFor="let item of skills; let i = index">
-                                                        <ng-container
-                                                            *ngIf="isCheck_skills[i] == item.skill_id; else second">
-                                                            <input type="checkbox" checked id="skillsName"
-                                                                (change)="onChange(item.skill_name,item.skill_id,$event.target.checked)">
-                                                            {{item.skill_name}}
-                                                        </ng-container>
-                                                        <ng-template #second>
-                                                            <ng-container>
-                                                                <input type="checkbox" id="skillsName"
-                                                                    (change)="onChange(item.skill_name,item.skill_id,$event.target.checked)">
-                                                                {{item.skill_name}}
-                                                            </ng-container>
-                                                        </ng-template>
+                                                        <input type="checkbox"
+                                                            (change)="onChange(item.skill_name,item.skill_id,$event.target.checked)">
+                                                        {{item.skill_name}}
                                                     </label>
                                                 </li>
                                             </ul>
@@ -481,11 +574,14 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="button" class="btnPrevious" (click)="ShowNextButton(2)">Previous</button>
+                        <button type="button" class="btnPrevious" (click)="ShowNextButton(3)">Previous</button>
                         <button type="button" class="btnNext" (click)="onSubmitDetails()">Save</button>
                     </div>
                 </form>
             </div>
         </div>
+
+
     </div>
+
 </div>
