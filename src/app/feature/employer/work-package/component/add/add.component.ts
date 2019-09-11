@@ -24,18 +24,19 @@ export class AddComponent implements OnInit {
   currencyArr=['$' , 'Rs'];
   countries=[];
   durationArr=['days','months','years'];
+  allDomainArr = [];
+  allSkillsArr = [];
 
   //Date 
   today = new Date();
   todayDate: string ;
   employerId:number = 123456789;
 
-  //other variables
-
+  //skill related variables
+ 
   durationYears : number = 2019;
   durationMonths : number = 8;
   durationDays : number = 23;
-  duration_options : string;
   isSelected : boolean = false;
   
 
@@ -50,6 +51,7 @@ export class AddComponent implements OnInit {
     this.formatToday();
     this.createProjectForm();
     this.createSkillForm();
+    this.getAllDomain();
     this.getAllCountries();
   }
 
@@ -66,7 +68,9 @@ export class AddComponent implements OnInit {
       proj_desc:['',[Validators.required]],
       complexity:['',[Validators.required]],
       duration_option:['',[Validators.required]],
-      duration:['',[Validators.required]],
+      durationYears:['',[Validators.required]],
+      durationMonths:['',[Validators.required]],
+      durationDays:['',[Validators.required]],
       proj_start_date:['',[Validators.required]],
       budgetAmt:['',[Validators.required]],
       currency:['',[Validators.required]],
@@ -77,8 +81,9 @@ export class AddComponent implements OnInit {
 
   createSkillForm(){
     this.skillForm = this.fb.group({
-        // skillDetails :  this.fb.array([this.fb.group({
-          skill:['',[Validators.required]],
+      skillDetails: this.fb.array([this.fb.group({
+        domain : ['',[Validators.required]],
+        skill:['',[Validators.required]],
           skillLevel:['',[Validators.required]],
           projectType:['',[Validators.required]],
           members:['', Validators.required],
@@ -88,9 +93,15 @@ export class AddComponent implements OnInit {
           currency:['',[Validators.required]],
           skill_start_date:['',[Validators.required]],
           skill_end_date:['',[Validators.required]],
-        });
-    //   ])
-    // });
+      })]),
+    });
+  }
+
+  selectSkills(country_id){
+    this.__profileService.getFreelancerSkills(country_id).then((data: any) => {
+      this.allSkillsArr = data;
+      console.log("all skills" , this.allSkillsArr);
+    })
   }
 
   getAllCountries(){
@@ -102,30 +113,32 @@ export class AddComponent implements OnInit {
   }
 
   setDuration(){
-    console.log("duration" + this.projectForm.controls.duration_option.value);
-    this.duration_options = this.projectForm.controls.duration_option.value;
-    if(this.duration_options == 'years'){
-      this.durationYears = this.projectForm.controls.duration.value ;
+    this.durationYears = this.projectForm.controls.durationYears.value;
+    this.durationMonths = this.projectForm.controls.durationMonths.value;
+    this.durationDays = this.projectForm.controls.durationDays.value;
+
+    if((
+          this.durationYears !==null && this.durationMonths == null && this.durationDays == null)
+      
+      ){
       this.durationMonths= 0;
       this.durationDays= 0;
-    }else if(this.duration_options == 'months'){
+    }else if(this.durationYears !==null && this.durationMonths == null && this.durationDays == null){
       this.durationYears = 0;
-      this.durationMonths= this.projectForm.controls.duration.value ;
       this.durationDays= 0;
     }else{
       this.durationYears = 0 ;
       this.durationMonths= 0;
-      this.durationDays= this.projectForm.controls.duration.value ;
     }
   }
 
   
-  get workSkillArr() {
+  get skillDetailsArr() {
     return this.skillForm.get('skillDetails') as FormArray;
   }
 
   addSkill(){
-    this.workSkillArr.push(this.fb.group(
+    this.skillDetailsArr.push(this.fb.group(
       {
         skill : '',
         skillLevel : '',
@@ -141,7 +154,14 @@ export class AddComponent implements OnInit {
   }
 
   removeSkill(index){
-    this.workSkillArr.removeAt(index);
+    this.skillDetailsArr.removeAt(index);
+  }
+
+  getAllDomain(){
+    this.__profileService.getFreelancerCategory().then((data: any) => {
+      this.allDomainArr = data;
+      console.log("Domain Values" , this.allDomainArr);
+    })
   }
 
   isReviewer(){
@@ -149,10 +169,9 @@ export class AddComponent implements OnInit {
     console.log("I need Reviewer" + this.isSelected);
   }
 
-  onSubmit(){
-
+ 
+  saveDetails(){
     this.setDuration();
-
     const workPackagePayload = { 
       budget: this.projectForm.controls.budgetAmt.value,
       estimatedCost: this.projectForm.controls.estimatedCost.value,
@@ -165,20 +184,29 @@ export class AddComponent implements OnInit {
       complexity: this.projectForm.controls.complexity.value,
       budgetCurrencyCode: this.projectForm.controls.currency.value,
       estimatedCostCurrency:this.projectForm.controls.currency.value,
-      countryPreference:this.skillForm.controls.country.value,
       approxStartDate1 :this.projectForm.controls.proj_start_date.value,
       preferredAttributes :"",
-      postedByIndividualEmpId :"" ,
-      postedByEnterpriseEmpId : "",
-    }
-
-    const skillDetails = {
-      // skillDetails :  
+      postedByIndividualEmpId :{} ,
+      postedByEnterpriseEmpId : {},
     }
     console.log("Work package payload" , workPackagePayload);
 
+
     this.__workpackageService.postWorkPackageData(workPackagePayload).then((workData: any) =>{
-        console.log("Data is successfully saved");
-    });
+      console.log("Data is successfully saved");
+     });
+
+     
+  }
+  onSubmit(){
+    const skillDetailsPayload = { 
+     payload:this.skillForm.controls.skillDetails.value
+    }
+
+    console.log("Work payload",  this.skillForm.controls.skillDetails.value);
+
+    this.__workpackageService.postWorkPackageSkillData(skillDetailsPayload).then((workData: any) =>{
+      console.log("Data is successfully saved" ,workData);
+  });
   }
 }

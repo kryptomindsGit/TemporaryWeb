@@ -10,12 +10,12 @@
   color: $text-color;
   overflow: scroll;
   font-weight: 400;
-  // width:100%;
+  width:90%;
   height:100vh;
   position: fixed;
 }
 .container{
-  max-width: 90% !important;
+  // max-width: 90% !important;
   position: relative;
   }
 p{
@@ -35,7 +35,7 @@ CARD CSS
 -------------------------------------------------------------------------*/
 
 .card {
-  widows: 70%; 
+  widows: 100%; 
   height: auto !important;
   // margin: 1rem auto !important;
   margin-top:0.3rem;;
@@ -278,6 +278,7 @@ input[type=checkbox] {
     border-radius:2rem;
     margin-left:1rem;
     margin-top: 1rem;
+    margin-bottom: 5rem;
     background: rgba(2, 41, 148, 0.966);
     width:7rem;
     height: 3rem;
@@ -297,8 +298,9 @@ input[type=checkbox] {
     } 
 
     .setwidth{
-      width: 7rem;
+      width : 7rem;
     }
+
     .increment{
       border-radius: 50%;
       background: rgba(2, 41, 148, 0.966);

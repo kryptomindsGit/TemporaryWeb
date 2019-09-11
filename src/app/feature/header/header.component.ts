@@ -84,7 +84,7 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-
+}
   // userRoleInfo() {
   //   console.log("Indise userRoleInfo");
 
@@ -132,4 +132,89 @@ export class HeaderComponent implements OnInit {
   //   }
   // }
 
-}
+
+  // userRoleInfo() {
+  //   console.log("Indise userRoleInfo");
+
+  //   if (this.userRole == "Freelancer") {
+  //     console.log("Inside Freelancer");
+  //     this.__idptProfileService.getFreelancerByEmail(this.email_id).then((resData: any) => {
+  //       this.freelancerDetailsArr = resData[0];
+  //       console.log(this.freelancerDetailsArr);
+  //     });
+  //     // if (this.indepUserDetails == null) {
+  //     this.__router.navigate(['/feature/feature/full-layout/independent/profile/indp-profile/add']);
+  //     // } else {
+  //     this.__router.navigate(['/feature/feature/full-layout/independent/profile/indp-profile/view', this.email_id]);
+  //     // }
+  //   }
+  //   else if (this.userRole == "Employer") {
+  //     console.log("Inside Employer");
+  //     this.__empProfileService.getEmployerByEmailId(this.email_id).then((resData: any) => {
+  //       this.employerDetailsArr = resData[0];
+  //       console.log(this.employerDetailsArr);
+  //     });
+  //     if (this.indepUserDetails == null) {
+  //       this.__router.navigate(['/feature/feature/full-layout/employer/profile/emp-profile/add']);
+  //     } else {
+  //       this.__router.navigate(['/feature/feature/full-layout/employer/profile/emp-profile/view', this.email_id]);
+  //     }
+  //   }
+  //   else if (this.userRole == "Partner") {
+  //     console.log("Inside Partner");
+
+  //     this.__partProfileService.getPartnerByEmailId(this.email_id).then((resData: any) => {
+  //       this.partnerDetailsArr = resData[0];
+  //       console.log(this.partnerDetailsArr);
+  //     });
+
+  //     if (this.indepUserDetails == null) {
+  //       this.__router.navigate(['/feature/feature/full-layout/employer/profile/emp-profile/add']);
+  //     } else {
+  //       this.__router.navigate(['/feature/feature/full-layout/employer/profile/emp-profile/view', this.email_id]);
+  //     }
+  //   }
+  // }
+
+
+    // if (this.userRole == "Freelancer") {
+    //   this.__idptProfileService.getFreelancerByEmail(this.email_id).then((resData: any) => {
+    //     this.freelancerDetailsArr = resData[0];
+    //     console.log(this.freelancerDetailsArr);
+    //   });
+    //   // if (this.indepUserDetails == null) {
+    //   this.__router.navigate(['/feature/feature/full-layout/independent/profile/indp-profile/add']);
+    //   // } else {
+    //   //   this.__router.navigate(['/feature/feature/full-layout/independent/profile/indp-profile/view', this.email_id]);
+    //   // }
+    // }
+    // else if (this.userRole == "Employer") {
+    //   this.__empProfileService.getEmployerByEmailId(this.email_id).then((resData: any) => {
+    //     this.employerDetailsArr = resData[0];
+    //     console.log(this.employerDetailsArr);
+    //   });
+    //   if (this.indepUserDetails == null) {
+    //     this.__router.navigate(['/feature/feature/full-layout/employer/profile/emp-profile/add']);
+    //   } else {
+    //     this.__router.navigate(['/feature/feature/full-layout/employer/profile/emp-profile/view', this.email_id]);
+    //   }
+    // }
+    // else if (this.userRole == "Partner") {
+    //   this.__partProfileService.getPartnerByEmailId(this.email_id).then((resData: any) => {
+    //     this.partnerDetailsArr = resData[0];
+    //     console.log(this.partnerDetailsArr);
+    //   });
+
+    //   if (this.indepUserDetails == null) {
+    //     this.__router.navigate(['/feature/feature/full-layout/partner/profile/part-profile/add']);
+    //   } else {
+    //     this.__router.navigate(['/feature/feature/full-layout/partner/profile/part-profile/view', this.email_id]);
+    //   }
+    // }
+    // else {
+    //   console.log("error in routing based User Role")
+    // }
+//   }
+ 
+
+

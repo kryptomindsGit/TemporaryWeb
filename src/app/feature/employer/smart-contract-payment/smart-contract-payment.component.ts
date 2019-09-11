@@ -1,12 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-smart-contract-payment',
   templateUrl: './smart-contract-payment.component.html',
   styleUrls: ['./smart-contract-payment.component.scss']
 })
+
 export class SmartContractPaymentComponent implements OnInit {
+
+
+//Milestone Related Variables
+milestoneForm : FormGroup;
+
+//payment section realated variables
+
+
+//Payment Shedule related Variables
+
+
 
 teamMemberArr = [
                   {memberId: 1 ,status :'pending'},
@@ -15,7 +27,6 @@ teamMemberArr = [
                 ];
 paymentMethodArr = ['paypal','net-backing'];
 
-  contractForm : FormGroup;
   contractStatus : string ="";
   searchFreelancer:number;
   constructor(
@@ -25,22 +36,48 @@ paymentMethodArr = ['paypal','net-backing'];
 
   ngOnInit() {
 
-    this.contractForm = this.__fb.group({
-      teamMember: ['', Validators.required],
+   this.createProjectForm();
+  }
+
+
+  createProjectForm(){
+    this.milestoneForm = this.__fb.group({
+      milestoneDetails: this.__fb.array([this.__fb.group({
+      // jo: ['', Validators.required],
+      milestone:['',[Validators.required]],
+      start_date:['',[Validators.required]],
+      end_date:['',[Validators.required]],
+      criteria:['',[Validators.required]],
+      teamMember:['',[Validators.required]],
+      // paymentMethod: ['', Validators.required],
+      amt:['',[Validators.required]]
+    })]),
     });
   }
-
-  onMemberSelect(){
-    this.searchFreelancer= this.contractForm.controls.teamMember.value;
-
-    for(let i=0;i<this.teamMemberArr.length ;i++){
-      if(this.searchFreelancer == this.teamMemberArr[i].memberId){
-        this.contractStatus = this.teamMemberArr[i].status;
-        break; 
-      }
-    }
-    console.log("selected Team Member" + this.searchFreelancer);
-    
+  
+  
+  get milstoneDetailsArr() {
+    return this.milestoneForm.get('milestoneDetails') as FormArray;
   }
+
+
+  addMolestone(){
+    this.milstoneDetailsArr.push(this.__fb.group(
+      {
+        milestone : '',
+        start_date : '',
+        end_date : '',
+        criteria : '',
+        teamMember : '',
+        amt : ''
+      }))
+  }
+
+  removeMilestone(index){
+    this.milstoneDetailsArr.removeAt(index);
+
+  }
+
+ 
 
 }
