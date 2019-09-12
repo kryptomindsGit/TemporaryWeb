@@ -193,7 +193,7 @@
                               <th>Domain</th>
                               <th class="setwidth">Skill</th>
                               <th class="setwidth">Expertise</th>  
-                              <th class="setwidth">Project Type</th>
+                              <th class="setwidth">Part-time/Full-time</th>
                               <th>No. of team members</th>
                               <th>Country</th>
                               <th>Rate/hour</th>
@@ -226,13 +226,13 @@
                                     </select>
                               </td>
                               <td scope="row">
-                                  <select formControlName="projectType" id=" projectType">
-                                    <option>Select Project Type</option>
+                                  <select formControlName="availability" id=" projectType">
+                                    <option>Select</option>
                                     <option id="option_type" *ngFor="let  projectType of  projectTypeArr" [value]=" projectType">{{projectType}}</option>
                                   </select>
                               </td>
                               <td scope="row">
-                                  <input type="text" formControlName="members">
+                                  <input type="text" formControlName="members" placeholder="Members">
                                 </td>
                                 <td scope="row">
                                     <select formControlName="country" id="country">
@@ -242,10 +242,10 @@
                                       
                                 </td>
                                 <td scope="row">
-                                    <input formControlName="rate" type="text">
+                                    <input formControlName="ratePerHour" type="text" placeholder="Rate/hour">
                                 </td>
                                 <td scope="row">
-                                    <input formControlName="avgRate" type="text">
+                                    <input formControlName="availableAvgRatePerHour" type="text" placeholder="Avg Rate">
                                   </td>
                                   <td scope="row">
                                           <select formControlName="currency" id="currency">

@@ -54,11 +54,11 @@ export class WorkPackageService {
   }
 
   //fetch using emial id latter
-  async getWorkPackageData(packageId : any):Promise<any> {
+  async getWorkPackageData(packageId : number):Promise<any> {
     console.log("Package Data :" , packageId);
     
     try {
-      let res = await this.http.get(`${SPRING_URL}/workpackage/wp-save/${packageId}`,httpOptions).toPromise();
+      let res = await this.http.get(`${SPRING_URL}/workpackage/wp-fetch/${packageId}`,httpOptions).toPromise();
       return res;
     } catch (error) {
       this.handleError(error);      
@@ -69,8 +69,10 @@ export class WorkPackageService {
     console.log("Package Data :" , skillPackageId);
     
     try {
-      let res = await this.http.get(`${SPRING_URL}/workpackage/wp-save/${skillPackageId}`,httpOptions).toPromise();
+      let res = await this.http.get(`${SPRING_URL}/workpackage/wp-skills/${skillPackageId}`,httpOptions).toPromise();
+      console.log("data " ,res);
       return res;
+      
     } catch (error) {
       this.handleError(error);      
     }

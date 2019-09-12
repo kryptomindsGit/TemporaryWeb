@@ -82,15 +82,15 @@ export class AddComponent implements OnInit {
   createSkillForm(){
     this.skillForm = this.fb.group({
       skillDetails: this.fb.array([this.fb.group({
-        domain : ['',[Validators.required]],
-        skill:['',[Validators.required]],
+          domain : ['',[Validators.required]],
+          skill:['',[Validators.required]],
           skillLevel:['',[Validators.required]],
-          projectType:['',[Validators.required]],
+          availability:['',[Validators.required]],
           members:['', Validators.required],
           country:['',[Validators.required]],
-          rate:['',[Validators.required]],
-          avgRate:['',[Validators.required]],
-          currency:['',[Validators.required]],
+          ratePerHour:['',[Validators.required]],
+          availableAvgRatePerHour:['',[Validators.required]],
+          currencyCode:['',[Validators.required]],
           skill_start_date:['',[Validators.required]],
           skill_end_date:['',[Validators.required]],
       })]),
@@ -186,8 +186,8 @@ export class AddComponent implements OnInit {
       estimatedCostCurrency:this.projectForm.controls.currency.value,
       approxStartDate1 :this.projectForm.controls.proj_start_date.value,
       preferredAttributes :"",
-      postedByIndividualEmpId :{} ,
-      postedByEnterpriseEmpId : {},
+      // postedByIndividualEmpId :{} ,
+      // postedByEnterpriseEmpId : {},
     }
     console.log("Work package payload" , workPackagePayload);
 
@@ -197,7 +197,7 @@ export class AddComponent implements OnInit {
      });
 
      
-  }
+  } 
   onSubmit(){
     const skillDetailsPayload = { 
      payload:this.skillForm.controls.skillDetails.value
@@ -207,6 +207,7 @@ export class AddComponent implements OnInit {
 
     this.__workpackageService.postWorkPackageSkillData(skillDetailsPayload).then((workData: any) =>{
       console.log("Data is successfully saved" ,workData);
+
   });
   }
 }

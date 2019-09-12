@@ -75,7 +75,6 @@ paymentMethodArr = ['paypal','net-backing'];
 
   removeMilestone(index){
     this.milstoneDetailsArr.removeAt(index);
-
   }
 
  

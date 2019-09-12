@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SwiperOptions } from 'swiper';
+import { WorkPackageService } from '../../shared/service/work-package.service';
 
 @Component({
   selector: 'app-view',
@@ -29,7 +30,7 @@ export class ViewComponent implements OnInit {
   startDate : string = "10 jan 2019";
   fromDate : string = "14 jan 2019";
   toDate : string = "1 june 2019";
-
+  budgetCurrency : string ;
      
   
 
@@ -43,9 +44,13 @@ export class ViewComponent implements OnInit {
     spaceBetween: 30
   };
 
-  constructor() { }
+  constructor(
+    private __workService: WorkPackageService,
+  ) { }
 
   ngOnInit() {
+
+    this.getWorkPackage(2);
     
   }
   onClick(event)
@@ -56,7 +61,6 @@ export class ViewComponent implements OnInit {
       // this.Lastname = document.getElementById("lastname"+this.UserId).innerHTML;
       // this.Email = document.getElementById("email"+this.UserId).innerHTML;
 
-      
       this.UserId= "1";
       this.Firstname = "Irshad";
       this.Lastname ="Hukeri";
@@ -66,6 +70,26 @@ export class ViewComponent implements OnInit {
   hide()
   {
     this.showModal = false;
+  }
+
+  getWorkPackage(id){
+    
+    this.__workService.getWorkPackageData(id).then((resData: any) => {
+      console.log(resData.responseObject);
+      this.projectName = resData.responseObject.projectName ;
+      this.projectDesc = resData.responseObject.projectDescription ;
+      this.budget = resData.responseObject.budget ;
+      this.estimatedCost =  resData.responseObject.estimatedCost;
+      this.startDate = resData.responseObject.approxStartDate;
+      this.toDate = resData.responseObject.approxStartDate;
+      this.budgetCurrency = resData.responseObject.budgetCurrencyCode;
+    });
+
+    this.__workService.getSkillPackageData(id).then((resData: any) => {
+      console.log(resData);
+    });
+
+
   }
 
 }

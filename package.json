@@ -24,6 +24,7 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.4.1",
     "jwt-decode": "^2.2.0",
+    "ng-animate": "^0.3.4",
     "ng-pick-datetime": "^5.2.6",
     "ngx-smart-modal": "^7.1.1",
     "ngx-useful-swiper": "^8.0.1",
