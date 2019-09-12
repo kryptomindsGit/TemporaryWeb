@@ -12,7 +12,8 @@ export class SmartContractPaymentComponent implements OnInit {
 
 //Milestone Related Variables
 milestoneForm : FormGroup;
-
+i : any;
+show : boolean = false;
 //payment section realated variables
 
 
@@ -42,16 +43,15 @@ paymentMethodArr = ['paypal','net-backing'];
 
   createProjectForm(){
     this.milestoneForm = this.__fb.group({
-      milestoneDetails: this.__fb.array([this.__fb.group({
-      // jo: ['', Validators.required],
-      milestone:['',[Validators.required]],
-      start_date:['',[Validators.required]],
-      end_date:['',[Validators.required]],
-      criteria:['',[Validators.required]],
-      teamMember:['',[Validators.required]],
-      // paymentMethod: ['', Validators.required],
-      amt:['',[Validators.required]]
-    })]),
+        milestoneDetails: this.__fb.array([this.__fb.group({
+          milestone:['',[Validators.required]],
+          start_date:['',[Validators.required]],
+          end_date:['',[Validators.required]],
+          criteria:['',[Validators.required]],
+          teamMember:['',[Validators.required]],
+          amt:['',[Validators.required]]
+        })
+      ])
     });
   }
   
@@ -77,6 +77,17 @@ paymentMethodArr = ['paypal','net-backing'];
     this.milstoneDetailsArr.removeAt(index);
   }
 
- 
+
+  saveMilestones(){
+    
+  }
+
+  onSaveChanges(){
+
+  }
+
+  onSaveContract(){
+
+  }
 
 }

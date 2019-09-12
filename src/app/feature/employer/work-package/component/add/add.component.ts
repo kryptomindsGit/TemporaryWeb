@@ -15,7 +15,7 @@ export class AddComponent implements OnInit {
   // basicForm : FormGroup;
   projectForm : FormGroup;
   skillForm : FormGroup;
-
+  i: any;
 
   //Static Arrays 
   complexityArr = ['High','Medium','Low'];
@@ -199,13 +199,11 @@ export class AddComponent implements OnInit {
      
   } 
   onSubmit(){
-    const skillDetailsPayload = { 
-     payload:this.skillForm.controls.skillDetails.value
-    }
+    this.saveDetails();
 
     console.log("Work payload",  this.skillForm.controls.skillDetails.value);
 
-    this.__workpackageService.postWorkPackageSkillData(skillDetailsPayload).then((workData: any) =>{
+    this.__workpackageService.postWorkPackageSkillData(this.skillForm.controls.skillDetails.value).then((workData: any) =>{
       console.log("Data is successfully saved" ,workData);
 
   });

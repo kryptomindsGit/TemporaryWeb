@@ -5,6 +5,7 @@ import { EmployerRoutingModule } from './employer-routing.module';
 import { EmployerComponent } from './employer.component';
 import { SmartContractPaymentComponent } from './smart-contract-payment/smart-contract-payment.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 
 @NgModule({
@@ -13,7 +14,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     CommonModule,
     EmployerRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    OwlDateTimeModule, 
+    OwlNativeDateTimeModule
   ]
 })
 export class EmployerModule { }

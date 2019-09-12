@@ -50,14 +50,13 @@ allInvitations = [
   projectDesc : string ="Lorem ipsum, dolor sit amet consectetur adipisicing elit.Exercitationem consequatur adipisci,aliquam consequuntur minus sunt dolorequas quideminventore suscipit laudantium voluptatum iure nulla soluta nemo qui sit, maxime nostrum! ";
   estimatedCost: number =  320 ;
   complexity : string ="High";
-  // stratDate : Date ;
-  // fromDate : Date ;
-  // toDate : Date ;
   fromDate : string = "14 jan 2019";
   toDate : string = "1 june 2019";
 
      
-  
+  //other variables
+
+  show : boolean = false;
 
   
   config: SwiperOptions = {
@@ -104,6 +103,10 @@ allInvitations = [
   hide()
   {
     this.showModal = false;
+  }
+
+  showModel(){
+    this.show = ! this.show ; 
   }
 
   onSearch(){

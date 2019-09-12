@@ -826,7 +826,7 @@ export class EditComponent implements OnInit {
 
   }
 
-  onSaveSkill(rate: number) {
+  onSaveSkill() {
     console.log(this.skillRateArr.value)
   }
 
