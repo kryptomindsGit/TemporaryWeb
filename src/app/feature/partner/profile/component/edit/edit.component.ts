@@ -77,43 +77,6 @@ export class EditComponent implements OnInit {
    * @name valEmpProfile
    * @description validating the form fields
    */
-  // valPartProfile() {
-
-  //   this.partnerProfileForm = this.__fb.group({
-
-  //     jo: ['TEST'],
-  //     comapany_name: [(this.partnerArr == null || this.partnerArr.part_name == null) ? '' :
-  //       this.partnerArr.part_name, Validators.required],
-  //     website_addr: [(this.partnerArr == null || this.partnerArr.part_website == null) ? '' :
-  //       this.partnerArr.part_website, Validators.required],
-  //     address_line_one: [(this.partnerArr == null || this.partnerArr.part_addr == null) ? '' :
-  //       this.partnerArr.part_addr, Validators.required],
-  //     address_line_two: [(this.partnerArr == null || this.partnerArr.part_addr_2 == null) ? '' :
-  //       this.partnerArr.part_addr_2, Validators.required],
-  //     country: [(this.partnerArr == null || this.partnerArr.country == null) ? '' :
-  //       this.partnerArr.country, Validators.required],
-  //     state: [(this.partnerArr == null || this.partnerArr.state == null) ? '' :
-  //       this.partnerArr.state, Validators.required],
-  //     city: [(this.partnerArr == null || this.partnerArr.city == null) ? '' :
-  //       this.partnerArr.city, Validators.required],
-  //     zipcode: [(this.partnerArr == null || this.partnerArr.zipcode == null) ? '' :
-  //       this.partnerArr.zipcode, [Validators.required, Validators.pattern('^[0-9]*$')]],
-  //     business_cat: [(this.partnerArr == null || this.partnerArr.business_details == null) ? '' :
-  //       this.partnerArr.business_details, Validators.required],
-  //     company_profile: [(this.partnerArr == null || this.partnerArr.part_type == null) ? '' :
-  //       this.partnerArr.part_type, Validators.required],
-  //     company_rep_det: [(this.partnerArr == null || this.partnerArr.part_reprentative == null) ? '' :
-  //       this.partnerArr.part_reprentative, Validators.required],
-  //     documents: this.__fb.array([this.__fb.group({
-  //       chooseFile: (this.partnerFileArr == null || this.partnerFileArr.file_name == null) ? '' :
-  //         this.partnerFileArr.file_name,
-  //       docType: (this.partnerFileArr == null || this.partnerFileArr.file_type == null) ? '' :
-  //         this.partnerFileArr.file_type
-  //     })])
-
-  //   })
-
-  // }
 
   valPartProfile() {
     this.partnerProfileForm = this.__fb.group({
@@ -168,9 +131,9 @@ export class EditComponent implements OnInit {
         address_line_one: this.partnerArr.part_addr,
         address_line_two: this.partnerArr.part_addr_2,
         country: this.partnerArr.country,
-        // state: this.partnerArr.state,
-        // city: this.partnerArr.city,
-        // zipcode: this.partnerArr.zipcode,
+        state: this.partnerArr.state,
+        city: this.partnerArr.city,
+        zipcode: this.partnerArr.zipcode,
         business_cat: this.partnerArr.business_details,
         company_profile: this.partnerArr.part_type,
         company_rep_det: this.partnerArr.part_reprentative
@@ -197,30 +160,6 @@ export class EditComponent implements OnInit {
     });
     // await this.valPartProfile();
   }
-
-  /**
-   * @name getPartnerFile
-   * @description call get API for partner file details 
-   */
-  // getPartnerFile() {
-  //   this.__profileService.getPartnerFileById(this.id).then((resData: any) => {
-  //     this.partnerFileArr = resData;
-  //     console.log(this.partnerFileArr);
-
-  //     for (let index = 0; index < this.partnerFileArr.length; index++) {
-  //       this.documentArr.push(this.__fb.group(
-  //         {
-  //           chooseFile: this.partnerFileArr[index].file_name,
-  //           docType: this.partnerFileArr[index].file_type,
-  //           file_id: this.partnerFileArr[index].file_id,
-  //           part_id: this.partnerFileArr[index].part_id
-  //         }));
-  //     }
-  //     console.log(this.documentArr);
-
-  //   });
-  // }
-
 
   /**
    * @description FormArray (Dynamicaly create input)
@@ -313,15 +252,15 @@ export class EditComponent implements OnInit {
 
   uploadFile() {
 
-    // this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((event) => {
-    //   this.FileArrData = event;
-    //   console.log("File Resp:", this.FileArrData);
-    // });
-    this.FileArrData = "jkdhfjkhkdjshfkjhdskjfh"
+    this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((event) => {
+      this.FileArrData = event;
+      console.log("File Resp:", this.FileArrData.fileId);
+    });
+    // this.FileArrData = "jkdhfjkhkdjshfkjhdskjfh"
 
     this.documentFileArr.push(
       {
-        'file_name': this.FileArrData,
+        'file_name': this.FileArrData.fileId,
         'file_type': this.fileType
       });
     console.log(this.documentFileArr);

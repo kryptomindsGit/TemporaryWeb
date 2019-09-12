@@ -58,7 +58,6 @@ export class EditComponent implements OnInit {
     //Calling Function's
 
     this.getEmplyeeDetails();
-    // this.getEmplyeeFileDetails();
     this.valEmpProfile();
   }
 
@@ -110,48 +109,25 @@ export class EditComponent implements OnInit {
 
     });
 
-    // this.__profileService.getEmployerFileById(this.id).then((resData: any) => {
-    //   this.employerFileArr = resData;
-    //   console.log(this.employerFileArr);
+    this.__profileService.getEmployerFileById(this.id).then((resData: any) => {
+      this.employerFileArr = resData;
+      console.log(this.employerFileArr);
 
-    //   for (let index = 0; index < this.employerFileArr.length; index++) {
-    //     this.documentArr.push(this.__fb.group(
-    //       {
-    //         file_name: this.employerFileArr[index].file_name,
-    //         file_type: this.employerFileArr[index].file_type,
-    //         file_id: this.employerFileArr[index].file_id,
-    //         part_id: this.employerFileArr[index].part_id
-    //       }));
-    //   }
-    //   console.log(this.documentArr);
-    //   this.valEmpProfile();
-    // });
+      for (let index = 0; index < this.employerFileArr.length; index++) {
+        this.documentArr.push(this.__fb.group(
+          {
+            file_name: this.employerFileArr[index].file_name,
+            file_type: this.employerFileArr[index].file_type,
+            file_id: this.employerFileArr[index].file_id,
+            part_id: this.employerFileArr[index].part_id
+          }));
+      }
+      console.log(this.documentArr);
+      // this.valEmpProfile();
+    });
 
 
   }
-
-  /**
-   * @name getEmplyeeFileDetails
-   * @description call get API for employer file details 
-   */
-  // getEmplyeeFileDetails() {
-
-  //   this.__profileService.getEmployerFileById(this.id).then((resData: any) => {
-  //     this.employerFileArr = resData;
-  //     console.log(this.employerFileArr);
-
-  //     for (let index = 0; index < this.employerFileArr.length; index++) {
-  //       this.documentArr.push(this.__fb.group(
-  //         {
-  //           file_name: this.employerFileArr[index].file_name,
-  //           file_type: this.employerFileArr[index].file_type,
-  //           file_id: this.employerFileArr[index].file_id,
-  //           part_id: this.employerFileArr[index].part_id
-  //         }));
-  //     }
-  //     console.log(this.documentArr);
-  //   });
-  // }
 
   /**
   * @description FormArray (Dynamicaly create input)
@@ -226,14 +202,14 @@ export class EditComponent implements OnInit {
 
 
   /**
-     * @name 
-     * @description file handler
-     */
-
+    * @name 
+    * @description file handler
+    */
   setDocTypeCatType(inputValue) {
     console.log(inputValue);
     this.fileType = inputValue
   }
+
   handleFileInput(event) {
     if (event.target.files.length > 0) {
 
@@ -246,17 +222,17 @@ export class EditComponent implements OnInit {
   }
 
 
-  uploadFile() {
+  async uploadFile() {
 
-    // this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((event) => {
-    //   this.FileArrData = event;
-    //   console.log("File Resp:", this.FileArrData);
-    // });
-    this.FileArrData = "jkdhfjkhkdjshfkjhdskjfh"
+    await this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((event) => {
+      this.FileArrData = event;
+      console.log("File Resp:", this.FileArrData.fileId);
+    });
+    // this.FileArrData = "jkdhfjkhkdjshfkjhdskjfh"
 
-    this.documentFileArr.push(
+    await this.documentFileArr.push(
       {
-        'file_name': this.FileArrData,
+        'file_name': this.FileArrData.fileId,
         'file_type': this.fileType
       });
     console.log(this.documentFileArr);

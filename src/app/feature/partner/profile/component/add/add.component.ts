@@ -158,10 +158,6 @@ export class AddComponent implements OnInit {
   }
 
   /**
-   * @description File Handler
-   */
-
-  /**
     * @name 
     * @description file handler
     */
@@ -185,15 +181,15 @@ export class AddComponent implements OnInit {
 
   uploadFile() {
 
-    // this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((event) => {
-    //   this.FileArrData = event;
-    //   console.log("File Resp:", this.FileArrData);
-    // });
-    this.FileArrData = "jkdhfjkhkdjshfkjhdskjfh"
+    this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((event) => {
+      this.FileArrData = event;
+      console.log("File Resp:", this.FileArrData.fileId);
+    });
+    // this.FileArrData = "jkdhfjkhkdjshfkjhdskjfh"
 
     this.documentFileArr.push(
       {
-        'file_name': this.FileArrData,
+        'file_name': this.FileArrData.fileId,
         'file_type': this.fileType
       });
     console.log(this.documentFileArr);
