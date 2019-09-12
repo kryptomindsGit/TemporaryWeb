@@ -1,14 +1,34 @@
-<div class="section">
+<div class="container-fluid">
     <div class="card">
-        <div class="card-header">
+        <div class="card-header ">
+            <h6>View Profile</h6>
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-10 text-center">
-                    <h3>Profile Details</h3>
+                <div class="col-12 text-center">
+
+                    <div class="withvideo">
+                        <div class="overlay">
+                            <video playsinline="playsinline" autoplay="autoplay" id="myvideo" muted="muted" loop="loop">
+                                <source src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4"
+                                    type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="container h-100">
+                            <div class="d-flex h-100 text-center align-items-center">
+                                <div class="w-100 text-white">
+                                    <img src="assets/images/irshad.jpeg">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
-                <div class="col-2">
-                    <a class="btn btnBlue" (click)="editProfile()">Edit Profile</a>
+                <br>
+                <br>
+                <br>
+                <div class="col-12">
+                    <a class="btn btnBlue float-right" (click)="editProfile()">Edit Profile</a>
                 </div>
             </div>
 

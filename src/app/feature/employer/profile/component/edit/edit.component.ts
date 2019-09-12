@@ -126,7 +126,6 @@ export class EditComponent implements OnInit {
     this.__profileService.getEmployerByEmailId(this.emailId).then((data: any) => {
       this.employerArr = data[0];
       console.log(this.employerArr);
-      // this.valEmpProfile();
 
       this.employerProfileForm.patchValue({
         comapany_name: this.employerArr.cmp_name,
