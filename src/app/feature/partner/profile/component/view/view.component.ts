@@ -57,9 +57,9 @@ export class ViewComponent implements OnInit {
       this.partnerFileArr = data;
       console.log(this.partnerFileArr);
 
-      for (let i = 0; i < data.length; i++) {
-        this.partnerFileArr[i] = data[i].file_name
-      }
+      // for (let i = 0; i < data.length; i++) {
+      //   this.partnerFileArr[i] = data[i].file_name
+      // }
       console.log(this.partnerFileArr);
 
     });

@@ -54,11 +54,11 @@ export class ViewComponent implements OnInit {
    * @description call get API for employer file details 
    */
   getEmplyeeFileDetails() {
-    this.__profileService.getEmployerFileById(this.id).then((data: any) => {
+    this.__profileService.getEmployerFileById(this.emailId).then((data: any) => {
       this.employerFileArr = data;
-      for (let i = 0; i < data.length; i++) {
-        this.employerFileArr[i] = data[i].file_name;
-      }
+      // for (let i = 0; i < data.length; i++) {
+      //   this.employerFileArr[i] = data[i].file_name;
+      // }
       console.log(this.employerFileArr);
 
     });

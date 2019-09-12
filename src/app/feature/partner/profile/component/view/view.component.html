@@ -68,13 +68,32 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th width="30%">Documents: </th>
+                                    <td>
+                                        <div *ngFor="let document of partnerFileArr">
+                                            <table>
+                                                <tr>
+                                                    <th>{{document.doc_type}}</th>
+                                                    <td>{{ document.doc_name }}</td>
+                                                    <td><a style="color:#1051dd; "
+                                                            (click)="downloadFile(document.doc_name)"><i
+                                                                class="fa fa-download" aria-hidden="true"></i>
+                                                        </a></td>
+                                                </tr>
+
+                                            </table>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- <tr>
                                     <th width=30%>Documents</th>
                                     <td>
                                         <div *ngFor="let item of partnerFile">
                                             <a style="color: #1051dd;" (click)="downloadFile(item)">{{ item }}</a>
                                         </div>
                                     </td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>

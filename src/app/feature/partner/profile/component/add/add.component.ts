@@ -179,15 +179,15 @@ export class AddComponent implements OnInit {
   }
 
 
-  uploadFile() {
+  async uploadFile() {
 
-    this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((event) => {
+    await this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((event) => {
       this.FileArrData = event;
       console.log("File Resp:", this.FileArrData.fileId);
     });
     // this.FileArrData = "jkdhfjkhkdjshfkjhdskjfh"
 
-    this.documentFileArr.push(
+    await this.documentFileArr.push(
       {
         'file_name': this.FileArrData.fileId,
         'file_type': this.fileType

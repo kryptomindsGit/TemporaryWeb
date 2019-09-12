@@ -57,7 +57,7 @@ export class EmpProfileService {
     }
   }
 
-  async getEmployerFileById(id: number) {
+  async getEmployerFileById(id: any) {
     try {
       let result = await this.__http.get(`${BASE_URL}/employerfiles/` + id, httpOptions).toPromise();
       return result;
