@@ -33,6 +33,11 @@ export class EditComponent implements OnInit {
   public checkMarked: string;
   public edu_catId: number;
 
+  public fileType: any;
+  public fileName: any;
+  public fileObj: any;
+
+
   // Array's
   public congnitoID: any = [];
   public eduCatArr: any = [];
@@ -56,11 +61,14 @@ export class EditComponent implements OnInit {
   public freelancerEduArr: any = [];
   public freelancerOrgArr: any = [];
   public freelancerPortArr: any = [];
+  public FileArrData: any = [];
 
 
   public skillList: any = [];
 
 
+  //skill variables.
+  keyword = 'skill_cat_name';
 
   constructor(
     private __fb: FormBuilder,
@@ -823,8 +831,70 @@ export class EditComponent implements OnInit {
   }
 
   /**
-   * @description File Handler
-   */
+ * @description File Handler
+ */
+
+  setDocTypeCatType(inputValue) {
+    console.log(inputValue);
+    this.fileType = inputValue
+  }
+
+  handleFileInput(event) {
+    if (event.target.files.length > 0) {
+
+      const file = event.target.files[0];
+      this.fileName = file.name;
+      this.fileObj = file;
+      console.log("File name:", this.fileName);
+      console.log("File obj:", this.fileObj);
+    }
+  }
+
+
+  async uploadPersonalFile() {
+
+    await this.__profileService.postDocHashData(this.fileObj, this.congnitoID, this.fileName).then((event) => {
+      this.FileArrData = event;
+      console.log("File Resp:", this.FileArrData.fileId);
+    });
+
+    await this.documentPersonalArray.push(
+      {
+        'file_name': this.FileArrData.fileId,
+        'file_type': this.doc_cat_id
+      });
+    console.log(this.documentPersonalArray);
+  }
+
+  uploadEducationFile() {
+
+    this.__profileService.postDocHashData(this.fileObj, this.congnitoID, this.fileName).then((event) => {
+      this.FileArrData = event;
+      console.log("File Resp:", this.FileArrData.fileId);
+    });
+
+    this.documentQualArray.push(
+      {
+        'file_name': this.FileArrData.fileId,
+        'file_type': 4
+      });
+    console.log(this.documentQualArray);
+  }
+
+  uploadWorkExpFile() {
+
+    this.__profileService.postDocHashData(this.fileObj, this.congnitoID, this.fileName).then((event) => {
+      this.FileArrData = event;
+      console.log("File Resp:", this.FileArrData.fileId);
+    });
+
+    this.documentWorkArray.push(
+      {
+        'file_name': this.FileArrData.fileId,
+        'file_type': this.doc_cat_id
+      });
+    console.log(this.documentWorkArray);
+  }
 
 
 

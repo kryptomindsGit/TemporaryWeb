@@ -4,176 +4,186 @@
             <div class="card-header">
                 <h6>PROFILE DETAILS</h6>
             </div>
-            <div class="card-body">
-                <form [formGroup]="personalDetails" novalidate>
-                    <div class="row">
-                        <div class="form-group form-input col">
-                            <select class="formStyle" formControlName="prefix">
-                                <option disabled value="" selected>Prefix</option>
-                                <option id="option_txt" *ngFor="let prefix of prefixArr" [value]="prefix">{{prefix}}
-                                </option>
-                            </select>
-                            <div *ngIf="personalDetails.controls['prefix'].invalid && (personalDetails.controls['prefix'].dirty || personalDetails.controls['prefix'].touched)"
-                                class="text-danger error-msg">
-                                <div [hidden]="!personalDetails.controls['prefix'].errors.required">Prefix is required.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group form-input col">
-                            <input type="text" formControlName="first_name" id="first_name" required />
-                            <label for="first_name" class="form-label">First Name</label>
-
-                            <div *ngIf="personalDetails.controls['first_name'].invalid && (personalDetails.controls['first_name'].dirty || personalDetails.controls['first_name'].touched)"
-                                class="text-danger error-msg">
-                                <div [hidden]="!personalDetails.controls['first_name'].errors.required">First name is
-                                    required.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-input col">
-                            <input type="text" formControlName="middle_name" id="middle_name" required />
-                            <label for="middle_name" class="form-label">Middle Name</label>
-
-                            <div *ngIf="personalDetails.controls['middle_name'].invalid && (personalDetails.controls['middle_name'].dirty || personalDetails.controls['middle_name'].touched)"
-                                class="text-danger error-msg">
-                                <div [hidden]="!personalDetails.controls['middle_name'].errors.required">Middle name is
-                                    required.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group form-input col">
-                            <input type="text" formControlName="last_name" id="last_name" required />
-                            <label for="last_name" class="form-label">Last Name</label>
-
-                            <div *ngIf="personalDetails.controls['last_name'].invalid && (personalDetails.controls['last_name'].dirty || personalDetails.controls['last_name'].touched)"
-                                class="text-danger error-msg">
-                                <div [hidden]="!personalDetails.controls['last_name'].errors.required">Last name is
-                                    required.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group form-input col">
-                            <input type="text" formControlName="address_one" id="address_one" required />
-                            <label for="address_one" class="form-label">Address Line 1</label>
-
-                            <div *ngIf="personalDetails.controls['address_one'].invalid && (personalDetails.controls['address_one'].dirty || personalDetails.controls['address_one'].touched)"
-                                class="text-danger error-msg">
-                                <div [hidden]="!personalDetails.controls['address_one'].errors.required">Address line 1
-                                    is
-                                    required.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group form-input col">
-                            <input type="text" formControlName="address_two" id="address_two" required />
-                            <label for="address_two" class="form-label">Address Line 2</label>
-
-                            <div *ngIf="personalDetails.controls['address_two'].invalid && (personalDetails.controls['address_two'].dirty || personalDetails.controls['address_two'].touched)"
-                                class="text-danger error-msg">
-                                <div [hidden]="!personalDetails.controls['address_two'].errors.required">Address line 2
-                                    is
-                                    required.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group form-input col">
-                            <select class="formStyle" (change)="setCountryID($event.target.value)"
-                                formControlName="country">
-                                <option disabled value="">Country</option>
-                                <option *ngFor="let country of countryArr" [ngValue]="country.name">{{country.name}}
-                                </option>
-                            </select>
-
-                            <div *ngIf="personalDetails.controls['country'].invalid && (personalDetails.controls['country'].dirty || personalDetails.controls['country'].touched)"
-                                class="text-danger error-msg">
-                                <div [hidden]="!personalDetails.controls['country'].errors.required">Country is
-                                    required.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group form-input col">
-                            <select class="formStyle" (change)="setStateID($event.target.value)"
-                                formControlName="province">
-                                <option disabled value="">State</option>
-                                <option *ngFor="let state of stateArr" [ngValue]="state.name">{{state.name}}</option>
-                            </select>
-
-                            <div *ngIf="personalDetails.controls['province'].invalid && (personalDetails.controls['province'].dirty || personalDetails.controls['province'].touched)"
-                                class="text-danger error-msg">
-                                <div [hidden]="!personalDetails.controls['province'].errors.required">State is
-                                    required.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-input col">
-                            <select class="formStyle" formControlName="city">
-                                <option disabled value="">City</option>
-                                <option *ngFor="let city of cityArr" [ngValue]="city.name">{{city.name}}</option>
-                            </select>
-
-                            <div *ngIf="personalDetails.controls['city'].invalid && (personalDetails.controls['city'].dirty || personalDetails.controls['city'].touched)"
-                                class="text-danger error-msg">
-                                <div [hidden]="!personalDetails.controls['city'].errors.required">City is required.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group form-input col">
-                            <input type="text" formControlName="postal_code" id="postal_code" required />
-                            <label for="postal_code" class="form-label">Postal code</label>
-
-                            <div *ngIf="personalDetails.controls['postal_code'].invalid && (personalDetails.controls['postal_code'].dirty || personalDetails.controls['postal_code'].touched)"
-                                class="text-danger error-msg">
-                                <div [hidden]="!personalDetails.controls['postal_code'].errors.required">Postal code is
-                                    required.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <div formArrayName="documents_personal">
-                        <div *ngFor="let item of documentArr.controls; let i=index" formGroupName="{{i}}">
-                            <!-- <label for="quali">Documents :</label> -->
-                            <div class="row">
-                                <div class="form-group form-input col-3">
-                                    <select class="formStyle" (change)="setDocTypeCatID($event.target.value)"
-                                        formControlName="file_type">
-                                        <option disabled value="">Document type</option>
-                                        <option id="option_txt" *ngFor="let docType of docTypeArr"
-                                            [value]="docType.doc_type_id">{{docType.doc_type}}</option>
-                                    </select>
-                                </div>
-                                <div class="form-group form-input col-3">
-                                    <div class="file-upload">
-                                        <div class="file-select" id="document_file">
-                                            <input type="file" class="document_name" name="chooseFile" id="chooseFile"
-                                                (change)="handleFileInput($event)" formControlName="chooseFile">
-                                        </div>
+            <div class="card-other-body">
+                <div class="card-body others-card">
+                    <form [formGroup]="personalDetails" novalidate>
+                        <div class="row">
+                            <div class="form-group form-input col">
+                                <select class="formStyle" formControlName="prefix">
+                                    <option disabled value="" selected>Prefix</option>
+                                    <option id="option_txt" *ngFor="let prefix of prefixArr" [value]="prefix">{{prefix}}
+                                    </option>
+                                </select>
+                                <div *ngIf="personalDetails.controls['prefix'].invalid && (personalDetails.controls['prefix'].dirty || personalDetails.controls['prefix'].touched)"
+                                    class="text-danger error-msg">
+                                    <div [hidden]="!personalDetails.controls['prefix'].errors.required">Prefix is
+                                        required.
                                     </div>
                                 </div>
-                                <div class=col-2>
-                                    <input type="button" class="btnBlue" id="upload" value="UPLOAD"
-                                        (click)="uploadPersonalFile()">
+                            </div>
+                            <div class="form-group form-input col">
+                                <input type="text" formControlName="first_name" id="first_name" required />
+                                <label for="first_name" class="form-label">First Name</label>
+
+                                <div *ngIf="personalDetails.controls['first_name'].invalid && (personalDetails.controls['first_name'].dirty || personalDetails.controls['first_name'].touched)"
+                                    class="text-danger error-msg">
+                                    <div [hidden]="!personalDetails.controls['first_name'].errors.required">First name
+                                        is
+                                        required.
+                                    </div>
                                 </div>
-                                <div class="form-group col-2">
-                                    <button type="button" class="btn btnadd" (click)="addDocument()">+</button>
-                                    &nbsp;
-                                    <button type="button" class="btn btnadd" (click)="deleteDocument(i)">-</button>
+                            </div>
+
+                            <div class="form-group form-input col">
+                                <input type="text" formControlName="middle_name" id="middle_name" required />
+                                <label for="middle_name" class="form-label">Middle Name</label>
+
+                                <div *ngIf="personalDetails.controls['middle_name'].invalid && (personalDetails.controls['middle_name'].dirty || personalDetails.controls['middle_name'].touched)"
+                                    class="text-danger error-msg">
+                                    <div [hidden]="!personalDetails.controls['middle_name'].errors.required">Middle name
+                                        is
+                                        required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group form-input col">
+                                <input type="text" formControlName="last_name" id="last_name" required />
+                                <label for="last_name" class="form-label">Last Name</label>
+
+                                <div *ngIf="personalDetails.controls['last_name'].invalid && (personalDetails.controls['last_name'].dirty || personalDetails.controls['last_name'].touched)"
+                                    class="text-danger error-msg">
+                                    <div [hidden]="!personalDetails.controls['last_name'].errors.required">Last name is
+                                        required.
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <button type="button" class="btnNext" (click)="ShowNextButton(2)">Next</button>
-                </form>
+
+                        <div class="row">
+                            <div class="form-group form-input col">
+                                <input type="text" formControlName="address_one" id="address_one" required />
+                                <label for="address_one" class="form-label">Address Line 1</label>
+
+                                <div *ngIf="personalDetails.controls['address_one'].invalid && (personalDetails.controls['address_one'].dirty || personalDetails.controls['address_one'].touched)"
+                                    class="text-danger error-msg">
+                                    <div [hidden]="!personalDetails.controls['address_one'].errors.required">Address
+                                        line 1
+                                        is
+                                        required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group form-input col">
+                                <input type="text" formControlName="address_two" id="address_two" required />
+                                <label for="address_two" class="form-label">Address Line 2</label>
+
+                                <div *ngIf="personalDetails.controls['address_two'].invalid && (personalDetails.controls['address_two'].dirty || personalDetails.controls['address_two'].touched)"
+                                    class="text-danger error-msg">
+                                    <div [hidden]="!personalDetails.controls['address_two'].errors.required">Address
+                                        line 2
+                                        is
+                                        required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group form-input col">
+                                <select class="formStyle" (change)="setCountryID($event.target.value)"
+                                    formControlName="country">
+                                    <option disabled value="">Country</option>
+                                    <option *ngFor="let country of countryArr" [ngValue]="country.name">{{country.name}}
+                                    </option>
+                                </select>
+
+                                <div *ngIf="personalDetails.controls['country'].invalid && (personalDetails.controls['country'].dirty || personalDetails.controls['country'].touched)"
+                                    class="text-danger error-msg">
+                                    <div [hidden]="!personalDetails.controls['country'].errors.required">Country is
+                                        required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group form-input col">
+                                <select class="formStyle" (change)="setStateID($event.target.value)"
+                                    formControlName="province">
+                                    <option disabled value="">State</option>
+                                    <option *ngFor="let state of stateArr" [ngValue]="state.name">{{state.name}}
+                                    </option>
+                                </select>
+
+                                <div *ngIf="personalDetails.controls['province'].invalid && (personalDetails.controls['province'].dirty || personalDetails.controls['province'].touched)"
+                                    class="text-danger error-msg">
+                                    <div [hidden]="!personalDetails.controls['province'].errors.required">State is
+                                        required.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-input col">
+                                <select class="formStyle" formControlName="city">
+                                    <option disabled value="">City</option>
+                                    <option *ngFor="let city of cityArr" [ngValue]="city.name">{{city.name}}</option>
+                                </select>
+
+                                <div *ngIf="personalDetails.controls['city'].invalid && (personalDetails.controls['city'].dirty || personalDetails.controls['city'].touched)"
+                                    class="text-danger error-msg">
+                                    <div [hidden]="!personalDetails.controls['city'].errors.required">City is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group form-input col">
+                                <input type="text" formControlName="postal_code" id="postal_code" required />
+                                <label for="postal_code" class="form-label">Postal code</label>
+
+                                <div *ngIf="personalDetails.controls['postal_code'].invalid && (personalDetails.controls['postal_code'].dirty || personalDetails.controls['postal_code'].touched)"
+                                    class="text-danger error-msg">
+                                    <div [hidden]="!personalDetails.controls['postal_code'].errors.required">Postal code
+                                        is
+                                        required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div formArrayName="documents_personal">
+                            <div *ngFor="let item of documentArr.controls; let i=index" formGroupName="{{i}}">
+                                <!-- <label for="quali">Documents :</label> -->
+                                <div class="row">
+                                    <div class="form-group form-input col-3">
+                                        <select class="formStyle" (change)="setDocTypeCatID($event.target.value)"
+                                            formControlName="file_type">
+                                            <option disabled value="">Document type</option>
+                                            <option id="option_txt" *ngFor="let docType of docTypeArr"
+                                                [value]="docType.doc_type_id">{{docType.doc_type}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group form-input col-3">
+                                        <div class="file-upload">
+                                            <div class="file-select" id="document_file">
+                                                <input type="file" class="document_name" name="chooseFile"
+                                                    id="chooseFile" (change)="handleFileInput($event)"
+                                                    formControlName="chooseFile">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=col-2>
+                                        <input type="button" class="btnBlue" id="upload" value="UPLOAD"
+                                            (click)="uploadPersonalFile()">
+                                    </div>
+                                    <div class="form-group col-2">
+                                        <button type="button" class="btn btnadd" (click)="addDocument()">+</button>
+                                        &nbsp;
+                                        <button type="button" class="btn btnadd" (click)="deleteDocument(i)">-</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btnNext" (click)="ShowNextButton(2)">Next</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -183,7 +193,7 @@
             <div class="card-header">
                 <h6>EDUCATION DETAILS</h6>
             </div>
-            <div class="card-body">
+            <div class="card-body others-card">
                 <form [formGroup]="qualificationDetails" novalidate>
                     <div formArrayName="qualification">
                         <div *ngFor="let item of qualfArr.controls; let i=index" [formGroupName]="i">
@@ -269,7 +279,7 @@
             <div class="card-header">
                 <h6>WORK EXPERIENCE DETAILS</h6>
             </div>
-            <div class="card-body">
+            <div class="card-body others-card">
                 <form [formGroup]="workExpDetails" novalidate>
                     <div formArrayName="org_details">
                         <div *ngFor="let item of orgArr.controls; let i=index" [formGroupName]="i">
@@ -453,7 +463,7 @@
                                 formControlName="isFreelancer">No</label>
                     </div>
 
-                    <button type="button" class="btnPrevious" (click)="ShowNextButton(3)">Previous</button>
+                    <button type="button" class="btnPrevious" (click)="ShowNextButton(2)">Previous</button>
 
                     <button type=" button" class="btnNext" (click)="ShowNextButton(4)">Next</button>
 
@@ -481,7 +491,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body">
+                                        <div class="card-body skill-innner-container">
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="ng-autocomplete">
@@ -525,7 +535,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body">
+                                        <div class="card-body skill-checkbox-container ">
                                             <ul class="checkbox-grid-row">
                                                 <li>
                                                     <label class="checkbox-grid-col"
@@ -548,7 +558,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body">
+                                        <div class="card-body skill-innner-container">
 
                                             <div formArrayName="skills">
                                                 <div *ngFor="let item of skillRateArr.controls; let i=index"

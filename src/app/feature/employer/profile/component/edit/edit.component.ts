@@ -66,39 +66,6 @@ export class EditComponent implements OnInit {
    * @name valEmpProfile
    * @description validating the form fields
    */
-  // valEmpProfile() {
-  //   console.log("kbhhoiuhiuhui", this.employerArr.cmp_name);
-
-  //   this.employerProfileForm = this.__fb.group({
-  //     jo: ['TEST'],
-  //     website_addr: [(this.employerArr == null || this.employerArr.cmp_website == null) ? '' :
-  //       this.employerArr.cmp_website, Validators.required],
-  //     comapany_name: [(this.employerArr == null || this.employerArr.cmp_name == null) ? '' :
-  //       this.employerArr.cmp_name, Validators.required],
-  //     address_line_one: [(this.employerArr == null || this.employerArr.cmp_addr == null) ? '' :
-  //       this.employerArr.cmp_addr, Validators.required],
-  //     address_line_two: [(this.employerArr == null || this.employerArr.cmp_addr_2 == null) ? '' :
-  //       this.employerArr.cmp_addr_2, Validators.required],
-  //     country: [(this.employerArr == null || this.employerArr.country == null) ? '' :
-  //       this.employerArr.country, Validators.required],
-  //     state: [(this.employerArr == null || this.employerArr.state == null) ? '' :
-  //       this.employerArr.state, Validators.required],
-  //     city: [(this.employerArr == null || this.employerArr.city == null) ? '' :
-  //       this.employerArr.city, Validators.required],
-  //     zipcode: [(this.employerArr == null || this.employerArr.zipcode == null) ? '' :
-  //       this.employerArr.zipcode, [Validators.required, Validators.pattern('^[0-9]*$')]],
-  //     business_cat: [(this.employerArr == null || this.employerArr.business_cat == null) ? '' :
-  //       this.employerArr.business_cat, Validators.required],
-  //     company_profile: [(this.employerArr == null || this.employerArr.cpm_profile == null) ? '' :
-  //       this.employerArr.cpm_profile, Validators.required],
-  //     company_rep_det: [(this.employerArr == null || this.employerArr.cmp_reprentative == null) ? '' :
-  //       this.employerArr.cmp_reprentative, Validators.required],
-  //     documents: this.__fb.array([this.__fb.group(
-  //       { chooseFile: '' },
-  //       { docType: '' }
-  //     )])
-  //   })
-  // }
 
   valEmpProfile() {
     this.employerProfileForm = this.__fb.group({

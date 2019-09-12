@@ -15,6 +15,7 @@ export class SignUpComponent implements OnInit {
 
   //Variables
   public showMsg: string;
+  public showMsgCognito: any = [];
 
   constructor(
     private __fb: FormBuilder,
@@ -57,29 +58,28 @@ export class SignUpComponent implements OnInit {
     console.log("Sing up Data:", signupPayload);
 
     this.__authService.register(signupPayload).then((resData: any) => {
-      this.showMsg = resData;
+      this.showMsgCognito = resData;
+      console.log("Message: ", this.showMsgCognito.message);
+
 
       const cognitoPayload = {
         flag: "N",
         email: signupPayload.email,
         phone_no: signupPayload.phone_no,
         role: signupPayload.custom_role,
-        country: signupPayload.custom_country,
-        // cognito_id: "resData"
+        country: signupPayload.custom_country
       }
-
 
       this.__authService.uportSignup(cognitoPayload).then((resData: any) => {
         this.showMsg = resData;
-        this.__router.navigate(['/auth/auth/login']);
+        // setTimeout(() => {
+        //   this.__router.navigate(['/auth/auth/login']);
+        // }, 5000);
 
       });
-
-      //   setTimeout(() => {
-      //     this.__router.navigate(['/auth/auth/login']);
-      // }, 5000);
-
     });
+
+
 
   }
 

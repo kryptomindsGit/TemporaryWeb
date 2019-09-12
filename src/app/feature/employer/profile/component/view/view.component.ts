@@ -64,6 +64,11 @@ export class ViewComponent implements OnInit {
     });
   }
 
+  downloadFile(item) {
+    console.log("Download")
+
+  }
+
   editProfile() {
     console.log("Edit calling");
 

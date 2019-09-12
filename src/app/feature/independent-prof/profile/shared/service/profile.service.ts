@@ -33,6 +33,10 @@ export class IndeptProfileService {
 
   // Blockchain POST API call
   async postDocHashData(fileData: any, cognitoId: any, fileName: any) {
+    console.log("file Data:", fileName);
+    console.log("file Data:", cognitoId);
+    console.log("file Data:", fileName);
+
     try {
       let formData = new FormData();
       formData.append('fileData', fileData);

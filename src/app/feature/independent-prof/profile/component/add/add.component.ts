@@ -69,6 +69,9 @@ export class AddComponent implements OnInit {
   ngOnInit() {
 
     this.isUportUser = localStorage.getItem("uportUser");
+    // const user = this.__authService.decode();
+    // this.congnitoID = user["cognito:username"];
+    // console.log("Cognito ID:", this.congnitoID)
 
     if (this.isUportUser == "false") {
 
@@ -79,12 +82,14 @@ export class AddComponent implements OnInit {
       this.country = user["custom:country"];
 
     } else {
-      this.congnitoID = localStorage.getItem("cognito_id");
+      const user = this.__authService.decode();
+      this.congnitoID = user["cognito:username"];
+
       this.uid = localStorage.getItem("uid");
       this.email = localStorage.getItem("email");
       this.country = localStorage.getItem("country");
     }
-
+    console.log("Cognito ID:", this.congnitoID)
     console.log("Email Id is : " + this.email);
     console.log("User ID is : " + this.uid);
 
@@ -530,24 +535,23 @@ export class AddComponent implements OnInit {
 
       const file = event.target.files[0];
       this.fileName = file.name;
-      console.log("File name:", file.name);
-
       this.fileObj = file;
+      console.log("File name:", this.fileName);
+      console.log("File obj:", this.fileObj);
     }
   }
 
 
-  uploadPersonalFile() {
+  async uploadPersonalFile() {
 
-    // this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((event) => {
-    //   this.FileArrData = event;
-    //   console.log("File Resp:", this.FileArrData);
-    // });
-    this.FileArrData = "jkdhfjkhkdjshfkjhdskjfh"
+    await this.__profileService.postDocHashData(this.fileObj, this.congnitoID, this.fileName).then((event) => {
+      this.FileArrData = event;
+      console.log("File Resp:", this.FileArrData.fileId);
+    });
 
-    this.documentPersonalArray.push(
+    await this.documentPersonalArray.push(
       {
-        'file_name': this.FileArrData,
+        'file_name': this.FileArrData.fileId,
         'file_type': this.doc_cat_id
       });
     console.log(this.documentPersonalArray);
@@ -555,15 +559,14 @@ export class AddComponent implements OnInit {
 
   uploadEducationFile() {
 
-    // this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((event) => {
-    //   this.FileArrData = event;
-    //   console.log("File Resp:", this.FileArrData);
-    // });
-    this.FileArrData = "jkdhfjkhkdjshfkjhdskjfh"
+    this.__profileService.postDocHashData(this.fileObj, this.congnitoID, this.fileName).then((event) => {
+      this.FileArrData = event;
+      console.log("File Resp:", this.FileArrData.fileId);
+    });
 
     this.documentQualArray.push(
       {
-        'file_name': this.FileArrData,
+        'file_name': this.FileArrData.fileId,
         'file_type': 4
       });
     console.log(this.documentQualArray);
@@ -571,15 +574,14 @@ export class AddComponent implements OnInit {
 
   uploadWorkExpFile() {
 
-    // this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((event) => {
-    //   this.FileArrData = event;
-    //   console.log("File Resp:", this.FileArrData);
-    // });
-    this.FileArrData = "jkdhfjkhkdjshfkjhdskjfh"
+    this.__profileService.postDocHashData(this.fileObj, this.congnitoID, this.fileName).then((event) => {
+      this.FileArrData = event;
+      console.log("File Resp:", this.FileArrData.fileId);
+    });
 
     this.documentWorkArray.push(
       {
-        'file_name': this.FileArrData,
+        'file_name': this.FileArrData.fileId,
         'file_type': this.doc_cat_id
       });
     console.log(this.documentWorkArray);

@@ -107,6 +107,19 @@ export class ViewComponent implements OnInit {
     });
   }
 
+  getHashDataBlockChainPDF(fileName) {
+    console.log("Calling API...");
+
+    this.__profileService.getDocHashData(fileName).then((data) => {
+      console.log("Blockchain get data done", data);
+
+      var file = new Blob([data.body], { type: 'application/octet-stream' });
+      var fileURL = URL.createObjectURL(file);
+      // window.open(fileURL);
+      window.open(fileURL, '_blank');
+    })
+  }
+
 
   editProfile() {
     console.log("indise edit btn");

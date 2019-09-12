@@ -10,18 +10,53 @@
     color: $text-color;
     overflow: hidden;
     font-weight: 400;
-    // width: 100%;
-    // height: 100vh;
 }
+
+/*-----------------------------------------------------------------------
+  SKILL CARD CSS
+  -------------------------------------------------------------------------*/
 
 .container-skill {
     font: 14px "Montserrat", sans-serif;
-    // background-color: $bg-back-color;
     color: $text-color;
     overflow: hidden;
     font-weight: 400;
-    // width: 100%;
-    // height: auto !important;
+}
+
+.skill-checkbox-container {
+    width: 100%;
+    max-height: 20rem;
+    overflow: auto;
+    padding: 0.1rem;
+    margin-right: 0.2rem !important;
+    margin-left: 0.2rem !important;
+}
+
+.skill-innner-container {
+    width: 100%;
+    max-height: 20rem;
+    overflow: auto;
+    padding: 0.1rem;
+    margin-right: 0.2rem !important;
+    margin-left: 0.2rem !important;
+}
+
+.skill-container {
+    border-radius: 10px;
+    box-shadow: 5px 5px 32px 5px rgba(0, 0, 0, 0.22);
+    background: $bg-front-color;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.skill-container .card-body {
+    flex: 1 1 auto;
+    padding: 0.5rem;
+}
+
+.ng-autocomplete {
+    width: 100%;
+    padding: 0.1rem 0.2rem !important;
 }
 
 /*-----------------------------------------------------------------------
@@ -41,26 +76,6 @@
     background: $bg-front-color;
     // width: 70%;
     // height: auto !important;
-}
-
-.skill-container {
-    border-radius: 10px;
-    box-shadow: 5px 5px 32px 5px rgba(0, 0, 0, 0.22);
-    background: $bg-front-color;
-    // width: 100%;
-    // height: auto !important;
-    // margin: 1rem auto;
-    margin-bottom: 1rem;
-}
-
-.skill-container .card-body {
-    flex: 1 1 auto;
-    padding: 0.5rem;
-}
-
-.ng-autocomplete {
-    width: 100%;
-    padding: 0.1rem 0.2rem !important;
 }
 
 .table td,
@@ -299,16 +314,24 @@ input[type=radio] {
 
 .checkbox-grid-row {
     overflow: hidden;
-    // padding: 10px;
+    padding: 10px;
 }
 
 .checkbox-grid-col {
     float: left;
-    // padding: 5px;
-    // margin-right: 5px;
+    padding: 5px;
+    margin-right: 5px;
     width: 30%;
     color: #898989;
 }
+
+// .box {
+//     display: flex;
+//     flex-wrap: wrap;
+//   }
+//   .box>* {
+//     flex: 1 1 33%;
+//   }
 
 .save_skills {
     border: none;
@@ -366,18 +389,21 @@ input[type='file'] {
     margin: 20px auto;
 }
 
+// .btn {
+//     padding: 0.2rem;
+// }
+
 .btnadd {
     border: none;
     border-radius: 0.5rem;
-    padding: 0.3rem;
-    width: 2rem;
+    padding: 0.1rem;
+    width: 1.5rem;
     text-transform: uppercase;
     cursor: pointer;
     background: #064d86;
     color: #9e9d9d;
     float: right;
-    display: inline-block;
-    margin-left: 0.2rem;
+    margin-right: 0.2rem;
 }
 
 .error-msg {

@@ -2,7 +2,7 @@
 
 #sidebar-wrapper {
   min-height: 100vh;
-  font-family: "Neo Latina";
+  font-family: "Montserrat Regular";
   -webkit-transition: margin .25s ease-out;
   -moz-transition: margin .25s ease-out;
   -o-transition: margin .25s ease-out;
@@ -48,7 +48,8 @@
   letter-spacing: 0.1rem;
 }
 
-#sidebar-wrapper .list-group-flush .list-group-item:hover {
+#sidebar-wrapper .list-group-flush .list-group-item:hover,
+#sidebar-wrapper .list-group-flush .list-group-item:focus {
   background: $bg-back-color;
   color: $text-color;
   -webkit-transition: margin .25s ease-out;

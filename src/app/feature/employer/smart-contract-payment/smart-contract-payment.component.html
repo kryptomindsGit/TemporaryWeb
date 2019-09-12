@@ -11,7 +11,8 @@
                     </div>
                     <div class="col-5">
                         <div class="row">
-                            <label><span class="text-muted"> Project Name :</span> Create an app for Online Shopping</label>
+                            <label><span class="text-muted"> Project Name :</span> Create an app for Online
+                                Shopping</label>
                         </div>
                     </div>
                     <div class="col-4">
@@ -20,7 +21,7 @@
                         </div>
                     </div>
                 </div>
-                 <!-- <form [formGroup]="contractForm">
+                <!-- <form [formGroup]="contractForm">
                     <div class="form-content">
                         <div class="row">
 
@@ -37,122 +38,130 @@
                 </div>
             </div>
                     </form> -->
-               
+
             </div>
         </div>
 
         <h5>Milestones</h5>
         <div class="card">
             <div class="card-body">
-                    
+
 
                 <div class="row">
                     <div class="col-10">
-                            <form class="table-responsive" [formGroup]="milestoneForm">
-                                    <table class="table table-dark  table-bordered worktable">
-                                        <thead>
-                                            <tr>
-                                            <th>Milestone</th>
-                                            <th class="setWidth">Start Date </th>
-                                            <th class="setWidth">End Date</th>
-                                            <th >Completion Criteria</th>
-                                            <th class="setWidth">Team Member</th>
-                                            <th class="setWidth">Amount Payble</th>
-                                           
-                                            </tr>
-                                         </thead>
-                                        
-                                            <tbody formArrayName="milestoneDetails">
-                                            <tr *ngFor="let item of milstoneDetailsArr.controls; let i=index" [formGroupName]="i">
-                                                <td ><input type="text" formControlName="milestone" placeholder="Enter Milestone"></td>
-                                                <td><input type="text" formControlName="start_date"  placeholder="Start Date"></td>
-                                                <td><input type="text" formControlName="end_date" placeholder="End Date"></td>
-                                                <td><input type="text" formControlName="criteria" placeholder="Criteria"></td>
-                                                <td><select  formControlName="teamMember"  id="teamMember">
-                                                        <option>select Team Member</option>
-                                                        <option id="option_type" *ngFor="let  team of  teamMemberArr" [value]=" team.memberId">{{team.memberId}}</option>
-                                                    </select> 
-                                                </td>
-                                                <td><input type="text" formControlName="amt" placeholder="Amount "></td> 
-                                            </tr>
-                                            
-                                        </tbody>
+                        <form class="table-responsive" [formGroup]="milestoneForm">
+                            <table class="table table-dark  table-bordered worktable">
+                                <thead>
+                                    <tr>
+                                        <th>Milestone</th>
+                                        <th class="setWidth">Start Date </th>
+                                        <th class="setWidth">End Date</th>
+                                        <th>Completion Criteria</th>
+                                        <th class="setWidth">Team Member</th>
+                                        <th class="setWidth">Amount Payble</th>
 
-                                        <div class="col-md-2">
-                                                <button class="btn increment" (click)="addMolestone()">+</button>
-                                                <button class="btn increment" (click)="removeMilestone(i)">-</button>
-                                        </div>
-                                    
-                                    </table>
-                                    
-                                </form>
-                                  
+                                    </tr>
+                                </thead>
+
+                                <tbody formArrayName="milestoneDetails">
+                                    <tr *ngFor="let item of milstoneDetailsArr.controls; let i=index"
+                                        [formGroupName]="i">
+                                        <td><input type="text" formControlName="milestone"
+                                                placeholder="Enter Milestone"></td>
+                                        <td><input type="text" formControlName="start_date" placeholder="Start Date">
+                                        </td>
+                                        <td><input type="text" formControlName="end_date" placeholder="End Date"></td>
+                                        <td><input type="text" formControlName="criteria" placeholder="Criteria"></td>
+                                        <td><select formControlName="teamMember" id="teamMember">
+                                                <option>select Team Member</option>
+                                                <option id="option_type" *ngFor="let  team of  teamMemberArr"
+                                                    [value]=" team.memberId">{{team.memberId}}</option>
+                                            </select>
+                                        </td>
+                                        <td><input type="text" formControlName="amt" placeholder="Amount "></td>
+                                    </tr>
+
+                                </tbody>
+
+                                <div class="col-md-2">
+                                    <button class="btn increment" (click)="addMolestone()">+</button>
+                                    <button class="btn increment" (click)="removeMilestone(i)">-</button>
                                 </div>
-                            </div>
-                                
-                                      
-                                  
+
+                            </table>
+
+                        </form>
+
                     </div>
-                   
                 </div>
- 
+
+
+
+            </div>
+
+        </div>
+
         <h5>Payment shedule</h5>
         <div class="card">
-                <div class="card-body">
-                        <form class="table-responsive" >
-                                <table class="table table-dark  table-bordered worktable">
-                                    <thead>
-                                        <tr>
-                                        <th>Milestone</th>
-                                        <th >Payment Method</th>  
-                                        <th >Payer Name</th>
-                                        <th >Payer Account</th>
-                                        <th >Payee Name</th>
-                                        <th >Payee Account</th>
-                                        <th >Payment Condition</th>
-                                        <th >Payment Amount</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                        <td ><input type="text" placeholder="Enter Milestone"></td>
-                                        <td>
-                                            <select  formControlName="paymentMethod" (change)="onMemberSelect($event)" (change)="show = !show" ng-model="show" id="paymentMethod">
-                                                <option>Select Payment Method</option>
-                                                <option id="option_type" *ngFor="let  payment of  paymentMethodArr" [value]="payment">{{payment}}</option>
-                                            </select> 
-                                        </td>
-                                        <td><input type="text" placeholder="Payer Name"></td>
-                                        <td><input type="text" placeholder="Payer Account"></td>
-                                        <td><input type="text" placeholder="Payee Name"></td>
-                                        <td><input type="text" placeholder="Payee Account"></td>
-                                        <td>
-                                                <label class="checkbox-inline"><input type="checkbox" value="">Approved by Employer</label><br>
-                                                <label class="checkbox-inline"><input type="checkbox" value="">Approved by Reviewer</label><br>
-                                                <label class="checkbox-inline"><input type="checkbox" value="">On Date</label><br>
+            <div class="card-body">
+                <form class="table-responsive">
+                    <table class="table table-dark  table-bordered worktable">
+                        <thead>
+                            <tr>
+                                <th>Milestone</th>
+                                <th>Payment Method</th>
+                                <th>Payer Name</th>
+                                <th>Payer Account</th>
+                                <th>Payee Name</th>
+                                <th>Payee Account</th>
+                                <th>Payment Condition</th>
+                                <th>Payment Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" placeholder="Enter Milestone"></td>
+                                <td>
+                                    <select (change)="onMemberSelect($event)" (change)="show = !show" ng-model="show"
+                                        id="paymentMethod">
+                                        <option>Select Payment Method</option>
+                                        <option id="option_type" *ngFor="let  payment of  paymentMethodArr"
+                                            [value]="payment">{{payment}}</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" placeholder="Payer Name"></td>
+                                <td><input type="text" placeholder="Payer Account"></td>
+                                <td><input type="text" placeholder="Payee Name"></td>
+                                <td><input type="text" placeholder="Payee Account"></td>
+                                <td>
+                                    <label class="checkbox-inline"><input type="checkbox" value="">Approved by
+                                        Employer</label><br>
+                                    <label class="checkbox-inline"><input type="checkbox" value="">Approved by
+                                        Reviewer</label><br>
+                                    <label class="checkbox-inline"><input type="checkbox" value="">On Date</label><br>
 
-                                        <td><input type="text" placeholder="Payee Ammount"></td>
-                                       
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td> </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>   
-                                            </tr>
-                                    </tbody>
-                                </table>
-                            </form>   
-                          
-                </div>
-               
+                                <td><input type="text" placeholder="Payee Ammount"></td>
+
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td> </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+
             </div>
-            <button class="btn viewprofile" *ngIf="show" id="divshow" (click)="onSearch()">Save Changes</button>
-            <button class="btn viewprofile" *ngIf="show" id="divshow" (click)="onSearch()">Submit Contract</button>
-    </div> 
-  
-</div>  
+
+        </div>
+        <button class="btn viewprofile" *ngIf="show" id="divshow" (click)="onSearch()">Save Changes</button>
+        <button class="btn viewprofile" *ngIf="show" id="divshow" (click)="onSearch()">Submit Contract</button>
+    </div>
+
+</div>
