@@ -10,7 +10,7 @@
                                 <div class="col-2">
                                         <select class="formStyle" formControlName="project-Id" id="project-Id">
                                             <option>Project Id</option>
-                                            <option id="option_txt" *ngFor="let project-Id of projectIdArr" [value]="project-Id">{{project-Id}}</option>
+                                            <!-- <option id="option_txt" *ngFor="let project-Id of projectIdArr" [value]="project-Id">{{project-Id}}</option> -->
                                         </select>
                                 </div>
                                 <div class="col-2">
@@ -19,13 +19,13 @@
                                 <div class="col-2">
                                     <select class="formStyle"  id="projectId">
                                         <option>Domain</option>
-                                        <option id="option_txt" *ngFor="let projectId of projectIdArr" [value]="projectId">{{projectId}}</option>
+                                        <!-- <option id="option_txt" *ngFor="let projectId of projectIdArr" [value]="projectId">{{projectId}}</option> -->
                                     </select>
                                 </div>
                                 <div class="col-2">
                                     <select class="formStyle"  id="projectId">
                                         <option>Skills</option>
-                                        <option id="option_txt" *ngFor="let projectId of projectIdArr" [value]="projectId">{{projectId}}</option>
+                                        <!-- <option id="option_txt" *ngFor="let projectId of projectIdArr" [value]="projectId">{{projectId}}</option> -->
                                     </select>                                
                                 </div>
                                 <div class="col-2">
@@ -42,7 +42,7 @@
                                 <div class="col-2">
                                     <select class="formStyle"  id="projectId">
                                         <option>Region</option>
-                                        <option id="option_txt" *ngFor="let projectId of projectIdArr" [value]="projectId">{{projectId}}</option>
+                                        <!-- <option id="option_txt" *ngFor="let projectId of projectIdArr" [value]="projectId">{{projectId}}</option> -->
                                     </select>                                 
                                 </div>
                                 <div class="col-2">
@@ -292,8 +292,7 @@
                                                                 <button class="btn apply-button" (click)="show = !show" ng-model="show">Apply </button>
                                                                 <button class="btn viewprofile2" (click)="show = !show" ng-model="show">Show Details </button>
                                                             </div>
-                                                        </div>
-                        
+                                                        </div>                     
                                                     </div>
                                            
                                         </div>
@@ -355,7 +354,7 @@
                         </thead>
                         <tbody *ngFor="let data of allInvitations">
                           <tr>
-                            <th scope="row" class="setwidth" (click)="show = !show">{{data.projectId}}</th>
+                            <th scope="row" class="setwidth" (click)="showModel()">{{data.projectId}}</th>
                             <td class="setwidth">
                                 <button class="btn viewprofile" (click)="onClick($event)">view</button>
                             </td>

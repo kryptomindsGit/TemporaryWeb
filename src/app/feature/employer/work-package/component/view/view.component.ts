@@ -80,8 +80,8 @@ export class ViewComponent implements OnInit {
       this.projectDesc = resData.responseObject.projectDescription ;
       this.budget = resData.responseObject.budget ;
       this.estimatedCost =  resData.responseObject.estimatedCost;
-      this.startDate = resData.responseObject.approxStartDate;
-      this.toDate = resData.responseObject.approxStartDate;
+      this.startDate = (resData.responseObject.approxStartDate).substring(0,10);
+      this.toDate = (resData.responseObject.approxStartDate).substring(0,10);
       this.budgetCurrency = resData.responseObject.budgetCurrencyCode;
     });
 

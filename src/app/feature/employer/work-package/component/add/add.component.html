@@ -75,7 +75,7 @@
                                     <div class="form-group form-input">
                                     <input type="text" formControlName="durationYears" value="" required/>
                                     <label for="durationYears" class="form-label">Duration-Year</label>
-                                    <div *ngIf="projectForm.controls['durationYears'].invalid && (projectForm.controls['durationYears'].dirty || projectForm.controls['durationYears'].Fromuched)" class="alert">
+                                    <div *ngIf="projectForm.controls['durationYears'].invalid && (projectForm.controls['durationYears'].dirty || projectForm.controls['durationYears'].touched)" class="alert">
                                         <div *ngIf="projectForm.controls['durationYears'].errors.required">
                                           Please enter no of years.
                                         </div>
@@ -86,7 +86,7 @@
                                     <div class="form-group form-input">
                                     <input type="text" formControlName="durationMonths" value="" required/>
                                     <label for="duration" class="form-label">Duration-Months</label>
-                                    <div *ngIf="projectForm.controls['durationMonths'].invalid && (projectForm.controls['durationMonths'].dirty || projectForm.controls['durationMonths'].Fromuched)" class="alert">
+                                    <div *ngIf="projectForm.controls['durationMonths'].invalid && (projectForm.controls['durationMonths'].dirty || projectForm.controls['durationMonths'].touched)" class="alert">
                                         <div *ngIf="projectForm.controls['durationMonths'].errors.required">
                                             Please enter no of months.
                                         </div>
@@ -97,7 +97,7 @@
                                     <div class="form-group form-input">
                                     <input type="text" formControlName="durationDays" value="" required/>
                                     <label for="durationDays" class="form-label">Duration-Days</label>
-                                    <div *ngIf="projectForm.controls['durationDays'].invalid && (projectForm.controls['durationDays'].dirty || projectForm.controls['durationDays'].Fromuched)" class="alert">
+                                    <div *ngIf="projectForm.controls['durationDays'].invalid && (projectForm.controls['durationDays'].dirty || projectForm.controls['durationDays'].touched)" class="alert">
                                         <div *ngIf="projectForm.controls['durationDays'].errors.required">
                                             Please enter no of days.
                                         </div>
@@ -112,7 +112,7 @@
                                     <option>Select</option>
                                     <option id="option_txt" *ngFor="let duration_option of durationArr" [value]="duration_option">{{duration_option}}</option>
                                   </select>
-                                <div *ngIf="projectForm.controls['duration_option'].invalid && (projectForm.controls['duration_option'].dirty || projectForm.controls['duration_option'].Fromuched)" class="alert">
+                                <div *ngIf="projectForm.controls['duration_option'].invalid && (projectForm.controls['duration_option'].dirty || projectForm.controls['duration_option'].touched)" class="alert">
                                     <div *ngIf="projectForm.controls['duration_option'].errors.required">
                                       Please select From-date, it's required.
                                     </div>
@@ -126,7 +126,7 @@
                             <input type=text [owlDateTimeTrigger]="dt3" formControlName="proj_start_date" id="datePicker3 "
                             placeholder="Estimated Start Date" [owlDateTime]="dt3">
                         <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
-                            <div *ngIf="projectForm.controls['proj_start_date'].invalid && (projectForm.controls['proj_start_date'].dirty || projectForm.controls['proj_start_date'].Fromuched)" class="alert">
+                            <div *ngIf="projectForm.controls['proj_start_date'].invalid && (projectForm.controls['proj_start_date'].dirty || projectForm.controls['proj_start_date'].touched)" class="alert">
                                 <div *ngIf="projectForm.controls['proj_start_date'].errors.required">
                                   Please select Starting date, it's required.
                                 </div>
@@ -184,7 +184,7 @@
               <form class="workpackage" [formGroup]="skillForm">
 
             <div class="row">
-              <div class="col-12">
+              <div class="col-10">
                 <div class="row table-responsive">
                   
                       <table class="table table-dark  table-bordered worktable">
@@ -273,22 +273,17 @@
                         
                   </table>
 
-                  <div class="col-md-2">
-                      <button type="button" class="btn increment" (click)="addSkill()">+</button>
-                      <button type="button" class="btn increment" (click)="removeSkill(i)">-</button>
-                    </div>
+                  
                       </div>
               </div>
-            
-           <!-- <div class="col-1">
-             <button class="btn increment">+</button>
-             <button class="btn increment">-</button>
-           </div> -->
+              <div class="col-md-2">
+                  <button type="button" class="btn increment" (click)="addSkill()">+</button>
+                  <button type="button" class="btn increment" (click)="removeSkill(i)">-</button>
+              </div>
           </div>
         </form>
-        <button class="btn submit-button" (click)="textSumbit()">text Submit</button>
-        <button class="btn submit-button" (click)="onSubmit()">Submit</button>
         </div>  
-      
   </div>  
+  <button class="btn submit-button" (click)="onSubmit()">Submit</button>
+
 </div>

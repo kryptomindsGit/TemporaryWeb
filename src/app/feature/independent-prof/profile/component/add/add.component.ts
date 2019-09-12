@@ -517,7 +517,7 @@ export class AddComponent implements OnInit {
 
   }
 
-  onSaveSkill(rate: number) {
+  onSaveSkill() {
     console.log(this.skillRateArr.value)
   }
 
