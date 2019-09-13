@@ -1,12 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { PartnerComponent } from './partner.component';
 
 
 const routes: Routes = [
-  { 
-    path: 'profile', 
-    loadChildren: () => import(`./profile/profile.module`).then(module => module.ProfileModule) 
-  },
+  {
+    path:'part',
+    component: PartnerComponent,
+    children:[
+      { 
+        path: 'profile', 
+        loadChildren: () => import('./profile/profile.module').then(module => module.ProfileModule) 
+      }
+    ]
+  }
   
 ];
 

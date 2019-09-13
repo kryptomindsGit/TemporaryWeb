@@ -13,19 +13,19 @@ const routes: Routes = [
   // },
   {
     path: 'auth',
-    loadChildren: () => import(`./auth/auth.module`).then(module => module.AuthModule)
+    loadChildren: () => import('./auth/auth.module').then(module => module.AuthModule)
   },
   {
     path: 'core',
-    loadChildren: () => import(`./core/core.module`).then(module => module.CoreModule)
+    loadChildren: () => import('./core/core.module').then(module => module.CoreModule)
   },
   {
     path: 'feature',
-    loadChildren: () => import(`./feature/feature.module`).then(module => module.FeatureModule)
+    loadChildren: () => import('./feature/feature.module').then(module => module.FeatureModule)
   },
   {
     path: 'shared',
-    loadChildren: () => import(`./shared/shared.module`).then(module => module.SharedModule)
+    loadChildren: () => import('./shared/shared.module').then(module => module.SharedModule)
   },
   {
     path: 'landing',

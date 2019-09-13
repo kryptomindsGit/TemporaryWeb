@@ -38,15 +38,15 @@ const routes: Routes = [
           },
           {
             path: 'employer',
-            loadChildren: () => import(`./employer/employer.module`).then(module => module.EmployerModule)
+            loadChildren: () => import('./employer/employer.module').then(module => module.EmployerModule)
           },
           {
             path: 'partner',
-            loadChildren: () => import(`./partner/partner.module`).then(module => module.PartnerModule)
+            loadChildren: () => import('./partner/partner.module').then(module => module.PartnerModule)
           },
           {
             path: 'independent',
-            loadChildren: () => import(`./independent-prof/independent-prof.module`).then(module => module.IndependentProfModule)
+            loadChildren: () => import('./independent-prof/independent-prof.module').then(module => module.IndependentProfModule)
           }
         ]
       }

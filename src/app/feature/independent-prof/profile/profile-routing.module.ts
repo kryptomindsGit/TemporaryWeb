@@ -9,7 +9,7 @@ import { ProfileComponent } from './profile.component';
 
 const routes: Routes = [
   {
-    path:  'indp-profile',
+    path:  'profile',
     component:  ProfileComponent,
     children: [
       { 

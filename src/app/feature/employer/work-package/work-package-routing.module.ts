@@ -7,7 +7,7 @@ import { WorkPackageComponent } from './work-package.component';
 
 const routes: Routes = [
   {
-    path: 'work-pack',
+    path: 'workpack',
     component: WorkPackageComponent,
     children: [
       {

@@ -53,9 +53,9 @@ export class HeaderComponent implements OnInit {
         console.log(this.freelancerDetailsArr);
       });
       if (this.freelancerDetailsArr == null) {
-        this.__router.navigate(['/feature/feature/full-layout/independent/profile/indp-profile/add']);
+        this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/add']);
       } else {
-        this.__router.navigate(['/feature/feature/full-layout/independent/profile/indp-profile/view', this.email_id]);
+        this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email_id]);
       }
     }
     else if (this.userRole == "Employer") {
@@ -65,9 +65,9 @@ export class HeaderComponent implements OnInit {
         console.log(this.employerDetailsArr);
       });
       if (this.__empProfileService == null) {
-        this.__router.navigate(['/feature/feature/full-layout/employer/profile/emp-profile/add']);
+        this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/add']);
       } else {
-        this.__router.navigate(['/feature/feature/full-layout/employer/profile/emp-profile/view', this.email_id]);
+        this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view', this.email_id]);
       }
     }
     else if (this.userRole == "Partner") {
@@ -77,9 +77,9 @@ export class HeaderComponent implements OnInit {
         console.log(this.partnerDetailsArr);
       });
       if (this.partnerDetailsArr == null) {
-        this.__router.navigate(['/feature/feature/full-layout/partner/profile/part-profile/add']);
+        this.__router.navigate(['/feature/feature/full-layout/partner/part/profile/profile/add']);
       } else {
-        this.__router.navigate(['/feature/feature/full-layout/partner/profile/part-profile/view', this.email_id]);
+        this.__router.navigate(['/feature/feature/full-layout/partner/part/profile/profile/view', this.email_id]);
       }
     }
   }
