@@ -59,6 +59,7 @@ export class EditComponent implements OnInit {
 
     this.getEmplyeeDetails();
     this.valEmpProfile();
+    this.getAllCountry();
   }
 
   /**
@@ -79,7 +80,7 @@ export class EditComponent implements OnInit {
       business_cat: ['', Validators.required],
       company_profile: ['', Validators.required],
       company_rep_det: ['', Validators.required],
-      // documents: this.__fb.array([]),
+      documents: this.__fb.array([]),
     })
   }
 

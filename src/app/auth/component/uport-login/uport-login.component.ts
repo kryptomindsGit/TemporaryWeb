@@ -2,6 +2,7 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { AuthService } from '../../shared/service/auth.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 //Import service's
 import { EmpProfileService } from 'src/app/feature/employer/profile/shared/service/profile.service';
@@ -39,6 +40,8 @@ export class UportLoginComponent implements OnInit {
     private __indeptProfileService: IndeptProfileService,
     private __empProfileService: EmpProfileService,
     private __partProfileService: PartProfileService,
+    private toastr: ToastrService,
+
     // public ngxSmartModalService: NgxSmartModalService,
     private zone: NgZone
   ) {
@@ -123,6 +126,13 @@ export class UportLoginComponent implements OnInit {
         localStorage.setItem("phone_no", phone);
         localStorage.setItem('uid', this.uPortDetailsArr.uid);
         localStorage.setItem('email', this.uPortDetailsArr.email);
+
+        var baseName = this.email;
+        baseName = baseName.substring(0, baseName.indexOf('@'));
+        const emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1);
+
+        this.toastr.success(emailName, 'Welcome to Konnecteum');
+
         this.__router.navigate(['/feature/feature/full-layout/dashboard'])
 
         // if (this.uPortDetailsArr.role == "Freelancer") {

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { IndeptProfileService } from 'src/app/feature/independent-prof/profile/shared/service/profile.service';
 import { EmpProfileService } from 'src/app/feature/employer/profile/shared/service/profile.service';
 import { PartProfileService } from 'src/app/feature/partner/profile/shared/service/profile.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -28,9 +29,7 @@ export class LoginComponent implements OnInit {
     private __fb: FormBuilder,
     private __authService: AuthService,
     private __router: Router,
-    private __indepprofileService: IndeptProfileService,
-    private __empprofileService: EmpProfileService,
-    private __partprofileService: PartProfileService,
+    private toastr: ToastrService
 
   ) { }
 
@@ -48,39 +47,6 @@ export class LoginComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
-
-  // /**
-  //  * @name getIndeptProfileDetails
-  //  * @description get Independent user profile info
-  //  */
-  // getIndeptProfileDetails() {
-  //   this.__indepprofileService.getFreelancerByEmail(this.emailID).then((resData: any) => {
-  //     this.indepUserDetails = resData[0];
-  //     console.log(this.indepUserDetails);
-  //   });
-  // }
-
-  // /**
-  // * @name getEmpProfileDetails
-  // * @description get Employer user profile info
-  // */
-  // getEmpProfileDetails() {
-  //   this.__empprofileService.getEmployerByEmailId(this.emailID).then((resData: any) => {
-  //     this.empUserDetails = resData[0];
-  //     console.log(this.empUserDetails);
-  //   });
-  // }
-
-  // /**
-  // * @name getPartProfileDetails
-  // * @description get partner user profile info
-  // */
-  // getPartProfileDetails() {
-  //   this.__partprofileService.getPartnerByEmailId(this.emailID).then((resData: any) => {
-  //     this.__partprofileService = resData[0];
-  //     console.log(this.__partprofileService);
-  //   });
-  // }
 
   /**
    * @name onSubmit
@@ -101,8 +67,15 @@ export class LoginComponent implements OnInit {
       if (resData) {
         this.__authService.getUportInfo(loginPayload.email).then((data: any) => {
           console.log("Res:", data[0]);
+          console.log("Data:", data[0]);
 
-          // localStorage.setItem('cognito_id', data[0].cognito:username)
+          var baseName = data[0].email;
+          baseName = baseName.substring(0, baseName.indexOf('@'));
+          const emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1);
+
+          this.toastr.success(emailName, 'Welcome to Konnecteum');
+          // this.toastr.error(baseName, 'Please signup');
+
           localStorage.setItem('uid', data[0].uid);
           localStorage.setItem('email', data[0].email);
           this.__router.navigate(['/feature/feature/full-layout/dashboard'])

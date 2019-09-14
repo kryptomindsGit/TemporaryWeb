@@ -1,8 +1,8 @@
-<div class="section">
-  <div class="container">
+<div class="container-fluid">
+  <div class="row">
     <div class="card">
       <div class="card-body">
-        <img src="../../../../assets/images/konnecteum_logo.png" alt="Konnecteum" class="center">
+        <img src="../../../../assets/images/konnecteum_logo.png" alt="Konnecteum" class="center rounded img-fluid">
         <h4>LOGIN</h4>
         <form [formGroup]="loginForm" novalidate class="loginForm">
 
@@ -16,6 +16,8 @@
             <label for="name" class="form-label">Password</label>
           </div>
 
+          <br>
+          <br>
           <!-- <div class="checkbox"> -->
           <button type="button" class="btn" [disabled]="loginForm.pristine || loginForm.invalid" id="btn-30"
             (click)="onSubmit()">Login</button>

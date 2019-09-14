@@ -1,121 +1,127 @@
 <div class="container-fluid">
-    <div class="card">
-        <div class="card-header ">
-            <h6>View Profile</h6>
-        </div>
-        <div class="card-body ">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <!-- <h4>Profile Details</h4>
+    <div class="row p-2">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header ">
+                    <h6>View Profile</h6>
+                </div>
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <!-- <h4>Profile Details</h4>
                     <span class="line"></span> -->
 
-                    <div class="withvideo">
-                        <div class="overlay">
-                            <video playsinline="playsinline" autoplay="autoplay" id="myvideo" muted="muted" loop="loop">
-                                <source src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4"
-                                    type="video/mp4">
-                            </video>
-                        </div>
-                        <div class="container h-100">
-                            <div class="d-flex h-100 text-center align-items-center">
-                                <div class="w-100 text-white">
-                                    <img src="assets/images/irshad.jpeg">
+                            <div class="withvideo">
+                                <div class="overlay">
+                                    <video playsinline="playsinline" autoplay="autoplay" id="myvideo" muted="muted"
+                                        loop="loop">
+                                        <source src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4"
+                                            type="video/mp4">
+                                    </video>
                                 </div>
+                                <div class="container h-100">
+                                    <div class="d-flex h-100 text-center align-items-center">
+                                        <div class="w-100 text-white">
+                                            <img src="assets/images/irshad.jpeg">
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
-
+                        <br>
+                        <br>
+                        <br>
+                        <div class="col-12">
+                            <a class="btn btnBlue float-right" (click)="editProfile()">Edit Profile</a>
+                        </div>
                     </div>
-                </div>
-                <br>
-                <br>
-                <br>
-                <div class="col-12">
-                    <a class="btn btnBlue float-right" (click)="editProfile()">Edit Profile</a>
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <th width="30%">Name:</th>
-                                <td>
-                                    {{freeDetailsArr.prefix}} {{freeDetailsArr.first_name}}
-                                    {{freeDetailsArr.middle_name}} {{freeDetailsArr.last_name}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th width="30%">Address: </th>
-                                <td>
-                                    <li>Address Line 1 : {{freeDetailsArr.line_1}}</li>
-                                    <li>Address Line 1 : {{freeDetailsArr.line_2}}</li>
-                                    <li>City : {{freeDetailsArr.city}}, State : {{freeDetailsArr.state}},
-                                        Country : {{freeDetailsArr.country}}</li>
-                                    <li>Postal Code : {{freeDetailsArr.code}}</li>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th width="30%">Education:
-                                </th>
-                                <td>
-                                    <div *ngFor="let education of freeEduArr; let i=index">
-                                        <hr *ngIf="i>0">
-                                        <li>Degree : {{ education.edu_name }}</li>
-                                        <li>Grade : {{ education.grade }}, Passing Year : {{ education.passing_year }},
-                                            Percentage : {{ education.percentage }}</li>
-                                        <li>University : {{ education.university }}</li>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th width="30%">Name:</th>
+                                        <td>
+                                            {{freeDetailsArr.prefix}} {{freeDetailsArr.first_name}}
+                                            {{freeDetailsArr.middle_name}} {{freeDetailsArr.last_name}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th width="30%">Address: </th>
+                                        <td>
+                                            <li>Address Line 1 : {{freeDetailsArr.line_1}}</li>
+                                            <li>Address Line 1 : {{freeDetailsArr.line_2}}</li>
+                                            <li>City : {{freeDetailsArr.city}}, State : {{freeDetailsArr.state}},
+                                                Country : {{freeDetailsArr.country}}</li>
+                                            <li>Postal Code : {{freeDetailsArr.code}}</li>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th width="30%">Education:
+                                        </th>
+                                        <td>
+                                            <div *ngFor="let education of freeEduArr; let i=index">
+                                                <hr *ngIf="i>0">
+                                                <li>Degree : {{ education.edu_name }}</li>
+                                                <li>Grade : {{ education.grade }}, Passing Year :
+                                                    {{ education.passing_year }},
+                                                    Percentage : {{ education.percentage }}</li>
+                                                <li>University : {{ education.university }}</li>
 
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th width="30%">Email: </th>
-                                <td>
-                                    {{email_addr}}
-                                </td>
-                            </tr>
-                            <!-- <tr>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th width="30%">Email: </th>
+                                        <td>
+                                            {{email_addr}}
+                                        </td>
+                                    </tr>
+                                    <!-- <tr>
                                 <th width="30%">Phone Number: </th>
                                 <td>
                                     {{phone_number}}
                                 </td>
                             </tr> -->
-                            <tr>
-                                <th width="30%">Country: </th>
-                                <td>
-                                    {{freeDetailsArr.country}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th width="30%">Skills: </th>
-                                <td>
-                                    <div *ngFor="let skill of freeSkillDetailsArr">
-                                        <li>{{ skill.skill_name }}</li>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th width="30%">Documents: </th>
-                                <td>
-                                    <div *ngFor="let document of freeDocsArr">
-                                        <table>
-                                            <tr>
-                                                <th>{{document.doc_type}}</th>
-                                                <td>{{ document.doc_name }}</td>
-                                                <td><a style="color:#1051dd; "
-                                                        (click)="getHashDataBlockChainPDF(document.doc_name)"><i
-                                                            class="fa fa-download" aria-hidden="true"></i>
-                                                    </a></td>
-                                            </tr>
+                                    <tr>
+                                        <th width="30%">Country: </th>
+                                        <td>
+                                            {{freeDetailsArr.country}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th width="30%">Skills: </th>
+                                        <td>
+                                            <div *ngFor="let skill of freeSkillDetailsArr">
+                                                <li>{{ skill.skill_name }}</li>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th width="30%">Documents: </th>
+                                        <td>
+                                            <div *ngFor="let document of freeDocsArr">
+                                                <table>
+                                                    <tr>
+                                                        <th>{{document.doc_type}}</th>
+                                                        <td>{{ document.doc_name }}</td>
+                                                        <td><a style="color:#1051dd; "
+                                                                (click)="getHashDataBlockChainPDF(document.doc_name)"><i
+                                                                    class="fa fa-download" aria-hidden="true"></i>
+                                                            </a></td>
+                                                    </tr>
 
-                                        </table>
+                                                </table>
 
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../shared/service/auth.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-sign-up',
@@ -21,6 +22,7 @@ export class SignUpComponent implements OnInit {
     private __fb: FormBuilder,
     private __authService: AuthService,
     private __router: Router,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -59,8 +61,6 @@ export class SignUpComponent implements OnInit {
 
     this.__authService.register(signupPayload).then((resData: any) => {
       this.showMsgCognito = resData;
-      console.log("Message: ", this.showMsgCognito.message);
-
 
       const cognitoPayload = {
         flag: "N",
@@ -72,11 +72,23 @@ export class SignUpComponent implements OnInit {
 
       this.__authService.uportSignup(cognitoPayload).then((resData: any) => {
         this.showMsg = resData;
-        // setTimeout(() => {
-        //   this.__router.navigate(['/auth/auth/login']);
-        // }, 5000);
+        this.toastr.success(this.showMsgCognito.message);
+        setTimeout(() => {
+          this.__router.navigate(['/auth/auth/login']);
+        }, 5000);
 
       });
+
+      // if (this.toastr.success) {
+      //   this.toastr.success(this.showMsgCognito.message);
+
+      // } else if (this.toastr.error) {
+      //   this.toastr.error(this.showMsgCognito.message);
+      // } else {
+      //   this.toastr.warning(this.showMsgCognito.message);
+      // }
+
+      console.log("Message: ", this.showMsgCognito.message);
     });
 
 

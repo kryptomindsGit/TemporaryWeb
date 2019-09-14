@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   public userRole: any;
   public email_id: any;
   public congnitoID: any;
+  public isUportUser: any;
 
   public indepUserDetails: any = [];
   public empUserDetails: any = [];
@@ -42,6 +43,30 @@ export class HeaderComponent implements OnInit {
     this.email_id = user["email"];
     console.log(this.email_id);
 
+    this.isUportUser = localStorage.getItem("uportUser");
+
+    // if (this.isUportUser == "false") {
+
+    //   const user = this.__authService.decode();
+    //   this.congnitoID = user["cognito:username"];
+    //   console.log(this.congnitoID);
+
+    //   this.email_id = user["email"];
+    //   console.log(this.email_id);
+
+    //   this.congnitoID = user["cognito:username"];
+    //   this.userRole = user["custom:role"];
+    //   console.log(this.userRole);
+    //   // this.country = user["custom:country"];
+
+    // } else {
+
+    //   this.email_id = localStorage.getItem("email");
+    //   // this.country = localStorage.getItem("country");
+    //   console.log("Email Id is : " + this.email_id);
+
+    // }
+
   }
 
   userRoleInfo() {
@@ -51,39 +76,51 @@ export class HeaderComponent implements OnInit {
       this.__idptProfileService.getFreelancerByEmail(this.email_id).then((resData: any) => {
         this.freelancerDetailsArr = resData[0];
         console.log(this.freelancerDetailsArr);
+
+        if (this.freelancerDetailsArr == null) {
+          this.__router.navigate(['/feature/feature/full-layout/independent/profile/indp-profile/add']);
+        } else {
+          this.__router.navigate(['/feature/feature/full-layout/independent/profile/indp-profile/view', this.email_id]);
+        }
       });
-      if (this.freelancerDetailsArr == null) {
-        this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/add']);
-      } else {
-        this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email_id]);
-      }
     }
     else if (this.userRole == "Employer") {
       console.log("Inside Employer");
       this.__empProfileService.getEmployerByEmailId(this.email_id).then((resData: any) => {
         this.employerDetailsArr = resData[0];
         console.log(this.employerDetailsArr);
+
+        if (this.__empProfileService == null) {
+          this.__router.navigate(['/feature/feature/full-layout/employer/profile/emp-profile/add']);
+        } else {
+          this.__router.navigate(['/feature/feature/full-layout/employer/profile/emp-profile/view', this.email_id]);
+        }
       });
-      if (this.__empProfileService == null) {
-        this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/add']);
-      } else {
-        this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view', this.email_id]);
-      }
     }
     else if (this.userRole == "Partner") {
       console.log("Inside Partner");
       this.__partProfileService.getPartnerByEmailId(this.email_id).then((resData: any) => {
         this.partnerDetailsArr = resData[0];
         console.log(this.partnerDetailsArr);
+
+        if (this.partnerDetailsArr == null) {
+          this.__router.navigate(['/feature/feature/full-layout/partner/profile/part-profile/add']);
+        } else {
+          this.__router.navigate(['/feature/feature/full-layout/partner/profile/part-profile/view', this.email_id]);
+        }
       });
+<<<<<<< Updated upstream
       if (this.partnerDetailsArr == null) {
         this.__router.navigate(['/feature/feature/full-layout/partner/part/profile/profile/add']);
       } else {
         this.__router.navigate(['/feature/feature/full-layout/partner/part/profile/profile/view', this.email_id]);
       }
+=======
+
+>>>>>>> Stashed changes
     }
   }
-  
+
 
 }
 

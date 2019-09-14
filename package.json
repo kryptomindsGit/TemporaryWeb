@@ -11,7 +11,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~8.2.4",
+    "@angular/animations": "^8.2.6",
     "@angular/common": "~8.2.0",
     "@angular/compiler": "~8.2.0",
     "@angular/core": "~8.2.0",
@@ -27,6 +27,7 @@
     "ng-animate": "^0.3.4",
     "ng-pick-datetime": "^5.2.6",
     "ngx-smart-modal": "^7.1.1",
+    "ngx-toastr": "^10.2.0",
     "ngx-useful-swiper": "^8.0.1",
     "popper": "^1.0.1",
     "popper.js": "^1.15.0",

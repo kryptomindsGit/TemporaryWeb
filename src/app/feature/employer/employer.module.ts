@@ -6,10 +6,12 @@ import { EmployerComponent } from './employer.component';
 import { SmartContractPaymentComponent } from './smart-contract-payment/smart-contract-payment.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { ProjectTimelineComponent } from './project-timeline/project-timeline.component';
+import { BlockchainTimelineComponent } from './blockchain-timeline/blockchain-timeline.component';
 
 
 @NgModule({
-  declarations: [EmployerComponent, SmartContractPaymentComponent],
+  declarations: [EmployerComponent, SmartContractPaymentComponent, ProjectTimelineComponent, BlockchainTimelineComponent],
   imports: [
     CommonModule,
     EmployerRoutingModule,

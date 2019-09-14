@@ -1,92 +1,114 @@
-<div class="section">
-    <div class="card">
-        <div class="card-header">
-
-        </div>
-
-        <div class="card-body">
-            <div class="row">
-                <div class="col-10 text-center">
-                    <h3>Profile Details</h3>
+<div class="container-fluid">
+    <div class="row p-2">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h6>View Profile</h6>
                 </div>
-                <div class="col-2">
-                    <a class="btn btnBlue" (click)="editProfile()">Edit Profile</a>
-                </div>
-            </div>
 
-            <form>
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table">
-                            <tbody>
-                                <tr>
-                                    <th width="50%">Name:
-                                    </th>
-                                    <td>
-                                        {{partnerDetailsArr.part_name}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th width="50%">Address line 1: </th>
-                                    <td>
-                                        {{partnerDetailsArr.part_addr}} {{partnerDetailsArr.city}}
-                                        {{partnerDetailsArr.state}} {{partnerDetailsArr.country}}
-                                        {{partnerDetailsArr.zipcode}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th width="50%">Address line 2: </th>
-                                    <td>
-                                        {{partnerDetailsArr.part_addr_2}}{{partnerDetailsArr.city}}
-                                        {{partnerDetailsArr.state}} {{partnerDetailsArr.country}}
-                                        {{partnerDetailsArr.zipcode}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th width="50%">Company Profile:
-                                    </th>
-                                    <td>
-                                        {{partnerDetailsArr.part_type}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th width="50%">Company Rep Details: </th>
-                                    <td>
-                                        {{partnerDetailsArr.part_reprentative}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th width="50%">Business Category: </th>
-                                    <td>
-                                        {{partnerDetailsArr.business_details}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th width="50%">Country: </th>
-                                    <td>
-                                        {{partnerDetailsArr.country}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th width="30%">Documents: </th>
-                                    <td>
-                                        <div *ngFor="let document of partnerFileArr">
-                                            <table>
-                                                <tr>
-                                                    <th>{{document.doc_type}}</th>
-                                                    <td>{{ document.doc_name }}</td>
-                                                    <td><a style="color:#1051dd; "
-                                                            (click)="downloadFile(document.doc_name)"><i
-                                                                class="fa fa-download" aria-hidden="true"></i>
-                                                        </a></td>
-                                                </tr>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 text-center">
 
-                                            </table>
-
+                            <div class="withvideo">
+                                <div class="overlay">
+                                    <video playsinline="playsinline" autoplay="autoplay" id="myvideo" muted="muted"
+                                        loop="loop">
+                                        <source src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4"
+                                            type="video/mp4">
+                                    </video>
+                                </div>
+                                <div class="container h-100">
+                                    <div class="d-flex h-100 text-center align-items-center">
+                                        <div class="w-100 text-white">
+                                            <img src="assets/images/irshad.jpeg">
                                         </div>
-                                    </td>
-                                </tr>
-                                <!-- <tr>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                        <div class="col-12">
+                            <a class="btn btnBlue float-right" (click)="editProfile()">Edit Profile</a>
+                        </div>
+                    </div>
+
+                    <form>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th width="50%">Name:
+                                            </th>
+                                            <td>
+                                                {{partnerDetailsArr.part_name}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="50%">Address line 1: </th>
+                                            <td>
+                                                {{partnerDetailsArr.part_addr}} {{partnerDetailsArr.city}}
+                                                {{partnerDetailsArr.state}} {{partnerDetailsArr.country}}
+                                                {{partnerDetailsArr.zipcode}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="50%">Address line 2: </th>
+                                            <td>
+                                                {{partnerDetailsArr.part_addr_2}}{{partnerDetailsArr.city}}
+                                                {{partnerDetailsArr.state}} {{partnerDetailsArr.country}}
+                                                {{partnerDetailsArr.zipcode}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="50%">Company Profile:
+                                            </th>
+                                            <td>
+                                                {{partnerDetailsArr.part_type}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="50%">Company Rep Details: </th>
+                                            <td>
+                                                {{partnerDetailsArr.part_reprentative}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="50%">Business Category: </th>
+                                            <td>
+                                                {{partnerDetailsArr.business_details}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="50%">Country: </th>
+                                            <td>
+                                                {{partnerDetailsArr.country}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="30%">Documents: </th>
+                                            <td>
+                                                <div *ngFor="let document of partnerFileArr">
+                                                    <table>
+                                                        <tr>
+                                                            <th>{{document.doc_type}}</th>
+                                                            <td>{{ document.doc_name }}</td>
+                                                            <td><a style="color:#1051dd; "
+                                                                    (click)="downloadFile(document.doc_name)"><i
+                                                                        class="fa fa-download" aria-hidden="true"></i>
+                                                                </a></td>
+                                                        </tr>
+
+                                                    </table>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- <tr>
                                     <th width=30%>Documents</th>
                                     <td>
                                         <div *ngFor="let item of partnerFile">
@@ -94,12 +116,14 @@
                                         </div>
                                     </td>
                                 </tr> -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </form>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
 
+                </div>
+            </div>
         </div>
     </div>
 </div>

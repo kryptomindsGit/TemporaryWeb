@@ -1,10 +1,9 @@
-@import "../../../../assets/css/theme_colors";
-
 /*-----------------------------------------------------------------------
       BASIC CSS
 -------------------------------------------------------------------------*/
+@import "../../../../assets/css/theme_colors";
 
-.section {
+.container-fluid {
   font: 14px "Montserrat", sans-serif;
   background-color: $bg-back-color;
   color: $text-color;
@@ -12,7 +11,6 @@
   font-weight: 400;
   width: 100%;
   height: 100vh;
-  position: fixed;
 }
 
 /*-----------------------------------------------------------------------
@@ -20,9 +18,9 @@ CARD CSS
 -------------------------------------------------------------------------*/
 
 .card {
-  width: 50%;
+  width: 40%;
   height: auto !important;
-  margin: 1rem auto !important;
+  margin: 1.5rem auto !important;
   float: none;
   border-radius: 10px;
   box-shadow: 0px 0px 32px 0px rgba(0, 0, 0, 0.22);
@@ -30,8 +28,8 @@ CARD CSS
 }
 
 .card .card-body img {
-  width: 5rem;
-  height: 5rem;
+  width: 3rem;
+  height: 3rem;
 }
 
 .center {
@@ -51,7 +49,7 @@ CARD CSS
 FORM CSS
 -------------------------------------------------------------------------*/
 form {
-  padding: 20px 100px 20px 100px;
+  padding: 1rem 5rem;
 }
 
 .form-group {
@@ -109,6 +107,7 @@ select {
 input:focus,
 select:focus {
   border-bottom: 1px solid $blue-color;
+  background: transparent !important;
 }
 
 input:-webkit-autofill {
@@ -156,6 +155,7 @@ input:focus,
 select:focus,
 textarea:focus {
   outline: none;
+  background: transparent !important;
   box-shadow: none !important;
   -moz-box-shadow: none !important;
   -webkit-box-shadow: none !important;
@@ -232,10 +232,12 @@ input[type=radio] {
   position: relative;
   outline: 0;
   border: 0;
-  color: black;
+  color: $text-color;
+  font-size: 0.8rem;
   text-align: center;
   height: 1.5em;
   opacity: .5;
+  background: transparent !important;
 }
 
 hr {
@@ -287,4 +289,47 @@ a {
   font-size: 0.7rem;
   bottom: -2em;
   margin-bottom: 0.2rem;
+}
+
+/*-----------------------------------------------------------------------
+MEDIA QUERY CSS
+-------------------------------------------------------------------------*/
+
+
+@media only screen and (max-width: 768px) {
+  .card {
+    width: 80%;
+    height: auto !important;
+    margin: 1rem auto !important;
+    float: none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 32px 0px rgba(0, 0, 0, 0.22);
+    background: $bg-front-color;
+    font-weight: 200;
+    overflow: scroll;
+  }
+
+  .card .card-body img {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .card {
+    width: 80%;
+    height: auto !important;
+    margin: 0.5rem auto !important;
+    float: none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 32px 0px rgba(0, 0, 0, 0.22);
+    background: $bg-front-color;
+    font-weight: 200;
+    overflow: scroll;
+  }
+
+  .card .card-body img {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
 }

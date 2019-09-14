@@ -7,33 +7,32 @@
                 <a [routerLink]="['/feature/feature/full-layout/dashboard']"
                         class="list-group-item list-group-item-action bg-color-dark"><i class="fa fa-tachometer"
                                 aria-hidden="true"></i> Dashboard</a>
-                <a [routerLink]="['/feature/feature/full-layout/employer/emp/workpackage/workpack/add']"
-                        class="list-group-item list-group-item-action bg-color-dark"><i class="fa fa-briefcase"
-                                aria-hidden="true"></i> Add Work Package</a>
-                <a [routerLink]="['feature/feature/full-layout/independent/indp/workpackage']"
-                        class="list-group-item list-group-item-action bg-color-dark"><i class="fa fa-briefcase"
-                                aria-hidden="true"></i> View Work Package</a>
-                <a href="#" class="list-group-item list-group-item-action bg-color-dark"><i class="fa fa-calendar"
-                                aria-hidden="true"></i> Timeline</a>
-                <!-- <a href="#" class="list-group-item list-group-item-action bg-color-dark"><i class="fa fa-calendar"
-                                aria-hidden="true"></i> Events</a>
-                <a href="#" class="list-group-item list-group-item-action bg-color-dark"><i class="fa fa-briefcase"
-                                aria-hidden="true"></i> Projects</a> -->
-                <a [routerLink]="['/feature/feature/full-layout/employer/emp/smartpayment']"
+                <li class="list-group list-group-flush">
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"
+                                class="dropdown-toggle list-group-item list-group-item-action bg-color-dark"><i
+                                        class="fa fa-briefcase" aria-hidden="true"></i> Work Package</a>
+                        <ul class="collapse list-unstyled " id="homeSubmenu">
+                                <li>
+                                        <a [routerLink]="['/feature/feature/full-layout/employer/workpackage/work-pack/add']"
+                                                class="list-group-item list-group-item-action bg-color-dark"><i
+                                                        class="fa fa-address-book" aria-hidden="true"></i> Add</a>
+                                </li>
+                                <li>
+                                        <a [routerLink]="['/feature/feature/full-layout/independent/workpackage']"
+                                                class="list-group-item list-group-item-action bg-color-dark"><i
+                                                        class="fa fa-address-book" aria-hidden="true"></i> View</a>
+                                </li>
+                        </ul>
+                </li>
+                <a [routerLink]="['/feature/feature/full-layout/employer/proj-timeline']"
+                        class="list-group-item list-group-item-action bg-color-dark"><i class="fa fa-calendar"
+                                aria-hidden="true"></i> Project Timeline</a>
+                <a [routerLink]="['/feature/feature/full-layout/employer/block-timeline']"
+                        class="list-group-item list-group-item-action bg-color-dark"><i class="fa fa-calendar"
+                                aria-hidden="true"></i> User Timeline</a>
+                <a [routerLink]="['/feature/feature/full-layout/employer/smartpayment']"
                         class="list-group-item list-group-item-action bg-color-dark"><i class="fa fa-credit-card"
                                 aria-hidden="true"></i> Payments</a>
-                <!-- <a href="#" class="list-group-item list-group-item-action bg-color-dark"><i class="fa fa-calendar"
-                                aria-hidden="true"></i> Work</a> -->
+
         </div>
 </div>
-
-
-
-<!-- <li data-toggle="collapse" data-target="#service" class="collapsed">
-            <a href="#" class="list-group-item list-group-item-action bg-color-dark" >Projects <span class="arrow"></span></a>
-        </li>  
-        <ul class="sub-menu collapse" id="service">
-            <li class=">Project 1</li>
-            <li class=">Project 2</li>
-            <li class=">Project 3</li>
-        </ul> -->

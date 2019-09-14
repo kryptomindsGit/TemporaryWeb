@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { CommonModule } from '@angular/common';
+import { ToastrModule } from 'ngx-toastr';
 
 //import Component,s
 import { AppComponent } from './app.component';
@@ -33,7 +34,10 @@ const MODULES = [
   ReactiveFormsModule,
   HttpClientModule,
   OwlDateTimeModule,
-  OwlNativeDateTimeModule
+  OwlNativeDateTimeModule,
+  ToastrModule.forRoot({
+    timeOut: 3000,
+  }) // ToastrModule added
 ];
 
 @NgModule({

@@ -8,16 +8,16 @@ const routes: Routes = [
   {
     path: 'emp',
     component: EmployerComponent,
-    children:[
-      { 
-        path: 'profile', 
-        loadChildren: () => import('./profile/profile.module').then(module => module.ProfileModule) 
+    children: [
+      {
+        path: 'profile',
+        loadChildren: () => import('./profile/profile.module').then(module => module.ProfileModule)
       },
-      { 
-        path: 'workpackage', 
-        loadChildren: () => import('./work-package/work-package.module').then(module => module.WorkPackageModule) 
+      {
+        path: 'workpackage',
+        loadChildren: () => import('./work-package/work-package.module').then(module => module.WorkPackageModule)
       },
-      { 
+      {
         path: 'smartpayment',
         component: SmartContractPaymentComponent
       }

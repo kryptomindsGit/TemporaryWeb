@@ -1,56 +1,89 @@
-<div class="section">
-    <div class="container">
-        <div class="card">
-            <div class="card-body ">
-                <img src="../../../../assets/images/konnecteum_logo.png" alt="Konnecteum" class="center">
-                <h4>SIGN UP</h4>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-body ">
+            <img src="../../../../assets/images/konnecteum_logo.png" alt="Konnecteum" class="center">
+            <h4>SIGN UP</h4>
 
-                <form [formGroup]="uportSignupForm">
+            <form [formGroup]="uportSignupForm">
 
-                    <div class="form-group form-input">
-                        <input type="text" formControlName="email" name="name" id="email" value="" required />
-                        <label for="email" class="form-label">Email</label>
+                <div class="form-group form-input">
+                    <input type="text" formControlName="email" name="name" id="email" value="" required />
+                    <label for="email" class="form-label">Email</label>
+
+                    <div *ngIf="uportSignupForm.controls['email'].invalid && (uportSignupForm.controls['email'].dirty || uportSignupForm.controls['email'].touched)"
+                        class="text-danger error-msg">
+                        <div [hidden]="!uportSignupForm.controls['email'].errors.required">
+                            Email is required.
+                        </div>
                     </div>
+                </div>
 
-                    <div class="form-group form-input">
-                        <input type="text" formControlName="country" name="name" id="country" value="" required />
-                        <label for="country" class="form-label">Country</label>
+                <div class="form-group form-input">
+                    <input type="text" formControlName="country" name="name" id="country" value="" required />
+                    <label for="country" class="form-label">Country</label>
+
+                    <div *ngIf="uportSignupForm.controls['country'].invalid && (uportSignupForm.controls['country'].dirty || uportSignupForm.controls['country'].touched)"
+                        class="text-danger error-msg">
+                        <div [hidden]="!uportSignupForm.controls['country'].errors.required">
+                            Country is required.
+                        </div>
                     </div>
+                </div>
 
-                    <div class="form-group form-input">
-                        <input type="text" formControlName="phone_no" name="name" id="phone_number" value="" required />
-                        <label for="phone_number" class="form-label">Phone Number</label>
+                <div class="form-group form-input">
+                    <input type="text" formControlName="phone_no" name="name" id="phone_number" value="" required />
+                    <label for="phone_number" class="form-label">Phone Number</label>
+
+                    <div *ngIf="uportSignupForm.controls['phone_no'].invalid && (uportSignupForm.controls['phone_no'].dirty || uportSignupForm.controls['phone_no'].touched)"
+                        class="text-danger error-msg">
+                        <div [hidden]="!uportSignupForm.controls['phone_no'].errors.required">
+                            Phone Number is required.
+                        </div>
                     </div>
-
-                    <div class="form-group form-input row">
-                        <div class="col-md-4">
+                </div>
+                <div class="form-group form-input">
+                    <div class="row">
+                        <div class="col-4">
                             <label class="radio-inline">
                                 <input type="radio" formControlName="role" name="role" value="Freelancer"
                                     class="radiobutton">Freelancer
                             </label>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-4">
                             <label class="radio-inline">
                                 <input type="radio" formControlName="role" name="role" value="Employer"
                                     class="radiobutton">Employer
                             </label>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-4">
                             <label class="radio-inline">
                                 <input type="radio" formControlName="role" name="role" value="Partner"
                                     class="radiobutton">Partner
                             </label>
                         </div>
+
                     </div>
+                    <div *ngIf="uportSignupForm.controls['role'].invalid && (uportSignupForm.controls['role'].dirty || uportSignupForm.controls['role'].touched)"
+                        class="text-danger error-msg">
+                        <div [hidden]="!uportSignupForm.controls['role'].errors.required">
+                            Role is required.
+                        </div>
+                    </div>
+                </div>
 
-                    <button type="button" class="btn" [disabled]="uportSignupForm.pristine || uportSignupForm.invalid"
-                        (click)="onSubmit()" id="btn-30">Sign up</button>
-                </form>
+                <br>
+                <br>
+
+                <button type="button" class="btn" id="btn-60"
+                    [disabled]="uportSignupForm.pristine || uportSignupForm.invalid" (click)="onSubmit()">Sign
+                    up</button>
+            </form>
 
 
-                <label id="option">Already have an account? </label>
-                <a [routerLink]="['/auth/auth/login']" href="#" id="forgetPassword"><i>Login</i></a>
-            </div>
+            <label id="option">Already have an account? </label>
+            <a [routerLink]="['/auth/auth/login']" href="#" id="forgetPassword"><i>
+                    <h6>Login</h6>
+                </i></a>
         </div>
     </div>
 </div>

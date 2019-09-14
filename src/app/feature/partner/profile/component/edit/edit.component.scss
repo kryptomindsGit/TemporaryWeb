@@ -4,14 +4,12 @@
       BASIC CSS
 -------------------------------------------------------------------------*/
 
-.section {
+.container-fluid {
     font: 14px "Montserrat", sans-serif;
     background-color: $bg-back-color;
     color: $text-color;
     overflow: hidden;
     font-weight: 400;
-    width: 100%;
-    height: 100vh;
 }
 
 /*-----------------------------------------------------------------------
@@ -23,25 +21,15 @@
     border-radius: 10px;
     box-shadow: 0px 0px 32px 0px rgba(0, 0, 0, 0.22);
     background: $bg-front-color;
-    width: 100%;
-    height: auto !important;
 }
 
 .card .card-body {
-    width: 100%;
-    height: 100vh;
+    padding: 0%;
 }
 
 .card .card-body img {
     width: 5rem;
     height: 5rem;
-}
-
-.center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
 }
 
 .card-body h4 {
@@ -50,9 +38,6 @@
     letter-spacing: 0.1em
 }
 
-/*-----------------------------------------------------------------------
-  FORM CSS
-  -------------------------------------------------------------------------*/
 /*-----------------------------------------------------------------------
 FORM CSS
 -------------------------------------------------------------------------*/
