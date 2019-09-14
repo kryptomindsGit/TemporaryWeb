@@ -109,15 +109,6 @@ export class HeaderComponent implements OnInit {
           this.__router.navigate(['/feature/feature/full-layout/partner/profile/part-profile/view', this.email_id]);
         }
       });
-<<<<<<< Updated upstream
-      if (this.partnerDetailsArr == null) {
-        this.__router.navigate(['/feature/feature/full-layout/partner/part/profile/profile/add']);
-      } else {
-        this.__router.navigate(['/feature/feature/full-layout/partner/part/profile/profile/view', this.email_id]);
-      }
-=======
-
->>>>>>> Stashed changes
     }
   }
 
