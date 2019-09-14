@@ -101,11 +101,12 @@
                         <table class="table table-dark  table-bordered worktable">
                             <thead>
                                 <tr>
+                                <th>Domain</th>
                                 <th>Skill</th>
                                 <th class="setWidth">Expertise</th>  
-                                <th class="setWidth">Project Type</th>
+                                <th class="setWidth">Full-time/Part-time</th>
                                 <th class="setWidth">No. of team members</th>
-                                <th class="setWidth">Regional Preference</th>
+                                <th class="setWidth">Country</th>
                                 <th class="setWidth">Rate/hour</th>
                                 <th class="setWidth">Avg. Rate/hour</th>
                                 <th class="setWidth">Currency</th>
@@ -113,35 +114,23 @@
                                 <th class="setWidth">End Date</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody *ngFor="let data of skillArr">
                                 <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{data.domain}}</td>
+                                <td>{{data.skill}}</td>
+                                <td>{{data.skillLevel}}</td>
+                                <td>{{data.availability}}</td>
+                                <td>{{data.country}}</td>
+                                <td>{{data.ratePerHour}}</td>
+                                <td>{{data.availableAvgRatePerHour}}</td>
+                                <td>{{data.currencyCode}}</td>
+                                <td>{{data.startDate}}</td>
+                                <td>{{data.endDate}}</td>
                                 </tr>
-                                <tr>
-                                    <td></td>
-                                    <td> </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    </tr>
                             </tbody>
                         </table>
                     </form>    
-                    </div>
+                </div>
             </div>
            
             <label class="headinglable">Recommendations</label> 

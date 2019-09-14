@@ -38,14 +38,16 @@
                                                 <th>Milestone</th>
                                                 <th class="setWidth">Start Date </th>
                                                 <th class="setWidth">End Date</th>
-                                                <th >Completion Criteria</th>
+                                                <th>Completion Criteria</th>
+                                                <th>Payment Condition</th>
                                                 <th class="setWidth">Team Member</th>
                                                 <th class="setWidth">Amount Payble</th>
+                                                <th>Currency Code</th>
                                             </tr>
                                         </thead>
                                             
                                         <tbody formArrayName="milestoneDetails">
-                                            <tr *ngFor="let item of milstoneDetailsArr.controls; let i=index" [formGroupName]="i">
+                                            <tr *ngFor="let item of milestoneDetailsArr.controls; let i=index" [formGroupName]="i">
                                                 <td ><input type="text" formControlName="milestone" placeholder="Enter Milestone"></td>
                                                 <td>
                                                     <input type=text [owlDateTimeTrigger]="dt1" formControlName="start_date" id="datePicker1"
@@ -57,13 +59,27 @@
                                                     placeholder="End Date" [owlDateTime]="dt">
                                                     <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
                                                 </td>
-                                                <td><input type="text" formControlName="criteria" placeholder="Criteria"></td>
+                                                <td>
+                                                    <input type="text" formControlName="completionCriteria" placeholder="Criteria">
+                                                </td>
+                                                <td>
+                                                        <label class="checkbox-inline"><input type="checkbox" formControlName="paymentConditionApprovedByEmployer" >Approved by Employer</label><br>
+                                                        <label class="checkbox-inline"><input type="checkbox" formControlName="paymentConditionApprovedByReviewer" >Approved by Reviewer</label><br>
+                                                        <label class="checkbox-inline">
+                                                            <input type="checkbox" [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" id="datePicker2"  formControlName="paymentConditionDueDate" (click)="checkDate()" value="true">On Date
+                                                            <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                                                        </label>
+                                                        <br>
+                                                </td>
                                                 <td><select  formControlName="teamMember"  id="teamMember">
                                                         <option>select Team Member</option>
                                                         <option id="option_type" *ngFor="let  team of  teamMemberArr" [value]=" team.memberId">{{team.memberId}}</option>
                                                     </select> 
                                                 </td>
-                                                <td><input type="text" formControlName="amt" placeholder="Amount "></td> 
+                                                <td><input type="text" formControlName="amountPayable" placeholder="Amount "></td> 
+                                                <td>
+                                                        <input type="text" formControlName="currencyCd" placeholder="Currency">
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -73,6 +89,7 @@
                                     <button class="btn increment" (click)="removeMilestone(i)">-</button>
                                 </div>
                             </div>
+                            <button class="btn viewprofile" (click)="onSaveChanges()">Save Changes</button>
                         </form>
                     </div>
                 </div>
@@ -92,13 +109,18 @@
                             <th >Payer Account</th>
                             <th >Payee Name</th>
                             <th >Payee Account</th>
-                            <th >Payment Condition</th>
+                            <!-- <th >Payment Condition</th> -->
                             <th >Payment Amount</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                            <td ><input type="text" placeholder="Enter Milestone"></td>
+                            <td>
+                                <select  id="paymentMethod">
+                                    <option>Select Payment Method</option>
+                                    <option id="option_type" *ngFor="let  payment of  paymentMethodArr" [value]="payment">{{payment}}</option>
+                                </select> 
+                            </td>
                             <td>
                                 <select  id="paymentMethod">
                                     <option>Select Payment Method</option>
@@ -109,11 +131,11 @@
                             <td><input type="text" placeholder="Payer Account"></td>
                             <td><input type="text" placeholder="Payee Name"></td>
                             <td><input type="text" placeholder="Payee Account"></td>
-                            <td>
+                            <!-- <td>
                                     <label class="checkbox-inline"><input type="checkbox" value="">Approved by Employer</label><br>
                                     <label class="checkbox-inline"><input type="checkbox" value="">Approved by Reviewer</label><br>
                                     <label class="checkbox-inline"><input type="checkbox" value="">On Date</label><br>
-
+                            </td> -->
                             <td><input type="text" placeholder="Payee Ammount"></td>
                             
                             </tr>
@@ -125,14 +147,15 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>   
+                          
                                 </tr>
                         </tbody>
                     </table>
                 </form>             
             </div>   
         </div>
-            <button class="btn viewprofile" *ngIf="show" id="divshow" (click)="onSaveChanges()">Save Changes</button>
-            <button class="btn viewprofile" *ngIf="show" id="divshow" (click)="onSaveContract()">Submit Contract</button>
+           
     </div> 
+    <button class="btn viewprofile" (click)="onSaveChanges()">Save Changes</button>
+    <button class="btn viewprofile1" (click)="onSaveContract()">Submit Contract</button>
 </div>

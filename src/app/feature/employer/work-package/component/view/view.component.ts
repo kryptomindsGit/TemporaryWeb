@@ -32,7 +32,8 @@ export class ViewComponent implements OnInit {
   toDate : string = "1 june 2019";
   budgetCurrency : string ;
      
-  
+  //Arr
+  skillArr = [];
 
 
   config: SwiperOptions = {
@@ -86,10 +87,8 @@ export class ViewComponent implements OnInit {
     });
 
     this.__workService.getSkillPackageData(id).then((resData: any) => {
-      console.log(resData);
+      console.log("Data of skills" + resData);
+      this.skillArr = resData;
     });
-
-
   }
-
 }

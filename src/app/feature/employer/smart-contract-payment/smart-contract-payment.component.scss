@@ -10,7 +10,7 @@
   color: $text-color;
   overflow: scroll;
   font-weight: 400;
-  // height:100vh;
+  height:100vh;
   position: fixed;
   // width:100%;
 }
@@ -262,7 +262,20 @@ span{
 
 
   .viewprofile{
-    font-size: 0.6rem;
+    font-size: 0.8rem;
+    color: #ffffff;
+    border-radius:0.5rem;
+    margin-left:1rem;
+    margin-top:1rem;
+    margin-bottom:1rem;
+    margin-right:6rem;
+    background: rgba(2, 41, 148, 0.966);
+    width:10%;
+    float: right;
+  }
+  
+  .viewprofile1{
+    font-size: 0.8rem;
     color: #ffffff;
     border-radius:0.5rem;
     margin-left:1rem;
@@ -271,14 +284,6 @@ span{
     background: rgba(2, 41, 148, 0.966);
     width:10%;
     float: right;
-  }
-  
-  .viewprofile1{
-    font-size: 0.6rem;
-    color: #ffffff;
-    border-radius:1rem;
-    background: rgba(2, 41, 148, 0.966);
-    padding: none !important;
   }
 
 
