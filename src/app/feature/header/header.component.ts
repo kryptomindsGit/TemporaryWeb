@@ -34,16 +34,6 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // const user = this.__authService.decode();
-    // console.log("User is  : ", user);
-
-    // this.congnitoID = user["cognito:username"];
-    // this.userRole = user["custom:role"];
-    // console.log(this.userRole);
-    // this.email_id = user["email"];
-    // console.log(this.email_id);
-
-    // this.isUportUser = localStorage.getItem("uportUser");
 
     // if (this.isUportUser == "false") {
 
