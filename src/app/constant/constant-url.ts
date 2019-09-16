@@ -19,7 +19,7 @@ export const DEPLOY_CONTRACT_SAW_URL= "http://192.168.0.19:5000";
 /**
  * @description AWS Server URL's
  */
-
+//url
 export const BASE_URL = 'http://13.234.75.74:3060'; //(shefali - Node Server)
 
 export const BLOCKCHAIN_URL = 'http://54.242.103.217:5000'; //(Khemraj - Python Server)
