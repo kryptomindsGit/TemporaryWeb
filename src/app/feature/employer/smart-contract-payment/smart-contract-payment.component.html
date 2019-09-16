@@ -67,7 +67,7 @@
                                                         <label class="checkbox-inline"><input type="checkbox" formControlName="paymentConditionApprovedByEmployer" >Approved by Employer</label><br>
                                                         <label class="checkbox-inline"><input type="checkbox" formControlName="paymentConditionApprovedByReviewer" >Approved by Reviewer</label><br>
                                                         <label class="checkbox-inline">
-                                                            <input type="checkbox" [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" id="datePicker2"  formControlName="paymentConditionDueDate" (click)="checkDate()" value="true">On Date
+                                                            <input type="checkbox" [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" id="datePicker2"  formControlName="paymentConditionDueDate" value="true">On Date
                                                             <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
                                                         </label>
                                                         <br>
@@ -98,7 +98,7 @@
                                 <button class="btn viewprofile1" (click)="onDeployContract()">Deploy Contract</button>
 
 
-                                <div class="modal" id="myModal" [style.display]="showModal ? 'block' : 'none'">
+                                <!-- <div class="modal" id="myModal" [style.display]="showModal ? 'block' : 'none'">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="center">
@@ -107,37 +107,37 @@
                                                         </div>
                                                         <h6>Jhon Disuza</h6>
                                                         <label>jhon@gmail.com</label> 
-                                                    </div>
+                                                    </div> -->
                         
                                             <!-- Modal Header -->
-                                            <div class="modal-header">
-                        
+                                            <!-- <div class="modal-header">
+                         -->
                                                 <!-- <h4 class="modal-title">User Details:</h4> -->
-                                            </div>
-                                            
+                                            <!-- </div>
+                                             -->
                                             <!-- Modal body -->
-                                            <div class="modal-body">
-                                                <p>User Id : {{UserId}}</p>
+                                            <!-- <div class="modal-body"> -->
+                                                <!-- <p>User Id : {{UserId}}</p>
                                                 <p>Firstname : {{Firstname}}</p>
                                                 <p>Lastname : {{Lastname}}</p>
-                                                <p>Email : {{Email}}</p>
-                                            </div>
+                                                <p>Email : {{Email}}</p> -->
+                                            <!-- </div> -->
                                             
                                             <!-- Modal footer -->
-                                            <div class="modal-footer">
+                                            <!-- <div class="modal-footer">
                                                 <button type="button" class="btn btn-warning" data-dismiss="modal" (click) = "hide()">Close</button>
                                             </div>
                                             
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                         </form>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div [@bounce]="bounce">
+       
             <h5>Payment shedule</h5>
         <div class="card" >
             <div class="card-body">
@@ -187,7 +187,7 @@
                 </form>             
             </div>   
         </div>
-        </div>
+       
         
            
     </div> 

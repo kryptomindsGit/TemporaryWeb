@@ -35,32 +35,35 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
 
-    // if (this.isUportUser == "false") {
+    this.isUportUser = localStorage.getItem("uportUser");
 
-    //   const user = this.__authService.decode();
-    //   this.congnitoID = user["cognito:username"];
-    //   console.log(this.congnitoID);
+    if (this.isUportUser == "false") {
 
-    //   this.email_id = user["email"];
-    //   console.log(this.email_id);
+      const user = this.__authService.decode();
+      this.congnitoID = user["cognito:username"];
+      console.log(this.congnitoID);
 
-    //   this.congnitoID = user["cognito:username"];
-    //   this.userRole = user["custom:role"];
-    //   console.log(this.userRole);
-    //   // this.country = user["custom:country"];
+      this.email_id = user["email"];
+      console.log(this.email_id);
 
-    // } else {
+      this.congnitoID = user["cognito:username"];
+      this.userRole = user["custom:role"];
+      console.log(this.userRole);
+      // this.country = user["custom:country"];
 
-    //   this.email_id = localStorage.getItem("email");
-    //   // this.country = localStorage.getItem("country");
-    //   console.log("Email Id is : " + this.email_id);
+    } else {
 
-    // }
+      this.email_id = localStorage.getItem("email");
+      this.userRole = localStorage.getItem("role");
+      // this.country = localStorage.getItem("country");
+      console.log("Email Id is : " + this.email_id);
+
+    }
 
   }
 
   userRoleInfo() {
-    console.log("Indise userRoleInfo");
+    console.log("Indise userRoleInfo", this.userRole);
     if (this.userRole == "Freelancer") {
       console.log("Inside Freelancer");
       this.__idptProfileService.getFreelancerByEmail(this.email_id).then((resData: any) => {
