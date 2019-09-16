@@ -49,45 +49,45 @@ CARD CSS
   letter-spacing: 0.1em
 }
 
-/*-----------------------------------------------------------------------
-MEDIA QUERY CSS
--------------------------------------------------------------------------*/
+// /*-----------------------------------------------------------------------
+// MEDIA QUERY CSS
+// -------------------------------------------------------------------------*/
 
 
-@media only screen and (max-width: 768px) {
-  .card {
-    width: 70%;
-    height: auto !important;
-    margin: 5rem auto !important;
-    float: none;
-    border-radius: 10px;
-    box-shadow: 0px 0px 32px 0px rgba(0, 0, 0, 0.22);
-    background: $bg-front-color;
-    font-weight: 200;
-    overflow: scroll;
-  }
+// @media only screen and (max-width: 768px) {
+//   .card {
+//     width: 70%;
+//     height: auto !important;
+//     margin: 5rem auto !important;
+//     float: none;
+//     border-radius: 10px;
+//     box-shadow: 0px 0px 32px 0px rgba(0, 0, 0, 0.22);
+//     background: $bg-front-color;
+//     font-weight: 200;
+//     overflow: scroll;
+//   }
 
-  .card .card-body img {
-    width: 8rem;
-    height: 8rem;
-  }
-}
+//   .card .card-body img {
+//     width: 8rem;
+//     height: 8rem;
+//   }
+// }
 
-@media only screen and (max-width: 350px) {
-  .card {
-    width: 70%;
-    height: auto !important;
-    margin: 5rem auto !important;
-    float: none;
-    border-radius: 10px;
-    box-shadow: 0px 0px 32px 0px rgba(0, 0, 0, 0.22);
-    background: $bg-front-color;
-    font-weight: 200;
-    overflow: scroll;
-  }
+// @media only screen and (max-width: 350px) {
+//   .card {
+//     width: 70%;
+//     height: auto !important;
+//     margin: 5rem auto !important;
+//     float: none;
+//     border-radius: 10px;
+//     box-shadow: 0px 0px 32px 0px rgba(0, 0, 0, 0.22);
+//     background: $bg-front-color;
+//     font-weight: 200;
+//     overflow: scroll;
+//   }
 
-  .card .card-body img {
-    width: 8rem;
-    height: 8rem;
-  }
-}
+//   .card .card-body img {
+//     width: 8rem;
+//     height: 8rem;
+//   }
+// }

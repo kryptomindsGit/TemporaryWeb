@@ -46,14 +46,20 @@ export class EditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.emailId = this.__activatedRoute.snapshot.params.id;
-    const user = this.__authService.decode();
-    this.uid = localStorage.getItem("uid");
-    this.congnitoId = user["cognito:username"];
 
+    let isUportUser = localStorage.getItem("uportUser");
 
-    const userInfo = this.__authService.decode();
-    this.congnitoId = userInfo["cognito:username"];
+    if (isUportUser == "false") {
+      const user = this.__authService.decode();
+      this.congnitoId = user["cognito:username"];
+      this.emailId = user["email"];
+      this.uid = user["uid"];
+    } else {
+      this.congnitoId = "TEST"
+      this.uid = localStorage.getItem("uid");
+      this.emailId = localStorage.getItem("email");
+      // this.country = localStorage.getItem("country");
+    }
 
     //Calling Function's
 
@@ -88,27 +94,31 @@ export class EditComponent implements OnInit {
    * @name getEmplyeeDetails
    * @description call get API for employer file details 
    */
-  getEmplyeeDetails() {
+  async getEmplyeeDetails() {
 
-    this.__profileService.getEmployerByEmailId(this.emailId).then((data: any) => {
+    await this.__profileService.getEmployerByEmailId(this.emailId).then((data: any) => {
       this.employerArr = data[0];
       console.log(this.employerArr);
-
-      this.employerProfileForm.patchValue({
-        comapany_name: this.employerArr.cmp_name,
-        website_addr: this.employerArr.cmp_website,
-        address_line_one: this.employerArr.cmp_addr,
-        address_line_two: this.employerArr.cmp_addr_2,
-        country: this.employerArr.country,
-        state: this.employerArr.state,
-        city: this.employerArr.city,
-        zipcode: this.employerArr.zipcode,
-        business_cat: this.employerArr.business_cat,
-        company_profile: this.employerArr.cpm_profile,
-        company_rep_det: this.employerArr.cmp_reprentative
-      });
-
     });
+
+    await this.populateStateList();
+    await this.populateCityList();
+
+    this.employerProfileForm.patchValue({
+      comapany_name: this.employerArr.cmp_name,
+      website_addr: this.employerArr.cmp_website,
+      address_line_one: this.employerArr.cmp_addr,
+      address_line_two: this.employerArr.cmp_addr_2,
+      country: this.employerArr.country,
+      state: this.employerArr.state,
+      city: this.employerArr.city,
+      zipcode: this.employerArr.zipcode,
+      business_cat: this.employerArr.business_cat,
+      company_profile: this.employerArr.cpm_profile,
+      company_rep_det: this.employerArr.cmp_reprentative
+    });
+
+
 
     this.__profileService.getEmployerFileById(this.id).then((resData: any) => {
       this.employerFileArr = resData;
@@ -123,11 +133,25 @@ export class EditComponent implements OnInit {
             part_id: this.employerFileArr[index].part_id
           }));
       }
-      console.log(this.documentArr);
-      // this.valEmpProfile();
     });
 
+  }
 
+  async populateStateList() {
+    for (let i = 0; i < this.countryArr.length; i++) {
+      if (this.countryArr[i].name == this.employerArr.country) {
+        let countryID = this.countryArr[i].id;
+        await this.getStateListByCountryID(countryID);
+      }
+    }
+  }
+  async populateCityList() {
+    for (let i = 0; i < this.stateArr.length; i++) {
+      if (this.stateArr[i].name == this.employerArr.state) {
+        let stateID = this.stateArr[i].id;
+        this.getCityListByStateID(stateID);
+      }
+    }
   }
 
   /**
@@ -163,19 +187,19 @@ export class EditComponent implements OnInit {
   /**
    * @method setCountryID
    * @param country_id
-   * @description get the selected country id and pass to getStateByID method.
+   * @description get the selected country id and pass to getStateListByCountryID method.
    */
   setCountryID(country_id) {
-    this.getStateByID(country_id)
+    this.getStateListByCountryID(country_id)
   }
 
   /**
-   * @method getStateByID
+   * @method getStateListByCountryID
    * @param country_id
    * @description get the all state values based on selected country id.
    */
-  getStateByID(country_id) {
-    this.__profileService.getEmpStateByID(country_id).then((resData: any) => {
+  async getStateListByCountryID(country_id) {
+    await this.__profileService.getEmpStateByID(country_id).then((resData: any) => {
       this.stateArr = resData;
     })
   }
@@ -183,24 +207,23 @@ export class EditComponent implements OnInit {
   /**
    * @method setStateID
    * @param state_id
-   * @description get the selected state id and pass to getCityByID method.
+   * @description get the selected state id and pass to getCityListByStateID method.
    */
   setStateID(state_id) {
-    this.getCityByID(state_id)
+    this.getCityListByStateID(state_id)
   }
 
   /**
-   * @method getCityByID
+   * @method getCityListByStateID
    * @param state_id
    * @description get the all city values based on selected state id.
    */
-  getCityByID(state_id) {
-    this.__profileService.getEmpCityByID(state_id).then((resData: any) => {
+  async getCityListByStateID(state_id) {
+    await this.__profileService.getEmpCityByID(state_id).then((resData: any) => {
       this.cityArr = resData;
       console.log(this.cityArr)
     })
   }
-
 
   /**
     * @name 

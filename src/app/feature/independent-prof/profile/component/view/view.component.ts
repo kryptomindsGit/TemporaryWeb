@@ -16,6 +16,7 @@ export class ViewComponent implements OnInit {
   public __id: any;
   public email_addr: any;
   public phone_number: any;
+  public uid: any;
 
   //Array's
   public congnitoID: any = [];
@@ -34,26 +35,25 @@ export class ViewComponent implements OnInit {
     private __router: Router,
     private __activatedRoute: ActivatedRoute,
   ) {
-    this.email_addr = this.__activatedRoute.snapshot.params.id;
+    // this.email_addr = this.__activatedRoute.snapshot.params.id;
   }
 
   ngOnInit() {
 
     let isUportUser = localStorage.getItem("uportUser");
+
     if (isUportUser == "false") {
 
       const user = this.__authService.decode();
       this.congnitoID = user["cognito:username"];
       this.email_addr = user["email"];
-      this.phone_number = user["phone_number"];
+      this.uid = user["uid"];
 
     } else {
-
+      this.congnitoID = "TEST";
+      this.uid = localStorage.getItem("uid");
       this.email_addr = localStorage.getItem("email");
-      this.phone_number = localStorage.getItem("phone_no");
     }
-
-    console.log("Email:", this.email_addr);
 
 
     // get API call function's

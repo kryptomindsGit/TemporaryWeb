@@ -43,22 +43,20 @@ export class AddComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const user = this.__authService.decode();
-    this.congnitoId = user["cognito:username"];
-    this.uid = localStorage.getItem("uid");
-    console.log("uid :", this.uid);
 
     let isUportUser = localStorage.getItem("uportUser");
+
     if (isUportUser == "false") {
+      const user = this.__authService.decode();
       this.congnitoId = user["cognito:username"];
       this.email_id = user["email"];
+      this.uid = user["uid"];
     } else {
+      this.congnitoId = "TEST"
+      this.uid = localStorage.getItem("uid");
       this.email_id = localStorage.getItem("email");
       this.country = localStorage.getItem("country");
     }
-    console.log("Cognito:", this.congnitoId);
-
-    console.log("Email id:", this.email_id);
 
 
     //Calling Function's

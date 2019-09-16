@@ -13,6 +13,7 @@ export class ViewComponent implements OnInit {
   //Variable's
   public id: number;
   public emailId: string;
+  public uid: any;
 
   //Array's
   public congnitoID: any = [];
@@ -25,12 +26,22 @@ export class ViewComponent implements OnInit {
     private __router: Router,
     private __activatedRoute: ActivatedRoute,
   ) {
-    this.emailId = this.__activatedRoute.snapshot.params.id;
+    // this.emailId = this.__activatedRoute.snapshot.params.id;
   }
 
   ngOnInit() {
-    const userInfo = this.__authService.decode();
-    this.congnitoID = userInfo["cognito:username"];
+    let isUportUser = localStorage.getItem("uportUser");
+
+    if (isUportUser == "false") {
+      const user = this.__authService.decode();
+      this.congnitoID = user["cognito:username"];
+      this.emailId = user["email"];
+      this.uid = user["uid"];
+    } else {
+      this.congnitoID = "TEST"
+      this.uid = localStorage.getItem("uid");
+      this.emailId = localStorage.getItem("email");
+    }
 
     //call function's
     this.getEmployerDetails();

@@ -69,9 +69,6 @@ export class AddComponent implements OnInit {
   ngOnInit() {
 
     this.isUportUser = localStorage.getItem("uportUser");
-    // const user = this.__authService.decode();
-    // this.congnitoID = user["cognito:username"];
-    // console.log("Cognito ID:", this.congnitoID)
 
     if (this.isUportUser == "false") {
 
@@ -82,16 +79,11 @@ export class AddComponent implements OnInit {
       this.country = user["custom:country"];
 
     } else {
-      const user = this.__authService.decode();
-      this.congnitoID = user["cognito:username"];
-
+      this.congnitoID = "TEST";
       this.uid = localStorage.getItem("uid");
       this.email = localStorage.getItem("email");
       this.country = localStorage.getItem("country");
     }
-    console.log("Cognito ID:", this.congnitoID)
-    console.log("Email Id is : " + this.email);
-    console.log("User ID is : " + this.uid);
 
     //Call val funtion's
 
@@ -622,7 +614,7 @@ export class AddComponent implements OnInit {
     const freelancerProfilePayload = {};
     if (this.isUportUser == "false") {
       const freelancerProfilePayload = {
-        cognito_id: '32d00d9f-1f45-4bf3-97c5-4b03ab75348b',
+        cognito_id: this.congnitoID,
         email: this.email,
         uid: this.uid,
         prefix: this.personalDetails.controls.prefix.value,
@@ -655,7 +647,7 @@ export class AddComponent implements OnInit {
     else {
 
       const freelancerProfilePayload = {
-        cognito_id: '32d00d9f-1f45-4bf3-97c5-4b03ab75348b',
+        cognito_id: this.congnitoID,
         email: this.email,
         uid: this.uid,
         prefix: this.personalDetails.controls.prefix.value,

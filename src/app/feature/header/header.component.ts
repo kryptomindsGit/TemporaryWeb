@@ -106,6 +106,16 @@ export class HeaderComponent implements OnInit {
   }
 
 
+  /**
+    *@name onLogout 
+    * @description call Logout
+    */
+  onLogout() {
+    this.__authService.logout();
+    this.__router.navigate(['/auth/auth/login']);
+  }
+
+
 }
 
 

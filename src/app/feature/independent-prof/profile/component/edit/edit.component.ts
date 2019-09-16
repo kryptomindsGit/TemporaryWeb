@@ -30,6 +30,7 @@ export class EditComponent implements OnInit {
   public country: string;
   public doc_cat_id: number;
   public __id: any;
+  public uid: any;
   public checkMarked: string;
   public edu_catId: number;
 
@@ -91,13 +92,14 @@ export class EditComponent implements OnInit {
       const user = this.__authService.decode();
       this.congnitoID = user["cognito:username"];
       this.email = user["email"];
+      this.uid = user["uid"];
       this.country = user["custom:country"];
 
     } else {
-
+      this.congnitoID = "TEST";
+      this.uid = localStorage.getItem("uid");
       this.email = localStorage.getItem("email");
       this.country = localStorage.getItem("country");
-
     }
 
     /**
@@ -324,6 +326,7 @@ export class EditComponent implements OnInit {
     });
   }
 
+
   getFreelancerDocuments() {
     this.__profileService.getFreelancerDocumentById(this.__id).then((data: any) => {
       this.freelancerDocsArr = data;
@@ -332,30 +335,6 @@ export class EditComponent implements OnInit {
       if (isPersonal) {
 
         console.log("isPersonal", isPersonal);
-
-        // for (let index = 0; index < isPersonal.length; index++) {
-        //   this.documentArr.push(this.__fb.group(
-        //     {
-        //       file_name: isPersonal[index].doc_name,
-        //       file_type: isPersonal[index].doc_type,
-        //       file_id: isPersonal[index].doc_type_id,
-        //       doc_id: isPersonal[index].doc_id
-        //     }
-        //   ));
-        // }
-
-        // console.log(" this.documentArr", this.documentArr);
-
-        // for (let index = 0; index < isPersonal.length; index++) {
-        //   this.documentPersonalArray.push(this.__fb.group(
-        //     {
-        //       file_name: isPersonal[index].doc_name,
-        //       file_type: isPersonal[index].doc_type,
-        //       file_id: isPersonal[index].doc_type_id,
-        //       doc_id: isPersonal[index].doc_id
-        //     }
-        //   ));
-        // }
 
         isPersonal.forEach(item => {
           this.documentArr.push(

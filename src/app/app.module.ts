@@ -36,7 +36,7 @@ const MODULES = [
   OwlDateTimeModule,
   OwlNativeDateTimeModule,
   ToastrModule.forRoot({
-    timeOut: 3000,
+    timeOut: 2000,
   }) // ToastrModule added
 ];
 

@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   //Variables
   public emailID: string;
-  public uportUser: string =  "false";
+  public uportUser: string = "false";
 
   //Arrays
   public indepUserDetails: any = [];
@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit {
 
           this.toastr.success(emailName, 'Welcome to Konnecteum');
           localStorage.setItem('uid', data[0].uid);
-          localStorage.setItem('uportUser', this.uportUser );
+          localStorage.setItem('uportUser', this.uportUser);
           localStorage.setItem('email', data[0].email);
           this.__router.navigate(['/feature/feature/full-layout/dashboard'])
         })

@@ -44,26 +44,23 @@ export class EditComponent implements OnInit {
     private __router: Router,
     private __activatedRoute: ActivatedRoute,
   ) {
-    this.emailId = this.__activatedRoute.snapshot.params.id;
+    // this.emailId = this.__activatedRoute.snapshot.params.id;
   }
 
   ngOnInit() {
-    const user = this.__authService.decode();
     let isUportUser = localStorage.getItem("uportUser");
-    this.uid = localStorage.getItem("uid");
-    this.congnitoId = user["cognito:username"];
 
     if (isUportUser == "false") {
       const user = this.__authService.decode();
       this.congnitoId = user["cognito:username"];
-      this.email = user["email"];
+      this.emailId = user["email"];
+      this.uid = user["uid"];
     } else {
-      this.email = localStorage.getItem("email");
+      this.congnitoId = "TEST"
+      this.uid = localStorage.getItem("uid");
+      this.emailId = localStorage.getItem("email");
       this.country = localStorage.getItem("country");
     }
-
-    console.log("UID", this.uid);
-    console.log("emial", this.email);
 
 
     //Call function
@@ -103,43 +100,29 @@ export class EditComponent implements OnInit {
    * @name getPartnerDetails
    * @description call get API for partner details 
    */
-  getPartnerDetails() {
+  async getPartnerDetails() {
 
-    this.__profileService.getPartnerByEmailId(this.emailId).then((resData: any) => {
+    await this.__profileService.getPartnerByEmailId(this.emailId).then((resData: any) => {
       this.partnerArr = resData[0];
       console.log(this.partnerArr);
-
-      for (let i = 0; i < this.countryArr.length; i++) {
-        if (this.countryArr[i].name == this.partnerArr.country) {
-          let countryID = this.countryArr[i].id;
-          console.log("Country Id", countryID);
-          this.getStateByID(countryID);
-        }
-      }
-
-      for (let i = 0; i < this.stateArr.length; i++) {
-        if (this.stateArr[i].name == this.partnerArr.state) {
-          let stateID = this.stateArr[i].id;
-          console.log("State Id", stateID);
-          this.getCityByID(stateID);
-        }
-      }
-
-      this.partnerProfileForm.patchValue({
-        comapany_name: this.partnerArr.part_name,
-        website_addr: this.partnerArr.part_website,
-        address_line_one: this.partnerArr.part_addr,
-        address_line_two: this.partnerArr.part_addr_2,
-        country: this.partnerArr.country,
-        state: this.partnerArr.state,
-        city: this.partnerArr.city,
-        zipcode: this.partnerArr.zipcode,
-        business_cat: this.partnerArr.business_details,
-        company_profile: this.partnerArr.part_type,
-        company_rep_det: this.partnerArr.part_reprentative
-      });
     });
 
+    await this.populateStateList();
+    await this.populateCityList();
+
+    this.partnerProfileForm.patchValue({
+      comapany_name: this.partnerArr.part_name,
+      website_addr: this.partnerArr.part_website,
+      address_line_one: this.partnerArr.part_addr,
+      address_line_two: this.partnerArr.part_addr_2,
+      country: this.partnerArr.country,
+      state: this.partnerArr.state,
+      city: this.partnerArr.city,
+      zipcode: this.partnerArr.zipcode,
+      business_cat: this.partnerArr.business_details,
+      company_profile: this.partnerArr.part_type,
+      company_rep_det: this.partnerArr.part_reprentative
+    });
 
     this.__profileService.getPartnerFileById(this.emailId).then((resData: any) => {
       this.partnerFileArr = resData;
@@ -154,11 +137,25 @@ export class EditComponent implements OnInit {
             part_id: this.partnerFileArr[index].part_id
           }));
       }
-      this.valPartProfile();
-      console.log(this.documentArr);
 
     });
-    // await this.valPartProfile();
+  }
+
+  async populateStateList() {
+    for (let i = 0; i < this.countryArr.length; i++) {
+      if (this.countryArr[i].name == this.partnerArr.country) {
+        let countryID = this.countryArr[i].id;
+        await this.getStateListByCountryID(countryID);
+      }
+    }
+  }
+  async populateCityList() {
+    for (let i = 0; i < this.stateArr.length; i++) {
+      if (this.stateArr[i].name == this.partnerArr.state) {
+        let stateID = this.stateArr[i].id;
+        this.getCityListByStateID(stateID);
+      }
+    }
   }
 
   /**
@@ -193,19 +190,19 @@ export class EditComponent implements OnInit {
   /**
    * @method setCountryID
    * @param country_id
-   * @description get the selected country id and pass to getStateByID method.
+   * @description get the selected country id and pass to getStateListByCountryID method.
    */
   setCountryID(country_id) {
-    this.getStateByID(country_id)
+    this.getStateListByCountryID(country_id)
   }
 
   /**
-   * @method getStateByID
+   * @method getStateListByCountryID
    * @param country_id
    * @description get the all state values based on selected country id.
    */
-  getStateByID(country_id) {
-    this.__profileService.getPartStateByID(country_id).then((resData: any) => {
+  async getStateListByCountryID(country_id) {
+    await this.__profileService.getPartStateByID(country_id).then((resData: any) => {
       this.stateArr = resData;
     })
   }
@@ -213,19 +210,19 @@ export class EditComponent implements OnInit {
   /**
    * @method setStateID
    * @param state_id
-   * @description get the selected state id and pass to getCityByID method.
+   * @description get the selected state id and pass to getCityListByStateID method.
    */
   setStateID(state_id) {
-    this.getCityByID(state_id)
+    this.getCityListByStateID(state_id)
   }
 
   /**
-   * @method getCityByID
+   * @method getCityListByStateID
    * @param state_id
    * @description get the all city values based on selected state id.
    */
-  getCityByID(state_id) {
-    this.__profileService.getPartCityByID(state_id).then((resData: any) => {
+  async getCityListByStateID(state_id) {
+    await this.__profileService.getPartCityByID(state_id).then((resData: any) => {
       this.cityArr = resData;
       console.log(this.cityArr)
     })
