@@ -32,10 +32,12 @@ export class AuthService {
   ) { }
 
   login(loginPayload): any {
-    return this.__http.post<{ jwtToken: string }>(`${AWS_URL}/login`, loginPayload, httpOptions)
+    return this.__http.post<{ response: string }>(`${AWS_URL}/login`, loginPayload, httpOptions)
       .pipe(
         map(result => {
-          localStorage.setItem('access_token', result.jwtToken);
+          // console.log("Response :", result.response['jwtToken']);
+
+          localStorage.setItem('access_token', result.response['jwtToken']);
           return result;
         })
       );

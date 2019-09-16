@@ -95,8 +95,7 @@
 
                             <div class="row">
                                 <div class="form-group form-input col">
-                                    <select class="formStyle" (change)="setCountryID($event.target.value)"
-                                        formControlName="country">
+                                    <select (change)="setCountryID($event.target.value)" formControlName="country">
                                         <option disabled value="">Country</option>
                                         <option *ngFor="let country of countryArr" [ngValue]="country.name">
                                             {{country.name}}
@@ -111,8 +110,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group form-input col">
-                                    <select class="formStyle" (change)="setStateID($event.target.value)"
-                                        formControlName="province">
+                                    <select (change)="setStateID($event.target.value)" formControlName="province">
                                         <option disabled value="">State</option>
                                         <option *ngFor="let state of stateArr" [ngValue]="state.name">{{state.name}}
                                         </option>
@@ -127,7 +125,7 @@
                                 </div>
 
                                 <div class="form-group form-input col">
-                                    <select class="formStyle" formControlName="city">
+                                    <select formControlName="city">
                                         <option disabled value="">City</option>
                                         <option *ngFor="let city of cityArr" [ngValue]="city.name">{{city.name}}
                                         </option>
@@ -159,9 +157,9 @@
 
                             <div formArrayName="documents_personal">
                                 <div *ngFor="let item of documentArr.controls; let i=index">
-
+                                    <!-- {{documentArr.controls[0].value['file_name']}} -->
                                     <hr *ngIf="i>0">
-                                    <div class="row" formGroupName="{{i}}">
+                                    <div class="row" [formGroupName]="i">
                                         <div class="form-group form-input col-3">
                                             <select class="formStyle" (change)="setDocTypeCatID($event.target.value)"
                                                 formControlName="file_type">
@@ -180,7 +178,7 @@
                                         </div>
                                         <div class="form-group form-input col-3">
                                             <input type="file" class="document_name" name="chooseFile" id="chooseFile"
-                                                (change)="handleFileInput($event)" formControlName="chooseFile">
+                                                (change)="handleFileInput($event)" formControlName="file_name">
 
                                             <!-- <div *ngIf="item.controls['chooseFile'].invalid && (item.controls['chooseFile'].dirty || item.controls['chooseFile'].touched)"
                                                         class="text-danger error-msg">
@@ -222,7 +220,7 @@
                                     <!-- <label for="quali">Education :</label> -->
                                     <hr *ngIf="i>0">
                                     <div class="row" [formGroupName]="i">
-                                        <div class="form-group form-input col-3">
+                                        <div class="form-group form-input col-4">
                                             <select (change)="setEduCatByID($event.target.value)"
                                                 formControlName="edu_cat_id">
                                                 <option disabled value="">Category</option>
@@ -233,7 +231,7 @@
                                         </div>
 
 
-                                        <div class="form-group form-input col-3">
+                                        <div class="form-group form-input col-4">
                                             <select formControlName="edu_type_id">
                                                 <option disabled value="">Qualification</option>
                                                 <option *ngFor="let edu of eduArr" [value]="edu.edu_type_id">
@@ -268,7 +266,7 @@
                                             </select>
                                         </div>
 
-                                        <div class="form-group form-input col-4">
+                                        <div class="form-group form-input col-3">
                                             <div class="file-upload">
                                                 <div class="file-select">
                                                     <input type="file" class="document_name" name="chooseFile"
@@ -277,13 +275,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class=col-2>
+                                        <div class=col-1>
                                             <input type="button" class="btnBlue" id="upload" value="UPLOAD"
                                                 (click)="uploadEducationFile()">
                                         </div>
                                         <div class="form-group form-input col-2">
                                             <button type="button" class="btn btn-secondary btn_add"
-                                                (click)="addQualification()">+</button> &nbsp;
+                                                (click)="addQualification()">+</button>
                                             <button type="button" class="btn btn-secondary btn_remove"
                                                 (click)="deleteQualification(i)">-</button>
                                         </div>
@@ -514,11 +512,11 @@
             </div>
 
             <div class="skill-details-form" *ngIf="showMainContent == 4">
-                <div class="card skill-container">
-                    <div class="card-header">
+                <div class="card main-skill-container">
+                    <div class="card-header main-skill-container">
                         <h6>SKILL DETAILS</h6>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body main-skill-container">
                         <form [formGroup]="skillDetails">
                             <div class="form-content">
                                 <div class="container container-skill">
@@ -630,7 +628,7 @@
                                     </div>
                                 </div>
                                 <button type="button" class="btnPrevious" (click)="ShowNextButton(3)">Previous</button>
-                                <button type="button" class="btnNext" (click)="onSubmitDetails()">Save</button>
+                                <button type="button" class="btnNext" (click)="onSubmitDetails()">Update</button>
                             </div>
                         </form>
                     </div>

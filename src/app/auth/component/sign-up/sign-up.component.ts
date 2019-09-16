@@ -60,35 +60,33 @@ export class SignUpComponent implements OnInit {
     console.log("Sing up Data:", signupPayload);
 
     this.__authService.register(signupPayload).then((resData: any) => {
-      this.showMsgCognito = resData;
+      console.log("Res:", resData);
 
-      const cognitoPayload = {
-        flag: "N",
-        email: signupPayload.email,
-        phone_no: signupPayload.phone_no,
-        role: signupPayload.custom_role,
-        country: signupPayload.custom_country
-      }
+      if (resData.status == "SUCCESS") {
 
-      this.__authService.uportSignup(cognitoPayload).then((resData: any) => {
-        this.showMsg = resData;
-        this.toastr.success(this.showMsgCognito.message);
         setTimeout(() => {
+          this.toastr.success(resData.message);
           this.__router.navigate(['/auth/auth/login']);
         }, 5000);
 
-      });
+        const cognitoPayload = {
+          flag: "N",
+          email: signupPayload.email,
+          phone_no: signupPayload.phone_no,
+          role: signupPayload.custom_role,
+          country: signupPayload.custom_country
+        }
 
-      // if (this.toastr.success) {
-      //   this.toastr.success(this.showMsgCognito.message);
+        this.__authService.uportSignup(cognitoPayload).then((resData: any) => {
+          this.showMsg = resData;
+        });
 
-      // } else if (this.toastr.error) {
-      //   this.toastr.error(this.showMsgCognito.message);
-      // } else {
-      //   this.toastr.warning(this.showMsgCognito.message);
-      // }
-
-      console.log("Message: ", this.showMsgCognito.message);
+      } else if (resData.status == "ERROR") {
+        this.toastr.error(resData.response.message);
+        this.__router.navigate(['/auth/auth/sign-up']);
+      } else {
+        this.toastr.warning(resData.response.message);
+      }
     });
 
 

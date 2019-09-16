@@ -44,26 +44,28 @@ export class EditComponent implements OnInit {
   public eduArr: any = [];
   public skills: any = [];
   public categ: any = [];
+
   public countryArr: any = [];
   public stateArr: any = [];
   public cityArr: any = [];
+  public stateByIdArr: any = [];
+  public cityByIdArr: any = [];
+  public freelancerArr: any = [];
+
+  public qualityArray: any = [];
+  public freelancerEduArr: any = [];
+  public freelancerOrgArr: any = [];
+  public freelancerPortArr: any = [];
+
+  public FileArrData: any = [];
+  public freelancerDocsArr: any = [];
   public docTypeArr: any = [];
   public documentPersonalArray: any = [];
   public documentQualArray: any = [];
   public documentWorkArray: any = [];
-  public freelancerArr: any = [];
-  public stateByIdArr: any = [];
-  public cityByIdArr: any = [];
+
   public freelancerSkillDetailsArr: any = [];
   public skillArr: any = [];
-  public qualityArray: any = [];
-  public freelancerDocsArr: any = [];
-  public freelancerEduArr: any = [];
-  public freelancerOrgArr: any = [];
-  public freelancerPortArr: any = [];
-  public FileArrData: any = [];
-
-
   public skillList: any = [];
 
 
@@ -95,7 +97,6 @@ export class EditComponent implements OnInit {
 
       this.email = localStorage.getItem("email");
       this.country = localStorage.getItem("country");
-      console.log("Email Id is : " + this.email);
 
     }
 
@@ -197,76 +198,64 @@ export class EditComponent implements OnInit {
   }
 
 
-  getFreelancerDetails() {
-    this.__profileService.getFreelancerById(this.__id).then((data: any) => {
+  async getFreelancerDetails() {
+    await this.__profileService.getFreelancerById(this.__id).then((data: any) => {
       this.freelancerArr = data[0];
-      console.log("Personal Details:", this.freelancerArr);
-
-      for (let i = 0; i < this.countryArr.length; i++) {
-        if (this.countryArr[i].name == this.freelancerArr.country) {
-          let countryID = this.countryArr[i].id;
-          console.log("Country Id", countryID);
-          this.getStateByID(countryID);
-        }
-      }
-
-      this.checkMarked = this.freelancerArr.is_interviewer;
-      console.log(this.checkMarked);
-      console.log("this.stateArr", this.stateArr);
-
-
-      for (let i = 0; i < this.stateArr.length; i++) {
-        if (this.stateArr[i].name == this.freelancerArr.state) {
-          let stateID = this.stateArr[i].id;
-          console.log("State Id", stateID);
-          this.getCityByID(stateID);
-        }
-      }
-      console.log("this.freelancerArr.city", this.cityArr);
-
-      // for (let i = 0; i < this.cityByIdArr.length; i++) {
-      //   if (this.cityByIdArr[i].name == this.freelancerArr.city) {
-      //     let cityID = this.cityByIdArr[i].id;
-      //     console.log("City Id", cityID);
-      //     this.getCityByID(cityID);
-      //   }
-      // }
-
-      this.personalDetails.patchValue({
-        prefix: this.freelancerArr.prefix,
-        first_name: this.freelancerArr.first_name,
-        middle_name: this.freelancerArr.middle_name,
-        last_name: this.freelancerArr.last_name,
-        address_one: this.freelancerArr.line_1,
-        address_two: this.freelancerArr.line_2,
-        country: this.freelancerArr.country,
-        province: this.freelancerArr.state,
-        city: this.freelancerArr.city,
-        zipcode: this.freelancerArr.code,
-      });
-
-      this.workExpDetails.patchValue({
-        references: this.freelancerArr.reference,
-        area_of_expertise: this.freelancerArr.area_of_experties,
-        psychomatric: this.freelancerArr.psyco_result,
-        isFreelancer: this.freelancerArr.is_interviewer
-      });
-
-
-      // this.personalDetails.setControl('documents_personal', this.__fb.array(
-      //   this.documentArr.file_name || [],
-      //   this.documentArr.file_type || [],
-      // ));
     });
+
+    this.checkMarked = this.freelancerArr.is_interviewer;
+    await this.populateStateList();
+    await this.populateCityList();
+
+    this.personalDetails.patchValue({
+      prefix: this.freelancerArr.prefix,
+      first_name: this.freelancerArr.first_name,
+      middle_name: this.freelancerArr.middle_name,
+      last_name: this.freelancerArr.last_name,
+      address_one: this.freelancerArr.line_1,
+      address_two: this.freelancerArr.line_2,
+      country: this.freelancerArr.country,
+      province: this.freelancerArr.state,
+      city: this.freelancerArr.city,
+      postal_code: this.freelancerArr.code,
+    });
+
+    this.workExpDetails.patchValue({
+      references: this.freelancerArr.reference,
+      area_of_expertise: this.freelancerArr.area_of_experties,
+      psychomatric: this.freelancerArr.psyco_result,
+      isFreelancer: this.freelancerArr.is_interviewer
+    });
+
+
+    // this.personalDetails.setControl('documents_personal', this.__fb.array(
+    //   this.documentArr.file_name || [],
+    //   this.documentArr.file_type || [],
+    // ));
+
+  }
+  async populateStateList() {
+    for (let i = 0; i < this.countryArr.length; i++) {
+      if (this.countryArr[i].name == this.freelancerArr.country) {
+        let countryID = this.countryArr[i].id;
+        await this.getStateListByCountryID(countryID);
+      }
+    }
+  }
+  async populateCityList() {
+    for (let i = 0; i < this.stateArr.length; i++) {
+      if (this.stateArr[i].name == this.freelancerArr.state) {
+        let stateID = this.stateArr[i].id;
+        this.getCityListByStateID(stateID);
+      }
+    }
   }
 
   getFreelancerSkillDetails() {
     this.__profileService.getFreelancerSkillById(this.__id).then((data: any) => {
       this.freelancerSkillDetailsArr = data;
-      console.log("Skills:", this.freelancerSkillDetailsArr);
 
       let skillCat_ID = this.freelancerSkillDetailsArr[0].skill_cat_id;
-      console.log("skill cat id", skillCat_ID);
 
       this.freelancerSkillDetailsArr.forEach(item => {
         this.skillList.push({
@@ -278,7 +267,7 @@ export class EditComponent implements OnInit {
           skill_id: item.skill_id,
         });
       });
-      console.log("Skills Array:", this.skillList);
+
 
 
       this.getSkillsByID(skillCat_ID);
@@ -293,7 +282,7 @@ export class EditComponent implements OnInit {
           }
         ));
       }
-      console.log("Skills ", this.skillRateArr);
+
 
     });
   }
@@ -301,7 +290,7 @@ export class EditComponent implements OnInit {
   getQualitiesById() {
     this.__profileService.getFreelancerQuality(this.__id).then((data: any) => {
       this.qualityArray = data;
-      console.log("Qualities:", this.qualityArray);
+
 
       let strengthQual = this.qualityArray.filter(
         function (item) {
@@ -324,8 +313,6 @@ export class EditComponent implements OnInit {
         )
       });
 
-      console.log("Strengths ", this.strengthArr);
-
       weaknessQual.forEach(item => {
         this.weaknessArr.push(
           this.__fb.group({
@@ -334,21 +321,42 @@ export class EditComponent implements OnInit {
           })
         )
       });
-      console.log("Weaknesss ", this.weaknessArr);
 
     });
   }
 
   getFreelancerDocuments() {
-
     this.__profileService.getFreelancerDocumentById(this.__id).then((data: any) => {
       this.freelancerDocsArr = data;
-      console.log("Documnets:", this.freelancerDocsArr);
       // personal document
       let isPersonal = this.freelancerDocsArr.filter(item => item.doc_cat_name == 'personal');
-      console.log(isPersonal);
-
       if (isPersonal) {
+
+        console.log("isPersonal", isPersonal);
+
+        // for (let index = 0; index < isPersonal.length; index++) {
+        //   this.documentArr.push(this.__fb.group(
+        //     {
+        //       file_name: isPersonal[index].doc_name,
+        //       file_type: isPersonal[index].doc_type,
+        //       file_id: isPersonal[index].doc_type_id,
+        //       doc_id: isPersonal[index].doc_id
+        //     }
+        //   ));
+        // }
+
+        // console.log(" this.documentArr", this.documentArr);
+
+        // for (let index = 0; index < isPersonal.length; index++) {
+        //   this.documentPersonalArray.push(this.__fb.group(
+        //     {
+        //       file_name: isPersonal[index].doc_name,
+        //       file_type: isPersonal[index].doc_type,
+        //       file_id: isPersonal[index].doc_type_id,
+        //       doc_id: isPersonal[index].doc_id
+        //     }
+        //   ));
+        // }
 
         isPersonal.forEach(item => {
           this.documentArr.push(
@@ -360,7 +368,6 @@ export class EditComponent implements OnInit {
             })
           )
         });
-
         isPersonal.forEach(item => {
           this.documentPersonalArray.push({
             file_name: item.doc_name,
@@ -369,14 +376,11 @@ export class EditComponent implements OnInit {
             doc_id: item.doc_id
           });
         });
-
-        console.log(" Personal Doc", this.documentPersonalArray);
-        console.log("Personal Documents", this.documentArr);
       }
+      console.log("documentassskhjj", this.documentArr.controls[0]);
 
       // educational document
       let isEducation = this.freelancerDocsArr.filter(item => item.doc_cat_name == 'educational');
-      console.log(isEducation);
       isEducation.forEach(item => {
         this.documentQualArray.push({
           file_name: item.doc_name,
@@ -385,17 +389,11 @@ export class EditComponent implements OnInit {
           doc_id: item.doc_id
         });
       });
-      console.log("Qual Docs", this.documentQualArray);
-
       this.getFreelancerEducation(isEducation);
-
-
       // work exp document
       let isProfessional = this.freelancerDocsArr.filter(item => item.doc_cat_name == 'professional');
       console.log(isProfessional);
-
       if (isProfessional) {
-
         isProfessional.forEach(item => {
           this.workdocumentArr.push(
             this.__fb.group({
@@ -406,8 +404,6 @@ export class EditComponent implements OnInit {
             })
           )
         });
-        console.log("Work doc", this.workdocumentArr);
-
         isProfessional.forEach(item => {
           this.documentWorkArray.push({
             file_name: item.doc_name,
@@ -416,9 +412,6 @@ export class EditComponent implements OnInit {
             doc_id: item.doc_id
           });
         });
-        console.log("WorkExp Doc", this.documentWorkArray);
-
-
       }
     });
 
@@ -429,7 +422,6 @@ export class EditComponent implements OnInit {
     let docName = document;
     this.__profileService.getFreelancerEduById(this.__id).then((data: any) => {
       this.freelancerEduArr = data;
-      console.log("Education", this.freelancerEduArr);
 
       for (let index = 0; index < this.freelancerEduArr.length; index++) {
         this.edu_catId = this.freelancerEduArr[index].edu_cat_id;
@@ -450,24 +442,20 @@ export class EditComponent implements OnInit {
         ));
 
       }
-      console.log("Qualification :", this.qualfArr);
 
       this.getAllEducation(this.edu_catId);
     });
   }
 
   getAllEducation(eduCat_id) {
-    console.log("Edu Cat ", eduCat_id);
     this.__profileService.getFreelancerEducname(eduCat_id).then((data: any) => {
       this.eduArr = data;
-      console.log(this.eduArr)
     })
   }
 
   getFreelancerOrganization() {
     this.__profileService.getFreelancerOrgById(this.__id).then((data: any) => {
       this.freelancerOrgArr = data;
-      console.log("Oragnization:", this.freelancerOrgArr);
 
       for (let index = 0; index < this.freelancerOrgArr.length; index++) {
         this.orgArr.push(this.__fb.group(
@@ -481,7 +469,6 @@ export class EditComponent implements OnInit {
           }
         ));
       }
-      console.log("Org Array ", this.orgArr);
 
     });
   }
@@ -489,7 +476,7 @@ export class EditComponent implements OnInit {
   getFreelancerPortfolio() {
     this.__profileService.getFreelancerPortfolioById(this.__id).then((data: any) => {
       this.freelancerPortArr = data;
-      console.log("Portfolio:", this.freelancerPortArr);
+
 
       let portflio = this.workExpDetails.get('portfolios') as FormArray;
       for (let index = 0; index < this.freelancerPortArr.length; index++) {
@@ -576,43 +563,41 @@ export class EditComponent implements OnInit {
   /**
    * @method setCountryID
    * @param country_id
-   * @description get the selected country id and pass to getStateByID method.
+   * @description get the selected country id and pass to getStateListByCountryID method.
    */
   setCountryID(country_id) {
-    this.getStateByID(country_id)
+    this.getStateListByCountryID(country_id)
   }
 
   /**
-   * @method getStateByID
+   * @method getStateListByCountryID
    * @param country_id
    * @description get the all state values based on selected country id.
    */
-  getStateByID(country_id) {
-    this.__profileService.getFreelancerStateByID(country_id).then((resData: any) => {
+  async getStateListByCountryID(country_id) {
+    await this.__profileService.getFreelancerStateByID(country_id).then((resData: any) => {
       this.stateArr = resData;
-      console.log("this.stateArr", this.stateArr);
-
     })
   }
 
   /**
    * @method setStateID
    * @param state_id
-   * @description get the selected state id and pass to getCityByID method.
+   * @description get the selected state id and pass to getCityListByStateID method.
    */
   setStateID(state_id) {
-    this.getCityByID(state_id)
+    this.getCityListByStateID(state_id)
   }
 
   /**
-   * @method getCityByID
+   * @method getCityListByStateID
    * @param state_id
    * @description get the all city values based on selected state id.
    */
-  getCityByID(state_id) {
-    this.__profileService.getFreelancerCityByID(state_id).then((resData: any) => {
+  async getCityListByStateID(state_id) {
+
+    await this.__profileService.getFreelancerCityByID(state_id).then((resData: any) => {
       this.cityArr = resData;
-      console.log(this.cityArr)
     })
   }
 
@@ -781,10 +766,6 @@ export class EditComponent implements OnInit {
     return this.workExpDetails.get('documents_work') as FormArray;
   }
 
-  getValidity(i) {
-    return (<FormArray>this.workExpDetails.get('documents_work')).controls[i].invalid;
-  }
-
   addWorkDocument() {
     this.workdocumentArr.push(this.__fb.group(
       {
@@ -816,12 +797,10 @@ export class EditComponent implements OnInit {
           rate_hour: ''
         }
       ));
-      console.log(this.skillRateArr.value);
     }
     else {
       let index = this.skillRateArr.controls.findIndex(x => x.value == skill);
       this.skillRateArr.removeAt(index);
-      console.log(this.skillRateArr)
     }
 
   }
@@ -835,7 +814,6 @@ export class EditComponent implements OnInit {
  */
 
   setDocTypeCatType(inputValue) {
-    console.log(inputValue);
     this.fileType = inputValue
   }
 
@@ -845,8 +823,6 @@ export class EditComponent implements OnInit {
       const file = event.target.files[0];
       this.fileName = file.name;
       this.fileObj = file;
-      console.log("File name:", this.fileName);
-      console.log("File obj:", this.fileObj);
     }
   }
 
@@ -855,7 +831,6 @@ export class EditComponent implements OnInit {
 
     await this.__profileService.postDocHashData(this.fileObj, this.congnitoID, this.fileName).then((event) => {
       this.FileArrData = event;
-      console.log("File Resp:", this.FileArrData.fileId);
     });
 
     await this.documentPersonalArray.push(

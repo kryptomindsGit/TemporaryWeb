@@ -123,7 +123,7 @@ export class ViewComponent implements OnInit {
 
   editProfile() {
     console.log("indise edit btn");
-    this.__router.navigate(['/feature/feature/full-layout/independent/profile/indp-profile/edit', this.email_addr]);
+    this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/edit', this.email_addr]);
 
   }
 

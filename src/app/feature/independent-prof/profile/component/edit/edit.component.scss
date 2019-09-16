@@ -4,7 +4,7 @@
       BASIC CSS
 -------------------------------------------------------------------------*/
 
-.section {
+.container-fluid {
     font: 14px "Montserrat", sans-serif;
     background-color: $bg-back-color;
     color: $text-color;
@@ -15,6 +15,9 @@
 /*-----------------------------------------------------------------------
   SKILL CARD CSS
   -------------------------------------------------------------------------*/
+.main-skill-containe {
+    background: $bg-front-color !important;
+}
 
 .container-skill {
     font: 14px "Montserrat", sans-serif;
@@ -289,7 +292,7 @@ input[type=radio] {
 .btnNext {
     border: none;
     border-radius: 2rem;
-    padding: 1%;
+    padding: 0.2rem 1rem;
     width: 8rem;
     text-transform: uppercase;
     cursor: pointer;
@@ -302,7 +305,7 @@ input[type=radio] {
 .btnPrevious {
     border: none;
     border-radius: 2rem;
-    padding: 1%;
+    padding: 0.2rem 1rem;
     width: 8rem;
     text-transform: uppercase;
     cursor: pointer;
@@ -379,7 +382,7 @@ input[type='file'] {
 .btnBlue {
     border: none;
     border-radius: 2rem;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.8rem;
     width: 6rem;
     text-transform: uppercase;
     cursor: pointer;

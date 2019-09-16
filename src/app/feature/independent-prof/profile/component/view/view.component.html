@@ -42,14 +42,14 @@
                             <table class="table">
                                 <tbody>
                                     <tr>
-                                        <th width="30%">Name:</th>
+                                        <th width="25%">Name:</th>
                                         <td>
                                             {{freeDetailsArr.prefix}} {{freeDetailsArr.first_name}}
                                             {{freeDetailsArr.middle_name}} {{freeDetailsArr.last_name}}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th width="30%">Address: </th>
+                                        <th width="25%">Address: </th>
                                         <td>
                                             <li>Address Line 1 : {{freeDetailsArr.line_1}}</li>
                                             <li>Address Line 1 : {{freeDetailsArr.line_2}}</li>
@@ -59,7 +59,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th width="30%">Education:
+                                        <th width="25%">Education:
                                         </th>
                                         <td>
                                             <div *ngFor="let education of freeEduArr; let i=index">
@@ -74,39 +74,35 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th width="30%">Email: </th>
+                                        <th width="25%">Email: </th>
                                         <td>
                                             {{email_addr}}
                                         </td>
                                     </tr>
-                                    <!-- <tr>
-                                <th width="30%">Phone Number: </th>
-                                <td>
-                                    {{phone_number}}
-                                </td>
-                            </tr> -->
                                     <tr>
-                                        <th width="30%">Country: </th>
+                                        <th width="25%">Country: </th>
                                         <td>
                                             {{freeDetailsArr.country}}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th width="30%">Skills: </th>
+                                        <th width="25%">Skills: </th>
                                         <td>
-                                            <div *ngFor="let skill of freeSkillDetailsArr">
+                                            <div *ngFor="let skill of freeSkillDetailsArr; let i=index">
+                                                <!-- <hr *ngIf="i>0"> -->
                                                 <li>{{ skill.skill_name }}</li>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th width="30%">Documents: </th>
+                                        <th width="25%">Documents: </th>
                                         <td>
-                                            <div *ngFor="let document of freeDocsArr">
+                                            <div *ngFor="let document of freeDocsArr; let i=index">
+                                                <hr *ngIf="i>0">
                                                 <table>
                                                     <tr>
-                                                        <th>{{document.doc_type}}</th>
-                                                        <td>{{ document.doc_name }}</td>
+                                                        <th width="25%">{{document.doc_type}}</th>
+                                                        <td width="60%">{{ document.doc_name }}</td>
                                                         <td><a style="color:#1051dd; "
                                                                 (click)="getHashDataBlockChainPDF(document.doc_name)"><i
                                                                     class="fa fa-download" aria-hidden="true"></i>

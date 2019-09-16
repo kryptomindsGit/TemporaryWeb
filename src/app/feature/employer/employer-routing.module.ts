@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SmartContractPaymentComponent } from './smart-contract-payment/smart-contract-payment.component';
 import { EmployerComponent } from './employer.component';
+import { ProjectTimelineComponent } from './project-timeline/project-timeline.component';
+import { BlockchainTimelineComponent } from './blockchain-timeline/blockchain-timeline.component';
 
 
 const routes: Routes = [
@@ -20,6 +22,14 @@ const routes: Routes = [
       {
         path: 'smartpayment',
         component: SmartContractPaymentComponent
+      },
+      {
+        path: 'proj-timeline',
+        component: ProjectTimelineComponent
+      },
+      {
+        path: 'block-timeline',
+        component: BlockchainTimelineComponent
       }
     ]
   }

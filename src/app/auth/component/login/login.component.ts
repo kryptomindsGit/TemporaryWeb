@@ -62,9 +62,7 @@ export class LoginComponent implements OnInit {
 
     this.__authService.login(loginPayload).subscribe((resData: any) => {
 
-      console.log(resData);
-
-      if (resData) {
+      if (resData.status == "SUCCESS") {
         this.__authService.getUportInfo(loginPayload.email).then((data: any) => {
           console.log("Res:", data[0]);
           console.log("Data:", data[0]);
@@ -74,12 +72,13 @@ export class LoginComponent implements OnInit {
           const emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1);
 
           this.toastr.success(emailName, 'Welcome to Konnecteum');
-          // this.toastr.error(baseName, 'Please signup');
-
           localStorage.setItem('uid', data[0].uid);
           localStorage.setItem('email', data[0].email);
           this.__router.navigate(['/feature/feature/full-layout/dashboard'])
         })
+      } else if (resData.status == "ERROR") {
+        this.toastr.error(resData.response.message);
+        this.__router.navigate(['/auth/auth/login'])
       }
 
     })

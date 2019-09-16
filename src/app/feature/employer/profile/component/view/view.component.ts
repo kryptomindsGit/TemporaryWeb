@@ -79,7 +79,7 @@ export class ViewComponent implements OnInit {
   editProfile() {
     console.log("Edit calling");
 
-    this.__router.navigate(['/feature/feature/full-layout/employer/profile/emp-profile/edit/', this.emailId]);
+    this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/edit/', this.emailId]);
   }
 
 
