@@ -162,7 +162,7 @@
                                     <div class="row" [formGroupName]="i">
                                         <div class="form-group form-input col-3">
                                             <select class="formStyle" (change)="setDocTypeCatID($event.target.value)"
-                                                formControlName="file_type">
+                                                formControlName="file_id">
                                                 <option disabled value="">Document type</option>
                                                 <option id="option_txt" *ngFor="let docType of docTypeArr"
                                                     [value]="docType.doc_type_id">{{docType.doc_type}}</option>

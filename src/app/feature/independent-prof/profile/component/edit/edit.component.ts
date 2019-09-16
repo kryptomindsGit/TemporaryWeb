@@ -227,7 +227,6 @@ export class EditComponent implements OnInit {
       isFreelancer: this.freelancerArr.is_interviewer
     });
 
-
     // this.personalDetails.setControl('documents_personal', this.__fb.array(
     //   this.documentArr.file_name || [],
     //   this.documentArr.file_type || [],
@@ -368,6 +367,7 @@ export class EditComponent implements OnInit {
             })
           )
         });
+        console.log("TEST: ", this.documentArr);
         isPersonal.forEach(item => {
           this.documentPersonalArray.push({
             file_name: item.doc_name,

@@ -63,7 +63,7 @@ export class HeaderComponent implements OnInit {
   }
 
   userRoleInfo() {
-    console.log("Indise userRoleInfo" , this.userRole);
+    console.log("Indise userRoleInfo", this.userRole);
     if (this.userRole == "Freelancer") {
       console.log("Inside Freelancer");
       this.__idptProfileService.getFreelancerByEmail(this.email_id).then((resData: any) => {
