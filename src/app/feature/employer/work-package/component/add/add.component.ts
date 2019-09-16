@@ -26,7 +26,7 @@ export class AddComponent implements OnInit {
   durationArr=['days','months','years'];
   allDomainArr = [];
   allSkillsArr = [];
-  workId:any;
+  wpId:any;
   //Date 
   today = new Date();
   todayDate: string ;
@@ -38,6 +38,7 @@ export class AddComponent implements OnInit {
   durationMonths : number = 8;
   durationDays : number = 23;
   isSelected : boolean = false;
+
   
 
   constructor(
@@ -140,14 +141,15 @@ export class AddComponent implements OnInit {
   addSkill(){
     this.skillDetailsArr.push(this.fb.group(
       {
+        domain:'',
         skill : '',
         skillLevel : '',
-        projectType : '',
+        availability : '',
         members : '',
         country : '',
-        rate : '',
-        avgRate :'',
-        currency :'',
+        ratePerHour : '',
+        availableAvgRatePerHour :'',
+        currencyCode :'',
         skill_start_date :'',
         skill_end_date:''
       }))
@@ -194,18 +196,21 @@ export class AddComponent implements OnInit {
 
     this.__workpackageService.postWorkPackageData(workPackagePayload).then((workData: any) =>{
         console.log("Data is successfully saved");
-        this.workId = workData.workPackageId;
-        localStorage.setItem("WorkId" , this.workId);
-     });     
+
+        this.wpId = workData.responseObject.workPackageId;
+      
+    
+
+        console.log("Work payload",  this.skillForm.controls.skillDetails.value);
+
+        this.__workpackageService.postWorkPackageSkillData(this.skillForm.controls.skillDetails.value, this.wpId).then((workData: any) =>{
+          console.log("Data is successfully saved" ,workData);
+        });
+
+      });     
   } 
+
   onSubmit(){
     this.saveDetails();
-
-    console.log("Work payload",  this.skillForm.controls.skillDetails.value);
-
-    this.__workpackageService.postWorkPackageSkillData(this.skillForm.controls.skillDetails.value).then((workData: any) =>{
-      console.log("Data is successfully saved" ,workData);
-
-  });
   }
 }

@@ -82,8 +82,8 @@ export class AddComponent implements OnInit {
       this.country = user["custom:country"];
 
     } else {
-      const user = this.__authService.decode();
-      this.congnitoID = user["cognito:username"];
+     // const user = this.__authService.decode();
+      this.congnitoID = "cognito:username"; //   to do
 
       this.uid = localStorage.getItem("uid");
       this.email = localStorage.getItem("email");

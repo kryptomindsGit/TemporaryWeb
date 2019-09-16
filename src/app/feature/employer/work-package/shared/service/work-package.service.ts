@@ -42,11 +42,10 @@ export class WorkPackageService {
       this.handleError(error);      
     }
   }
-  async postWorkPackageSkillData(packageData : any):Promise<any> {
-    console.log("Package Data :" , packageData);
-    
+  async postWorkPackageSkillData(packageData:any , wpId:any):Promise<any> {
+    console.log("Package Data :" , packageData, wpId);
     try {
-      let res = await this.http.post(`${SPRING_URL}/workpackage/wp-skills`, packageData , httpOptions).toPromise();
+      let res = await this.http.post(`${SPRING_URL}/workpackage/wp-skills/${wpId}`,packageData,httpOptions).toPromise();
       return res;
     } catch (error) {
       this.handleError(error);      

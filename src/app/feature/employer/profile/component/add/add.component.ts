@@ -53,6 +53,7 @@ export class AddComponent implements OnInit {
       this.congnitoId = user["cognito:username"];
       this.email_id = user["email"];
     } else {
+      this.congnitoId = "cognito:username";
       this.email_id = localStorage.getItem("email");
       this.country = localStorage.getItem("country");
     }
