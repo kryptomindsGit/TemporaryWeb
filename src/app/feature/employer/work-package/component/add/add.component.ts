@@ -74,7 +74,7 @@ export class AddComponent implements OnInit {
       durationDays:['',[Validators.required]],
       proj_start_date:['',[Validators.required]],
       budgetAmt:['',[Validators.required]],
-      currency:['',[Validators.required]],
+      budgetCurrencyCode:['',[Validators.required]],
       estimatedCost:['',[Validators.required]],
       yes_reviewer:['',[Validators.required]]
     });
