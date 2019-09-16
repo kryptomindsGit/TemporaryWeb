@@ -26,7 +26,7 @@ export class AddComponent implements OnInit {
   durationArr=['days','months','years'];
   allDomainArr = [];
   allSkillsArr = [];
-
+  workId:any;
   //Date 
   today = new Date();
   todayDate: string ;
@@ -113,22 +113,23 @@ export class AddComponent implements OnInit {
   }
 
   setDuration(){
-    this.durationYears = this.projectForm.controls.durationYears.value;
-    this.durationMonths = this.projectForm.controls.durationMonths.value;
-    this.durationDays = this.projectForm.controls.durationDays.value;
 
     if((
           this.durationYears !==null && this.durationMonths == null && this.durationDays == null)
       
       ){
-      this.durationMonths= 0;
+        this.durationYears = this.projectForm.controls.durationYears.value;
+        this.durationMonths= 0;
       this.durationDays= 0;
     }else if(this.durationYears !==null && this.durationMonths == null && this.durationDays == null){
       this.durationYears = 0;
       this.durationDays= 0;
+      this.durationMonths = this.projectForm.controls.durationMonths.value;
+
     }else{
       this.durationYears = 0 ;
       this.durationMonths= 0;
+      this.durationDays = this.projectForm.controls.durationDays.value;
     }
   }
 
@@ -193,10 +194,10 @@ export class AddComponent implements OnInit {
 
 
     this.__workpackageService.postWorkPackageData(workPackagePayload).then((workData: any) =>{
-      console.log("Data is successfully saved");
-     });
-
-     
+        console.log("Data is successfully saved");
+        this.workId = workData.workPackageId;
+        localStorage.setItem("WorkId" , this.workId);
+     });     
   } 
   onSubmit(){
     this.saveDetails();

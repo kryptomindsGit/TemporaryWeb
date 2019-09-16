@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { throwError } from 'rxjs/internal/observable/throwError';
 import { SPRING_URL } from '../../../constant/constant-url';
+import {DEPLOY_CONTRACT_URL} from '../../../constant/constant-url';
+import {DEPLOY_CONTRACT_SAW_URL} from '../../../constant/constant-url';
+
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -54,6 +57,44 @@ export class SmartContractService {
   //     await this.handleError(error);
   //   }
   // }
+
+  //deploy contract 
+  async deployContractData(workId : any):Promise<any> {
+    console.log("schedule Data :" , workId);
+    
+    try {
+    let res = await this.http.post(`${DEPLOY_CONTRACT_URL}/deployContract`, workId ,  {responseType:'json'}).toPromise();
+      return res;
+    } catch (error) {
+      this.handleError(error);      
+    } 
+  }
+
+  //Deploy Milestone ethereum
+  async deployMilestoneData(payload : any):Promise<any> {
+    console.log("schedule Data :" , payload);
+    
+    try {
+    let res = await this.http.post(`${DEPLOY_CONTRACT_URL}/addMile`, payload ,{responseType:'text'}).toPromise();
+      return res;
+    } catch (error) {
+      this.handleError(error);      
+    } 
+
+  }
+
+
+  async deployMilestoneData1(payload : any):Promise<any> {
+    console.log("schedule Data :" , payload);
+    
+    try {
+    let res = await this.http.post(`${DEPLOY_CONTRACT_SAW_URL}/addmilestone`, payload ,{responseType:'text'}).toPromise();
+      return res;
+    } catch (error) {
+      this.handleError(error);      
+    } 
+
+  }
 
   handleError(error) {
     let errorMessage = '';
