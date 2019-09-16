@@ -8,8 +8,9 @@ body {
     right: 0%;
 }
 
-.page-content-wrapper {
-    width: 100%;
+#page-content-wrapper {
+    width: 100% !important;
+    min-height: 720px !important;
     background: $bg-back-color;
     color: $text-color;
 }

@@ -184,7 +184,8 @@
                                     <div class="form-group col-2">
                                         <button type="button" class="btn btnadd" (click)="addDocument()">+</button>
                                         &nbsp;
-                                        <button type="button" class="btn btnadd" (click)="deleteDocument(i)">-</button>
+                                        <button type="button" class="btn btnadd" *ngIf="documentArr.controls.length > 1"
+                                            (click)="deleteDocument(i)">-</button>
                                     </div>
                                 </div>
                             </div>

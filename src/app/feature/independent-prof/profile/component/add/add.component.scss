@@ -3,6 +3,9 @@
 /*-----------------------------------------------------------------------
       BASIC CSS
 -------------------------------------------------------------------------*/
+.row {
+    margin-right: 0px !important;
+}
 
 .container-fluid {
     font: 14px "Montserrat", sans-serif;
@@ -20,47 +23,22 @@
   SKILL CARD CSS
   -------------------------------------------------------------------------*/
 
-.container-skill {
-    font: 14px "Montserrat", sans-serif;
-    color: $text-color;
-    overflow: hidden;
-    font-weight: 400;
-}
-
 .skill-checkbox-container {
-    width: 100%;
-    max-height: 20rem;
+    max-height: 30rem;
     overflow: auto;
     padding: 0.1rem;
     margin-right: 0.2rem !important;
     margin-left: 0.2rem !important;
-}
-
-.skill-innner-container {
-    width: 100%;
-    max-height: 20rem;
-    overflow: auto;
-    padding: 0.1rem;
-    margin-right: 0.2rem !important;
-    margin-left: 0.2rem !important;
-}
-
-.skill-container {
-    border-radius: 10px;
-    box-shadow: 5px 5px 32px 5px rgba(0, 0, 0, 0.22);
-    background: $bg-front-color;
-    overflow: hidden;
-    margin-bottom: 1rem;
-}
-
-.skill-container .card-body {
-    flex: 1 1 auto;
-    padding: 0.5rem;
 }
 
 .ng-autocomplete {
-    width: 100%;
-    padding: 0.1rem 0.2rem !important;
+    max-width: 100%;
+    padding: 0.1rem;
+    background: $bg-front-color;
+}
+
+.autocomplete-container .input-container input {
+    background: $bg-front-color;
 }
 
 /*-----------------------------------------------------------------------
@@ -411,4 +389,8 @@ input[type='file'] {
     font-size: 0.8rem;
     bottom: -2em;
     margin-bottom: 0.2rem;
+}
+
+table tr td p {
+    color: $text-color;
 }

@@ -103,7 +103,12 @@ export class AddComponent implements OnInit {
   }
 
   deleteDocument(index) {
-    this.documentArr.removeAt(index);
+    if (this.documentArr.length > 0) {
+      this.documentArr.removeAt(index);
+    } else {
+
+    }
+
   }
 
 
