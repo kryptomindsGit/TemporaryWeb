@@ -116,17 +116,16 @@ export class AddComponent implements OnInit {
 
     if((
           this.durationYears !==null && this.durationMonths == null && this.durationDays == null)
-      
       ){
         this.durationYears = this.projectForm.controls.durationYears.value;
         this.durationMonths= 0;
       this.durationDays= 0;
-    }else if(this.durationYears !==null && this.durationMonths == null && this.durationDays == null){
+    }else if(this.durationYears ==null && this.durationMonths != null && this.durationDays == null){
       this.durationYears = 0;
       this.durationDays= 0;
       this.durationMonths = this.projectForm.controls.durationMonths.value;
 
-    }else{
+    }else if(this.durationYears ==null && this.durationMonths == null && this.durationDays != null){
       this.durationYears = 0 ;
       this.durationMonths= 0;
       this.durationDays = this.projectForm.controls.durationDays.value;

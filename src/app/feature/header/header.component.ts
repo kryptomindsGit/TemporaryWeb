@@ -34,43 +34,36 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // const user = this.__authService.decode();
-    // console.log("User is  : ", user);
 
-    // this.congnitoID = user["cognito:username"];
-    // this.userRole = user["custom:role"];
-    // console.log(this.userRole);
-    // this.email_id = user["email"];
-    // console.log(this.email_id);
+    this.isUportUser = localStorage.getItem("uportUser");
 
-    // this.isUportUser = localStorage.getItem("uportUser");
+    if (this.isUportUser == "false") {
 
-    // if (this.isUportUser == "false") {
+      const user = this.__authService.decode();
+      this.congnitoID = user["cognito:username"];
+      console.log(this.congnitoID);
 
-    //   const user = this.__authService.decode();
-    //   this.congnitoID = user["cognito:username"];
-    //   console.log(this.congnitoID);
+      this.email_id = user["email"];
+      console.log(this.email_id);
 
-    //   this.email_id = user["email"];
-    //   console.log(this.email_id);
+      this.congnitoID = user["cognito:username"];
+      this.userRole = user["custom:role"];
+      console.log(this.userRole);
+      // this.country = user["custom:country"];
 
-    //   this.congnitoID = user["cognito:username"];
-    //   this.userRole = user["custom:role"];
-    //   console.log(this.userRole);
-    //   // this.country = user["custom:country"];
+    } else {
 
-    // } else {
+      this.email_id = localStorage.getItem("email");
+      this.userRole = localStorage.getItem("role");
+      // this.country = localStorage.getItem("country");
+      console.log("Email Id is : " + this.email_id);
 
-    //   this.email_id = localStorage.getItem("email");
-    //   // this.country = localStorage.getItem("country");
-    //   console.log("Email Id is : " + this.email_id);
-
-    // }
+    }
 
   }
 
   userRoleInfo() {
-    console.log("Indise userRoleInfo");
+    console.log("Indise userRoleInfo" , this.userRole);
     if (this.userRole == "Freelancer") {
       console.log("Inside Freelancer");
       this.__idptProfileService.getFreelancerByEmail(this.email_id).then((resData: any) => {
