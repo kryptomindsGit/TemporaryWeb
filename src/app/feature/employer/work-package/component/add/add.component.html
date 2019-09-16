@@ -207,7 +207,7 @@
                           <tbody formArrayName="skillDetails">
                               <tr *ngFor="let item of skillDetailsArr.controls; let i=index" [formGroupName]="i">
                                 <td scope="row">
-                                  <select formControlName="domain" id="domain" (change)="selectSkills($event.target.value)" (change)="saveDetails()">
+                                  <select formControlName="domain" id="domain" (change)="selectSkills($event.target.value)" >
                                     <option>Select</option>
                                     <option id="domain_option" *ngFor="let allDomain of allDomainArr" [value]="allDomain.skill_cat_id">{{allDomain.skill_cat_name}}</option>
                                   </select>
@@ -248,7 +248,7 @@
                                     <input formControlName="availableAvgRatePerHour" type="text" placeholder="Avg Rate">
                                   </td>
                                   <td scope="row">
-                                          <select formControlName="currency" id="currency">
+                                          <select formControlName="currencyCode" id="currency">
                                               <option>Currency</option>
                                               <option id="option_txt" *ngFor="let currency of currencyArr" [value]="currency">{{currency}}</option>
                                             </select>
