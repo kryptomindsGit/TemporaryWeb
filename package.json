@@ -26,6 +26,7 @@
     "jwt-decode": "^2.2.0",
     "ng-animate": "^0.3.4",
     "ng-pick-datetime": "^5.2.6",
+    "ngx-loading": "^3.0.1",
     "ngx-smart-modal": "^7.1.1",
     "ngx-toastr": "^10.2.0",
     "ngx-useful-swiper": "^8.0.1",

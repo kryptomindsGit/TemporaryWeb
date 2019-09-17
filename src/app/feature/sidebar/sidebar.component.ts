@@ -16,6 +16,7 @@ export class SidebarComponent implements OnInit {
   public email_id: any;
   public congnitoID: any;
   public isUportUser: any;
+  public isEmployer: boolean = true;
 
   public indepUserDetails: any = [];
   public empUserDetails: any = [];
@@ -58,6 +59,10 @@ export class SidebarComponent implements OnInit {
       // this.country = localStorage.getItem("country");
       console.log("Email Id is : " + this.email_id);
 
+    }
+
+    if (this.userRole != 'Employer') {
+      this.isEmployer = false;
     }
   }
 
@@ -108,6 +113,10 @@ export class SidebarComponent implements OnInit {
       //   }
       // });
     }
+  }
+
+  userEmployer() {
+    this.__router.navigate(['/feature/feature/full-layout/employer/emp/workpackage/workpack/view', this.email_id]);
   }
 
 }

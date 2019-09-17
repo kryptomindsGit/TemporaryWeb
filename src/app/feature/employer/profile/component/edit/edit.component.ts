@@ -120,7 +120,7 @@ export class EditComponent implements OnInit {
 
 
 
-    this.__profileService.getEmployerFileById(this.id).then((resData: any) => {
+    this.__profileService.getEmployerFileById(this.emailId).then((resData: any) => {
       this.employerFileArr = resData;
       console.log(this.employerFileArr);
 

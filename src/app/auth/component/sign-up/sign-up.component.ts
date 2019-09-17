@@ -15,6 +15,7 @@ export class SignUpComponent implements OnInit {
   public signupForm: FormGroup;
 
   //Variables
+  public loading = false;
   public showMsg: string;
   public showMsgCognito: any = [];
 
@@ -48,7 +49,7 @@ export class SignUpComponent implements OnInit {
    * @description submit sipn-up info
    */
   onSubmit() {
-
+    this.loading = true;
     const signupPayload = {
       email: this.signupForm.controls.email.value,
       password: this.signupForm.controls.password.value,
@@ -64,7 +65,9 @@ export class SignUpComponent implements OnInit {
 
       if (resData.status == "SUCCESS") {
 
+
         setTimeout(() => {
+          this.loading = false;
           this.toastr.success(resData.message);
           this.__router.navigate(['/auth/auth/login']);
         }, 5000);
@@ -82,6 +85,7 @@ export class SignUpComponent implements OnInit {
         });
 
       } else if (resData.status == "ERROR") {
+        this.loading = false;
         this.toastr.error(resData.response.message);
         this.__router.navigate(['/auth/auth/sign-up']);
       } else {

@@ -14,6 +14,7 @@ export class UportSignUpComponent implements OnInit {
   public uportSignupForm: FormGroup;
 
   //Variables
+  public loading = false;
   public showMsg: string;
 
   constructor(
@@ -49,6 +50,7 @@ export class UportSignUpComponent implements OnInit {
    * @description submit uport sipn-up info
    */
   onSubmit() {
+    this.loading = true;
     console.log("Inside Submit btn");
 
     const signupUportPayload = {
@@ -75,11 +77,13 @@ export class UportSignUpComponent implements OnInit {
         localStorage.setItem(email, this.uportSignupForm.controls.email.value);
 
         this.__authService.uportSignup(signupUportPayload).then((resData: any) => {
+          this.loading = false;
           console.log("uportSignup ", resData);
           this.showMsg = resData.message;
           this.__router.navigate(['/auth/auth/uport-login']);
         });
       } else {
+        this.loading = false;
         console.log("Your have signed up already with this email id please login...!!!");
         this.__router.navigate(['/auth/auth/uport-login']);
       }

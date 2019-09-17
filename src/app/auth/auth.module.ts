@@ -11,6 +11,7 @@ import { SignUpComponent } from './component/sign-up/sign-up.component';
 import { UportSignUpComponent } from './component/uport-sign-up/uport-sign-up.component';
 import { AuthComponent } from './auth.component';
 import { UportLoginComponent } from './component/uport-login/uport-login.component';
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 
 // module's
 const MODULES = [
@@ -19,6 +20,14 @@ const MODULES = [
   FormsModule,
   ReactiveFormsModule,
   HttpClientModule,
+  NgxLoadingModule.forRoot({
+    // animationType: ngxLoadingAnimationTypes.cubeGrid,
+    // backdropBackgroundColour: 'rgba(0,0,0,0.1)',
+    // backdropBorderRadius: '4px',
+    // primaryColour: '#ffffff',
+    // secondaryColour: '#ffffff',
+    // tertiaryColour: '#ffffff'
+  }),
 ];
 
 // component's

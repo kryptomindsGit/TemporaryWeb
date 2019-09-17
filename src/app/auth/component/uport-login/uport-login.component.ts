@@ -23,6 +23,7 @@ import { UPORT_URL } from '../../../constant/constant-url';
 export class UportLoginComponent implements OnInit {
 
   //Variables
+  public loading = false;
   public qrData: string;
   public tagId: string;
   public URL: any;
@@ -101,6 +102,7 @@ export class UportLoginComponent implements OnInit {
   }
 
   getuPortDetails(jwtdata: any) {
+    this.loading = true;
     console.log("JWT token is :", jwtdata);
 
     console.log("email from JWT " + this.email);
@@ -109,9 +111,11 @@ export class UportLoginComponent implements OnInit {
       console.log("data from database : ", data);
 
       if (data.length == 0) {
+        this.loading = false;
         console.log("User needs to sign up");
         this.__router.navigate(['/auth/auth/sign-up']);
       } else {
+        this.loading = false;
         this.uPortDetailsArr = data[0];
 
         let role = this.uPortDetailsArr.role;

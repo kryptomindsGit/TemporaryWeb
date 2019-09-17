@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
 
   //Variables
+  public loading = false;
   public emailID: string;
   public uportUser: string = "false";
 
@@ -27,10 +28,12 @@ export class LoginComponent implements OnInit {
   public partUserDetails: any = [];
 
   constructor(
+
     private __fb: FormBuilder,
     private __authService: AuthService,
     private __router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+
 
   ) { }
 
@@ -54,6 +57,7 @@ export class LoginComponent implements OnInit {
    * @description submit login info
    */
   onSubmit() {
+    this.loading = true;
 
     const loginPayload = {
       email: this.loginForm.controls.email.value,
@@ -65,6 +69,7 @@ export class LoginComponent implements OnInit {
 
       if (resData.status == "SUCCESS") {
         this.__authService.getUportInfo(loginPayload.email).then((data: any) => {
+          this.loading = false;
           console.log("Res:", data[0]);
           console.log("Data:", data[0]);
 
@@ -80,6 +85,7 @@ export class LoginComponent implements OnInit {
           this.__router.navigate(['/feature/feature/full-layout/dashboard'])
         })
       } else if (resData.status == "ERROR") {
+        this.loading = false;
         this.toastr.error(resData.response.message);
         this.__router.navigate(['/auth/auth/login'])
       }

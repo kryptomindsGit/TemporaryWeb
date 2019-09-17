@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="card">
+    <div class="card #customLoadingTemplate">
       <div class="card-body">
         <img src="../../../../assets/images/konnecteum_logo.png" alt="Konnecteum" class="center rounded img-fluid">
         <h5>LOGIN</h5>
@@ -74,4 +74,7 @@
       </div>
     </div>
   </div>
+
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+  </ngx-loading>
 </div>

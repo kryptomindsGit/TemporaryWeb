@@ -67,9 +67,6 @@ export class ViewComponent implements OnInit {
   getEmplyeeFileDetails() {
     this.__profileService.getEmployerFileById(this.emailId).then((data: any) => {
       this.employerFileArr = data;
-      // for (let i = 0; i < data.length; i++) {
-      //   this.employerFileArr[i] = data[i].file_name;
-      // }
       console.log(this.employerFileArr);
 
     });

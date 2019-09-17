@@ -47,11 +47,15 @@ export class ViewComponent implements OnInit {
       const user = this.__authService.decode();
       this.congnitoID = user["cognito:username"];
       this.email_addr = user["email"];
-      this.uid = user["uid"];
+      this.uid = localStorage.getItem("uid");
+      console.log("UID:", this.uid);
+
 
     } else {
       this.congnitoID = "TEST";
       this.uid = localStorage.getItem("uid");
+      console.log("UID:", this.uid);
+
       this.email_addr = localStorage.getItem("email");
     }
 
@@ -108,7 +112,7 @@ export class ViewComponent implements OnInit {
   }
 
   getHashDataBlockChainPDF(fileName) {
-    console.log("Calling API...");
+    console.log("File ", fileName);
 
     this.__profileService.getDocHashData(fileName).then((data) => {
       console.log("Blockchain get data done", data);

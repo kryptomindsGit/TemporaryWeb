@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 
 //import Component,s
 import { AppComponent } from './app.component';
@@ -35,6 +36,14 @@ const MODULES = [
   HttpClientModule,
   OwlDateTimeModule,
   OwlNativeDateTimeModule,
+  NgxLoadingModule.forRoot({
+    // animationType: ngxLoadingAnimationTypes.cubeGrid,
+    // backdropBackgroundColour: 'rgba(0,0,0,0.1)',
+    // backdropBorderRadius: '4px',
+    // primaryColour: '#ffffff',
+    // secondaryColour: '#ffffff',
+    // tertiaryColour: '#ffffff'
+  }),
   ToastrModule.forRoot({
     timeOut: 2000,
   }) // ToastrModule added

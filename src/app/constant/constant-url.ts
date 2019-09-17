@@ -36,4 +36,3 @@ export const DEPLOY_CONTRACT_SAW_URL = "http://54.163.41.241:5000";
 // export const SPRING_URL = "http://13.234.75.74:8090";  // (Bhushan - Spring server)
 // URL for SPRING local (bhushan)
 // export const SPRING_URL = "http://13.127.208.145:8080";
-

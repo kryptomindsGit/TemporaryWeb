@@ -63,7 +63,7 @@ export class ViewComponent implements OnInit {
    * @description call get API for partner file details 
    */
   getPartnerFile() {
-    this.__profileService.getPartnerFileById(this.id).then((data: any) => {
+    this.__profileService.getPartnerFileById(this.email_id).then((data: any) => {
       this.partnerFileArr = data;
       console.log(this.partnerFileArr);
 

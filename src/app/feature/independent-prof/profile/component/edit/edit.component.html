@@ -525,10 +525,7 @@
             </div>
 
             <div class="skill-details-form" *ngIf="showMainContent == 4">
-                <div class="card skill-container">
-                    <div class="card-header">
-                        <h6>SKILL DETAILS</h6>
-                    </div>
+                <div class="card">
                     <div class="card-body">
                         <form [formGroup]="skillDetails">
                             <div class="form-content">
@@ -567,9 +564,8 @@
                                                             <div>
                                                                 <table class="table">
                                                                     <tr *ngFor="let skill of categ; let i = index">
-                                                                        <td>
-                                                                            <a id="link" (click)="selectEvent($event)">
-                                                                                {{skill.skill_cat_name}}</a>
+                                                                        <td (click)="selectEvent($event)">
+                                                                            <p>{{skill.skill_cat_name}}</p>
                                                                         </td>
                                                                     </tr>
                                                                 </table>
@@ -602,7 +598,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 " *ngIf="skillRateArr.controls.length > 0">
                                             <div class="card skill-container">
                                                 <div class="card-header cardHeader">
                                                     <div class="form">

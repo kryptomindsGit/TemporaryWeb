@@ -92,13 +92,14 @@
                                         <tr>
                                             <th width="30%">Documents: </th>
                                             <td>
-                                                <div *ngFor="let document of partnerFileArr">
+                                                <div *ngFor="let document of partnerFileArr; let i=index">
+                                                    <hr *ngIf="i>0">
                                                     <table>
                                                         <tr>
-                                                            <th>{{document.doc_type}}</th>
-                                                            <td>{{ document.doc_name }}</td>
+                                                            <th>{{document.file_type}}</th>
+                                                            <td>{{ document.file_name }}</td>
                                                             <td><a style="color:#1051dd; "
-                                                                    (click)="downloadFile(document.doc_name)"><i
+                                                                    (click)="downloadFile(document.file_name)"><i
                                                                         class="fa fa-download" aria-hidden="true"></i>
                                                                 </a></td>
                                                         </tr>
@@ -108,14 +109,6 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        <!-- <tr>
-                                    <th width=30%>Documents</th>
-                                    <td>
-                                        <div *ngFor="let item of partnerFile">
-                                            <a style="color: #1051dd;" (click)="downloadFile(item)">{{ item }}</a>
-                                        </div>
-                                    </td>
-                                </tr> -->
                                     </tbody>
                                 </table>
                             </div>
