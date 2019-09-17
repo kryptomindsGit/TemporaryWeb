@@ -60,10 +60,10 @@ export class SmartContractService {
 
   //deploy contract 
   async deployContractData(workId : any):Promise<any> {
-    console.log("schedule Data :" , workId);
+    console.log("deploy Data :" , workId);
     
     try {
-    let res = await this.http.post(`${DEPLOY_CONTRACT_URL}/deployContract`, workId ,  {responseType:'json'}).toPromise();
+    let res = await this.http.post(`${DEPLOY_CONTRACT_URL}/deployContract`, workId , httpOptions).toPromise();
       return res;
     } catch (error) {
       this.handleError(error);      

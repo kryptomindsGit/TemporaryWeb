@@ -197,7 +197,7 @@ paymentMethodArr = ['paypal','net-backing'];
       dueDate:((this.milestoneForm.controls.milestoneDetails.value)[i].paymentConditionDueDate),
       amount:(this.milestoneForm.controls.milestoneDetails.value)[i].amountPayable,
       currency:(this.milestoneForm.controls.milestoneDetails.value)[i].currencyCd,
-      contractAddress:this.contractAddr,
+      // contractAddress:this.contractAddr,
       freeAddr:'0xD4496dA2a4b376fC8Ce4786EB6B71483436077c4',
       empAddr:'0xDbc71C18Ab38edc4b7E2cd926e2Bd53cA8e8E52E'
     }

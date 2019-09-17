@@ -116,8 +116,8 @@
                             </thead>
                             <tbody *ngFor="let data of skillArr">
                                 <tr>
-                                <td>{{data.domain}}</td>
-                                <td>{{data.skill}}</td>
+                                <td>{{data.skillId.masterDomain.domainId}}</td>
+                                <td>{{data.skillId.skillName}}</td>
                                 <td>{{data.skillLevel}}</td>
                                 <td>{{data.availability}}</td>
                                 <td>{{data.country}}</td>

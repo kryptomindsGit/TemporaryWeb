@@ -34,9 +34,9 @@ export class AddComponent implements OnInit {
 
   //skill related variables
  
-  durationYears : number = 2019;
-  durationMonths : number = 8;
-  durationDays : number = 23;
+  durationYears : number ;
+  durationMonths : number;
+  durationDays : number;
   isSelected : boolean = false;
 
   
@@ -201,7 +201,7 @@ export class AddComponent implements OnInit {
 
         console.log("Work payload",  this.skillForm.controls.skillDetails.value);
 
-        this.__workpackageService.postWorkPackageSkillData(this.skillForm.controls.skillDetails.value, this.wpId).then((workData: any) =>{
+        this.__workpackageService.postWorkPackageSkillData(this.skillForm.controls.skillDetails.value,this.wpId).then((workData: any) =>{
           console.log("Data is successfully saved" ,workData);
         });
 
