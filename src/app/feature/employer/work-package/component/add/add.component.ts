@@ -83,7 +83,7 @@ export class AddComponent implements OnInit {
   createSkillForm(){
     this.skillForm = this.fb.group({
       skillDetails: this.fb.array([this.fb.group({
-          domain : ['',[Validators.required]],
+          domainId : ['',[Validators.required]],
           skill:['',[Validators.required]],
           skillLevel:['',[Validators.required]],
           availability:['',[Validators.required]],
@@ -141,7 +141,7 @@ export class AddComponent implements OnInit {
   addSkill(){
     this.skillDetailsArr.push(this.fb.group(
       {
-        domain:'',
+        domainId:'',
         skill : '',
         skillLevel : '',
         availability : '',
@@ -184,12 +184,10 @@ export class AddComponent implements OnInit {
       projectName: this.projectForm.controls.proj_name.value,
       projectDescription: this.projectForm.controls.proj_desc.value,
       complexity: this.projectForm.controls.complexity.value,
-      budgetCurrencyCode: this.projectForm.controls.currency.value,
-      estimatedCostCurrency:this.projectForm.controls.currency.value,
-      approxStartDate1 :this.projectForm.controls.proj_start_date.value,
-      preferredAttributes :"",
-      // postedByIndividualEmpId :{} ,
-      // postedByEnterpriseEmpId : {},
+      budgetCurrencyCode: this.projectForm.controls.budgetCurrencyCode.value,
+      estimatedCostCurrency:this.projectForm.controls.budgetCurrencyCode.value,
+      approxStartDate :this.projectForm.controls.proj_start_date.value,
+      preferredAttributes :""
     }
     console.log("Work package payload" , workPackagePayload);
 

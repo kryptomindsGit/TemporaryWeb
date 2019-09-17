@@ -564,8 +564,10 @@
                                                             <div>
                                                                 <table class="table">
                                                                     <tr *ngFor="let skill of categ; let i = index">
-                                                                        <td (click)="selectEvent($event)">
-                                                                            <p>{{skill.skill_cat_name}}</p>
+                                                                        <td>
+                                                                            <a id="link" (click)="selectEvent($event)"
+                                                                                href>
+                                                                                {{skill.skill_cat_name}}</a>
                                                                         </td>
                                                                     </tr>
                                                                 </table>

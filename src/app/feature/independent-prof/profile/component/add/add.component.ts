@@ -675,7 +675,7 @@ export class AddComponent implements OnInit {
       this.__profileService.createFreelancer(freelancerProfilePayload).then((resData: any) => {
         console.log(resData);
         if (resData) {
-          this.__router.navigate(['/feature/independent/indp-profile/profile/view/', this.email]);
+          this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view/', this.email]);
         } else {
           console.log("Freelancer add res Waitting...");
 

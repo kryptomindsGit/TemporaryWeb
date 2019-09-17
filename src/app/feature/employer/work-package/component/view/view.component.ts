@@ -51,7 +51,7 @@ export class ViewComponent implements OnInit {
 
   ngOnInit() {
 
-    this.getWorkPackage(2);
+    this.getWorkPackage(1);
     
   }
   onClick(event)
