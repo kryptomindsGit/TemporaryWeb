@@ -236,13 +236,21 @@ export class AddComponent implements OnInit {
     });
   }
 
+  /**
+* @name onLogout
+* @description call Logot the process
+*/
   onLogout() {
     this.__authService.logout();
     this.__router.navigate(['/auth/auth/login']);
   }
 
+  /**
+* @name onCancel
+* @description call Cancel the process
+*/
   onCancel() {
-    console.log(" Canceled the process");
+    this.partnerProfileForm.reset();
   }
 
 }

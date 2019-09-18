@@ -318,7 +318,8 @@ export class EditComponent implements OnInit {
   * @description call Cancel the process
   */
   onCancel() {
-    console.log(" Canceled the process");
+    this.employerProfileForm.reset();
+    this.getEmplyeeDetails();
   }
 
 }

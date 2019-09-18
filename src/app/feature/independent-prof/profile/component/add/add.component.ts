@@ -710,4 +710,13 @@ export class AddComponent implements OnInit {
     this.__router.navigate(['/auth/auth/login']);
   }
 
+
+  /**
+ * @name onCancel
+ * @description call Cancel the process
+ */
+  //  onCancel() {
+  //   this.employerProfileForm.reset();
+  // }
+
 }
