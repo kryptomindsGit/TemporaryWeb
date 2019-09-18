@@ -1,7 +1,7 @@
 <div id="sidebar-wrapper">
         <div class="sidebar-heading">
                 <img src="../../../assets/images/konnecteum_logo.png" alt="Konnecteum">
-                <h6>Konnecteum</h6>
+                <h6 class="logo-font">Konnecteum</h6>
         </div>
         <div class="list-group list-group-flush">
                 <a [routerLink]="['/feature/feature/full-layout/dashboard']"
@@ -9,7 +9,7 @@
                                 aria-hidden="true"></i> Dashboard</a>
                 <a (click)="userRoleInfo()" class="list-group-item list-group-item-action bg-color-dark"><i
                                 class="fa fa-address-book" aria-hidden="true"></i> Profile</a>
-                <li class="list-group list-group-flush">
+                <li class="list-group list-group-flush" *ngIf="isEmployer">
                         <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"
                                 class="dropdown-toggle list-group-item list-group-item-action bg-color-dark"><i
                                         class="fa fa-briefcase" aria-hidden="true"></i> Work Package</a>
@@ -20,7 +20,8 @@
                                                         class="fa fa-address-book" aria-hidden="true"></i> Add</a>
                                 </li>
                                 <li>
-                                        <a (click)="userEmployer()"
+                                        <a [routerLink]="['/feature/feature/full-layout/employer/emp/workpackage/workpack/viewall']"
+                                        
                                                 class="list-group-item list-group-item-action bg-color-dark"><i
                                                         class="fa fa-address-book" aria-hidden="true"></i> View</a>
                                 </li>

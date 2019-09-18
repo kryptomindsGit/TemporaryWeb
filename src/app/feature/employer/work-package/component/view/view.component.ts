@@ -75,7 +75,7 @@ export class ViewComponent implements OnInit {
   getWorkPackage(id) {
 
     this.__workService.getWorkPackageData(id).then((resData: any) => {
-      console.log(resData.responseObject);
+      console.log("response data : ",resData.responseObject);
       this.projectName = resData.responseObject.projectName;
       this.projectDesc = resData.responseObject.projectDescription;
       this.budget = resData.responseObject.budget;

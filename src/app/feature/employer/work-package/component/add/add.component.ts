@@ -224,9 +224,10 @@ export class AddComponent implements OnInit {
 
       this.__workpackageService.postWorkPackageSkillData(this.skillForm.controls.skillDetails.value, this.wpId).then((workData: any) => {
         console.log("Data is successfully saved", workData);
+        this.__router.navigate(['/feature/feature/full-layout/employer/emp/workpackage/workpack/viewall'])
       });
 
-      this.__router.navigate(['/feature/feature/full-layout/employer/emp/workpackage/workpack/viewall'])
+      
 
     });
   }

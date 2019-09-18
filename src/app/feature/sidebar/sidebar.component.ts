@@ -115,8 +115,8 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-  userEmployer() {
-    this.__router.navigate(['/feature/feature/full-layout/employer/emp/workpackage/workpack/view', this.email_id]);
-  }
+  // userEmployer() {
+  //   this.__router.navigate(['/feature/feature/full-layout/employer/emp/workpackage/workpack/viewall', this.email_id]);
+  // }
 
 }
