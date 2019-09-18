@@ -160,7 +160,7 @@ paymentMethodArr = ['paypal','net-backing'];
     // }
 
     const payload={
-      projectId: 101116
+      projectId: 1011121
     }
 
     this.__paymentService.deployContractData(payload).then((workData: any) =>{
@@ -197,7 +197,7 @@ paymentMethodArr = ['paypal','net-backing'];
       dueDate:((this.milestoneForm.controls.milestoneDetails.value)[i].paymentConditionDueDate),
       amount:(this.milestoneForm.controls.milestoneDetails.value)[i].amountPayable,
       currency:(this.milestoneForm.controls.milestoneDetails.value)[i].currencyCd,
-      // contractAddress:this.contractAddr,
+      contractAddress:this.contractAddr,
       freeAddr:'0xD4496dA2a4b376fC8Ce4786EB6B71483436077c4',
       empAddr:'0xDbc71C18Ab38edc4b7E2cd926e2Bd53cA8e8E52E'
     }
@@ -207,7 +207,9 @@ paymentMethodArr = ['paypal','net-backing'];
   }
 
   onSaveChanges(){
+    
     console.log(" Milestone details  " , this.milestoneForm.controls.milestoneDetails.value);
+
       this.__paymentService.postMilestoneData(this.milestoneForm.controls.milestoneDetails.value).then((workData: any) =>{
         console.log("Data is successfully saved" ,workData);
       });
