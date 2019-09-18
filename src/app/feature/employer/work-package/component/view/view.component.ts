@@ -11,27 +11,27 @@ export class ViewComponent implements OnInit {
 
   //model variables
 
-  showModal : boolean;
-  UserId    : string;
-  Firstname : string;
-  Lastname  : string;
-  Email     : string;
+  showModal: boolean;
+  UserId: string;
+  Firstname: string;
+  Lastname: string;
+  Email: string;
 
   //project Details variables
 
-  projectName : string = "Web developmet For 'X-Company'";
-  projectDesc : string ="Lorem ipsum, dolor sit amet consectetur adipisicing elit.Exercitationem consequatur adipisci,aliquam consequuntur minus sunt dolorequas quideminventore suscipit laudantium voluptatum iure nulla soluta nemo qui sit, maxime nostrum! ";
-  budget: number =  350 ;
-  estimatedCost: number =  320 ;
-  complexity : string ="High";
+  projectName: string = "Web developmet For 'X-Company'";
+  projectDesc: string = "Lorem ipsum, dolor sit amet consectetur adipisicing elit.Exercitationem consequatur adipisci,aliquam consequuntur minus sunt dolorequas quideminventore suscipit laudantium voluptatum iure nulla soluta nemo qui sit, maxime nostrum! ";
+  budget: number = 350;
+  estimatedCost: number = 320;
+  complexity: string = "High";
   // stratDate : Date ;
   // fromDate : Date ;
   // toDate : Date ;
-  startDate : string = "10 jan 2019";
-  fromDate : string = "14 jan 2019";
-  toDate : string = "1 june 2019";
-  budgetCurrency : string ;
-     
+  startDate: string = "10 jan 2019";
+  fromDate: string = "14 jan 2019";
+  toDate: string = "1 june 2019";
+  budgetCurrency: string;
+
   //Arr
   skillArr = [];
 
@@ -52,44 +52,42 @@ export class ViewComponent implements OnInit {
   ngOnInit() {
 
     this.getWorkPackage(7);
-    
-  }
-  onClick(event)
-  {
-    this.showModal = true; // Show-Hide Modal Check
-      // this.UserId = event.target.id;
-      // this.Firstname = document.getElementById("firstname"+this.UserId).innerHTML;
-      // this.Lastname = document.getElementById("lastname"+this.UserId).innerHTML;
-      // this.Email = document.getElementById("email"+this.UserId).innerHTML;
 
-      this.UserId= "1";
-      this.Firstname = "Irshad";
-      this.Lastname ="Hukeri";
-      this.Email="irshad@gmaiil.com";
+  }
+  onClick(event) {
+    this.showModal = true; // Show-Hide Modal Check
+    // this.UserId = event.target.id;
+    // this.Firstname = document.getElementById("firstname"+this.UserId).innerHTML;
+    // this.Lastname = document.getElementById("lastname"+this.UserId).innerHTML;
+    // this.Email = document.getElementById("email"+this.UserId).innerHTML;
+
+    this.UserId = "1";
+    this.Firstname = "John";
+    this.Lastname = "D'souza";
+    this.Email = "johndsouza@gmaiil.com";
   }
   //Bootstrap Modal Close event
-  hide()
-  {
+  hide() {
     this.showModal = false;
   }
 
-  getWorkPackage(id){
-    
+  getWorkPackage(id) {
+
     this.__workService.getWorkPackageData(id).then((resData: any) => {
       console.log(resData.responseObject);
-      this.projectName = resData.responseObject.projectName ;
-      this.projectDesc = resData.responseObject.projectDescription ;
-      this.budget = resData.responseObject.budget ;
-      this.estimatedCost =  resData.responseObject.estimatedCost;
-      this.startDate = (resData.responseObject.approxStartDate).substring(0,10);
-      this.toDate = (resData.responseObject.approxStartDate).substring(0,10);
+      this.projectName = resData.responseObject.projectName;
+      this.projectDesc = resData.responseObject.projectDescription;
+      this.budget = resData.responseObject.budget;
+      this.estimatedCost = resData.responseObject.estimatedCost;
+      this.startDate = (resData.responseObject.approxStartDate).substring(0, 10);
+      this.toDate = (resData.responseObject.approxStartDate).substring(0, 10);
       this.budgetCurrency = resData.responseObject.budgetCurrencyCode;
     });
 
     this.__workService.getSkillPackageData(id).then((resData: any) => {
-      console.log("Data of skills" +  resData.responseObject);
+      console.log("Data of skills" + resData.responseObject);
       this.skillArr = resData.responseObject;
-      console.log("Data of skills" +  resData.responseObject);
+      console.log("Data of skills" + resData.responseObject);
     });
   }
 }

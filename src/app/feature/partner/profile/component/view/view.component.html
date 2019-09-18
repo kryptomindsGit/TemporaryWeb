@@ -41,7 +41,7 @@
                             <div class="col-md-12">
                                 <table class="table">
                                     <tbody>
-                                        <tr>
+                                        <!-- <tr>
                                             <th width="50%">Name:
                                             </th>
                                             <td>
@@ -88,11 +88,11 @@
                                             <td>
                                                 {{partnerDetailsArr.country}}
                                             </td>
-                                        </tr>
+                                        </tr> -->
                                         <tr>
                                             <th width="30%">Documents: </th>
                                             <td>
-                                                <div *ngFor="let document of partnerFileArr; let i=index">
+                                                <!-- <div *ngFor="let document of partnerFileArr; let i=index">
                                                     <hr *ngIf="i>0">
                                                     <table>
                                                         <tr>
@@ -106,7 +106,14 @@
 
                                                     </table>
 
-                                                </div>
+                                                </div> -->
+                                                <a (click)="downloadFile()"><i class="fa fa-download"
+                                                        aria-hidden="true"></i></a>
+                                                <a (click)="downloadFile1(2)"><i class="fa fa-download"
+                                                        aria-hidden="true"></i></a>
+                                                <a (click)="downloadFile2(2)"><i class="fa fa-download"
+                                                        aria-hidden="true"></i></a>
+
                                             </td>
                                         </tr>
                                     </tbody>

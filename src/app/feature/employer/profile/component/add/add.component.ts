@@ -23,6 +23,7 @@ export class AddComponent implements OnInit {
   public fileObj: any;
   public doc_cat_id: any;
   public FileArrData: any;
+  public error: any;
 
   //Static Array's
   prefixArr = ['Mr', 'Mrs', 'Miss'];
@@ -186,8 +187,11 @@ export class AddComponent implements OnInit {
 
   async uploadFile() {
 
-    await this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((event) => {
-      this.FileArrData = event;
+    await this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((resData) => {
+      this.FileArrData = resData;
+      (err) => this.error = err
+      console.log("Resp data:", this.FileArrData.Message);
+
       console.log("File Resp:", this.FileArrData.fileId);
     });
     // this.FileArrData = "jkdhfjkhkdjshfkjhdskjfh"

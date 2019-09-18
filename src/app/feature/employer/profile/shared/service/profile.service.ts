@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpEventType } from '@angular/common/http';
 import { throwError } from 'rxjs';
 
 
@@ -9,6 +9,7 @@ import { BASE_URL } from '../../../../../constant/constant-url';
 import { BLOCKCHAIN_URL } from '../../../../../constant/constant-url';
 import { UPORT_URL } from '../../../../../constant/constant-url';
 import { AWS_URL } from '../../../../../constant/constant-url';
+import { map } from 'rxjs/operators';
 
 //CORS
 const httpOptions = {
@@ -30,7 +31,21 @@ export class EmpProfileService {
     private __http: HttpClient
   ) { }
 
-  // Blockchain POST API call
+  //Blockchain POST API call
+  // async postDocHashData(fileData: any, cognitoId: any, fileName: any) {
+  //   try {
+  //     let formData = new FormData();
+  //     formData.append('fileData', fileData);
+  //     formData.append('cognitoId', cognitoId);
+  //     formData.append('fileName', fileName);
+
+  //     let res = await this.__http.post(`${BLOCKCHAIN_URL}/sendHash/`, formData).toPromise();
+  //     return res;
+  //   } catch (error) {
+  //     await this.handleError(error);
+  //   }
+  // }
+
   async postDocHashData(fileData: any, cognitoId: any, fileName: any) {
     try {
       let formData = new FormData();
@@ -38,8 +53,29 @@ export class EmpProfileService {
       formData.append('cognitoId', cognitoId);
       formData.append('fileName', fileName);
 
-      let res = await this.__http.post(`${BLOCKCHAIN_URL}/sendHash/`, formData).toPromise();
+      let res = await this.__http.post(`${BLOCKCHAIN_URL}/sendHash/`, formData,
+        {
+          reportProgress: true,
+          observe: 'events'
+        }).pipe(map((event) => {
+
+          switch (event.type) {
+
+            case HttpEventType.UploadProgress:
+              const progress = Math.round(100 * event.loaded / event.total);
+              return { status: 'progress', message: progress };
+
+            case HttpEventType.Response:
+              return event.body;
+            default:
+              return `Unhandled event: ${event.type}`;
+          }
+        })
+        ).toPromise();
+      console.log("Resp service:", res);
       return res;
+
+
     } catch (error) {
       await this.handleError(error);
     }
