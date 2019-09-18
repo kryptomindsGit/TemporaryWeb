@@ -77,6 +77,20 @@ export class WorkPackageService {
     }
   }
 
+  //get all work packages
+  async getAllWorkPackageData(email : any):Promise<any> {
+    console.log("Package Data :" , email);
+    
+    try {
+      let res = await this.http.get(`${SPRING_URL}/workpackage/wp-all`,httpOptions).toPromise();
+      console.log("data " ,res);
+      return res;
+      
+    } catch (error) {
+      this.handleError(error);      
+    }
+  }
+
 
 
   handleError(error) {

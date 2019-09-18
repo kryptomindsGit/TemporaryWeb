@@ -60,7 +60,7 @@ paymentMethodArr = ['paypal','net-backing'];
   }
 
   getWorkPackageId(){
-    this.workPackageID = localStorage.getItem("workId");
+    this.workPackageID = localStorage.getItem("workpackageId");
   }
 
   createMilestoneForm(){
@@ -155,13 +155,13 @@ paymentMethodArr = ['paypal','net-backing'];
   }
 
   onDeployContract(){
-    // const payload={
-    //   projectId: this.workPackageID
-    // }
-
     const payload={
-      projectId: 1011121
+      projectId: this.workPackageID
     }
+
+    // const payload={
+    //   projectId: 1011121
+    // }
 
     this.__paymentService.deployContractData(payload).then((workData: any) =>{
       console.log("Data is successfully saved" ,workData);
@@ -170,9 +170,9 @@ paymentMethodArr = ['paypal','net-backing'];
   }
 
   onDeployMilestone(i:any){
+    
     console.log("addr "+this.contractAddr);
-    
-    
+   
     const payloade = {
       milestoneStr:(this.milestoneForm.controls.milestoneDetails.value)[i].milestoneName,
       reviewAddrs:"0xd15eE84e3308249E178D8Fb8f20BD7A03b358ee5",
@@ -210,7 +210,7 @@ paymentMethodArr = ['paypal','net-backing'];
     
     console.log(" Milestone details  " , this.milestoneForm.controls.milestoneDetails.value);
 
-      this.__paymentService.postMilestoneData(this.milestoneForm.controls.milestoneDetails.value).then((workData: any) =>{
+      this.__paymentService.postMilestoneData(this.milestoneForm.controls.milestoneDetails.value,this.workPackageID).then((workData: any) =>{
         console.log("Data is successfully saved" ,workData);
       });
   }

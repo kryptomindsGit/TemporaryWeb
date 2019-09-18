@@ -139,48 +139,48 @@ export class UportLoginComponent implements OnInit {
 
         this.__router.navigate(['/feature/feature/full-layout/dashboard'])
 
-        // if (this.uPortDetailsArr.role == "Freelancer") {
-        //   console.log("Freelancer In");
+        if (this.uPortDetailsArr.role == "Freelancer") {
+          console.log("Freelancer In");
 
-        //   this.__indeptProfileService.getFreelancerByEmail(this.email).then((freelancerdata: any) => {
-        //     this.profileDetailsArr = freelancerdata[0];
-        //     console.log("Freelancer Data From Database : ", this.profileDetailsArr);
+          this.__indeptProfileService.getFreelancerByEmail(this.email).then((freelancerdata: any) => {
+            this.profileDetailsArr = freelancerdata[0];
+            console.log("Freelancer Data From Database : ", this.profileDetailsArr);
 
-        //     if (this.profileDetailsArr == null || this.profileDetailsArr.length == 0) {
-        //       this.__router.navigate(['/feature/feature/full-layout/independent/profile/indp-profile/add']);
-        //     } else {
-        //       this.__router.navigate(['/feature/feature/full-layout/independent/profile/indp-profile/view', this.email]);
-        //     }
-        //   });
-        // }
+            if (this.profileDetailsArr == null || this.profileDetailsArr.length == 0) {
+              this.__router.navigate(['/feature/feature/full-layout/independent/profile/indp-profile/add']);
+            } else {
+              this.__router.navigate(['/feature/feature/full-layout/independent/profile/indp-profile/view', this.email]);
+            }
+          });
+        }
 
-        // else if (this.uPortDetailsArr.role == "Employer") {
-        //   console.log("Employer In");
-        //   this.__empProfileService.getEmployerByEmailId(this.email).then((employerdata: any) => {
-        //     this.profileDetailsArr = employerdata[0];
-        //     if (this.profileDetailsArr == null || this.profileDetailsArr.length == 0) {
-        //       this.__router.navigate(['/feature/feature/full-layout/employer/profile/emp-profile/add']);
-        //     } else {
-        //       this.__router.navigate(['/feature/feature/full-layout/employer/profile/emp-profile/view', this.email]);
-        //     }
-        //   });
-        // }
+        else if (this.uPortDetailsArr.role == "Employer") {
+          console.log("Employer In");
+          this.__empProfileService.getEmployerByEmailId(this.email).then((employerdata: any) => {
+            this.profileDetailsArr = employerdata[0];
+            if (this.profileDetailsArr == null || this.profileDetailsArr.length == 0) {
+              this.__router.navigate(['/feature/feature/full-layout/employer/profile/emp-profile/add']);
+            } else {
+              this.__router.navigate(['/feature/feature/full-layout/employer/profile/emp-profile/view', this.email]);
+            }
+          });
+        }
 
-        // else if (this.uPortDetailsArr.role == "Partner") {
-        //   console.log("Partner In");
+        else if (this.uPortDetailsArr.role == "Partner") {
+          console.log("Partner In");
 
-        //   this.__partProfileService.getPartnerByEmailId(this.email).then((partnerdata: any) => {
-        //     this.profileDetailsArr = partnerdata[0];
-        //     if (this.profileDetailsArr == null || this.profileDetailsArr.length == 0) {
-        //       this.__router.navigate(['/feature/feature/full-layout/partner/profile/part-profile/add']);
-        //     } else {
-        //       this.__router.navigate(['/feature/feature/full-layout/partner/profile/part-profile/view', this.email]);
-        //     }
-        //   });
-        //   // this.__router.navigate(['/feature/feature/full-layout/partner/profile/part-profile/add']);
-        // } else {
-        //   console.log("error in routing based User Role");
-        // }
+          this.__partProfileService.getPartnerByEmailId(this.email).then((partnerdata: any) => {
+            this.profileDetailsArr = partnerdata[0];
+            if (this.profileDetailsArr == null || this.profileDetailsArr.length == 0) {
+              this.__router.navigate(['/feature/feature/full-layout/partner/profile/part-profile/add']);
+            } else {
+              this.__router.navigate(['/feature/feature/full-layout/partner/profile/part-profile/view', this.email]);
+            }
+          });
+          // this.__router.navigate(['/feature/feature/full-layout/partner/profile/part-profile/add']);
+        } else {
+          console.log("error in routing based User Role");
+        }
       }
     });
   }

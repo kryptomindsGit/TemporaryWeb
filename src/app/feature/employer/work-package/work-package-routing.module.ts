@@ -4,6 +4,7 @@ import { AddComponent } from './component/add/add.component';
 import { ViewComponent } from './component/view/view.component';
 import { EditComponent } from './component/edit/edit.component';
 import { WorkPackageComponent } from './work-package.component';
+import { AllWorkPackagesComponent } from './component/all-work-packages/all-work-packages.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'edit/:id',
         component: EditComponent
+      },
+       {
+        path: 'viewall',
+        component:AllWorkPackagesComponent
       }
     ]
   }

@@ -50,9 +50,10 @@ export class ViewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-    this.getWorkPackage(7);
-
+ 
+    let wpId = localStorage.getItem("workpackageId");
+    this.getWorkPackage(wpId);
+    
   }
   onClick(event) {
     this.showModal = true; // Show-Hide Modal Check

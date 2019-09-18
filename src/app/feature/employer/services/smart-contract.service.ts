@@ -26,11 +26,11 @@ export class SmartContractService {
   ) { }
 
 
-  async postMilestoneData(milestoneData : any):Promise<any> {
+  async postMilestoneData(milestoneData : any , id:any):Promise<any> {
     console.log("milestone Data :" , milestoneData);
     
     try {
-    let res = await this.http.post(`${SPRING_URL}/milestone/save`, milestoneData , httpOptions).toPromise();
+    let res = await this.http.post(`${SPRING_URL}/milestone/save/${id}`, milestoneData , httpOptions).toPromise();
       return res;
     } catch (error) {
       this.handleError(error);      
@@ -72,6 +72,7 @@ export class SmartContractService {
 
   //Deploy Milestone ethereum
   async deployMilestoneData(payload : any):Promise<any> {
+    
     console.log("schedule Data :" , payload);
     
     try {

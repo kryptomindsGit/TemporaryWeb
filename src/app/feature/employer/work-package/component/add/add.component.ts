@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@ang
 import { formatDate } from '@angular/common';
 import { IndeptProfileService } from 'src/app/feature/independent-prof/profile/shared/service/profile.service';
 import { WorkPackageService } from '../../shared/service/work-package.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add',
@@ -44,7 +45,8 @@ export class AddComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private __profileService: IndeptProfileService,
-    private __workpackageService: WorkPackageService
+    private __workpackageService: WorkPackageService,
+    private __router : Router
   ) {
   }
 
@@ -87,13 +89,13 @@ export class AddComponent implements OnInit {
         skill: ['', [Validators.required]],
         skillLevel: ['', [Validators.required]],
         availability: ['', [Validators.required]],
-        members: ['', Validators.required],
+        teamMembers: ['', Validators.required],
         country: ['', [Validators.required]],
         ratePerHour: ['', [Validators.required]],
         availableAvgRatePerHour: ['', [Validators.required]],
         currencyCode: ['', [Validators.required]],
-        skill_start_date: ['', [Validators.required]],
-        skill_end_date: ['', [Validators.required]],
+        startDate: ['', [Validators.required]],
+        endDate: ['', [Validators.required]],
       })]),
     });
   }
@@ -115,22 +117,41 @@ export class AddComponent implements OnInit {
 
   setDuration() {
 
-    if ((
-      this.durationYears !== null && this.durationMonths == null && this.durationDays == null)
-    ) {
+    if ( this.durationYears !== null && this.durationMonths == null && this.durationDays == null ) {
       this.durationYears = this.projectForm.controls.durationYears.value;
       this.durationMonths = 0;
       this.durationDays = 0;
     } else if (this.durationYears == null && this.durationMonths != null && this.durationDays == null) {
       this.durationYears = 0;
-      this.durationDays = 0;
       this.durationMonths = this.projectForm.controls.durationMonths.value;
+      this.durationDays = 0;
 
     } else if (this.durationYears == null && this.durationMonths == null && this.durationDays != null) {
       this.durationYears = 0;
       this.durationMonths = 0;
       this.durationDays = this.projectForm.controls.durationDays.value;
-    }
+    }else if (this.durationYears != null && this.durationMonths != null && this.durationDays == null) {
+      this.durationYears = this.projectForm.controls.durationYears.value;
+      this.durationMonths = this.projectForm.controls.durationMonths.value;
+      this.durationDays = 0;
+
+    }else if (this.durationYears == null && this.durationMonths != null && this.durationDays != null) {
+      this.durationYears = 0;
+      this.durationMonths = this.projectForm.controls.durationMonths.value;
+      this.durationDays = this.projectForm.controls.durationDays.value;
+    }else if (this.durationYears != null && this.durationMonths == null && this.durationDays != null) {
+      this.durationYears = this.projectForm.controls.durationYears.value;
+      this.durationMonths =0;
+      this.durationDays = this.projectForm.controls.durationDays.value;
+    }else if(this.durationYears != null && this.durationMonths != null && this.durationDays != null) {
+      this.durationYears = this.projectForm.controls.durationYears.value;
+      this.durationMonths =this.projectForm.controls.durationMonths.value;
+      this.durationDays = this.projectForm.controls.durationDays.value;
+    }else{
+      this.durationYears = 0;
+      this.durationMonths =0;
+      this.durationDays = 0;
+    }  
   }
 
 
@@ -145,13 +166,13 @@ export class AddComponent implements OnInit {
         skill: '',
         skillLevel: '',
         availability: '',
-        members: '',
+        teamMembers: '',
         country: '',
         ratePerHour: '',
         availableAvgRatePerHour: '',
         currencyCode: '',
-        skill_start_date: '',
-        skill_end_date: ''
+        startDate: '',
+        endDate: ''
       }))
   }
 
@@ -197,13 +218,15 @@ export class AddComponent implements OnInit {
 
       this.wpId = workData.responseObject.workPackageId;
 
-
+      localStorage.setItem("workpackageId" , this.wpId);
 
       console.log("Work payload", this.skillForm.controls.skillDetails.value);
 
       this.__workpackageService.postWorkPackageSkillData(this.skillForm.controls.skillDetails.value, this.wpId).then((workData: any) => {
         console.log("Data is successfully saved", workData);
       });
+
+      this.__router.navigate(['/feature/feature/full-layout/employer/emp/workpackage/workpack/viewall'])
 
     });
   }

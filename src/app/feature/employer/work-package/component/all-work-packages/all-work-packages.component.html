@@ -1,0 +1,145 @@
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <label for="workPackage" class="headinglable">Work Packages</label>
+            </div>
+        </div>
+    
+                <div class="card" *ngFor="let data of workArr; let i=index ">
+                  
+                    <div class="card-body">
+                        <div class="row ">
+                            <div class="col-2">
+                                <label class="text-muted" >Project Name :</label>
+                            </div>
+                            <div class="col-6">
+                                <h6 (click)="gotoWorkpackage(i)">{{data.projectName}}</h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <label class="text-muted"> Description :</label>
+                            </div>
+                            <div class="col-9">
+                                <h6>{{data.projectDescription}}</h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="text-muted">Budget :</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <h6>{{data.budgetCurrencyCode}}{{data.budget}} </h6>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="text-muted">Estimated cost :</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <h6>{{data.estimatedCost}}</h6>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                            <div class="col-md-8">
+                                    <div class="row">
+                                            <div class="col-3">
+                                                <label class="text-muted">Complexity Level:</label>
+                                            </div>
+                                            <div class="col-6">
+                                                <h6>{{data.complexity}}</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                                <div class="col-3">
+                                                    <label class="text-muted">start Date :</label>
+                                                </div>
+                                                <div class="col-6">
+                                                    <h6>{{data.approxStartDate}}</h6>
+                                                </div>
+                                            </div>
+                            </div>  
+                         
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="text-muted">Duration years:</label>
+                                    </div>
+                                    <div class="col-4">
+                                        <h6>{{data.durationYears}}</h6>
+                                    </div>
+                                </div> 
+                            </div>
+                            <div class="col-4">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="text-muted">Duration months:</label>
+                                    </div>
+                                    <div class="col-4">
+                                        <h6>{{data.durationMonths}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="text-muted">Duration days :</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <h6>{{data.durationDays}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn viewprofile" (click)="gotoWorkpackage(i)">Show Details</button>
+                        <button class="btn viewprofile1" (click)="gotPayment(i)">Payment</button>
+                               
+                    </div>
+
+                    
+
+                </div>
+              
+                <div class="modal" id="myModal" [style.display]="showModal ? 'block' : 'none'">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="center">
+                                    <div class="img-center">
+                                        <img class="img-circle" src="../../../../../../assets/images/45.jpg">   
+                                    </div>
+                                    <h6>Jhon Disuza</h6>
+                                    <label>jhon@gmail.com</label> 
+                                </div>
+    
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+    
+                            <!-- <h4 class="modal-title">User Details:</h4> -->
+                        </div>
+                        
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <p>User Id : {{UserId}}</p>
+                            <p>Firstname : {{Firstname}}</p>
+                            <p>Lastname : {{Lastname}}</p>
+                            <p>Email : {{Email}}</p>
+                        </div>
+                        
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-warning" data-dismiss="modal" (click) = "hide()">Close</button>
+                        </div>
+                        
+                        </div>
+                    </div>
+                </div>
+        </div>     
+    </div>
+    

@@ -276,7 +276,7 @@
                       </select>
                     </td>
                     <td scope="row">
-                      <input type="text" formControlName="members" placeholder="Members">
+                      <input type="text" formControlName="teamMembers" placeholder="Members">
                     </td>
                     <td scope="row">
                       <select formControlName="country" id="country">
@@ -301,13 +301,13 @@
 
                     </td>
                     <td scope="row">
-                      <input type=text [owlDateTimeTrigger]="dt1" formControlName="skill_start_date" id="datePicker1"
-                        placeholder="End Date" [owlDateTime]="dt1">
+                      <input type=text [owlDateTimeTrigger]="dt1" formControlName="startDate" id="datePicker1"
+                        placeholder="Start Date" [owlDateTime]="dt1">
                       <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
                       <!-- <input type="text" formControlName="skill_start_date" >  -->
                     </td>
                     <td scope="row">
-                      <input type=text [owlDateTimeTrigger]="dt2" formControlName="skill_end_date" id="datePicker2"
+                      <input type=text [owlDateTimeTrigger]="dt2" formControlName="endDate" id="datePicker2"
                         placeholder="End Date" [owlDateTime]="dt2">
                       <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
                       <!-- <input type="text" formControlName="skill_end_date" >  -->

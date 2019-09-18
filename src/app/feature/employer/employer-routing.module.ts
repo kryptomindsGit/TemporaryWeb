@@ -20,7 +20,7 @@ const routes: Routes = [
         loadChildren: () => import('./work-package/work-package.module').then(module => module.WorkPackageModule)
       },
       {
-        path: 'smartpayment',
+        path: 'smartpayment/:id',
         component: SmartContractPaymentComponent
       },
       {

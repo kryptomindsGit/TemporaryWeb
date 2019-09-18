@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   public indepUserDetails: any = [];
   public empUserDetails: any = [];
   public partUserDetails: any = [];
-
+  customLoadingTemplate:any;
   constructor(
 
     private __fb: FormBuilder,
