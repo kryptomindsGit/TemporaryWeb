@@ -1,32 +1,45 @@
 @import "../../../../assets/css/theme_colors";
-     
+
 /*-----------------------------------------------------------------------
       BASIC CSS
 -------------------------------------------------------------------------*/
 
-.section{
+// .container {
+//   font: 14px "Montserrat", sans-serif;
+//   background-color: $bg-back-color;
+//   color: $text-color;
+//   overflow: scroll;
+//   font-weight: 400;
+//   // height: 100vh;
+//   position: fixed;
+//   margin: 1rem;
+//   // width: 100%;
+// }
+
+.container {
   font: 14px "Montserrat", sans-serif;
   background-color: $bg-back-color;
   color: $text-color;
-  overflow: scroll;
+  padding: 1rem;
+  // overflow: scroll;
   font-weight: 400;
-  height:100vh;
-  position: fixed;
-  // width:100%;
+  width: 100%;
+  height: 100vh;
 }
-.container{
-  max-width: 90% !important;
-  position: relative;
-  }
-p{
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+
+// .container{
+//   max-width: 90% !important;
+//   position: relative;
+//   }
+p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 hr {
   box-sizing: content-box;
   height: 0;
-  border-top: 1px solid rgba(255,255,255,0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 
@@ -35,51 +48,56 @@ CARD CSS
 -------------------------------------------------------------------------*/
 
 .card {
-  widows: 70%; 
+  widows: 70%;
   height: auto !important;
   // margin: 1rem auto !important;
-  margin-top:0.3rem;;
-  float: none; 
+  margin-top: 0.3rem;
+  ;
+  float: none;
   // border-radius: 10px;
   // box-shadow: 0px 0px 32px 0px rgba(0, 0, 0, 0.22);
   // background: $bg-front-color;
-  
+
   border: 0px;
-  background: transparent !important; 
-}
-
-
-.card .card-header{
-  background: transparent !important;
-    padding: .72rem .30rem;
-
-}
-
-.worktable{
-  color: $text-color; 
   background: transparent !important;
 }
 
 
-.card-body{
+.card .card-header {
+  background: transparent !important;
+  padding: .72rem .30rem;
+
+}
+
+.worktable {
+  color: $text-color;
+  background: transparent !important;
+}
+
+
+.card-body {
   border-radius: 3px;
-    font-weight: 400;
-    color: #a5a8ad;
-    background: #282b2f;
-    border-top: 1px solid rgba(255,255,255,0.09);
+  font-weight: 400;
+  color: $text-color;
+  // background: #282b2f;
+  // border-top: 1px solid rgba(255, 255, 255, 0.09);
+  background: $bg-front-color;
 }
 
 
-.text-muted {
-  color: #6c757d!important;
-  margin-right:20px;
+table thead tr th {
+  color: $text-color;
+  font-size: 0.7rem;
+  text-transform: uppercase;
 }
 
-.text-muted1{
-  color: #6c757d!important;
-  // margin-right:20px;
-  // margin-top:10rem;
+.text-color {
+  font-size: 0.9rem;
+  // color: #6c757d !important;
+  color: $text-color;
+  float: left;
 }
+
 .center {
   display: block;
   margin-left: auto;
@@ -87,7 +105,7 @@ CARD CSS
   width: 50%;
 }
 
-.card-body h4{
+.card-body h4 {
   text-align: center;
   margin: 1rem auto;
   letter-spacing: 0.1em
@@ -97,16 +115,16 @@ CARD CSS
 FORM CSS
 -------------------------------------------------------------------------*/
 form {
-  padding: 5px 5px 5px 5px; 
+  padding: 5px 5px 5px 5px;
 }
 
 .form-group {
   margin-bottom: 10px;
   position: relative;
- }
+}
 
 .form-input {
-  padding-top: 21px; 
+  padding-top: 21px;
 }
 
 .form-label {
@@ -118,29 +136,35 @@ form {
   -ms-transition: 0.25s ease;
   color: $text-color;
   left: 0;
-  top: 23px; 
+  top: 23px;
 }
 
-input ,textarea , select{
+input,
+textarea,
+select {
   transition: 0.3s ease;
   -moz-transition: 0.3s ease;
   -webkit-transition: 0.3s ease;
   -o-transition: 0.3s ease;
   -ms-transition: 0.3s ease;
   padding-top: 10px;
-  -webkit-appearance: none; 
+  -webkit-appearance: none;
 }
 
-  input:focus + .form-label, input:valid + .form-label ,textarea:focus + .form-label,textarea:valid + .form-label ,
-  select:focus + .form-label
-  {
-    top: 1px;
-    font-size: 11px;
-    color: $blue-color;
-    background: transparent !important;
-  }
+input:focus+.form-label,
+input:valid+.form-label,
+textarea:focus+.form-label,
+textarea:valid+.form-label,
+select:focus+.form-label {
+  top: 1px;
+  font-size: 11px;
+  color: $blue-color;
+  background: transparent !important;
+}
 
-input[type="text"], select , textarea {
+input[type="text"],
+select,
+textarea {
   box-sizing: border-box;
   width: 100%;
   display: block;
@@ -149,59 +173,66 @@ input[type="text"], select , textarea {
   color: $text-color;
   background: transparent;
   border-bottom: 1px solid $text-color;
-  padding: 4px 0; 
+  padding: 4px 0;
 }
 
-input:focus, select:focus ,textarea:focus {
-  border-bottom: 1px solid $blue-color; 
+input:focus,
+select:focus,
+textarea:focus {
+  border-bottom: 1px solid $blue-color;
 }
 
 input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 30px transparent inset; 
+  -webkit-box-shadow: 0 0 0 30px transparent inset;
 }
 
 input::-webkit-input-placeholder {
-  color: $text-color; 
+  color: $text-color;
 }
 
 input::-moz-placeholder {
-  color: $text-color; 
+  color: $text-color;
 }
 
 input:-ms-input-placeholder {
-  color: $text-color; 
+  color: $text-color;
 }
 
 input:-moz-placeholder {
-  color: $text-color; 
+  color: $text-color;
 }
-  
 
-input, select, textarea {
+
+input,
+select,
+textarea {
   outline: none;
   appearance: unset !important;
   -moz-appearance: unset !important;
   -webkit-appearance: unset !important;
   -o-appearance: unset !important;
-  -ms-appearance: unset !important; 
+  -ms-appearance: unset !important;
 }
 
-input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
   appearance: none !important;
   -moz-appearance: none !important;
   -webkit-appearance: none !important;
   -o-appearance: none !important;
   -ms-appearance: none !important;
-  margin: 0; 
+  margin: 0;
 }
 
-input:focus, select:focus, textarea:focus {
+input:focus,
+select:focus,
+textarea:focus {
   outline: none;
   box-shadow: none !important;
   -moz-box-shadow: none !important;
   -webkit-box-shadow: none !important;
   -o-box-shadow: none !important;
-  -ms-box-shadow: none !important; 
+  -ms-box-shadow: none !important;
 }
 
 input[type=checkbox] {
@@ -209,7 +240,7 @@ input[type=checkbox] {
   -moz-appearance: checkbox !important;
   -webkit-appearance: checkbox !important;
   -o-appearance: checkbox !important;
-  -ms-appearance: checkbox !important; 
+  -ms-appearance: checkbox !important;
 }
 
 
@@ -226,113 +257,114 @@ input[type=checkbox] {
 
 
 .hr-text:before {
-    content: '';
-    background: linear-gradient(to right, transparent, #818078, transparent);
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 100%;
-    height: 1px;
+  content: '';
+  background: linear-gradient(to right, transparent, #818078, transparent);
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 1px;
 }
 
 .hr-text:after {
-    content: attr(data-content);
-    position: relative;
-    display: inline-block;
-    color: black;
-    padding: 0 .5em;
-    line-height: 1.5em;
-    color: #818078;
-    background-color: #ffffff;
+  content: attr(data-content);
+  position: relative;
+  display: inline-block;
+  color: black;
+  padding: 0 .5em;
+  line-height: 1.5em;
+  color: #818078;
+  background-color: #ffffff;
 }
 
-span{
-  margin-left : 1rem;
+span {
+  margin-left: 1rem;
 }
 
-#option{
-  display: flex; 
+#option {
+  display: flex;
   justify-content: center;
   font-size: 12px;
   font-weight: 300px;
   color: $text-color;
 }
-    
-  // Work Pacakage
+
+// Work Pacakage
 
 
-  .viewprofile{
-    font-size: 0.8rem;
-    color: #ffffff;
-    border-radius:0.5rem;
-    margin-left:1rem;
-    margin-top:1rem;
-    margin-bottom:1rem;
-    margin-right:6rem;
-    background: rgba(2, 41, 148, 0.966);
-    width:10%;
-    float: right;
-  }
-  
-  .viewprofile1{
-    font-size: 0.8rem;
-    color: #ffffff;
-    border-radius:0.5rem;
-    margin-left:1rem;
-    margin-top:1rem;
-    margin-bottom:1rem;
-    background: rgba(2, 41, 148, 0.966);
-    width:12%;
-    float: right;
-  }
+.viewprofile {
+  font-size: 0.8rem;
+  color: #ffffff;
+  border-radius: 0.5rem;
+  margin: 1rem;
+  // background: rgba(2, 41, 148, 0.966);
+  background: #064d86;
+  width: 15%;
+  float: right;
+}
 
-  .deploy{
-    font-size: 0.5rem;
-    color: #ffffff;
-    border-radius:0.5rem;
-    margin-top:1rem;
-    margin-bottom:1rem;
-    background: rgba(2, 41, 148, 0.966);
-    width:100%;
-  }
+// .viewprofile1 {
+//   font-size: 0.8rem;
+//   color: #ffffff;
+//   border-radius: 0.5rem;
+//   margin-left: 1rem;
+//   margin-top: 1rem;
+//   margin-bottom: 1rem;
+//   background: rgba(2, 41, 148, 0.966);
+//   width: 12%;
+//   float: right;
+// }
+
+.deploy {
+  font-size: 0.5rem;
+  color: #ffffff;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  // background: rgba(2, 41, 148, 0.966);
+  background: #064d86;
+  width: 100%;
+}
 
 
-  .submit-button{
-    float:right;
-    font-size: 0.9rem;
-    color: #ffffff;
-    border-radius:2rem;
-    margin-left:1rem;
-    margin-top: 1rem;
-    background: rgba(2, 41, 148, 0.966);
-    width:7rem;
-    height: 3rem;
-  }
+.submit-button {
+  float: right;
+  font-size: 0.9rem;
+  color: #ffffff;
+  border-radius: 2rem;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  // background: rgba(2, 41, 148, 0.966);
+  background: #064d86;
+  width: 7rem;
+  height: 3rem;
+}
 
-  .dropdown-menu{
-    background: #3e3f41 !important;
-    color:#ffffff !important;
-  }
+.dropdown-menu {
+  background: #3e3f41 !important;
+  color: #ffffff !important;
+}
 
-  .alert{
-    position:relative;
-    padding:.0rem !important;
-    margin-bottom:1rem;
-    border: 1px solid transparent;
-    border-radius:.25rem;
-    } 
+.alert {
+  position: relative;
+  padding: .0rem !important;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+}
 
-    .setwidth{
-      width: 1rem;
-    }
+.setwidth {
+  width: 1rem;
+}
 
-    .increment{
-      border-radius: 50%;
-      background: rgba(2, 41, 148, 0.966);
-      color: #ffffff;
-      margin-left:0.2rem; 
-    }
+.increment {
+  border-radius: 50%;
+  // background: rgba(2, 41, 148, 0.966);
+  background: #064d86;
+  color: #ffffff;
+  margin-left: 0.2rem;
+}
 
-    .btn{
-      padding: .200rem .55rem;
-    }
+.btn {
+  padding: .200rem .55rem;
+}

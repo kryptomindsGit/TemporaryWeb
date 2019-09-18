@@ -20,11 +20,6 @@ export class ViewComponent implements OnInit {
   public partnerDetailsArr: any = [];
   public partnerFileArr: any = [];
 
-
-  file_name: any;
-  file_name1: any;
-  file_name2: any
-
   constructor(
     private __profileService: PartProfileService,
     private __activatedRoute: ActivatedRoute,
@@ -50,10 +45,6 @@ export class ViewComponent implements OnInit {
 
     this.getPartnerDetails();
     this.getPartnerFile();
-
-    this.file_name = 'badb05bc-7694-4470-b822-4a3102890935-sample_explain.pdf';
-    this.file_name1 = 'badb05bc-7694-4470-b822-4a3102890935-pdf-test.pdf';
-    this.file_name2 = 'badb05bc-7694-4470-b822-4a3102890935-sample_two.pdf';
   }
 
   /**
@@ -84,33 +75,9 @@ export class ViewComponent implements OnInit {
     });
   }
 
-  downloadFile() {
+  downloadFile(item) {
     console.log("Download")
-    this.__profileService.getDocHashData(this.file_name).then((data) => {
-      console.log("Blockchain get data done", data);
-
-      var file = new Blob([data.body], { type: 'application/octet-stream' });
-      var fileURL = URL.createObjectURL(file);
-      // window.open(fileURL);
-      window.open(fileURL, '_blank');
-    })
-  }
-
-  downloadFile1() {
-    console.log("Download")
-    this.__profileService.getDocHashData(this.file_name1).then((data) => {
-      console.log("Blockchain get data done", data);
-
-      var file = new Blob([data.body], { type: 'application/octet-stream' });
-      var fileURL = URL.createObjectURL(file);
-      // window.open(fileURL);
-      window.open(fileURL, '_blank');
-    })
-  }
-
-  downloadFile2() {
-    console.log("Download")
-    this.__profileService.getDocHashData(this.file_name2).then((data) => {
+    this.__profileService.getDocHashData(item).then((data) => {
       console.log("Blockchain get data done", data);
 
       var file = new Blob([data.body], { type: 'application/octet-stream' });
