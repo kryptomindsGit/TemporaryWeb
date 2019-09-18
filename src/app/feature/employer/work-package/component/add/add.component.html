@@ -38,7 +38,7 @@
                     *ngIf="projectForm.controls['proj_name'].invalid && (projectForm.controls['proj_name'].dirty || projectForm.controls['proj_name'].touched)"
                     class="alert">
                     <div *ngIf="projectForm.controls['proj_name'].errors.required">
-                      Please Select Project Name Level , It's required.
+                      Project Name is required.
                     </div>
                   </div>
                 </div>
@@ -46,7 +46,7 @@
               <div class="col-md-6">
                 <div class="form-group form-input">
                   <select class="formStyle" formControlName="complexity" id="complexity">
-                    <option>Complexity</option>
+                    <option disabled value="">Select Complexity</option>
                     <option id="option_txt" *ngFor="let complexity of complexityArr" [value]="complexity">
                       {{complexity}}</option>
                   </select>
@@ -54,7 +54,7 @@
                     *ngIf="projectForm.controls['complexity'].invalid && (projectForm.controls['complexity'].dirty || projectForm.controls['complexity'].touched)"
                     class="alert">
                     <div *ngIf="projectForm.controls['complexity'].errors.required">
-                      Please Select Complexity Level , It's required.
+                      Complexity Level is required.
                     </div>
                   </div>
                 </div>
@@ -85,7 +85,7 @@
                             *ngIf="projectForm.controls['durationYears'].invalid && (projectForm.controls['durationYears'].dirty || projectForm.controls['durationYears'].touched)"
                             class="alert">
                             <div *ngIf="projectForm.controls['durationYears'].errors.required">
-                              Please enter no of years.
+                              Enter no. of years.
                             </div>
                           </div>
                         </div>
@@ -98,7 +98,7 @@
                             *ngIf="projectForm.controls['durationMonths'].invalid && (projectForm.controls['durationMonths'].dirty || projectForm.controls['durationMonths'].touched)"
                             class="alert">
                             <div *ngIf="projectForm.controls['durationMonths'].errors.required">
-                              Please enter no of months.
+                              Enter no. of months.
                             </div>
                           </div>
                         </div>
@@ -111,7 +111,7 @@
                             *ngIf="projectForm.controls['durationDays'].invalid && (projectForm.controls['durationDays'].dirty || projectForm.controls['durationDays'].touched)"
                             class="alert">
                             <div *ngIf="projectForm.controls['durationDays'].errors.required">
-                              Please enter no of days.
+                              Enter no. of days.
                             </div>
                           </div>
                         </div>
@@ -145,7 +145,7 @@
                       Please select Starting date, it's required.
                     </div>
                   </div>
-                </div>`
+                </div>
               </div>
             </div>
 
@@ -155,13 +155,13 @@
                   <div class="col-md-6">
                     <div class="form-group form-input">
                       <input type="text" formControlName="budgetAmt" id="budgetAmt" value="" required />
-                      <label for="budgetAmt" class="form-label">Budget Amount</label>
+                      <label for="budgetAmt" class="form-label">Budget</label>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group form-input">
                       <select formControlName="budgetCurrencyCode" id="currency">
-                        <option>Currency</option>
+                        <option disabled value="">Currency</option>
                         <option id="option_txt" *ngFor="let currency of currencyArr" [value]="currency">{{currency}}
                         </option>
                       </select>

@@ -111,7 +111,6 @@ export class AddComponent implements OnInit {
         Validators.pattern('^[a-zA-Z \-\']+')
       ])],
       middle_name: ['', Validators.compose([
-        Validators.required,
         Validators.pattern('^[a-zA-Z \-\']+')
       ])],
       last_name: ['', Validators.compose([

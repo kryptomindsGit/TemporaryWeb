@@ -441,11 +441,11 @@
 
                                 <div class="form-group form-input col">
                                     <input type="text" formControlName="psychomatric" id="psychomatric" required />
-                                    <label for="psychomatric" class="form-label">Psychomatric</label>
+                                    <label for="psychomatric" class="form-label">Psychometric test results</label>
                                     <div *ngIf="workExpDetails.controls['psychomatric'].invalid && (workExpDetails.controls['psychomatric'].dirty || workExpDetails.controls['psychomatric'].touched)"
                                         class="text-danger error-msg">
                                         <div [hidden]="!workExpDetails.controls['psychomatric'].errors.required">
-                                            Psychomatric is
+                                            Psychometric test results is
                                             required.
                                         </div>
                                     </div>

@@ -41,14 +41,14 @@
                                     <input type="text" formControlName="middle_name" id="middle_name" required />
                                     <label for="middle_name" class="form-label">Middle Name</label>
 
-                                    <div *ngIf="personalDetails.controls['middle_name'].invalid && (personalDetails.controls['middle_name'].dirty || personalDetails.controls['middle_name'].touched)"
+                                    <!-- <div *ngIf="personalDetails.controls['middle_name'].invalid && (personalDetails.controls['middle_name'].dirty || personalDetails.controls['middle_name'].touched)"
                                         class="text-danger error-msg">
                                         <div [hidden]="!personalDetails.controls['middle_name'].errors.required">Middle
                                             name
                                             is
                                             required.
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="form-group form-input col">
                                     <input type="text" formControlName="last_name" id="last_name" required />
@@ -314,18 +314,16 @@
                             <div formArrayName="org_details">
                                 <div *ngFor="let item of orgArr.controls; let i=index">
                                     <hr *ngIf="i>0">
-                                    <label for="quali">ORGANIZATION {{i}}</label>
                                     <div class="row" [formGroupName]="i">
                                         <div class="form-group form-input col-6">
                                             <input type="text" formControlName="org_name" id="org_name" required />
-                                            <label for="org_name" class="form-label">Oragnization Name</label>
+                                            <label for="org_name" class="form-label">Organization</label>
                                         </div>
 
                                         <div class="form-group form-input col-6">
                                             <input type="text" formControlName="org_designation" id="org_designation"
                                                 required />
-                                            <label for="org_designation" class="form-label">Oragnization
-                                                Designation</label>
+                                            <label for="org_designation" class="form-label">Designation</label>
                                         </div>
 
                                         <div class="form-group form-input col-3">
@@ -345,7 +343,7 @@
                                         <div class="form-group form-input col-3">
                                             <input type="text" formControlName="responsibilities" id="responsibilities"
                                                 required />
-                                            <label for="responsibilities" class="form-label">Oragnization Name</label>
+                                            <label for="responsibilities" class="form-label">Responsibility</label>
                                         </div>
 
                                         <div class="form-group col-md-3">
@@ -441,11 +439,11 @@
 
                                 <div class="form-group form-input col">
                                     <input type="text" formControlName="psychomatric" id="psychomatric" required />
-                                    <label for="psychomatric" class="form-label">Psychomatric</label>
+                                    <label for="psychomatric" class="form-label">Psychometric test results</label>
                                     <div *ngIf="workExpDetails.controls['psychomatric'].invalid && (workExpDetails.controls['psychomatric'].dirty || workExpDetails.controls['psychomatric'].touched)"
                                         class="text-danger error-msg">
                                         <div [hidden]="!workExpDetails.controls['psychomatric'].errors.required">
-                                            Psychomatric is
+                                            Psychometric results is
                                             required.
                                         </div>
                                     </div>
@@ -477,7 +475,6 @@
                             <div formArrayName="documents_work">
                                 <div *ngFor="let item of workdocumentArr.controls; let i=index">
                                     <hr *ngIf="i>0">
-                                    <label for="quali">DOCUMENT {{i}}</label>
 
                                     <div class="row" [formGroupName]="i">
                                         <div class="form-group form-input col-3">
@@ -565,8 +562,7 @@
                                                                 <table class="table">
                                                                     <tr *ngFor="let skill of categ; let i = index">
                                                                         <td>
-                                                                            <a id="link" (click)="selectEvent($event)"
-                                                                                href>
+                                                                            <a id="link" (click)="selectEvent($event)">
                                                                                 {{skill.skill_cat_name}}</a>
                                                                         </td>
                                                                     </tr>
