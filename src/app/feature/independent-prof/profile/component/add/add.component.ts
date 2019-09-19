@@ -494,10 +494,11 @@ export class AddComponent implements OnInit {
 
       this.skillRateArr.push(this.__fb.group(
         {
-          skill: skill_id,
+          skill: skill,
           rate_hour: ''
         }
       ));
+      
       console.log(this.skillRateArr.value);
     }
     else {

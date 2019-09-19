@@ -36,7 +36,7 @@ export class AllWorkPackagesComponent implements OnInit {
     this.__router.navigate(['/feature/feature/full-layout/employer/emp/workpackage/workpack/view/',this.wpId])
   }
   
-  gotogotPayment(index){
+  gotoPayment(index){
     this.wpId = this.workArr[index].workPackageId; 
     this.__router.navigate(['/feature/feature/full-layout/employer/emp/smartpayment/',this.wpId])
   }

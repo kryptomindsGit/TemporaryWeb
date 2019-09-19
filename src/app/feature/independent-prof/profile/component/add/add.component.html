@@ -2,10 +2,8 @@
     <div class="row p-2">
         <div class="col-12">
             <div class="personal-details-form" *ngIf="showMainContent == 1">
+                <h6>PROFILE DETAILS</h6>
                 <div class="card">
-                    <div class="card-header">
-                        <h6>PROFILE DETAILS</h6>
-                    </div>
                     <div class="card-body others-card">
                         <form [formGroup]="personalDetails" novalidate>
                             <div class="row">
@@ -214,10 +212,8 @@
             </div>
 
             <div class="education-details-form" *ngIf="showMainContent == 2">
+                <h6>EDUCATION DETAILS</h6>
                 <div class="card">
-                    <div class="card-header">
-                        <h6>EDUCATION DETAILS</h6>
-                    </div>
                     <div class="card-body others-card">
                         <form [formGroup]="qualificationDetails" novalidate>
                             <div formArrayName="qualification">
@@ -305,10 +301,8 @@
             </div>
 
             <div class="workexp-details-form" *ngIf="showMainContent == 3">
+                <h6>WORK EXPERIENCE DETAILS</h6>
                 <div class="card">
-                    <div class="card-header">
-                        <h6>WORK EXPERIENCE DETAILS</h6>
-                    </div>
                     <div class="card-body others-card">
                         <form [formGroup]="workExpDetails" novalidate>
                             <div formArrayName="org_details">
@@ -522,123 +516,126 @@
             </div>
 
             <div class="skill-details-form" *ngIf="showMainContent == 4">
-                <div class="card">
+                <!-- <div class="card">
                     <div class="card-body">
-                        <form [formGroup]="skillDetails">
-                            <div class="form-content">
-                                <div class="container container-skill">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <div class="card skill-container">
-                                                <div class="card-header cardHeader">
-                                                    <div class="form">
-                                                        <div class="note">
-                                                            <p>Skills Category</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body skill-innner-container">
-                                                    <div class="row">
-                                                        <div class="col-12">
-                                                            <div class="ng-autocomplete">
-                                                                <ng-autocomplete [data]="categ"
-                                                                    [searchKeyword]="keyword"
-                                                                    (selected)='selectEvent($event)'
-                                                                    (inputChanged)='onChangeSearch($event.target.value)'
-                                                                    (inputFocused)='onFocused($event.target.value)'
-                                                                    [itemTemplate]="itemTemplate"
-                                                                    [notFoundTemplate]="notFoundTemplate">
-                                                                </ng-autocomplete>
+                        
+                    </div>
+                </div> -->
 
-                                                                <ng-template #itemTemplate let-item>
-                                                                    <a [innerHTML]="item.skill_cat_name"></a>
-                                                                </ng-template>
 
-                                                                <ng-template #notFoundTemplate let-notFound>
-                                                                    <div [innerHTML]="notFound"></div>
-                                                                </ng-template>
-                                                            </div>
-                                                            <div>
-                                                                <table class="table">
-                                                                    <tr *ngFor="let skill of categ; let i = index">
-                                                                        <td>
-                                                                            <a id="link" (click)="selectEvent($event)">
-                                                                                {{skill.skill_cat_name}}</a>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </div>
-                                                        </div>
+                <form [formGroup]="skillDetails">
+                        <div class="form-content">
+                            <div class="container container-skill">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="card skill-container">
+                                            <div class="card-header cardHeader">
+                                                <div class="form">
+                                                    <div class="note">
+                                                        <p>Skills Category</p>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="card skill-container">
-                                                <div class="card-header cardHeader">
-                                                    <div class="form">
-                                                        <div class="note">
-                                                            <p>Skills</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body skill-checkbox-container ">
-                                                    <ul class="checkbox-grid-row">
-                                                        <li>
-                                                            <label class="checkbox-grid-col"
-                                                                *ngFor="let item of skills; let i = index">
-                                                                <input type="checkbox"
-                                                                    (change)="onChange(item.skill_name,item.skill_id,$event.target.checked)">
-                                                                {{item.skill_name}}
-                                                            </label>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 " *ngIf="skillRateArr.controls.length > 0">
-                                            <div class="card skill-container">
-                                                <div class="card-header cardHeader">
-                                                    <div class="form">
-                                                        <div class="note">
-                                                            <p>Selected Skills</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body skill-innner-container">
+                                            <div class="card-body skill-innner-container">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="ng-autocomplete">
+                                                            <ng-autocomplete [data]="categ"
+                                                                [searchKeyword]="keyword"
+                                                                (selected)='selectEvent($event)'
+                                                                (inputChanged)='onChangeSearch($event.target.value)'
+                                                                (inputFocused)='onFocused($event.target.value)'
+                                                                [itemTemplate]="itemTemplate"
+                                                                [notFoundTemplate]="notFoundTemplate">
+                                                            </ng-autocomplete>
 
-                                                    <div formArrayName="skills">
-                                                        <div *ngFor="let item of skillRateArr.controls; let i=index"
-                                                            [formGroupName]="i">
-                                                            <div class="row">
-                                                                <div class="form-group form-input col-6">
-                                                                    <label for="skill_name" class="label-skill"
-                                                                        formControlName="skill">
-                                                                        {{item.value.skill}}
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-group form-input col-6">
-                                                                    <input type="text" formControlName="rate_hour"
-                                                                        id="rate_skill" required />
-                                                                    <label for="rate_skill"
-                                                                        class="form-label">Rate</label>
-                                                                </div>
-                                                            </div>
+                                                            <ng-template #itemTemplate let-item>
+                                                                <a [innerHTML]="item.skill_cat_name"></a>
+                                                            </ng-template>
+
+                                                            <ng-template #notFoundTemplate let-notFound>
+                                                                <div [innerHTML]="notFound"></div>
+                                                            </ng-template>
+                                                        </div>
+                                                        <div>
+                                                            <table class="table">
+                                                                <tr *ngFor="let skill of categ; let i = index">
+                                                                    <td>
+                                                                        <a id="link" (click)="selectEvent($event)">
+                                                                            {{skill.skill_cat_name}}</a>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
                                                         </div>
                                                     </div>
-                                                    <button class="button save_skills" (click)="onSaveSkill()">Save
-                                                        Skill</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="card skill-container">
+                                            <div class="card-header cardHeader">
+                                                <div class="form">
+                                                    <div class="note">
+                                                        <p>Skills</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body skill-checkbox-container ">
+                                                <ul class="checkbox-grid-row">
+                                                    <li>
+                                                        <label class="checkbox-grid-col"
+                                                            *ngFor="let item of skills; let i = index">
+                                                            <input type="checkbox"
+                                                                (change)="onChange(item.skill_name,item.skill_id,$event.target.checked)">
+                                                            {{item.skill_name}}
+                                                        </label>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 " *ngIf="skillRateArr.controls.length > 0">
+                                        <div class="card skill-container">
+                                            <div class="card-header cardHeader">
+                                                <div class="form">
+                                                    <div class="note">
+                                                        <p>Selected Skills</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body skill-innner-container">
+
+                                                <div formArrayName="skills">
+                                                    <div *ngFor="let item of skillRateArr.controls; let i=index"
+                                                        [formGroupName]="i">
+                                                        <div class="row">
+                                                            <div class="form-group form-input col-6">
+                                                                <label for="skill_name" class="label-skill"
+                                                                    formControlName="skill">
+                                                                    {{item.value.skill}}
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-group form-input col-6">
+                                                                <input type="text" formControlName="rate_hour"
+                                                                    id="rate_skill" required />
+                                                                <label for="rate_skill"
+                                                                    class="form-label">Rate/hour</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button class="button save_skills" (click)="onSaveSkill()">Save
+                                                    Skill</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <button type="button" class="btnPrevious" (click)="ShowNextButton(3)">Previous</button>
-                                <button type="button" class="btnNext" (click)="onSubmitDetails()">Save</button>
                             </div>
-                        </form>
-                    </div>
-                </div>
+                            <button type="button" class="btnPrevious" (click)="ShowNextButton(3)">Previous</button>
+                            <button type="button" class="btnNext" (click)="onSubmitDetails()">Save</button>
+                        </div>
+                    </form>
 
 
             </div>

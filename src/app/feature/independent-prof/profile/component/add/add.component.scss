@@ -30,7 +30,10 @@
     margin-right: 0.2rem !important;
     margin-left: 0.2rem !important;
 }
-
+.container-skill{
+    width: 100%;
+    height: 35rem;
+}
 .ng-autocomplete {
     max-width: 100%;
     padding: 0.1rem;
@@ -57,6 +60,7 @@
     box-shadow: 5px 5px 32px 5px rgba(0, 0, 0, 0.22);
     background: $bg-front-color;
 }
+
 
 .table td,
 .table th {
@@ -333,6 +337,9 @@ input[type=radio] {
     box-sizing: border-box;
 }
 
+a:not([href]):not([tabindex]){
+    color: $text-color;
+}
 a:not([href]):not([tabindex]):hover {
     color: $text-color;
     background: $bg-front-color;
