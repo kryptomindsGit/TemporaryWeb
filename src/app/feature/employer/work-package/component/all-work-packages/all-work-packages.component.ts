@@ -31,16 +31,21 @@ export class AllWorkPackagesComponent implements OnInit {
     });
   } 
 
-  gotoWorkpackage(index){
+  setWorkId(index){
     console.log("index :" ,index);
     this.wpId = this.workArr[index].workPackageId; 
     console.log("wp id is :" ,this.wpId);
-    
+    this.wpId = this.workArr[index].workPackageId;
+    localStorage.setItem("workpackageId",this.wpId);
+ 
+  }
+  gotoWorkpackage(index){
+    this.setWorkId(index);
     this.__router.navigate(['/feature/feature/full-layout/employer/emp/workpackage/workpack/view/',this.wpId])
   }
   
   gotoPayment(index){
-    this.wpId = this.workArr[index].workPackageId; 
+    this.setWorkId(index);
     this.__router.navigate(['/feature/feature/full-layout/employer/emp/smartpayment/',this.wpId])
   }
 }

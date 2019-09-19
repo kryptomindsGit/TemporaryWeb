@@ -69,6 +69,9 @@ CARD CSS
 
 }
 
+h6{
+  // color: #04afda;
+}
 .worktable {
   color: $text-color;
   background: transparent !important;
@@ -277,8 +280,17 @@ input[type=checkbox] {
   background-color: #ffffff;
 }
 
+.noborder{
+  border: none !important;
+}
+
+h5{
+
+}
 span {
-  margin-left: 1rem;
+  color: red;
+  font-size:1rem;
+  margin-left:0.2rem;
 }
 
 #option {

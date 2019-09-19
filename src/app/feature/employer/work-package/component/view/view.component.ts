@@ -89,6 +89,9 @@ export class ViewComponent implements OnInit {
       console.log("Data of skills" + resData.responseObject);
       this.skillArr = resData.responseObject;
       console.log("Data of skills" + resData.responseObject);
+      localStorage.removeItem("workpackageId");
+
     });
+
   }
 }

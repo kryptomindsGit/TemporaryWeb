@@ -30,6 +30,8 @@ workPackageID : any;
 approvedEmp: boolean  = false;
 approvedRev: boolean = false;
 milestoneArr = [];
+projectName : any;
+empId:any;
 //payment section realated variables
 
 
@@ -49,7 +51,8 @@ paymentMethodArr = ['paypal','net-backing'];
   constructor(
     private __fb: FormBuilder,
     private __paymentService: SmartContractService,
-    private __empProfile : EmpProfileService
+    private __empProfile : EmpProfileService,
+    private __workService :WorkPackageService
   ) { }
 
   ngOnInit() {
@@ -57,10 +60,21 @@ paymentMethodArr = ['paypal','net-backing'];
    this.getWorkPackageId();
    this.createMilestoneForm();
    this.createScheduleForm();
+   this.getWorkPackageData();
   }
 
+  
   getWorkPackageId(){
     this.workPackageID = localStorage.getItem("workpackageId");
+  }
+
+  getWorkPackageData(){ 
+    this.__workService.getWorkPackageData( this.workPackageID).then((resData: any) => {
+      console.log("response data : ",resData.responseObject);
+      this.projectName = resData.responseObject.projectName;
+      this.contractStatus = resData.responseObject.contractStatus;
+      this.empId = resData.responseObject.postedByIndividualEmpId.user.userId;
+    });
   }
 
   createMilestoneForm(){
