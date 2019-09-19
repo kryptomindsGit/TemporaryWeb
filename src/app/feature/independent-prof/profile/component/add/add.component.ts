@@ -4,7 +4,7 @@ import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { IndeptProfileService } from '../../shared/service/profile.service';
-import { async } from '@angular/core/testing';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add',
@@ -29,7 +29,7 @@ export class AddComponent implements OnInit {
   keyword = 'skill_cat_name';
 
   // Variable's
-  public showMainContent: number = 1;
+  public showMainContent: number = 4;
   public isUportUser: string;
   public email: string;
   public country: string;
@@ -61,7 +61,8 @@ export class AddComponent implements OnInit {
     private __fb: FormBuilder,
     private __profileService: IndeptProfileService,
     private __authService: AuthService,
-    private __router: Router
+    private __router: Router,
+    private toastr: ToastrService,
   ) {
 
   }
@@ -487,18 +488,14 @@ export class AddComponent implements OnInit {
 
     if (isChecked && skill != null) {
 
-      // this.skill.push(
-      //   {
-      //     'skillname': skill,
-      //   });
-
       this.skillRateArr.push(this.__fb.group(
         {
-          skill: skill,
+          skill_name: skill,
+          skill: skill_id,
           rate_hour: ''
         }
       ));
-      
+
       console.log(this.skillRateArr.value);
     }
     else {
@@ -507,10 +504,6 @@ export class AddComponent implements OnInit {
       console.log(this.skillRateArr)
     }
 
-  }
-
-  onSaveSkill() {
-    console.log(this.skillRateArr.value)
   }
 
   /**
@@ -640,8 +633,18 @@ export class AddComponent implements OnInit {
       }
       console.log('Freelancer Payload Value : ', freelancerProfilePayload);
       this.__profileService.createFreelancer(freelancerProfilePayload).then((resData: any) => {
-        console.log("Successfully Profile Registered", resData);
-        this.__router.navigate(['/freelancer/free-profile/profile/view/', this.email]);
+        console.log("Res Data:", resData);
+
+        if (resData.status == 'success') {
+          this.toastr.error(resData.message);
+          setTimeout(function () {
+            this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
+          }, 2000);
+
+        }
+        else if (resData.status == 'error') {
+          this.toastr.error(resData.message);
+        }
       });
     }
     else {
@@ -674,12 +677,18 @@ export class AddComponent implements OnInit {
       console.log('Freelancer Payload Value : ', freelancerProfilePayload);
       this.__profileService.createFreelancer(freelancerProfilePayload).then((resData: any) => {
         console.log(resData);
-        if (resData) {
-          this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view/', this.email]);
-        } else {
-          console.log("Freelancer add res Waitting...");
+
+        if (resData.status == 'success') {
+          this.toastr.error(resData.message);
+          setTimeout(function () {
+            this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
+          }, 2000);
 
         }
+        else if (resData.status == 'error') {
+          this.toastr.error(resData.message);
+        }
+
       });
     }
   }

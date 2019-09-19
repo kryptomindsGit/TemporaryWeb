@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { IndeptProfileService } from '../../shared/service/profile.service';
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpClient } from 'selenium-webdriver/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit',
@@ -79,6 +79,7 @@ export class EditComponent implements OnInit {
     private __authService: AuthService,
     private __router: Router,
     private __activatedRoute: ActivatedRoute,
+    private toastr: ToastrService
   ) {
     this.__id = this.__activatedRoute.snapshot.params.id;
   }
@@ -201,7 +202,7 @@ export class EditComponent implements OnInit {
 
 
   async getFreelancerDetails() {
-    await this.__profileService.getFreelancerById(this.__id).then((data: any) => {
+    await this.__profileService.getFreelancerByEmail(this.__id).then((data: any) => {
       this.freelancerArr = data[0];
     });
 
@@ -256,34 +257,43 @@ export class EditComponent implements OnInit {
     this.__profileService.getFreelancerSkillById(this.__id).then((data: any) => {
       this.freelancerSkillDetailsArr = data;
 
-      let skillCat_ID = this.freelancerSkillDetailsArr[0].skill_cat_id;
+      if (this.freelancerSkillDetailsArr) {
 
-      this.freelancerSkillDetailsArr.forEach(item => {
-        this.skillList.push({
-          skillname: item.skill_cat_name,
-          rate: item.rate_per_hr
+        let skillCat_ID = this.freelancerSkillDetailsArr[0].skill_cat_id;
+
+        this.freelancerSkillDetailsArr.forEach(item => {
+          this.skillList.push({
+            skillname: item.skill_cat_name,
+            rate: item.rate_per_hr
+          });
+
+          this.skillArr.push({
+            skill_id: item.skill_id,
+          });
         });
 
-        this.skillArr.push({
-          skill_id: item.skill_id,
-        });
-      });
 
 
+        this.getSkillsByID(skillCat_ID);
 
-      this.getSkillsByID(skillCat_ID);
 
-      for (let index = 0; index < this.freelancerSkillDetailsArr.length; index++) {
+        for (let index = 0; index < this.freelancerSkillDetailsArr.length; index++) {
 
+          this.skillRateArr.push(this.__fb.group(
+            {
+              skill: this.freelancerSkillDetailsArr[index].skill_name,
+              rate_hour: this.freelancerSkillDetailsArr[index].rate_per_hr,
+              skill_id: this.freelancerSkillDetailsArr[index].skill_id
+            }
+          ));
+        }
+      }
+      else {
         this.skillRateArr.push(this.__fb.group(
           {
-            skill: this.freelancerSkillDetailsArr[index].skill_name,
-            rate_hour: this.freelancerSkillDetailsArr[index].rate_per_hr,
-            skill_id: this.freelancerSkillDetailsArr[index].skill_id
           }
         ));
       }
-
 
     });
   }
@@ -487,15 +497,6 @@ export class EditComponent implements OnInit {
       this.eduCatArr = resData;
     })
   }
-
-  // /**
-  //  * @method setEduCatByID
-  //  * @param eduCat_id
-  //  * @description get the education category id and pass it to getAllEducation method.
-  //  */
-  // setEduCatByID(eduCat_id) {
-  //   this.getAllEducation(eduCat_id);
-  // }
 
   /**
    * @method getAllEducation
@@ -772,6 +773,7 @@ export class EditComponent implements OnInit {
 
       this.skillRateArr.push(this.__fb.group(
         {
+          skill_name: skill,
           skill: skill_id,
           rate_hour: ''
         }
@@ -913,8 +915,17 @@ export class EditComponent implements OnInit {
       }
       console.log('Freelancer Payload Value : ', freelancerProfilePayload);
       this.__profileService.createFreelancer(freelancerProfilePayload).then((resData: any) => {
-        console.log("Successfully Profile Registered", resData);
-        this.__router.navigate(['/freelancer/free-profile/profile/view/', this.email]);
+        console.log("Resp Data:", resData);
+        if (resData.status == 'success') {
+          this.toastr.error(resData.message);
+          setTimeout(function () {
+            this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
+          }, 2000);
+
+        }
+        else if (resData.status == 'error') {
+          this.toastr.error(resData.message);
+        }
       });
     }
     else {
@@ -946,8 +957,17 @@ export class EditComponent implements OnInit {
       }
       console.log('Freelancer Payload Value : ', freelancerProfilePayload);
       this.__profileService.updateFreelancer(this.email, freelancerProfilePayload).then((resData: any) => {
-        console.log("Successfully Profile Registered", resData);
-        this.__router.navigate(['/freelancer/free-profile/profile/view/', this.email]);
+        console.log("Resp Data:", resData);
+        if (resData.status == 'success') {
+          this.toastr.error(resData.message);
+          setTimeout(function () {
+            this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
+          }, 2000);
+
+        }
+        else if (resData.status == 'error') {
+          this.toastr.error(resData.message);
+        }
       });
     }
   }

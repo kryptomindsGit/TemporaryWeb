@@ -4,7 +4,7 @@
       <div class="card-body">
         <img src="../../../../assets/images/konnecteum_logo.png" alt="Konnecteum" class="center rounded img-fluid">
         <h5>LOGIN</h5>
-        <form [formGroup]="loginForm" (keyup.enter)="onSubmit(loginForm.value)" novalidate class="loginForm">
+        <form [formGroup]="loginForm" novalidate class="loginForm" autocomplete="off">
 
           <div class="form-group form-input">
             <input type="text" formControlName="email" name="name" id="name" value="" required />
@@ -27,7 +27,8 @@
           </div>
 
           <div class="form-group form-input">
-            <input type="password" formControlName="password" name="name" id="name" value="" required />
+            <input type="password" formControlName="password" name="name" id="name" value="" required
+              (keyup.enter)="focusableSubmit.click()" />
             <label for="name" class="form-label">Password</label>
 
             <div
@@ -50,8 +51,8 @@
           <br>
           <br>
           <!-- <div class="checkbox"> -->
-          <button type="button" class="btn" [disabled]="loginForm.pristine || loginForm.invalid" id="btn-30"
-            (click)="onSubmit()">Login</button>
+          <button type="button" class="btn" #focusableSubmit [disabled]="loginForm.pristine || loginForm.invalid"
+            id="btn-30" (click)="onSubmit()">Login</button>
           <a id="forgetPassword"><i>Forgot Password ?</i></a>
           <hr class="hr-text" data-content="OR">
           <button type="button" class="btn" id="btn-70" [routerLink]="['/auth/auth/uport-login']">Login ( Passwordless

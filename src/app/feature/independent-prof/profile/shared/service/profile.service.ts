@@ -224,14 +224,14 @@ export class IndeptProfileService {
     }
   }
 
-  async getFreelancerById(id: any) {
-    try {
-      let res = await this.__http.get(`${BASE_URL}/freelancer/freelancers/${id}`, httpOptions).toPromise();
-      return res;
-    } catch (error) {
-      await this.handleError(error);
-    }
-  }
+  // async getFreelancerById(id: any) {
+  //   try {
+  //     let res = await this.__http.get(`${BASE_URL}/freelancer/freelancers/${id}`, httpOptions).toPromise();
+  //     return res;
+  //   } catch (error) {
+  //     await this.handleError(error);
+  //   }
+  // }
 
   // async getFreelancerByEmail(email: string) {
   //   try {

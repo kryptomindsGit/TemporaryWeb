@@ -4,7 +4,7 @@
             <img src="../../../../assets/images/konnecteum_logo.png" alt="Konnecteum" class="center">
             <h4>SIGN UP</h4>
 
-            <form [formGroup]="signupForm" (keyup.enter)="onSubmit(signupForm.value)">
+            <form [formGroup]="signupForm" class="signupForm" novalidate autocomplete="off">
 
                 <div class="form-group form-input">
                     <input type="text" formControlName="email" name="name" id="email" value="" required />
@@ -73,20 +73,22 @@
                         <!-- <div class="form-group form-input"> -->
                         <div class="col-4">
                             <label class="radio-inline">
-                                <input type="radio" formControlName="custom_role" name="custom_role" value="Freelancer"
+                                <input type="radio" formControlName="custom_role" name="custom_role"
+                                    (keyup.enter)="focusableSubmit.click()" value="Freelancer"
                                     class="radiobutton">Freelancer
                             </label>
                         </div>
                         <div class="col-4">
                             <label class="radio-inline">
-                                <input type="radio" formControlName="custom_role" name="custom_role" value="Employer"
+                                <input type="radio" formControlName="custom_role" name="custom_role"
+                                    (keyup.enter)="focusableSubmit.click()" value="Employer"
                                     class="radiobutton">Employer
                             </label>
                         </div>
                         <div class="col-4">
                             <label class="radio-inline">
-                                <input type="radio" formControlName="custom_role" name="custom_role" value="Partner"
-                                    class="radiobutton">Partner
+                                <input type="radio" formControlName="custom_role" name="custom_role"
+                                    (keyup.enter)="focusableSubmit.click()" value="Partner" class="radiobutton">Partner
                             </label>
                         </div>
 
@@ -99,8 +101,8 @@
                     </div>
                 </div>
 
-                <button type="button" class="btn" id="btn-60" [disabled]="signupForm.pristine || signupForm.invalid"
-                    (click)="onSubmit()">Sign up</button>
+                <button type="button" #focusableSubmit class="btn" id="btn-60"
+                    [disabled]="signupForm.pristine || signupForm.invalid" (click)="onSubmit()">Sign up</button>
             </form>
 
 
