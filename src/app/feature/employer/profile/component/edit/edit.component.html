@@ -25,7 +25,7 @@
                             <div class="form-group form-input col">
                                 <input type="text" formControlName="website_addr" autocomplete="off" id="website_addr"
                                     required />
-                                <label for="website_addr" class="form-label">Website Addr</label>
+                                <label for="website_addr" class="form-label">Website Address</label>
                                 <div *ngIf="employerProfileForm.controls['website_addr'].invalid && (employerProfileForm.controls['website_addr'].dirty || employerProfileForm.controls['website_addr'].touched)"
                                     class="text-danger error-msg">
                                     <div [hidden]="!employerProfileForm.controls['website_addr'].errors.required">
@@ -39,7 +39,7 @@
                             <div class="form-group form-input col">
                                 <input type="text" formControlName="address_line_one" autocomplete="off"
                                     id="address_line_one" required />
-                                <label for="address_line_one" class="form-label">Address line 1</label>
+                                <label for="address_line_one" class="form-label">Address Line 1</label>
                                 <div *ngIf="employerProfileForm.controls['address_line_one'].invalid && (employerProfileForm.controls['address_line_one'].dirty || employerProfileForm.controls['address_line_one'].touched)"
                                     class="text-danger error-msg">
                                     <div [hidden]="!employerProfileForm.controls['address_line_one'].errors.required">
@@ -52,7 +52,7 @@
                             <div class="form-group form-input col">
                                 <input type="text" formControlName="address_line_two" autocomplete="off"
                                     id="address_line_two" required />
-                                <label for="address_line_two" class="form-label">Address line 2</label>
+                                <label for="address_line_two" class="form-label">Address Line 2</label>
                                 <div *ngIf="employerProfileForm.controls['address_line_two'].invalid && (employerProfileForm.controls['address_line_two'].dirty || employerProfileForm.controls['address_line_two'].touched)"
                                     class="text-danger error-msg">
                                     <div [hidden]="!employerProfileForm.controls['address_line_two'].errors.required">
@@ -105,7 +105,7 @@
                             <div class="form-group form-input col">
                                 <input type="text" formControlName="zipcode" autocomplete="off" id="postal_code"
                                     required />
-                                <label for="postal_code" class="form-label">Postal code</label>
+                                <label for="postal_code" class="form-label">Postal Code</label>
                                 <div *ngIf="employerProfileForm.controls['zipcode'].invalid && (employerProfileForm.controls['zipcode'].dirty || employerProfileForm.controls['zipcode'].touched)"
                                     class="text-danger error-msg">
                                     <div [hidden]="!employerProfileForm.controls['zipcode'].errors.required">postal code
@@ -133,7 +133,7 @@
                             <div class="form-group form-input col">
                                 <input type="text" formControlName="company_profile" autocomplete="off"
                                     id="company_profile" required />
-                                <label for="company_profile" class="form-label">Comapany Name</label>
+                                <label for="company_profile" class="form-label">Company Name</label>
                                 <div *ngIf="employerProfileForm.controls['company_profile'].invalid && (employerProfileForm.controls['company_profile'].dirty || employerProfileForm.controls['company_profile'].touched)"
                                     class="text-danger error-msg">
                                     <div [hidden]="!employerProfileForm.controls['company_profile'].errors.required">
@@ -146,13 +146,13 @@
                             <div class="form-group form-input col">
                                 <input type="text" formControlName="company_rep_det" autocomplete="off"
                                     id="company_rep_det" required />
-                                <label for="company_rep_det" class="form-label">Company Representative Detail</label>
+                                <label for="company_rep_det" class="form-label">Company Representative Name</label>
                                 <div *ngIf="employerProfileForm.controls['company_rep_det'].invalid && (employerProfileForm.controls['company_rep_det'].dirty || employerProfileForm.controls['company_rep_det'].touched)"
                                     class="text-danger error-msg">
                                     <div [hidden]="!employerProfileForm.controls['company_rep_det'].errors.required">
                                         company
                                         representative details
-                                        is required.</div>
+                                        are required.</div>
                                 </div>
                             </div>
                         </div>
@@ -161,11 +161,14 @@
                                 <hr *ngIf="i>0">
                                 <div class="row" formGroupName="{{i}}">
                                     <div class="form-group form-input col-3">
-                                        <input type="text" formControlName="docType" autocomplete="off" #textInput
-                                            (input)="setDocTypeCatType(textInput.value)" id="docType" required>
-
-                                        <label for="file_type" class="form-label">Document Type</label>
-
+                                        <select class="formStyle"
+                                            (change)="setDocTypeCatID($event.target.value)"
+                                            formControlName="file_type">
+                                            <option disabled value="">Document Type</option>
+                                            <option id="option_txt" *ngFor="let docType of docTypeArr"
+                                                [value]="docType.doc_type_id">{{docType.doc_type}}
+                                            </option>
+                                        </select>
                                     </div>
                                     <div class="form-group form-input col-3">
                                         <div class="file-upload">

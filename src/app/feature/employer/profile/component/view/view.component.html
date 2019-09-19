@@ -42,33 +42,33 @@
                                     <table class="table">
                                         <tbody>
                                             <tr>
+                                                <th width="50%">Name: </th>
+                                                <td>
+                                                    {{employerDetailsArr.cmp_name}}
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <th width="50%">Email: </th>
                                                 <td>
                                                     {{emailId}}
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th width="50%">Name:
-                                                </th>
+                                                <th width="50%">Address: </th>
                                                 <td>
-                                                    {{employerDetailsArr.cmp_name}}
+                                                    <li>{{employerDetailsArr.cmp_addr}}</li>
+                                                    <li>{{employerDetailsArr.cmp_addr_2}}</li>
+                                                    <li>City : {{employerDetailsArr.city}}</li>
+                                                    <li>State: {{employerDetailsArr.state}}</li>
+                                                    <li>Country: {{employerDetailsArr.country}}</li>
+                                                    <li>Postal Code : {{employerDetailsArr.zipcode}}</li>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th width="50%">Address line 1: </th>
-                                                <td>
-                                                    {{employerDetailsArr.cmp_addr}}{{employerDetailsArr.line_2}}
-                                                    {{employerDetailsArr.city}} {{employerDetailsArr.state}}
-                                                    {{employerDetailsArr.country}} {{employerDetailsArr.zipcode}}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th width="50%">Address line 2: </th>
-                                                <td>
-                                                    {{employerDetailsArr.cmp_addr_2}}{{employerDetailsArr.line_2}}
-                                                    {{employerDetailsArr.city}} {{employerDetailsArr.state}}
-                                                    {{employerDetailsArr.country}} {{employerDetailsArr.zipcode}}
-                                                </td>
+                                                    <th width="50%">Country: </th>
+                                                    <td>
+                                                        {{employerDetailsArr.country}}
+                                                    </td>
                                             </tr>
                                             <tr>
                                                 <th width="50%">Company Profile:
@@ -78,7 +78,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th width="50%">Company Rep Details: </th>
+                                                <th width="50%">Company Representative: </th>
                                                 <td>
                                                     {{employerDetailsArr.cmp_reprentative}}
                                                 </td>
@@ -89,12 +89,7 @@
                                                     {{employerDetailsArr.business_cat}}
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <th width="50%">Country: </th>
-                                                <td>
-                                                    {{employerDetailsArr.country}}
-                                                </td>
-                                            </tr>
+                                            
                                             <tr>
                                                 <th width="30%">Documents: </th>
                                                 <td>
