@@ -71,52 +71,15 @@ export class SidebarComponent implements OnInit {
     if (this.userRole == "Freelancer") {
       console.log("Inside Freelancer");
       this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/add']);
-
-      // this.__idptProfileService.getFreelancerByEmail(this.email_id).then((resData: any) => {
-      //   this.freelancerDetailsArr = resData[0];
-      //   console.log(this.freelancerDetailsArr);
-
-      //   if (this.freelancerDetailsArr == null) {
-
-      //   } else {
-      //     this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email_id]);
-      //   }
-      // });
     }
     else if (this.userRole == "Employer") {
       console.log("Inside Employer");
       this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/add']);
-
-      // this.__empProfileService.getEmployerByEmailId(this.email_id).then((resData: any) => {
-      //   this.employerDetailsArr = resData[0];
-      //   console.log(this.employerDetailsArr);
-
-      //   if (this.__empProfileService == null) {
-      //     this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/add']);
-      //   } else {
-      //     this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view', this.email_id]);
-      //   }
-      // });
     }
     else if (this.userRole == "Partner") {
       console.log("Inside Partner");
       this.__router.navigate(['/feature/feature/full-layout/partner/part/profile/profile/add']);
-
-      // this.__partProfileService.getPartnerByEmailId(this.email_id).then((resData: any) => {
-      //   this.partnerDetailsArr = resData[0];
-      //   console.log(this.partnerDetailsArr);
-
-      //   if (this.partnerDetailsArr == null) {
-      //     this.__router.navigate(['/feature/feature/full-layout/partner/part/profile/profile/add']);
-      //   } else {
-      //     this.__router.navigate(['/feature/feature/full-layout/partner/part/profile/profile/view', this.email_id]);
-      //   }
-      // });
     }
   }
-
-  // userEmployer() {
-  //   this.__router.navigate(['/feature/feature/full-layout/employer/emp/workpackage/workpack/viewall', this.email_id]);
-  // }
 
 }

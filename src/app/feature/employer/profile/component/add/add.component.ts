@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EmpProfileService } from '../../shared/service/profile.service';
+import { IndeptProfileService } from '../../../../independent-prof/profile/shared/service/profile.service';
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
@@ -24,7 +25,7 @@ export class AddComponent implements OnInit {
   public doc_cat_id: any;
   public FileArrData: any;
   public error: any;
-
+  public docTypeArr: any = [];
   //Static Array's
   prefixArr = ['Mr', 'Mrs', 'Miss'];
 
@@ -39,6 +40,7 @@ export class AddComponent implements OnInit {
   constructor(
     private __fb: FormBuilder,
     private __profileService: EmpProfileService,
+    private __freelancerProfileService: IndeptProfileService,
     private __authService: AuthService,
     private __router: Router
   ) { }
@@ -63,6 +65,7 @@ export class AddComponent implements OnInit {
     //Calling Function's
     this.valEmpProfile();
     this.getAllCountry();
+    this.getDocumentsTypeCat(4);
   }
 
   /**
@@ -172,6 +175,14 @@ export class AddComponent implements OnInit {
     console.log(inputValue);
     this.fileType = inputValue
   }
+  /**
+   * @method setDocTypeCatID
+   * @param city_id
+   * @description get the zipcode based on selected city id.
+   */
+  setDocTypeCatID(id) {
+    console.log(this.doc_cat_id = id);
+  }
 
   handleFileInput(event) {
     if (event.target.files.length > 0) {
@@ -199,7 +210,7 @@ export class AddComponent implements OnInit {
     await this.documentFileArr.push(
       {
         'file_name': this.FileArrData.fileId,
-        'file_type': this.fileType
+        'file_type': this.doc_cat_id
       });
     console.log(this.documentFileArr);
   }
@@ -242,6 +253,17 @@ export class AddComponent implements OnInit {
     this.__profileService.createEmployer(employerProfileVal).then((resData: any) => {
       console.log(resData);
     });
+
+  }
+
+  /**
+   * @name getDocumentsTypeCat
+   * @description get API for all document category type of independent prof 
+   */
+  getDocumentsTypeCat(index) {
+    this.__freelancerProfileService.getFreelancerDocumentByCat(index).then((resData: any) => {
+      this.docTypeArr = resData;
+    })
 
   }
 
