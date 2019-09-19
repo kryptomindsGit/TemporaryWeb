@@ -275,16 +275,31 @@ input[type=checkbox] {
 
 // Work Pacakage
 
+.calbutton{
+  font-size: 0.6rem;
+  color: #ffffff;
+  width: 3.8rem;
+  height: 1.5rem;
+  background: #064d86;
+  border-radius:0.5rem;
+}
+.noborder{
+  border: none !important;
+}
+
+.setwidth1{
+  width:12rem;
+}
 
 .viewprofile {
   font-size: 0.6rem;
   color: #ffffff;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   padding: 0.5rem;
   margin-left: 2rem;
   margin-top: 1rem;
-  width: 6rem;
-  height: 2rem;
+  width: 5rem;
+  height: 1.7rem;
   background: #064d86;
   // background: rgba(2, 41, 148, 0.966);
 }
@@ -292,12 +307,11 @@ input[type=checkbox] {
 .viewprofile1 {
   font-size: 0.6rem;
   color: #ffffff;
-  border-radius: 1rem;
-  padding: 0.5rem;
+  border-radius: 0.5rem;
   margin-right: 1rem;
   margin-top: 1rem;
-  width: 6rem;
-  height: 2rem;
+  width: 4rem;
+  height: 1.7rem;
   background: #064d86;
   // background: rgba(2, 41, 148, 0.966);
 }
@@ -316,6 +330,14 @@ input[type=checkbox] {
   background: #064d86;
   width: 7rem;
   height: 2.5rem;
+}
+
+
+.setright{
+  margin-left:1rem;
+}
+.settop{
+  margin-top:1rem;
 }
 
 .dropdown-menu {

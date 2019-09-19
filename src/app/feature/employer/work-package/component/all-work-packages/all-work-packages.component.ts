@@ -32,7 +32,10 @@ export class AllWorkPackagesComponent implements OnInit {
   } 
 
   gotoWorkpackage(index){
+    console.log("index :" ,index);
     this.wpId = this.workArr[index].workPackageId; 
+    console.log("wp id is :" ,this.wpId);
+    
     this.__router.navigate(['/feature/feature/full-layout/employer/emp/workpackage/workpack/view/',this.wpId])
   }
   

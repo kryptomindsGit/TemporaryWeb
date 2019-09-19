@@ -32,7 +32,7 @@ export class AddComponent implements OnInit {
   today = new Date();
   todayDate: string;
   employerId: number = 123456789;
-
+  email : any;
   //skill related variables
 
   durationYears: number;
@@ -56,6 +56,7 @@ export class AddComponent implements OnInit {
     this.createSkillForm();
     this.getAllDomain();
     this.getAllCountries();
+    this.email=localStorage.getItem("email");
   }
 
   formatToday() {
@@ -166,13 +167,13 @@ export class AddComponent implements OnInit {
         skill: '',
         skillLevel: '',
         availability: '',
-        teamMembers: '',
+        teamMembers: '' ,
         country: '',
         ratePerHour: '',
         availableAvgRatePerHour: '',
         currencyCode: '',
         startDate: '',
-        endDate: ''
+        endDate: '',
       }))
   }
 
@@ -232,6 +233,9 @@ export class AddComponent implements OnInit {
     });
   }
 
+  onProfileView(){
+    this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view', this.email]);
+  }
   onSubmit() {
     this.saveDetails();
   }
