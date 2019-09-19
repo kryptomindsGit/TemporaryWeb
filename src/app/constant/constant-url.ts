@@ -20,7 +20,7 @@ export const BLOCKCHAIN_URL = 'http://3.81.144.31:5000'; //(Khemraj - Python Ser
 export const DEPLOY_CONTRACT_URL = "http://54.163.41.241:5001";
 export const DEPLOY_CONTRACT_SAW_URL = "http://54.163.41.241:5000";
 
-export const AWS_IP = 'http://13.233.53.168:';
+export const AWS_IP = 'http://13.235.67.4:';
 
 export const BASE_URL = AWS_IP + '3060'; //(shefali - Node Server)
 export const AWS_URL = AWS_IP + '3030'; // (Bhushan - cognito AWS server)

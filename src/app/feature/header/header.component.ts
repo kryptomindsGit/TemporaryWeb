@@ -70,7 +70,7 @@ export class HeaderComponent implements OnInit {
         this.freelancerDetailsArr = resData[0];
         console.log(this.freelancerDetailsArr);
 
-        if (this.freelancerDetailsArr == null) {
+        if (this.freelancerDetailsArr == null) {  
           this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/add']);
         } else {
           this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email_id]);
