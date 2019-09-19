@@ -86,13 +86,13 @@ export class ViewComponent implements OnInit {
   getQualitiesById(__id) {
     this.__profileService.getFreelancerQuality(this.email_addr).then((resData: any) => {
       this.qualityArray = resData;
+      console.log("Qualities", this.qualityArray);
 
       this.strengthArr = this.qualityArray.map(function (a) { return a["strengths"]; });
       console.log("Strength:", this.strengthArr);
 
-
       this.weaknessArr = this.qualityArray.map(function (a) { return a["weaknesses"]; });
-      console.log("Strength:", this.weaknessArr);
+      console.log("Weakness:", this.weaknessArr);
     });
   }
 

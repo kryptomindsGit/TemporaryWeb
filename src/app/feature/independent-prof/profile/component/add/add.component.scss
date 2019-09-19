@@ -125,7 +125,9 @@ form {
     top: 23px;
 }
 
-input {
+input,
+select,
+textarea {
     transition: 0.3s ease;
     -moz-transition: 0.3s ease;
     -webkit-transition: 0.3s ease;
@@ -136,7 +138,11 @@ input {
 }
 
 input:focus+.form-label,
-input:valid+.form-label {
+input:valid+.form-label,
+select:focus+.form-label,
+select:valid+.form-label,
+textarea:focus+.form-label,
+textarea:valid+.form-label {
     top: 1px;
     font-size: 11px;
     color: $blue-color;
@@ -144,7 +150,8 @@ input:valid+.form-label {
 }
 
 input,
-select {
+select,
+textarea {
     box-sizing: border-box;
     width: 100%;
     display: block;
@@ -157,7 +164,8 @@ select {
 }
 
 input:focus,
-select:focus {
+select:focus,
+textarea:focus {
     border-bottom: 1px solid $blue-color;
 }
 
@@ -180,6 +188,7 @@ input:-ms-input-placeholder {
 input:-moz-placeholder {
     color: $text-color;
 }
+
 
 input,
 select,
@@ -225,7 +234,7 @@ input[type=checkbox] {
 }
 
 input[type="checkbox"]:checked {
-    background: #064d86;
+    background: $btn-bg-color;
 }
 
 input[type=radio] {
@@ -236,6 +245,117 @@ input[type=radio] {
     -ms-appearance: radio !important;
 }
 
+//Select option
+
+.has-float-label {
+    display: block;
+    position: relative;
+}
+
+.has-float-label label,
+.has-float-label>span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    cursor: text;
+    font-size: 75%;
+    opacity: 1;
+    transition: all .8s;
+    top: -.5rem;
+    left: 0.55rem;
+    z-index: 3;
+    line-height: 1;
+    padding: 0 1px;
+}
+
+.has-float-label label::after,
+.has-float-label>span::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    background: white;
+    height: 2px;
+    top: 50%;
+    left: -.2em;
+    right: -.2em;
+    z-index: -1;
+}
+
+.has-float-label .form-control::-webkit-input-placeholder {
+    opacity: 1;
+    transition: all .8s;
+}
+
+.has-float-label .form-control::-moz-placeholder {
+    opacity: 1;
+    transition: all .8s;
+}
+
+.has-float-label .form-control:-ms-input-placeholder {
+    opacity: 1;
+    transition: all .8s;
+}
+
+.has-float-label .form-control::placeholder {
+    opacity: 1;
+    transition: all .8s;
+}
+
+.has-float-label .form-control:placeholder-shown:not(:focus)::-webkit-input-placeholder {
+    opacity: 0;
+}
+
+.has-float-label .form-control:placeholder-shown:not(:focus)::-moz-placeholder {
+    opacity: 0;
+}
+
+.has-float-label .form-control:placeholder-shown:not(:focus):-ms-input-placeholder {
+    opacity: 0;
+}
+
+.has-float-label .form-control:placeholder-shown:not(:focus)::placeholder {
+    opacity: 0;
+}
+
+.has-float-label .form-control:placeholder-shown:not(:focus)+* {
+    font-size: 1rem;
+    opacity: .5;
+    top: .6em;
+    line-height: 1;
+    color: #495057;
+}
+
+.has-float-label.select-label label {
+    top: .9em;
+}
+
+.select-label select:focus+label {
+    top: -0.5em;
+}
+
+.input-group .has-float-label {
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    margin-bottom: 0;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+
+//
 #btn-30 {
     display: flex;
     justify-content: center;
@@ -257,7 +377,7 @@ input[type=radio] {
     justify-content: center;
     margin: 1rem auto;
     width: 70%;
-    background: #064d86;
+    background: $btn-bg-color;
     font-size: 15px;
     color: #9e9d9d;
     border: none
@@ -265,7 +385,7 @@ input[type=radio] {
 
 #btn-70:hover {
     color: #000;
-    background: #064d86;
+    background: $btn-bg-color;
 }
 
 #btn-equal {
@@ -273,7 +393,7 @@ input[type=radio] {
     justify-content: center;
     margin: 1rem auto;
     width: 100%;
-    background: #064d86;
+    background: $btn-bg-color;
     font-size: 15px;
     color: #9e9d9d;
     border: none
@@ -285,26 +405,26 @@ input[type=radio] {
 }
 
 .btnNext {
-    border: none;
+    border: none !important;
     border-radius: 2rem;
     padding: 1%;
     width: 8rem;
     text-transform: uppercase;
     cursor: pointer;
-    background: #064d86;
+    background: $btn-bg-color;
     color: #fff;
     float: right;
     margin-bottom: 20px;
 }
 
 .btnPrevious {
-    border: none;
+    border: none !important;
     border-radius: 2rem;
     padding: 1%;
     width: 8rem;
     text-transform: uppercase;
     cursor: pointer;
-    background: #064d86;
+    background: $btn-bg-color;
     color: #fff;
     float: left;
     margin-bottom: 20px;
@@ -331,7 +451,7 @@ input[type=radio] {
     width: 50%;
     text-transform: uppercase;
     cursor: pointer;
-    background: #064d86;
+    background: $btn-bg-color;
     color: #fff;
     float: right;
     margin-bottom: 20px;
@@ -358,17 +478,30 @@ a:not([href]):not([tabindex]):hover {
 }
 
 .btn_add {
-    background: #064d86;
+    background: $btn-bg-color;
 }
 
 .btn_remove {
-    background: #064d86;
+    background: $btn-bg-color;
 }
 
 input[type='file'] {
-    // color: #064d86;
-    background: 064d86;
     font-size: 15px;
+}
+
+input[type="button"] {
+    outline: none !important;
+}
+
+input[type="button"]::-moz-focus-inner {
+    border: 0 !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none !important;
 }
 
 .btnBlue {
@@ -378,7 +511,7 @@ input[type='file'] {
     width: 6rem;
     text-transform: uppercase;
     cursor: pointer;
-    background: #064d86;
+    background: $btn-bg-color;
     color: #9e9d9d;
     float: center;
     margin: 20px auto;
@@ -393,7 +526,7 @@ input[type='file'] {
     height: 2rem;
     font-size: 1rem;
     cursor: pointer;
-    background: #064d86;
+    background: $btn-bg-color;
     color: #9e9d9d;
     float: right;
 }
@@ -407,7 +540,7 @@ input[type='file'] {
     height: 2rem;
     font-size: 1rem;
     cursor: pointer;
-    background: #064d86;
+    background: $btn-bg-color;
     color: #9e9d9d;
     float: right;
 }
@@ -421,7 +554,7 @@ input[type='file'] {
     height: 2rem;
     font-size: 1rem;
     cursor: pointer;
-    background: #064d86;
+    background: $btn-bg-color;
     color: #9e9d9d;
     float: left;
 }

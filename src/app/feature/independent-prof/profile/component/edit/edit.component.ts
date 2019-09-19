@@ -126,8 +126,6 @@ export class EditComponent implements OnInit {
     this.getFreelancerOrganization();
     this.getFreelancerPortfolio();
     // this.setAllFreelancerData();
-
-
   }
 
   /**
@@ -204,6 +202,8 @@ export class EditComponent implements OnInit {
   async getFreelancerDetails() {
     await this.__profileService.getFreelancerByEmail(this.__id).then((data: any) => {
       this.freelancerArr = data[0];
+      console.log("Res getFreelancerDetails:", this.freelancerArr);
+
     });
 
     this.checkMarked = this.freelancerArr.is_interviewer;
@@ -256,44 +256,39 @@ export class EditComponent implements OnInit {
   getFreelancerSkillDetails() {
     this.__profileService.getFreelancerSkillById(this.__id).then((data: any) => {
       this.freelancerSkillDetailsArr = data;
+      console.log("Res getFreelancerSkillDetails:", this.freelancerSkillDetailsArr);
 
-      if (this.freelancerSkillDetailsArr) {
+      // if (this.freelancerSkillDetailsArr) {
 
-        let skillCat_ID = this.freelancerSkillDetailsArr[0].skill_cat_id;
+      let skillCat_ID = this.freelancerSkillDetailsArr[0].skill_cat_id;
 
-        this.freelancerSkillDetailsArr.forEach(item => {
-          this.skillList.push({
-            skillname: item.skill_cat_name,
-            rate: item.rate_per_hr
-          });
-
-          this.skillArr.push({
-            skill_id: item.skill_id,
-          });
+      this.freelancerSkillDetailsArr.forEach(item => {
+        this.skillList.push({
+          skillname: item.skill_cat_name,
+          rate: item.rate_per_hr
         });
 
+        this.skillArr.push({
+          skill_id: item.skill_id,
+        });
+      });
 
 
-        this.getSkillsByID(skillCat_ID);
+
+      this.getSkillsByID(skillCat_ID);
 
 
-        for (let index = 0; index < this.freelancerSkillDetailsArr.length; index++) {
+      for (let index = 0; index < this.freelancerSkillDetailsArr.length; index++) {
 
-          this.skillRateArr.push(this.__fb.group(
-            {
-              skill: this.freelancerSkillDetailsArr[index].skill_name,
-              rate_hour: this.freelancerSkillDetailsArr[index].rate_per_hr,
-              skill_id: this.freelancerSkillDetailsArr[index].skill_id
-            }
-          ));
-        }
-      }
-      else {
         this.skillRateArr.push(this.__fb.group(
           {
+            skill: this.freelancerSkillDetailsArr[index].skill_name,
+            rate_hour: this.freelancerSkillDetailsArr[index].rate_per_hr,
+            skill_id: this.freelancerSkillDetailsArr[index].skill_id
           }
         ));
       }
+      // }
 
     });
   }
@@ -301,6 +296,8 @@ export class EditComponent implements OnInit {
   getQualitiesById() {
     this.__profileService.getFreelancerQuality(this.__id).then((data: any) => {
       this.qualityArray = data;
+
+      console.log("Res this.qualityArray:", this.qualityArray);
 
 
       let strengthQual = this.qualityArray.filter(
@@ -340,6 +337,7 @@ export class EditComponent implements OnInit {
   getFreelancerDocuments() {
     this.__profileService.getFreelancerDocumentById(this.__id).then((data: any) => {
       this.freelancerDocsArr = data;
+      console.log("Res this.freelancerDocsArr:", this.freelancerDocsArr);
       // personal document
       let isPersonal = this.freelancerDocsArr.filter(item => item.doc_cat_name == 'personal');
       if (isPersonal) {
@@ -412,6 +410,8 @@ export class EditComponent implements OnInit {
     this.__profileService.getFreelancerEduById(this.__id).then((data: any) => {
       this.freelancerEduArr = data;
 
+      console.log("Res this.freelancerEduArr:", this.freelancerEduArr);
+
       for (let index = 0; index < this.freelancerEduArr.length; index++) {
         this.edu_catId = this.freelancerEduArr[index].edu_cat_id;
 
@@ -446,6 +446,7 @@ export class EditComponent implements OnInit {
     this.__profileService.getFreelancerOrgById(this.__id).then((data: any) => {
       this.freelancerOrgArr = data;
 
+      console.log("Res this.freelancerOrgArr:", this.freelancerOrgArr);
       for (let index = 0; index < this.freelancerOrgArr.length; index++) {
         this.orgArr.push(this.__fb.group(
           {
@@ -466,7 +467,7 @@ export class EditComponent implements OnInit {
     this.__profileService.getFreelancerPortfolioById(this.__id).then((data: any) => {
       this.freelancerPortArr = data;
 
-
+      console.log("Res this.freelancerPortArr:", this.freelancerPortArr);
       let portflio = this.workExpDetails.get('portfolios') as FormArray;
       for (let index = 0; index < this.freelancerPortArr.length; index++) {
         portflio.push(this.__fb.group({

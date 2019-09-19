@@ -236,6 +236,14 @@ input[type=radio] {
     -ms-appearance: radio !important;
 }
 
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none !important;
+    background: $bg-front-color;
+}
+
 #btn-30 {
     display: flex;
     justify-content: center;

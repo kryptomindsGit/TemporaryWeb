@@ -42,24 +42,23 @@
                             <table class="table">
                                 <tbody>
                                     <tr>
-                                        <th width="25%">Email: </th>
-                                        <td>
-                                            {{email_addr}}
-                                        </td>
-                                    </tr>
-                                    <tr>
                                         <th width="25%">Name:</th>
                                         <td>
                                             {{freeDetailsArr.prefix}} {{freeDetailsArr.first_name}}
                                             {{freeDetailsArr.middle_name}} {{freeDetailsArr.last_name}}
                                         </td>
                                     </tr>
-
+                                    <tr>
+                                        <th width="25%">Email: </th>
+                                        <td>
+                                            {{email_addr}}
+                                        </td>
+                                    </tr>
                                     <tr>
                                         <th width="25%">Address: </th>
                                         <td>
                                             <li>Address Line 1 : {{freeDetailsArr.line_1}}</li>
-                                            <li>Address Line 1 : {{freeDetailsArr.line_2}}</li>
+                                            <li>Address Line 2 : {{freeDetailsArr.line_2}}</li>
                                             <li>City : {{freeDetailsArr.city}}, State : {{freeDetailsArr.state}},
                                                 Country : {{freeDetailsArr.country}}</li>
                                             <li>Postal Code : {{freeDetailsArr.code}}</li>

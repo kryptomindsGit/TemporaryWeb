@@ -29,7 +29,7 @@ export class AddComponent implements OnInit {
   keyword = 'skill_cat_name';
 
   // Variable's
-  public showMainContent: number = 4;
+  public showMainContent: number = 1;
   public isUportUser: string;
   public email: string;
   public country: string;
@@ -636,10 +636,10 @@ export class AddComponent implements OnInit {
         console.log("Res Data:", resData);
 
         if (resData.status == 'success') {
-          this.toastr.error(resData.message);
-          setTimeout(function () {
-            this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
-          }, 2000);
+          this.toastr.success(resData.message);
+          // setTimeout(function () {
+          //   this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
+          // }, 2000);
 
         }
         else if (resData.status == 'error') {
@@ -679,14 +679,11 @@ export class AddComponent implements OnInit {
         console.log(resData);
 
         if (resData.status == 'success') {
-          this.toastr.error(resData.message);
-          setTimeout(function () {
-            this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
-          }, 2000);
-
+          this.toastr.success("Successfully Registered");
+          //this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
         }
         else if (resData.status == 'error') {
-          this.toastr.error(resData.message);
+          this.toastr.error("Registration Failed");
         }
 
       });

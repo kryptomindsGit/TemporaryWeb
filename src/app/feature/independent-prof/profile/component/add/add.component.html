@@ -8,12 +8,13 @@
                         <form [formGroup]="personalDetails" novalidate>
                             <div class="row">
                                 <div class="form-group form-input col">
-                                    <select class="formStyle" formControlName="prefix">
+                                    <select formControlName="prefix">
                                         <option disabled value="" selected>Prefix</option>
                                         <option id="option_txt" *ngFor="let prefix of prefixArr" [value]="prefix">
                                             {{prefix}}
                                         </option>
                                     </select>
+
                                     <div *ngIf="personalDetails.controls['prefix'].invalid && (personalDetails.controls['prefix'].dirty || personalDetails.controls['prefix'].touched)"
                                         class="text-danger error-msg">
                                         <div [hidden]="!personalDetails.controls['prefix'].errors.required">Prefix is
@@ -93,8 +94,7 @@
 
                             <div class="row">
                                 <div class="form-group form-input col">
-                                    <select class="formStyle" (change)="setCountryID($event.target.value)"
-                                        formControlName="country">
+                                    <select (change)="setCountryID($event.target.value)" formControlName="country">
                                         <option disabled value="">Country</option>
                                         <option *ngFor="let country of countryArr" [ngValue]="country.name">
                                             {{country.name}}
@@ -109,8 +109,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group form-input col">
-                                    <select class="formStyle" (change)="setStateID($event.target.value)"
-                                        formControlName="province">
+                                    <select (change)="setStateID($event.target.value)" formControlName="province">
                                         <option disabled value="">State</option>
                                         <option *ngFor="let state of stateArr" [ngValue]="state.name">{{state.name}}
                                         </option>
@@ -125,7 +124,7 @@
                                 </div>
 
                                 <div class="form-group form-input col">
-                                    <select class="formStyle" formControlName="city">
+                                    <select formControlName="city">
                                         <option disabled value="">City</option>
                                         <option *ngFor="let city of cityArr" [ngValue]="city.name">{{city.name}}
                                         </option>
@@ -162,8 +161,7 @@
                                             <hr *ngIf="i>0">
                                             <div class="row" formGroupName="{{i}}">
                                                 <div class="form-group form-input col-4">
-                                                    <select class="formStyle"
-                                                        (change)="setDocTypeCatID($event.target.value)"
+                                                    <select (change)="setDocTypeCatID($event.target.value)"
                                                         formControlName="file_type">
                                                         <option disabled value="">Document type</option>
                                                         <option id="option_txt" *ngFor="let docType of docTypeArr"
@@ -203,7 +201,7 @@
                                 <!-- <div class="row" formGroupName="{{i}}">
 
                                         <div class="form-group form-input col-3">
-                                            <select class="formStyle" (change)="setDocTypeCatID($event.target.value)"
+                                            <select  (change)="setDocTypeCatID($event.target.value)"
                                                 formControlName="file_type">
                                                 <option disabled value="">Document type</option>
                                                 <option id="option_txt" *ngFor="let docType of docTypeArr"
@@ -271,7 +269,7 @@
                                                 </div>
 
                                                 <div class="form-group form-input col-2">
-                                                    <select class="formStyle" formControlName="passing_year">
+                                                    <select formControlName="passing_year">
                                                         <option disabled value="">Passing year</option>
                                                         <option *ngFor="let year of yearArr"
                                                             aria-placeholder="Passing Year" [value]="year">{{year}}
@@ -286,7 +284,7 @@
                                                 </div>
 
                                                 <div class="form-group form-input col-2">
-                                                    <select class="formStyle" formControlName="grade">
+                                                    <select formControlName="grade">
                                                         <option disabled value="">Grade</option>
                                                         <option *ngFor="let grades of gradeArr" aria-placeholder="Grade"
                                                             [value]="grades">{{grades}}</option>
@@ -539,8 +537,7 @@
 
                                             <div class="row" [formGroupName]="i">
                                                 <div class="form-group form-input col-3">
-                                                    <select class="formStyle"
-                                                        (change)="setDocTypeCatID($event.target.value)"
+                                                    <select (change)="setDocTypeCatID($event.target.value)"
                                                         formControlName="file_type">
                                                         <option disabled value="">Document type</option>
                                                         <option id="option_txt" *ngFor="let docType of docTypeArr"
