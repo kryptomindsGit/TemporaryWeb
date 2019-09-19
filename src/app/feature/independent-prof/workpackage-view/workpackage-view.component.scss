@@ -52,8 +52,8 @@ CARD CSS
 -------------------------------------------------------------------------*/
 
 .card {
-  width: 100%;
-  height: auto !important;
+  // width: 100%;
+  // height: auto !important;
   margin-top: 0.3rem;
   float: none;
   border: 0px;
@@ -67,7 +67,7 @@ CARD CSS
 }
 
 .card-body {
-  width: 100%;
+  // width: 100%;
   border-radius: 3px;
   font-weight: 400;
   color: #a5a8ad;
@@ -541,9 +541,9 @@ img:hover {
   margin-left: 20px;
 }
 
-.formStyle {
-  background: $bg-front-color;
-}
+// .formStyle {
+//   background: $bg-front-color;
+// }
 
 h4 {
   margin-top: 20px;
