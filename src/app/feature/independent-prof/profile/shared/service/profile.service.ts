@@ -112,6 +112,16 @@ export class IndeptProfileService {
     }
   }
 
+   // Independent freelancer education data list GET API call
+   async getFreelancerEduList(): Promise<any> {
+    try {
+      let res = await this.__http.get(`${BASE_URL}/freelancer/education`, httpOptions).toPromise();
+      return res;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
   // Independent Prof skills by id GET API call
   async getFreelancerSkills(id: any): Promise<any> {
     try {

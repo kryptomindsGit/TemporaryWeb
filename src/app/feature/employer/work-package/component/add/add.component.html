@@ -252,7 +252,7 @@
                                     <tbody formArrayName="skillDetails">
                                         <tr *ngFor="let item of skillDetailsArr.controls; let i=index" [formGroupName]="i">
                                           <td scope="row">
-                                            <select formControlName="domainId" id="domain" (change)="selectSkills($event.target.value)">
+                                            <select formControlName="domainId" id="domain" (change)="getAllDomainSkills($event.target.value, i)">
                                               <option disabled value="">Select Domain</option>
                                               <option id="domain_option" *ngFor="let allDomain of allDomainArr"
                                                 [value]="allDomain.skill_cat_id">{{allDomain.skill_cat_name}}</option>
@@ -262,7 +262,7 @@
                                           <td scope="row">
                                             <select formControlName="skill" id="skill">
                                               <option disabled value="">Select Skills</option>
-                                              <option id="option_skill" *ngFor="let allSkills of allSkillsArr" [value]="allSkills.skill_id">
+                                              <option id="option_skill" *ngFor="let allSkills of domainSkillsList[skillForm.get('skillDetails')['controls'][i].controls['domainId'].value]" [value]="allSkills.skill_id">
                                                 {{allSkills.skill_name}}</option>
                                             </select>
                                           </td>

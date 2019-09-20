@@ -235,15 +235,15 @@
                 <h6>EDUCATION DETAILS</h6>
                 <div class="card">
                     <div class="card-body others-card">
-                        <form [formGroup]="qualificationDetails" novalidate>
-                            <div formArrayName="qualification">
+                        <form [formGroup]="qualificationDetails" novalidate>        
+                            <div formArrayName="qualification">                    
                                 <div class="row">
                                     <div class="col-11">
                                         <div *ngFor="let item of qualfArr.controls; let i=index">
                                             <hr *ngIf="i>0">
                                             <div class="row" [formGroupName]="i">
                                                 <div class="form-group form-input col-3">
-                                                    <select (change)="setEduCatByID($event.target.value)"
+                                                    <select (change)="setEduListByCatId($event.target.value,i)"
                                                         formControlName="edu_cat_id">
                                                         <option disabled value="">Category</option>
                                                         <option *ngFor="let eduCat of eduCatArr"
@@ -256,7 +256,7 @@
                                                 <div class="form-group form-input col-3">
                                                     <select formControlName="edu_type_id">
                                                         <option disabled value="">Qualification</option>
-                                                        <option *ngFor="let edu of eduArr" [value]="edu.edu_type_id">
+                                                        <option *ngFor="let edu of eduListbyId[qualificationDetails.get('qualification')['controls'][i].controls['edu_cat_id'].value]" [value]="edu.edu_type_id">
                                                             {{edu.edu_name}}
                                                         </option>
                                                     </select>

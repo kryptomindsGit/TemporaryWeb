@@ -44,6 +44,8 @@ export class AddComponent implements OnInit {
   // Array's
   public congnitoID: any = [];
   public eduCatArr: any = [];
+  public eduList: any = [];
+  public eduListbyId: any = [];  
   public eduArr: any = [];
   public skills: any = [];
   public skill: any = [];
@@ -95,6 +97,7 @@ export class AddComponent implements OnInit {
 
     //Call get API function's
     this.getAllEducationCat();
+    this.getAllEducationList();
     this.getAllSkillCategory();
     this.getAllCountry();
     this.getDocumentsTypeCat(1);
@@ -202,6 +205,17 @@ export class AddComponent implements OnInit {
     })
   }
 
+  /**
+   * @name getAllEducationList
+   * @description get API for all education data in List
+   */
+  getAllEducationList() {
+    this.__profileService.getFreelancerEduList().then((resData: any) => {
+      this.eduList = resData;
+      console.log('eduList: ',this.eduList);
+    })
+  }
+
   // /**
   //  * @method setEduCatByID
   //  * @param eduCat_id
@@ -222,6 +236,18 @@ export class AddComponent implements OnInit {
     })
   }
 
+    /**
+   * @method getAllEducation
+   * @param eduCat_id
+   * @description get all education values based on selected education category id.
+   */
+
+  
+  setEduListByCatId(eduCat_id, i) {
+    this.eduListbyId[eduCat_id] = this.eduList.filter((item)=> item.edu_cat_id == eduCat_id);
+    this.qualificationDetails.get('qualification')['controls'][i].patchValue({ edu_cat_id: eduCat_id, edu_type_id: ''});
+   
+  }
   /**
    * @method getSkillsByID
    * @param skill_cat_id

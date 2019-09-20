@@ -28,6 +28,7 @@ export class AddComponent implements OnInit {
   allDomainArr = [];
   allSkillsArr = [];
   wpId: any;
+  domainSkillsList: any = [];
   //Date 
   today = new Date();
   todayDate: string;
@@ -56,6 +57,7 @@ export class AddComponent implements OnInit {
     this.createSkillForm();
     this.getAllDomain();
     this.getAllCountries();
+    this.getAllSkills();
     this.email=localStorage.getItem("email");
   }
 
@@ -101,12 +103,12 @@ export class AddComponent implements OnInit {
     });
   }
 
-  selectSkills(country_id) {
-    this.__profileService.getFreelancerSkills(country_id).then((data: any) => {
-      this.allSkillsArr = data;
-      console.log("all skills", this.allSkillsArr);
-    })
-  }
+  // selectSkills(country_id) {
+  //   this.__profileService.getFreelancerSkills(country_id).then((data: any) => {
+  //     this.allSkillsArr = data;
+  //     console.log("all skills", this.allSkillsArr);
+  //   })
+  // }
 
   getAllCountries() {
     console.log("inisde");
@@ -115,6 +117,20 @@ export class AddComponent implements OnInit {
       this.countries = resData;
     });
   }
+
+  getAllDomainSkills(domainId,i){
+    this.domainSkillsList[domainId] = this.allSkillsArr.filter((item)=> item.skill_cat_id == domainId);
+    this.skillForm.get('skillDetails')['controls'][i].patchValue({ domainId: domainId, skill: ''});
+   
+  }
+
+  getAllSkills(){
+    this.__workpackageService.getAllSkills().then((resData: any) => {
+      this.allSkillsArr = resData;
+      //console.log(`allskills: ${JSON.stringify(this.allSkillsArr)}`);
+    });
+  }
+
 
   setDuration() {
 

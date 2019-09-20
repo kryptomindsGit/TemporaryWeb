@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { throwError } from 'rxjs/internal/observable/throwError';
 
 //Constant URL
-// import { BASE_URL } from '../../../../../constant/constant-url';
+import { BASE_URL } from '../../../../../constant/constant-url';
 // import { BASE_URL_ADDRESS } from '../../../../../constant/constant-url';
 // import { BLOCKCHAIN_URL } from '../../../../../constant/constant-url';
 // import { UPORT_URL } from '../../../../../constant/constant-url';
@@ -91,7 +91,19 @@ export class WorkPackageService {
     }
   }
 
+  //get all skills
 
+async getAllSkills():Promise<any> {
+    
+    try {
+      let res = await this.http.get(`${BASE_URL}/freelancer/skills`,httpOptions).toPromise();
+      console.log("data " ,res);
+      return res;
+      
+    } catch (error) {
+      this.handleError(error);      
+    }
+  }
 
   handleError(error) {
     let errorMessage = '';

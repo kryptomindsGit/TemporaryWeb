@@ -62,7 +62,7 @@
                                         <label class="text-color">start Date :</label>
                                     </div>
                                     <div class="col-6">
-                                        <h6 class="text-color">{{startDate}}</h6>
+                                        <h6 class="text-color">{{startDate | date :  "dd MMM yyyy" }}</h6>
                                     </div>
                                 </div>
             
@@ -74,7 +74,7 @@
                                         <label class="text-color">Duration From :</label>
                                     </div>
                                     <div class="col-6">
-                                        <h6 class="text-color">{{fromDate}}</h6>
+                                        <h6 class="text-color">{{fromDate | date :  "dd MMM yyyy" }}</h6>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -82,7 +82,7 @@
                                         <label class="text-color">Duration To :</label>
                                     </div>
                                     <div class="col-6">
-                                        <h6 class="text-color">{{toDate}}</h6>
+                                        <h6 class="text-color">{{toDate | date :  "dd MMM yyyy" }}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -122,8 +122,8 @@
                                     <td>{{data.currencyCode}} {{data.ratePerHour}}</td>
                                     <td>{{data.currencyCode}} {{data.availableAvgRatePerHour}}</td>
                                     <!-- <td>{{data.currencyCode}}</td> -->
-                                    <td>{{data.startDate}}</td>
-                                    <td>{{data.endDate}}</td>
+                                    <td>{{data.startDate | date :  "dd MMM yyyy" }}</td>
+                                    <td>{{data.endDate | date :  "dd MMM yyyy" }}</td>
                                     </tr>
                                 </tbody>
                             </table>
