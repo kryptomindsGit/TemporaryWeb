@@ -3,6 +3,7 @@ import { Validators, FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { EmpProfileService } from '../../shared/service/profile.service';
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { IndeptProfileService } from 'src/app/feature/independent-prof/profile/shared/service/profile.service';
 
 @Component({
   selector: 'app-edit',
@@ -23,6 +24,7 @@ export class EditComponent implements OnInit {
   public doc_cat_id: any;
   public FileArrData: any;
   public uid: any;
+  public docTypeArr: any = [];
 
   //Static Array's
   prefixArr = ['Mr', 'Mrs', 'Miss'];
@@ -43,6 +45,8 @@ export class EditComponent implements OnInit {
     private __authService: AuthService,
     private __router: Router,
     private __activatedRoute: ActivatedRoute,
+    private __freelancerProfileService: IndeptProfileService,
+
   ) { }
 
   ngOnInit() {
@@ -66,6 +70,7 @@ export class EditComponent implements OnInit {
     this.getEmplyeeDetails();
     this.valEmpProfile();
     this.getAllCountry();
+    this.getDocumentsTypeCat(4);
   }
 
   /**
@@ -262,6 +267,16 @@ export class EditComponent implements OnInit {
     console.log(this.documentFileArr);
   }
 
+  getDocumentsTypeCat(index) {
+    this.__freelancerProfileService.getFreelancerDocumentByCat(index).then((resData: any) => {
+      this.docTypeArr = resData;
+    })
+
+  }
+
+  setDocTypeCatID(id) {
+    console.log(this.doc_cat_id = id);
+  }
 
   /**
    * @name onSubmit
