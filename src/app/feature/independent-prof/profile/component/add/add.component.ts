@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 import { IndeptProfileService } from '../../shared/service/profile.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -40,12 +40,13 @@ export class AddComponent implements OnInit {
   public fileName: any;
   public fileObj: any;
   public FileArrData: any;
+  public fileUploadProgress: string = null;
 
   // Array's
   public congnitoID: any = [];
   public eduCatArr: any = [];
   public eduList: any = [];
-  public eduListbyId: any = [];  
+  public eduListbyId: any = [];
   public eduArr: any = [];
   public skills: any = [];
   public skill: any = [];
@@ -212,7 +213,7 @@ export class AddComponent implements OnInit {
   getAllEducationList() {
     this.__profileService.getFreelancerEduList().then((resData: any) => {
       this.eduList = resData;
-      console.log('eduList: ',this.eduList);
+      console.log('eduList: ', this.eduList);
     })
   }
 
@@ -236,17 +237,17 @@ export class AddComponent implements OnInit {
     })
   }
 
-    /**
-   * @method getAllEducation
-   * @param eduCat_id
-   * @description get all education values based on selected education category id.
-   */
+  /**
+ * @method getAllEducation
+ * @param eduCat_id
+ * @description get all education values based on selected education category id.
+ */
 
-  
+
   setEduListByCatId(eduCat_id, i) {
-    this.eduListbyId[eduCat_id] = this.eduList.filter((item)=> item.edu_cat_id == eduCat_id);
-    this.qualificationDetails.get('qualification')['controls'][i].patchValue({ edu_cat_id: eduCat_id, edu_type_id: ''});
-   
+    this.eduListbyId[eduCat_id] = this.eduList.filter((item) => item.edu_cat_id == eduCat_id);
+    this.qualificationDetails.get('qualification')['controls'][i].patchValue({ edu_cat_id: eduCat_id, edu_type_id: '' });
+
   }
   /**
    * @method getSkillsByID
@@ -555,8 +556,21 @@ export class AddComponent implements OnInit {
 
   async uploadPersonalFile() {
 
+    this.fileUploadProgress = '0%';
     await this.__profileService.postDocHashData(this.fileObj, this.congnitoID, this.fileName).then((event) => {
       this.FileArrData = event;
+
+      // file upload progress start
+      // if (event.type === HttpEventType.UploadProgress) {
+      //   this.fileUploadProgress = Math.round(event.loaded / event.total * 100) + '%';
+      //   console.log(this.fileUploadProgress);
+      // } else if (event.type === HttpEventType.Response) {
+      //   this.fileUploadProgress = '';
+      //   console.log(event.body);
+      //   this.toastr.success("Successfully uploaded");
+      // }
+      // file upload progress end
+
       console.log("File Resp:", this.FileArrData.fileId);
     });
 
@@ -662,14 +676,11 @@ export class AddComponent implements OnInit {
         console.log("Res Data:", resData);
 
         if (resData.status == 'success') {
-          this.toastr.success(resData.message);
-          // setTimeout(function () {
-          //   this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
-          // }, 2000);
-
+          this.toastr.success("Successfully Registered");
+          //this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
         }
         else if (resData.status == 'error') {
-          this.toastr.error(resData.message);
+          this.toastr.error("Registered Failed");
         }
       });
     }

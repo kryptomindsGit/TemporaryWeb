@@ -3,6 +3,8 @@ import { EmpProfileService } from '../../shared/service/profile.service';
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
+import { saveAs } from 'file-saver';
+
 @Component({
   selector: 'app-view',
   templateUrl: './view.component.html',
@@ -74,13 +76,17 @@ export class ViewComponent implements OnInit {
 
   downloadFile(item) {
     console.log("Download")
+    var filesave = item.substring(item.lastIndexOf("-") + 1);
+    console.log("file save:", filesave);
+
     this.__profileService.getDocHashData(item).then((data) => {
       console.log("Blockchain get data done", data);
 
       var file = new Blob([data.body], { type: 'application/octet-stream' });
-      var fileURL = URL.createObjectURL(file);
+      saveAs(file, filesave);
+      // var fileURL = URL.createObjectURL(file);
       // window.open(fileURL);
-      window.open(fileURL, '_blank');
+      // window.open(fileURL, '_blank');
     })
   }
 

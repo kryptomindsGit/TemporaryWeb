@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { PartProfileService } from '../../shared/service/profile.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit',
@@ -43,6 +44,7 @@ export class EditComponent implements OnInit {
     private __authService: AuthService,
     private __router: Router,
     private __activatedRoute: ActivatedRoute,
+    private toastr: ToastrService
   ) {
     // this.emailId = this.__activatedRoute.snapshot.params.id;
   }
@@ -299,8 +301,14 @@ export class EditComponent implements OnInit {
     }
     console.log(partnerProfileVal)
 
-    this.__profileService.updatePartner(this.emailId, partnerProfileVal).then((data: any) => {
-      console.log(data);
+    this.__profileService.updatePartner(this.emailId, partnerProfileVal).then((resData: any) => {
+      console.log(resData);
+      if (resData.status == 'success') {
+        this.toastr.success("Successfully Registered");
+      }
+      else if (resData.status == 'error') {
+        this.toastr.error("Registered Failed");
+      }
     });
   }
 

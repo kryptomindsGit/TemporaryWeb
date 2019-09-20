@@ -43,12 +43,19 @@ export class IndeptProfileService {
       formData.append('cognitoId', cognitoId);
       formData.append('fileName', fileName);
 
-      let res = await this.__http.post(`${BLOCKCHAIN_URL}/sendHash/`, formData).toPromise();
+      let res = await this.__http.post(`${BLOCKCHAIN_URL}/sendHash/`, formData,
+
+      ).toPromise();
       return res;
     } catch (error) {
       await this.handleError(error);
     }
   }
+
+  // {
+  //   reportProgress: true,
+  //   observe: 'events'
+  // }
 
   // Blockchain GET API call
   async getDocHashData(id): Promise<any> {
@@ -112,8 +119,8 @@ export class IndeptProfileService {
     }
   }
 
-   // Independent freelancer education data list GET API call
-   async getFreelancerEduList(): Promise<any> {
+  // Independent freelancer education data list GET API call
+  async getFreelancerEduList(): Promise<any> {
     try {
       let res = await this.__http.get(`${BASE_URL}/freelancer/education`, httpOptions).toPromise();
       return res;

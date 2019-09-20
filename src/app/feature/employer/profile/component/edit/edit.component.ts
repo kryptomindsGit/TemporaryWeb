@@ -4,6 +4,7 @@ import { EmpProfileService } from '../../shared/service/profile.service';
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IndeptProfileService } from 'src/app/feature/independent-prof/profile/shared/service/profile.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit',
@@ -46,6 +47,7 @@ export class EditComponent implements OnInit {
     private __router: Router,
     private __activatedRoute: ActivatedRoute,
     private __freelancerProfileService: IndeptProfileService,
+    private toastr: ToastrService
 
   ) { }
 
@@ -312,8 +314,14 @@ export class EditComponent implements OnInit {
     }
     console.log(" Submit values:", employerProfileVal);
 
-    this.__profileService.updateEmployer(this.emailId, employerProfileVal).then((data: any) => {
-      console.log(data);
+    this.__profileService.updateEmployer(this.emailId, employerProfileVal).then((resData: any) => {
+      console.log(resData);
+      if (resData.status == 'success') {
+        this.toastr.success("Successfully Registered");
+      }
+      else if (resData.status == 'error') {
+        this.toastr.error("Registered Failed");
+      }
     });
 
   }

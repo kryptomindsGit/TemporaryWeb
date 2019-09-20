@@ -4,6 +4,7 @@ import { IndeptProfileService } from '../../../../independent-prof/profile/share
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add',
@@ -42,7 +43,8 @@ export class AddComponent implements OnInit {
     private __profileService: EmpProfileService,
     private __freelancerProfileService: IndeptProfileService,
     private __authService: AuthService,
-    private __router: Router
+    private __router: Router,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -252,6 +254,12 @@ export class AddComponent implements OnInit {
 
     this.__profileService.createEmployer(employerProfileVal).then((resData: any) => {
       console.log(resData);
+      if (resData.status == 'success') {
+        this.toastr.success("Successfully Registered");
+      }
+      else if (resData.status == 'error') {
+        this.toastr.error("Registered Failed");
+      }
     });
 
   }

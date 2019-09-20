@@ -918,14 +918,14 @@ export class EditComponent implements OnInit {
       this.__profileService.createFreelancer(freelancerProfilePayload).then((resData: any) => {
         console.log("Resp Data:", resData);
         if (resData.status == 'success') {
-          this.toastr.error(resData.message);
-          setTimeout(function () {
-            this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
-          }, 2000);
+          this.toastr.success("Successfully Registered");
+          // setTimeout(function () {
+          //   this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
+          // }, 2000);
 
         }
         else if (resData.status == 'error') {
-          this.toastr.error(resData.message);
+          this.toastr.error("Registered Failed");
         }
       });
     }
@@ -960,14 +960,16 @@ export class EditComponent implements OnInit {
       this.__profileService.updateFreelancer(this.email, freelancerProfilePayload).then((resData: any) => {
         console.log("Resp Data:", resData);
         if (resData.status == 'success') {
-          this.toastr.error(resData.message);
-          setTimeout(function () {
-            this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
-          }, 2000);
+
+          this.toastr.success("Successfully Registered");
+
+          // setTimeout(function () {
+          //   this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
+          // }, 2000);
 
         }
         else if (resData.status == 'error') {
-          this.toastr.error(resData.message);
+          this.toastr.error("Registered Failed");
         }
       });
     }
