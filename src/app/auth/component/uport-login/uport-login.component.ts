@@ -138,7 +138,7 @@ export class UportLoginComponent implements OnInit {
 
         var baseName = this.email;
         baseName = baseName.substring(0, baseName.indexOf('@'));
-        const emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1);
+        const emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1)+",you are logged in as a "+role;
 
         this.toastr.success(emailName, 'Welcome to Konnecteum');
 

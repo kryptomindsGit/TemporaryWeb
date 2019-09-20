@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SwiperOptions } from 'swiper';
 import { WorkPackageService } from '../../shared/service/work-package.service';
+import { Router } from '@angular/router';
+import { SearchFreelancerComponent } from '../search-freelancer/search-freelancer.component';
 
 @Component({
   selector: 'app-view',
@@ -31,7 +33,7 @@ export class ViewComponent implements OnInit {
   fromDate: string = "14 jan 2019";
   toDate: string = "1 june 2019";
   budgetCurrency: string;
-
+  workId:any;
   //Arr
   skillArr = [];
 
@@ -47,12 +49,15 @@ export class ViewComponent implements OnInit {
 
   constructor(
     private __workService: WorkPackageService,
+    private __router : Router,
+    // private __search : SearchFreelancerComponent
+
   ) { }
 
   ngOnInit() {
  
-    let wpId = localStorage.getItem("workpackageId");
-    this.getWorkPackage(wpId);
+    this.workId = localStorage.getItem("workpackageId");
+    this.getWorkPackage(this.workId);
     
   }
   onClick(event) {
@@ -93,5 +98,10 @@ export class ViewComponent implements OnInit {
 
     });
 
+  }
+
+  gotoSearch(){
+    // this.__search.goBacktoWork(this.workId);
+    this.__router.navigate(['/feature/feature/full-layout/employer/emp/workpackage/workpack/findfree']);
   }
 }

@@ -3,48 +3,35 @@
 /*-----------------------------------------------------------------------
       BASIC CSS
 -------------------------------------------------------------------------*/
-.container-fluid {
-  font: 14px "Montserrat";
+
+.section{
+  font: 14px "Montserrat Regular";
   background-color: $bg-back-color;
   color: $text-color;
-  overflow: scroll;
   font-weight: 400;
-  width: 100%;
-  height: 100%;
-  position: fixed;
+  height:auto;
+  
 }
 
-// .section {
-//  font: 14px "Montserrat";
-//   background-color: $bg-back-color;
-//   color: $text-color;
-//   overflow: scroll;
-//   font-weight: 400;
-//   //width: 85%;
-//   height: 100vh;
-//   position: fixed;
-
-// }
-
-// .scrollbody {
-//   overflow-y: auto;
-//   max-height: 335px;
-// }
-
-// .container {
-//   max-width: 100% !important;
-//   position: relative;
-// }
-
-p {
-  margin-bottom: 1rem;
+.scrollbody{
+  overflow-y: auto;
+  max-height: 100vh;
+}
+.container{
+max-width: 90% !important;
+position: relative;
 }
 
-// hr {
-//   box-sizing: content-box;
-//   height: 0;
-//   border-top: 1px solid rgba(255, 255, 255, 0.1);
-// }
+p{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+hr {
+  box-sizing: content-box;
+  height: 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
 
 
 /*-----------------------------------------------------------------------

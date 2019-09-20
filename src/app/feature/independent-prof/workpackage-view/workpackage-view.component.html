@@ -1,151 +1,77 @@
-<div class="container-fluid">  
-        <h4>Work Package Mapping </h4>
-        <div class="card ">    
-            <div class="card-body">
-                    <form [formGroup]="searchForm">
-                        <div class="form-content">
-                            <div class="row">
-                                <div class="col-2">
-                                        <select class="formStyle" formControlName="project-Id" id="project-Id">
-                                            <option>Project Id</option>
-                                            <!-- <option id="option_txt" *ngFor="let project-Id of projectIdArr" [value]="project-Id">{{project-Id}}</option> -->
+<div class="section">
+    <div class="container">
+            <h4>Work Package Mapping </h4>
+            <div class="card ">    
+                <div class="card-body">
+                        <form [formGroup]="searchForm">
+                            <div class="form-content">
+                                <div class="row">
+                                    <div class="col-2">
+                                            <select class="formStyle" formControlName="project-Id" id="project-Id">
+                                                <option>Project Id</option>
+                                                <!-- <option id="option_txt" *ngFor="let project-Id of projectIdArr" [value]="project-Id">{{project-Id}}</option> -->
+                                            </select>
+                                    </div>
+                                    <div class="col-2">
+                                         <input type="text" placeholder="Project Name">
+                                    </div>
+                                    <div class="col-2">
+                                        <select class="formStyle"  id="projectId">
+                                            <option>Domain</option>
+                                            <!-- <option id="option_txt" *ngFor="let projectId of projectIdArr" [value]="projectId">{{projectId}}</option> -->
                                         </select>
+                                    </div>
+                                    <div class="col-2">
+                                        <select class="formStyle"  id="projectId">
+                                            <option>Skills</option>
+                                            <!-- <option id="option_txt" *ngFor="let projectId of projectIdArr" [value]="projectId">{{projectId}}</option> -->
+                                        </select>                                
+                                    </div>
+                                    <div class="col-2">
+                                        <input type="text" placeholder="Start Date  ">
+                                    </div>
+                                    <div class="col-2">
+                                        <input type="text" placeholder="End Date  ">
+                                    </div>
+                                    </div>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <input type="text" placeholder="Employer Name">
+                                    </div>
+                                    <div class="col-2">
+                                        <select class="formStyle"  id="projectId">
+                                            <option>Region</option>
+                                            <!-- <option id="option_txt" *ngFor="let projectId of projectIdArr" [value]="projectId">{{projectId}}</option> -->
+                                        </select>                                 
+                                    </div>
+                                    <div class="col-2">
+                                        <input type="text" placeholder="Budget">
+                                    </div>
+                                    <div class="col-5">
+                                            <button class="btn viewprofile1" (click)="onSearch()">Search</button>
+    
+                                    </div>
                                 </div>
-                                <div class="col-2">
-                                     <input type="text" placeholder="Project Name">
-                                </div>
-                                <div class="col-2">
-                                    <select class="formStyle"  id="projectId">
-                                        <option>Domain</option>
-                                        <!-- <option id="option_txt" *ngFor="let projectId of projectIdArr" [value]="projectId">{{projectId}}</option> -->
-                                    </select>
-                                </div>
-                                <div class="col-2">
-                                    <select class="formStyle"  id="projectId">
-                                        <option>Skills</option>
-                                        <!-- <option id="option_txt" *ngFor="let projectId of projectIdArr" [value]="projectId">{{projectId}}</option> -->
-                                    </select>                                
-                                </div>
-                                <div class="col-2">
-                                    <input type="text" placeholder="Start Date  ">
-                                </div>
-                                <div class="col-2">
-                                    <input type="text" placeholder="End Date  ">
-                                </div>
-                                </div>
-                            <div class="row">
-                                <div class="col-3">
-                                    <input type="text" placeholder="Employer Name">
-                                </div>
-                                <div class="col-2">
-                                    <select class="formStyle"  id="projectId">
-                                        <option>Region</option>
-                                        <!-- <option id="option_txt" *ngFor="let projectId of projectIdArr" [value]="projectId">{{projectId}}</option> -->
-                                    </select>                                 
-                                </div>
-                                <div class="col-2">
-                                    <input type="text" placeholder="Budget">
-                                </div>
-                                <div class="col-5">
-                                        <button class="btn viewprofile1" (click)="onSearch()">Search</button>
-
-                                </div>
+    
                             </div>
-
-                        </div>
-                    </form>
-            </div>   
-        </div>
-
-        <ul class="nav nav-tabs options">
-                <li class="active"><a  data-toggle="tab" aria-expanded="true" href="#home">Recommendations</a></li>
-                <li><a data-toggle="tab" href="#menu1">Invitations</a></li>
-              </ul>
-              
-              <div class="tab-content">
-                <div id="home" class="tab-pane fade in active">
-                        <h4>Recommended Work Packages</h4>
-                        <swiper [config]="config">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
-                                       
-                                        <div class="row">
-                                            <div class="col-md-4">                                 
-                                                <div class="card ">
-                                                    <div  class="card-body ">                    
-                                                        <div class="center">
-                                                            <h5>Create A website for 'X-Company'</h5>
-                                                            <hr> 
-                                                        </div>
-                                                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis unde fugiat reiciendis accusantium vitae hic fuga nostrum temporibus laboriosam corrupti exercitationem, consectetur a, blanditiis quisquam nihil? Atque numquam sed labore.Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis unde fugiat reiciendis accusantium vitae hic fuga nostrum temporibus laboriosam corrupti exercitationem, consectetur a, blanditiis quisquam nihil? Atque numquam sed labore.Corporis unde fugiatra</p>
-                                                            
-                                                        <div class="row">
-                                                            <div class="col-3">
-                                                                <label class="text-muted1">Employer :</label>
-                                                            </div>
-                                                            <div class="col-8">
-                                                                <img class="img-circle" src="../../../../../../assets/images/12.jpg"><span class="text-muted2">Isha Johari</span>
-                                                            </div> 
-                                                        </div>
-            
-                                                        <div class="row">
-                                                            <div class="col-6">
-                                                                    <div class="row">
-                                                                            <div class="col-6">
-                                                                                <label class="text-muted">Budget :</label>
-                                                                            </div>
-                                                                            <div class="col-6">
-                                                                                $400
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row">
-                                                                                <div class="col-6">
-                                                                                    <label class="text-muted">Country :</label>
-                                                                                </div>
-                                                                                <div class="col-6">
-                                                                                        <!-- <img src="../../../../assets/images/india-flag-icon-62.png"> -->
-                                                                                India
-                                                                                </div>
-                                                                            </div>
-                            
-                                                            </div>
-                                                            <div class="col-6">
-                                                                    <div class="row">
-                                                                            <div class="col-6">
-                                                                                <label class="text-muted">Duration :</label>
-                                                                            </div>
-                                                                            <div class="col-6">
-                                                                                6 Months
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <div class="col-6">
-                                                                                <label class="text-muted">Start Date :</label>
-                                                                            </div>
-                                                                            <div class="col-6">
-                                                                                3 July 2019
-                                                                            </div>
-                                                                        </div>
-                                                            </div>
-                                                        </div>
-                                                       
-                                                        <div class="row">
-                                                                <div class="col-3">
-                                                                    <label class="text-muted">Skills :</label>
-                                                                </div>
-                                                                <div class="col-9">
-                                                                   Php, Java , Html5 , CSS3
-                                                                </div>
-                                                            </div>
-                                                          
-                                                       
-                                                        <button class="btn apply-button" (click)="show = !show" ng-model="show">Apply </button>
-                                                        <button class="btn viewprofile2" (click)="show = !show" ng-model="show">Show Details </button>
-                                                    </div>
-                                                </div>
-                
-                                            </div>
-                                            <div class="col-md-4">                                 
+                        </form>
+                </div>   
+            </div>
+    
+            <ul class="nav nav-tabs options">
+                    <li class="active"><a  data-toggle="tab" aria-expanded="true" href="#home">Recommendations</a></li>
+                    <li><a data-toggle="tab" href="#menu1">Invitations</a></li>
+                  </ul>
+                  
+                  <div class="tab-content">
+                    <div id="home" class="tab-pane fade in active">
+                            <h4>Recommended Work Packages</h4>
+                            <swiper [config]="config">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                           
+                                            <div class="row">
+                                                <div class="col-md-4">                                 
                                                     <div class="card ">
                                                         <div  class="card-body ">                    
                                                             <div class="center">
@@ -203,6 +129,7 @@
                                                                             </div>
                                                                 </div>
                                                             </div>
+                                                           
                                                             <div class="row">
                                                                     <div class="col-3">
                                                                         <label class="text-muted">Skills :</label>
@@ -212,6 +139,7 @@
                                                                     </div>
                                                                 </div>
                                                               
+                                                           
                                                             <button class="btn apply-button" (click)="show = !show" ng-model="show">Apply </button>
                                                             <button class="btn viewprofile2" (click)="show = !show" ng-model="show">Show Details </button>
                                                         </div>
@@ -285,271 +213,347 @@
                                                                         </div>
                                                                     </div>
                                                                   
-                                                                
-                                                               
                                                                 <button class="btn apply-button" (click)="show = !show" ng-model="show">Apply </button>
                                                                 <button class="btn viewprofile2" (click)="show = !show" ng-model="show">Show Details </button>
                                                             </div>
-                                                        </div>                     
+                                                        </div>
+                        
                                                     </div>
-                                           
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Add Pagination -->
-                                <div class="swiper-pagination"></div>
-                                <!-- Add Arrows -->
-                                <div class="swiper-button-next"></div>
-                                <div class="swiper-button-prev"></div>
-                            </swiper>
-            
-                              <div class="modal" id="myModal" [style.display]="showModal ? 'block' : 'none'">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="center">
-                                                <h6>Project Description</h6>
+                                                    <div class="col-md-4">                                 
+                                                            <div class="card ">
+                                                                <div  class="card-body ">                    
+                                                                    <div class="center">
+                                                                        <h5>Create A website for 'X-Company'</h5>
+                                                                        <hr> 
+                                                                    </div>
+                                                                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis unde fugiat reiciendis accusantium vitae hic fuga nostrum temporibus laboriosam corrupti exercitationem, consectetur a, blanditiis quisquam nihil? Atque numquam sed labore.Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis unde fugiat reiciendis accusantium vitae hic fuga nostrum temporibus laboriosam corrupti exercitationem, consectetur a, blanditiis quisquam nihil? Atque numquam sed labore.Corporis unde fugiatra</p>
+                                                                        
+                                                                    <div class="row">
+                                                                        <div class="col-3">
+                                                                            <label class="text-muted1">Employer :</label>
+                                                                        </div>
+                                                                        <div class="col-8">
+                                                                            <img class="img-circle" src="../../../../../../assets/images/12.jpg"><span class="text-muted2">Isha Johari</span>
+                                                                        </div> 
+                                                                    </div>
+                        
+                                                                    <div class="row">
+                                                                        <div class="col-6">
+                                                                                <div class="row">
+                                                                                        <div class="col-6">
+                                                                                            <label class="text-muted">Budget :</label>
+                                                                                        </div>
+                                                                                        <div class="col-6">
+                                                                                            $400
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                            <div class="col-6">
+                                                                                                <label class="text-muted">Country :</label>
+                                                                                            </div>
+                                                                                            <div class="col-6">
+                                                                                                    <!-- <img src="../../../../assets/images/india-flag-icon-62.png"> -->
+                                                                                            India
+                                                                                            </div>
+                                                                                        </div>
+                                        
+                                                                        </div>
+                                                                        <div class="col-6">
+                                                                                <div class="row">
+                                                                                        <div class="col-6">
+                                                                                            <label class="text-muted">Duration :</label>
+                                                                                        </div>
+                                                                                        <div class="col-6">
+                                                                                            6 Months
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="col-6">
+                                                                                            <label class="text-muted">Start Date :</label>
+                                                                                        </div>
+                                                                                        <div class="col-6">
+                                                                                            3 July 2019
+                                                                                        </div>
+                                                                                    </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                            <div class="col-3">
+                                                                                <label class="text-muted">Skills :</label>
+                                                                            </div>
+                                                                            <div class="col-9">
+                                                                               Php, Java , Html5 , CSS3
+                                                                            </div>
+                                                                        </div>
+                                                                      
+                                                                    
+                                                                   
+                                                                    <button class="btn apply-button" (click)="show = !show" ng-model="show">Apply </button>
+                                                                    <button class="btn viewprofile2" (click)="show = !show" ng-model="show">Show Details </button>
+                                                                </div>
+                                                            </div>                     
+                                                        </div>
+                                               
                                             </div>
-                    
-                                        <!-- Modal Header -->
-                                        <div class="modal-header">
-                    
-                                            <!-- <h4 class="modal-title">User Details:</h4> -->
-                                        </div>
-                                        
-                                        <!-- Modal body -->
-                                        <div class="modal-body">
-                                            <p>{{description}}</p>
-                                            
-                                        </div>
-                                        
-                                        <!-- Modal footer -->
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-warning" data-dismiss="modal" (click) = "hide()">Close</button>
-                                        </div>
-                                        
                                         </div>
                                     </div>
-                                </div>
-                </div>
-                <div id="menu1" aria-expanded="false" class="tab-pane fade">
-                  
+                                    <!-- Add Pagination -->
+                                    <div class="swiper-pagination"></div>
+                                    <!-- Add Arrows -->
+                                    <div class="swiper-button-next"></div>
+                                    <div class="swiper-button-prev"></div>
+                                </swiper>
                 
-                <h4>Invitations</h4>
-                <table class="table table-hover table-dark table-custom spacing8">
-                        <thead>
-                          <tr>
-                            <th scope="col">Project Id</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Skill Details</th>
-                            <th scope="col">Duration</th>
-                            <th scope="col">Start Date</th>
-                            <th scope="col">End Date</th>
-                            <th scope="col">Employer</th>
-                            <th scope="col">Region</th>
-                            <th scope="col">Budget</th>
-                            <th scope="col">Action</th>
-                          </tr>
-                        </thead>
-                        <tbody *ngFor="let data of allInvitations">
-                          <tr>
-                            <th scope="row" class="setwidth" (click)="showModel()">{{data.projectId}}</th>
-                            <td class="setwidth">
-                                <button class="btn viewprofile" (click)="onClick($event)">view</button>
-                            </td>
-                            <td class="setwidth"><button class="btn viewprofile" (click)="onClick($event)">view</button></td>
-                            <td  class="setwidth">{{data.duration}}</td>
-                            <td class="setwidth">{{data.startDate}}</td>
-                            <td class="setwidth">{{data.endDate}}</td>
-                            <td class="setwidthimg"><img class="img-circle" src="../../../../../../assets/images/12.jpg">  {{data.employer}}</td>
-                            <td class="setwidth">{{data.region}}</td>
-                            <td>{{data.budget}}</td>
-                            <td><button class="btn btn-accept">Accept</button><button class="btn btn-reject">Reject</button></td>
-                          </tr>
-                        </tbody>
-                      </table>
-    
-                      <div class="modal" id="myModal" [style.display]="showModal ? 'block' : 'none'">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="center">
-                                        <h6>Project Description</h6>
+                                  <div class="modal" id="myModal" [style.display]="showModal ? 'block' : 'none'">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="center">
+                                                    <h6>Project Description</h6>
+                                                </div>
+                        
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                        
+                                                <!-- <h4 class="modal-title">User Details:</h4> -->
+                                            </div>
+                                            
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+                                                <p>{{description}}</p>
+                                                
+                                            </div>
+                                            
+                                            <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-warning" data-dismiss="modal" (click) = "hide()">Close</button>
+                                            </div>
+                                            
+                                            </div>
+                                        </div>
                                     </div>
-            
-                                <!-- Modal Header -->
-                                <div class="modal-header">
-            
-                                    <!-- <h4 class="modal-title">User Details:</h4> -->
-                                </div>
-                                
-                                <!-- Modal body -->
-                                <div class="modal-body">
-                                    <p>{{description}}</p>
+                    </div>
+                    <div id="menu1" aria-expanded="false" class="tab-pane fade">
+                      
+                    
+                    <h4>Invitations</h4>
+                    <table class="table table-hover table-dark table-custom spacing8">
+                            <thead>
+                              <tr>
+                                <th scope="col">Project Id</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Skill Details</th>
+                                <th scope="col">Duration</th>
+                                <th scope="col">Start Date</th>
+                                <th scope="col">End Date</th>
+                                <th scope="col">Employer</th>
+                                <th scope="col">Region</th>
+                                <th scope="col">Budget</th>
+                                <th scope="col">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let data of allInvitations">
+                              <tr>
+                                <th scope="row" class="setwidth" (click)="showModel()">{{data.projectId}}</th>
+                                <td class="setwidth">
+                                    <button class="btn viewprofile" (click)="onClick($event)">view</button>
+                                </td>
+                                <td class="setwidth"><button class="btn viewprofile" (click)="onClick($event)">view</button></td>
+                                <td  class="setwidth">{{data.duration}}</td>
+                                <td class="setwidth">{{data.startDate}}</td>
+                                <td class="setwidth">{{data.endDate}}</td>
+                                <td class="setwidthimg"><img class="img-circle" src="../../../../../../assets/images/12.jpg">  {{data.employer}}</td>
+                                <td class="setwidth">{{data.region}}</td>
+                                <td>{{data.budget}}</td>
+                                <td><button class="btn btn-accept">Accept</button><button class="btn btn-reject">Reject</button></td>
+                              </tr>
+                            </tbody>
+                          </table>
+        
+                          <div class="modal" id="myModal" [style.display]="showModal ? 'block' : 'none'">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="center">
+                                            <h6>Project Description</h6>
+                                        </div>
+                
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                
+                                        <!-- <h4 class="modal-title">User Details:</h4> -->
+                                    </div>
                                     
-                                </div>
-                                
-                                <!-- Modal footer -->
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-warning" data-dismiss="modal" (click) = "hide()">Close</button>
-                                </div>
-                                
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <p>{{description}}</p>
+                                        
+                                    </div>
+                                    
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-warning" data-dismiss="modal" (click) = "hide()">Close</button>
+                                    </div>
+                                    
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                      
-              </div>
-
-
-              <div class="row container-fluid" *ngIf="show" id="divshow" >
-                    <h4>Project Details</h4>
-
-                    <div class="card">
-
-                            <div class="card-body">
-                                <div class="row ">
-                                    <div class="col-2">
-                                        <label class="text-muted">Project Name :</label>
-                                    </div>
-                                    <div class="col-4">
-                                        <h6> {{projectName}} </h6>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-2">
-                                        <label class="text-muted"> Description :</label>
-                                    </div>
-                                    <div class="col-9">
-                                        <h6>{{projectDesc}}</h6>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <label class="text-muted">Budget :</label>
-                                            </div>
-                                            <div class="col-6">
-                                                <h6>{{budget}}</h6>
-                                            </div>
+    
+                          
+                  </div>
+    
+    
+                  <div class="row container-fluid" *ngIf="show" id="divshow" >
+                        <h4>Project Details</h4>
+    
+                        <div class="card">
+    
+                                <div class="card-body">
+                                    <div class="row ">
+                                        <div class="col-2">
+                                            <label class="text-muted">Project Name :</label>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <label class="text-muted">Estimated cost :</label>
-                                            </div>
-                                            <div class="col-6">
-                                                <h6>{{estimatedCost}}</h6>
-                                            </div>
+                                        <div class="col-4">
+                                            <h6> {{projectName}} </h6>
                                         </div>
-                                       
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <label class="text-muted"> Description :</label>
+                                        </div>
+                                        <div class="col-9">
+                                            <h6>{{projectDesc}}</h6>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
                                             <div class="row">
-                                                    <div class="col-6">
-                                                        <label class="text-muted">Complexity Level:</label>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <h6>{{complexity}}</h6>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                        <div class="col-6">
-                                                            <label class="text-muted">start Date :</label>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <h6>{{startDate}}</h6>
-                                                        </div>
-                                                    </div>
-                                      
-                                    </div>  
-                                    <div class="col-md-3">
-                                            
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <label class="text-muted">Duration From :</label>
-                                            </div>
-                                            <div class="col-6">
-                                                <h6>{{fromDate}}</h6>
-                                            </div>
-                                        </div>
-                                        <div class="row">
                                                 <div class="col-6">
-                                                    <label class="text-muted">Duration To :</label>
+                                                    <label class="text-muted">Budget :</label>
                                                 </div>
                                                 <div class="col-6">
-                                                    <h6>{{toDate}}</h6>
+                                                    <h6>{{budget}}</h6>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <label class="text-muted">Estimated cost :</label>
+                                                </div>
+                                                <div class="col-6">
+                                                    <h6>{{estimatedCost}}</h6>
                                                 </div>
                                             </div>
                                            
-                                    </div>    
-                                    <div class="col-md-3">
-                                            
+                                        </div>
+                                        <div class="col-md-3">
+                                                <div class="row">
+                                                        <div class="col-6">
+                                                            <label class="text-muted">Complexity Level:</label>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <h6>{{complexity}}</h6>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                            <div class="col-6">
+                                                                <label class="text-muted">start Date :</label>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <h6>{{startDate}}</h6>
+                                                            </div>
+                                                        </div>
+                                          
+                                        </div>  
+                                        <div class="col-md-3">
+                                                
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <label class="text-muted">Duration From :</label>
+                                                </div>
+                                                <div class="col-6">
+                                                    <h6>{{fromDate}}</h6>
+                                                </div>
+                                            </div>
                                             <div class="row">
                                                     <div class="col-6">
-                                                        <label class="text-muted">Team Required :</label>
+                                                        <label class="text-muted">Duration To :</label>
                                                     </div>
-                                                    <div class="col-3">
-                                                        <h6>yes</h6>
+                                                    <div class="col-6">
+                                                        <h6>{{toDate}}</h6>
                                                     </div>
                                                 </div>
                                                
-                                        </div>
-                                    
+                                        </div>    
+                                        <div class="col-md-3">
+                                                
+                                                <div class="row">
+                                                        <div class="col-6">
+                                                            <label class="text-muted">Team Required :</label>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <h6>yes</h6>
+                                                        </div>
+                                                    </div>
+                                                   
+                                            </div>
+                                        
+                                    </div>
+                                  
                                 </div>
-                              
-                            </div>
-                            <form class="table-responsive">
-                                    <table class="table table-dark  table-bordered worktable">
-                                        <thead>
-                                            <tr>
-                                            <th>Skill</th>
-                                            <th >Expertise</th>  
-                                            <th class="setWidth">Part-time/full-time </th>
-                                            <th class="setWidth">No. of team members</th>
-                                            <th class="setWidth">Regional Preference</th>
-                                            <th class="setWidth">Rate/hour</th>
-                                            <th class="setWidth">Avg. Rate/hour</th>
-                                            <th class="setWidth">Currency</th>
-                                            <th class="setWidth">Start Date </th>
-                                            <th class="setWidth">End Date</th>
-                                            <th class="setWidth">Action</th>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                            <td>php</td>
-                                            <td>Bigginer</td>
-                                            <td>Part Time</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><button class="btn apply-skill">Apply</button> </td>                                            
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td> </td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-
+                                <form class="table-responsive">
+                                        <table class="table table-dark  table-bordered worktable">
+                                            <thead>
+                                                <tr>
+                                                <th>Skill</th>
+                                                <th >Expertise</th>  
+                                                <th class="setWidth">Part-time/full-time </th>
+                                                <th class="setWidth">No. of team members</th>
+                                                <th class="setWidth">Regional Preference</th>
+                                                <th class="setWidth">Rate/hour</th>
+                                                <th class="setWidth">Avg. Rate/hour</th>
+                                                <th class="setWidth">Currency</th>
+                                                <th class="setWidth">Start Date </th>
+                                                <th class="setWidth">End Date</th>
+                                                <th class="setWidth">Action</th>
+    
                                                 </tr>
-                                        </tbody>
-                                    </table>
-                                </form>    
-                                <button class="btn apply-button1">Apply</button>                                              
-                        </div>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                <td>php</td>
+                                                <td>Bigginer</td>
+                                                <td>Part Time</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><button class="btn apply-skill">Apply</button> </td>                                            
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td> </td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+    
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                    </form>    
+                                    <button class="btn apply-button1">Apply</button>                                              
+                            </div>
+                </div>
+                  
             </div>
-              
-        </div>
-    </div>  
+    </div>
+</div>
+     
+  
            

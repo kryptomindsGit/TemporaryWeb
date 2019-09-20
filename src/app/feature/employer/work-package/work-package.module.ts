@@ -9,9 +9,10 @@ import { EditComponent } from './component/edit/edit.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AllWorkPackagesComponent } from './component/all-work-packages/all-work-packages.component';
+import { SearchFreelancerComponent } from './component/search-freelancer/search-freelancer.component';
 
 @NgModule({
-  declarations: [WorkPackageComponent, AddComponent, ViewComponent, EditComponent, AllWorkPackagesComponent],
+  declarations: [WorkPackageComponent, AddComponent, ViewComponent, EditComponent, AllWorkPackagesComponent, SearchFreelancerComponent],
   imports: [
     CommonModule,
     WorkPackageRoutingModule,

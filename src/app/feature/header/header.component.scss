@@ -10,8 +10,12 @@
 
 nav {
     background: $bg-front-color;
-    font-family: 'Neo Latina';
+    font-family: "Montserrat Regular";
     width:100%;
+}
+
+.role-name{
+    font-size:0.8rem;    
 }
 
 .navbar-nav>li>.dropdown-menu {

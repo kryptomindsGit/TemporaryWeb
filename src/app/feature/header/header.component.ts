@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/auth/shared/service/auth.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
+emailName:any;
   public userRole: any;
   public email_id: any;
   public congnitoID: any;
@@ -59,6 +59,12 @@ export class HeaderComponent implements OnInit {
       console.log("Email Id is : " + this.email_id);
 
     }
+
+    var baseName =this.email_id;
+    console.log("log");
+    
+    baseName = baseName.substring(0, baseName.indexOf('@'));
+    this.emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1);
 
   }
 

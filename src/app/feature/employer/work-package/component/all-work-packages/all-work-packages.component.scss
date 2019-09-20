@@ -4,25 +4,13 @@
       BASIC CSS
 -------------------------------------------------------------------------*/
 
-.section {
-  font: 14px "Montserrat";
+.section{
+  font: 14px "Montserrat Regular";
   background-color: $bg-back-color;
   color: $text-color;
-  overflow: scroll;
   font-weight: 400;
-  width: 85%;
-  height: 100vh;
-  position: fixed;
-}
-
-.scrollbody {
-  overflow-y: auto;
-  max-height: 100vh;
-}
-
-.container {
-  max-width: 90% !important;
-  position: relative;
+  height:100vh;
+  margin-top:90px;
 }
 
 p {
