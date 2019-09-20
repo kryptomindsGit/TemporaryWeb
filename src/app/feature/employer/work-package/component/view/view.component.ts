@@ -93,7 +93,7 @@ export class ViewComponent implements OnInit {
     this.__workService.getSkillPackageData(id).then((resData: any) => {
       console.log("Data of skills" + resData.responseObject);
       this.skillArr = resData.responseObject;
-      console.log("Data of skills" + resData.responseObject);
+      console.log("Data of skills" ,this.skillArr);
       localStorage.removeItem("workpackageId");
 
     });

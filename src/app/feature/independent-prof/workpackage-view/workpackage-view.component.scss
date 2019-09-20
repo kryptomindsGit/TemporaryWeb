@@ -61,6 +61,7 @@ CARD CSS
   background: $bg-front-color;
   border-top: 1px solid rgba(255, 255, 255, 0.09);
   padding: 1rem !important;
+  font-family: "Montserrat Regular";
 }
 
 .text-muted {
@@ -250,7 +251,7 @@ textarea {
   box-sizing: border-box;
   display: block;
   border: none;
-  font-family: sans-serif;
+  font-family: "Montserrat Regular";;
   color: $text-color;
   background: transparent;
   border-bottom: 1px solid $text-color;

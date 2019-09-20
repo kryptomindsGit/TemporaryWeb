@@ -40,12 +40,21 @@ export class AllWorkPackagesComponent implements OnInit {
  
   }
   gotoWorkpackage(index){
-    this.setWorkId(index);
+    console.log("index :" ,index);
+    this.wpId = this.workArr[index].workPackageId; 
+    console.log("wp id is :" ,this.wpId);
+    this.wpId = this.workArr[index].workPackageId;
+    localStorage.setItem("workpackageId",this.wpId);
+ 
     this.__router.navigate(['/feature/feature/full-layout/employer/emp/workpackage/workpack/view/',this.wpId])
   }
   
   gotoPayment(index){
-    this.setWorkId(index);
+    console.log("index :" ,index);
+    this.wpId = this.workArr[index].workPackageId; 
+    console.log("wp id is :" ,this.wpId);
+    this.wpId = this.workArr[index].workPackageId;
+    localStorage.setItem("workpackageId",this.wpId);
     this.__router.navigate(['/feature/feature/full-layout/employer/emp/smartpayment/',this.wpId])
   }
 }

@@ -15,8 +15,8 @@ export class SearchFreelancerComponent implements OnInit {
   ngOnInit() {
   }
 
-  // goBacktoWork(index){
-  //   this.__router.navigate(['/feature/feature/full-layout/employer/emp/workpackage/workpack/view/',index])
-  // }
+  goBacktoWork(){
+    this.__router.navigate(['/feature/feature/full-layout/employer/emp/workpackage/workpack/viewall'])
+  }
 
 }
