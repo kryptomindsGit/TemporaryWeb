@@ -4,6 +4,8 @@ import { IndeptProfileService } from '../../shared/service/profile.service';
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
+import { saveAs } from 'file-saver';
+
 @Component({
   selector: 'app-view',
   templateUrl: './view.component.html',
@@ -91,7 +93,6 @@ export class ViewComponent implements OnInit {
     this.__profileService.getFreelancerOrgById(this.email_addr).then((data: any) => {
       this.freelancerOrgArr = data;
       console.log("freelancerOrgArr", this.freelancerOrgArr);
-
     });
   }
 
@@ -119,8 +120,9 @@ export class ViewComponent implements OnInit {
   getFreelancerDocuments() {
     this.__profileService.getFreelancerDocumentById(this.email_addr).then((resData: any) => {
       this.freeDocsArr = resData;
-      console.log("Documents:", this.freeDocsArr);
-
+      // for (let index = 0; index < this.freeDocsArr.length; index++) {
+      //   console.log("Documents:", this.freeDocsArr[index].doc_name);
+      // }
     });
   }
 
@@ -133,14 +135,19 @@ export class ViewComponent implements OnInit {
 
   getHashDataBlockChainPDF(fileName) {
     console.log("File ", fileName);
+    var filesave = fileName.substring(fileName.lastIndexOf("-") + 1);
+    console.log("file save:", filesave);
 
     this.__profileService.getDocHashData(fileName).then((data) => {
       console.log("Blockchain get data done", data);
 
       var file = new Blob([data.body], { type: 'application/octet-stream' });
-      var fileURL = URL.createObjectURL(file);
+      // var fileURL = URL.createObjectURL(file);
       // window.open(fileURL);
-      window.open(fileURL, '_blank');
+      console.log(" Download URL :", file);
+      saveAs(file, filesave);
+
+      // window.open(fileURL, '_blank');
     })
   }
 
