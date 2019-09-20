@@ -5,7 +5,7 @@
 -------------------------------------------------------------------------*/
 
 // .section {
-//   font: 14px "Montserrat", sans-serif;
+//  font: 14px "Montserrat";
 //   background-color: $bg-back-color;
 //   color: $text-color;
 //   overflow: scroll;
@@ -16,7 +16,7 @@
 // }
 
 .container {
-  font: 14px "Montserrat", sans-serif;
+  font: 14px "Montserrat";
   background-color: $bg-back-color;
   color: $text-color;
   // overflow: scroll;
@@ -275,20 +275,21 @@ input[type=checkbox] {
 
 // Work Pacakage
 
-.calbutton{
+.calbutton {
   font-size: 0.6rem;
   color: #ffffff;
   width: 3.8rem;
   height: 1.5rem;
   background: #064d86;
-  border-radius:0.5rem;
+  border-radius: 0.5rem;
 }
-.noborder{
+
+.noborder {
   border: none !important;
 }
 
-.setwidth1{
-  width:12rem;
+.setwidth1 {
+  width: 12rem;
 }
 
 .viewprofile {
@@ -333,11 +334,12 @@ input[type=checkbox] {
 }
 
 
-.setright{
-  margin-left:1rem;
+.setright {
+  margin-left: 1rem;
 }
-.settop{
-  margin-top:1rem;
+
+.settop {
+  margin-top: 1rem;
 }
 
 .dropdown-menu {

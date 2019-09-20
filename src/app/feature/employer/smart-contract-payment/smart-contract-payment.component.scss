@@ -5,7 +5,7 @@
 -------------------------------------------------------------------------*/
 
 // .container {
-//   font: 14px "Montserrat", sans-serif;
+//  font: 14px "Montserrat";
 //   background-color: $bg-back-color;
 //   color: $text-color;
 //   overflow: scroll;
@@ -17,7 +17,7 @@
 // }
 
 .container {
-  font: 14px "Montserrat", sans-serif;
+  font: 14px "Montserrat";
   background-color: $bg-back-color;
   color: $text-color;
   padding: 1rem;
@@ -277,17 +277,16 @@ input[type=checkbox] {
   background-color: #ffffff;
 }
 
-.noborder{
+.noborder {
   border: none !important;
 }
 
-h5{
+h5 {}
 
-}
 span {
   color: red;
-  font-size:1rem;
-  margin-left:0.2rem;
+  font-size: 1rem;
+  margin-left: 0.2rem;
 }
 
 #option {

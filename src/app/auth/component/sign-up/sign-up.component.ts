@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../shared/service/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { IndeptProfileService } from 'src/app/feature/independent-prof/profile/shared/service/profile.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -17,17 +18,22 @@ export class SignUpComponent implements OnInit {
   //Variables
   public loading = false;
   public showMsg: string;
+
+  //Array's
   public showMsgCognito: any = [];
+  public countryArr: any = [];
 
   constructor(
     private __fb: FormBuilder,
     private __authService: AuthService,
     private __router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private __profileService: IndeptProfileService,
   ) { }
 
   ngOnInit() {
     this.valData();
+    this.getAllCountry();
   }
 
   /**
@@ -42,6 +48,18 @@ export class SignUpComponent implements OnInit {
       custom_role: ['', Validators.required],
       custom_country: ['', [Validators.required, Validators.pattern('^[a-zA-Z \-\']+')]]
     });
+  }
+
+  /**
+  * @method getAllCountry
+  * @description get all country values.
+  */
+  getAllCountry() {
+    this.__profileService.getFreelancerCountry().then((resData: any) => {
+      this.countryArr = resData;
+      console.log("countryArr:", this.countryArr);
+
+    })
   }
 
   /**

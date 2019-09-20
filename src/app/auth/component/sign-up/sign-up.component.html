@@ -27,6 +27,7 @@
                 <div class="form-group form-input">
                     <input type="password" formControlName="password" name="name" id="password" value="" required />
                     <label for="password" class="form-label">Password</label>
+                    <span class="text-font">( Enter one capital, one special, minimum 6 character )</span>
 
                     <div *ngIf="signupForm.controls['password'].invalid && (signupForm.controls['password'].dirty || signupForm.controls['password'].touched)"
                         class="text-danger error-msg">
@@ -38,14 +39,19 @@
                     <div *ngIf="signupForm.controls['password'].invalid && (signupForm.controls['password'].dirty || signupForm.controls['password'].touched)"
                         class="text-danger error-msg">
                         <div *ngIf="signupForm.controls['password'].errors.minLength">
-                            require min 6 character.
+                            Require min 6 character.
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group form-input">
-                    <input type="text" formControlName="custom_country" name="name" id="country" value="" required />
-                    <label for="country" class="form-label">Country</label>
+                    <!-- <label for="country" class="form-label">Country</label> -->
+                    <select formControlName="custom_country">
+                        <option disabled value="">Country</option>
+                        <option *ngFor="let country of countryArr" [ngValue]="country.name">
+                            {{country.name}}
+                        </option>
+                    </select>
 
                     <div *ngIf="signupForm.controls['custom_country'].invalid && (signupForm.controls['custom_country'].dirty || signupForm.controls['custom_country'].touched)"
                         class="text-danger error-msg">
@@ -58,7 +64,7 @@
                 <div class="form-group form-input">
                     <input type="text" formControlName="phone_no" name="name" id="phone_number" value="" required />
                     <label for="phone_number" class="form-label">Phone Number</label>
-
+                    <span class="text-font">( Enter Phone number formate ex: +91 and 10 digit )</span>
                     <div *ngIf="signupForm.controls['phone_no'].invalid && (signupForm.controls['phone_no'].dirty || signupForm.controls['phone_no'].touched)"
                         class="text-danger error-msg">
                         <div [hidden]="!signupForm.controls['phone_no'].errors.required">
@@ -69,26 +75,29 @@
 
                 <br>
                 <div class="form-group form-input">
+                    <label for="custom_role" class="form-label text-center">Select your Role</label>
+                </div>
+                <div class="form-group form-input">
                     <div class="row">
-                        <!-- <div class="form-group form-input"> -->
                         <div class="col-4">
                             <label class="radio-inline">
                                 <input type="radio" formControlName="custom_role" name="custom_role"
-                                    (keyup.enter)="focusableSubmit.click()" value="Freelancer"
-                                    class="radiobutton">Freelancer
+                                    (keyup.enter)="focusableSubmit.click()" value="Freelancer" class="radiobutton">
+                                Freelancer
                             </label>
                         </div>
                         <div class="col-4">
                             <label class="radio-inline">
                                 <input type="radio" formControlName="custom_role" name="custom_role"
-                                    (keyup.enter)="focusableSubmit.click()" value="Employer"
-                                    class="radiobutton">Employer
+                                    (keyup.enter)="focusableSubmit.click()" value="Employer" class="radiobutton">
+                                Employer
                             </label>
                         </div>
                         <div class="col-4">
                             <label class="radio-inline">
                                 <input type="radio" formControlName="custom_role" name="custom_role"
-                                    (keyup.enter)="focusableSubmit.click()" value="Partner" class="radiobutton">Partner
+                                    (keyup.enter)="focusableSubmit.click()" value="Partner" class="radiobutton">
+                                Partner
                             </label>
                         </div>
 

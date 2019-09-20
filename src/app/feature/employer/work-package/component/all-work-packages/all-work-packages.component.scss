@@ -1,38 +1,39 @@
 @import "../../../../../../assets/css/theme_colors";
-     
+
 /*-----------------------------------------------------------------------
       BASIC CSS
 -------------------------------------------------------------------------*/
 
-.section{
-  font: 14px "Montserrat", sans-serif;
+.section {
+  font: 14px "Montserrat";
   background-color: $bg-back-color;
   color: $text-color;
   overflow: scroll;
   font-weight: 400;
-   width:85%;
-  height:100vh;
+  width: 85%;
+  height: 100vh;
   position: fixed;
 }
 
-.scrollbody{
+.scrollbody {
   overflow-y: auto;
   max-height: 100vh;
 }
-.container{
-max-width: 90% !important;
-position: relative;
+
+.container {
+  max-width: 90% !important;
+  position: relative;
 }
 
-p{
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 hr {
   box-sizing: content-box;
   height: 0;
-  border-top: 1px solid rgba(255,255,255,0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 
@@ -41,50 +42,51 @@ CARD CSS
 -------------------------------------------------------------------------*/
 
 .card {
-  widows: 70%; 
+  widows: 70%;
   height: auto !important;
-  margin-top:0.3rem;;
-  float: none; 
+  margin-top: 0.3rem;
+  float: none;
   border: 0px;
   background: #282b2f;
 }
 
 
-.card-header{
+.card-header {
   background: transparent !important;
-  height :5rem;
+  height: 5rem;
 }
 
 
-.card-header1{
+.card-header1 {
   background: transparent !important;
   height: 3rem;
   text-align: center;
 }
-.card-header1 h6{
-  margin-top:1rem;
+
+.card-header1 h6 {
+  margin-top: 1rem;
   color: #04afda;
 }
 
-.worktable{
-  color: $text-color; 
+.worktable {
+  color: $text-color;
   background: transparent !important;
 }
 
 
-.card-body{
-  width:100%;
+.card-body {
+  width: 100%;
   border-radius: 3px;
-    font-weight: 400;
-    color: #a5a8ad;
-    background: #282b2f;
-    border-top: 1px solid rgba(255,255,255,0.09);
+  font-weight: 400;
+  color: #a5a8ad;
+  background: #282b2f;
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
 }
 
 
 .text-muted {
   font-size: 0.9rem;
-  color: #6c757d!important;
+  color: #6c757d !important;
   float: left;
 }
 
@@ -92,113 +94,116 @@ CARD CSS
 FORM CSS
 -------------------------------------------------------------------------*/
 form {
-  padding: 5px 5px 5px 5px; 
+  padding: 5px 5px 5px 5px;
 }
 
 .form-group {
   margin-bottom: 10px;
-  position: relative; 
+  position: relative;
 }
 
-  //View Work Package 
+//View Work Package 
 
 
 
-  .viewprofile{
-    font-size: 0.6rem;
-    color: #ffffff;
-    border-color:  rgba(178, 183, 196, 0.966) ;
-    background: transparent !important;
-    width: 10%;
-    margin-top:1rem;
-    float : left;
-  }
-
-  .viewprofile:hover{
-    border-color:  rgba(47, 105, 250, 0.966) ;
-  }
-
-  .viewprofile1{
-    font-size: 0.6rem;
-    color: #ffffff;
-    border-color:  rgba(178, 183, 196, 0.966) ;
-    background: transparent !important;
-    width: 10%;
-    margin-top:1.5rem;
-    float : right;
-
-  }
-
-  .viewprofile1:hover{
-    border-color:  rgba(47, 105, 250, 0.966) ;
-  }
-
-
-.center{
- text-align: center !important;
- font-family: "Bookman Old Style";
+.viewprofile {
+  font-size: 0.6rem;
+  color: #ffffff;
+  border-color: rgba(178, 183, 196, 0.966);
+  background: transparent !important;
+  width: 10%;
+  margin-top: 1rem;
+  float: left;
 }
 
-.setlabel{
+.viewprofile:hover {
+  border-color: rgba(47, 105, 250, 0.966);
+}
+
+.viewprofile1 {
+  font-size: 0.6rem;
+  color: #ffffff;
+  border-color: rgba(178, 183, 196, 0.966);
+  background: transparent !important;
+  width: 10%;
+  margin-top: 1.5rem;
+  float: right;
+
+}
+
+.viewprofile1:hover {
+  border-color: rgba(47, 105, 250, 0.966);
+}
+
+
+.center {
+  text-align: center !important;
+  font-family: "Bookman Old Style";
+}
+
+.setlabel {
   text-align: center !important;
 }
-.rightcol{
+
+.rightcol {
   float: right;
 }
 
-.leftcol{
+.leftcol {
   float: left;
 }
-.img-center{
-  transition:all 0.3s ease-in-out;
-  margin:0 auto;
-width:5rem;
-height:5rem;
-border-radius: 50%;
-margin-bottom:0.5rem;
+
+.img-center {
+  transition: all 0.3s ease-in-out;
+  margin: 0 auto;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
 }
 
-img{
+img {
   width: 4.0rem;
   height: 4.0rem;
   border-radius: 50%;
-  border:2px solid;
-  padding:3px;
+  border: 2px solid;
+  padding: 3px;
   border-color: #f5aa48;
-  margin-top:0.1rem;
+  margin-top: 0.1rem;
 }
 
-img:hover{
-  border:6px solid;
+img:hover {
+  border: 6px solid;
   border-color: #cc7401;
 
 
 }
 
-.headinglable{
-  margin-top:2rem;
-  color:#04afda;
+.headinglable {
+  margin-top: 2rem;
+  color: #04afda;
 
 }
 
-.headinglable1{
-  margin-top:1rem;
-  color:#04afda;
+.headinglable1 {
+  margin-top: 1rem;
+  color: #04afda;
 }
 
-.carousel-control-next, .carousel-control-prev{
-align-items: unset !important;
-width: unset !important;
+.carousel-control-next,
+.carousel-control-prev {
+  align-items: unset !important;
+  width: unset !important;
 }
 
-.cardrow{
-  margin-top:2rem;
-  margin-left:2rem;
-  margin-right:2rem;
+.cardrow {
+  margin-top: 2rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
 }
 
-.setWidth{
-  width : 7rem;
+.setWidth {
+  width: 7rem;
 }
 
 
@@ -207,15 +212,19 @@ width: unset !important;
   height: 300px;
   width: 400px;
 }
+
 .swiper-wrapper {
   box-sizing: border-box;
 }
+
 .zoom {
-  transition: transform .3s; /* Animation */
+  transition: transform .3s;
+  /* Animation */
 }
 
 .zoom:hover {
-  transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  transform: scale(1.1);
+  /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
 
 .ribbon {
@@ -223,17 +232,21 @@ width: unset !important;
   color: white;
   background: transparent !important;
 }
+
 .ribbon:nth-child(even) {
   margin-right: 4%;
 }
+
 @media (max-width: 500px) {
   .ribbon {
     width: 100%;
   }
+
   .ribbon:nth-child(even) {
     margin-right: 0%;
   }
 }
+
 .ribbon3 {
   width: 11rem;
   height: 50px;
@@ -244,10 +257,13 @@ width: unset !important;
   top: 20px;
   background: rgb(0, 66, 141);
 }
-.ribbon3:before, .ribbon3:after {
+
+.ribbon3:before,
+.ribbon3:after {
   content: "";
   position: absolute;
 }
+
 .ribbon3:before {
   height: 0;
   width: 0;
@@ -256,6 +272,7 @@ width: unset !important;
   border-bottom: 9px solid black;
   border-left: 9px solid transparent;
 }
+
 .ribbon3:after {
   height: 0;
   width: 0;
@@ -265,20 +282,23 @@ width: unset !important;
   border-left: 15px solid rgb(0, 66, 141);
 }
 
-.btnSearch{
-  float:right;
-  margin-top:0.9rem;
+.btnSearch {
+  float: right;
+  margin-top: 0.9rem;
   font-size: .8rem;
-  color:rgb(58, 56, 56);
+  color: rgb(58, 56, 56);
   background: rgb(221, 181, 3);
-  font-weight:600;
+  font-weight: 600;
 }
 
-.modal-header , .modal-body , .modal-footer , .modal-content{
-  background-color:#292828 !important;
-} 
+.modal-header,
+.modal-body,
+.modal-footer,
+.modal-content {
+  background-color: #292828 !important;
+}
 
-.seth6{
-margin-top:1rem;
-float:left;
+.seth6 {
+  margin-top: 1rem;
+  float: left;
 }

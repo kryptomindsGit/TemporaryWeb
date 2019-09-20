@@ -26,8 +26,15 @@
                 </div>
 
                 <div class="form-group form-input">
-                    <input type="text" formControlName="country" name="name" id="country" value="" required />
-                    <label for="country" class="form-label">Country</label>
+                    <!-- <input type="text" formControlName="country" name="name" id="country" value="" required />
+                    <label for="country" class="form-label">Country</label> -->
+
+                    <select formControlName="country">
+                        <option disabled value="">Country</option>
+                        <option *ngFor="let country of countryArr" [ngValue]="country.name">
+                            {{country.name}}
+                        </option>
+                    </select>
 
                     <div *ngIf="uportSignupForm.controls['country'].invalid && (uportSignupForm.controls['country'].dirty || uportSignupForm.controls['country'].touched)"
                         class="text-danger error-msg">
@@ -40,6 +47,7 @@
                 <div class="form-group form-input">
                     <input type="text" formControlName="phone_no" name="name" id="phone_number" value="" required />
                     <label for="phone_number" class="form-label">Phone Number</label>
+                    <span class="text-font">( Enter Phone number formate ex: +91 and 10 digit )</span>
 
                     <div *ngIf="uportSignupForm.controls['phone_no'].invalid && (uportSignupForm.controls['phone_no'].dirty || uportSignupForm.controls['phone_no'].touched)"
                         class="text-danger error-msg">
@@ -49,23 +57,29 @@
                     </div>
                 </div>
                 <div class="form-group form-input">
+                    <label for="custom_role" class="form-label text-center">Select your Role</label>
+                </div>
+                <div class="form-group form-input">
                     <div class="row">
                         <div class="col-4">
                             <label class="radio-inline">
                                 <input type="radio" formControlName="role" (keyup.enter)="focusableSubmit.click()"
-                                    name="role" value="Freelancer" class="radiobutton">Freelancer
+                                    name="role" value="Freelancer" class="radiobutton">
+                                Freelancer
                             </label>
                         </div>
                         <div class="col-4">
                             <label class="radio-inline">
                                 <input type="radio" formControlName="role" (keyup.enter)="focusableSubmit.click()"
-                                    name="role" value="Employer" class="radiobutton">Employer
+                                    name="role" value="Employer" class="radiobutton">
+                                Employer
                             </label>
                         </div>
                         <div class="col-4">
                             <label class="radio-inline">
                                 <input type="radio" formControlName="role" (keyup.enter)="focusableSubmit.click()"
-                                    name="role" value="Partner" class="radiobutton">Partner
+                                    name="role" value="Partner" class="radiobutton">
+                                Partner
                             </label>
                         </div>
 

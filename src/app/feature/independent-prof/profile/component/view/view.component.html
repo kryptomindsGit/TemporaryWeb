@@ -55,6 +55,12 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <th width="25%">Is Interviewer: </th>
+                                        <td>
+                                            {{freeDetailsArr.is_interviewer}}
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <th width="25%">Address: </th>
                                         <td>
                                             <li>Address Line 1 : {{freeDetailsArr.line_1}}</li>
@@ -81,9 +87,61 @@
                                     </tr>
 
                                     <tr>
-                                        <th width="25%">Country: </th>
+                                        <th width="25%">Organization:
+                                        </th>
                                         <td>
-                                            {{freeDetailsArr.country}}
+                                            <div *ngFor="let orag of freelancerOrgArr; let i=index">
+                                                <hr *ngIf="i>0">
+                                                <li>Name : {{ orag.org_name }}</li>
+                                                <li>Designation : {{ orag.org_designation }}</li>
+                                                <li>Start Date : {{ orag.start_date }}</li>
+                                                <li>End Date : {{ orag.end_date }}</li>
+                                                <li>Responsibilities : {{ orag.responsibilities }}</li>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th width="25%">Strength: </th>
+                                        <td>
+                                            {{strengthArr}}
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th width="25%">Weakness: </th>
+                                        <td>
+                                            {{weaknessArr}}
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th width="25%">Portfolio: </th>
+                                        <td>
+                                            <div *ngFor="let portfolio of freelancerPortArr; let i=index">
+                                                <li>{{ portfolio.port_addr }}</li>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th width="25%">Area of Experties: </th>
+                                        <td>
+                                            {{freeDetailsArr.area_of_experties}}
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th width="25%">Psychometric test result: </th>
+                                        <td>
+                                            {{freeDetailsArr.psyco_result}}
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th width="25%">Reference: </th>
+                                        <td>
+                                            {{freeDetailsArr.reference}}
                                         </td>
                                     </tr>
                                     <tr>

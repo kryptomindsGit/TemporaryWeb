@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../shared/service/auth.service';
 import { Router } from '@angular/router';
+import { IndeptProfileService } from 'src/app/feature/independent-prof/profile/shared/service/profile.service';
 
 @Component({
   selector: 'app-uport-sign-up',
@@ -17,14 +18,19 @@ export class UportSignUpComponent implements OnInit {
   public loading = false;
   public showMsg: string;
 
+  //Array's
+  public countryArr: any;
+
   constructor(
     private __fb: FormBuilder,
     private __authService: AuthService,
-    private __router: Router
+    private __router: Router,
+    private __profileService: IndeptProfileService
   ) { }
 
   ngOnInit() {
     this.valData();
+    this.getAllCountry();
   }
 
   hello() {
@@ -43,6 +49,18 @@ export class UportSignUpComponent implements OnInit {
       role: ['', Validators.required],
       country: ['', [Validators.required, Validators.pattern('^[a-zA-Z \-\']+')]]
     });
+  }
+
+  /**
+ * @method getAllCountry
+ * @description get all country values.
+ */
+  getAllCountry() {
+    this.__profileService.getFreelancerCountry().then((resData: any) => {
+      this.countryArr = resData;
+      console.log("countryArr:", this.countryArr);
+
+    })
   }
 
   /**

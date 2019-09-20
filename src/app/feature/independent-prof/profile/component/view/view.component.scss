@@ -4,7 +4,7 @@
       BASIC CSS
 -------------------------------------------------------------------------*/
 .container-fluid {
-    font: 14px "Montserrat", sans-serif;
+    font: 14px "Montserrat";
     background: $bg-back-color;
     color: $text-color;
     overflow: hidden;
@@ -33,6 +33,7 @@
     vertical-align: top;
     border: none !important;
 }
+
 
 .card .card-body img {
     width: 5rem;
@@ -211,10 +212,15 @@ table tbody tr th {
     font-size: 12px;
 }
 
+table tbody tr td p {
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
 table tbody tr td {
     letter-spacing: 1px;
     font-size: 12px;
-    font: 14px "Montserrat", sans-serif;
+    font: 14px "Montserrat";
 }
 
 table tbody tr {

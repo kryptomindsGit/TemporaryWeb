@@ -68,7 +68,8 @@
                                 </select>
                                 <div *ngIf="employerProfileForm.controls['country'].invalid && (employerProfileForm.controls['country'].dirty || employerProfileForm.controls['country'].touched)"
                                     class="text-danger error-msg">
-                                    <div [hidden]="!employerProfileForm.controls['country'].errors.required">Country is required.</div>
+                                    <div [hidden]="!employerProfileForm.controls['country'].errors.required">Country is
+                                        required.</div>
                                 </div>
                             </div>
                             <div class="form-group form-input col">
@@ -80,7 +81,8 @@
                                 </select>
                                 <div *ngIf="employerProfileForm.controls['state'].invalid && (employerProfileForm.controls['state'].dirty || employerProfileForm.controls['state'].touched)"
                                     class="text-danger error-msg">
-                                    <div [hidden]="!employerProfileForm.controls['state'].errors.required">State is required.</div>
+                                    <div [hidden]="!employerProfileForm.controls['state'].errors.required">State is
+                                        required.</div>
                                 </div>
                             </div>
 
@@ -91,7 +93,8 @@
                                 </select>
                                 <div *ngIf="employerProfileForm.controls['city'].invalid && (employerProfileForm.controls['city'].dirty || employerProfileForm.controls['city'].touched)"
                                     class="text-danger error-msg">
-                                    <div [hidden]="!employerProfileForm.controls['city'].errors.required">City is required.</div>
+                                    <div [hidden]="!employerProfileForm.controls['city'].errors.required">City is
+                                        required.</div>
                                 </div>
                             </div>
                             <div class="form-group form-input col">
@@ -100,7 +103,8 @@
                                 <label for="postal_code" class="form-label">Postal code</label>
                                 <div *ngIf="employerProfileForm.controls['zipcode'].invalid && (employerProfileForm.controls['zipcode'].dirty || employerProfileForm.controls['zipcode'].touched)"
                                     class="text-danger error-msg">
-                                    <div [hidden]="!employerProfileForm.controls['zipcode'].errors.required">Postal code is required.</div>
+                                    <div [hidden]="!employerProfileForm.controls['zipcode'].errors.required">Postal code
+                                        is required.</div>
                                 </div>
                             </div>
                         </div>
@@ -122,7 +126,7 @@
                             <div class="form-group form-input col">
                                 <input type="text" formControlName="company_profile" autocomplete="off"
                                     id="company_profile" required />
-                                <label for="company_profile" class="form-label">Company Name</label>
+                                <label for="company_profile" class="form-label">Company Profile</label>
                                 <div *ngIf="employerProfileForm.controls['company_profile'].invalid && (employerProfileForm.controls['company_profile'].dirty || employerProfileForm.controls['company_profile'].touched)"
                                     class="text-danger error-msg">
                                     <div [hidden]="!employerProfileForm.controls['company_profile'].errors.required">
@@ -163,11 +167,11 @@
 
                                         <label for="file_type" class="form-label">Document Type</label> -->
                                         <select class="formStyle" (change)="setDocTypeCatID($event.target.value)"
-                                                formControlName="docType">
-                                                <option disabled value="">Document Type</option>
-                                                <option id="option_txt" *ngFor="let docType of docTypeArr"
-                                                    [value]="docType.doc_type_id">{{docType.doc_type}}</option>
-                                            </select>
+                                            formControlName="docType">
+                                            <option disabled value="">Document Type</option>
+                                            <option id="option_txt" *ngFor="let docType of docTypeArr"
+                                                [value]="docType.doc_type_id">{{docType.doc_type}}</option>
+                                        </select>
                                         <!-- <div *ngIf="item.controls['docType'].invalid && (item.controls['docType'].dirty || item.controls['docType'].touched)"
                                     class="text-danger error-msg">
                                     <div [hidden]="!item.controls['docType'].errors.required">

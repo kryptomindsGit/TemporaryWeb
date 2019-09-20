@@ -4,7 +4,7 @@
       BASIC CSS
 -------------------------------------------------------------------------*/
 .container-fluid {
-    font: 14px "Montserrat", sans-serif;
+    font: 14px "Montserrat";
     background-color: $bg-back-color;
     color: $text-color;
     overflow: hidden;
@@ -222,7 +222,7 @@ table tbody tr th {
 table tbody tr td {
     letter-spacing: 1px;
     font-size: 12px;
-    font: 14px "Montserrat", sans-serif;
+    font: 14px "Montserrat";
 }
 
 table tbody tr {

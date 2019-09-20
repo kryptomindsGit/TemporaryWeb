@@ -27,6 +27,8 @@ export class ViewComponent implements OnInit {
   public weaknessArr: any = [];
   public freeDocsArr: any = [];
   public freeEduArr: any = [];
+  public freelancerOrgArr: any = [];
+  public freelancerPortArr: any = [];
 
   constructor(
     private __fb: FormBuilder,
@@ -64,8 +66,10 @@ export class ViewComponent implements OnInit {
     this.getFreelancerDetails();
     this.getFreelancerDocuments();
     this.getFreelancerEducation();
+    this.getFreelancerOrganization();
     this.getFreelancerSkillDetails();
     this.getQualitiesById(this.__id);
+    this.getFreelancerPortfolio();
   }
 
 
@@ -83,6 +87,15 @@ export class ViewComponent implements OnInit {
     });
   }
 
+  getFreelancerOrganization() {
+    this.__profileService.getFreelancerOrgById(this.email_addr).then((data: any) => {
+      this.freelancerOrgArr = data;
+      console.log("freelancerOrgArr", this.freelancerOrgArr);
+
+    });
+  }
+
+
   getQualitiesById(__id) {
     this.__profileService.getFreelancerQuality(this.email_addr).then((resData: any) => {
       this.qualityArray = resData;
@@ -93,6 +106,13 @@ export class ViewComponent implements OnInit {
 
       this.weaknessArr = this.qualityArray.map(function (a) { return a["weaknesses"]; });
       console.log("Weakness:", this.weaknessArr);
+    });
+  }
+
+  getFreelancerPortfolio() {
+    this.__profileService.getFreelancerPortfolioById(this.email_addr).then((data: any) => {
+      this.freelancerPortArr = data;
+      console.log("freelancerPortArr:", this.freelancerPortArr.port_addr);
     });
   }
 

@@ -133,7 +133,7 @@
                             <div class="form-group form-input col">
                                 <input type="text" formControlName="company_profile" autocomplete="off"
                                     id="company_profile" required />
-                                <label for="company_profile" class="form-label">Company Name</label>
+                                <label for="company_profile" class="form-label">Company Profile</label>
                                 <div *ngIf="employerProfileForm.controls['company_profile'].invalid && (employerProfileForm.controls['company_profile'].dirty || employerProfileForm.controls['company_profile'].touched)"
                                     class="text-danger error-msg">
                                     <div [hidden]="!employerProfileForm.controls['company_profile'].errors.required">
@@ -161,8 +161,7 @@
                                 <hr *ngIf="i>0">
                                 <div class="row" formGroupName="{{i}}">
                                     <div class="form-group form-input col-3">
-                                        <select class="formStyle"
-                                            (change)="setDocTypeCatID($event.target.value)"
+                                        <select class="formStyle" (change)="setDocTypeCatID($event.target.value)"
                                             formControlName="file_type">
                                             <option disabled value="">Document Type</option>
                                             <option id="option_txt" *ngFor="let docType of docTypeArr"

@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
           baseName = baseName.substring(0, baseName.indexOf('@'));
           const emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1);
 
-          this.toastr.success(emailName, 'Welcome to Konnecteum');
+          this.toastr.success(emailName, 'Welcome ');
           localStorage.setItem('uid', data[0].uid);
           localStorage.setItem('uportUser', this.uportUser);
           localStorage.setItem('email', data[0].email);
