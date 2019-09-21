@@ -205,32 +205,35 @@ export class EditComponent implements OnInit {
     await this.__profileService.getFreelancerByEmail(this.__id).then((data: any) => {
       this.freelancerArr = data[0];
       console.log("Res getFreelancerDetails:", this.freelancerArr);
-
     });
 
     this.checkMarked = this.freelancerArr.is_interviewer;
+
     await this.populateStateList();
     await this.populateCityList();
 
-    this.personalDetails.patchValue({
-      prefix: this.freelancerArr.prefix,
-      first_name: this.freelancerArr.first_name,
-      middle_name: this.freelancerArr.middle_name,
-      last_name: this.freelancerArr.last_name,
-      address_one: this.freelancerArr.line_1,
-      address_two: this.freelancerArr.line_2,
-      country: this.freelancerArr.country,
-      province: this.freelancerArr.state,
-      city: this.freelancerArr.city,
-      postal_code: this.freelancerArr.code,
-    });
-
-    this.workExpDetails.patchValue({
-      references: this.freelancerArr.reference,
-      area_of_expertise: this.freelancerArr.area_of_experties,
-      psychomatric: this.freelancerArr.psyco_result,
-      isFreelancer: this.freelancerArr.is_interviewer
-    });
+    if(this.freelancerArr != null){
+      this.personalDetails.patchValue({
+        prefix: this.freelancerArr.prefix,
+        first_name: this.freelancerArr.first_name,
+        middle_name: this.freelancerArr.middle_name,
+        last_name: this.freelancerArr.last_name,
+        address_one: this.freelancerArr.line_1,
+        address_two: this.freelancerArr.line_2,
+        country: this.freelancerArr.country,
+        province: this.freelancerArr.state,
+        city: this.freelancerArr.city,
+        postal_code: this.freelancerArr.code,
+      });
+  
+      this.workExpDetails.patchValue({
+        references: this.freelancerArr.reference,
+        area_of_expertise: this.freelancerArr.area_of_experties,
+        psychomatric: this.freelancerArr.psyco_result,
+        isFreelancer: this.freelancerArr.is_interviewer
+      });
+    }
+    
 
     // this.personalDetails.setControl('documents_personal', this.__fb.array(
     //   this.documentArr.file_name || [],
@@ -259,21 +262,24 @@ export class EditComponent implements OnInit {
     this.__profileService.getFreelancerSkillById(this.__id).then((data: any) => {
       this.freelancerSkillDetailsArr = data;
       console.log("Res getFreelancerSkillDetails:", this.freelancerSkillDetailsArr);
-      let skillCat_ID = this.freelancerSkillDetailsArr[0].skill_cat_id;
-      this.getSkillsByID(skillCat_ID);
-
-      for (let index = 0; index < this.freelancerSkillDetailsArr.length; index++) {
-        this.skillRateArr.push(this.__fb.group(
-          {
-            skill_name: this.freelancerSkillDetailsArr[index].skill_name,
-            rate_hour: this.freelancerSkillDetailsArr[index].rate_per_hr,
-            skill: this.freelancerSkillDetailsArr[index].skill_id
-          }
-        ));
+      if(this.freelancerSkillDetailsArr.length>0){
+        let skillCat_ID = this.freelancerSkillDetailsArr[0].skill_cat_id;
+        this.getSkillsByID(skillCat_ID);
+  
+        for (let index = 0; index < this.freelancerSkillDetailsArr.length; index++) {
+          this.skillRateArr.push(this.__fb.group(
+            {
+              skill_name: this.freelancerSkillDetailsArr[index].skill_name,
+              rate_hour: this.freelancerSkillDetailsArr[index].rate_per_hr,
+              skill: this.freelancerSkillDetailsArr[index].skill_id
+            }
+          ));
+        }
+      }else{
+        this.selectEvent(0);
+        this.getSkillsByID(1);
       }
       console.log("jyoti:", this.skillDetails);
-      
-
     });
   }
 
@@ -296,23 +302,31 @@ export class EditComponent implements OnInit {
         }
       );
 
-      strengthQual.forEach(item => {
-        this.strengthArr.push(
-          this.__fb.group({
-            strength: item.strengths,
-            quality_id: item.quality_id
-          })
-        )
-      });
-
-      weaknessQual.forEach(item => {
-        this.weaknessArr.push(
-          this.__fb.group({
-            weakness: item.weaknesses,
-            quality_id: item.quality_id
-          })
-        )
-      });
+        if(strengthQual.length>0){
+          strengthQual.forEach(item => {
+            this.strengthArr.push(
+              this.__fb.group({
+                strength: item.strengths,
+                quality_id: item.quality_id
+              })
+            )
+          });
+        }else{
+          this.addStrength();
+        }
+      
+      if(weaknessQual.length>0){
+        weaknessQual.forEach(item => {
+          this.weaknessArr.push(
+            this.__fb.group({
+              weakness: item.weaknesses,
+              quality_id: item.quality_id
+            })
+          )
+        });
+      }else{
+        this.addWeakness();
+      } 
 
     });
   }
@@ -321,34 +335,37 @@ export class EditComponent implements OnInit {
   getFreelancerDocuments() {
     this.__profileService.getFreelancerDocumentById(this.__id).then((data: any) => {
       this.freelancerDocsArr = data;
-      console.log("Res this.freelancerDocsArr:", this.freelancerDocsArr);
+      console.log("Ressdfsdf this.freelancerDocsArr:", this.freelancerDocsArr);
       // personal document
       let isPersonal = this.freelancerDocsArr.filter(item => item.doc_cat_name == 'personal');
-      if (isPersonal) {
-
+      console.log("isPersonal:",isPersonal.length);
+      
+      if (isPersonal.length>0) {
         console.log("isPersonal", isPersonal);
 
-        isPersonal.forEach(item => {
-          this.documentArr.push(
-            this.__fb.group({
+          isPersonal.forEach(item => {
+            this.documentArr.push(
+              this.__fb.group({
+                file_name: item.doc_name,
+                file_type: item.doc_type,
+                file_id: item.doc_type_id,
+                doc_id: item.doc_id
+              })
+            )
+          });
+     
+          isPersonal.forEach(item => {
+            this.documentPersonalArray.push({
               file_name: item.doc_name,
               file_type: item.doc_type,
-              file_id: item.doc_type_id,
+              file_type_id: item.doc_type_id,
               doc_id: item.doc_id
-            })
-          )
-        });
-        console.log("TEST: ", this.documentArr);
-        isPersonal.forEach(item => {
-          this.documentPersonalArray.push({
-            file_name: item.doc_name,
-            file_type: item.doc_type,
-            file_type_id: item.doc_type_id,
-            doc_id: item.doc_id
+            });
           });
-        });
+        
+      }else{
+        this.addDocument();
       }
-      console.log("documentassskhjj", this.documentArr.controls[0]);
 
       // educational document
       let isEducation = this.freelancerDocsArr.filter(item => item.doc_cat_name == 'educational');
@@ -363,8 +380,8 @@ export class EditComponent implements OnInit {
       this.getFreelancerEducation(isEducation);
       // work exp document
       let isProfessional = this.freelancerDocsArr.filter(item => item.doc_cat_name == 'professional');
-      console.log(isProfessional);
-      if (isProfessional) {
+ 
+      if (isProfessional.length>0) {
         isProfessional.forEach(item => {
           this.workdocumentArr.push(
             this.__fb.group({
@@ -375,6 +392,7 @@ export class EditComponent implements OnInit {
             })
           )
         });
+        
         isProfessional.forEach(item => {
           this.documentWorkArray.push({
             file_name: item.doc_name,
@@ -383,6 +401,8 @@ export class EditComponent implements OnInit {
             doc_id: item.doc_id
           });
         });
+      }else{
+        this.addWorkDocument();
       }
     });
 
@@ -395,28 +415,32 @@ export class EditComponent implements OnInit {
       this.freelancerEduArr = data;
 
       console.log("Res this.freelancerEduArr:", this.freelancerEduArr);
+      if(this.freelancerEduArr.length>0){
+        for (let index = 0; index < this.freelancerEduArr.length; index++) {
+          this.edu_catId = this.freelancerEduArr[index].edu_cat_id;
+  
+          this.qualfArr.push(this.__fb.group(
+            {
+              edu_cat_name: this.freelancerEduArr[index].edu_cat_name,
+              edu_type_name: this.freelancerEduArr[index].edu_name,
+              edu_cat_id: this.freelancerEduArr[index].edu_cat_id,
+              edu_type_id: this.freelancerEduArr[index].edu_type_id,
+              university: this.freelancerEduArr[index].university,
+              passing_year: this.freelancerEduArr[index].passing_year,
+              percentage: this.freelancerEduArr[index].percentage,
+              grade: this.freelancerEduArr[index].grade,
+              doc_name: docName,
+              edu_id: this.freelancerEduArr[index].edu_id
+            }
+          ));
 
-      for (let index = 0; index < this.freelancerEduArr.length; index++) {
-        this.edu_catId = this.freelancerEduArr[index].edu_cat_id;
-
-        this.qualfArr.push(this.__fb.group(
-          {
-            edu_cat_name: this.freelancerEduArr[index].edu_cat_name,
-            edu_type_name: this.freelancerEduArr[index].edu_name,
-            edu_cat_id: this.freelancerEduArr[index].edu_cat_id,
-            edu_type_id: this.freelancerEduArr[index].edu_type_id,
-            university: this.freelancerEduArr[index].university,
-            passing_year: this.freelancerEduArr[index].passing_year,
-            percentage: this.freelancerEduArr[index].percentage,
-            grade: this.freelancerEduArr[index].grade,
-            doc_name: docName,
-            edu_id: this.freelancerEduArr[index].edu_id
-          }
-        ));
-
+          this.getAllEducation(this.edu_catId);
+  
+        }
+      }else{
+        this.addQualification();
       }
-
-      this.getAllEducation(this.edu_catId);
+     
     });
   }
 
@@ -431,18 +455,23 @@ export class EditComponent implements OnInit {
       this.freelancerOrgArr = data;
 
       console.log("Res this.freelancerOrgArr:", this.freelancerOrgArr);
-      for (let index = 0; index < this.freelancerOrgArr.length; index++) {
-        this.orgArr.push(this.__fb.group(
-          {
-            org_name: this.freelancerOrgArr[index].org_name,
-            org_designation: this.freelancerOrgArr[index].org_designation,
-            start_date: this.freelancerOrgArr[index].start_date,
-            end_date: this.freelancerOrgArr[index].end_date,
-            responsibilities: this.freelancerOrgArr[index].responsibilities,
-            org_id: this.freelancerOrgArr[index].org_id
-          }
-        ));
+      if(this.freelancerOrgArr.length>0){
+        for (let index = 0; index < this.freelancerOrgArr.length; index++) {
+          this.orgArr.push(this.__fb.group(
+            {
+              org_name: this.freelancerOrgArr[index].org_name,
+              org_designation: this.freelancerOrgArr[index].org_designation,
+              start_date: this.freelancerOrgArr[index].start_date,
+              end_date: this.freelancerOrgArr[index].end_date,
+              responsibilities: this.freelancerOrgArr[index].responsibilities,
+              org_id: this.freelancerOrgArr[index].org_id
+            }
+          ));
+        }
+      }else{
+        this.addResponsibility()
       }
+      
 
     });
   }
@@ -450,15 +479,19 @@ export class EditComponent implements OnInit {
   getFreelancerPortfolio() {
     this.__profileService.getFreelancerPortfolioById(this.__id).then((data: any) => {
       this.freelancerPortArr = data;
-
-      console.log("Res this.freelancerPortArr:", this.freelancerPortArr);
-      let portflio = this.workExpDetails.get('portfolios') as FormArray;
-      for (let index = 0; index < this.freelancerPortArr.length; index++) {
-        portflio.push(this.__fb.group({
-          portfolio: this.freelancerPortArr[index].port_addr,
-          port_id: this.freelancerPortArr[index].port_id
-        }));
+      if(this.freelancerPortArr.length>0){
+        let portflio = this.workExpDetails.get('portfolios') as FormArray;
+        for (let index = 0; index < this.freelancerPortArr.length; index++) {
+          portflio.push(this.__fb.group({
+            portfolio: this.freelancerPortArr[index].port_addr,
+            port_id: this.freelancerPortArr[index].port_id
+          }));
+        }
+      }else{
+        this.addPortfolio();
       }
+      console.log("Res this.freelancerPortArr:", this.freelancerPortArr);
+      
 
     });
   }
@@ -512,6 +545,8 @@ export class EditComponent implements OnInit {
   getAllSkillCategory() {
     this.__profileService.getFreelancerCategory().then((resData: any) => {
       this.categ = resData;
+    console.log("Skill Category", this.categ);
+    
     })
   }
 

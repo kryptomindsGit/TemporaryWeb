@@ -71,6 +71,7 @@
                                     <option *ngFor="let country of countryArr" [ngValue]="country.name">{{country.name}}
                                     </option>
                                 </select>
+                                <label for="country" class="form-label">Country</label>
                                 <div *ngIf="employerProfileForm.controls['country'].invalid && (employerProfileForm.controls['country'].dirty || employerProfileForm.controls['country'].touched)"
                                     class="text-danger error-msg">
                                     <div [hidden]="!employerProfileForm.controls['country'].errors.required">country
@@ -84,6 +85,7 @@
                                     <option *ngFor="let state of stateArr" [ngValue]="state.name">{{state.name}}
                                     </option>
                                 </select>
+                                <label for="state" class="form-label">State</label>
                                 <div *ngIf="employerProfileForm.controls['state'].invalid && (employerProfileForm.controls['state'].dirty || employerProfileForm.controls['state'].touched)"
                                     class="text-danger error-msg">
                                     <div [hidden]="!employerProfileForm.controls['state'].errors.required">state
@@ -96,6 +98,7 @@
                                     <option disabled value="">City</option>
                                     <option *ngFor="let city of cityArr" [ngValue]="city.name">{{city.name}}</option>
                                 </select>
+                                <label for="city" class="form-label">City</label>
                                 <div *ngIf="employerProfileForm.controls['city'].invalid && (employerProfileForm.controls['city'].dirty || employerProfileForm.controls['city'].touched)"
                                     class="text-danger error-msg">
                                     <div [hidden]="!employerProfileForm.controls['city'].errors.required">city
@@ -116,9 +119,19 @@
 
                         <div class="row">
                             <div class="form-group form-input col-6">
-                                <input type="text" formControlName="business_cat" autocomplete="off" id="business_cat"
-                                    required />
+                                <!-- <input type="text" formControlName="business_cat" autocomplete="off" id="business_cat"
+                                    required /> -->
+                                    <select  formControlName="business_cat" autocomplete="off" id="business_cat"
+                                    required>
+                                            <option disabled value=""></option>
+                                            <option value="IT">IT</option>
+                                            <option value="Finance">Finance</option>
+                                            <option value="Banking">Banking</option>
+                                            <option value="Retail">Retail</option>
+                                            <option value="Others">Others</option>
+                                          </select>
                                 <label for="business_cat" class="form-label">Business Category</label>
+                                <!-- <label for="business_cat" class="form-label">Business Category</label> -->
                                 <div *ngIf="employerProfileForm.controls['business_cat'].invalid && (employerProfileForm.controls['business_cat'].dirty || employerProfileForm.controls['business_cat'].touched)"
                                     class="text-danger error-msg">
                                     <div [hidden]="!employerProfileForm.controls['business_cat'].errors.required">
@@ -157,49 +170,55 @@
                             </div>
                         </div>
                         <div formArrayName="documents">
-                            <div *ngFor="let item of documentArr.controls; let i=index">
-                                <hr *ngIf="i>0">
-                                <div class="row" formGroupName="{{i}}">
-                                    <div class="form-group form-input col-3">
-                                        <select class="formStyle" (change)="setDocTypeCatID($event.target.value)"
-                                            formControlName="file_type">
-                                            <option disabled value="">Document Type</option>
-                                            <option id="option_txt" *ngFor="let docType of docTypeArr"
-                                                [value]="docType.doc_type_id">{{docType.doc_type}}
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group form-input col-3">
-                                        <div class="file-upload">
-                                            <div class="file-select" id="document_file">
-                                                <input type="file" class="document_name" name="chooseFile"
-                                                    id="file_name" (change)="handleFileInput($event)"
-                                                    formControlName="chooseFile">
+                            <div class="row">
+                                <div class="col-11">
+                                        <div *ngFor="let item of documentArr.controls; let i=index">
+                                                <hr *ngIf="i>0">
+                                                <div class="row" formGroupName="{{i}}">
+                                                    <div class="form-group form-input col-3">
+                                                        <select class="formStyle" (change)="setDocTypeCatID($event.target.value)"
+                                                            formControlName="file_type">
+                                                            <option disabled value="">Document Type</option>
+                                                            <option id="option_txt" *ngFor="let docType of docTypeArr"
+                                                                [value]="docType.doc_type_id">{{docType.doc_type}}
+                                                            </option>
+                                                        </select>
+                                                        <label class="form-label">Document Type</label>
+                                                    </div>
+                                                    <div class="form-group form-input col-3">
+                                                        <div class="file-upload">
+                                                            <div class="file-select" id="document_file">
+                                                                <input type="file" class="document_name" name="chooseFile"
+                                                                    id="file_name" (change)="handleFileInput($event)"
+                                                                    formControlName="chooseFile">
+                                                                    <label class="form-label">Document Name</label>
+                                                            </div>
+                                                        </div>
+                
+                                                    </div>
+                                                    <div class=col-2>
+                                                        <input type="button" class="btnBlue" id="upload" value="UPLOAD"
+                                                            (click)="uploadFile()">
+                                                    </div>
+                                                    <div class="form-group col-2">
+                                                        <button type="button" class="btn btnadd" *ngIf="documentArr.controls.length > 1"
+                                                            (click)="deleteDocument(i)">-</button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-
-                                    </div>
-                                    <div class=col-2>
-                                        <input type="button" class="btnBlue" id="upload" value="UPLOAD"
-                                            (click)="uploadFile()">
-                                    </div>
-                                    <div class="form-group col-2">
+                                </div>
+                                <div class="col-1">
                                         <button type="button" class="btn btnadd" (click)="addDocument()">+</button>
-                                        &nbsp;
-                                        <button type="button" class="btn btnadd" *ngIf="documentArr.controls.length > 1"
-                                            (click)="deleteDocument(i)">-</button>
-                                    </div>
                                 </div>
                             </div>
+                           
                         </div>
 
                         <div class="row">
                             <div class="col-3"></div>
                             <div class="col-3">
 
-                                <button type="button" class="btn btnSave"
-                                    [disabled]="employerProfileForm.pristine || employerProfileForm.invalid"
-                                    (click)="onSubmit()" id="signUpButton">Save</button>
+                                <button type="button" class="btn btnSave" (click)="onSubmit()" id="signUpButton">Save</button>
                             </div>
                             <div class="col-3">
                                 <button type="button" class="btn btnCancel" (click)="onCancel()"

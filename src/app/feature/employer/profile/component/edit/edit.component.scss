@@ -87,7 +87,7 @@ select:-webkit-autofill:focus {
 
 // CSS for autofill background End
 
-input {
+input,select {
     transition: 0.3s ease;
     -moz-transition: 0.3s ease;
     -webkit-transition: 0.3s ease;
@@ -98,7 +98,9 @@ input {
 }
 
 input:focus+.form-label,
-input:valid+.form-label {
+input:valid+.form-label,
+select:focus+.form-label,
+select:valid+.form-label {
     top: 1px;
     font-size: 11px;
     color: $blue-color;
@@ -143,6 +145,27 @@ input:-moz-placeholder {
     color: $text-color;
 }
 
+//select
+select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px transparent inset;
+}
+
+select::-webkit-select-placeholder {
+    color: $text-color;
+}
+
+select::-moz-placeholder {
+    color: $text-color;
+}
+
+select:-ms-select-placeholder {
+    color: $text-color;
+}
+
+select:-moz-placeholder {
+    color: $text-color;
+}
+
 input,
 select,
 textarea {
@@ -155,7 +178,9 @@ textarea {
 }
 
 input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+input::-webkit-inner-spin-button,
+select::-webkit-outer-spin-button,
+select::-webkit-inner-spin-button {
     appearance: none !important;
     -moz-appearance: none !important;
     -webkit-appearance: none !important;
@@ -181,6 +206,13 @@ input[type=checkbox] {
     -webkit-appearance: checkbox !important;
     -o-appearance: checkbox !important;
     -ms-appearance: checkbox !important;
+    width: 0.9rem;
+    height: 0.9rem;
+    border-width: 0;
+}
+
+input[type="checkbox"]:checked {
+    background: #064d86;
 }
 
 input[type=radio] {
@@ -189,6 +221,14 @@ input[type=radio] {
     -webkit-appearance: radio !important;
     -o-appearance: radio !important;
     -ms-appearance: radio !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none !important;
+    background: $bg-front-color;
 }
 
 #btn-30 {

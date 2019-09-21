@@ -112,35 +112,41 @@ export class EditComponent implements OnInit {
     await this.populateStateList();
     await this.populateCityList();
 
-    this.partnerProfileForm.patchValue({
-      comapany_name: this.partnerArr.part_name,
-      website_addr: this.partnerArr.part_website,
-      address_line_one: this.partnerArr.part_addr,
-      address_line_two: this.partnerArr.part_addr_2,
-      country: this.partnerArr.country,
-      state: this.partnerArr.state,
-      city: this.partnerArr.city,
-      zipcode: this.partnerArr.zipcode,
-      business_cat: this.partnerArr.business_details,
-      company_profile: this.partnerArr.part_type,
-      company_rep_det: this.partnerArr.part_reprentative
-    });
+    if(this.partnerArr != null){
+      this.partnerProfileForm.patchValue({
+        comapany_name: this.partnerArr.part_name,
+        website_addr: this.partnerArr.part_website,
+        address_line_one: this.partnerArr.part_addr,
+        address_line_two: this.partnerArr.part_addr_2,
+        country: this.partnerArr.country,
+        state: this.partnerArr.state,
+        city: this.partnerArr.city,
+        zipcode: this.partnerArr.zipcode,
+        business_cat: this.partnerArr.business_details,
+        company_profile: this.partnerArr.part_type,
+        company_rep_det: this.partnerArr.part_reprentative
+      });
+  
+      this.__profileService.getPartnerFileById(this.emailId).then((resData: any) => {
+        this.partnerFileArr = resData;
+        console.log(this.partnerFileArr);
 
-    this.__profileService.getPartnerFileById(this.emailId).then((resData: any) => {
-      this.partnerFileArr = resData;
-      console.log(this.partnerFileArr);
+        if(!this.partnerFileArr){
+          for (let index = 0; index < this.partnerFileArr.length; index++) {
+            this.documentArr.push(this.__fb.group(
+              {
+                chooseFile: this.partnerFileArr[index].file_name,
+                docType: this.partnerFileArr[index].file_type,
+                file_id: this.partnerFileArr[index].file_id,
+                part_id: this.partnerFileArr[index].part_id
+              }));
+          }
+        }else{
+          this.addDocument();
+        }
 
-      for (let index = 0; index < this.partnerFileArr.length; index++) {
-        this.documentArr.push(this.__fb.group(
-          {
-            chooseFile: this.partnerFileArr[index].file_name,
-            docType: this.partnerFileArr[index].file_type,
-            file_id: this.partnerFileArr[index].file_id,
-            part_id: this.partnerFileArr[index].part_id
-          }));
-      }
-
-    });
+      });
+    }
   }
 
   async populateStateList() {

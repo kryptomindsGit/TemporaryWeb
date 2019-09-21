@@ -97,6 +97,172 @@
     letter-spacing: 0.1em
 }
 
+// /*-----------------------------------------------------------------------
+// FORM CSS
+// -------------------------------------------------------------------------*/
+// form {
+//     padding: 20px 40px 20px 40px;
+// }
+
+// .form-group {
+//     margin-bottom: 20px;
+//     position: relative;
+// }
+
+// .form-input {
+//     padding-top: 20px;
+// }
+
+// .form-label {
+//     position: absolute;
+//     transition: 0.25s ease;
+//     -moz-transition: 0.25s ease;
+//     -webkit-transition: 0.25s ease;
+//     -o-transition: 0.25s ease;
+//     -ms-transition: 0.25s ease;
+//     color: $text-color;
+//     left: 1rem;
+//     top: 23px;
+// }
+
+// // CSS for autofill background Start
+// input:-webkit-autofill,
+// input:-webkit-autofill:hover,
+// input:-webkit-autofill:focus,
+// textarea:-webkit-autofill,
+// textarea:-webkit-autofill:hover,
+// textarea:-webkit-autofill:focus,
+// select:-webkit-autofill,
+// select:-webkit-autofill:hover,
+// select:-webkit-autofill:focus {
+//     caret-color: $text-color;
+//     -webkit-text-fill-color: $text-color !important;
+//     transition: background-color 5000s ease-in-out 0s;
+// }
+
+// // CSS for autofill background End
+
+// input,
+// select,
+// textarea {
+//     transition: 0.3s ease;
+//     -moz-transition: 0.3s ease;
+//     -webkit-transition: 0.3s ease;
+//     -o-transition: 0.3s ease;
+//     -ms-transition: 0.3s ease;
+//     padding-top: 10px;
+//     -webkit-appearance: none;
+// }
+
+// input:focus+.form-label,
+// input:valid+.form-label,
+// select:focus+.form-label,
+// select:valid+.form-label,
+// textarea:focus+.form-label,
+// textarea:valid+.form-label {
+//     top: 1px;
+//     font-size: 11px;
+//     color: $blue-color;
+//     background: transparent !important;
+// }
+
+// input,
+// select,
+// textarea {
+//     box-sizing: border-box;
+//     width: 100%;
+//     display: block;
+//     border: none;
+//     font-family: "Montserrat Regular";
+//     color: $text-color;
+//     background: transparent;
+//     border-bottom: 1px solid $text-color;
+//     padding: 4px 0;
+// }
+
+// input:focus,
+// select:focus,
+// textarea:focus {
+//     border-bottom: 1px solid $blue-color;
+// }
+
+// input:-webkit-autofill {
+//     -webkit-box-shadow: 0 0 0 30px transparent inset;
+// }
+
+// input::-webkit-input-placeholder {
+//     color: $text-color;
+// }
+
+// input::-moz-placeholder {
+//     color: $text-color;
+// }
+
+// input:-ms-input-placeholder {
+//     color: $text-color;
+// }
+
+// input:-moz-placeholder {
+//     color: $text-color;
+// }
+
+
+// input,
+// select,
+// textarea {
+//     outline: none;
+//     appearance: unset !important;
+//     -moz-appearance: unset !important;
+//     -webkit-appearance: unset !important;
+//     -o-appearance: unset !important;
+//     -ms-appearance: unset !important;
+// }
+
+// input::-webkit-outer-spin-button,
+// input::-webkit-inner-spin-button {
+//     appearance: none !important;
+//     -moz-appearance: none !important;
+//     -webkit-appearance: none !important;
+//     -o-appearance: none !important;
+//     -ms-appearance: none !important;
+//     margin: 0;
+// }
+
+// input:focus,
+// select:focus,
+// textarea:focus {
+//     outline: none;
+//     box-shadow: none !important;
+//     -moz-box-shadow: none !important;
+//     -webkit-box-shadow: none !important;
+//     -o-box-shadow: none !important;
+//     -ms-box-shadow: none !important;
+// }
+
+// input[type=checkbox] {
+//     appearance: checkbox !important;
+//     -moz-appearance: checkbox !important;
+//     -webkit-appearance: checkbox !important;
+//     -o-appearance: checkbox !important;
+//     -ms-appearance: checkbox !important;
+//     width: 0.9rem;
+//     height: 0.9rem;
+//     border-width: 0;
+// }
+
+// input[type="checkbox"]:checked {
+//     background: $btn-bg-color;
+// }
+
+// input[type=radio] {
+//     appearance: radio !important;
+//     -moz-appearance: radio !important;
+//     -webkit-appearance: radio !important;
+//     -o-appearance: radio !important;
+//     -ms-appearance: radio !important;
+// }
+
+
 /*-----------------------------------------------------------------------
 FORM CSS
 -------------------------------------------------------------------------*/
@@ -142,9 +308,7 @@ select:-webkit-autofill:focus {
 
 // CSS for autofill background End
 
-input,
-select,
-textarea {
+input,select {
     transition: 0.3s ease;
     -moz-transition: 0.3s ease;
     -webkit-transition: 0.3s ease;
@@ -157,9 +321,7 @@ textarea {
 input:focus+.form-label,
 input:valid+.form-label,
 select:focus+.form-label,
-select:valid+.form-label,
-textarea:focus+.form-label,
-textarea:valid+.form-label {
+select:valid+.form-label {
     top: 1px;
     font-size: 11px;
     color: $blue-color;
@@ -167,8 +329,7 @@ textarea:valid+.form-label {
 }
 
 input,
-select,
-textarea {
+select {
     box-sizing: border-box;
     width: 100%;
     display: block;
@@ -181,8 +342,7 @@ textarea {
 }
 
 input:focus,
-select:focus,
-textarea:focus {
+select:focus {
     border-bottom: 1px solid $blue-color;
 }
 
@@ -206,6 +366,26 @@ input:-moz-placeholder {
     color: $text-color;
 }
 
+//select
+select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px transparent inset;
+}
+
+select::-webkit-select-placeholder {
+    color: $text-color;
+}
+
+select::-moz-placeholder {
+    color: $text-color;
+}
+
+select:-ms-select-placeholder {
+    color: $text-color;
+}
+
+select:-moz-placeholder {
+    color: $text-color;
+}
 
 input,
 select,
@@ -219,7 +399,9 @@ textarea {
 }
 
 input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+input::-webkit-inner-spin-button,
+select::-webkit-outer-spin-button,
+select::-webkit-inner-spin-button {
     appearance: none !important;
     -moz-appearance: none !important;
     -webkit-appearance: none !important;
@@ -251,7 +433,7 @@ input[type=checkbox] {
 }
 
 input[type="checkbox"]:checked {
-    background: $btn-bg-color;
+    background: #064d86;
 }
 
 input[type=radio] {
@@ -260,6 +442,14 @@ input[type=radio] {
     -webkit-appearance: radio !important;
     -o-appearance: radio !important;
     -ms-appearance: radio !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none !important;
+    background: $bg-front-color;
 }
 
 #btn-30 {

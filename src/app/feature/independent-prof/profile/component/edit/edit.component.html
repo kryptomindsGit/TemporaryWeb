@@ -7,13 +7,15 @@
                     <div class="card-body others-card">
                         <form [formGroup]="personalDetails" novalidate>
                             <div class="row">
-                                <div class="form-group form-input col">
-                                    <select class="formStyle" formControlName="prefix">
+                                <div class="form-group form-input col">        
+                                                   
+                                    <select formControlName="prefix">
                                         <option disabled value="" selected>Prefix</option>
                                         <option id="option_txt" *ngFor="let prefix of prefixArr" [value]="prefix">
                                             {{prefix}}
                                         </option>
                                     </select>
+                                    <label for="option_txt" class="form-label">Prefix</label>
                                     <div *ngIf="personalDetails.controls['prefix'].invalid && (personalDetails.controls['prefix'].dirty || personalDetails.controls['prefix'].touched)"
                                         class="text-danger error-msg">
                                         <div [hidden]="!personalDetails.controls['prefix'].errors.required">Prefix is
@@ -100,6 +102,7 @@
                                             {{country.name}}
                                         </option>
                                     </select>
+                                    <label class="form-label">Country</label>
 
                                     <div *ngIf="personalDetails.controls['country'].invalid && (personalDetails.controls['country'].dirty || personalDetails.controls['country'].touched)"
                                         class="text-danger error-msg">
@@ -115,6 +118,7 @@
                                         <option *ngFor="let state of stateArr" [ngValue]="state.name">{{state.name}}
                                         </option>
                                     </select>
+                                    <label class="form-label">State</label>
 
                                     <div *ngIf="personalDetails.controls['province'].invalid && (personalDetails.controls['province'].dirty || personalDetails.controls['province'].touched)"
                                         class="text-danger error-msg">
@@ -130,6 +134,7 @@
                                         <option *ngFor="let city of cityArr" [ngValue]="city.name">{{city.name}}
                                         </option>
                                     </select>
+                                    <label class="form-label">City</label>
 
                                     <div *ngIf="personalDetails.controls['city'].invalid && (personalDetails.controls['city'].dirty || personalDetails.controls['city'].touched)"
                                         class="text-danger error-msg">
@@ -157,7 +162,7 @@
 
                             <div formArrayName="documents_personal">
                                 <div class="row">
-                                    <div class="col-11">
+                                    <div class="col-10">
                                         <div *ngFor="let item of documentArr.controls; let i=index">
                                             <hr *ngIf="i>0">
                                             <div class="row" formGroupName="{{i}}">
@@ -170,11 +175,13 @@
                                                             [value]="docType.doc_type_id">{{docType.doc_type}}
                                                         </option>
                                                     </select>
+                                                    <label class="form-label">Document type</label>
                                                 </div>
                                                 <div class="form-group form-input col-4">
                                                     <input type="file" class="document_name" name="chooseFile"
                                                         id="chooseFile" (change)="handleFileInput($event)"
                                                         formControlName="file_name">
+                                                        <label class="form-label">Document Name</label>
 
                                                 </div>
                                                 <div class=col-2>
@@ -189,7 +196,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-1 btnadd-right">
+                                    <div class="col-2 btnadd-right">
                                         <div class="form-group col-2">
                                             <button type="button" class="btn btnaddRight"
                                                 (click)="addDocument()">+</button>
@@ -252,6 +259,7 @@
                                                             [value]="eduCat.edu_cat_id">
                                                             {{eduCat.edu_cat_name}}</option>
                                                     </select>
+                                                    <label class="form-label">Category</label>
                                                 </div>
 
 
@@ -262,6 +270,7 @@
                                                             {{edu.edu_name}}
                                                         </option>
                                                     </select>
+                                                    <label class="form-label">Qualification</label>
                                                 </div>
 
                                                 <div class="form-group form-input col-4">
@@ -277,6 +286,7 @@
                                                             aria-placeholder="Passing Year" [value]="year">{{year}}
                                                         </option>
                                                     </select>
+                                                    <label class="form-label">Passing year</label>
                                                 </div>
 
                                                 <div class="form-group form-input col-2">
@@ -291,6 +301,7 @@
                                                         <option *ngFor="let grades of gradeArr" aria-placeholder="Grade"
                                                             [value]="grades">{{grades}}</option>
                                                     </select>
+                                                    <label class="form-label">Grade</label>
                                                 </div>
 
                                                 <div class="form-group form-input col-4">
@@ -299,6 +310,7 @@
                                                             <input type="file" class="document_name" name="chooseFile"
                                                                 id="chooseFile" (change)="handleFileInput($event)"
                                                                 formControlName="doc_name" />
+                                                                <label class="form-label">Document Name</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -357,6 +369,7 @@
                                                 <div class="form-group form-input col-3">
                                                     <input [owlDateTimeTrigger]="dt" formControlName="start_date"
                                                         placeholder="Start Date" id="datePicker" [owlDateTime]="dt">
+                                                        <label class="form-label">Start Date</label>
                                                     <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
                                                     <!-- <label for="datePicker" class="form-label">Start Date</label> -->
                                                 </div>
@@ -364,6 +377,7 @@
                                                 <div class="form-group form-input col-3">
                                                     <input [owlDateTimeTrigger]="dt2" formControlName="end_date"
                                                         id="datePicker1" placeholder="End Date" [owlDateTime]="dt2">
+                                                        <label class="form-label">End Date</label>
                                                     <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
                                                     <!-- <label for="datePicker1" class="form-label">End Date</label> -->
                                                 </div>
@@ -546,6 +560,7 @@
                                                         <option id="option_txt" *ngFor="let docType of docTypeArr"
                                                             [value]="docType.doc_type_id">{{docType.doc_type}}</option>
                                                     </select>
+                                                    <label class="form-label">Document type</label>
                                                 </div>
                                                 <div class="form-group form-input col-5">
                                                     <div class="file-upload">
@@ -553,6 +568,7 @@
                                                             <input type="file" class="document_name" name="chooseFile"
                                                                 id="chooseFile" (change)="handleFileInput($event)"
                                                                 formControlName="file_type">
+                                                                <label class="form-label">Document Name</label>
                                                         </div>
                                                     </div>
                                                 </div>
