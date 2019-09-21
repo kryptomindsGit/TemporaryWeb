@@ -139,11 +139,46 @@
                            
                          
                         <button class="btn viewprofile" (click)="onSaveChanges()">Save Changes</button>
-                        <button class="btn viewprofile" (click)="onSaveChanges()">Upload Contract</button>
+                        <button class="btn viewprofile" (click)="onClick($event)" (click)="upoladContractDoument()">Upload Contract</button>
                     </form>
                 </div>
             </div>
         </div>
+        <div class="modal"  id="myModal" [style.display]="showModal ? 'block' : 'none'">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="center">
+                            <h6>Upload Document</h6>
+                        </div>
+    
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+    
+                        <!-- <h4 class="modal-title">User Details:</h4> -->
+                    </div>
+                    
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form [formGroup]="fileForm">
+                                <p>
+                                        <input type="file" class="document_name" formControlName="contractFile" name="chooseFile"
+                                        id="chooseFile" (change)="handleFileInput($event)">
+                                </p>
+                        </form>
+                       
+                        
+                    </div>
+                    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal" (click) = "upoladContractDoument()">Save</button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal" (click) = "hide()">Close</button>
+                    </div>
+                    
+                    </div>
+                </div>
+            </div>
+    
     </div>
 
     <br>
@@ -207,8 +242,7 @@
         </div>
     </div>
 
-
-
+    
     <button class="btn viewprofile" (click)="onSaveChanges()">Save Changes</button>
     <button class="btn viewprofile1" (click)="onSaveContract()">Submit Contract</button>
 

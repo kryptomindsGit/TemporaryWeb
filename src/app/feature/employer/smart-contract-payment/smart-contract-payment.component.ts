@@ -24,20 +24,24 @@ export class SmartContractPaymentComponent implements OnInit {
 //Milestone Related Variables
 milestoneForm : FormGroup;
 scheduleForm : FormGroup;
+fileForm : FormGroup;
+
 i : any;
-show : boolean = false;
+showModal : boolean = false;
 workPackageID : any;
 approvedEmp: boolean  = false;
 approvedRev: boolean = false;
 milestoneArr = [];
 projectName : any;
 empId:any;
+uploadedFile:any;
 //payment section realated variables
-
 
 //Payment Shedule related Variables
 contractAddr : string ; 
-
+fileName:string;
+fileObj:string;
+emailId:string;
 
 teamMemberArr = [
                   {memberId: 1 ,status :'pending'},
@@ -51,16 +55,19 @@ paymentMethodArr = ['paypal','net-backing'];
   constructor(
     private __fb: FormBuilder,
     private __paymentService: SmartContractService,
-    private __empProfile : EmpProfileService,
-    private __workService :WorkPackageService
+    private __workService :WorkPackageService,
+    private __profileService: EmpProfileService
   ) { }
 
   ngOnInit() {
+    this.emailId = localStorage.getItem("email");
+
    console.log("inside init");
    this.getWorkPackageId();
    this.createMilestoneForm();
    this.createScheduleForm();
    this.getWorkPackageData();
+   this.selectFile();
   }
 
   
@@ -74,6 +81,12 @@ paymentMethodArr = ['paypal','net-backing'];
       this.projectName = resData.responseObject.projectName;
       this.contractStatus = resData.responseObject.contractStatus;
       this.empId = resData.responseObject.postedByIndividualEmpId.user.userId;
+    });
+  }
+
+  selectFile(){
+    this.fileForm = this.__fb.group({
+      contractFile:['',[Validators.required]],
     });
   }
 
@@ -228,6 +241,46 @@ paymentMethodArr = ['paypal','net-backing'];
         console.log("Data is successfully saved" ,workData);
       });
   }
+
+  
+  handleFileInput(event) {
+    if (event.target.files.length > 0) {
+
+      const file = event.target.files[0];
+      this.fileName = file.name;
+      console.log("File name:", file.name);
+
+      this.fileObj = file;
+    }
+  }
+
+
+  async upoladContractDoument(){
+
+    await this.__profileService.postDocHashData(this.fileObj, this.emailId, this.fileName).then((resData) => {
+      this.uploadedFile = resData;    
+         
+      const filepayload = {
+        uploadedContractDocument : this.uploadedFile
+      }
+      this.__workService.updateContractDocument(this.workPackageID , filepayload).then((resData: any) => {
+        
+      });
+
+    });
+
+  }
+  onClick(event)
+  {
+    this.showModal = true; 
+  }
+  //Bootstrap Modal Close event
+  hide()
+  {
+    this.showModal = false;
+  }
+
+
 
   onSaveContract(){
 
