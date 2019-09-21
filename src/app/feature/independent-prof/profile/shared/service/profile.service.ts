@@ -44,7 +44,10 @@ export class IndeptProfileService {
       formData.append('fileName', fileName);
 
       let res = await this.__http.post(`${BLOCKCHAIN_URL}/sendHash/`, formData,
-
+        {
+          reportProgress: true,
+          observe: 'events'
+        }
       ).toPromise();
       return res;
     } catch (error) {
@@ -52,10 +55,7 @@ export class IndeptProfileService {
     }
   }
 
-  // {
-  //   reportProgress: true,
-  //   observe: 'events'
-  // }
+
 
   // Blockchain GET API call
   async getDocHashData(id): Promise<any> {
@@ -274,7 +274,7 @@ export class IndeptProfileService {
 
   async updateFreelancer(id: any, freelancer: any) {
     try {
-      let res = await this.__http.put(`${BASE_URL}/freelancers/${id}`, freelancer, httpOptions).toPromise();
+      let res = await this.__http.put(`${BASE_URL}/freelancer/freelancers/${id}`, freelancer, httpOptions).toPromise();
       return res;
     } catch (error) {
       await this.handleError(error);

@@ -630,7 +630,7 @@
                                                         <table class="table">
                                                             <tr *ngFor="let skill of categ; let i = index">
                                                                 <td>
-                                                                    <a id="link" (click)="selectEvent($event)">
+                                                                    <a id="link" (click)="selectEvent(skill)">
                                                                         {{skill.skill_cat_name}}</a>
                                                                 </td>
                                                             </tr>
@@ -657,7 +657,7 @@
                                                     <label class="checkbox-grid-col"
                                                         *ngFor="let item of skills; let i = index">
                                                         <input type="checkbox"
-                                                            (change)="onChange(item.skill_name,item.skill_id,$event.target.checked)">
+                                                            (click)="onChange(item.skill_name,item.skill_id,$event.target.checked)">
                                                         {{item.skill_name}}
                                                     </label>
                                                 </li>
@@ -675,14 +675,14 @@
                                             </div>
                                         </div>
                                         <div class="card-body skill-innner-container skill-selected-container">
-
+                                            
                                             <div formArrayName="skills">
-                                                <div *ngFor="let item of skillRateArr.controls; let i=index"
+                                                <div *ngFor="let item of skillDetails.controls.skills.controls ; let i=index"
                                                     [formGroupName]="i">
                                                     <div class="row">
                                                         <div class="form-group form-input col-6">
-                                                            <label for="skill_name" class="label-skill"
-                                                                formControlName="skill">
+                                                            <label  class="label-skill"
+                                                                formControlName="skill_name">
                                                                 {{item.value.skill_name}}
                                                             </label>
                                                         </div>

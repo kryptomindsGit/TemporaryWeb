@@ -27,6 +27,7 @@ export class AddComponent implements OnInit {
 
   //skill variables.
   keyword = 'skill_cat_name';
+  skillItem: any  =[];
 
   // Variable's
   public showMainContent: number = 1;
@@ -512,9 +513,9 @@ export class AddComponent implements OnInit {
   }
 
   onChange(skill: string, skill_id: number, isChecked: boolean) {
-
+    console.log("jyoti", skill);
+    
     if (isChecked && skill != null) {
-
       this.skillRateArr.push(this.__fb.group(
         {
           skill_name: skill,
@@ -522,14 +523,13 @@ export class AddComponent implements OnInit {
           rate_hour: ''
         }
       ));
-
-      console.log(this.skillRateArr.value);
     }
     else {
       let index = this.skillRateArr.controls.findIndex(x => x.value == skill);
       this.skillRateArr.removeAt(index);
       console.log(this.skillRateArr)
     }
+console.log("this.skillRateArr",this.skillRateArr);
 
   }
 
@@ -559,19 +559,19 @@ export class AddComponent implements OnInit {
     this.fileUploadProgress = '0%';
     await this.__profileService.postDocHashData(this.fileObj, this.congnitoID, this.fileName).then((event) => {
       this.FileArrData = event;
+      console.log("Data Resp:", this.FileArrData);
+      console.log("Resp File ID:", this.FileArrData.fileId);
 
       // file upload progress start
-      // if (event.type === HttpEventType.UploadProgress) {
-      //   this.fileUploadProgress = Math.round(event.loaded / event.total * 100) + '%';
-      //   console.log(this.fileUploadProgress);
-      // } else if (event.type === HttpEventType.Response) {
-      //   this.fileUploadProgress = '';
-      //   console.log(event.body);
-      //   this.toastr.success("Successfully uploaded");
-      // }
+      if (event.type === HttpEventType.UploadProgress) {
+        this.fileUploadProgress = Math.round(event.loaded / event.total * 100) + '%';
+        console.log(this.fileUploadProgress);
+      } else if (event.type === HttpEventType.Response) {
+        this.fileUploadProgress = '';
+        console.log(event.body);
+        this.toastr.success(this.fileName, "Successfully uploaded");
+      }
       // file upload progress end
-
-      console.log("File Resp:", this.FileArrData.fileId);
     });
 
     await this.documentPersonalArray.push(

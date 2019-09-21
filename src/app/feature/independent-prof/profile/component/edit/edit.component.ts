@@ -72,6 +72,7 @@ export class EditComponent implements OnInit {
 
   //skill variables.
   keyword = 'skill_cat_name';
+  skillItem: any = [];
 
   constructor(
     private __fb: FormBuilder,
@@ -126,6 +127,7 @@ export class EditComponent implements OnInit {
     this.getFreelancerOrganization();
     this.getFreelancerPortfolio();
     // this.setAllFreelancerData();
+  
   }
 
   /**
@@ -257,38 +259,20 @@ export class EditComponent implements OnInit {
     this.__profileService.getFreelancerSkillById(this.__id).then((data: any) => {
       this.freelancerSkillDetailsArr = data;
       console.log("Res getFreelancerSkillDetails:", this.freelancerSkillDetailsArr);
-
-      // if (this.freelancerSkillDetailsArr) {
-
       let skillCat_ID = this.freelancerSkillDetailsArr[0].skill_cat_id;
-
-      this.freelancerSkillDetailsArr.forEach(item => {
-        this.skillList.push({
-          skillname: item.skill_cat_name,
-          rate: item.rate_per_hr
-        });
-
-        this.skillArr.push({
-          skill_id: item.skill_id,
-        });
-      });
-
-
-
       this.getSkillsByID(skillCat_ID);
 
-
       for (let index = 0; index < this.freelancerSkillDetailsArr.length; index++) {
-
         this.skillRateArr.push(this.__fb.group(
           {
-            skill: this.freelancerSkillDetailsArr[index].skill_name,
+            skill_name: this.freelancerSkillDetailsArr[index].skill_name,
             rate_hour: this.freelancerSkillDetailsArr[index].rate_per_hr,
-            skill_id: this.freelancerSkillDetailsArr[index].skill_id
+            skill: this.freelancerSkillDetailsArr[index].skill_id
           }
         ));
       }
-      // }
+      console.log("jyoti:", this.skillDetails);
+      
 
     });
   }
@@ -608,6 +592,8 @@ export class EditComponent implements OnInit {
    * @description get the selected skill id and pass to getSkillsByID.
    */
   selectEvent(item) {
+    console.log("Skill click:", item);
+
     const skills = item;
     const skill_id = skills.skill_cat_id;
     this.getSkillsByID(skill_id)
@@ -769,26 +755,20 @@ export class EditComponent implements OnInit {
   }
 
   onChange(skill: string, skill_id: number, isChecked: boolean) {
-
-    if (isChecked && skill != null) {
-
-      this.skillRateArr.push(this.__fb.group(
-        {
-          skill_name: skill,
-          skill: skill_id,
-          rate_hour: ''
-        }
-      ));
-    }
+    console.log("Skill selected:", skill, skill_id, isChecked);
+      if (isChecked && skill != null) {
+        this.skillRateArr.push(this.__fb.group(
+          {
+            skill_name: skill,
+            skill: skill_id,
+            rate_hour: ''
+          }
+        ));       
+      }
     else {
       let index = this.skillRateArr.controls.findIndex(x => x.value == skill);
-      this.skillRateArr.removeAt(index);
+      this.skillItem.removeAt(index);
     }
-
-  }
-
-  onSaveSkill() {
-    console.log(this.skillRateArr.value)
   }
 
   /**
@@ -915,7 +895,7 @@ export class EditComponent implements OnInit {
         uid: 0
       }
       console.log('Freelancer Payload Value : ', freelancerProfilePayload);
-      this.__profileService.createFreelancer(freelancerProfilePayload).then((resData: any) => {
+      this.__profileService.updateFreelancer(this.email,freelancerProfilePayload).then((resData: any) => {
         console.log("Resp Data:", resData);
         if (resData.status == 'success') {
           this.toastr.success("Successfully Registered");

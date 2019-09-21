@@ -102,11 +102,11 @@ export class ViewComponent implements OnInit {
       this.qualityArray = resData;
       console.log("Qualities", this.qualityArray);
 
-      this.strengthArr = this.qualityArray.map(function (a) { return a["strengths"]; });
-      console.log("Strength:", this.strengthArr);
+      // this.strengthArr = this.qualityArray.map(function (a) { return a["strengths"]; });
+      // console.log("Strength:", this.strengthArr);
 
-      this.weaknessArr = this.qualityArray.map(function (a) { return a["weaknesses"]; });
-      console.log("Weakness:", this.weaknessArr);
+      // this.weaknessArr = this.qualityArray.map(function (a) { return a["weaknesses"]; });
+      // console.log("Weakness:", this.weaknessArr);
     });
   }
 
