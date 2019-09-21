@@ -372,9 +372,19 @@
                                                     <hr *ngIf="i>0">
                                                     <div class="row" [formGroupName]="i">
                                                         <div class="form-group form-input col-9">
-                                                            <input type="text" formControlName="strength" id="strength"
-                                                                required />
-                                                            <label for="strength" class="form-label">Strength</label>
+                                                            <!-- <input type="text" formControlName="strength" id="strength"
+                                                                required /> -->
+                                                                <select  formControlName="strength" id="strengths" required>
+                                                                        <option disabled value=""></option>
+                                                                        <option value="Creative">Creative</option>
+                                                                        <option value="Flexible">Flexible</option>
+                                                                        <option value="Discipline">Discipline</option>
+                                                                        <option value="Humble">Humble</option>
+                                                                        <option value="Self-Motivated">Self-Motivated</option>
+                                                                        <option value="Team Oriented">Team Oriented</option>
+                                                                        <option value="Organized">Organized</option>
+                                                                    </select>
+                                                            <label for="strengths" class="form-label">Strength</label>
                                                         </div>
 
                                                         <div class="col-3">
@@ -401,9 +411,17 @@
                                                     <hr *ngIf="i>0">
                                                     <div class="row" [formGroupName]="i">
                                                         <div class="form-group form-input col-9">
-                                                            <input type="text" formControlName="weakness" id="weakness"
-                                                                required />
-                                                            <label for="weakness" class="form-label">Weakness</label>
+                                                            <!-- <input type="text" formControlName="weakness" id="weakness"
+                                                                required /> -->
+                                                                <select  formControlName="weakness" id="weaknesses" required>
+                                                                        <option disabled value=""></option>
+                                                                        <option value="Sensitive">Sensitive</option>
+                                                                        <option value="Self-Critical">Self-Critical</option>
+                                                                        <option value="Shy">Shy</option>
+                                                                        <option value="Impatient">Impatient</option>
+                                                                        <option value="Trouble saying No">Trouble saying No</option>
+                                                                    </select>
+                                                            <label for="weaknesses" class="form-label">Weakness</label>
                                                         </div>
 
                                                         <div class="col-3">

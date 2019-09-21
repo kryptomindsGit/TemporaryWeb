@@ -120,6 +120,13 @@ export class ViewComponent implements OnInit {
   getFreelancerDocuments() {
     this.__profileService.getFreelancerDocumentById(this.email_addr).then((resData: any) => {
       this.freeDocsArr = resData;
+
+      console.log("freeDocsArr:", this.freeDocsArr);
+
+      // this.freeDocsArr.forEach(element => {
+      //   this.fileDisplay = element.doc_name
+      // });
+      
       // for (let index = 0; index < this.freeDocsArr.length; index++) {
       //   console.log("Documents:", this.freeDocsArr[index].doc_name);
       // }

@@ -561,16 +561,21 @@ console.log("this.skillRateArr",this.skillRateArr);
       this.FileArrData = event;
       console.log("Data Resp:", this.FileArrData);
       console.log("Resp File ID:", this.FileArrData.fileId);
+      if(this.FileArrData){
+        this.toastr.success(this.fileName, "Successfully uploaded");
+      }else{
+        this.toastr.error(this.fileName, "File not uploaded");
+      }
 
       // file upload progress start
-      if (event.type === HttpEventType.UploadProgress) {
+     /* if (event.type === HttpEventType.UploadProgress) {
         this.fileUploadProgress = Math.round(event.loaded / event.total * 100) + '%';
         console.log(this.fileUploadProgress);
       } else if (event.type === HttpEventType.Response) {
         this.fileUploadProgress = '';
         console.log(event.body);
         this.toastr.success(this.fileName, "Successfully uploaded");
-      }
+      } */
       // file upload progress end
     });
 
@@ -587,6 +592,11 @@ console.log("this.skillRateArr",this.skillRateArr);
     this.__profileService.postDocHashData(this.fileObj, this.congnitoID, this.fileName).then((event) => {
       this.FileArrData = event;
       console.log("File Resp:", this.FileArrData.fileId);
+      if(this.FileArrData){
+        this.toastr.success(this.fileName, "Successfully uploaded");
+      }else{
+        this.toastr.error(this.fileName, "File not uploaded");
+      }
     });
 
     this.documentQualArray.push(
@@ -602,6 +612,11 @@ console.log("this.skillRateArr",this.skillRateArr);
     this.__profileService.postDocHashData(this.fileObj, this.congnitoID, this.fileName).then((event) => {
       this.FileArrData = event;
       console.log("File Resp:", this.FileArrData.fileId);
+      if(this.FileArrData){
+        this.toastr.success(this.fileName, "Successfully uploaded");
+      }else{
+        this.toastr.error(this.fileName, "File not uploaded");
+      }
     });
 
     this.documentWorkArray.push(
@@ -676,11 +691,11 @@ console.log("this.skillRateArr",this.skillRateArr);
         console.log("Res Data:", resData);
 
         if (resData.status == 'success') {
-          this.toastr.success("Successfully Registered");
-          //this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
+          this.toastr.success("Profile added Successfully");
+          this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
         }
         else if (resData.status == 'error') {
-          this.toastr.error("Registered Failed");
+          this.toastr.error("Profile not saved");
         }
       });
     }
@@ -716,11 +731,11 @@ console.log("this.skillRateArr",this.skillRateArr);
         console.log(resData);
 
         if (resData.status == 'success') {
-          this.toastr.success("Successfully Registered");
-          //this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
+          this.toastr.success("Profile added Successfully");
+          this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
         }
         else if (resData.status == 'error') {
-          this.toastr.error("Registration Failed");
+          this.toastr.error("Profile not saved");
         }
 
       });

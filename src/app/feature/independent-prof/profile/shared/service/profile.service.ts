@@ -43,19 +43,18 @@ export class IndeptProfileService {
       formData.append('cognitoId', cognitoId);
       formData.append('fileName', fileName);
 
-      let res = await this.__http.post(`${BLOCKCHAIN_URL}/sendHash/`, formData,
-        {
-          reportProgress: true,
-          observe: 'events'
-        }
-      ).toPromise();
+      let res = await this.__http.post(`${BLOCKCHAIN_URL}/sendHash/`, formData).toPromise();
       return res;
     } catch (error) {
       await this.handleError(error);
     }
   }
 
-
+ /* {
+    reportProgress: true,
+    observe: 'events'
+  } 
+  */
 
   // Blockchain GET API call
   async getDocHashData(id): Promise<any> {
