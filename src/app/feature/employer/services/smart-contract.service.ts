@@ -97,6 +97,21 @@ export class SmartContractService {
 
   }
 
+  
+  async getMilestoneData(workPackageId : any):Promise<any> {
+    console.log("schedule Data :" , workPackageId);
+    
+    try {
+    let res = await this.http.get(`${SPRING_URL}/milestone/fetchAll/${workPackageId}`,{responseType:'json'}).toPromise();
+      return res;
+    } catch (error) {
+      this.handleError(error);      
+    } 
+
+  }
+
+  
+
   handleError(error) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {

@@ -278,10 +278,11 @@ input[type=checkbox] {
 .calbutton {
   font-size: 0.6rem;
   color: #ffffff;
-  width: 3.8rem;
+  width: rem;
   height: 1.5rem;
   background: #064d86;
   border-radius: 0.5rem;
+  margin-left:1rem;
 }
 
 .noborder {
@@ -296,9 +297,9 @@ input[type=checkbox] {
   font-size: 0.6rem;
   color: #ffffff;
   border-radius: 0.5rem;
-  padding: 0.5rem;
-  margin-left: 2rem;
-  margin-top: 1rem;
+  // padding: 0.5rem;
+  // margin-left: 2rem;
+  // margin-top: 1rem;
   width: 5rem;
   height: 1.7rem;
   background: #064d86;
@@ -311,12 +312,23 @@ input[type=checkbox] {
   border-radius: 0.5rem;
   margin-right: 1rem;
   margin-top: 1rem;
-  width: 4rem;
+  width: 4.5rem;
   height: 1.7rem;
   background: #064d86;
   // background: rgba(2, 41, 148, 0.966);
 }
+.setleft{
+ margin-left:1rem;
+}
 
+img{
+  width:3rem;
+  height:3rem;
+  margin-left:1rem;
+}
+.setbottom{
+  margin-top:1rem;
+}
 
 .submit-button {
   float: right;
@@ -383,6 +395,9 @@ input[type=checkbox] {
   padding: .200rem .55rem;
 }
 
+table{
+   margin-top:0.5rem;
+}
 table thead tr th {
   color: $text-color;
   font-size: 0.7rem;

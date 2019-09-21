@@ -8,7 +8,7 @@
     
                 <div class="card" *ngFor="let data of workArr; let i=index ">
                   
-                    <div class="card-body">
+                    <div class="card-body" >
                         <div class="row ">
                             <div class="col-2">
                                 <label class="text-muted" >Project Name :</label>
@@ -40,7 +40,7 @@
                                         <label class="text-muted">Estimated Cost :</label>
                                     </div>
                                     <div class="col-6">
-                                        <h6>{{data.estimatedCost}}</h6>
+                                        <h6>{{data.budgetCurrencyCode}}{{data.estimatedCost}}</h6>
                                     </div>
                                 </div>
                                
@@ -69,14 +69,14 @@
                             <div class="col-4">
                                 <div class="row">
                                     <div class="col-6">
-                                        <label class="text-muted">Duration Years :</label>
+                                        <label class="text-muted">Duration :</label>
                                     </div>
                                     <div class="col-4">
-                                        <h6>{{data.durationYears}}</h6>
+                                        <h6>{{data.durationYears}} years</h6>
                                     </div>
                                 </div> 
                             </div>
-                            <div class="col-4">
+                            <!-- <div class="col-4">
                                 <div class="row">
                                     <div class="col-6">
                                         <label class="text-muted">Duration Months :</label>
@@ -85,8 +85,8 @@
                                         <h6>{{data.durationMonths}}</h6>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-4">
+                            </div> -->
+                            <!-- <div class="col-4">
                                 
                                 <div class="row">
                                     <div class="col-6">
@@ -96,10 +96,10 @@
                                         <h6>{{data.durationDays}}</h6>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
-                        <button class="btn viewprofile" (click)="gotoWorkpackage(i)">Show Details</button>
-                        <button class="btn viewprofile1" (click)="gotoPayment(i)">Payment</button>
+                        <button class="btn viewprofile1" (click)="gotoPayment(i)">Set Milestones</button>
+                        <button class="btn viewprofile1" (click)="gotoWorkpackage(i)">Show Details</button>
                                
                     </div>
 

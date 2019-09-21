@@ -7,17 +7,46 @@
         </div>
         <div class="card-body">
           <form class="workpackage" [formGroup]="projectForm">
-            <label class="text-color">Posted by ( Employer ID ):</label><br>
-            <p>{{employerId}}
-              <button (click)="onProfileView()" class="btn viewprofile">View Profile</button>
-            </p>
+            <label class="text-color">Posted by (Employer): </label> {{employerName}}
+            <!-- <button (click)="onProfileView()" class="btn viewprofile">View Profile</button> -->
             <hr>
-            <label class="text-color">Posted Date :</label><br>
-            <p>{{todayDate}}</p>
-            <hr>
-            <label class="text-color">Do you require reviewer?</label><br>
-            <input type="checkbox" formControlName="yes_reviewer" (change)="isReviewer()" [value]="true">Yes
-            <hr>
+            <span> Need Reviewer </span> <input type="checkbox" formControlName="yes_reviewer" (change)="isReviewer()" (change)="show = !show" ng-model="show" [value]="true">
+            <div class="row" *ngIf="show" id="divshow" >
+                <table class="table table-dark table-responsive table-bordered worktable">
+                   <thead>
+                       <tr>
+                         <th>Select</th>
+                         <th>ID</th>
+                         <th>Skills</th>
+                         <th>K-Score</th>
+                         <th>Experience</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                         <tr>
+                           <td><input type="checkbox"></td>
+                           <td>XXXX</td>
+                           <td>PHP,JAVA</td>
+                           <td>* * *</td>
+                           <td>6 years</td>
+                         </tr>
+                         <tr>
+                            <td><input type="checkbox"></td>
+                            <td>XXXX</td>
+                            <td>Node.js</td>
+                            <td>* * *</td>
+                            <td>4 years</td>
+                          </tr>
+                          <tr>
+                              <td><input type="checkbox"></td>
+                              <td>XXXX</td>
+                              <td>Angular</td>
+                              <td>* * *</td>
+                              <td>9 years</td>
+                            </tr>
+                   </tbody>
+                </table>
+           </div>
           </form>
         </div>
       </div>
@@ -29,6 +58,8 @@
         </div>
         <div class="card-body">
           <form class="workpackage" [formGroup]="projectForm">
+            <label class="text-color">Posted Date  : </label> {{todayDate}}
+
             <div class="row">
               <div class="col-6">
                 <div class="form-group form-input">
@@ -140,6 +171,23 @@
             <div class="row">
               <div class="col-5">
                 <div class="row">
+                    <div class="col-5">
+                        <div class="form-group form-input">
+                          <select formControlName="budgetCurrencyCode" id="currency">
+                            <option disabled value="">Currency</option>
+                            <option id="option_txt" *ngFor="let currency of currencyArr" [value]="currency">{{currency}}
+                            </option>
+                          </select>
+    
+                          <div
+                            *ngIf="projectForm.controls['budgetCurrencyCode'].invalid && (projectForm.controls['budgetCurrencyCode'].dirty || projectForm.controls['budgetCurrencyCode'].touched)"
+                            class="text-danger error-msg">
+                            <div *ngIf="projectForm.controls['budgetCurrencyCode'].errors.required">
+                              Currency is required.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                   <div class="col-6">
                     <div class="form-group form-input">
                       <input type="text" formControlName="budgetAmt" id="budgetAmt" value="" required />
@@ -154,31 +202,15 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-6">
-                    <div class="form-group form-input">
-                      <select formControlName="budgetCurrencyCode" id="currency">
-                        <option disabled value="">Currency</option>
-                        <option id="option_txt" *ngFor="let currency of currencyArr" [value]="currency">{{currency}}
-                        </option>
-                      </select>
-
-                      <div
-                        *ngIf="projectForm.controls['budgetCurrencyCode'].invalid && (projectForm.controls['budgetCurrencyCode'].dirty || projectForm.controls['budgetCurrencyCode'].touched)"
-                        class="text-danger error-msg">
-                        <div *ngIf="projectForm.controls['budgetCurrencyCode'].errors.required">
-                          Currency is required.
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                 
                 </div>
               </div>
               <div class="col-7">
                 <div class="row">
-                  <div class="col-4">
+                  <div class="col-5">
                     <div class="form-group form-input">
-                      <input type="text" formControlName="estimatedCost" id="estimatedCost" value="" required />
-                      <label for="estimatedCost" class="form-label">Estimated Cost</label>
+                      <input type="text" formControlName="estimatedCost" id="estimatedCost" value="" required disabled/>
+                      <label for="estimatedCost" class="form-label">{{costEstimated}}</label>
 
                       <div
                         *ngIf="projectForm.controls['estimatedCost'].invalid && (projectForm.controls['estimatedCost'].dirty || projectForm.controls['estimatedCost'].touched)"
@@ -189,7 +221,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-4">
+                  <!-- <div class="col-3">
                       <div class="form-group form-input">
                           <select formControlName="budgetCurrencyCode" id="currency">
                             <option disabled value="">Currency</option>
@@ -205,44 +237,43 @@
                             </div>
                           </div>
                         </div>
-                  </div>
+                  </div> -->
                   <div class="col-4">
-                    <button class="btn viewprofile1">Calculate</button>
+                    <button class="btn viewprofile1" (click)="calCost()">Calculate</button>
                   </div>
                 </div>
               </div>
             </div>
-
-
           </form>
         </div>
       </div>
     </div>
   </div>
+ 
 
   <div class="card">
       <div class="card-header">
           <h6>Skill Details </h6>
         </div>
-      <div class="card-body">
+      <div class="card-body table-responsive">
           <div class="row">
               <div class="col-12">
-                  <form class="table-responsive" [formGroup]="skillForm">
+                  <form [formGroup]="skillForm">
                      
                               <table class="table table-dark  table-bordered worktable">
                                   <thead>
                                       <tr>
-                                        <th>Domain</th>
-                                        <th class="setwidth">Skill</th>
-                                        <th class="setwidth">Expertise</th>
-                                        <th class="setwidth">Availability</th>
+                                        <th >Domain</th>
+                                        <th >Skill</th>
+                                        <th>Expertise</th>
+                                        <th>Availability</th>
                                         <th>No. of team members</th>
-                                        <th>Country</th>
+                                        <th >Preferred Country</th>
                                         <th>Rate/hour</th>
-                                        <th class="setwidth1">Avg. Rate/hour</th>
                                         <th>Currency</th>
+                                        <th>Avg. Rate/hour</th>                                    
                                         <th>Start Date </th>
-                                        <th>End Date</th>
+                                        <th >End Date</th>
                                         <th  class="noborder">                              
                                           <button type="button" class="btn increment" (click)="addSkill()">+</button>
                                         </th>  
@@ -253,7 +284,7 @@
                                         <tr *ngFor="let item of skillDetailsArr.controls; let i=index" [formGroupName]="i">
                                           <td scope="row">
                                             <select formControlName="domainId" id="domain" (change)="getAllDomainSkills($event.target.value, i)">
-                                              <option disabled value="">Select Domain</option>
+                                              <option disabled value="">Domain</option>
                                               <option id="domain_option" *ngFor="let allDomain of allDomainArr"
                                                 [value]="allDomain.skill_cat_id">{{allDomain.skill_cat_name}}</option>
                                             </select>
@@ -261,21 +292,21 @@
                       
                                           <td scope="row">
                                             <select formControlName="skill" id="skill">
-                                              <option disabled value="">Select Skills</option>
+                                              <option disabled value="">Skills</option>
                                               <option id="option_skill" *ngFor="let allSkills of domainSkillsList[skillForm.get('skillDetails')['controls'][i].controls['domainId'].value]" [value]="allSkills.skill_id">
                                                 {{allSkills.skill_name}}</option>
                                             </select>
                                           </td>
                                           <td scope="row">
                                             <select formControlName="skillLevel" id=" skillLevel">
-                                              <option disabled value="">Select Level</option>
+                                              <option disabled value=""> Level</option>
                                               <option id="option_level" *ngFor="let skillLevel of skillLevelArr" [value]="skillLevel">
                                                 {{skillLevel}}</option>
                                             </select>
                                           </td>
                                           <td scope="row">
                                             <select formControlName="availability" id=" projectType">
-                                              <option disabled value="">Select Proj Type</option>
+                                              <option disabled value="">Availability</option>
                                               <option id="option_type" *ngFor="let  projectType of  projectTypeArr" [value]=" projectType">
                                                 {{projectType}}</option>
                                             </select>
@@ -285,7 +316,7 @@
                                           </td>
                                           <td scope="row">
                                             <select formControlName="country" id="country">
-                                              <option disabled value="">Select Country</option>
+                                              <option disabled value="">Country</option>
                                               <option id="option_type" *ngFor="let  country of  countries" [value]="country.name">
                                                 {{country.name}}</option>
                                             </select>
@@ -295,32 +326,28 @@
                                             <input formControlName="ratePerHour" type="text" placeholder="Rate/hour">
                                           </td>
                                           <td scope="row">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <input formControlName="availableAvgRatePerHour" type="text" placeholder="Avg Rate">
-                                                </div>
-                                                <div class="col-6">
-                                                    <button type="button" class="btn calbutton">Calculate</button>
-                                                </div> 
-                                            </div>
-                                          </td>
-                                          <td scope="row">
                                             <select formControlName="currencyCode" id="currency">
-                                              <option disabled value="">Select Currency</option>
+                                              <option disabled value="">Currency</option>
                                               <option id="option_txt" *ngFor="let currency of currencyArr" [value]="currency">{{currency}}
                                               </option>
                                             </select>
                       
                                           </td>
                                           <td scope="row">
+                                            <div class="row">
+                                                <button type="button" class="btn calbutton">Calculate</button>
+                                            </div>
+                                          </td>
+                                         
+                                          <td scope="row">
                                             <input type=text [owlDateTimeTrigger]="dt1" formControlName="startDate" id="datePicker1"
-                                              placeholder="Start Date" [owlDateTime]="dt1">
+                                              placeholder="Date" [owlDateTime]="dt1">
                                             <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
                                             <!-- <input type="text" formControlName="skill_start_date" >  -->
                                           </td>
                                           <td scope="row">
                                             <input type=text [owlDateTimeTrigger]="dt2" formControlName="endDate" id="datePicker2"
-                                              placeholder="End Date" [owlDateTime]="dt2">
+                                              placeholder="Date" [owlDateTime]="dt2">
                                             <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
                                             <!-- <input type="text" formControlName="skill_end_date" >  -->
                       

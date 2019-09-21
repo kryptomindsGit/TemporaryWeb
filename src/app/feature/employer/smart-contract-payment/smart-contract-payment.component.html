@@ -1,7 +1,7 @@
 <div class="container">
 
     <br>
-    <h6>Payment</h6>
+    <h6>Smart Contract</h6>
     <div class="card">
         <div class="card-body">
             <div class="row">
@@ -44,7 +44,7 @@
             <h6>Milestones</h6>
         </div>
         <div class="col-9">
-            <button class="btn viewprofile" (click)="onDeployContract()">Deploy Contract</button>
+            <!-- <button class="btn viewprofile" (click)="onDeployContract()">Deploy Contract</button> -->
         </div>
     </div>
     <div class="card">
@@ -57,15 +57,14 @@
                                     <thead>
                                         <tr>
                                             <th>Milestone<span>*</span></th>
+                                            <th>Completion Criteria</th>
                                             <th class="setWidth">Start Date<span>*</span></th>
                                             <th class="setWidth">End Date<span>*</span></th>
-                                            <th>Completion Criteria</th>
                                             <th>Due Date <span>*</span></th>
                                             <th>Payment Condition</th>
-                                            <th class="setWidth">Team Member</th>
-                                            <th class="setWidth">Amount Payble<span>*</span></th>
+                                            <th class="setWidth">Team Member<span>*</span></th>
+                                            <th class="setWidth">Amount Payable<span>*</span></th>
                                             <th>Currency Code<span>*</span></th>
-                                            <th>Submit Milestone</th>
                                             <th class="noborder">
                                                 <button class="btn increment" (click)="addMolestone()">+</button>
                                             </th>
@@ -76,7 +75,11 @@
                                         <tr *ngFor="let item of milestoneDetailsArr.controls; let i=index"
                                             [formGroupName]="i">
                                             <td><input type="text" formControlName="milestoneName"
-                                                    placeholder="Enter Milestone"></td>
+                                                    placeholder="Milestone Name"></td>
+                                            <td>
+                                                <input type="text" formControlName="completionCriteria"
+                                                    placeholder="Criteria">
+                                            </td>
                                             <td>
                                                 <input type=text [owlDateTimeTrigger]="dt1" formControlName="startDate"
                                                     id="datePicker1" placeholder="Start Date" [owlDateTime]="dt1">
@@ -87,16 +90,13 @@
                                                     id="datePicker" placeholder="End Date" [owlDateTime]="dt">
                                                 <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
                                             </td>
-                                            <td>
-                                                <input type="text" formControlName="completionCriteria"
-                                                    placeholder="Criteria">
-                                            </td>
+                                            
                                             <td>
                                                    
-                                                            <input type="text" [owlDateTimeTrigger]="dt4"
-                                                                [owlDateTime]="dt4" id="datePicker4"
-                                                                formControlName="paymentConditionDueDate" placeholder="Due Date" value="true">
-                                                            <owl-date-time [pickerType]="'calendar'" #dt4></owl-date-time>
+                                                    <input type="text" [owlDateTimeTrigger]="dt4"
+                                                        [owlDateTime]="dt4" id="datePicker4"
+                                                        formControlName="paymentConditionDueDate" placeholder="Due Date" value="true">
+                                                    <owl-date-time [pickerType]="'calendar'" #dt4></owl-date-time>
                                                        
                                                 </td>
                                             <td>
@@ -116,7 +116,7 @@
                                                 <br>
                                             </td>
                                             <td><select formControlName="freelancerId" id="teamMember">
-                                                    <option disabled value="">Select Team Member</option>
+                                                    <option disabled value="">Team Member</option>
                                                     <option id="option_type" *ngFor="let  team of  teamMemberArr"
                                                         [value]=" team.memberId">{{team.memberId}}</option>
                                                 </select>
@@ -124,11 +124,12 @@
                                             <td><input type="text" formControlName="amountPayable"
                                                     placeholder="Amount "></td>
                                             <td>
-                                                <input type="text" formControlName="currencyCd" placeholder="Currency">
-                                            </td>
-                                            <td>
-                                                <button class="btn deploy" (click)="onDeployMilestone(i)">Deploy
-                                                    Milestone</button>
+                                                <select formControlName="currencyCd" id="teamMember">
+                                                    <option disabled value="">Currency</option>
+                                                    <option id="option_type" *ngFor="let  currency of  currencyArr"
+                                                        [value]="currency">{{currency}}</option>
+                                                </select>
+                                                <!-- <input type="text" formControlName="currencyCd" placeholder="Currency"> -->
                                             </td>
                                             <td class="noborder">
                                                 <button class="btn increment" (click)="removeMilestone(i)">-</button>
@@ -138,8 +139,8 @@
                                 </table>
                            
                          
-                        <button class="btn viewprofile" (click)="onSaveChanges()">Save Changes</button>
-                        <button class="btn viewprofile" (click)="onClick($event)" (click)="upoladContractDoument()">Upload Contract</button>
+                        <button class="btn viewprofile" (click)="onSaveChanges()">Save Milestones</button>
+                        <button class="btn viewprofile" (click)="onClick($event)" (change)="upoladContractDoument()">Upload Contract</button>
                     </form>
                 </div>
             </div>
@@ -198,6 +199,7 @@
                                     <th>Payer Account</th>
                                     <th>Payee Name</th>
                                     <th>Payee Account</th>
+                                    <th>Payment Currency</th>
                                     <th>Payment Amount</th>
                                     <th class="noborder">
                                         <button class="btn increment" (click)="addSchedule()">+</button>
@@ -205,12 +207,14 @@
                                 </tr>
                             </thead>
                             <tbody formArrayName="scheduleDetails">
-                                <tr *ngFor="let item of scheduleDetailsArr.controls; let i=index" [formGroupName]="i">
+                                <tr *ngFor="let  milestone of  milestoneArr;let item of scheduleDetailsArr.controls; let i=index ;" [formGroupName]="i" >
                                     <td>
-                                        <select id="milestoneId" formControlName="milestoneId">
+                                        <!-- <select id="milestoneId" formControlName="milestoneId">
                                             <option disabled value="">Select Milestone</option>
-                                            <option id="option_type" *ngFor="let  milestone of  milestoneArr"
-                                                [value]="milestone.milestoneId">{{milestone.milestoneName}}</option>
+                                            <option id="option_type" [value]="milestone.milestoneId">{{milestone.milestoneName}}</option>
+                                        </select> -->
+                                       <select id="milestoneId" formControlName="milestoneId">
+                                            <option [value]="milestone.milestoneId">{{milestone.milestoneName}}</option>
                                         </select>
                                     </td>
                                     <td>
@@ -229,6 +233,14 @@
                                     </td>
                                     <td><input type="text" placeholder="Payee Account" formControlName="payeeAccount">
                                     </td>
+                                    <td>
+                                            <select formControlName="paymentCurrency" id="teamMember">
+                                                <option disabled value="">Currency</option>
+                                                <option id="option_type" *ngFor="let  currency of  currencyArr"
+                                                    [value]="currency">{{currency}}</option>
+                                            </select>
+                                            <!-- <input type="text" formControlName="currencyCd" placeholder="Currency"> -->
+                                        </td>
                                     <td><input type="text" placeholder="Payee Ammount" formControlName="paymentAmount">
                                     </td>
                                     <td class="noborder">
@@ -239,11 +251,8 @@
                         </table>
                    
             </form>
+            <button class="btn viewprofile" (click)="onSaveSchedule()">Save Schedule</button>
+
         </div>
     </div>
-
-    
-    <button class="btn viewprofile" (click)="onSaveChanges()">Save Changes</button>
-    <button class="btn viewprofile1" (click)="onSaveContract()">Submit Contract</button>
-
 </div>

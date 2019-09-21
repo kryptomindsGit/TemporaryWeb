@@ -21,21 +21,24 @@ export class ViewComponent implements OnInit {
 
   //project Details variables
 
-  projectName: string = "Web developmet For 'X-Company'";
-  projectDesc: string = "Lorem ipsum, dolor sit amet consectetur adipisicing elit.Exercitationem consequatur adipisci,aliquam consequuntur minus sunt dolorequas quideminventore suscipit laudantium voluptatum iure nulla soluta nemo qui sit, maxime nostrum! ";
-  budget: number = 350;
-  estimatedCost: number = 320;
-  complexity: string = "High";
+  projectName: string ;
+  projectDesc: string ;
+  budget: number;
+  estimatedCost: number ;
+  complexity: string ;
   // stratDate : Date ;
   // fromDate : Date ;
   // toDate : Date ;
-  startDate: string = "10 jan 2019";
-  fromDate: string = "14 jan 2019";
-  toDate: string = "1 june 2019";
+  startDate: string;
+  fromDate: string;
+  toDate: string ;
   budgetCurrency: string;
   workId:any;
   //Arr
   skillArr = [];
+  durationDays : any;
+  durationYears : any;
+  durationMonths : any;
 
 
   config: SwiperOptions = {
@@ -85,16 +88,20 @@ export class ViewComponent implements OnInit {
       this.projectDesc = resData.responseObject.projectDescription;
       this.budget = resData.responseObject.budget;
       this.estimatedCost = resData.responseObject.estimatedCost;
-      this.startDate = (resData.responseObject.approxStartDate).substring(0, 10);
-      this.toDate = (resData.responseObject.approxStartDate).substring(0, 10);
+      this.startDate = (resData.responseObject.approxStartDate);
+      this.toDate = (resData.responseObject.approxStartDate);
       this.budgetCurrency = resData.responseObject.budgetCurrencyCode;
+      this.complexity=resData.responseObject.complexity;
+      this.durationYears = resData.responseObject.durationYears;
+      this.durationMonths = resData.responseObject.durationMonths;
+      this.durationDays = resData.responseObject.durationDays;
     });
 
     this.__workService.getSkillPackageData(id).then((resData: any) => {
       console.log("Data of skills" + resData.responseObject);
       this.skillArr = resData.responseObject;
       console.log("Data of skills" ,this.skillArr);
-      localStorage.removeItem("workpackageId");
+      // localStorage.removeItem("workpackageId");
 
     });
 

@@ -4,6 +4,7 @@ import { formatDate } from '@angular/common';
 import { IndeptProfileService } from 'src/app/feature/independent-prof/profile/shared/service/profile.service';
 import { WorkPackageService } from '../../shared/service/work-package.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add',
@@ -22,7 +23,7 @@ export class AddComponent implements OnInit {
   complexityArr = ['High', 'Medium', 'Low'];
   skillLevelArr = ['Moderrate', 'Intermediate', 'Begginer'];
   projectTypeArr = ['Full-time', 'Part-time'];
-  currencyArr = ['$', 'Rs'];
+  currencyArr = ['INR', 'USD' , 'IDR' , 'AUD' , 'EUR'];
   countries = [];
   durationArr = ['days', 'months', 'years'];
   allDomainArr = [];
@@ -32,7 +33,7 @@ export class AddComponent implements OnInit {
   //Date 
   today = new Date();
   todayDate: string;
-  employerId: number = 123456789;
+  employerName: string;
   email : any;
   //skill related variables
 
@@ -41,13 +42,14 @@ export class AddComponent implements OnInit {
   durationDays: number;
   isSelected: boolean = false;
 
-
+  costEstimated:any ="Estimated Cost";
 
   constructor(
     private fb: FormBuilder,
     private __profileService: IndeptProfileService,
     private __workpackageService: WorkPackageService,
-    private __router : Router
+    private __router : Router,
+    private toastr: ToastrService,
   ) {
   }
 
@@ -226,12 +228,14 @@ export class AddComponent implements OnInit {
       estimatedCostCurrency: this.projectForm.controls.budgetCurrencyCode.value,
       approxStartDate: this.projectForm.controls.proj_start_date.value,
       preferredAttributes: ""
+      // wpsSet:this.skillForm.controls.skillDetails.value
     }
     console.log("Work package payload", workPackagePayload);
 
 
     this.__workpackageService.postWorkPackageData(workPackagePayload).then((workData: any) => {
       console.log("Data is successfully saved");
+      // this.__router.navigate(['/feature/feature/full-layout/employer/emp/workpackage/workpack/viewall'])
 
       this.wpId = workData.responseObject.workPackageId;
 
@@ -241,12 +245,14 @@ export class AddComponent implements OnInit {
 
       this.__workpackageService.postWorkPackageSkillData(this.skillForm.controls.skillDetails.value, this.wpId).then((workData: any) => {
         console.log("Data is successfully saved", workData);
-        this.__router.navigate(['/feature/feature/full-layout/employer/emp/workpackage/workpack/viewall'])
+        this.toastr.success('Project Saved Successfully');
+        this.__router.navigate(['/feature/feature/full-layout/employer/emp/workpackage/workpack/viewall']);
       });
-
-      
-
     });
+  }
+
+  calCost(){
+    this.costEstimated = this.projectForm.controls.budgetCurrencyCode.value+" 230";
   }
 
   onProfileView(){

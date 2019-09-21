@@ -81,13 +81,30 @@ export class WorkPackageService {
     console.log("Package Data :" , workPackageId);
     
     try {
-      let res = await this.http.put(`${SPRING_URL}/workpackage/uploadedContractDoc/${workPackageId}`,payload,httpOptions).toPromise();
+      let res = await this.http.post(`${SPRING_URL}/workpackage/uploadedContractDoc/${workPackageId}`,payload,httpOptions).toPromise();
       console.log("data " ,res);
       return res;
       
     } catch (error) {
       this.handleError(error);      
     }
+
+  }
+
+  
+  async updateContractAddress(workPackageId : any ,payload:any):Promise<any> {
+    
+    console.log("Package Data :" , workPackageId);
+    
+    try {
+      let res = await this.http.post(`${SPRING_URL}/workpackage/smartContractAddr/${workPackageId}`,payload,httpOptions).toPromise();
+      console.log("data " ,res);
+      return res;
+      
+    } catch (error) {
+      this.handleError(error);      
+    }
+
   }
 
   //get all work packages

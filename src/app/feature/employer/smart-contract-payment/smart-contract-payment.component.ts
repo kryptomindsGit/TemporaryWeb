@@ -5,6 +5,7 @@ import { SmartContractService } from '../services/smart-contract.service';
 import { EmpProfileService } from '../profile/shared/service/profile.service';
 import { trigger, transition, useAnimation } from '@angular/animations';
 import { bounce } from 'ng-animate';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-smart-contract-payment',
@@ -49,6 +50,8 @@ teamMemberArr = [
                   {memberId: 3 ,status:'rejected'}
                 ];
 paymentMethodArr = ['paypal','net-backing'];
+currencyArr = ['INR', 'USD' , 'IDR' , 'AUD' , 'EUR'];
+
 
   contractStatus : string ="";
   searchFreelancer:number;
@@ -56,7 +59,9 @@ paymentMethodArr = ['paypal','net-backing'];
     private __fb: FormBuilder,
     private __paymentService: SmartContractService,
     private __workService :WorkPackageService,
-    private __profileService: EmpProfileService
+    private __profileService: EmpProfileService,
+    private toastr: ToastrService,
+
   ) { }
 
   ngOnInit() {
@@ -68,6 +73,7 @@ paymentMethodArr = ['paypal','net-backing'];
    this.createScheduleForm();
    this.getWorkPackageData();
    this.selectFile();
+   this.getMilestoneDetails();
   }
 
   
@@ -80,7 +86,7 @@ paymentMethodArr = ['paypal','net-backing'];
       console.log("response data : ",resData.responseObject);
       this.projectName = resData.responseObject.projectName;
       this.contractStatus = resData.responseObject.contractStatus;
-      this.empId = resData.responseObject.postedByIndividualEmpId.user.userId;
+      this.empId = resData.responseObject.postedByIndividualEmp.user.userId;
     });
   }
 
@@ -121,6 +127,7 @@ paymentMethodArr = ['paypal','net-backing'];
           paymentCurrency:['',[Validators.required]],
           paymentStatus:['',[Validators.required]],
           paymentDate:['',[Validators.required]],
+          milestoneId:['',[Validators.required]]
         })
       ])
     });
@@ -186,21 +193,36 @@ paymentMethodArr = ['paypal','net-backing'];
       projectId: this.workPackageID
     }
 
-    // const payload={
-    //   projectId: 1011121
-    // }
-
     this.__paymentService.deployContractData(payload).then((workData: any) =>{
       console.log("Data is successfully saved" ,workData);
+     
       this.contractAddr = workData.ContractAddress;
+
+      for(let i= 0 ; i< (this.milestoneForm.controls.milestoneDetails.value).length ; i++){
+           this.onDeployMilestone(i);
+      }
+
+
+      this.__paymentService.postMilestoneData(this.milestoneForm.controls.milestoneDetails.value,this.workPackageID).then((workData: any) =>{
+        console.log("Data is successfully saved" ,workData);
+        this.toastr.success('Milestones saved Successfully!!');
+        this.milestoneArr=workData.responseObject;
+        const addrData={
+          smartContractAddr : this.contractAddr
+        }
+
+        this.__workService.updateContractAddress( this.workPackageID ,addrData).then((resData: any) => {
+        
+        });
+      });
     });
   }
 
-  onDeployMilestone(i:any){
+  async onDeployMilestone(i:any){
     
     console.log("addr "+this.contractAddr);
    
-    const payloade = {
+    const payload = {
       milestoneStr:(this.milestoneForm.controls.milestoneDetails.value)[i].milestoneName,
       reviewAddrs:"0xd15eE84e3308249E178D8Fb8f20BD7A03b358ee5",
       startDate:(this.milestoneForm.controls.milestoneDetails.value)[i].startDate,
@@ -210,7 +232,7 @@ paymentMethodArr = ['paypal','net-backing'];
       contractAddr:this.contractAddr,
     }
     
-    this.__paymentService.deployMilestoneData(payloade).then((workData: any) =>{
+    await this.__paymentService.deployMilestoneData(payload).then((workData: any) =>{
       console.log("Data is successfully saved" ,workData);
     });
 
@@ -233,13 +255,13 @@ paymentMethodArr = ['paypal','net-backing'];
     });
   }
 
-  onSaveChanges(){
-    
-    console.log(" Milestone details  " , this.milestoneForm.controls.milestoneDetails.value);
+   onSaveChanges(){
 
-      this.__paymentService.postMilestoneData(this.milestoneForm.controls.milestoneDetails.value,this.workPackageID).then((workData: any) =>{
-        console.log("Data is successfully saved" ,workData);
-      });
+    this.onDeployContract();
+
+    //  for(let i= 0 ; i< (this.milestoneForm.controls.milestoneDetails.value).length ; i++){
+    //    this.onDeployMilestone(i);
+    // }
   }
 
   
@@ -258,18 +280,27 @@ paymentMethodArr = ['paypal','net-backing'];
   async upoladContractDoument(){
 
     await this.__profileService.postDocHashData(this.fileObj, this.emailId, this.fileName).then((resData) => {
-      this.uploadedFile = resData;    
+      this.uploadedFile = resData['fileId'];    
          
       const filepayload = {
         uploadedContractDocument : this.uploadedFile
       }
       this.__workService.updateContractDocument(this.workPackageID , filepayload).then((resData: any) => {
-        
+        this.toastr.success('File Uploaded Successfully!!');
+
       });
 
     });
+  }
+
+  getMilestoneDetails(){
+    this.__paymentService.getMilestoneData(this.workPackageID).then((workData: any) =>{
+      console.log("Data is successfully saved" ,workData);
+      this.milestoneArr=workData.responseObject;
+    });
 
   }
+
   onClick(event)
   {
     this.showModal = true; 
@@ -280,10 +311,13 @@ paymentMethodArr = ['paypal','net-backing'];
     this.showModal = false;
   }
 
+  onSaveSchedule(){
+    this.__paymentService.postScheduleData(this.scheduleForm.controls.scheduleDetails.value).then((workData: any) =>{
+      console.log("Data is successfully saved" ,workData);
+      // this.milestoneArr=workData.responseObject;
+      this.toastr.success('Payment Details saved Successfully!!');
 
-
-  onSaveContract(){
-
+    });
   }
-
 }
+
