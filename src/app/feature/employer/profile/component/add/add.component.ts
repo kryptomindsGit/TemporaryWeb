@@ -177,7 +177,7 @@ export class AddComponent implements OnInit {
     console.log(inputValue);
     this.fileType = inputValue
   }
-  
+
   /**
    * @method setDocTypeCatID
    * @param city_id
@@ -203,9 +203,14 @@ export class AddComponent implements OnInit {
 
     await this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((resData) => {
       this.FileArrData = resData;
-      (err) => this.error = err
-      console.log("Resp data:", this.FileArrData.Message);
 
+      if (this.FileArrData) {
+        this.toastr.success(this.fileName, "Successfully uploaded");
+      } else {
+        this.toastr.error(this.fileName, "File not uploaded");
+      }
+
+      console.log("Resp data:", this.FileArrData.Message);
       console.log("File Resp:", this.FileArrData.fileId);
     });
     // this.FileArrData = "jkdhfjkhkdjshfkjhdskjfh"
@@ -256,10 +261,11 @@ export class AddComponent implements OnInit {
     this.__profileService.createEmployer(employerProfileVal).then((resData: any) => {
       console.log(resData);
       if (resData.status == 'success') {
-        this.toastr.success("Successfully Registered");
+        this.toastr.success("Profile added Successfully");
+        this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view', this.email_id]);
       }
       else if (resData.status == 'error') {
-        this.toastr.error("Registered Failed");
+        this.toastr.error("Profile not saved");
       }
     });
 

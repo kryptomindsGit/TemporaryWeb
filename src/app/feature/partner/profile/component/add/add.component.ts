@@ -237,10 +237,11 @@ export class AddComponent implements OnInit {
     this.__profileService.createPartner(partnerProfileVal).then((resData: any) => {
       console.log(resData);
       if (resData.status == 'success') {
-        this.toastr.success("Successfully Registered");
+        this.toastr.success("Profile added Successfully");
+        this.__router.navigate(['/feature/feature/full-layout/partner/part/profile/profile/view', this.email_id]);
       }
       else if (resData.status == 'error') {
-        this.toastr.error("Registered Failed");
+        this.toastr.error("Profile not saved");
       }
     });
   }

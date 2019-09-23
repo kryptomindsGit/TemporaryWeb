@@ -111,40 +111,40 @@ export class EditComponent implements OnInit {
     await this.populateStateList();
     await this.populateCityList();
 
-    if(this.employerArr != null){
-      this.employerProfileForm.patchValue({
-        comapany_name: this.employerArr.cmp_name,
-        website_addr: this.employerArr.cmp_website,
-        address_line_one: this.employerArr.cmp_addr,
-        address_line_two: this.employerArr.cmp_addr_2,
-        country: this.employerArr.country,
-        state: this.employerArr.state,
-        city: this.employerArr.city,
-        zipcode: this.employerArr.zipcode,
-        business_cat: this.employerArr.business_cat,
-        company_profile: this.employerArr.cpm_profile,
-        company_rep_det: this.employerArr.cmp_reprentative
-      });
-      
-      this.__profileService.getEmployerFileById(this.emailId).then((resData: any) => {
-        this.employerFileArr = resData;
-        console.log(this.employerFileArr);
-        if(!this.employerFileArr){
 
-          for (let index = 0; index < this.employerFileArr.length; index++) {
-            this.documentArr.push(this.__fb.group(
-              {
-                file_name: this.employerFileArr[index].file_name,
-                file_type: this.employerFileArr[index].file_type,
-                file_id: this.employerFileArr[index].file_id,
-                part_id: this.employerFileArr[index].part_id
-              }));
-          }
-        }else{
-         this.addDocument();
-        }  
-      });
-    }
+    this.employerProfileForm.patchValue({
+      comapany_name: this.employerArr.cmp_name,
+      website_addr: this.employerArr.cmp_website,
+      address_line_one: this.employerArr.cmp_addr,
+      address_line_two: this.employerArr.cmp_addr_2,
+      country: this.employerArr.country,
+      state: this.employerArr.state,
+      city: this.employerArr.city,
+      zipcode: this.employerArr.zipcode,
+      business_cat: this.employerArr.business_cat,
+      company_profile: this.employerArr.cpm_profile,
+      company_rep_det: this.employerArr.cmp_reprentative
+    });
+
+    this.__profileService.getEmployerFileById(this.emailId).then((resData: any) => {
+      this.employerFileArr = resData;
+      console.log(this.employerFileArr);
+      if (this.employerFileArr.length > 0) {
+
+        for (let index = 0; index < this.employerFileArr.length; index++) {
+          this.documentArr.push(this.__fb.group(
+            {
+              file_name: this.employerFileArr[index].file_name,
+              file_type: this.employerFileArr[index].file_type,
+              file_id: this.employerFileArr[index].file_id,
+              part_id: this.employerFileArr[index].part_id
+            }));
+        }
+      } else {
+        this.addDocument();
+      }
+    });
+
 
   }
 
@@ -321,10 +321,11 @@ export class EditComponent implements OnInit {
     this.__profileService.updateEmployer(this.emailId, employerProfileVal).then((resData: any) => {
       console.log(resData);
       if (resData.status == 'success') {
-        this.toastr.success("Successfully Registered");
+        this.toastr.success("Profile added Successfully");
+        this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view', this.emailId]);
       }
       else if (resData.status == 'error') {
-        this.toastr.error("Registered Failed");
+        this.toastr.error("Profile not saved");
       }
     });
 

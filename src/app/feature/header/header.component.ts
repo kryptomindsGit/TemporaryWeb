@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/auth/shared/service/auth.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-emailName:any;
+  emailName:any;
   public userRole: any;
   public email_id: any;
   public congnitoID: any;
@@ -89,7 +89,7 @@ emailName:any;
         this.employerDetailsArr = resData[0];
         console.log(this.employerDetailsArr);
 
-        if (this.__empProfileService == null) {
+        if (this.employerDetailsArr == null) {
           this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/add']);
         } else {
           this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view', this.email_id]);

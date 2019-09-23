@@ -112,7 +112,7 @@ export class EditComponent implements OnInit {
     await this.populateStateList();
     await this.populateCityList();
 
-    if(this.partnerArr != null){
+    if (this.partnerArr != null) {
       this.partnerProfileForm.patchValue({
         comapany_name: this.partnerArr.part_name,
         website_addr: this.partnerArr.part_website,
@@ -126,12 +126,12 @@ export class EditComponent implements OnInit {
         company_profile: this.partnerArr.part_type,
         company_rep_det: this.partnerArr.part_reprentative
       });
-  
+
       this.__profileService.getPartnerFileById(this.emailId).then((resData: any) => {
         this.partnerFileArr = resData;
         console.log(this.partnerFileArr);
 
-        if(!this.partnerFileArr){
+        if (!this.partnerFileArr) {
           for (let index = 0; index < this.partnerFileArr.length; index++) {
             this.documentArr.push(this.__fb.group(
               {
@@ -141,7 +141,7 @@ export class EditComponent implements OnInit {
                 part_id: this.partnerFileArr[index].part_id
               }));
           }
-        }else{
+        } else {
           this.addDocument();
         }
 
@@ -310,10 +310,11 @@ export class EditComponent implements OnInit {
     this.__profileService.updatePartner(this.emailId, partnerProfileVal).then((resData: any) => {
       console.log(resData);
       if (resData.status == 'success') {
-        this.toastr.success("Successfully Registered");
+        this.toastr.success("Profile added Successfully");
+        this.__router.navigate(['/feature/feature/full-layout/partner/part/profile/profile/view', this.email]);
       }
       else if (resData.status == 'error') {
-        this.toastr.error("Registered Failed");
+        this.toastr.error("Profile not saved");
       }
     });
   }
