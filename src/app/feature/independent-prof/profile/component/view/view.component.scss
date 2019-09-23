@@ -22,9 +22,9 @@
     /* Added */
     margin: 2rem;
     /* Added */
-    border-radius: 10px;
-    box-shadow: 5px 5px 32px 5px rgba(0, 0, 0, 0.22);
-    background: $bg-front-color;
+    // border-radius: 10px;
+    // box-shadow: 5px 5px 32px 5px rgba(0, 0, 0, 0.22);
+    background: transparent !important;
 }
 
 .table td,
@@ -43,10 +43,12 @@
 .card-header {
     text-transform: uppercase;
     font-size: 14px;
+    background: transparent !important;
 }
 
 .card-body {
-    padding: 0%;
+    padding: 0% !important;
+
 }
 
 .card-body h4 {
@@ -57,6 +59,18 @@
     text-transform: uppercase;
 
 }
+
+/*-----------------------------------------------------------------------
+CUSTOME CARD CSS
+-------------------------------------------------------------------------*/
+.card .cardbody {
+    float: none;
+    margin: 2rem;
+    background: $bg-front-color;
+    padding-top: 30%;
+    margin: 0%;
+}
+
 
 /*-----------------------------------------------------------------------
 FORM CSS

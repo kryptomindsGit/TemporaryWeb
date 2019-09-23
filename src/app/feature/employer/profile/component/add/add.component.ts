@@ -202,13 +202,17 @@ export class AddComponent implements OnInit {
   async uploadFile() {
 
     await this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((resData) => {
-      this.FileArrData = resData;
+      // this.FileArrData = resData;
+      this.FileArrData = resData,
+        (error) => this.error = error
 
       if (this.FileArrData) {
         this.toastr.success(this.fileName, "Successfully uploaded");
       } else {
         this.toastr.error(this.fileName, "File not uploaded");
       }
+
+
 
       console.log("Resp data:", this.FileArrData.Message);
       console.log("File Resp:", this.FileArrData.fileId);

@@ -3,13 +3,16 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header ">
-                    <h6>View Profile</h6>
+                    <div class="col text-center">
+                        <h5>Profile Details</h5>
+                    </div>
+                    <div class="col">
+                        <a class="btn btnBlue float-right" (click)="editProfile()">Edit Profile</a>
+                    </div>
                 </div>
                 <div class="card-body ">
                     <div class="row">
                         <div class="col-12 text-center">
-                            <!-- <h4>Profile Details</h4>
-                    <span class="line"></span> -->
 
                             <div class="withvideo">
                                 <div class="overlay">
@@ -29,15 +32,11 @@
 
                             </div>
                         </div>
-                        <br>
-                        <br>
-                        <br>
-                        <div class="col-12">
-                            <a class="btn btnBlue float-right" (click)="editProfile()">Edit Profile</a>
-                        </div>
                     </div>
+                </div>
+            </div>
 
-                    <div class="row">
+            <!-- <div class="row">
                         <div class="col-md-12">
                             <table class="table">
                                 <tbody>
@@ -94,8 +93,8 @@
                                                 <hr *ngIf="i>0">
                                                 <li>Name : {{ orag.org_name }}</li>
                                                 <li>Designation : {{ orag.org_designation }}</li>
-                                                <li>Start Date : {{ orag.start_date }}</li>
-                                                <li>End Date : {{ orag.end_date }}</li>
+                                                <li>Start Date : {{ orag.start_date | date : dd MMM yyyy }}</li>
+                                                <li>End Date : {{ orag.end_date | date : dd MMM yyyy }}</li>
                                                 <li>Responsibilities : {{ orag.responsibilities }}</li>
                                             </div>
                                         </td>
@@ -153,11 +152,208 @@
                                         <th width="25%">Skills: </th>
                                         <td>
                                             <div *ngFor="let skill of freeSkillDetailsArr; let i=index">
-                                                <!-- <hr *ngIf="i>0"> -->
                                                 <li>{{ skill.skill_name }}</li>
                                             </div>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <th width="25%">Documents: </th>
+                                        <td>
+                                            <div *ngFor="let document of freeDocsArr; let i=index">
+                                                <hr *ngIf="i>0">
+                                                <table>
+                                                    <tr>
+                                                        <th width="25%">{{document.doc_type}}</th>
+                                                        <td width="60%">{{ document.doc_name }}</td>
+                                                        <td><a style="color:#1051dd; "
+                                                                (click)="getHashDataBlockChainPDF(document.doc_name)"><i
+                                                                    class="fa fa-download" aria-hidden="true"></i>
+                                                            </a></td>
+                                                    </tr>
+
+                                                </table>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> -->
+            <div class="card">
+                <div class="card-header ">
+                    <h6>Personal Details</h6>
+                </div>
+                <div class="card-body cardbody">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th width="25%">Name:</th>
+                                        <td>
+                                            {{freeDetailsArr.prefix}} {{freeDetailsArr.first_name}}
+                                            {{freeDetailsArr.middle_name}} {{freeDetailsArr.last_name}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th width="25%">Email: </th>
+                                        <td>
+                                            {{email_addr}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th width="25%">Is Reviewer: </th>
+                                        <td>
+                                            {{freeDetailsArr.is_interviewer}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th width="25%">Address: </th>
+                                        <td>
+                                            <li>Address Line 1 : {{freeDetailsArr.line_1}}</li>
+                                            <li>Address Line 2 : {{freeDetailsArr.line_2}}</li>
+                                            <li>City : {{freeDetailsArr.city}}, State :
+                                                {{freeDetailsArr.state}},
+                                                Country : {{freeDetailsArr.country}}</li>
+                                            <li>Postal Code : {{freeDetailsArr.code}}</li>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th width="25%">Strength: </th>
+                                        <div *ngFor="let strength of qualityArray; let i=index">
+                                            <td *ngIf="strength.strengths != null">
+                                                {{strength.strengths}}
+                                            </td>
+                                        </div>
+
+                                    </tr>
+
+                                    <tr>
+                                        <th width="25%">Weakness: </th>
+                                        <div *ngFor="let weakness of qualityArray; let i=index">
+                                            <td *ngIf="weakness.weaknesses != null">
+                                                {{weakness.weaknesses}}
+                                            </td>
+                                        </div>
+                                    </tr>
+
+                                    <tr>
+                                        <th width="25%">Portfolio: </th>
+                                        <td>
+                                            <div *ngFor="let portfolio of freelancerPortArr; let i=index">
+                                                <li>{{ portfolio.port_addr }}</li>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header ">
+                    <h6>Education Details</h6>
+                </div>
+                <div class="card-body cardbody">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th width="25%">Education:
+                                        </th>
+                                        <td>
+                                            <div *ngFor="let education of freeEduArr; let i=index">
+                                                <hr *ngIf="i>0">
+                                                <li>Degree : {{ education.edu_name }}</li>
+                                                <li>Grade : {{ education.grade }}, Passing Year :
+                                                    {{ education.passing_year }},
+                                                    Percentage : {{ education.percentage }}</li>
+                                                <li>University : {{ education.university }}</li>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header ">
+                    <h6>Organization Details</h6>
+                </div>
+                <div class="card-body cardbody">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th width="25%">Organization:
+                                        </th>
+                                        <td>
+                                            <div *ngFor="let orag of freelancerOrgArr; let i=index">
+                                                <hr *ngIf="i>0">
+                                                <li>Name : {{ orag.org_name }}</li>
+                                                <li>Designation : {{ orag.org_designation }}</li>
+                                                <li>Start Date : {{ orag.start_date | date : 'dd MMM yyyy' }}</li>
+                                                <li>End Date : {{ orag.end_date | date : 'dd MMM yyyy' }}</li>
+                                                <li>Responsibilities : {{ orag.responsibilities }}</li>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th width="25%">Area of Expertise: </th>
+                                        <td>
+                                            {{freeDetailsArr.area_of_experties}}
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th width="25%">Psychometric test result: </th>
+                                        <td>
+                                            {{freeDetailsArr.psyco_result}}
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th width="25%">Reference: </th>
+                                        <td>
+                                            {{freeDetailsArr.reference}}
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th width="25%">Skills: </th>
+                                        <td>
+                                            <div *ngFor="let skill of freeSkillDetailsArr; let i=index">
+                                                <li>{{ skill.skill_name }}</li>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header ">
+                    <h6>Documents Details</h6>
+                </div>
+                <div class="card-body cardbody">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <tbody>
                                     <tr>
                                         <th width="25%">Documents: </th>
                                         <td>

@@ -7,7 +7,7 @@
                     <div class="card-body others-card">
                         <form [formGroup]="personalDetails" novalidate>
                             <div class="row">
-                                    
+
                                 <div class="form-group form-input col">
                                     <select formControlName="prefix">
                                         <option disabled value="">Prefix</option>
@@ -166,7 +166,7 @@
                                                     <input type="file" class="document_name" name="chooseFile"
                                                         id="chooseFile" (change)="handleFileInput($event)"
                                                         formControlName="file_name">
-                                                    
+
                                                 </div>
 
                                                 <div class=col-2>
@@ -332,7 +332,7 @@
                                                     <input [owlDateTimeTrigger]="dt" formControlName="start_date"
                                                         placeholder="Start Date" id="datePicker" [owlDateTime]="dt">
                                                     <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
-                                                    
+
                                                 </div>
 
                                                 <div class="form-group form-input col-3">
@@ -374,16 +374,16 @@
                                                         <div class="form-group form-input col-9">
                                                             <!-- <input type="text" formControlName="strength" id="strength"
                                                                 required /> -->
-                                                                <select  formControlName="strength" id="strengths" required>
-                                                                        <option disabled value=""></option>
-                                                                        <option value="Creative">Creative</option>
-                                                                        <option value="Flexible">Flexible</option>
-                                                                        <option value="Discipline">Discipline</option>
-                                                                        <option value="Humble">Humble</option>
-                                                                        <option value="Self-Motivated">Self-Motivated</option>
-                                                                        <option value="Team Oriented">Team Oriented</option>
-                                                                        <option value="Organized">Organized</option>
-                                                                    </select>
+                                                            <select formControlName="strength" id="strengths" required>
+                                                                <option disabled value=""></option>
+                                                                <option value="Creative">Creative</option>
+                                                                <option value="Flexible">Flexible</option>
+                                                                <option value="Discipline">Discipline</option>
+                                                                <option value="Humble">Humble</option>
+                                                                <option value="Self-Motivated">Self-Motivated</option>
+                                                                <option value="Team Oriented">Team Oriented</option>
+                                                                <option value="Organized">Organized</option>
+                                                            </select>
                                                             <label for="strengths" class="form-label">Strength</label>
                                                         </div>
 
@@ -413,14 +413,15 @@
                                                         <div class="form-group form-input col-9">
                                                             <!-- <input type="text" formControlName="weakness" id="weakness"
                                                                 required /> -->
-                                                                <select  formControlName="weakness" id="weaknesses" required>
-                                                                        <option disabled value=""></option>
-                                                                        <option value="Sensitive">Sensitive</option>
-                                                                        <option value="Self-Critical">Self-Critical</option>
-                                                                        <option value="Shy">Shy</option>
-                                                                        <option value="Impatient">Impatient</option>
-                                                                        <option value="Trouble saying No">Trouble saying No</option>
-                                                                    </select>
+                                                            <select formControlName="weakness" id="weaknesses" required>
+                                                                <option disabled value=""></option>
+                                                                <option value="Sensitive">Sensitive</option>
+                                                                <option value="Self-Critical">Self-Critical</option>
+                                                                <option value="Shy">Shy</option>
+                                                                <option value="Impatient">Impatient</option>
+                                                                <option value="Trouble saying No">Trouble saying No
+                                                                </option>
+                                                            </select>
                                                             <label for="weaknesses" class="form-label">Weakness</label>
                                                         </div>
 
@@ -573,14 +574,14 @@
                         </form>
                     </div>
                 </div>
-            </div> 
+            </div>
 
             <div class="skill-details-form" *ngIf="showMainContent == 4">
                 <form [formGroup]="skillDetails">
                     <div class="form-content">
                         <div class="container container-skill">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="card skill-container">
                                         <div class="card-header cardHeader">
                                             <div class="form">
@@ -624,7 +625,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <div class="card skill-container">
                                         <div class="card-header cardHeader">
                                             <div class="form">
@@ -633,8 +634,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div
-                                            class="card-body skill-innner-container skill-container skill-checkbox-container ">
+                                        <div class="card-body skill-checkbox-container">
                                             <ul class="checkbox-grid-row">
                                                 <li>
                                                     <label class="checkbox-grid-col"
@@ -664,16 +664,16 @@
                                                     [formGroupName]="i">
                                                     <div class="row">
                                                         <div class="form-group form-input col-6">
-                                                            <label class="label-skill"
-                                                                formControlName="skill_name">
+                                                            <label class="label-skill" formControlName="skill_name">
                                                                 {{item.value.skill_name}}
                                                             </label>
                                                         </div>
                                                         <div class="form-group form-input col-6">
                                                             <input type="text" formControlName="rate_hour"
                                                                 id="rate_skill" required />
-                                                            <label for="rate_skill" class="form-label">Rate Per
-                                                                hour</label>
+                                                            <label for="rate_skill" class="form-label"
+                                                                style="font-size: 0.7rem">Rate Per
+                                                                hour(USD)</label>
                                                         </div>
                                                     </div>
                                                 </div>

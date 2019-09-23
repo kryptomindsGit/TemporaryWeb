@@ -1,5 +1,4 @@
 <div class="container">
-
     <br>
     <h6>Smart Contract</h6>
     <div class="card">
@@ -8,14 +7,14 @@
                 <div class="col-3">
                     <div class="row">
                         <label class="text-color">
-                            Project ID  :   {{workPackageID}}
+                            Project ID : {{workPackageID}}
                         </label>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="row">
                         <label class="text-color">
-                            Project Name :  {{projectName}}
+                            Project Name : {{projectName}}
                         </label>
                     </div>
                 </div>
@@ -27,12 +26,12 @@
                     </div>
                 </div>
                 <div class="col-3">
-                        <div class="row">
-                            <label class="text-color">
-                                Contract Status : {{contractStatus}}
-                            </label>
-                        </div>
+                    <div class="row">
+                        <label class="text-color">
+                            Contract Status : {{contractStatus}}
+                        </label>
                     </div>
+                </div>
             </div>
         </div>
     </div>
@@ -49,207 +48,208 @@
     </div>
     <div class="card">
         <div class="card-body">
-           <label>Note : <span>*</span> fields are mandatory .</label>
+            <label>Note : <span>*</span> fields are mandatory .</label>
             <div class="row">
                 <div class="col-12">
                     <form class="table-responsive" [formGroup]="milestoneForm">
-                                <table class="table table-dark  table-bordered worktable">
-                                    <thead>
-                                        <tr>
-                                            <th>Milestone<span>*</span></th>
-                                            <th>Completion Criteria</th>
-                                            <th class="setWidth">Start Date<span>*</span></th>
-                                            <th class="setWidth">End Date<span>*</span></th>
-                                            <th>Due Date <span>*</span></th>
-                                            <th>Payment Condition</th>
-                                            <th class="setWidth">Team Member<span>*</span></th>
-                                            <th class="setWidth">Amount Payable<span>*</span></th>
-                                            <th>Currency Code<span>*</span></th>
-                                            <th class="noborder">
-                                                <button class="btn increment" (click)="addMolestone()">+</button>
-                                            </th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody formArrayName="milestoneDetails">
-                                        <tr *ngFor="let item of milestoneDetailsArr.controls; let i=index"
-                                            [formGroupName]="i">
-                                            <td><input type="text" formControlName="milestoneName"
-                                                    placeholder="Milestone Name"></td>
-                                            <td>
-                                                <input type="text" formControlName="completionCriteria"
-                                                    placeholder="Criteria">
-                                            </td>
-                                            <td>
-                                                <input type=text [owlDateTimeTrigger]="dt1" formControlName="startDate"
-                                                    id="datePicker1" placeholder="Start Date" [owlDateTime]="dt1">
-                                                <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
-                                            </td>
-                                            <td>
-                                                <input type=text [owlDateTimeTrigger]="dt" formControlName="endDate"
-                                                    id="datePicker" placeholder="End Date" [owlDateTime]="dt">
-                                                <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
-                                            </td>
-                                            
-                                            <td>
-                                                   
-                                                    <input type="text" [owlDateTimeTrigger]="dt4"
-                                                        [owlDateTime]="dt4" id="datePicker4"
-                                                        formControlName="paymentConditionDueDate" placeholder="Due Date" value="true">
-                                                    <owl-date-time [pickerType]="'calendar'" #dt4></owl-date-time>
-                                                       
-                                                </td>
-                                            <td>
-                                                <label class="checkbox-inline"><input type="checkbox"
-                                                        formControlName="paymentConditionApprovedByEmployer">Approved
-                                                    by Employer</label><br>
-                                                <label class="checkbox-inline"><input type="checkbox"
-                                                        formControlName="paymentConditionApprovedByReviewer">Approved
-                                                    by Reviewer</label><br>
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" [owlDateTimeTrigger]="dt2"
-                                                        [owlDateTime]="dt2" id="datePicker2"
-                                                        formControlName="paymentConditionDueDate" value="true">On
-                                                    Date
-                                                    <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
-                                                </label>
-                                                <br>
-                                            </td>
-                                            <td><select formControlName="freelancerId" id="teamMember">
-                                                    <option disabled value="">Team Member</option>
-                                                    <option id="option_type" *ngFor="let  team of  teamMemberArr"
-                                                        [value]=" team.memberId">{{team.memberId}}</option>
-                                                </select>
-                                            </td>
-                                            <td><input type="text" formControlName="amountPayable"
-                                                    placeholder="Amount "></td>
-                                            <td>
-                                                <select formControlName="currencyCd" id="teamMember">
-                                                    <option disabled value="">Currency</option>
-                                                    <option id="option_type" *ngFor="let  currency of  currencyArr"
-                                                        [value]="currency">{{currency}}</option>
-                                                </select>
-                                                <!-- <input type="text" formControlName="currencyCd" placeholder="Currency"> -->
-                                            </td>
-                                            <td class="noborder">
-                                                <button class="btn increment" (click)="removeMilestone(i)">-</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                           
-                         
-                        <button class="btn viewprofile" (click)="onSaveChanges()">Save Milestones</button>
-                        <button class="btn viewprofile" (click)="onClick($event)" (change)="upoladContractDoument()">Upload Contract</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="modal"  id="myModal" [style.display]="showModal ? 'block' : 'none'">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="center">
-                            <h6>Upload Document</h6>
-                        </div>
-    
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-    
-                        <!-- <h4 class="modal-title">User Details:</h4> -->
-                    </div>
-                    
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <form [formGroup]="fileForm">
-                                <p>
-                                        <input type="file" class="document_name" formControlName="contractFile" name="chooseFile"
-                                        id="chooseFile" (change)="handleFileInput($event)">
-                                </p>
-                        </form>
-                       
-                        
-                    </div>
-                    
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-success" data-dismiss="modal" (click) = "upoladContractDoument()">Save</button>
-                        <button type="button" class="btn btn-warning" data-dismiss="modal" (click) = "hide()">Close</button>
-                    </div>
-                    
-                    </div>
-                </div>
-            </div>
-    
-    </div>
-
-    <br>
-    <h6>Payment shedule</h6>
-    <div class="card">
-        <div class="card-body">
-            <form class="table-responsive" [formGroup]="scheduleForm">
-              
                         <table class="table table-dark  table-bordered worktable">
                             <thead>
                                 <tr>
-                                    <th>
-                                      Milestone<span>*</span>
-                                    </th>
-                                    <th>Payment Method</th>
-                                    <th>Payer Name</th>
-                                    <th>Payer Account</th>
-                                    <th>Payee Name</th>
-                                    <th>Payee Account</th>
-                                    <th>Payment Currency</th>
-                                    <th>Payment Amount</th>
+                                    <th>Milestone<span>*</span></th>
+                                    <th>Completion Criteria</th>
+                                    <th class="setWidth">Start Date<span>*</span></th>
+                                    <th class="setWidth">End Date<span>*</span></th>
+                                    <th>Due Date <span>*</span></th>
+                                    <th>Payment Condition</th>
+                                    <th class="setWidth">Team Member<span>*</span></th>
+                                    <th class="setWidth">Amount Payable<span>*</span></th>
+                                    <th>Currency Code<span>*</span></th>
                                     <th class="noborder">
-                                        <button class="btn increment" (click)="addSchedule()">+</button>
+                                        <button class="btn increment" (click)="addMolestone()">+</button>
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody formArrayName="scheduleDetails">
-                                <tr *ngFor="let  milestone of  milestoneArr;let item of scheduleDetailsArr.controls; let i=index ;" [formGroupName]="i" >
+
+                            <tbody formArrayName="milestoneDetails">
+                                <tr *ngFor="let item of milestoneDetailsArr.controls; let i=index" [formGroupName]="i">
+                                    <td><input type="text" formControlName="milestoneName" placeholder="Milestone Name">
+                                    </td>
                                     <td>
-                                        <!-- <select id="milestoneId" formControlName="milestoneId">
-                                            <option disabled value="">Select Milestone</option>
-                                            <option id="option_type" [value]="milestone.milestoneId">{{milestone.milestoneName}}</option>
-                                        </select> -->
-                                       <select id="milestoneId" formControlName="milestoneId">
-                                            <option [value]="milestone.milestoneId">{{milestone.milestoneName}}</option>
+                                        <input type="text" formControlName="completionCriteria" placeholder="Criteria">
+                                    </td>
+                                    <td>
+                                        <input type=text [owlDateTimeTrigger]="dt1" formControlName="startDate"
+                                            id="datePicker1" placeholder="Start Date" [owlDateTime]="dt1">
+                                        <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                                    </td>
+                                    <td>
+                                        <input type=text [owlDateTimeTrigger]="dt" formControlName="endDate"
+                                            id="datePicker" placeholder="End Date" [owlDateTime]="dt">
+                                        <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+                                    </td>
+
+                                    <td>
+
+                                        <input type="text" [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4"
+                                            id="datePicker4" formControlName="paymentConditionDueDate"
+                                            placeholder="Due Date" value="true">
+                                        <owl-date-time [pickerType]="'calendar'" #dt4></owl-date-time>
+
+                                    </td>
+                                    <td>
+                                        <label class="checkbox-inline"><input type="checkbox"
+                                                formControlName="paymentConditionApprovedByEmployer">Approved
+                                            by Employer</label><br>
+                                        <label class="checkbox-inline"><input type="checkbox"
+                                                formControlName="paymentConditionApprovedByReviewer">Approved
+                                            by Reviewer</label><br>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2"
+                                                id="datePicker2" formControlName="paymentConditionDueDate"
+                                                value="true">On
+                                            Date
+                                            <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                                        </label>
+                                        <br>
+                                    </td>
+                                    <td><select formControlName="freelancerId" id="teamMember">
+                                            <option disabled value="">Team Member</option>
+                                            <option id="option_type" *ngFor="let  team of  teamMemberArr"
+                                                [value]=" team.memberId">{{team.memberId}}</option>
                                         </select>
                                     </td>
+                                    <td><input type="text" formControlName="amountPayable" placeholder="Amount "></td>
                                     <td>
-                                        <select id="paymentMethod" formControlName="paymentMethod">
-                                            <option disabled value="">Select Payment Method</option>
-                                            <option id="option_type" *ngFor="let  payment of  paymentMethodArr"
-                                                [value]="payment">{{payment}}</option>
+                                        <select formControlName="currencyCd" id="teamMember">
+                                            <option disabled value="">Currency</option>
+                                            <option id="option_type" *ngFor="let  currency of  currencyArr"
+                                                [value]="currency">{{currency}}</option>
                                         </select>
-                                    </td>
-                                    <td>
-                                        <input type="text" placeholder="Payer Name" formControlName="payerName">
-                                    </td>
-                                    <td><input type="text" placeholder="Payer Account" formControlName="payerAccount">
-                                    </td>
-                                    <td><input type="text" placeholder="Payee Name" formControlName="payeeName">
-                                    </td>
-                                    <td><input type="text" placeholder="Payee Account" formControlName="payeeAccount">
-                                    </td>
-                                    <td>
-                                            <select formControlName="paymentCurrency" id="teamMember">
-                                                <option disabled value="">Currency</option>
-                                                <option id="option_type" *ngFor="let  currency of  currencyArr"
-                                                    [value]="currency">{{currency}}</option>
-                                            </select>
-                                            <!-- <input type="text" formControlName="currencyCd" placeholder="Currency"> -->
-                                        </td>
-                                    <td><input type="text" placeholder="Payee Ammount" formControlName="paymentAmount">
+                                        <!-- <input type="text" formControlName="currencyCd" placeholder="Currency"> -->
                                     </td>
                                     <td class="noborder">
-                                        <button class="btn increment" (click)="removeSchedule(i)">-</button>
+                                        <button class="btn increment" (click)="removeMilestone(i)">-</button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                   
+
+
+                        <button class="btn viewprofile" (click)="onSaveChanges()">Save Milestones</button>
+                        <button class="btn viewprofile" (click)="onClick($event)"
+                            (change)="upoladContractDoument()">Upload Contract</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="myModal" [style.display]="showModal ? 'block' : 'none'">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="center">
+                        <h6>Upload Document</h6>
+                    </div>
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+
+                        <!-- <h4 class="modal-title">User Details:</h4> -->
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form [formGroup]="fileForm">
+                            <p>
+                                <input type="file" class="document_name" formControlName="contractFile"
+                                    name="chooseFile" id="chooseFile" (change)="handleFileInput($event)">
+                            </p>
+                        </form>
+
+
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal"
+                            (click)="upoladContractDoument()">Save</button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal"
+                            (click)="hide()">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <br>
+    <h6>Payment Schedule</h6>
+    <div class="card">
+        <div class="card-body">
+            <form class="table-responsive" [formGroup]="scheduleForm">
+
+                <table class="table table-dark  table-bordered worktable">
+                    <thead>
+                        <tr>
+                            <th>
+                                Milestone<span>*</span>
+                            </th>
+                            <th>Payment Method</th>
+                            <th>Payer Name</th>
+                            <th>Payer Account</th>
+                            <th>Payee Name</th>
+                            <th>Payee Account</th>
+                            <th>Payment Currency</th>
+                            <th>Payment Amount</th>
+                            <th class="noborder">
+                                <button class="btn increment" (click)="addSchedule()">+</button>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody formArrayName="scheduleDetails">
+                        <tr *ngFor="let  milestone of  milestoneArr;let item of scheduleDetailsArr.controls; let i=index ;"
+                            [formGroupName]="i">
+                            <td>
+                                <!-- <select id="milestoneId" formControlName="milestoneId">
+                                            <option disabled value="">Select Milestone</option>
+                                            <option id="option_type" [value]="milestone.milestoneId">{{milestone.milestoneName}}</option>
+                                        </select> -->
+                                <select id="milestoneId" formControlName="milestoneId">
+                                    <option [value]="milestone.milestoneId">{{milestone.milestoneName}}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select id="paymentMethod" formControlName="paymentMethod">
+                                    <option disabled value="">Select Payment Method</option>
+                                    <option id="option_type" *ngFor="let  payment of  paymentMethodArr"
+                                        [value]="payment">{{payment}}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" placeholder="Payer Name" formControlName="payerName">
+                            </td>
+                            <td><input type="text" placeholder="Payer Account" formControlName="payerAccount">
+                            </td>
+                            <td><input type="text" placeholder="Payee Name" formControlName="payeeName">
+                            </td>
+                            <td><input type="text" placeholder="Payee Account" formControlName="payeeAccount">
+                            </td>
+                            <td>
+                                <select formControlName="paymentCurrency" id="teamMember">
+                                    <option disabled value="">Currency</option>
+                                    <option id="option_type" *ngFor="let  currency of  currencyArr" [value]="currency">
+                                        {{currency}}</option>
+                                </select>
+                                <!-- <input type="text" formControlName="currencyCd" placeholder="Currency"> -->
+                            </td>
+                            <td><input type="text" placeholder="Payee Ammount" formControlName="paymentAmount">
+                            </td>
+                            <td class="noborder">
+                                <button class="btn increment" (click)="removeSchedule(i)">-</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
             </form>
             <button class="btn viewprofile" (click)="onSaveSchedule()">Save Schedule</button>
 

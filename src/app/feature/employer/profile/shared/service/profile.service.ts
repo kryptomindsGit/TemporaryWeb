@@ -53,25 +53,7 @@ export class EmpProfileService {
       formData.append('cognitoId', cognitoId);
       formData.append('fileName', fileName);
 
-      let res = await this.__http.post(`${BLOCKCHAIN_URL}/sendHash/`, formData,
-        {
-          reportProgress: true,
-          observe: 'events'
-        }).pipe(map((event) => {
-
-          switch (event.type) {
-
-            case HttpEventType.UploadProgress:
-              const progress = Math.round(100 * event.loaded / event.total);
-              return { status: 'progress', message: progress };
-
-            case HttpEventType.Response:
-              return event.body;
-            default:
-              return `Unhandled event: ${event.type}`;
-          }
-        })
-        ).toPromise();
+      let res = await this.__http.post(`${BLOCKCHAIN_URL}/sendHash/`, formData).toPromise();
       console.log("Resp service:", res);
       return res;
 
@@ -80,6 +62,41 @@ export class EmpProfileService {
       await this.handleError(error);
     }
   }
+
+  // {
+  //   reportProgress: true,
+  //   observe: 'events'
+  // }).pipe(map((event) => {
+
+  //   switch (event.type) {
+
+  //     case HttpEventType.UploadProgress:
+  //       const progress = Math.round(100 * event.loaded / event.total);
+  //       return { status: 'progress', message: progress };
+
+  //     case HttpEventType.Response:
+  //       return event.body;
+  //     default:
+  //       return `Unhandled event: ${event.type}`;
+  //   }
+  // })
+
+
+
+  // ).pipe(map((event) => {
+
+  //   switch (event.type) {
+
+  //     case HttpEventType.UploadProgress:
+  //       const progress = Math.round(100 * event.loaded / event.total);
+  //       return { status: 'progress', message: progress };
+
+  //     case HttpEventType.Response:
+  //       return event.body;
+  //     default:
+  //       return `Unhandled event: ${event.type}`;
+  //   }
+  // })
 
   // Blockchain GET API call
   async getDocHashData(id): Promise<any> {

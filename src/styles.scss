@@ -23,11 +23,36 @@
   src: url('./assets/font/montserrat-14/montserrat-v14-latin-regular.ttf');
 }
 
+// html {
+//   overflow: -moz-scrollbars-vertical;
+//   overflow-y: scroll;
+// }
 
-head {
-  display: none;
-  -ms-overflow-style: scrollbar;
+html {
+  // overflow: scroll;
+  overflow: -moz-scrollbars-vertical;
+  background: $bg-back-color;
 }
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+  background: transparent !important;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: $bg-front-color;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $text-color;
+}
+
+// head {
+//   display: none;
+//   -ms-overflow-style: scrollbar;
+// }
 
 body {
   font: 14px "Montserrat Regular";
