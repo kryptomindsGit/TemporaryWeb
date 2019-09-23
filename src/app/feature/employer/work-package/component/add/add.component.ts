@@ -136,8 +136,13 @@ export class AddComponent implements OnInit {
 
 
   setDuration() {
-
-    if ( this.durationYears !== null && this.durationMonths == null && this.durationDays == null ) {
+    
+    if(this.durationYears != null && this.durationMonths != null && this.durationDays != null) {
+      this.durationYears = this.projectForm.controls.durationYears.value;
+      this.durationMonths =this.projectForm.controls.durationMonths.value;
+      this.durationDays = this.projectForm.controls.durationDays.value;
+    }
+    else if ( this.durationYears !== null && this.durationMonths == null && this.durationDays == null ) {
       this.durationYears = this.projectForm.controls.durationYears.value;
       this.durationMonths = 0;
       this.durationDays = 0;
@@ -162,10 +167,6 @@ export class AddComponent implements OnInit {
     }else if (this.durationYears != null && this.durationMonths == null && this.durationDays != null) {
       this.durationYears = this.projectForm.controls.durationYears.value;
       this.durationMonths =0;
-      this.durationDays = this.projectForm.controls.durationDays.value;
-    }else if(this.durationYears != null && this.durationMonths != null && this.durationDays != null) {
-      this.durationYears = this.projectForm.controls.durationYears.value;
-      this.durationMonths =this.projectForm.controls.durationMonths.value;
       this.durationDays = this.projectForm.controls.durationDays.value;
     }else{
       this.durationYears = 0;
