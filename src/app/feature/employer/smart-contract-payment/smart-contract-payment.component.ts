@@ -36,6 +36,7 @@ milestoneArr = [];
 projectName : any;
 empId:any;
 uploadedFile:any;
+
 //payment section realated variables
 
 //Payment Shedule related Variables
@@ -43,14 +44,16 @@ contractAddr : string ;
 fileName:string;
 fileObj:string;
 emailId:string;
-
+payerAcc="0xDbc71C18Ab38edc4b7E2cd926e2Bd53cA8e8E52E";
+payeeAcc="0xD4496dA2a4b376fC8Ce4786EB6B71483436077c4";
+paymentMethod="Crypto";
 teamMemberArr = [
                   {memberId: 1 ,status :'pending'},
                   {memberId: 2 ,status:'completed'},
                   {memberId: 3 ,status:'rejected'}
                 ];
 paymentMethodArr = ['paypal','net-backing'];
-currencyArr = ['INR', 'USD' , 'IDR' , 'AUD' , 'EUR'];
+currencyArr = ['INR', 'USD' , 'IDR' , 'AUD' , 'EUR','ETH'];
 
 
   contractStatus : string ="";
@@ -74,8 +77,15 @@ currencyArr = ['INR', 'USD' , 'IDR' , 'AUD' , 'EUR'];
    this.getWorkPackageData();
    this.selectFile();
    this.getMilestoneDetails();
+   this.getEmployerData();
+
   }
 
+  getEmployerData(){
+    this.__profileService.getEmployerByEmailId(this.emailId).then((resData: any) => {
+      this.empId = resData[0].cmp_reprentative;
+    });
+  }
   
   getWorkPackageId(){
     this.workPackageID = localStorage.getItem("workpackageId");
@@ -86,7 +96,7 @@ currencyArr = ['INR', 'USD' , 'IDR' , 'AUD' , 'EUR'];
       console.log("response data : ",resData.responseObject);
       this.projectName = resData.responseObject.projectName;
       this.contractStatus = resData.responseObject.contractStatus;
-      this.empId = resData.responseObject.postedByIndividualEmp.user.userId;
+      // this.empId = resData.responseObject.postedByIndividualEmp.user.userId;
     });
   }
 
@@ -164,11 +174,11 @@ currencyArr = ['INR', 'USD' , 'IDR' , 'AUD' , 'EUR'];
       {
           milestoneId:'',
           paymentAmount:'',
-          payerAccount:'',
-          payeeAccount:'',
+          payerAccount:'0xDbc71C18Ab38edc4b7E2cd926e2Bd53cA8e8E52E',
+          payeeAccount:'0xD4496dA2a4b376fC8Ce4786EB6B71483436077c4',
           payerName:'',
           payeeName:'',
-          paymentMethod:'',
+          paymentMethod:'Crypto',
           paymentCurrency:'',
           paymentStatus:'',
           paymentDate:'',
@@ -198,9 +208,7 @@ currencyArr = ['INR', 'USD' , 'IDR' , 'AUD' , 'EUR'];
      
       this.contractAddr = workData.ContractAddress;
 
-      for(let i= 0 ; i< (this.milestoneForm.controls.milestoneDetails.value).length ; i++){
-           this.onDeployMilestone(i);
-      }
+      
 
 
       this.__paymentService.postMilestoneData(this.milestoneForm.controls.milestoneDetails.value,this.workPackageID).then((workData: any) =>{
@@ -256,12 +264,7 @@ currencyArr = ['INR', 'USD' , 'IDR' , 'AUD' , 'EUR'];
   }
 
    onSaveChanges(){
-
     this.onDeployContract();
-
-    //  for(let i= 0 ; i< (this.milestoneForm.controls.milestoneDetails.value).length ; i++){
-    //    this.onDeployMilestone(i);
-    // }
   }
 
   
@@ -312,12 +315,42 @@ currencyArr = ['INR', 'USD' , 'IDR' , 'AUD' , 'EUR'];
   }
 
   onSaveSchedule(){
-    this.__paymentService.postScheduleData(this.scheduleForm.controls.scheduleDetails.value).then((workData: any) =>{
-      console.log("Data is successfully saved" ,workData);
+
+    for(let i= 0 ; i< (this.milestoneForm.controls.milestoneDetails.value).length ; i++){
+      this.onDeployMilestone(i);
+    }
+
+    for(let i= 0 ; i< (this.scheduleForm.controls.scheduleDetails.value).length ; i++){
+      this.scheduleDetailMethod(i);
+    }
+
+    
+
+    
+  }
+
+  scheduleDetailMethod(i: any){
+    const scheduleDetailsArr = {
+      paymentAmount:(this.scheduleForm.controls.scheduleDetails.value)[i].paymentAmount,
+      payerAccount:this.payerAcc,
+      payeeAccount:this.payeeAcc,
+      payerName:(this.scheduleForm.controls.scheduleDetails.value)[i].payerName,
+      payeeName:(this.scheduleForm.controls.scheduleDetails.value)[i].payeeName,
+      paymentMethod:this.paymentMethod,
+      paymentCurrency:(this.scheduleForm.controls.scheduleDetails.value)[i].paymentCurrency,
+      paymentStatus:(this.scheduleForm.controls.scheduleDetails.value)[i].paymentStatus,
+      paymentDate:(this.scheduleForm.controls.scheduleDetails.value)[i].paymentDate,
+      milestoneId:(this.scheduleForm.controls.scheduleDetails.value)[i].milestoneId
+    }
+
+    console.log("Array scheduleDetailsArr",scheduleDetailsArr);
+    
+    // this.__paymentService.postScheduleData(this.scheduleForm.controls.scheduleDetails.value).then((workData: any) =>{
+      // console.log("Data is successfully saved" ,workData);
       // this.milestoneArr=workData.responseObject;
       this.toastr.success('Payment Details saved Successfully!!');
 
-    });
+    // });
   }
 }
 

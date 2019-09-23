@@ -13,7 +13,7 @@ export class WorkpackageViewComponent implements OnInit {
 
 
   //Employer Information
-
+  target:any;
   duration:string = "3 Months";
   startDate: string= "12 jan 2019";
   endDate: string= "02 apr 2019";
