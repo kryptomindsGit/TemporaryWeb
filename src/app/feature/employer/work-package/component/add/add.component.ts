@@ -18,6 +18,7 @@ export class AddComponent implements OnInit {
   projectForm: FormGroup;
   skillForm: FormGroup;
   i: any;
+  show : boolean;
 
   //Static Arrays 
   complexityArr = ['High', 'Medium', 'Low'];

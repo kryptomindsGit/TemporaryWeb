@@ -693,7 +693,7 @@
                                         <div class="card-body skill-innner-container skill-selected-container">
                                             
                                             <div formArrayName="skills">
-                                                <div *ngFor="let item of skillDetails.controls.skills.controls ; let i=index"
+                                                <div *ngFor="let item of skillRateArr.controls ; let i=index"
                                                     [formGroupName]="i">
                                                     <div class="row">
                                                         <div class="form-group form-input col-6">

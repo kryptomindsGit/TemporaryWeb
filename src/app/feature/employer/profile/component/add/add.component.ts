@@ -253,15 +253,15 @@ export class AddComponent implements OnInit {
     }
     console.log(" Submit values:", employerProfileVal);
 
-    // this.__profileService.createEmployer(employerProfileVal).then((resData: any) => {
-    //   console.log(resData);
-    //   if (resData.status == 'success') {
-    //     this.toastr.success("Successfully Registered");
-    //   }
-    //   else if (resData.status == 'error') {
-    //     this.toastr.error("Registered Failed");
-    //   }
-    // });
+    this.__profileService.createEmployer(employerProfileVal).then((resData: any) => {
+      console.log(resData);
+      if (resData.status == 'success') {
+        this.toastr.success("Successfully Registered");
+      }
+      else if (resData.status == 'error') {
+        this.toastr.error("Registered Failed");
+      }
+    });
 
   }
 
