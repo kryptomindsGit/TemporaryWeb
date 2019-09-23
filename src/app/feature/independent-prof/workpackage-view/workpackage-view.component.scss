@@ -4,23 +4,18 @@
       BASIC CSS
 -------------------------------------------------------------------------*/
 
-.section{
+.section {
   font: 14px "Montserrat Regular";
   background-color: $bg-back-color;
   color: $text-color;
   font-weight: 400;
-  height:auto;
-  
+  height: auto;
 }
 
-.scrollbody{
-  overflow-y: auto;
-  max-height: 100vh;
+.container {
+  position: relative;
 }
-.container{
-max-width: 90% !important;
-position: relative;
-}
+
 
 p{
     margin-top: 1rem;
@@ -54,7 +49,7 @@ CARD CSS
 }
 
 .card-body {
-  // width: 100%;
+  width: 100%;
   border-radius: 3px;
   font-weight: 400;
   color: #a5a8ad;
@@ -537,4 +532,12 @@ img:hover {
 h4 {
   margin-top: 20px;
   text-align: center;
+}
+
+.tab-content{
+  font: 14px "Montserrat Regular";
+  background-color: $bg-back-color;
+  color: $text-color;
+  font-weight: 400;
+  height: auto;
 }
