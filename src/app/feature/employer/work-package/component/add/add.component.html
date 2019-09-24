@@ -77,7 +77,7 @@
               <div class="col-6">
                 <div class="form-group form-input">
                   <select class="formStyle" formControlName="complexity" id="complexity">
-                    <option disabled value="">Select Complexity</option>
+                    <option disabled value="">Select Complexity ▼</option>
                     <option id="option_txt" *ngFor="let complexity of complexityArr" [value]="complexity">
                       {{complexity}}</option>
                   </select>
@@ -174,7 +174,7 @@
                     <div class="col-5">
                         <div class="form-group form-input">
                           <select formControlName="budgetCurrencyCode" id="currency">
-                            <option disabled value="">Currency</option>
+                            <option disabled value="">Currency  ▼</option>
                             <option id="option_txt" *ngFor="let currency of currencyArr" [value]="currency">{{currency}}
                             </option>
                           </select>
@@ -284,7 +284,7 @@
                                         <tr *ngFor="let item of skillDetailsArr.controls; let i=index" [formGroupName]="i">
                                           <td scope="row">
                                             <select formControlName="domainId" id="domain" (change)="getAllDomainSkills($event.target.value, i)">
-                                              <option disabled value="">Domain</option>
+                                              <option disabled value="">Domain ▼</option>
                                               <option id="domain_option" *ngFor="let allDomain of allDomainArr"
                                                 [value]="allDomain.skill_cat_id">{{allDomain.skill_cat_name}}</option>
                                             </select>
@@ -292,21 +292,21 @@
                       
                                           <td scope="row">
                                             <select formControlName="skill" id="skill">
-                                              <option disabled value="">Skills</option>
+                                              <option disabled value="">Skills ▼</option>
                                               <option id="option_skill" *ngFor="let allSkills of domainSkillsList[skillForm.get('skillDetails')['controls'][i].controls['domainId'].value]" [value]="allSkills.skill_id">
                                                 {{allSkills.skill_name}}</option>
                                             </select>
                                           </td>
                                           <td scope="row">
                                             <select formControlName="skillLevel" id=" skillLevel">
-                                              <option disabled value=""> Level</option>
+                                              <option disabled value=""> Level  ▼</option>
                                               <option id="option_level" *ngFor="let skillLevel of skillLevelArr" [value]="skillLevel">
                                                 {{skillLevel}}</option>
                                             </select>
                                           </td>
                                           <td scope="row">
                                             <select formControlName="availability" id=" projectType">
-                                              <option disabled value="">Availability</option>
+                                              <option disabled value="">Availability  ▼</option>
                                               <option id="option_type" *ngFor="let  projectType of  projectTypeArr" [value]=" projectType">
                                                 {{projectType}}</option>
                                             </select>
@@ -316,7 +316,7 @@
                                           </td>
                                           <td scope="row">
                                             <select formControlName="country" id="country">
-                                              <option disabled value="">Country</option>
+                                              <option disabled value="">Country  ▼</option>
                                               <option id="option_type" *ngFor="let  country of  countries" [value]="country.name">
                                                 {{country.name}}</option>
                                             </select>
@@ -327,7 +327,7 @@
                                           </td>
                                           <td scope="row">
                                             <select formControlName="currencyCode" id="currency">
-                                              <option disabled value="">Currency</option>
+                                              <option disabled value="">Currency  ▼</option>
                                               <option id="option_txt" *ngFor="let currency of currencyArr" [value]="currency">{{currency}}
                                               </option>
                                             </select>
