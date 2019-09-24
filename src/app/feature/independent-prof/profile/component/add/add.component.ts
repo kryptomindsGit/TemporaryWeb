@@ -546,7 +546,7 @@ export class AddComponent implements OnInit {
     if (event.target.files.length > 0) {
 
       const file = event.target.files[0];
-      this.fileName = file.name;
+      this.fileName = file.name.replace(" ", "");
       this.fileObj = file;
       console.log("File name:", this.fileName);
       console.log("File obj:", this.fileObj);
@@ -557,10 +557,11 @@ export class AddComponent implements OnInit {
   async uploadPersonalFile() {
 
     this.fileUploadProgress = '0%';
-    await this.__profileService.postDocHashData(this.fileObj, this.congnitoID, this.fileName).then((event) => {
+    await this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
       this.FileArrData = event;
       console.log("Data Resp:", this.FileArrData);
       console.log("Resp File ID:", this.FileArrData.fileId);
+
       if (this.FileArrData) {
         this.toastr.success(this.fileName, "Successfully uploaded");
       } else {
@@ -589,7 +590,7 @@ export class AddComponent implements OnInit {
 
   uploadEducationFile() {
 
-    this.__profileService.postDocHashData(this.fileObj, this.congnitoID, this.fileName).then((event) => {
+    this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
       this.FileArrData = event;
       console.log("File Resp:", this.FileArrData.fileId);
       if (this.FileArrData) {
@@ -609,7 +610,7 @@ export class AddComponent implements OnInit {
 
   uploadWorkExpFile() {
 
-    this.__profileService.postDocHashData(this.fileObj, this.congnitoID, this.fileName).then((event) => {
+    this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
       this.FileArrData = event;
       console.log("File Resp:", this.FileArrData.fileId);
       if (this.FileArrData) {

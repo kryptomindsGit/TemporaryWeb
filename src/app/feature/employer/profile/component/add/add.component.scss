@@ -88,7 +88,8 @@ select:-webkit-autofill:focus {
 
 // CSS for autofill background End
 
-input,select {
+input,
+select {
     transition: 0.3s ease;
     -moz-transition: 0.3s ease;
     -webkit-transition: 0.3s ease;
@@ -330,4 +331,8 @@ button:focus {
     color: #9e9d9d;
     float: center;
     margin: 20px auto;
+}
+
+.icon-right {
+    float: right;
 }

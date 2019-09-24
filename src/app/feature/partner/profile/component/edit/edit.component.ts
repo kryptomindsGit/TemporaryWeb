@@ -247,7 +247,7 @@ export class EditComponent implements OnInit {
     if (event.target.files.length > 0) {
 
       const file = event.target.files[0];
-      this.fileName = file.name;
+      this.fileName = file.name.replace(" ", "");
       console.log("File name:", file.name);
 
       this.fileObj = file;
@@ -257,7 +257,7 @@ export class EditComponent implements OnInit {
 
   uploadFile() {
 
-    this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((event) => {
+    this.__profileService.postDocHashData(this.fileObj, this.emailId, this.fileName).then((event) => {
       this.FileArrData = event;
       console.log("File Resp:", this.FileArrData.fileId);
     });

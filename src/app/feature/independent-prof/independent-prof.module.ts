@@ -6,10 +6,11 @@ import { IndependentProfComponent } from './independent-prof.component';
 import { WorkpackageViewComponent } from './workpackage-view/workpackage-view.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
+import { FreeBlockchainTimelineComponent } from './free-blockchain-timeline/free-blockchain-timeline.component';
 
 
 @NgModule({
-  declarations: [IndependentProfComponent, WorkpackageViewComponent],
+  declarations: [IndependentProfComponent, WorkpackageViewComponent, FreeBlockchainTimelineComponent],
   imports: [
     CommonModule,
     IndependentProfRoutingModule,

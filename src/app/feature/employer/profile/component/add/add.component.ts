@@ -191,9 +191,8 @@ export class AddComponent implements OnInit {
     if (event.target.files.length > 0) {
 
       const file = event.target.files[0];
-      this.fileName = file.name;
-      console.log("File name:", file.name);
-
+      this.fileName = file.name.replace(" ", "");
+      console.log("File name:", file.name, this.fileName);
       this.fileObj = file;
     }
   }
@@ -201,7 +200,7 @@ export class AddComponent implements OnInit {
 
   async uploadFile() {
 
-    await this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((resData) => {
+    await this.__profileService.postDocHashData(this.fileObj, this.email_id, this.fileName).then((resData) => {
       // this.FileArrData = resData;
       this.FileArrData = resData,
         (error) => this.error = error
@@ -282,8 +281,7 @@ export class AddComponent implements OnInit {
   getDocumentsTypeCat(index) {
     this.__freelancerProfileService.getFreelancerDocumentByCat(index).then((resData: any) => {
       this.docTypeArr = resData;
-    })
-
+    });
   }
 
   /**

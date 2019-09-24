@@ -818,7 +818,7 @@ export class EditComponent implements OnInit {
     if (event.target.files.length > 0) {
 
       const file = event.target.files[0];
-      this.fileName = file.name;
+      this.fileName = file.name.replace(" ", "");
       this.fileObj = file;
     }
   }
@@ -826,8 +826,13 @@ export class EditComponent implements OnInit {
 
   async uploadPersonalFile() {
 
-    await this.__profileService.postDocHashData(this.fileObj, this.congnitoID, this.fileName).then((event) => {
+    await this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
       this.FileArrData = event;
+      if (this.FileArrData) {
+        this.toastr.success(this.fileName, "Successfully uploaded");
+      } else {
+        this.toastr.error(this.fileName, "File not uploaded");
+      }
     });
 
     await this.documentPersonalArray.push(
@@ -840,7 +845,7 @@ export class EditComponent implements OnInit {
 
   uploadEducationFile() {
 
-    this.__profileService.postDocHashData(this.fileObj, this.congnitoID, this.fileName).then((event) => {
+    this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
       this.FileArrData = event;
       console.log("File Resp:", this.FileArrData.fileId);
     });
@@ -855,7 +860,7 @@ export class EditComponent implements OnInit {
 
   uploadWorkExpFile() {
 
-    this.__profileService.postDocHashData(this.fileObj, this.congnitoID, this.fileName).then((event) => {
+    this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
       this.FileArrData = event;
       console.log("File Resp:", this.FileArrData.fileId);
     });

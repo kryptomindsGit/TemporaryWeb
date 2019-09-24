@@ -175,7 +175,7 @@ export class AddComponent implements OnInit {
     if (event.target.files.length > 0) {
 
       const file = event.target.files[0];
-      this.fileName = file.name;
+      this.fileName = file.name.replace(" ", "");
       console.log("File name:", file.name);
 
       this.fileObj = file;
@@ -185,7 +185,7 @@ export class AddComponent implements OnInit {
 
   async uploadFile() {
 
-    await this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((event) => {
+    await this.__profileService.postDocHashData(this.fileObj, this.email_id, this.fileName).then((event) => {
       this.FileArrData = event;
       console.log("File Resp:", this.FileArrData.fileId);
     });

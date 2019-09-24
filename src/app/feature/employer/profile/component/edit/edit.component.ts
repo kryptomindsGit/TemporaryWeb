@@ -249,7 +249,7 @@ export class EditComponent implements OnInit {
     if (event.target.files.length > 0) {
 
       const file = event.target.files[0];
-      this.fileName = file.name;
+      this.fileName = file.name.replace(" ", "");
       console.log("File name:", file.name);
 
       this.fileObj = file;
@@ -259,9 +259,14 @@ export class EditComponent implements OnInit {
 
   async uploadFile() {
 
-    await this.__profileService.postDocHashData(this.fileObj, this.congnitoId, this.fileName).then((event) => {
+    await this.__profileService.postDocHashData(this.fileObj, this.emailId, this.fileName).then((event) => {
       this.FileArrData = event;
       console.log("File Resp:", this.FileArrData.fileId);
+      if (this.FileArrData) {
+        this.toastr.success(this.fileName, "Successfully uploaded");
+      } else {
+        this.toastr.error(this.fileName, "File not uploaded");
+      }
     });
     // this.FileArrData = "jkdhfjkhkdjshfkjhdskjfh"
 
