@@ -22,45 +22,45 @@ import { ToastrService } from 'ngx-toastr';
 export class SmartContractPaymentComponent implements OnInit {
 
 
-  //Milestone Related Variables
-  milestoneForm: FormGroup;
-  scheduleForm: FormGroup;
-  fileForm: FormGroup;
+//Milestone Related Variables
+milestoneForm : FormGroup;
+scheduleForm : FormGroup;
+fileForm : FormGroup;
 
-  i: any;
-  showModal: boolean = false;
-  workPackageID: any;
-  approvedEmp: boolean = false;
-  approvedRev: boolean = false;
-  milestoneArr = [];
-  projectName: any;
-  empId: any;
-  uploadedFile: any;
-
-  public loading = false;
-  public smartcontractform: any;
-
-  //payment section realated variables
-
-  //Payment Shedule related Variables
-  contractAddr: string;
-  fileName: string;
-  fileObj: string;
-  emailId: string;
-  payerAcc = "0xDbc71C18Ab38edc4b7E2cd926e2Bd53cA8e8E52E";
-  payeeAcc = "0xD4496dA2a4b376fC8Ce4786EB6B71483436077c4";
-  paymentMethod = "Crypto";
-  teamMemberArr = [
-    { memberId: 1, status: 'pending' },
-    { memberId: 2, status: 'completed' },
-    { memberId: 3, status: 'rejected' }
-  ];
-  paymentMethodArr = ['paypal', 'net-backing'];
-  currencyArr = ['INR', 'USD', 'IDR', 'AUD', 'EUR', 'ETH'];
+i : any;
+showModal : boolean = false;
+workPackageID : any;
+approvedEmp: boolean  = false;
+approvedRev: boolean = false;
+milestoneArr = [];
+projectName : any;
+empId:any;
+uploadedFile:any;
 
 
-  contractStatus: string = "";
-  searchFreelancer: number;
+public loading = false;
+public smartcontractform: any;
+//payment section realated variables
+
+//Payment Shedule related Variables
+contractAddr : string ; 
+fileName:string;
+fileObj:string;
+emailId:string;
+payerAcc="0xDbc71C18Ab38edc4b7E2cd926e2Bd53cA8e8E52E";
+payeeAcc="0xD4496dA2a4b376fC8Ce4786EB6B71483436077c4";
+paymentMethod="Crypto";
+teamMemberArr = [
+                  {memberId: 1 ,status :'pending'},
+                  {memberId: 2 ,status:'completed'},
+                  {memberId: 3 ,status:'rejected'}
+                ];
+paymentMethodArr = ['paypal','net-backing'];
+currencyArr = ['ETH','INR', 'USD' , 'IDR' , 'AUD' , 'EUR'];
+
+
+  contractStatus : string ="";
+  searchFreelancer:number;
   constructor(
     private __fb: FormBuilder,
     private __paymentService: SmartContractService,
@@ -99,7 +99,7 @@ export class SmartContractPaymentComponent implements OnInit {
       console.log("response data : ", resData.responseObject);
       this.projectName = resData.responseObject.projectName;
       this.contractStatus = resData.responseObject.contractStatus;
-      // this.empId = resData.responseObject.postedByIndividualEmp.user.userId;
+      this.contractAddr = resData.responseObject.smartContractAddr;
     });
   }
 
@@ -130,18 +130,19 @@ export class SmartContractPaymentComponent implements OnInit {
 
   createScheduleForm() {
     this.scheduleForm = this.__fb.group({
-      scheduleDetails: this.__fb.array([this.__fb.group({
-        paymentAmount: ['', [Validators.required]],
-        payerAccount: ['', [Validators.required]],
-        payeeAccount: ['', [Validators.required]],
-        payerName: ['', [Validators.required]],
-        payeeName: ['', [Validators.required]],
-        paymentMethod: ['', [Validators.required]],
-        paymentCurrency: ['', [Validators.required]],
-        paymentStatus: ['', [Validators.required]],
-        paymentDate: ['', [Validators.required]],
-        milestoneId: ['', [Validators.required]]
-      })
+        scheduleDetails: this.__fb.array([this.__fb.group({
+          paymentAmount:['',[Validators.required]] , 
+          // payerAccount:['',[Validators.required]],
+          payerAccount:'0xDbc71C18Ab38edc4b7E2cd926e2Bd53cA8e8E52E',
+          payeeAccount:'0xD4496dA2a4b376fC8Ce4786EB6B71483436077c4',
+          payerName:['',[Validators.required]],
+          payeeName:['',[Validators.required]],
+          paymentMethod:'Crypto',
+          paymentCurrency:['',[Validators.required]],
+          paymentStatus:['',[Validators.required]],
+          paymentDate:['',[Validators.required]],
+          milestoneId:['',[Validators.required]]
+        })
       ])
     });
   }
@@ -213,15 +214,13 @@ export class SmartContractPaymentComponent implements OnInit {
 
       this.contractAddr = workData.ContractAddress;
 
-
-
-
-      this.__paymentService.postMilestoneData(this.milestoneForm.controls.milestoneDetails.value, this.workPackageID).then((workData: any) => {
-        console.log("Data is successfully saved", workData);
+      this.__paymentService.postMilestoneData(this.milestoneForm.controls.milestoneDetails.value,this.workPackageID).then((workData: any) =>{
+        console.log("Data is successfully saved" ,workData);
         this.toastr.success('Milestones saved Successfully!!');
-        this.milestoneArr = workData.responseObject;
-        const addrData = {
-          smartContractAddr: this.contractAddr
+        this.milestoneArr=workData.responseObject;
+
+        const addrData={
+          smartContractAddr : this.contractAddr
         }
 
         this.__workService.updateContractAddress(this.workPackageID, addrData).then((resData: any) => {
@@ -233,43 +232,49 @@ export class SmartContractPaymentComponent implements OnInit {
     });
   }
 
-  async onDeployMilestone(i: any) {
-
+  async onDeployMilestone(i:any){
+    
     this.loading = true;
-
-    console.log("addr " + this.contractAddr);
+    console.log("addr "+this.contractAddr);
+    let dueDate = new Date().getDate();
 
     const payload = {
-      milestoneStr: (this.milestoneForm.controls.milestoneDetails.value)[i].milestoneName,
-      reviewAddrs: "0xd15eE84e3308249E178D8Fb8f20BD7A03b358ee5",
-      startDate: (this.milestoneForm.controls.milestoneDetails.value)[i].startDate,
-      endDate: (this.milestoneForm.controls.milestoneDetails.value)[i].endDate,
-      dueDate: (this.milestoneForm.controls.milestoneDetails.value)[i].paymentConditionDueDate,
-      amount: (this.milestoneForm.controls.milestoneDetails.value)[i].amountPayable,
-      contractAddr: this.contractAddr,
+      milestoneStr:this.milestoneArr[i].milestoneName,
+      reviewAddrs:"0xd15eE84e3308249E178D8Fb8f20BD7A03b358ee5",
+      startDate:this.milestoneArr[i].startDate,
+      endDate:this.milestoneArr[i].endDate,
+      dueDate: this.milestoneArr[i].paymentConditionDueDate,
+      amount:"0.01",
+      contractAddr:this.contractAddr,
     }
+ 
+   console.log("addmile " ,payload);
 
-    await this.__paymentService.deployMilestoneData(payload).then((workData: any) => {
-      console.log("Data is successfully saved", workData);
+    await this.__paymentService.deployMilestoneData(payload).then((workData: any) =>{
+      console.log("Data is successfully saved" ,workData);
       this.loading = false;
     });
 
+    console.log("Payload for addMiles");
 
-
+        
     const payloads = {
-      milestoneStr: (this.milestoneForm.controls.milestoneDetails.value)[i].milestoneName,
-      reviewAddrs: "0xd15eE84e3308249E178D8Fb8f20BD7A03b358ee5",
-      startDate: ((this.milestoneForm.controls.milestoneDetails.value)[i].startDate),
-      endDate: ((this.milestoneForm.controls.milestoneDetails.value)[i].endDate),
-      dueDate: ((this.milestoneForm.controls.milestoneDetails.value)[i].paymentConditionDueDate),
-      amount: (this.milestoneForm.controls.milestoneDetails.value)[i].amountPayable,
-      currency: (this.milestoneForm.controls.milestoneDetails.value)[i].currencyCd,
-      contractAddress: this.contractAddr,
-      freeAddr: '0xD4496dA2a4b376fC8Ce4786EB6B71483436077c4',
-      empAddr: '0xDbc71C18Ab38edc4b7E2cd926e2Bd53cA8e8E52E'
+      milestoneStr:this.milestoneArr[i].milestoneName,
+      reviewAddrs:"0xd15eE84e3308249E178D8Fb8f20BD7A03b358ee5",
+      startDate:this.milestoneArr[i].startDate,
+      endDate:this.milestoneArr[i].endDate,
+      dueDate:new Date(),
+      amount:0.01,
+      currency:this.milestoneArr[i].currencyCd,
+      contractAddress:this.contractAddr,
+      freeAddr:'0xD4496dA2a4b376fC8Ce4786EB6B71483436077c4',
+      empAddr:'0xDbc71C18Ab38edc4b7E2cd926e2Bd53cA8e8E52E'
     }
-    this.__paymentService.deployMilestoneData1(payloads).then((workData: any) => {
-      console.log("Data is successfully saved", workData);
+
+    console.log("Payload for addMilestone");
+    
+    this.__paymentService.deployMilestoneData1(payloads).then((workData: any) =>{
+      console.log("Data is successfully saved" ,workData);
     });
   }
 
@@ -311,12 +316,22 @@ export class SmartContractPaymentComponent implements OnInit {
     });
   }
 
+<<<<<<< Updated upstream
   getMilestoneDetails() {
 
     this.__paymentService.getMilestoneData(this.workPackageID).then((workData: any) => {
       console.log("Data is successfully saved", workData);
 
       this.milestoneArr = workData.responseObject;
+=======
+  getMilestoneDetails(){
+    this.__paymentService.getMilestoneData(this.workPackageID).then((workData: any) =>{
+      console.log("Data is successfully saved" ,workData);
+      this.milestoneArr=workData.responseObject;
+      for(let i = 0 ;i < this.milestoneArr.length-1 ; i++){  //TODO : remove -1 after prototype
+        this.addSchedule();
+      }
+>>>>>>> Stashed changes
     });
 
   }
@@ -334,6 +349,7 @@ export class SmartContractPaymentComponent implements OnInit {
     for (let i = 0; i < (this.milestoneForm.controls.milestoneDetails.value).length; i++) {
       this.onDeployMilestone(i);
     }
+<<<<<<< Updated upstream
 
     for (let i = 0; i < (this.scheduleForm.controls.scheduleDetails.value).length; i++) {
       this.scheduleDetailMethod(i);
@@ -361,8 +377,19 @@ export class SmartContractPaymentComponent implements OnInit {
     // console.log("Data is successfully saved" ,workData);
     // this.milestoneArr=workData.responseObject;
     this.toastr.success('Payment Details saved Successfully!!');
+=======
+    this.scheduleDetailMethod();
+  }
 
-    // });
+  scheduleDetailMethod(){
+    
+    this.__paymentService.postScheduleData(this.scheduleForm.controls.scheduleDetails.value).then((workData: any) =>{
+      console.log("Data is successfully saved" ,workData);
+      this.milestoneArr=workData.responseObject;
+      this.toastr.success('Payment Details saved Successfully!!');
+>>>>>>> Stashed changes
+
+    });
   }
 }
 

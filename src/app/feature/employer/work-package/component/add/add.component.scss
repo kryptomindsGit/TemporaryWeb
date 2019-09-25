@@ -292,7 +292,7 @@ input[type=checkbox] {
 }
 
 .setwidth1 {
-  width: 12rem;
+  min-width: 12rem;
 }
 
 .viewprofile {
@@ -372,8 +372,10 @@ img {
 }
 
 .setwidth {
-  width: 7rem;
+  min-width: 8rem;
 }
+
+
 
 .increment {
   border-radius: 50%;

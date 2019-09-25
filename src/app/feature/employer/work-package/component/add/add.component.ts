@@ -25,7 +25,7 @@ export class AddComponent implements OnInit {
 
   //Static Arrays 
   complexityArr = ['High', 'Medium', 'Low'];
-  skillLevelArr = ['Moderrate', 'Intermediate', 'Begginer'];
+  skillLevelArr = ['Moderate', 'Intermediate', 'Begginer'];
   projectTypeArr = ['Full-time', 'Part-time'];
   currencyArr = ['INR', 'USD', 'IDR', 'AUD', 'EUR'];
   countries = [];
@@ -69,7 +69,7 @@ export class AddComponent implements OnInit {
 
   formatToday() {
 
-    this.todayDate = formatDate(this.today, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+0530');
+    this.todayDate = formatDate(this.today, 'dd MMM yyyy ', 'en-US', '+0530');
     console.log("Todays date : ", this.today);
     console.log("Todays date : ", this.todayDate);
   }

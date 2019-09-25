@@ -10,11 +10,12 @@
   color: $text-color;
   font-weight: 400;
   height:auto;
+  
 }
 
-.container{
-max-width: 90% !important;
-}
+// .container{
+// max-width: 90% !important;
+// }
 
 p{
     margin-top: 1rem;
@@ -34,13 +35,41 @@ CARD CSS
 .card {
     // width: 100%;
     // height: auto !important;
-    margin-top: 0.3rem;
+    margin-top: 0.8rem;
     float: none;
     border: 0px;
     background: $bg-front-color;
   }
   
+  .img-center {
+    transition: all 0.3s ease-in-out;
+    margin: 0 auto;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    margin-bottom: 0.5rem;
+  }
+
+  .top{
+    margin-top:30px;
+  }
   
+  img {
+    width: 5.0rem;
+    height: 5.0rem;
+    border-radius: 50%;
+    border: 2px solid;
+    padding: 3px;
+    border-color: #064d86;
+    margin-top: 4.5rem;
+  }
+  
+  img:hover {
+    border: 6px solid;
+    border-color: #064d86;
+  
+  
+  }
   .card-header {
     background: transparent !important;
     height: 5rem;
@@ -197,7 +226,7 @@ CARD CSS
     color: #ffffff;
     border-color: rgba(127, 128, 129, 0.966);
     background: transparent !important;
-    width: 60%;
+    width: 70%;
     margin-top: 1rem;
     float: right;
   }
@@ -346,7 +375,7 @@ CARD CSS
     border-spacing: 0px 8px !important;
   }
   
-  label span {
+  .navi {
     color: rgb(10, 126, 221);
     font-size:0.8rem;
   }
@@ -363,24 +392,7 @@ CARD CSS
     height: 5rem;
     border-radius: 50%;
   }
-  
-  img {
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 50%;
-    border: 1px solid;
-    padding: 3px;
-    border-color: #adaaa5;
-    margin-top: 0.4rem;
-    margin-bottom: 1rem;
-  }
-  
-  img:hover {
-    border: 1px solid;
-    border-color: #cc7401;
-  
-  
-  }
+ 
   
   .headinglable {
     margin-top: 2rem;
@@ -525,4 +537,83 @@ CARD CSS
   h4 {
     margin-top: 20px;
     text-align: center;
+  }
+
+  label .checked{
+    color: rgb(27, 223, 20);
+    margin-left:0.3rem;
+  }
+
+  .givmargin{
+    margin-left:0.3rem;
+  }
+  .ribbon {
+    width: 100%;
+    position: relative;
+    float: left;
+    background: url(https://html5book.ru/wp-content/uploads/2015/10/snow-road.jpg);
+    background-size: cover;
+    text-transform: uppercase;
+    color: white;
+  }
+
+  .ribbon:nth-child(even) {
+    margin-right: 4%;
+  }
+  @media (max-width: 500px) {
+    .ribbon {
+      width: 100%;
+    }
+    .ribbon:nth-child(even) {
+      margin-right: 0%;
+    }
+  }
+
+
+  .ribbon3 {
+    width: 200px;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 15px;
+    position: absolute;
+    left: -8px;
+    top: 20px;
+    background: rgb(45, 75, 121);
+  }
+  .ribbon3:before, .ribbon3:after {
+    content: "";
+    position: absolute;
+  }
+  .ribbon3:before {
+    height: 0;
+    width: 0;
+    top: -8.5px;
+    left: 0.1px;
+    border-bottom: 9px solid black;
+    border-left: 9px solid transparent;
+  }
+  .ribbon3:after {
+    height: 0;
+    width: 0;
+    right: -14.5px;
+    border-top: 25px solid transparent;
+    border-bottom: 25px solid transparent;
+    border-left: 15px solid  rgb(45, 75, 121);
+  }
+
+  .name{
+    margin-top:2rem;
+    font: 16px "Montserrat Regular";
+  }
+
+  .email{
+    font: 14px "Montserrat Regular";
+  }
+
+  .leftcol{
+    float: left;
+  }
+
+  .rightcol{
+    float: right;
   }
