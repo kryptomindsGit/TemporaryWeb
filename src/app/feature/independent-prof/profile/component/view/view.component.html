@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <div class="row p-2">
+    <div class="row p-2" #viewprofilefreelancer>
         <div class="col-12">
             <div class="card">
                 <div class="card-header ">
@@ -203,7 +203,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th width="25%">Is Reviewer: </th>
+                                        <th width="25%">Is a Reviewer: </th>
                                         <td>
                                             {{freeDetailsArr.is_interviewer}}
                                         </td>
@@ -243,7 +243,7 @@
                                         <th width="25%">Portfolio: </th>
                                         <td>
                                             <div *ngFor="let portfolio of freelancerPortArr; let i=index">
-                                                <li>{{ portfolio.port_addr }}</li>
+                                                <li>{{ portfoao.port_addr }}</li>
                                             </div>
                                         </td>
                                     </tr>
@@ -363,7 +363,7 @@
                                                     <tr>
                                                         <th width="25%">{{document.doc_type}}</th>
                                                         <td width="60%">{{ document.doc_name }}</td>
-                                                        <td><a style="color:#1051dd; "
+                                                        <td><a style="color:#1051dd; width: 30px;"
                                                                 (click)="getHashDataBlockChainPDF(document.doc_name)"><i
                                                                     class="fa fa-download" aria-hidden="true"></i>
                                                             </a></td>
@@ -382,4 +382,7 @@
             </div>
         </div>
     </div>
+
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="viewprofilefreelancer">
+    </ngx-loading>
 </div>

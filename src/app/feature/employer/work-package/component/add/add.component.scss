@@ -46,7 +46,8 @@ CARD CSS
   widows: 100%;
   height: auto !important;
   // margin: 1rem auto !important;
-  margin-top: 0.3rem;;
+  margin-top: 0.3rem;
+  ;
   float: none;
   // border-radius: 10px;
   // box-shadow: 0px 0px 32px 0px rgba(0, 0, 0, 0.22);
@@ -141,7 +142,8 @@ input:focus+.form-label,
 input:valid+.form-label,
 textarea:focus+.form-label,
 textarea:valid+.form-label,
-select:focus+.form-label {
+select:focus+.form-label,
+select:valid+.form-label {
   top: 1px;
   font-size: 11px;
   color: $blue-color;
@@ -282,7 +284,7 @@ input[type=checkbox] {
   height: 1.5rem;
   background: #064d86;
   border-radius: 0.5rem;
-  margin-left:1rem;
+  margin-left: 1rem;
 }
 
 .noborder {
@@ -317,17 +319,19 @@ input[type=checkbox] {
   background: #064d86;
   // background: rgba(2, 41, 148, 0.966);
 }
-.setleft{
- margin-left:1rem;
+
+.setleft {
+  margin-left: 1rem;
 }
 
-img{
-  width:3rem;
-  height:3rem;
-  margin-left:1rem;
+img {
+  width: 3rem;
+  height: 3rem;
+  margin-left: 1rem;
 }
-.setbottom{
-  margin-top:1rem;
+
+.setbottom {
+  margin-top: 1rem;
 }
 
 .submit-button {
@@ -395,9 +399,10 @@ img{
   padding: .200rem .55rem;
 }
 
-table{
-   margin-top:0.5rem;
+table {
+  margin-top: 0.5rem;
 }
+
 table thead tr th {
   color: $text-color;
   font-size: 0.7rem;

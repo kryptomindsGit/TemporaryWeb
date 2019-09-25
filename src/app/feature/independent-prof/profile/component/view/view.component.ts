@@ -15,6 +15,9 @@ import { saveAs } from 'file-saver';
 export class ViewComponent implements OnInit {
 
   //Variable's
+  public loading = false;
+  public viewprofilefreelancer: any;
+
   public __id: any;
   public email_addr: any;
   public phone_number: any;
@@ -126,7 +129,7 @@ export class ViewComponent implements OnInit {
       // this.freeDocsArr.forEach(element => {
       //   this.fileDisplay = element.doc_name
       // });
-      
+
       // for (let index = 0; index < this.freeDocsArr.length; index++) {
       //   console.log("Documents:", this.freeDocsArr[index].doc_name);
       // }
@@ -141,12 +144,16 @@ export class ViewComponent implements OnInit {
   }
 
   getHashDataBlockChainPDF(fileName) {
+    this.loading = true;
     console.log("File ", fileName);
     var filesave = fileName.substring(fileName.lastIndexOf("-") + 1);
     console.log("file save:", filesave);
 
+
     this.__profileService.getDocHashData(fileName).then((data) => {
       console.log("Blockchain get data done", data);
+      // setTimeout(() => {
+      this.loading = false;
 
       var file = new Blob([data.body], { type: 'application/octet-stream' });
       // var fileURL = URL.createObjectURL(file);
@@ -155,6 +162,8 @@ export class ViewComponent implements OnInit {
       saveAs(file, filesave);
 
       // window.open(fileURL, '_blank');
+      // }, 3000);
+
     })
   }
 

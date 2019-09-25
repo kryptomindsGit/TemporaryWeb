@@ -7,7 +7,7 @@ import { WorkpackageViewComponent } from './workpackage-view/workpackage-view.co
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
 import { FreeBlockchainTimelineComponent } from './free-blockchain-timeline/free-blockchain-timeline.component';
-
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 
 @NgModule({
   declarations: [IndependentProfComponent, WorkpackageViewComponent, FreeBlockchainTimelineComponent],
@@ -16,7 +16,9 @@ import { FreeBlockchainTimelineComponent } from './free-blockchain-timeline/free
     IndependentProfRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxUsefulSwiperModule
+    NgxUsefulSwiperModule,
+    NgxLoadingModule.forRoot({
+    }),
   ]
 })
 export class IndependentProfModule { }

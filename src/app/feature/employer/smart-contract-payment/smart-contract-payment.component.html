@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" #smartcontractform>
     <br>
     <h6>Smart Contract</h6>
     <div class="card">
@@ -213,49 +213,52 @@
                                             <option disabled value="">Select Milestone</option>
                                             <option id="option_type" [value]="milestone.milestoneId">{{milestone.milestoneName}}</option>
                                         </select> -->
-                                       <select id="milestoneId" formControlName="milestoneId">
-                                            <option [value]="milestone.milestoneId">{{milestone.milestoneName}}</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <!-- <select id="paymentMethod" formControlName="paymentMethod">
+                                <select id="milestoneId" formControlName="milestoneId">
+                                    <option [value]="milestone.milestoneId">{{milestone.milestoneName}}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <!-- <select id="paymentMethod" formControlName="paymentMethod">
                                             <option disabled value="">Select Payment Method</option>
                                             <option id="option_type" *ngFor="let payment of  paymentMethodArr"
                                                 [value]="payment">{{payment}}</option>
                                         </select> -->
-                                        {{paymentMethod}}
-                                    </td>
-                                    <td>
-                                        <input type="text" placeholder="Payer Name" formControlName="payerName">
-                                    </td>
-                                    <td>
-                                        <label>{{payerAcc}}</label>
-                                    </td>
-                                    <td><input type="text" placeholder="Payee Name" formControlName="payeeName">
-                                    </td>
-                                    <td>
-                                        <label>{{payeeAcc}}</label>
-                                    </td>
-                                    <td>
-                                            <select formControlName="paymentCurrency" id="teamMember">
-                                                <option disabled value="">Currency</option>
-                                                <option id="option_type" *ngFor="let  currency of  currencyArr"
-                                                    [value]="currency">{{currency}}</option>
-                                            </select>
-                                            <!-- <input type="text" formControlName="currencyCd" placeholder="Currency"> -->
-                                        </td>
-                                    <td><input type="text" placeholder="Payee Ammount" formControlName="paymentAmount">
-                                    </td>
-                                    <td class="noborder">
-                                        <button class="btn increment" (click)="removeSchedule(i)">-</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                   
+                                {{paymentMethod}}
+                            </td>
+                            <td>
+                                <input type="text" placeholder="Payer Name" formControlName="payerName">
+                            </td>
+                            <td>
+                                <label>{{payerAcc}}</label>
+                            </td>
+                            <td><input type="text" placeholder="Payee Name" formControlName="payeeName">
+                            </td>
+                            <td>
+                                <label>{{payeeAcc}}</label>
+                            </td>
+                            <td>
+                                <select formControlName="paymentCurrency" id="teamMember">
+                                    <option disabled value="">Currency</option>
+                                    <option id="option_type" *ngFor="let  currency of  currencyArr" [value]="currency">
+                                        {{currency}}</option>
+                                </select>
+                                <!-- <input type="text" formControlName="currencyCd" placeholder="Currency"> -->
+                            </td>
+                            <td><input type="text" placeholder="Payee Ammount" formControlName="paymentAmount">
+                            </td>
+                            <td class="noborder">
+                                <button class="btn increment" (click)="removeSchedule(i)">-</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
             </form>
             <button class="btn viewprofile" (click)="onSaveSchedule()">Save Schedule</button>
 
         </div>
     </div>
 </div>
+
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="smartcontractform">
+</ngx-loading>

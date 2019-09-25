@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <div class="row p-2">
+    <div class="row p-2" #editprofilefreelancer>
         <div class="col-12">
             <div class="personal-details-form" *ngIf="showMainContent == 1">
                 <h6>PROFILE DETAILS</h6>
@@ -747,4 +747,7 @@
             </div>
         </div>
     </div>
+
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="editprofilefreelancer">
+    </ngx-loading>
 </div>

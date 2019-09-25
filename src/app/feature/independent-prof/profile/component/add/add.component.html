@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <div class="row p-2">
+    <div class="row p-2" #addprofilefreelancer>
         <div class="col-12">
             <div class="personal-details-form" *ngIf="showMainContent == 1">
                 <h6>PROFILE DETAILS</h6>
@@ -674,6 +674,14 @@
                                                             <label for="rate_skill" class="form-label"
                                                                 style="font-size: 0.7rem">Rate Per
                                                                 hour(USD)</label>
+
+                                                            <!-- <div *ngIf="skillDetails.controls.skillRateArr.controls.item['rate_hour'].invalid && (skillDetails.controls.skillRateArr.controls.item['rate_hour'].dirty || skillDetails.controls.skillRateArr.controls.item['rate_hour'].touched)"
+                                                                class="text-danger error-msg">
+                                                                <div
+                                                                    [hidden]="!skillDetails.controls.skillRateArr.controls.item['rate_hour'].errors.required">
+                                                                    Rate per hour
+                                                                    is required.</div>
+                                                            </div> -->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -683,6 +691,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- [disabled]="skillDetails.controls.skillRateArr.controls.pristine || skillDetails.controls.skillRateArr.controls.invalid" -->
                         <button type="button" class="btnPrevious" (click)="ShowNextButton(3)">Previous</button>
                         <button type="button" class="btnNext" (click)="onSubmitDetails()">Save</button>
                     </div>
@@ -691,4 +700,7 @@
             </div>
         </div>
     </div>
+
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="addprofilefreelancer">
+    </ngx-loading>
 </div>

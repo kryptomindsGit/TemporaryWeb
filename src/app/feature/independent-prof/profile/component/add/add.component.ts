@@ -30,6 +30,9 @@ export class AddComponent implements OnInit {
   skillItem: any = [];
 
   // Variable's
+  public loading = false;
+  public addprofilefreelancer: any;
+
   public showMainContent: number = 1;
   public isUportUser: string;
   public email: string;
@@ -555,10 +558,12 @@ export class AddComponent implements OnInit {
 
 
   async uploadPersonalFile() {
+    this.loading = true;
 
     this.fileUploadProgress = '0%';
     await this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
       this.FileArrData = event;
+      this.loading = false;
       console.log("Data Resp:", this.FileArrData);
       console.log("Resp File ID:", this.FileArrData.fileId);
 
@@ -589,9 +594,10 @@ export class AddComponent implements OnInit {
   }
 
   uploadEducationFile() {
-
+    this.loading = true;
     this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
       this.FileArrData = event;
+      this.loading = false;
       console.log("File Resp:", this.FileArrData.fileId);
       if (this.FileArrData) {
         this.toastr.success(this.fileName, "Successfully uploaded");
@@ -609,9 +615,10 @@ export class AddComponent implements OnInit {
   }
 
   uploadWorkExpFile() {
-
+    this.loading = true;
     this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
       this.FileArrData = event;
+      this.loading = false;
       console.log("File Resp:", this.FileArrData.fileId);
       if (this.FileArrData) {
         this.toastr.success(this.fileName, "Successfully uploaded");
@@ -635,6 +642,8 @@ export class AddComponent implements OnInit {
    */
 
   onSubmitDetails() {
+
+    this.loading = true;
 
     let documentArr: any = [
       'file_name',
@@ -691,6 +700,8 @@ export class AddComponent implements OnInit {
       this.__profileService.createFreelancer(freelancerProfilePayload).then((resData: any) => {
         console.log("Res Data:", resData);
 
+        this.loading = false;
+
         if (resData.status == 'success') {
           this.toastr.success("Profile added Successfully");
           this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
@@ -730,6 +741,7 @@ export class AddComponent implements OnInit {
       console.log('Freelancer Payload Value : ', freelancerProfilePayload);
       this.__profileService.createFreelancer(freelancerProfilePayload).then((resData: any) => {
         console.log(resData);
+        this.loading = false;
 
         if (resData.status == 'success') {
           this.toastr.success("Profile added Successfully");

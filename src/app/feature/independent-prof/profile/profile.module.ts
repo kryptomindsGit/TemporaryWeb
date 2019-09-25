@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 
 //import component's
 import { ProfileRoutingModule } from './profile-routing.module';
@@ -34,6 +35,7 @@ const MODULE = [
   OwlNativeDateTimeModule,
   AutocompleteLibModule,
   NgxSmartModalModule.forChild(),
+  NgxLoadingModule.forRoot({}),
 ];
 
 @NgModule({

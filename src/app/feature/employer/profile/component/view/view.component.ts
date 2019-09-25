@@ -13,6 +13,9 @@ import { saveAs } from 'file-saver';
 export class ViewComponent implements OnInit {
 
   //Variable's
+  public viewprofileemployer: any;
+  public loading = false;
+
   public id: number;
   public emailId: string;
   public uid: any;
@@ -75,12 +78,15 @@ export class ViewComponent implements OnInit {
   }
 
   downloadFile(item) {
+    this.loading = true;
     console.log("Download")
     var filesave = item.substring(item.lastIndexOf("-") + 1);
     console.log("file save:", filesave);
 
     this.__profileService.getDocHashData(item).then((data) => {
       console.log("Blockchain get data done", data);
+
+      this.loading = false;
 
       var file = new Blob([data.body], { type: 'application/octet-stream' });
       saveAs(file, filesave);

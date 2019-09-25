@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { EmpProfileService } from '../../shared/service/profile.service';
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -17,6 +17,9 @@ export class EditComponent implements OnInit {
   public employerProfileForm: FormGroup;
 
   //Variable's
+  public editprofileemployer: any;
+  public loading = false;
+
   public congnitoId: string;
   public emailId: any;
   public id: any;
@@ -111,40 +114,42 @@ export class EditComponent implements OnInit {
     await this.populateStateList();
     await this.populateCityList();
 
+    if (this.employerArr != null) {
+      this.employerProfileForm.patchValue({
+        comapany_name: this.employerArr.cmp_name,
+        website_addr: this.employerArr.cmp_website,
+        address_line_one: this.employerArr.cmp_addr,
+        address_line_two: this.employerArr.cmp_addr_2,
+        country: this.employerArr.country,
+        state: this.employerArr.state,
+        city: this.employerArr.city,
+        zipcode: this.employerArr.zipcode,
+        business_cat: this.employerArr.business_cat,
+        company_profile: this.employerArr.cpm_profile,
+        company_rep_det: this.employerArr.cmp_reprentative
+      });
 
-    this.employerProfileForm.patchValue({
-      comapany_name: this.employerArr.cmp_name,
-      website_addr: this.employerArr.cmp_website,
-      address_line_one: this.employerArr.cmp_addr,
-      address_line_two: this.employerArr.cmp_addr_2,
-      country: this.employerArr.country,
-      state: this.employerArr.state,
-      city: this.employerArr.city,
-      zipcode: this.employerArr.zipcode,
-      business_cat: this.employerArr.business_cat,
-      company_profile: this.employerArr.cpm_profile,
-      company_rep_det: this.employerArr.cmp_reprentative
-    });
+      await this.__profileService.getEmployerFileById(this.emailId).then((resData: any) => {
+        this.employerFileArr = resData;
+        console.log(this.employerFileArr);
 
-    this.__profileService.getEmployerFileById(this.emailId).then((resData: any) => {
-      this.employerFileArr = resData;
-      console.log(this.employerFileArr);
-      if (this.employerFileArr.length > 0) {
+        if (this.employerFileArr.length > 0) {
 
-        for (let index = 0; index < this.employerFileArr.length; index++) {
-          this.documentArr.push(this.__fb.group(
-            {
-              file_name: this.employerFileArr[index].file_name,
-              file_type: this.employerFileArr[index].file_type,
-              file_id: this.employerFileArr[index].file_id,
-              part_id: this.employerFileArr[index].part_id
-            }));
+          for (let index = 0; index < this.employerFileArr.length; index++) {
+            this.documentArr.push(this.__fb.group(
+              {
+                chooseFile: this.employerFileArr[index].file_name,
+                docType: this.employerFileArr[index].file_type,
+                file_id: this.employerFileArr[index].file_id,
+                part_id: this.employerFileArr[index].part_id
+              }));
+          }
+        } else {
+          this.addDocument();
         }
-      } else {
-        this.addDocument();
-      }
-    });
 
+      });
+    }
 
   }
 
@@ -174,8 +179,10 @@ export class EditComponent implements OnInit {
 
   addDocument() {
     this.documentArr.push(this.__fb.group(
-      { chooseFile: '' },
-      { docType: '' }
+      {
+        chooseFile: new FormControl(""),
+        docType: new FormControl("")
+      }
     ));
   }
 
@@ -259,8 +266,11 @@ export class EditComponent implements OnInit {
 
   async uploadFile() {
 
+    this.loading = true;
     await this.__profileService.postDocHashData(this.fileObj, this.emailId, this.fileName).then((event) => {
       this.FileArrData = event;
+      this.loading = false;
+
       console.log("File Resp:", this.FileArrData.fileId);
       if (this.FileArrData) {
         this.toastr.success(this.fileName, "Successfully uploaded");
@@ -294,7 +304,7 @@ export class EditComponent implements OnInit {
    * @description submit the form fileds values
    */
   onSubmit() {
-
+    this.loading = true;
     let documensFile: any = [
       'file_name',
       'file_type'
@@ -325,6 +335,7 @@ export class EditComponent implements OnInit {
 
     this.__profileService.updateEmployer(this.emailId, employerProfileVal).then((resData: any) => {
       console.log(resData);
+      this.loading = false;
       if (resData.status == 'success') {
         this.toastr.success("Profile added Successfully");
         this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view', this.emailId]);

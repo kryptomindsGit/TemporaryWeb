@@ -10,6 +10,7 @@ import { EditComponent } from './component/edit/edit.component';
 import { AddComponent } from './component/add/add.component';
 import { ViewComponent } from './component/view/view.component';
 import { ProfileComponent } from './profile.component';
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 
 //Component's
 const COMPONENT = [
@@ -25,7 +26,8 @@ const MODULE = [
   ProfileRoutingModule,
   FormsModule,
   ReactiveFormsModule,
-  HttpClientModule
+  HttpClientModule,
+  NgxLoadingModule.forRoot({}),
 ];
 
 @NgModule({

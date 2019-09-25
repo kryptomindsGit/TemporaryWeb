@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <div class="row p-2">
+    <div class="row p-2" #addprofileemployer>
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
@@ -154,40 +154,64 @@
                                 </div>
                             </div>
                         </div>
-                        <div formArrayName="documents">
-                            <!-- <div *ngIf="error">
-                                {{ error.message }}
-                            </div>
-                            <div *ngIf="FileArrData.status === 'error'">
-                                {{ FileArrData.message }}
-                            </div>
-                            <div *ngIf="FileArrData.status === 'progress'">
-                                <div role="progressbar" [style.width.%]="FileArrData.message" aria-valuenow="25"
-                                    aria-valuemin="0" aria-valuemax="100">
-                                    {{FileArrData.message}}%
+                        <!-- <div formArrayName="documents_personal">
+                            <div class="row">
+                                <div class="col-11">
+                                    <div *ngFor="let item of documentArr.controls; let i=index">
+                                        <hr *ngIf="i>0">
+                                        <div class="row" formGroupName="{{i}}">
+                                            <div class="form-group form-input col-4">
+                                                <select (change)="setDocTypeCatID($event.target.value)"
+                                                    formControlName="file_type">
+                                                    <option disabled value="">Document type</option>
+                                                    <option id="option_txt" *ngFor="let docType of docTypeArr"
+                                                        [value]="docType.doc_type_id">{{docType.doc_type}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group form-input col-4">
+                                                <input type="file" class="document_name" name="chooseFile"
+                                                    id="chooseFile" (change)="handleFileInput($event)"
+                                                    formControlName="file_name">
+
+                                            </div>
+
+                                            <div class=col-2>
+                                                <input type="button" class="btnBlue" id="upload" value="UPLOAD"
+                                                    (click)="uploadPersonalFile()">
+                                            </div>
+                                            <div class="form-group col-2">
+                                                <button type="button" *ngIf="documentArr.controls.length > 1"
+                                                    class="btn btnadd" (click)="deleteDocument(i)">-</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
                                 </div>
-                            </div> -->
+                                <div class="col-1 btnadd-right">
+                                    <div class="form-group col-2">
+                                        <button type="button" class="btn btnaddRight" (click)="addDocument()">+</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div> -->
+
+                        <div formArrayName="documents">
                             <div class="row">
                                 <div class="col-11">
                                     <div *ngFor="let item of documentArr.controls; let i=index">
                                         <hr *ngIf="i>0">
                                         <div class="row" formGroupName="{{i}}">
                                             <div class="form-group form-input col-3">
-                                                <!-- <input type="text" formControlName="docType" autocomplete="off" #textInput
-                                                            (input)="setDocTypeCatType(textInput.value)" id="docType" required>
-                                        
-                                                            <label for="file_type" class="form-label">Document Type</label> -->
                                                 <select (change)="setDocTypeCatID($event.target.value)"
                                                     formControlName="docType">
                                                     <option disabled value="">Document Type</option>
-                                                    <option id="option_txt" *ngFor="let doctype of docTypeArr"
-                                                        [value]="doctype.doc_type_id">{{doctype.doc_type}}</option>
+                                                    <option id="option_txt" *ngFor="let doctypefile of docTypeArr"
+                                                        [value]="doctypefile.doc_cat_id">{{doctypefile.doc_type}}
+                                                    </option>
                                                 </select>
-                                                <!-- <div *ngIf="item.controls['docType'].invalid && (item.controls['docType'].dirty || item.controls['docType'].touched)"
-                                                    class="text-danger error-msg">
-                                                    <div [hidden]="!item.controls['docType'].errors.required">
-                                                        Document type is required.</div>
-                                                </div> -->
                                             </div>
                                             <div class="form-group form-input col-5">
                                                 <div class="file-upload">
@@ -197,11 +221,6 @@
                                                             formControlName="chooseFile">
                                                     </div>
                                                 </div>
-                                                <!-- <div *ngIf="item.controls['chooseFile'].invalid && (item.controls['chooseFile'].dirty || item.controls['chooseFile'].touched)"
-                                                    class="text-danger error-msg">
-                                                    <div [hidden]="!item.controls['chooseFile'].errors.required">
-                                                        File is required.</div>
-                                                </div> -->
                                             </div>
                                             <div class=col-2>
                                                 <input type="button" class="btnBlue" id="upload" value="UPLOAD"
@@ -214,23 +233,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- File message start-->
-                                    <!-- <div *ngIf="error">
-                                        {{ error.message }}
-                                    </div>
-                                    <div *ngIf="uploadResponse.status === 'error'">
-                                        {{ uploadResponse.message }}
-                                    </div>
-                                    <div *ngIf="uploadResponse.status === 'progress'">
-
-
-                                        <div role="progressbar" [style.width.%]="uploadResponse.message"
-                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                            {{uploadResponse.message}}%
-                                        </div>
-
-                                    </div> -->
-                                    <!-- File message end-->
 
                                 </div>
                                 <div class="col-1">
@@ -258,4 +260,7 @@
             </div>
         </div>
     </div>
+
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="addprofileemployer">
+    </ngx-loading>
 </div>

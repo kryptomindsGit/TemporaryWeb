@@ -18,13 +18,16 @@ export class AddComponent implements OnInit {
   projectForm: FormGroup;
   skillForm: FormGroup;
   i: any;
-  show : boolean;
+  show: boolean;
+
+  loading = false;
+  addWorkPackage: any;
 
   //Static Arrays 
   complexityArr = ['High', 'Medium', 'Low'];
   skillLevelArr = ['Moderrate', 'Intermediate', 'Begginer'];
   projectTypeArr = ['Full-time', 'Part-time'];
-  currencyArr = ['INR', 'USD' , 'IDR' , 'AUD' , 'EUR'];
+  currencyArr = ['INR', 'USD', 'IDR', 'AUD', 'EUR'];
   countries = [];
   durationArr = ['days', 'months', 'years'];
   allDomainArr = [];
@@ -35,7 +38,7 @@ export class AddComponent implements OnInit {
   today = new Date();
   todayDate: string;
   employerName: string;
-  email : any;
+  email: any;
   //skill related variables
 
   durationYears: number;
@@ -43,13 +46,13 @@ export class AddComponent implements OnInit {
   durationDays: number;
   isSelected: boolean = false;
 
-  costEstimated:any ="Estimated Cost";
+  costEstimated: any = "Estimated Cost";
 
   constructor(
     private fb: FormBuilder,
     private __profileService: IndeptProfileService,
     private __workpackageService: WorkPackageService,
-    private __router : Router,
+    private __router: Router,
     private toastr: ToastrService,
   ) {
   }
@@ -61,7 +64,7 @@ export class AddComponent implements OnInit {
     this.getAllDomain();
     this.getAllCountries();
     this.getAllSkills();
-    this.email=localStorage.getItem("email");
+    this.email = localStorage.getItem("email");
   }
 
   formatToday() {
@@ -121,13 +124,13 @@ export class AddComponent implements OnInit {
     });
   }
 
-  getAllDomainSkills(domainId,i){
-    this.domainSkillsList[domainId] = this.allSkillsArr.filter((item)=> item.skill_cat_id == domainId);
-    this.skillForm.get('skillDetails')['controls'][i].patchValue({ domainId: domainId, skill: ''});
-   
+  getAllDomainSkills(domainId, i) {
+    this.domainSkillsList[domainId] = this.allSkillsArr.filter((item) => item.skill_cat_id == domainId);
+    this.skillForm.get('skillDetails')['controls'][i].patchValue({ domainId: domainId, skill: '' });
+
   }
 
-  getAllSkills(){
+  getAllSkills() {
     this.__workpackageService.getAllSkills().then((resData: any) => {
       this.allSkillsArr = resData;
       //console.log(`allskills: ${JSON.stringify(this.allSkillsArr)}`);
@@ -137,7 +140,7 @@ export class AddComponent implements OnInit {
 
   setDuration() {
     this.durationYears = this.projectForm.controls.durationYears.value == null ? 0 : this.projectForm.controls.durationYears.value;
-    this.durationMonths =this.projectForm.controls.durationMonths.value == null ? 0 : this.projectForm.controls.durationMonths.value ;
+    this.durationMonths = this.projectForm.controls.durationMonths.value == null ? 0 : this.projectForm.controls.durationMonths.value;
     this.durationDays = this.projectForm.controls.durationDays.value == null ? 0 : this.projectForm.controls.durationDays.value;
   }
 
@@ -153,7 +156,7 @@ export class AddComponent implements OnInit {
         skill: '',
         skillLevel: '',
         availability: '',
-        teamMembers: '' ,
+        teamMembers: '',
         country: '',
         ratePerHour: '',
         availableAvgRatePerHour: '',
@@ -181,6 +184,9 @@ export class AddComponent implements OnInit {
 
 
   saveDetails() {
+
+    this.loading = true;
+
     this.setDuration();
     const workPackagePayload = {
       budget: this.projectForm.controls.budgetAmt.value,
@@ -207,23 +213,24 @@ export class AddComponent implements OnInit {
 
       this.wpId = workData.responseObject.workPackageId;
 
-      localStorage.setItem("workpackageId" , this.wpId);
+      localStorage.setItem("workpackageId", this.wpId);
 
       console.log("Work payload", this.skillForm.controls.skillDetails.value);
 
       this.__workpackageService.postWorkPackageSkillData(this.skillForm.controls.skillDetails.value, this.wpId).then((workData: any) => {
         console.log("Data is successfully saved", workData);
+        this.loading = false;
         this.toastr.success('Project Saved Successfully');
         this.__router.navigate(['/feature/feature/full-layout/employer/emp/workpackage/workpack/viewall']);
       });
     });
   }
 
-  calCost(){
-    this.costEstimated = this.projectForm.controls.budgetCurrencyCode.value+" 230";
+  calCost() {
+    this.costEstimated = this.projectForm.controls.budgetCurrencyCode.value + " 230";
   }
 
-  onProfileView(){
+  onProfileView() {
     this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view', this.email]);
   }
   onSubmit() {

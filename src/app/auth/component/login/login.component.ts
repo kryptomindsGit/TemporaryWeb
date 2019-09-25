@@ -19,6 +19,8 @@ export class LoginComponent implements OnInit {
 
   //Variables
   public loading = false;
+  customLoadingTemplate: any;
+
   public emailID: string;
   public uportUser: string = "false";
 
@@ -26,7 +28,7 @@ export class LoginComponent implements OnInit {
   public indepUserDetails: any = [];
   public empUserDetails: any = [];
   public partUserDetails: any = [];
-  customLoadingTemplate: any;
+
   constructor(
 
     private __fb: FormBuilder,

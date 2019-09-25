@@ -3,7 +3,7 @@ import { EmpProfileService } from '../../shared/service/profile.service';
 import { IndeptProfileService } from '../../../../independent-prof/profile/shared/service/profile.service';
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -17,6 +17,9 @@ export class AddComponent implements OnInit {
   public employerProfileForm: FormGroup;
 
   //Variable's
+  public addprofileemployer: any;
+  public loading = false;
+
   public uid: any;
   public email_id: any;
   public country: any;
@@ -88,8 +91,10 @@ export class AddComponent implements OnInit {
       company_profile: ['', Validators.required],
       company_rep_det: ['', Validators.required],
       documents: this.__fb.array([this.__fb.group(
-        { chooseFile: ['', Validators.required] },
-        { docType: ['', Validators.required] }
+        {
+          chooseFile: ['', Validators.required],
+          docType: ['', Validators.required]
+        }
       )]),
     })
   }
@@ -103,8 +108,10 @@ export class AddComponent implements OnInit {
 
   addDocument() {
     this.documentArr.push(this.__fb.group(
-      { chooseFile: '' },
-      { docType: '' }
+      {
+        chooseFile: new FormControl(""),
+        docType: new FormControl("")
+      }
     ));
   }
 
@@ -199,9 +206,10 @@ export class AddComponent implements OnInit {
 
 
   async uploadFile() {
-
+    this.loading = true;
     await this.__profileService.postDocHashData(this.fileObj, this.email_id, this.fileName).then((resData) => {
       // this.FileArrData = resData;
+      this.loading = false;
       this.FileArrData = resData,
         (error) => this.error = error
 
@@ -232,6 +240,7 @@ export class AddComponent implements OnInit {
    * @description submit the form fileds values
    */
   onSubmit() {
+    this.loading = true;
     console.log(this.employerProfileForm);
     let documensFile: any = [
       'file_name',
@@ -263,6 +272,7 @@ export class AddComponent implements OnInit {
 
     this.__profileService.createEmployer(employerProfileVal).then((resData: any) => {
       console.log(resData);
+      this.loading = false;
       if (resData.status == 'success') {
         this.toastr.success("Profile added Successfully");
         this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view', this.email_id]);
@@ -281,6 +291,8 @@ export class AddComponent implements OnInit {
   getDocumentsTypeCat(index) {
     this.__freelancerProfileService.getFreelancerDocumentByCat(index).then((resData: any) => {
       this.docTypeArr = resData;
+      console.log("docTypeArr:", this.docTypeArr);
+
     });
   }
 

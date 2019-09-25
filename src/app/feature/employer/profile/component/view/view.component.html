@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <div class="row p-2">
+    <div class="row p-2" #viewprofileemployer>
         <div class="col-12">
             <div class="card">
                 <div class="card-header ">
@@ -65,10 +65,10 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                    <th width="50%">Country: </th>
-                                                    <td>
-                                                        {{employerDetailsArr.country}}
-                                                    </td>
+                                                <th width="50%">Country: </th>
+                                                <td>
+                                                    {{employerDetailsArr.country}}
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th width="50%">Company Profile:
@@ -89,17 +89,17 @@
                                                     {{employerDetailsArr.business_cat}}
                                                 </td>
                                             </tr>
-                                            
+
                                             <tr>
-                                                <th width="30%">Documents: </th>
+                                                <th width="50%">Documents: </th>
                                                 <td>
                                                     <div *ngFor="let document of employerFileArr; let i=index">
                                                         <hr *ngIf="i>0">
                                                         <table>
                                                             <tr>
-                                                                <th>{{document.file_type}}</th>
-                                                                <td>{{ document.file_name }}</td>
-                                                                <td><a style="color:#1051dd; "
+                                                                <th width="30%">{{document.file_type}}</th>
+                                                                <td width="70%">{{ document.file_name }}</td>
+                                                                <td width="20%"><a style="color:#1051dd; "
                                                                         (click)="downloadFile(document.file_name)"><i
                                                                             class="fa fa-download"
                                                                             aria-hidden="true"></i>
@@ -124,4 +124,7 @@
             </div>
         </div>
     </div>
+
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="viewprofileemployer">
+    </ngx-loading>
 </div>

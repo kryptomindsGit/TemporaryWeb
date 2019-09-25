@@ -1,3 +1,337 @@
+// @import "../../../../../../assets/css/theme_colors";
+
+// /*-----------------------------------------------------------------------
+//       BASIC CSS
+// -------------------------------------------------------------------------*/
+// .container-fluid {
+//     font: 14px "Montserrat Regular";
+//     background-color: $bg-back-color;
+//     color: $text-color;
+//     overflow: hidden;
+//     font-weight: 400;
+// }
+
+// /*-----------------------------------------------------------------------
+//   CARD CSS
+//   -------------------------------------------------------------------------*/
+
+// .card {
+//     float: none;
+//     border-radius: 10px;
+//     box-shadow: 5px 5px 32px 5px rgba(0, 0, 0, 0.22);
+//     background: $bg-front-color;
+// }
+
+// .table td,
+// .table th {
+//     padding: .75rem;
+//     vertical-align: top;
+//     border: none !important;
+// }
+
+// .card .card-body img {
+//     width: 5rem;
+//     height: 5rem;
+// }
+
+// .card-header {
+//     text-transform: uppercase;
+//     font-size: 14px;
+// }
+
+// .card-body {
+//     padding: 0%;
+// }
+
+// .center {
+//     display: block;
+//     margin-left: auto;
+//     margin-right: auto;
+//     width: 50%;
+// }
+
+// .card-body h4 {
+//     text-align: center;
+//     margin: 2rem auto;
+//     font-size: 1.2rem;
+//     letter-spacing: 0.1em;
+//     text-transform: uppercase;
+
+// }
+
+// /*-----------------------------------------------------------------------
+// FORM CSS
+// -------------------------------------------------------------------------*/
+// form {
+//     padding: 20px 40px 20px 40px;
+// }
+
+// .form-group {
+//     margin-bottom: 20px;
+//     position: relative;
+// }
+
+// .form-input {
+//     padding-top: 20px;
+// }
+
+// .form-label {
+//     position: absolute;
+//     transition: 0.25s ease;
+//     -moz-transition: 0.25s ease;
+//     -webkit-transition: 0.25s ease;
+//     -o-transition: 0.25s ease;
+//     -ms-transition: 0.25s ease;
+//     color: $text-color;
+//     left: 1rem;
+//     top: 23px;
+// }
+
+// #btn-30 {
+//     display: flex;
+//     justify-content: center;
+//     margin: 1rem auto;
+//     width: 30%;
+//     background: $blue-color;
+//     font-size: 15px;
+//     color: #9e9d9d;
+//     border: none
+// }
+
+// #btn-30:hover {
+//     color: #000;
+//     background: $blue-color;
+// }
+
+// #btn-70 {
+//     display: flex;
+//     justify-content: center;
+//     margin: 1rem auto;
+//     width: 70%;
+//     background: #064d86;
+//     font-size: 15px;
+//     color: #9e9d9d;
+//     border: none
+// }
+
+// #btn-70:hover {
+//     color: #000;
+//     background: #064d86;
+// }
+
+// #btn-equal {
+//     display: flex;
+//     justify-content: center;
+//     margin: 1rem auto;
+//     width: 100%;
+//     background: #064d86;
+//     font-size: 15px;
+//     color: #9e9d9d;
+//     border: none
+// }
+
+// #btn-equal:hover {
+//     color: #000;
+//     background: $blue-color;
+// }
+
+// .btnNext {
+//     border: none;
+//     border-radius: 2rem;
+//     padding: 1%;
+//     width: 8rem;
+//     text-transform: uppercase;
+//     cursor: pointer;
+//     background: #064d86;
+//     color: #fff;
+//     float: right;
+//     margin-bottom: 20px;
+// }
+
+// .btnPrevious {
+//     border: none;
+//     border-radius: 2rem;
+//     padding: 1%;
+//     width: 8rem;
+//     text-transform: uppercase;
+//     cursor: pointer;
+//     background: #064d86;
+//     color: #fff;
+//     float: left;
+//     margin-bottom: 20px;
+// }
+
+// .checkbox-grid-row {
+//     overflow: hidden;
+//     // padding: 10px;
+// }
+
+// .checkbox-grid-col {
+//     float: left;
+//     width: 30%;
+//     color: #898989;
+// }
+
+// .save_skills {
+//     border: none;
+//     border-radius: 1.5rem;
+//     padding: 3% 4%;
+//     width: 50%;
+//     text-transform: uppercase;
+//     cursor: pointer;
+//     background: #064d86;
+//     color: #fff;
+//     float: right;
+//     margin-bottom: 20px;
+//     align-content: center;
+// }
+
+// .autocomplete-container .suggestions-container {
+//     position: absolute;
+//     width: 100%;
+//     background: $bg-back-color;
+//     height: auto;
+//     box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
+//     box-sizing: border-box;
+// }
+
+// a:not([href]):not([tabindex]):hover {
+//     color: $text-color;
+//     background: $bg-front-color;
+//     text-decoration: none;
+// }
+
+// table tbody {
+//     width: 100%;
+//     padding: 0%;
+// }
+
+// table tbody tr th {
+//     text-transform: uppercase;
+//     font-size: 12px;
+// }
+
+// table tbody tr td {
+//     letter-spacing: 1px;
+//     font-size: 12px;
+//     font: 14px "Montserrat Regular";
+// }
+
+// table tbody tr {
+//     color: $text-color;
+//     margin-bottom: 0.1rem;
+//     background: transparent !important;
+// }
+
+// li {
+//     list-style-type: none;
+
+// }
+
+// .line {
+//     contain: "";
+//     width: 50px;
+//     border-bottom: 1px solid #060606;
+// }
+
+// .btnBlue {
+//     border: none;
+//     border-radius: 2rem;
+//     padding: 0.2rem;
+//     width: 8rem;
+//     text-transform: uppercase;
+//     cursor: pointer;
+//     background: #064d86;
+//     color: #9e9d9d;
+//     float: center;
+//     font-size: 15px;
+//     margin-right: 1rem;
+// }
+
+// .btnBlue:hover {
+//     background: #9e9d9d !important;
+//     color: #064d86 !important;
+// }
+
+// hr {
+//     border: 0.5px solid silver;
+// }
+
+
+// .withvideo {
+//     position: relative;
+//     background-color: black;
+//     height: 25vh;
+//     min-height: 15rem;
+//     width: 100%;
+//     overflow: hidden;
+// }
+
+// .withvideo video {
+//     position: absolute;
+//     top: 50%;
+//     left: 50%;
+//     min-width: 100%;
+//     min-height: 100%;
+//     width: auto;
+//     height: auto;
+//     z-index: 0;
+//     -ms-transform: translateX(-50%) translateY(-50%);
+//     -moz-transform: translateX(-50%) translateY(-50%);
+//     -webkit-transform: translateX(-50%) translateY(-50%);
+//     transform: translateX(-50%) translateY(-50%);
+// }
+
+// .withvideo .container {
+//     position: relative;
+//     z-index: 2;
+// }
+
+// .withvideo .overlay {
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     height: 100%;
+//     width: 100%;
+//     background-color: black;
+//     opacity: 0.5;
+//     z-index: 1;
+// }
+
+// @media (pointer: coarse) and (hover: none) {
+//     .withvideo {
+//         background: url('https://source.unsplash.com/XT5OInaElMw/1600x900') black no-repeat center center scroll;
+//     }
+
+//     .withvideo video {
+//         display: none;
+//     }
+// }
+
+// .withvideo img {
+
+//     border-radius: 150px;
+// }
+
+// .card-body h3 {
+//     text-align: center;
+//     margin-bottom: 30px;
+
+// }
+
+// #videocover {
+//     position: absolute;
+//     z-index: 1;
+//     top: 0;
+//     right: 0;
+//     bottom: 0;
+//     left: 0;
+// }
+
+
+
+
+
 @import "../../../../../../assets/css/theme_colors";
 
 /*-----------------------------------------------------------------------
@@ -5,7 +339,7 @@
 -------------------------------------------------------------------------*/
 .container-fluid {
     font: 14px "Montserrat Regular";
-    background-color: $bg-back-color;
+    background: $bg-back-color;
     color: $text-color;
     overflow: hidden;
     font-weight: 400;
@@ -16,10 +350,15 @@
   -------------------------------------------------------------------------*/
 
 .card {
+    // margin: 0 auto;
+    /* Added */
     float: none;
-    border-radius: 10px;
-    box-shadow: 5px 5px 32px 5px rgba(0, 0, 0, 0.22);
-    background: $bg-front-color;
+    /* Added */
+    margin: 2rem;
+    /* Added */
+    // border-radius: 10px;
+    // box-shadow: 5px 5px 32px 5px rgba(0, 0, 0, 0.22);
+    background: transparent !important;
 }
 
 .table td,
@@ -29,6 +368,7 @@
     border: none !important;
 }
 
+
 .card .card-body img {
     width: 5rem;
     height: 5rem;
@@ -37,17 +377,12 @@
 .card-header {
     text-transform: uppercase;
     font-size: 14px;
+    background: transparent !important;
 }
 
 .card-body {
-    padding: 0%;
-}
-
-.center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
+    padding: 0% !important;
+    background: $bg-front-color !important;
 }
 
 .card-body h4 {
@@ -58,6 +393,18 @@
     text-transform: uppercase;
 
 }
+
+/*-----------------------------------------------------------------------
+CUSTOME CARD CSS
+-------------------------------------------------------------------------*/
+.card .cardbody {
+    float: none;
+    margin: 2rem;
+    background: $bg-front-color;
+    padding-top: 30%;
+    margin: 0%;
+}
+
 
 /*-----------------------------------------------------------------------
 FORM CSS
@@ -168,6 +515,8 @@ form {
 
 .checkbox-grid-col {
     float: left;
+    // padding: 5px;
+    // margin-right: 5px;
     width: 30%;
     color: #898989;
 }
@@ -207,6 +556,11 @@ table tbody {
 }
 
 table tbody tr th {
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+table tbody tr td p {
     text-transform: uppercase;
     font-size: 12px;
 }
@@ -254,7 +608,7 @@ li {
 }
 
 hr {
-    border: 0.5px solid silver;
+    border: 0.5rem solid $bg-front-color;
 }
 
 

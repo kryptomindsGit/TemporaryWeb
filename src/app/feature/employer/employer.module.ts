@@ -8,7 +8,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ProjectTimelineComponent } from './project-timeline/project-timeline.component';
 import { BlockchainTimelineComponent } from './blockchain-timeline/blockchain-timeline.component';
-
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 
 @NgModule({
   declarations: [EmployerComponent, SmartContractPaymentComponent, ProjectTimelineComponent, BlockchainTimelineComponent],
@@ -17,8 +17,9 @@ import { BlockchainTimelineComponent } from './blockchain-timeline/blockchain-ti
     EmployerRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    OwlDateTimeModule, 
-    OwlNativeDateTimeModule
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    NgxLoadingModule.forRoot({}),
   ]
 })
 export class EmployerModule { }

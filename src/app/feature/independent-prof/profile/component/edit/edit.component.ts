@@ -24,6 +24,9 @@ export class EditComponent implements OnInit {
   public gradeArr = ['A', 'B', 'C', 'D', 'E', 'F'];
 
   // Variable's
+  public editprofilefreelancer: any;
+  public loading = false;
+
   public showMainContent: number = 1;
   public isUportUser: string;
   public email: string;
@@ -825,9 +828,10 @@ export class EditComponent implements OnInit {
 
 
   async uploadPersonalFile() {
-
+    this.loading = true;
     await this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
       this.FileArrData = event;
+      this.loading = false;
       if (this.FileArrData) {
         this.toastr.success(this.fileName, "Successfully uploaded");
       } else {
@@ -844,9 +848,10 @@ export class EditComponent implements OnInit {
   }
 
   uploadEducationFile() {
-
+    this.loading = true;
     this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
       this.FileArrData = event;
+      this.loading = false;
       console.log("File Resp:", this.FileArrData.fileId);
     });
 
@@ -859,9 +864,10 @@ export class EditComponent implements OnInit {
   }
 
   uploadWorkExpFile() {
-
+    this.loading = true;
     this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
       this.FileArrData = event;
+      this.loading = false;
       console.log("File Resp:", this.FileArrData.fileId);
     });
 
