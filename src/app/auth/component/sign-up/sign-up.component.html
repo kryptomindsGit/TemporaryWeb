@@ -27,7 +27,7 @@
                 <div class="form-group form-input">
                     <input type="password" formControlName="password" name="name" id="password" value="" required />
                     <label for="password" class="form-label">Password</label>
-                    <span class="text-font">( Enter one capital, one special, minimum 6 character )</span>
+                    <span class="text-font">(Enter one uppercase, one special character, minimum 8 characters)</span>
 
                     <div *ngIf="signupForm.controls['password'].invalid && (signupForm.controls['password'].dirty || signupForm.controls['password'].touched)"
                         class="text-danger error-msg">
@@ -39,7 +39,7 @@
                     <div *ngIf="signupForm.controls['password'].invalid && (signupForm.controls['password'].dirty || signupForm.controls['password'].touched)"
                         class="text-danger error-msg">
                         <div *ngIf="signupForm.controls['password'].errors.minLength">
-                            Require min 6 character.
+                            Require min 8 character.
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                 <div class="form-group form-input">
                     <input type="text" formControlName="phone_no" name="name" id="phone_number" value="" required />
                     <label for="phone_number" class="form-label">Phone Number</label>
-                    <span class="text-font">( Enter Phone number formate ex: +91 and 10 digit )</span>
+                    <span class="text-font">(Enter Phone number with format: +91 and 10 digit)</span>
                     <div *ngIf="signupForm.controls['phone_no'].invalid && (signupForm.controls['phone_no'].dirty || signupForm.controls['phone_no'].touched)"
                         class="text-danger error-msg">
                         <div [hidden]="!signupForm.controls['phone_no'].errors.required">

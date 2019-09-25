@@ -9,12 +9,20 @@
                             <div class="row">
 
                                 <div class="form-group form-input col">
-                                    <select formControlName="prefix">
+                                        <select formControlName="prefix" id="prefixes" required>
+                                                <option id="option_txt" *ngFor="let prefix of prefixArr" [value]="prefix">
+                                                        {{prefix}}
+                                                    </option>
+                                            </select>
+                                            <label for="prefixes" class="form-label">Prefix</label>
+
+                                    <!-- <select formControlName="prefix" id="prefix">
                                         <option disabled value="">Prefix</option>
                                         <option id="option_txt" *ngFor="let prefix of prefixArr" [value]="prefix">
                                             {{prefix}}
                                         </option>
-                                    </select>
+                                        <label for="prefix">Prefix</label>
+                                    </select> -->
                                     <!-- <label for="option_txt" class="form-label">Prefix</label> -->
                                     <div *ngIf="personalDetails.controls['prefix'].invalid && (personalDetails.controls['prefix'].dirty || personalDetails.controls['prefix'].touched)"
                                         class="text-danger error-msg">
@@ -86,13 +94,12 @@
 
                             <div class="row">
                                 <div class="form-group form-input col">
-                                    <select (change)="setCountryID($event.target.value)" formControlName="country">
-                                        <option disabled value="">Country</option>
+                                    <select (change)="setCountryID($event.target.value)" formControlName="country" id="country" required>
                                         <option *ngFor="let country of countryArr" [ngValue]="country.name">
                                             {{country.name}}
                                         </option>
                                     </select>
-                                    <!-- <label class="form-label">Country</label> -->
+                                    <label for="country" class="form-label">Country</label>
                                     <div *ngIf="personalDetails.controls['country'].invalid && (personalDetails.controls['country'].dirty || personalDetails.controls['country'].touched)"
                                         class="text-danger error-msg">
                                         <div [hidden]="!personalDetails.controls['country'].errors.required">Country is
@@ -101,12 +108,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group form-input col">
-                                    <select (change)="setStateID($event.target.value)" formControlName="province">
-                                        <option disabled value="">State</option>
+                                    <select (change)="setStateID($event.target.value)" formControlName="province" id="state" required>
+                                        <!-- <option disabled value="">State</option> -->
                                         <option *ngFor="let state of stateArr" [ngValue]="state.name">{{state.name}}
                                         </option>
                                     </select>
-                                    <!-- <label class="form-label">State</label> -->
+                                    <label class="form-label" for="state">State</label>
                                     <div *ngIf="personalDetails.controls['province'].invalid && (personalDetails.controls['province'].dirty || personalDetails.controls['province'].touched)"
                                         class="text-danger error-msg">
                                         <div [hidden]="!personalDetails.controls['province'].errors.required">State is
@@ -116,12 +123,12 @@
                                 </div>
 
                                 <div class="form-group form-input col">
-                                    <select formControlName="city">
-                                        <option disabled value="">City</option>
+                                    <select formControlName="city" id="city" required>
+                                        <!-- <option disabled value="">City</option> -->
                                         <option *ngFor="let city of cityArr" [ngValue]="city.name">{{city.name}}
                                         </option>
                                     </select>
-                                    <!-- <label class="form-label">City</label> -->
+                                    <label class="form-label" for="city">City</label>
 
                                     <div *ngIf="personalDetails.controls['city'].invalid && (personalDetails.controls['city'].dirty || personalDetails.controls['city'].touched)"
                                         class="text-danger error-msg">
@@ -155,12 +162,13 @@
                                             <div class="row" formGroupName="{{i}}">
                                                 <div class="form-group form-input col-4">
                                                     <select (change)="setDocTypeCatID($event.target.value)"
-                                                        formControlName="file_type">
-                                                        <option disabled value="">Document type</option>
+                                                        formControlName="file_type" id="document_type" required>
+                                                        <!-- <option disabled value="">Document type</option> -->
                                                         <option id="option_txt" *ngFor="let docType of docTypeArr"
                                                             [value]="docType.doc_type_id">{{docType.doc_type}}
                                                         </option>
                                                     </select>
+                                                    <label class="form-label" for="document_type">Document type</label>
                                                 </div>
                                                 <div class="form-group form-input col-4">
                                                     <input type="file" class="document_name" name="chooseFile"
@@ -197,14 +205,6 @@
                 </div>
             </div>
 
-
-            <!-- <div *ngIf="fileUploadProgress">
-                                                        <label for="chooseFile"> Upload Progress:
-                                                            {{ fileUploadProgress }}
-                                                        </label>
-                                                    </div> -->
-
-
             <div class="education-details-form" *ngIf="showMainContent == 2">
                 <h6>EDUCATION DETAILS</h6>
                 <div class="card">
@@ -218,24 +218,26 @@
                                             <div class="row" [formGroupName]="i">
                                                 <div class="form-group form-input col-3">
                                                     <select (change)="setEduListByCatId($event.target.value,i)"
-                                                        formControlName="edu_cat_id">
-                                                        <option disabled value="">Category</option>
+                                                        formControlName="edu_cat_id" id="qual_cat" required>
+                                                        <!-- <option disabled value="">Category</option> -->
                                                         <option *ngFor="let eduCat of eduCatArr"
                                                             [value]="eduCat.edu_cat_id">
                                                             {{eduCat.edu_cat_name}}</option>
                                                     </select>
+                                                    <label class="form-label" for="qual_cat">Category</label>
                                                 </div>
 
 
                                                 <div class="form-group form-input col-3">
-                                                    <select formControlName="edu_type_id">
-                                                        <option disabled value="">Qualification</option>
+                                                    <select formControlName="edu_type_id" id="qualification" required>
+                                                        <!-- <option disabled value="">Qualification</option> -->
                                                         <option
                                                             *ngFor="let edu of eduListbyId[qualificationDetails.get('qualification')['controls'][i].controls['edu_cat_id'].value]"
                                                             [value]="edu.edu_type_id">
                                                             {{edu.edu_name}}
                                                         </option>
                                                     </select>
+                                                    <label class="form-label" for="qualification">Qualification</label>
                                                 </div>
 
                                                 <div class="form-group form-input col-4">
@@ -245,12 +247,14 @@
                                                 </div>
 
                                                 <div class="form-group form-input col-2">
-                                                    <select formControlName="passing_year">
-                                                        <option disabled value="">Passing year</option>
+                                                    <select formControlName="passing_year" id="passing_year" required>
+                                                        <!-- <option disabled value="">Passing year</option> -->
                                                         <option *ngFor="let year of yearArr"
                                                             aria-placeholder="Passing Year" [value]="year">{{year}}
                                                         </option>
                                                     </select>
+
+                                                    <label class="form-label" for="passing_year">Passing year</label>
                                                 </div>
 
                                                 <div class="form-group form-input col-2">
@@ -260,11 +264,12 @@
                                                 </div>
 
                                                 <div class="form-group form-input col-2">
-                                                    <select formControlName="grade">
-                                                        <option disabled value="">Grade</option>
+                                                    <select formControlName="grade" id="grade" required>
+                                                        <!-- <option disabled value="">Grade</option> -->
                                                         <option *ngFor="let grades of gradeArr" aria-placeholder="Grade"
                                                             [value]="grades">{{grades}}</option>
                                                     </select>
+                                                    <label class="form-label" for="grade">Grade</label>
                                                 </div>
 
                                                 <div class="form-group form-input col-4">
@@ -330,14 +335,16 @@
 
                                                 <div class="form-group form-input col-3">
                                                     <input [owlDateTimeTrigger]="dt" formControlName="start_date"
-                                                        placeholder="Start Date" id="datePicker" [owlDateTime]="dt">
+                                                         id="datePicker" [owlDateTime]="dt" required>
+                                                        <label for="datePicker" class="form-label">Start Date</label>
                                                     <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
 
                                                 </div>
 
                                                 <div class="form-group form-input col-3">
                                                     <input [owlDateTimeTrigger]="dt2" formControlName="end_date"
-                                                        id="datePicker1" placeholder="End Date" [owlDateTime]="dt2">
+                                                        id="datePicker1" [owlDateTime]="dt2" required>
+                                                        <label for="datePicker1" class="form-label">End Date</label>
                                                     <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
                                                 </div>
 
@@ -375,7 +382,7 @@
                                                             <!-- <input type="text" formControlName="strength" id="strength"
                                                                 required /> -->
                                                             <select formControlName="strength" id="strengths" required>
-                                                                <option disabled value=""></option>
+                                                                <!-- <option disabled value="">Strength</option> -->
                                                                 <option value="Creative">Creative</option>
                                                                 <option value="Flexible">Flexible</option>
                                                                 <option value="Discipline">Discipline</option>
@@ -414,7 +421,7 @@
                                                             <!-- <input type="text" formControlName="weakness" id="weakness"
                                                                 required /> -->
                                                             <select formControlName="weakness" id="weaknesses" required>
-                                                                <option disabled value=""></option>
+                                                                <!-- <option disabled value=""></option> -->
                                                                 <option value="Sensitive">Sensitive</option>
                                                                 <option value="Self-Critical">Self-Critical</option>
                                                                 <option value="Shy">Shy</option>
@@ -512,14 +519,28 @@
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-6">
-                                    <label> Would you like to be a Reviewer? </label> &nbsp;&nbsp;
-                                    <label class="radio-inline radiobutton"><input checked type="radio" value="Y"
-                                            name="isFreelancer" formControlName="isFreelancer">Yes</label>
-                                    &nbsp;&nbsp;&nbsp;
-                                    <label class="radio-inline radiobutton"><input type="radio" value="N"
-                                            name="isFreelancer" formControlName="isFreelancer">No</label>
+                                <div class="col-4">
+                                    <label> Would you like to be a Reviewer? </label>
                                 </div>
+
+                                <div class="form-check form-check-inline col-1">
+                                    <input class="form-check-input" type="radio" formControlName="isFreelancer" name="isFreelancer" id="inlineRadio1" value="Y">
+                                    <label class="form-check-label" for="inlineRadio1">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline col-1">
+                                    <input class="form-check-input" type="radio" formControlName="isFreelancer" name="isFreelancer" id="inlineRadio2" value="N">
+                                    <label class="form-check-label" for="inlineRadio2">No</label>
+                                </div>
+                                <!-- <div class="col-3">
+                                    <label>Yes</label>
+                                    <input checked type="radio" value="Y" name="isFreelancer" formControlName="isFreelancer">
+                                            
+                                </div>
+                                <div class="col-3">
+                                    <label>No</label>
+                                    <input type="radio" value="N" name="isFreelancer" formControlName="isFreelancer">
+                                    
+                                </div> -->
                             </div>
 
                             <br>
@@ -532,11 +553,12 @@
                                             <div class="row" [formGroupName]="i">
                                                 <div class="form-group form-input col-3">
                                                     <select (change)="setDocTypeCatID($event.target.value)"
-                                                        formControlName="file_type">
-                                                        <option disabled value="">Document type</option>
-                                                        <option id="option_txt" *ngFor="let docType of docTypeArr"
+                                                        formControlName="file_type" id="id_doc_type" required>
+                                                        
+                                                        <option *ngFor="let docType of docTypeArr"
                                                             [value]="docType.doc_type_id">{{docType.doc_type}}</option>
                                                     </select>
+                                                    <label class="form-label" for="id_doc_type">Document type</label>
                                                 </div>
                                                 <div class="form-group form-input col-5">
                                                     <div class="file-upload">

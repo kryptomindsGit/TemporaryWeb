@@ -290,6 +290,8 @@ export class AddComponent implements OnInit {
    * @description get the selected country id and pass to getStateByID method.
    */
   setCountryID(country_id) {
+    console.log("country_id", country_id);
+    
     this.getStateByID(country_id)
   }
 
@@ -299,8 +301,11 @@ export class AddComponent implements OnInit {
    * @description get the all state values based on selected country id.
    */
   getStateByID(country_id) {
+
     this.__profileService.getFreelancerStateByID(country_id).then((resData: any) => {
       this.stateArr = resData;
+      console.log("this.stateArr", this.stateArr);
+      
     })
   }
 
