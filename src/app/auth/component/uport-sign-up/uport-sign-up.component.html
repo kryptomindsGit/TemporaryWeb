@@ -29,12 +29,13 @@
                     <!-- <input type="text" formControlName="country" name="name" id="country" value="" required />
                     <label for="country" class="form-label">Country</label> -->
 
-                    <select formControlName="country">
-                        <option disabled value="">Country</option>
+                    <select formControlName="country" id="country" required>
+                        <!-- <option disabled value="">Country</option> -->
                         <option *ngFor="let country of countryArr" [ngValue]="country.name">
                             {{country.name}}
                         </option>
                     </select>
+                    <label  class="form-label" for="country">Country</label>
 
                     <div *ngIf="uportSignupForm.controls['country'].invalid && (uportSignupForm.controls['country'].dirty || uportSignupForm.controls['country'].touched)"
                         class="text-danger error-msg">

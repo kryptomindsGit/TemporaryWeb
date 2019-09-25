@@ -121,6 +121,15 @@ select {
   padding: 4px 0;
 }
 
+option {
+  font-weight: normal;
+  display: block;
+  white-space: pre;
+  min-height: 1.2em;
+  padding: 0px 2px 1px;
+  color: $bg-dropdown-color;
+}
+
 input:focus,
 select:focus {
   border-bottom: 1px solid $blue-color;

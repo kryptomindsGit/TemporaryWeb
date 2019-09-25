@@ -102,7 +102,7 @@ input:valid+.form-label,
 select:focus+.form-label,
 select:valid+.form-label {
     top: 1px;
-    font-size: 11px;
+    font-size: 0.9rem;
     color: $blue-color;
     background: transparent !important;
 }

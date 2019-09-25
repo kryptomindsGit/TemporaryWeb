@@ -46,12 +46,13 @@
 
                 <div class="form-group form-input">
                     <!-- <label for="country" class="form-label">Country</label> -->
-                    <select formControlName="custom_country">
-                        <option disabled value="">Country</option>
+                    <select formControlName="custom_country" id="country" required>
+                        <!-- <option disabled value="">Country</option> -->
                         <option *ngFor="let country of countryArr" [ngValue]="country.name">
                             {{country.name}}
                         </option>
                     </select>
+                    <label  class="form-label" for="country">Country</label>
 
                     <div *ngIf="signupForm.controls['custom_country'].invalid && (signupForm.controls['custom_country'].dirty || signupForm.controls['custom_country'].touched)"
                         class="text-danger error-msg">

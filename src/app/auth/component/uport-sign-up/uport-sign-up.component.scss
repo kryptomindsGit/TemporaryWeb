@@ -83,114 +83,164 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-  caret-color: $text-color;
-  -webkit-text-fill-color: $text-color !important;
-  transition: background-color 5000s ease-in-out 0s;
+    caret-color: $text-color;
+    -webkit-text-fill-color: $text-color !important;
+    transition: background-color 5000s ease-in-out 0s;
 }
 
 // CSS for autofill background End
 
-input {
-  transition: 0.3s ease;
-  -moz-transition: 0.3s ease;
-  -webkit-transition: 0.3s ease;
-  -o-transition: 0.3s ease;
-  -ms-transition: 0.3s ease;
-  padding-top: 10px;
-  -webkit-appearance: none;
+input,
+select {
+    transition: 0.3s ease;
+    -moz-transition: 0.3s ease;
+    -webkit-transition: 0.3s ease;
+    -o-transition: 0.3s ease;
+    -ms-transition: 0.3s ease;
+    padding-top: 10px;
+    -webkit-appearance: none;
 }
 
 input:focus+.form-label,
-input:valid+.form-label {
-  top: 1px;
-  font-size: 11px;
-  color: $blue-color;
+input:valid+.form-label,
+select:focus+.form-label,
+select:valid+.form-label {
+    top: 1px;
+    font-size: 0.9rem;
+    color: $blue-color;
+    background: transparent !important;
 }
 
-input,
-select {
-  box-sizing: border-box;
-  width: 100%;
-  display: block;
-  border: none;
-  font-family: "Montserrat Regular";
-  color: $text-color;
-  background: transparent;
-  border-bottom: 1px solid $text-color;
-  padding: 4px 0;
+input,select{
+    box-sizing: border-box;
+    width: 100%;
+    display: block;
+    border: none;
+    font-family: "Montserrat Regular";
+    color: $text-color;
+    background: transparent;
+    border-bottom: 1px solid $text-color;
+    padding: 4px 0;
 }
+
+// option {
+//     font-weight: normal;
+//     display: block;
+//     white-space: pre;
+//     min-height: 1.2em;
+//     padding: 0px 2px 1px;
+//     color: $bg-dropdown-color;
+// }
 
 input:focus,
 select:focus {
-  border-bottom: 1px solid $blue-color;
+    border-bottom: 1px solid $blue-color;
 }
 
 input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 30px transparent inset;
+    -webkit-box-shadow: 0 0 0 30px transparent inset;
 }
 
 input::-webkit-input-placeholder {
-  color: $text-color;
+    color: $text-color;
 }
 
 input::-moz-placeholder {
-  color: $text-color;
+    color: $text-color;
 }
 
 input:-ms-input-placeholder {
-  color: $text-color;
+    color: $text-color;
 }
 
 input:-moz-placeholder {
-  color: $text-color;
+    color: $text-color;
+}
+
+//select
+select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px transparent inset;
+}
+
+select::-webkit-select-placeholder {
+    color: $text-color;
+}
+
+select::-moz-placeholder {
+    color: $text-color;
+}
+
+select:-ms-select-placeholder {
+    color: $text-color;
+}
+
+select:-moz-placeholder {
+    color: $text-color;
 }
 
 input,
 select,
 textarea {
-  outline: none;
-  appearance: unset !important;
-  -moz-appearance: unset !important;
-  -webkit-appearance: unset !important;
-  -o-appearance: unset !important;
-  -ms-appearance: unset !important;
+    outline: none;
+    appearance: unset !important;
+    -moz-appearance: unset !important;
+    -webkit-appearance: unset !important;
+    -o-appearance: unset !important;
+    -ms-appearance: unset !important;
 }
 
 input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  appearance: none !important;
-  -moz-appearance: none !important;
-  -webkit-appearance: none !important;
-  -o-appearance: none !important;
-  -ms-appearance: none !important;
-  margin: 0;
+input::-webkit-inner-spin-button,
+select::-webkit-outer-spin-button,
+select::-webkit-inner-spin-button {
+    appearance: none !important;
+    -moz-appearance: none !important;
+    -webkit-appearance: none !important;
+    -o-appearance: none !important;
+    -ms-appearance: none !important;
+    margin: 0;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
-  outline: none;
-  box-shadow: none !important;
-  -moz-box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-  -o-box-shadow: none !important;
-  -ms-box-shadow: none !important;
+    outline: none;
+    box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -o-box-shadow: none !important;
+    -ms-box-shadow: none !important;
 }
 
 input[type=checkbox] {
-  appearance: checkbox !important;
-  -moz-appearance: checkbox !important;
-  -webkit-appearance: checkbox !important;
-  -o-appearance: checkbox !important;
-  -ms-appearance: checkbox !important;
+    appearance: checkbox !important;
+    -moz-appearance: checkbox !important;
+    -webkit-appearance: checkbox !important;
+    -o-appearance: checkbox !important;
+    -ms-appearance: checkbox !important;
+    width: 0.9rem;
+    height: 0.9rem;
+    border-width: 0;
+}
+
+input[type="checkbox"]:checked {
+    background: #064d86;
 }
 
 input[type=radio] {
-  appearance: radio !important;
-  -moz-appearance: radio !important;
-  -webkit-appearance: radio !important;
-  -o-appearance: radio !important;
-  -ms-appearance: radio !important;
+    appearance: radio !important;
+    -moz-appearance: radio !important;
+    -webkit-appearance: radio !important;
+    -o-appearance: radio !important;
+    -ms-appearance: radio !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none !important;
+    background: $bg-front-color;
 }
 
 .text-font {

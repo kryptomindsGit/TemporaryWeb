@@ -66,8 +66,8 @@
                         <div class="row">
                             <div class="form-group form-input col">
                                 <select class="formStyle" (change)="setCountryID($event.target.value)"
-                                    formControlName="country">
-                                    <option disabled value="">Country</option>
+                                    formControlName="country" id="country" required>
+                                    <!-- <option disabled value="">Country</option> -->
                                     <option *ngFor="let country of countryArr" [ngValue]="country.name">{{country.name}}
                                     </option>
                                 </select>
@@ -80,8 +80,8 @@
                             </div>
                             <div class="form-group form-input col">
                                 <select class="formStyle" (change)="setStateID($event.target.value)"
-                                    formControlName="state">
-                                    <option disabled value="">State</option>
+                                    formControlName="state" id="state" required>
+                                    <!-- <option disabled value="">State</option> -->
                                     <option *ngFor="let state of stateArr" [ngValue]="state.name">{{state.name}}
                                     </option>
                                 </select>
@@ -94,8 +94,8 @@
                             </div>
 
                             <div class="form-group form-input col">
-                                <select class="formStyle" formControlName="city">
-                                    <option disabled value="">City</option>
+                                <select class="formStyle" formControlName="city" id="city" required>
+                                    <!-- <option disabled value="">City</option> -->
                                     <option *ngFor="let city of cityArr" [ngValue]="city.name">{{city.name}}</option>
                                 </select>
                                 <label for="city" class="form-label">City</label>

@@ -61,12 +61,12 @@
                         <div class="row">
                             <div class="form-group form-input col">
                                 <select (change)="setCountryID($event.target.value)" formControlName="country"
-                                    autocomplete="off">
-                                    <option disabled value="">Country</option>
+                                    autocomplete="off" id="country" required>
+                                    <!-- <option disabled value="">Country</option> -->
                                     <option *ngFor="let country of countryArr" [ngValue]="country.name">{{country.name}}
                                     </option>
                                 </select>
-                                <!-- <label for="country" class="form-label">Country</label> -->
+                                <label for="country" class="form-label">Country</label>
                                 <div *ngIf="employerProfileForm.controls['country'].invalid && (employerProfileForm.controls['country'].dirty || employerProfileForm.controls['country'].touched)"
                                     class="text-danger error-msg">
                                     <div [hidden]="!employerProfileForm.controls['country'].errors.required">Country is
@@ -75,11 +75,12 @@
                             </div>
                             <div class="form-group form-input col">
                                 <select class="formStyle" (change)="setStateID($event.target.value)"
-                                    formControlName="state">
-                                    <option disabled value="">State</option>
+                                    formControlName="state" id="state" required>
+                                    <!-- <option disabled value="">State</option> -->
                                     <option *ngFor="let state of stateArr" [ngValue]="state.name">{{state.name}}
                                     </option>
                                 </select>
+                                <label for="state" class="form-label">State</label>
                                 <div *ngIf="employerProfileForm.controls['state'].invalid && (employerProfileForm.controls['state'].dirty || employerProfileForm.controls['state'].touched)"
                                     class="text-danger error-msg">
                                     <div [hidden]="!employerProfileForm.controls['state'].errors.required">State is
@@ -88,10 +89,11 @@
                             </div>
 
                             <div class="form-group form-input col">
-                                <select class="formStyle" formControlName="city">
-                                    <option disabled value="">City</option>
+                                <select class="formStyle" formControlName="city" id="city" required>
+                                    <!-- <option disabled value="">City</option> -->
                                     <option *ngFor="let city of cityArr" [ngValue]="city.name">{{city.name}}</option>
                                 </select>
+                                <label for="city" class="form-label">City</label>
                                 <div *ngIf="employerProfileForm.controls['city'].invalid && (employerProfileForm.controls['city'].dirty || employerProfileForm.controls['city'].touched)"
                                     class="text-danger error-msg">
                                     <div [hidden]="!employerProfileForm.controls['city'].errors.required">City is
@@ -206,12 +208,13 @@
                                         <div class="row" formGroupName="{{i}}">
                                             <div class="form-group form-input col-3">
                                                 <select (change)="setDocTypeCatID($event.target.value)"
-                                                    formControlName="docType">
-                                                    <option disabled value="">Document Type</option>
+                                                    formControlName="docType" id="document_type" required>
+                                                    <!-- <option disabled value="">Document Type</option> -->
                                                     <option id="option_txt" *ngFor="let doctypefile of docTypeArr"
                                                         [value]="doctypefile.doc_cat_id">{{doctypefile.doc_type}}
                                                     </option>
                                                 </select>
+                                                <label class="form-label" for="document_type">Document Type</label>
                                             </div>
                                             <div class="form-group form-input col-5">
                                                 <div class="file-upload">
