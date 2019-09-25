@@ -42,7 +42,6 @@
     margin: 1rem auto;
     letter-spacing: 0.1em
 }
-
 /*-----------------------------------------------------------------------
 FORM CSS
 -------------------------------------------------------------------------*/
@@ -240,7 +239,7 @@ button:focus {
     width: 30%;
     background: $blue-color;
     font-size: 15px;
-    color: #9e9d9d;
+    color: $text-color;
     border: none
 }
 
@@ -256,7 +255,7 @@ button:focus {
     width: 70%;
     background: #064d86;
     font-size: 15px;
-    color: #9e9d9d;
+    color: $text-color;
     border: none
 }
 
@@ -272,7 +271,7 @@ button:focus {
     width: 100%;
     background: #064d86;
     font-size: 15px;
-    color: #9e9d9d;
+    color: $text-color;
     border: none
 }
 
@@ -289,7 +288,7 @@ button:focus {
     text-transform: uppercase;
     cursor: pointer;
     background: #064d86;
-    color: #9e9d9d;
+    color: $text-color;
     float: center;
     margin: 20px auto;
 }
@@ -302,7 +301,7 @@ button:focus {
     text-transform: uppercase;
     cursor: pointer;
     background: #064d86;
-    color: #9e9d9d;
+    color: $text-color;
     float: right;
     margin-left: 0.2rem;
 }
@@ -315,7 +314,7 @@ button:focus {
     text-transform: uppercase;
     cursor: pointer;
     background: #064d86;
-    color: #9e9d9d;
+    color: $text-color;
     float: center;
     margin: 20px auto;
 }
@@ -328,11 +327,26 @@ button:focus {
     text-transform: uppercase;
     cursor: pointer;
     background: #064d86;
-    color: #9e9d9d;
+    color: $text-color;
     float: center;
     margin: 20px auto;
 }
 
 .icon-right {
     float: right;
+}
+
+.error-msg {
+    display: block;
+    position: absolute;
+    font-size: 0.8rem;
+    bottom: -2em;
+    margin-bottom: 0.2rem;
+}
+
+span {
+    color: red;
+    font-size: 0.8rem;
+    margin-left: 0.2rem;
+    font-weight: normal;
 }

@@ -283,10 +283,19 @@ input[type=checkbox] {
 
 h5 {}
 
+.error-msg {
+  display: block;
+  position: absolute;
+  font-size: 0.8rem;
+  bottom: -2em;
+  margin-bottom: 0.2rem;
+}
+
 span {
   color: red;
-  font-size: 1rem;
+  font-size: 0.8rem;
   margin-left: 0.2rem;
+  font-weight: normal;
 }
 
 #option {
@@ -310,7 +319,7 @@ span {
   border-radius: 0.5rem;
   margin: 1rem;
   // background: rgba(2, 41, 148, 0.966);
-  background: #064d86;
+  background: $btn-bg-color;
   width: 18%;
   float: right;
 }
@@ -322,7 +331,7 @@ span {
   margin-top: 1rem;
   margin-bottom: 1rem;
   // background: rgba(2, 41, 148, 0.966);
-  background: #064d86;
+  background: $btn-bg-color;
   width: 100%;
 }
 
@@ -335,7 +344,7 @@ span {
   margin-left: 1rem;
   margin-top: 1rem;
   // background: rgba(2, 41, 148, 0.966);
-  background: #064d86;
+  background: $btn-bg-color;
   width: 7rem;
   height: 3rem;
 }
@@ -360,7 +369,7 @@ span {
 .increment {
   border-radius: 50%;
   // background: rgba(2, 41, 148, 0.966);
-  background: #064d86;
+  background: $btn-bg-color;
   color: #ffffff;
   margin-left: 0.2rem;
 }

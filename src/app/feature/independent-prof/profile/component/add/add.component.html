@@ -14,7 +14,7 @@
                                                         {{prefix}}
                                                     </option>
                                             </select>
-                                            <label for="prefixes" class="form-label">Prefix</label>
+                                            <label for="prefixes" class="form-label">Prefix<span>*</span></label>
 
                                     <!-- <select formControlName="prefix" id="prefix">
                                         <option disabled value="">Prefix</option>
@@ -33,7 +33,7 @@
                                 </div>
                                 <div class="form-group form-input col">
                                     <input type="text" formControlName="first_name" id="first_name" required />
-                                    <label for="first_name" class="form-label">First Name</label>
+                                    <label for="first_name" class="form-label">First Name<span>*</span></label>
 
                                     <div *ngIf="personalDetails.controls['first_name'].invalid && (personalDetails.controls['first_name'].dirty || personalDetails.controls['first_name'].touched)"
                                         class="text-danger error-msg">
@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="form-group form-input col">
                                     <input type="text" formControlName="last_name" id="last_name" required />
-                                    <label for="last_name" class="form-label">Last Name</label>
+                                    <label for="last_name" class="form-label">Last Name<span>*</span></label>
 
                                     <div *ngIf="personalDetails.controls['last_name'].invalid && (personalDetails.controls['last_name'].dirty || personalDetails.controls['last_name'].touched)"
                                         class="text-danger error-msg">
@@ -66,7 +66,7 @@
                             <div class="row">
                                 <div class="form-group form-input col">
                                     <input type="text" formControlName="address_one" id="address_one" required />
-                                    <label for="address_one" class="form-label">Address Line 1</label>
+                                    <label for="address_one" class="form-label">Address Line 1<span>*</span></label>
 
                                     <div *ngIf="personalDetails.controls['address_one'].invalid && (personalDetails.controls['address_one'].dirty || personalDetails.controls['address_one'].touched)"
                                         class="text-danger error-msg">
@@ -79,7 +79,7 @@
                                 </div>
                                 <div class="form-group form-input col">
                                     <input type="text" formControlName="address_two" id="address_two" required />
-                                    <label for="address_two" class="form-label">Address Line 2</label>
+                                    <label for="address_two" class="form-label">Address Line 2<span>*</span></label>
 
                                     <div *ngIf="personalDetails.controls['address_two'].invalid && (personalDetails.controls['address_two'].dirty || personalDetails.controls['address_two'].touched)"
                                         class="text-danger error-msg">
@@ -99,7 +99,7 @@
                                             {{country.name}}
                                         </option>
                                     </select>
-                                    <label for="country" class="form-label">Country</label>
+                                    <label for="country" class="form-label">Country<span>*</span></label>
                                     <div *ngIf="personalDetails.controls['country'].invalid && (personalDetails.controls['country'].dirty || personalDetails.controls['country'].touched)"
                                         class="text-danger error-msg">
                                         <div [hidden]="!personalDetails.controls['country'].errors.required">Country is
@@ -113,7 +113,7 @@
                                         <option *ngFor="let state of stateArr" [ngValue]="state.name">{{state.name}}
                                         </option>
                                     </select>
-                                    <label class="form-label" for="state">State</label>
+                                    <label class="form-label" for="state">State<span>*</span></label>
                                     <div *ngIf="personalDetails.controls['province'].invalid && (personalDetails.controls['province'].dirty || personalDetails.controls['province'].touched)"
                                         class="text-danger error-msg">
                                         <div [hidden]="!personalDetails.controls['province'].errors.required">State is
@@ -128,7 +128,7 @@
                                         <option *ngFor="let city of cityArr" [ngValue]="city.name">{{city.name}}
                                         </option>
                                     </select>
-                                    <label class="form-label" for="city">City</label>
+                                    <label class="form-label" for="city">City<span>*</span></label>
 
                                     <div *ngIf="personalDetails.controls['city'].invalid && (personalDetails.controls['city'].dirty || personalDetails.controls['city'].touched)"
                                         class="text-danger error-msg">
@@ -139,7 +139,7 @@
                                 </div>
                                 <div class="form-group form-input col">
                                     <input type="text" formControlName="postal_code" id="postal_code" required />
-                                    <label for="postal_code" class="form-label">Postal code</label>
+                                    <label for="postal_code" class="form-label">Postal code<span>*</span></label>
 
                                     <div *ngIf="personalDetails.controls['postal_code'].invalid && (personalDetails.controls['postal_code'].dirty || personalDetails.controls['postal_code'].touched)"
                                         class="text-danger error-msg">
@@ -224,7 +224,7 @@
                                                             [value]="eduCat.edu_cat_id">
                                                             {{eduCat.edu_cat_name}}</option>
                                                     </select>
-                                                    <label class="form-label" for="qual_cat">Category</label>
+                                                    <label class="form-label" for="qual_cat">Category<span>*</span></label>
                                                 </div>
 
 
@@ -237,13 +237,13 @@
                                                             {{edu.edu_name}}
                                                         </option>
                                                     </select>
-                                                    <label class="form-label" for="qualification">Qualification</label>
+                                                    <label class="form-label" for="qualification">Qualification<span>*</span></label>
                                                 </div>
 
                                                 <div class="form-group form-input col-4">
                                                     <input type="text" formControlName="university" id="university"
                                                         required />
-                                                    <label for="university" class="form-label">University</label>
+                                                    <label for="university" class="form-label">University<span>*</span></label>
                                                 </div>
 
                                                 <div class="form-group form-input col-2">
@@ -254,13 +254,13 @@
                                                         </option>
                                                     </select>
 
-                                                    <label class="form-label" for="passing_year">Passing year</label>
+                                                    <label class="form-label" for="passing_year">Passing year<span>*</span></label>
                                                 </div>
 
                                                 <div class="form-group form-input col-2">
                                                     <input type="text" formControlName="percentage" id="percentage"
                                                         required />
-                                                    <label for="percentage" class="form-label">Percentage</label>
+                                                    <label for="percentage" class="form-label">Percentage<span>*</span></label>
                                                 </div>
 
                                                 <div class="form-group form-input col-2">
@@ -269,7 +269,7 @@
                                                         <option *ngFor="let grades of gradeArr" aria-placeholder="Grade"
                                                             [value]="grades">{{grades}}</option>
                                                     </select>
-                                                    <label class="form-label" for="grade">Grade</label>
+                                                    <label class="form-label" for="grade">Grade<span>*</span></label>
                                                 </div>
 
                                                 <div class="form-group form-input col-4">
@@ -324,19 +324,19 @@
                                                 <div class="form-group form-input col-6">
                                                     <input type="text" formControlName="org_name" id="org_name"
                                                         required />
-                                                    <label for="org_name" class="form-label">Organization</label>
+                                                    <label for="org_name" class="form-label">Organization<span>*</span></label>
                                                 </div>
 
                                                 <div class="form-group form-input col-6">
                                                     <input type="text" formControlName="org_designation"
                                                         id="org_designation" required />
-                                                    <label for="org_designation" class="form-label">Designation</label>
+                                                    <label for="org_designation" class="form-label">Designation<span>*</span></label>
                                                 </div>
 
                                                 <div class="form-group form-input col-3">
                                                     <input [owlDateTimeTrigger]="dt" formControlName="start_date"
                                                          id="datePicker" [owlDateTime]="dt" required>
-                                                        <label for="datePicker" class="form-label">Start Date</label>
+                                                        <label for="datePicker" class="form-label">Start Date<span>*</span></label>
                                                     <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
 
                                                 </div>
@@ -344,7 +344,7 @@
                                                 <div class="form-group form-input col-3">
                                                     <input [owlDateTimeTrigger]="dt2" formControlName="end_date"
                                                         id="datePicker1" [owlDateTime]="dt2" required>
-                                                        <label for="datePicker1" class="form-label">End Date</label>
+                                                        <label for="datePicker1" class="form-label">End Date<span>*</span></label>
                                                     <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
                                                 </div>
 
@@ -352,7 +352,7 @@
                                                     <input type="text" formControlName="responsibilities"
                                                         id="responsibilities" required />
                                                     <label for="responsibilities"
-                                                        class="form-label">Responsibility</label>
+                                                        class="form-label">Responsibility<span>*</span></label>
                                                 </div>
 
                                                 <div class="form-group col-md-2">
@@ -391,7 +391,7 @@
                                                                 <option value="Team Oriented">Team Oriented</option>
                                                                 <option value="Organized">Organized</option>
                                                             </select>
-                                                            <label for="strengths" class="form-label">Strength</label>
+                                                            <label for="strengths" class="form-label">Strength<span>*</span></label>
                                                         </div>
 
                                                         <div class="col-3">
@@ -429,7 +429,7 @@
                                                                 <option value="Trouble saying No">Trouble saying No
                                                                 </option>
                                                             </select>
-                                                            <label for="weaknesses" class="form-label">Weakness</label>
+                                                            <label for="weaknesses" class="form-label">Weakness<span>*</span></label>
                                                         </div>
 
                                                         <div class="col-3">
@@ -483,7 +483,7 @@
                                 <div class="form-group form-input col">
                                     <input type="text" formControlName="area_of_expertise" id="area_of_expertise"
                                         required />
-                                    <label for="area_of_expertise" class="form-label">Area of Expertise</label>
+                                    <label for="area_of_expertise" class="form-label">Area of Expertise<span>*</span></label>
                                     <div *ngIf="workExpDetails.controls['area_of_expertise'].invalid && (workExpDetails.controls['area_of_expertise'].dirty || workExpDetails.controls['area_of_expertise'].touched)"
                                         class="text-danger error-msg">
                                         <div [hidden]="!workExpDetails.controls['area_of_expertise'].errors.required">
@@ -520,7 +520,7 @@
                             <br>
                             <div class="row">
                                 <div class="col-4">
-                                    <label> Would you like to be a Reviewer? </label>
+                                    <label> Would you like to be a Reviewer? <span>*</span></label>
                                 </div>
 
                                 <div class="form-check form-check-inline col-1">
@@ -601,9 +601,9 @@
             <div class="skill-details-form" *ngIf="showMainContent == 4">
                 <form [formGroup]="skillDetails">
                     <div class="form-content">
-                        <div class="container container-skill">
+                        <div class="container-skill">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-3">
                                     <div class="card skill-container">
                                         <div class="card-header cardHeader">
                                             <div class="form">
@@ -647,7 +647,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-4">
                                     <div class="card skill-container">
                                         <div class="card-header cardHeader">
                                             <div class="form">
@@ -685,25 +685,22 @@
                                                 <div *ngFor="let item of skillRateArr.controls; let i=index"
                                                     [formGroupName]="i">
                                                     <div class="row">
-                                                        <div class="form-group form-input col-6">
-                                                            <label class="label-skill" formControlName="skill_name">
+                                                        <div class="form-group form-input col-4">
+                                                            <label style="font-size: 0.8rem" class="label-skill" formControlName="skill_name">
                                                                 {{item.value.skill_name}}
                                                             </label>
                                                         </div>
-                                                        <div class="form-group form-input col-6">
-                                                            <input type="text" formControlName="rate_hour"
+                                                        <div class="form-group form-input col-4">
+                                                                <input type="text" formControlName="rate_hour"
                                                                 id="rate_skill" required />
                                                             <label for="rate_skill" class="form-label"
-                                                                style="font-size: 0.7rem">Rate Per
-                                                                hour(USD)</label>
-
-                                                            <!-- <div *ngIf="skillDetails.controls.skillRateArr.controls.item['rate_hour'].invalid && (skillDetails.controls.skillRateArr.controls.item['rate_hour'].dirty || skillDetails.controls.skillRateArr.controls.item['rate_hour'].touched)"
-                                                                class="text-danger error-msg">
-                                                                <div
-                                                                    [hidden]="!skillDetails.controls.skillRateArr.controls.item['rate_hour'].errors.required">
-                                                                    Rate per hour
-                                                                    is required.</div>
-                                                            </div> -->
+                                                                style="font-size: 0.6rem">Rate Hour(USD)</label>
+                                                        </div>
+                                                        <div class="form-group form-input col-4">
+                                                            <input type="text" formControlName="skill_exp"
+                                                                id="exp_skill" required />
+                                                            <label for="exp_skill" class="form-label"
+                                                                style="font-size: 0.6rem">Experience</label>
                                                         </div>
                                                     </div>
                                                 </div>

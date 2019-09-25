@@ -164,8 +164,9 @@
               <div class="col-4">
                 <div class="form-group form-input settop">
                   <input type=text [owlDateTimeTrigger]="dt3" formControlName="proj_start_date" id="datePicker3 "
-                    placeholder="Estimated Start Date" [owlDateTime]="dt3">
-                  <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+                    id="estimated_startdate" [owlDateTime]="dt3" required>
+                  <label for="estimated_startdate" class="form-label">Estimated Start Date</label>
+                    <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
                   <div
                     *ngIf="projectForm.controls['proj_start_date'].invalid && (projectForm.controls['proj_start_date'].dirty || projectForm.controls['proj_start_date'].touched)"
                     class="text-danger error-msg">
@@ -385,9 +386,9 @@
                   </div>
              </div>
         </div>
-      </div>
+      <!-- </div>
     </div>
-  </div>
+  </div> -->
   <button class="btn submit-button" (click)="onSubmit()">Submit</button>
 </div>
 

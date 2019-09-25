@@ -25,7 +25,7 @@ export class AddComponent implements OnInit {
 
   //Static Arrays 
   complexityArr = ['High', 'Medium', 'Low'];
-  skillLevelArr = ['Moderate', 'Intermediate', 'Begginer'];
+  skillLevelArr = ['Moderate', 'Intermediate', 'Beginner'];
   projectTypeArr = ['Full-time', 'Part-time'];
   currencyArr = ['INR', 'USD', 'IDR', 'AUD', 'EUR'];
   countries = [];

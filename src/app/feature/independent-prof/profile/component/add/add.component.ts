@@ -528,12 +528,13 @@ export class AddComponent implements OnInit {
         {
           skill_name: skill,
           skill: skill_id,
-          rate_hour: ''
+          rate_hour: '',
+          skill_exp: ''
         }
       ));
     }
     else {
-      let index = this.skillRateArr.controls.findIndex(x => x.value == skill);
+      let index = this.skillRateArr.controls.findIndex(x => x.value.skill == skill_id);
       this.skillRateArr.removeAt(index);
       console.log(this.skillRateArr)
     }

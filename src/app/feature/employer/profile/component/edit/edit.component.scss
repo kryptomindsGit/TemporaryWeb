@@ -330,3 +330,18 @@ button:focus {
     float: center;
     margin: 20px auto;
 }
+
+.error-msg {
+    display: block;
+    position: absolute;
+    font-size: 0.8rem;
+    bottom: -2em;
+    margin-bottom: 0.2rem;
+}
+
+span {
+    color: red;
+    font-size: 0.8rem;
+    margin-left: 0.2rem;
+    font-weight: normal;
+}

@@ -71,9 +71,9 @@ export class ViewComponent implements OnInit {
     // this.Email = document.getElementById("email"+this.UserId).innerHTML;
 
     this.UserId = "1";
-    this.Firstname = "John";
-    this.Lastname = "D'souza";
-    this.Email = "johndsouza@gmaiil.com";
+    this.Firstname = "Khemraj";
+    this.Lastname = "Adhawade";
+    this.Email = "khemrajAdhawade@gmaiil.com";
   }
   //Bootstrap Modal Close event
   hide() {

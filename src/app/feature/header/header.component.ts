@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
   public email_id: any;
   public congnitoID: any;
   public isUportUser: any;
+  public profile_img:any;
 
   public indepUserDetails: any = [];
   public empUserDetails: any = [];
@@ -65,6 +66,14 @@ export class HeaderComponent implements OnInit {
     
     baseName = baseName.substring(0, baseName.indexOf('@'));
     this.emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1);
+
+    if(this.userRole == "Freelancer"){
+      this.profile_img = '../../../assets/images/khemraj.jpeg';
+    }else if (this.userRole == "Employer"){
+      this.profile_img = '../../../assets/images/jothipawar.jpg';
+    }else{
+      this.profile_img = '../../../assets/images/bule_img.png';
+    }
 
   }
 

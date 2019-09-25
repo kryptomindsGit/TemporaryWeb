@@ -46,6 +46,7 @@
 .ng-autocomplete {
     max-width: 100%;
     padding: 0.1rem;
+    color: $text-color;
     background: $bg-front-color;
 }
 
@@ -544,7 +545,7 @@ button:focus {
     padding: 1px;
     margin-right: 5px;
     width: 30%;
-    color: #898989;
+    color: $text-color;
     display: inline-block;
 }
 
@@ -572,7 +573,8 @@ button:focus {
 }
 
 a:not([href]):not([tabindex]) {
-    color: $text-color;
+    color: #000;
+    // background: $bg-front-color;
 }
 
 a:not([href]):not([tabindex]):hover {
@@ -673,6 +675,13 @@ button:focus {
     font-size: 0.8rem;
     bottom: -2em;
     margin-bottom: 0.2rem;
+}
+
+span {
+    color: red;
+    font-size: 0.8rem;
+    margin-left: 0.2rem;
+    font-weight: normal;
 }
 
 table tr td p {
