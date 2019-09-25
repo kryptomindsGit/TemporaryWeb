@@ -316,22 +316,12 @@ currencyArr = ['ETH','INR', 'USD' , 'IDR' , 'AUD' , 'EUR'];
     });
   }
 
-<<<<<<< Updated upstream
   getMilestoneDetails() {
 
     this.__paymentService.getMilestoneData(this.workPackageID).then((workData: any) => {
       console.log("Data is successfully saved", workData);
 
       this.milestoneArr = workData.responseObject;
-=======
-  getMilestoneDetails(){
-    this.__paymentService.getMilestoneData(this.workPackageID).then((workData: any) =>{
-      console.log("Data is successfully saved" ,workData);
-      this.milestoneArr=workData.responseObject;
-      for(let i = 0 ;i < this.milestoneArr.length-1 ; i++){  //TODO : remove -1 after prototype
-        this.addSchedule();
-      }
->>>>>>> Stashed changes
     });
 
   }
@@ -349,7 +339,6 @@ currencyArr = ['ETH','INR', 'USD' , 'IDR' , 'AUD' , 'EUR'];
     for (let i = 0; i < (this.milestoneForm.controls.milestoneDetails.value).length; i++) {
       this.onDeployMilestone(i);
     }
-<<<<<<< Updated upstream
 
     for (let i = 0; i < (this.scheduleForm.controls.scheduleDetails.value).length; i++) {
       this.scheduleDetailMethod(i);
@@ -373,21 +362,10 @@ currencyArr = ['ETH','INR', 'USD' , 'IDR' , 'AUD' , 'EUR'];
 
     console.log("Array scheduleDetailsArr", scheduleDetailsArr);
 
-    // this.__paymentService.postScheduleData(this.scheduleForm.controls.scheduleDetails.value).then((workData: any) =>{
-    // console.log("Data is successfully saved" ,workData);
-    // this.milestoneArr=workData.responseObject;
-    this.toastr.success('Payment Details saved Successfully!!');
-=======
-    this.scheduleDetailMethod();
-  }
-
-  scheduleDetailMethod(){
-    
     this.__paymentService.postScheduleData(this.scheduleForm.controls.scheduleDetails.value).then((workData: any) =>{
-      console.log("Data is successfully saved" ,workData);
-      this.milestoneArr=workData.responseObject;
-      this.toastr.success('Payment Details saved Successfully!!');
->>>>>>> Stashed changes
+    console.log("Data is successfully saved" ,workData);
+    this.milestoneArr=workData.responseObject;
+    this.toastr.success('Payment Details saved Successfully!!');
 
     });
   }
