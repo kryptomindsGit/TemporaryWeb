@@ -179,92 +179,48 @@
             <br>
             <div class="row">
               <div class="col-3">
-                
-                        <div class="form-group form-input">
-                          <select formControlName="budgetCurrencyCode" id="currency">
-                            <option disabled value="">Currency  </option>
-                            <option id="option_txt" *ngFor="let currency of currencyArr" [value]="currency">{{currency}}
-                            </option>
-                          </select>
-    
-                          <div
-                            *ngIf="projectForm.controls['budgetCurrencyCode'].invalid && (projectForm.controls['budgetCurrencyCode'].dirty || projectForm.controls['budgetCurrencyCode'].touched)"
-                            class="text-danger error-msg">
-                            <div *ngIf="projectForm.controls['budgetCurrencyCode'].errors.required">
-                              Currency is required.
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    
-                  <div class="col-3">
-                    <div class="form-group form-input">
-                      <input type="text" formControlName="budgetAmt" id="budgetAmt" value="" required />
-                      <label for="budgetAmt" class="form-label">Budget</label>
+                <div class="form-group form-input">
+                  <select formControlName="budgetCurrencyCode" id="currency">
+                    <option disabled value="">Currency  </option>
+                    <option id="option_txt" *ngFor="let currency of currencyArr" [value]="currency">{{currency}}
+                    </option>
+                  </select>
 
-                      <div
-                        *ngIf="projectForm.controls['budgetAmt'].invalid && (projectForm.controls['budgetAmt'].dirty || projectForm.controls['budgetAmt'].touched)"
-                        class="text-danger error-msg">
-                        <div *ngIf="projectForm.controls['budgetAmt'].errors.required">
-                          Budget is required.
-                        </div>
-                      </div>
+                  <div
+                    *ngIf="projectForm.controls['budgetCurrencyCode'].invalid && (projectForm.controls['budgetCurrencyCode'].dirty || projectForm.controls['budgetCurrencyCode'].touched)"
+                    class="text-danger error-msg">
+                    <div *ngIf="projectForm.controls['budgetCurrencyCode'].errors.required">
+                      Currency is required.
                     </div>
                   </div>
+                </div>
+              </div>
+                    
+              <div class="col-3">
+                <div class="form-group form-input">
+                  <input type="text" formControlName="budgetAmt" id="budgetAmt" value="" required />
+                  <label for="budgetAmt" class="form-label">Budget</label>
+
+                  <div
+                    *ngIf="projectForm.controls['budgetAmt'].invalid && (projectForm.controls['budgetAmt'].dirty || projectForm.controls['budgetAmt'].touched)"
+                    class="text-danger error-msg">
+                    <div *ngIf="projectForm.controls['budgetAmt'].errors.required">
+                      Budget is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
 
                
               <div class="col-3">
-             
                     <div class="form-group form-input">
                       <input type="file" name="chooseFile" >
                     </div>
-                  </div>
-                
-                    <button class="btn viewprofile1" (click)="calCost()">Calculate</button>
-                  
-                 
+              </div>
+                    <!-- <button class="btn viewprofile1" (click)="calCost()">Calculate</button> -->
              
-            </div>
           </div>
-                              <!-- <div class=col-5>
-                                  <input type="button" class="btnBlue" id="upload" value="UPLOAD"
-                                      (click)="uploadFile()">
-                              </div> -->
-                        <!-- <div class="col-5">
-                          <div class="form-group form-input">
-                            <input type="text" formControlName="estimatedCost" id="estimatedCost" value="" required
-                              disabled />
-                            <label for="estimatedCost" class="form-label">{{costEstimated}}</label>
-      
-                            <div
-                              *ngIf="projectForm.controls['estimatedCost'].invalid && (projectForm.controls['estimatedCost'].dirty || projectForm.controls['estimatedCost'].touched)"
-                              class="text-danger error-msg">
-                              <div *ngIf="projectForm.controls['estimatedCost'].errors.required">
-                                Estimated cost is required.
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-4">
-                            <button class="btn viewprofile1" (click)="calCost()">Calculate</button>
-                          </div> -->
-                        <!-- <div class="col-3">
-                            <div class="form-group form-input">
-                                <select formControlName="budgetCurrencyCode" id="currency">
-                                  <option disabled value="">Currency</option>
-                                  <option id="option_txt" *ngFor="let currency of currencyArr" [value]="currency">{{currency}}
-                                  </option>
-                                </select>
-          
-                                <div
-                                  *ngIf="projectForm.controls['budgetCurrencyCode'].invalid && (projectForm.controls['budgetCurrencyCode'].dirty || projectForm.controls['budgetCurrencyCode'].touched)"
-                                  class="text-danger error-msg">
-                                  <div *ngIf="projectForm.controls['budgetCurrencyCode'].errors.required">
-                                    Currency is required.
-                                  </div>
-                                </div>
-                              </div>
-                        </div> -->
+                              
                 
           </form>
         </div>

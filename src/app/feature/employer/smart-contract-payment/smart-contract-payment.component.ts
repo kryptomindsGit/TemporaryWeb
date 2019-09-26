@@ -233,33 +233,36 @@ export class SmartContractPaymentComponent implements OnInit {
   onDeployContract() {
     this.loading = true;
     const payload = {
-      projectId: this.workPackageID
+      projectId: this.workPackageID + Math.floor(Math.random()*10) + 1
     }
-    for (let i = 0; i < this.milestoneForm.controls.milestoneDetails.value.length; i++) {
-      let newStartDate = formatDate((this.milestoneForm.controls.milestoneDetails.value)[i].startDate, "yyyy-MM-dd", 'en-Us');
-      let newEndDate = formatDate((this.milestoneForm.controls.milestoneDetails.value)[i].endDate, "yyyy-MM-dd", 'en-Us');
-      let newDueDate = formatDate((this.milestoneForm.controls.milestoneDetails.value)[i].paymentConditionDueDate, "yyyy-MM-dd", 'en-Us');
-      (this.milestoneForm.controls.milestoneDetails.value)[i].startDate = newStartDate;
-      (this.milestoneForm.controls.milestoneDetails.value)[i].endDate = newEndDate;
-      (this.milestoneForm.controls.milestoneDetails.value)[i].paymentConditionDueDate = newDueDate;
-    }
-    console.log("data for milstones", this.milestoneForm.controls.milestoneDetails.value);
-    this.__paymentService.deployContractData(payload).then((workData: any) => {
-      console.log("Data is successfully saved", workData);
-      this.contractAddr = workData.ContractAddress;
-      console.log("data for milstones", this.milestoneForm.controls.milestoneDetails.value);
-      this.__paymentService.postMilestoneData(this.milestoneForm.controls.milestoneDetails.value, this.workPackageID).then((workData: any) => {
-        console.log("Data is successfully saved", workData);
+    console.log(`projectId: ${payload.projectId}`);
+    for(let i=0;i<this.milestoneForm.controls.milestoneDetails.value.length;i++){
+     let newStartDate = formatDate((this.milestoneForm.controls.milestoneDetails.value)[i].startDate,"yyyy-MM-dd",'en-Us');
+     let newEndDate = formatDate((this.milestoneForm.controls.milestoneDetails.value)[i].endDate,"yyyy-MM-dd",'en-Us');
+     let newDueDate = formatDate((this.milestoneForm.controls.milestoneDetails.value)[i].paymentConditionDueDate,"yyyy-MM-dd", 'en-Us');
+     (this.milestoneForm.controls.milestoneDetails.value)[i].startDate = newStartDate;
+     (this.milestoneForm.controls.milestoneDetails.value)[i].endDate = newEndDate;
+     (this.milestoneForm.controls.milestoneDetails.value)[i].paymentConditionDueDate = newDueDate;
+   }
+    console.log("data for milstones" ,this.milestoneForm.controls.milestoneDetails.value);
+     this.__paymentService.deployContractData(payload).then((workData: any) => {
+    
+       this.contractAddr = workData.ContractAddress;
+      
+      this.__paymentService.postMilestoneData(this.milestoneForm.controls.milestoneDetails.value,this.workPackageID).then((workData: any) =>{
         this.toastr.success('Milestones saved Successfully!!');
-        this.milestoneArr = workData.responseObject;
-        const addrData = {
-          smartContractAddr: this.contractAddr
+        this.milestoneArr=workData.responseObject;
+        console.log(`milestoneArrJSON.Stringify: ${JSON.stringify(this.milestoneArr)}`);
+        const addrData={
+          smartContractAddr : this.contractAddr
         }
-        this.__workService.updateContractAddress(this.workPackageID, addrData).then((resData: any) => {
+         this.__workService.updateContractAddress(this.workPackageID, addrData).then((resData: any) => {
           this.loading = false;
-        });
-      });
+         });
+       });
     });
+    console.log(`1.`)
+
   }
 
   async onDeployMilestone(i: any) {
@@ -267,43 +270,44 @@ export class SmartContractPaymentComponent implements OnInit {
     // this.loading = true;
     console.log("addr " + this.contractAddr);
 
+    console.log("this.milestoneArr[i]", this.milestoneArr[i]);
+    
+ 
     const payload = {
       milestoneStr: this.milestoneArr[i].milestoneName,
       reviewAddrs: "0xd15eE84e3308249E178D8Fb8f20BD7A03b358ee5",
       startDate: this.milestoneArr[i].startDate,
       endDate: this.milestoneArr[i].endDate,
       dueDate: this.milestoneArr[i].paymentConditionDueDate,
-      amount: "0.01",
-      contractAddr: this.contractAddr,
+      amount:this.milestoneArr[i].amountPayable,
+      contractAddr:this.contractAddr,
     }
+ 
+   console.log("addmile " ,payload)
 
-    console.log("addmile ", payload);
+   const payloads = {
+    milestoneStr:this.milestoneArr[i].milestoneName,
+    reviewAddrs:"0xd15eE84e3308249E178D8Fb8f20BD7A03b358ee5",
+    startDate:this.milestoneArr[i].startDate,
+    endDate:this.milestoneArr[i].endDate,
+    dueDate: this.milestoneArr[i].paymentConditionDueDate,
+    amount:this.milestoneArr[i].amountPayable,
+    currency:this.milestoneArr[i].currencyCd,
+    contractAddress:this.contractAddr,
+    freeAddr:'0xD4496dA2a4b376fC8Ce4786EB6B71483436077c4',
+    empAddr:'0xDbc71C18Ab38edc4b7E2cd926e2Bd53cA8e8E52E'
+  }
 
-    await this.__paymentService.deployMilestoneData(payload).then((workData: any) => {
-      console.log("Data is successfully saved", workData);
-      // this.loading = false;
+  console.log("Payload for addMilestone",payloads);
+
+    await this.__paymentService.deployMilestoneData(payload).then((workData: any) =>{
+      console.log("Data is successfully saved" ,workData);
+      this.loading = false;
+
     });
-
-    console.log("Payload for addMiles");
-
-
-    const payloads = {
-      milestoneStr: this.milestoneArr[i].milestoneName,
-      reviewAddrs: "0xd15eE84e3308249E178D8Fb8f20BD7A03b358ee5",
-      startDate: this.milestoneArr[i].startDate,
-      endDate: this.milestoneArr[i].endDate,
-      dueDate: new Date(),
-      amount: 0.01,
-      currency: this.milestoneArr[i].currencyCd,
-      contractAddress: this.contractAddr,
-      freeAddr: '0xD4496dA2a4b376fC8Ce4786EB6B71483436077c4',
-      empAddr: '0xDbc71C18Ab38edc4b7E2cd926e2Bd53cA8e8E52E'
-    }
-
-    console.log("Payload for addMilestone");
-
-    this.__paymentService.deployMilestoneData1(payloads).then((workData: any) => {
-      console.log("Data is successfully saved", workData);
+    
+    await this.__paymentService.deployMilestoneData1(payloads).then((workData: any) =>{
+      console.log("Data is successfully saved" ,workData);
     });
   }
 

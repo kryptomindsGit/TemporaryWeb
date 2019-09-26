@@ -31,6 +31,8 @@ export class SmartContractService {
     
     try {
     let res = await this.http.post(`${SPRING_URL}/milestone/save/${id}`, milestoneData , httpOptions).toPromise();
+      console.log(`response befre return: ${res}`);
+      console.log(`response befre return JSON.stringify: ${JSON.stringify(res)}`);
       return res;
     } catch (error) {
       this.handleError(error);      
@@ -73,10 +75,10 @@ export class SmartContractService {
   //Deploy Milestone ethereum
   async deployMilestoneData(payload : any):Promise<any> {
     
-    console.log("schedule Data :" , payload);
+    // console.log("schedule Data :" , payload);
     
     try {
-    let res = await this.http.post(`${DEPLOY_CONTRACT_URL}/addMile`, payload ,{responseType:'text'}).toPromise();
+    let res = await this.http.post(`${DEPLOY_CONTRACT_URL}/addMile`, payload,{responseType:'text'}).toPromise();
       return res;
     } catch (error) {
       this.handleError(error);      
@@ -84,12 +86,12 @@ export class SmartContractService {
 
   }
 
-
   async deployMilestoneData1(payload : any):Promise<any> {
-    console.log("schedule Data :" , payload);
+    // console.log("schedule Data :" , payload);
+    // console.log("schedule Data :" , JSON.stringify(payload));
     
     try {
-    let res = await this.http.post(`${DEPLOY_CONTRACT_SAW_URL}/addmilestone`, payload ,{responseType:'text'}).toPromise();
+    let res = await this.http.post(`${DEPLOY_CONTRACT_SAW_URL}/addmilestone`, payload,{responseType:'text'}).toPromise();
       return res;
     } catch (error) {
       this.handleError(error);      
