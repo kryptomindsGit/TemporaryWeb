@@ -329,7 +329,8 @@ select:valid+.form-label {
     background: transparent !important;
 }
 
-input,select{
+input,
+select {
     box-sizing: border-box;
     width: 100%;
     display: block;
@@ -673,6 +674,14 @@ button:focus {
     display: block;
     position: absolute;
     font-size: 0.8rem;
+    bottom: -2em;
+    margin-bottom: 0.2rem;
+}
+
+.error-msg-skill {
+    display: block;
+    position: absolute;
+    font-size: 0.6rem;
     bottom: -2em;
     margin-bottom: 0.2rem;
 }

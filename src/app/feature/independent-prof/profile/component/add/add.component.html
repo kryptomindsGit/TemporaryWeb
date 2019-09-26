@@ -9,12 +9,12 @@
                             <div class="row">
 
                                 <div class="form-group form-input col">
-                                        <select formControlName="prefix" id="prefixes" required>
-                                                <option id="option_txt" *ngFor="let prefix of prefixArr" [value]="prefix">
-                                                        {{prefix}}
-                                                    </option>
-                                            </select>
-                                            <label for="prefixes" class="form-label">Prefix<span>*</span></label>
+                                    <select formControlName="prefix" id="prefixes" required>
+                                        <option id="option_txt" *ngFor="let prefix of prefixArr" [value]="prefix">
+                                            {{prefix}}
+                                        </option>
+                                    </select>
+                                    <label for="prefixes" class="form-label">Prefix<span>*</span></label>
 
                                     <!-- <select formControlName="prefix" id="prefix">
                                         <option disabled value="">Prefix</option>
@@ -94,7 +94,8 @@
 
                             <div class="row">
                                 <div class="form-group form-input col">
-                                    <select (change)="setCountryID($event.target.value)" formControlName="country" id="country" required>
+                                    <select (change)="setCountryID($event.target.value)" formControlName="country"
+                                        id="country" required>
                                         <option *ngFor="let country of countryArr" [ngValue]="country.name">
                                             {{country.name}}
                                         </option>
@@ -108,7 +109,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group form-input col">
-                                    <select (change)="setStateID($event.target.value)" formControlName="province" id="state" required>
+                                    <select (change)="setStateID($event.target.value)" formControlName="province"
+                                        id="state" required>
                                         <!-- <option disabled value="">State</option> -->
                                         <option *ngFor="let state of stateArr" [ngValue]="state.name">{{state.name}}
                                         </option>
@@ -224,7 +226,8 @@
                                                             [value]="eduCat.edu_cat_id">
                                                             {{eduCat.edu_cat_name}}</option>
                                                     </select>
-                                                    <label class="form-label" for="qual_cat">Category<span>*</span></label>
+                                                    <label class="form-label"
+                                                        for="qual_cat">Category<span>*</span></label>
                                                 </div>
 
 
@@ -237,13 +240,15 @@
                                                             {{edu.edu_name}}
                                                         </option>
                                                     </select>
-                                                    <label class="form-label" for="qualification">Qualification<span>*</span></label>
+                                                    <label class="form-label"
+                                                        for="qualification">Qualification<span>*</span></label>
                                                 </div>
 
                                                 <div class="form-group form-input col-4">
                                                     <input type="text" formControlName="university" id="university"
                                                         required />
-                                                    <label for="university" class="form-label">University<span>*</span></label>
+                                                    <label for="university"
+                                                        class="form-label">University<span>*</span></label>
                                                 </div>
 
                                                 <div class="form-group form-input col-2">
@@ -254,13 +259,15 @@
                                                         </option>
                                                     </select>
 
-                                                    <label class="form-label" for="passing_year">Passing year<span>*</span></label>
+                                                    <label class="form-label" for="passing_year">Passing
+                                                        year<span>*</span></label>
                                                 </div>
 
                                                 <div class="form-group form-input col-2">
                                                     <input type="text" formControlName="percentage" id="percentage"
                                                         required />
-                                                    <label for="percentage" class="form-label">Percentage<span>*</span></label>
+                                                    <label for="percentage"
+                                                        class="form-label">Percentage<span>*</span></label>
                                                 </div>
 
                                                 <div class="form-group form-input col-2">
@@ -324,19 +331,22 @@
                                                 <div class="form-group form-input col-6">
                                                     <input type="text" formControlName="org_name" id="org_name"
                                                         required />
-                                                    <label for="org_name" class="form-label">Organization<span>*</span></label>
+                                                    <label for="org_name"
+                                                        class="form-label">Organization<span>*</span></label>
                                                 </div>
 
                                                 <div class="form-group form-input col-6">
                                                     <input type="text" formControlName="org_designation"
                                                         id="org_designation" required />
-                                                    <label for="org_designation" class="form-label">Designation<span>*</span></label>
+                                                    <label for="org_designation"
+                                                        class="form-label">Designation<span>*</span></label>
                                                 </div>
 
                                                 <div class="form-group form-input col-3">
                                                     <input [owlDateTimeTrigger]="dt" formControlName="start_date"
-                                                         id="datePicker" [owlDateTime]="dt" required>
-                                                        <label for="datePicker" class="form-label">Start Date<span>*</span></label>
+                                                        id="datePicker" [owlDateTime]="dt" required>
+                                                    <label for="datePicker" class="form-label">Start
+                                                        Date<span>*</span></label>
                                                     <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
 
                                                 </div>
@@ -344,7 +354,8 @@
                                                 <div class="form-group form-input col-3">
                                                     <input [owlDateTimeTrigger]="dt2" formControlName="end_date"
                                                         id="datePicker1" [owlDateTime]="dt2" required>
-                                                        <label for="datePicker1" class="form-label">End Date<span>*</span></label>
+                                                    <label for="datePicker1" class="form-label">End
+                                                        Date<span>*</span></label>
                                                     <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
                                                 </div>
 
@@ -391,7 +402,8 @@
                                                                 <option value="Team Oriented">Team Oriented</option>
                                                                 <option value="Organized">Organized</option>
                                                             </select>
-                                                            <label for="strengths" class="form-label">Strength<span>*</span></label>
+                                                            <label for="strengths"
+                                                                class="form-label">Strength<span>*</span></label>
                                                         </div>
 
                                                         <div class="col-3">
@@ -429,7 +441,8 @@
                                                                 <option value="Trouble saying No">Trouble saying No
                                                                 </option>
                                                             </select>
-                                                            <label for="weaknesses" class="form-label">Weakness<span>*</span></label>
+                                                            <label for="weaknesses"
+                                                                class="form-label">Weakness<span>*</span></label>
                                                         </div>
 
                                                         <div class="col-3">
@@ -483,7 +496,8 @@
                                 <div class="form-group form-input col">
                                     <input type="text" formControlName="area_of_expertise" id="area_of_expertise"
                                         required />
-                                    <label for="area_of_expertise" class="form-label">Area of Expertise<span>*</span></label>
+                                    <label for="area_of_expertise" class="form-label">Area of
+                                        Expertise<span>*</span></label>
                                     <div *ngIf="workExpDetails.controls['area_of_expertise'].invalid && (workExpDetails.controls['area_of_expertise'].dirty || workExpDetails.controls['area_of_expertise'].touched)"
                                         class="text-danger error-msg">
                                         <div [hidden]="!workExpDetails.controls['area_of_expertise'].errors.required">
@@ -524,11 +538,13 @@
                                 </div>
 
                                 <div class="form-check form-check-inline col-1">
-                                    <input class="form-check-input" type="radio" formControlName="isFreelancer" name="isFreelancer" id="inlineRadio1" value="Y">
+                                    <input class="form-check-input" type="radio" formControlName="isFreelancer"
+                                        name="isFreelancer" id="inlineRadio1" value="Y">
                                     <label class="form-check-label" for="inlineRadio1">Yes</label>
                                 </div>
                                 <div class="form-check form-check-inline col-1">
-                                    <input class="form-check-input" type="radio" formControlName="isFreelancer" name="isFreelancer" id="inlineRadio2" value="N">
+                                    <input class="form-check-input" type="radio" formControlName="isFreelancer"
+                                        name="isFreelancer" id="inlineRadio2" value="N">
                                     <label class="form-check-label" for="inlineRadio2">No</label>
                                 </div>
                                 <!-- <div class="col-3">
@@ -554,7 +570,7 @@
                                                 <div class="form-group form-input col-3">
                                                     <select (change)="setDocTypeCatID($event.target.value)"
                                                         formControlName="file_type" id="id_doc_type" required>
-                                                        
+
                                                         <option *ngFor="let docType of docTypeArr"
                                                             [value]="docType.doc_type_id">{{docType.doc_type}}</option>
                                                     </select>
@@ -670,7 +686,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4" *ngIf="skillRateArr.controls.length > 0">
+                                <div class="col-md-5" *ngIf="skillRateArr.controls.length > 0">
                                     <div class="card skill-container">
                                         <div class="card-header cardHeader">
                                             <div class="form">
@@ -686,34 +702,55 @@
                                                     [formGroupName]="i">
                                                     <div class="row">
                                                         <div class="form-group form-input col-4">
-                                                            <label style="font-size: 0.8rem" class="label-skill" formControlName="skill_name">
+                                                            <label style="font-size: 0.7rem" class="label-skill"
+                                                                formControlName="skill_name">
                                                                 {{item.value.skill_name}}
                                                             </label>
                                                         </div>
                                                         <div class="form-group form-input col-4">
-                                                                <input type="text" formControlName="rate_hour"
+                                                            <input type="text" formControlName="rate_hour"
                                                                 id="rate_skill" required />
                                                             <label for="rate_skill" class="form-label"
                                                                 style="font-size: 0.6rem">Rate Hour(USD)</label>
+                                                            <div *ngIf="skillRateArr.controls[i].get('rate_hour').invalid && (skillRateArr.controls[i].get('rate_hour').dirty || skillRateArr.controls[i].get('rate_hour').touched)"
+                                                                class="text-danger error-msg-skill">
+                                                                <div
+                                                                    [hidden]="!skillRateArr.controls[i].get('rate_hour').errors?.required">
+                                                                    Rate/Hour is
+                                                                    required.
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <div class="form-group form-input col-4">
                                                             <input type="text" formControlName="skill_exp"
                                                                 id="exp_skill" required />
                                                             <label for="exp_skill" class="form-label"
-                                                                style="font-size: 0.6rem">Experience</label>
+                                                                style="font-size: 0.6rem">Experience(Year)</label>
+                                                            <div *ngIf="skillRateArr.controls[i].get('skill_exp').invalid && (skillRateArr.controls[i].get('skill_exp').dirty || skillRateArr.controls[i].get('skill_exp').touched)"
+                                                                class="text-danger error-msg-skill">
+                                                                <div
+                                                                    [hidden]="!skillRateArr.controls[i].get('skill_exp').errors.required">
+                                                                    skill exp is
+                                                                    required.
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
+
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- [disabled]="skillDetails.controls.skillRateArr.controls.pristine || skillDetails.controls.skillRateArr.controls.invalid" -->
-                        <button type="button" class="btnPrevious" (click)="ShowNextButton(3)">Previous</button>
-                        <button type="button" class="btnNext" (click)="onSubmitDetails()">Save</button>
                     </div>
+                    <!-- [disabled]="skillDetails.controls.skillRateArr.controls.pristine || skillDetails.controls.skillRateArr.controls.invalid" -->
+                    <button type="button" class="btnPrevious" (click)="ShowNextButton(3)">Previous</button>
+                    <button type="button" class="btnNext" (click)="onSubmitDetails()"
+                        [disabled]="skillDetails.invalid">Save</button>
+
                 </form>
 
             </div>

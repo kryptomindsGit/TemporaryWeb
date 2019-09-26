@@ -74,7 +74,8 @@ CARD CSS
   border-radius: 3px;
   font-weight: 400;
   color: #a5a8ad;
-  background: #282b2f;
+  // background: #282b2f;
+  background: $bg-front-color;
   border-top: 1px solid rgba(255, 255, 255, 0.09);
 }
 
@@ -388,9 +389,9 @@ img {
 .error-msg {
   display: block;
   position: absolute;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   bottom: -2em;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.3rem;
 }
 
 .text-color {
@@ -409,4 +410,17 @@ table thead tr th {
   color: $text-color;
   font-size: 0.7rem;
   text-transform: uppercase;
+}
+
+.btnBlue {
+  border: none;
+  border-radius: 2rem;
+  padding: 0.5rem 1rem;
+  width: 6rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: #064d86;
+  color: $text-color;
+  float: center;
+  margin: 20px auto;
 }

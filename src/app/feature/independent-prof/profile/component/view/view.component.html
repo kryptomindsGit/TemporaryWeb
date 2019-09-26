@@ -41,26 +41,26 @@
                             <table class="table">
                                 <tbody>
                                     <tr>
-                                        <th width="25%">Name:</th>
+                                        <th>Name:</th>
                                         <td>
                                             {{freeDetailsArr.prefix}} {{freeDetailsArr.first_name}}
                                             {{freeDetailsArr.middle_name}} {{freeDetailsArr.last_name}}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th width="25%">Email: </th>
+                                        <th>Email: </th>
                                         <td>
                                             {{email_addr}}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th width="25%">Is Reviewer: </th>
+                                        <th>Is Reviewer: </th>
                                         <td>
                                             {{freeDetailsArr.is_interviewer}}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th width="25%">Address: </th>
+                                        <th>Address: </th>
                                         <td>
                                             <li>Address Line 1 : {{freeDetailsArr.line_1}}</li>
                                             <li>Address Line 2 : {{freeDetailsArr.line_2}}</li>
@@ -70,7 +70,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th width="25%">Education:
+                                        <th>Education:
                                         </th>
                                         <td>
                                             <div *ngFor="let education of freeEduArr; let i=index">
@@ -86,7 +86,7 @@
                                     </tr>
 
                                     <tr>
-                                        <th width="25%">Organization:
+                                        <th>Organization:
                                         </th>
                                         <td>
                                             <div *ngFor="let orag of freelancerOrgArr; let i=index">
@@ -101,7 +101,7 @@
                                     </tr>
 
                                     <tr>
-                                        <th width="25%">Strength: </th>
+                                        <th>Strength: </th>
                                         <div *ngFor="let strength of qualityArray; let i=index">
                                             <td *ngIf="strength.strengths != null">
                                                 {{strength.strengths}}
@@ -111,7 +111,7 @@
                                     </tr>
 
                                     <tr>
-                                        <th width="25%">Weakness: </th>
+                                        <th>Weakness: </th>
                                         <div *ngFor="let weakness of qualityArray; let i=index">
                                             <td *ngIf="weakness.weaknesses != null">
                                                 {{weakness.weaknesses}}
@@ -120,7 +120,7 @@
                                     </tr>
 
                                     <tr>
-                                        <th width="25%">Portfolio: </th>
+                                        <th>Portfolio: </th>
                                         <td>
                                             <div *ngFor="let portfolio of freelancerPortArr; let i=index">
                                                 <li>{{ portfolio.port_addr }}</li>
@@ -129,27 +129,27 @@
                                     </tr>
 
                                     <tr>
-                                        <th width="25%">Area of Expertise: </th>
+                                        <th>Area of Expertise: </th>
                                         <td>
                                             {{freeDetailsArr.area_of_experties}}
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <th width="25%">Psychometric test result: </th>
+                                        <th>Psychometric test result: </th>
                                         <td>
                                             {{freeDetailsArr.psyco_result}}
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <th width="25%">Reference: </th>
+                                        <th>Reference: </th>
                                         <td>
                                             {{freeDetailsArr.reference}}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th width="25%">Skills: </th>
+                                        <th>Skills: </th>
                                         <td>
                                             <div *ngFor="let skill of freeSkillDetailsArr; let i=index">
                                                 <li>{{ skill.skill_name }}</li>
@@ -157,7 +157,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th width="25%">Documents: </th>
+                                        <th>Documents: </th>
                                         <td>
                                             <div *ngFor="let document of freeDocsArr; let i=index">
                                                 <hr *ngIf="i>0">
@@ -190,32 +190,36 @@
                             <table class="table">
                                 <tbody>
                                     <tr>
-                                        <th width="25%">Name:</th>
+                                        <th>Name:</th>
                                         <td>
                                             {{freeDetailsArr.prefix}} {{freeDetailsArr.first_name}}
                                             {{freeDetailsArr.middle_name}} {{freeDetailsArr.last_name}}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th width="25%">Email: </th>
+                                        <th>Email: </th>
                                         <td>
                                             {{email_addr}}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th width="25%">About: </th>
+                                        <th>About: </th>
                                         <td>
-                                            Computer Engineer with a demonstrated history of working in the information technology and services industry. Skilled in Blockchain fundamentals, Software development, Web development. Strong engineering professional with a Bachelor of Engineering focused in Computer Engineering from Maharashtra Institute of Technology
+                                            Computer Engineer with a demonstrated history of working in the information
+                                            technology and services industry. Skilled in Blockchain fundamentals,
+                                            Software development, Web development. Strong engineering professional with
+                                            a Bachelor of Engineering focused in Computer Engineering from Maharashtra
+                                            Institute of Technology
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th width="25%">Is a Reviewer: </th>
+                                        <th>Is a Reviewer: </th>
                                         <td>
                                             {{freeDetailsArr.is_interviewer}}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th width="25%">Address: </th>
+                                        <th>Address: </th>
                                         <td>
                                             <li>Address Line 1 : {{freeDetailsArr.line_1}}</li>
                                             <li>Address Line 2 : {{freeDetailsArr.line_2}}</li>
@@ -227,7 +231,7 @@
                                     </tr>
 
                                     <tr>
-                                        <th width="25%">Strength: </th>
+                                        <th>Strength: </th>
                                         <div *ngFor="let strength of qualityArray; let i=index">
                                             <td *ngIf="strength.strengths != null">
                                                 {{strength.strengths}}
@@ -237,7 +241,7 @@
                                     </tr>
 
                                     <tr>
-                                        <th width="25%">Weakness: </th>
+                                        <th>Weakness: </th>
                                         <div *ngFor="let weakness of qualityArray; let i=index">
                                             <td *ngIf="weakness.weaknesses != null">
                                                 {{weakness.weaknesses}}
@@ -246,7 +250,7 @@
                                     </tr>
 
                                     <tr>
-                                        <th width="25%">Portfolio: </th>
+                                        <th>Portfolio: </th>
                                         <td>
                                             <div *ngFor="let portfolio of freelancerPortArr; let i=index">
                                                 <li>{{ portfoao.port_addr }}</li>
@@ -270,7 +274,7 @@
                             <table class="table">
                                 <tbody>
                                     <tr>
-                                        <th width="25%">Education:
+                                        <th>Education:
                                         </th>
                                         <td>
                                             <div *ngFor="let education of freeEduArr; let i=index">
@@ -301,7 +305,7 @@
                             <table class="table">
                                 <tbody>
                                     <tr>
-                                        <th width="25%">Organization:
+                                        <th>Organization:
                                         </th>
                                         <td>
                                             <div *ngFor="let orag of freelancerOrgArr; let i=index">
@@ -316,33 +320,40 @@
                                     </tr>
 
                                     <tr>
-                                        <th width="25%">Area of Expertise: </th>
+                                        <th>Area of Expertise: </th>
                                         <td>
                                             {{freeDetailsArr.area_of_experties}}
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <th width="25%">Psychometric test result: </th>
+                                        <th>Psychometric test result: </th>
                                         <td>
                                             {{freeDetailsArr.psyco_result}}
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <th width="25%">Reference: </th>
+                                        <th>Reference: </th>
                                         <td>
                                             {{freeDetailsArr.reference}}
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <th width="25%">Skills: </th>
-                                        <td>
-                                            <div *ngFor="let skill of freeSkillDetailsArr; let i=index">
-                                                <li>{{ skill.skill_name }}</li>
-                                            </div>
-                                        </td>
+                                        <th>Skills: </th>
+                                        <table>
+                                            <tr>
+                                                <th class="padding-none">Skill Name</th>
+                                                <th class="padding-none">Year of Experience</th>
+                                            </tr>
+                                            <tbody *ngFor="let skill of freeSkillDetailsArr; let i=index">
+                                                <tr>
+                                                    <td>{{ skill.skill_name }}</td>
+                                                    <td>2 Year</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </tr>
                                 </tbody>
                             </table>
@@ -360,25 +371,43 @@
                         <div class="col-md-12">
                             <table class="table">
                                 <tbody>
-                                    <tr>
-                                        <th width="25%">Documents: </th>
+                                    <!-- <tr>
+                                        <th>Documents: </th>
                                         <td>
                                             <div *ngFor="let document of freeDocsArr; let i=index">
                                                 <hr *ngIf="i>0">
-                                                <table>
-                                                    <tr>
-                                                        <th width="25%">{{document.doc_type}}</th>
-                                                        <td width="60%">{{ document.doc_name }}</td>
-                                                        <td><a style="color:#1051dd; width: 30px;"
-                                                                (click)="getHashDataBlockChainPDF(document.doc_name)"><i
-                                                                    class="fa fa-download" aria-hidden="true"></i>
-                                                            </a></td>
-                                                    </tr>
+                                    <tr>
+                                        <th>{{document.doc_type}}</th>
+                                        <td width="60%">{{ document.doc_name }}</td>
+                                        <td><a style="color:#1051dd; width: 30px;"
+                                                (click)="getHashDataBlockChainPDF(document.doc_name)"><i
+                                                    class="fa fa-download" aria-hidden="true"></i>
+                                            </a></td>
+                                    </tr>
 
-                                                </table>
+                        </div>
+                        </td>
+                        </tr> -->
 
-                                            </div>
-                                        </td>
+                                    <tr>
+                                        <th>Documents: </th>
+                                        <table>
+                                            <tr>
+                                                <th class="padding-none">Document Type</th>
+                                                <th class="padding-none">Document Name</th>
+                                                <th class="padding-none">Download</th>
+                                            </tr>
+                                            <tbody *ngFor="let document of freeDocsArr; let i=index">
+                                                <tr>
+                                                    <td width="30%">{{document.doc_type}}</td>
+                                                    <td width="60%">{{ document.doc_name }}</td>
+                                                    <td width="30%"><a style="color:#1051dd; font-size: 1rem;"
+                                                            (click)="getHashDataBlockChainPDF(document.doc_name)"><i
+                                                                class="fa fa-download" aria-hidden="true"></i>
+                                                        </a></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </tr>
                                 </tbody>
                             </table>

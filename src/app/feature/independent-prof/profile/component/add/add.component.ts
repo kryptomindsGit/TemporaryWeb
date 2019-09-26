@@ -291,7 +291,7 @@ export class AddComponent implements OnInit {
    */
   setCountryID(country_id) {
     console.log("country_id", country_id);
-    
+
     this.getStateByID(country_id)
   }
 
@@ -305,7 +305,7 @@ export class AddComponent implements OnInit {
     this.__profileService.getFreelancerStateByID(country_id).then((resData: any) => {
       this.stateArr = resData;
       console.log("this.stateArr", this.stateArr);
-      
+
     })
   }
 

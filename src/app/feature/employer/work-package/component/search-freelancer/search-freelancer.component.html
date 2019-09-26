@@ -2,252 +2,219 @@
     <div class="container"><br>
         <h6>Independent Professionals</h6>
         <label for="goback"><span class="navi" (click)="goBacktoWork()">Work-Package</span> / Search</label>
-        <div class="card ">    
+        <div class="card ">
             <div class="card-body">
-                    <form >
-                        <div class="form-content">
-                            <div class="row">
-                                <div class="col-2">
-                                        <select class="formStyle" formControlName="project-Id" id="project-Id">
-                                            <option>Id</option>
-                                            <!-- <option id="option_txt" *ngFor="let project-Id of projectIdArr" [value]="project-Id">{{project-Id}}</option> -->
-                                        </select>
-                                </div>
-                                <div class="col-2">
-                                     <input type="text" placeholder="Name">
-                                </div>
-                                <div class="col-2">
-                                    <select class="formStyle"  id="projectId">
-                                        <option>Domain</option>
-                                        <!-- <option id="option_txt" *ngFor="let projectId of projectIdArr" [value]="projectId">{{projectId}}</option> -->
-                                    </select>
-                                </div>
-                                <div class="col-2">
-                                    <select class="formStyle"  id="projectId">
-                                        <option>Skills</option>
-                                        <!-- <option id="option_txt" *ngFor="let projectId of projectIdArr" [value]="projectId">{{projectId}}</option> -->
-                                    </select>                                
-                                </div>
-                                <div class="col-2">
-                                    <input type="text" placeholder="Location">
-                                </div>
-                                <div class="col-2">
-                                    <input type="text" placeholder="Rate / Hour">
-                                </div>
-                                </div>
-                         
-                                <button class="btn viewprofile1">Search</button>
+                <form>
+                    <div class="form-content">
+                        <div class="row">
+                            <div class="col-2">
+                                <select class="formStyle" formControlName="project-Id" id="project-Id">
+                                    <option>Id</option>
+                                    <!-- <option id="option_txt" *ngFor="let project-Id of projectIdArr" [value]="project-Id">{{project-Id}}</option> -->
+                                </select>
+                            </div>
+                            <div class="col-2">
+                                <input type="text" placeholder="Name">
+                            </div>
+                            <div class="col-2">
+                                <select class="formStyle" id="projectId">
+                                    <option>Domain</option>
+                                    <!-- <option id="option_txt" *ngFor="let projectId of projectIdArr" [value]="projectId">{{projectId}}</option> -->
+                                </select>
+                            </div>
+                            <div class="col-2">
+                                <select class="formStyle" id="projectId">
+                                    <option>Skills</option>
+                                    <!-- <option id="option_txt" *ngFor="let projectId of projectIdArr" [value]="projectId">{{projectId}}</option> -->
+                                </select>
+                            </div>
+                            <div class="col-2">
+                                <input type="text" placeholder="Location">
+                            </div>
+                            <div class="col-2">
+                                <input type="text" placeholder="Rate / Hour">
+                            </div>
+                        </div>
 
-                        </div>
-                    </form>
-            </div>   
-              
-                
-    </div>  
-    <div class="row ">
-            <div class="col-3">
-                    <div class="card">
-                        <div class="ribbon">
-                            <span class="ribbon3">
-                                    <label class="text-desc text-center">Kscore : 
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                    </label>
-                            </span>
-                        </div>
-        
-                        <div class="card-body ">
-                                <div class="center">
-                                <div class="img-center">
-                                    <img class="img-circle" src="../../../../../../assets/images/bhushan.png">
-                                </div><br><br>
-                                <h6 class="name">Bhushan Mahajan</h6>
-                                <label class="email">bhushan@gmail.com</label><br>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 ">
-                                    <button class="btn viewprofile leftcol rightcol" type="button" (click)="onClick($event)">View
-                                    </button>
-                                </div>
-                                <div class="col-6 ">
-                                    <button class="btn viewprofile leftcol leftcol">Invite</button>
-                                </div>
-                            </div>
-                            <hr>
-                        </div>
-                    </div>      
-                </div>
-                <div class="col-3">
-                        <div class="card">
-                            <div class="ribbon">
-                                <span class="ribbon3">
-                                        <label class="text-desc text-center">Kscore : 
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star"></span>
-                                                <span class="fa fa-star"></span>
-                                        </label>
-                                </span>
-                            </div>
-            
-                            <div class="card-body ">
-                                    <div class="center">
-                                    <div class="img-center">
-                                        <img class="img-circle" src="../../../../../../assets/images/irshad.jpeg">
-                                    </div><br><br>
-                                    <h6 class="name">Irshad Hukkeri</h6>
-                                    <label class="email">irshad@gmail.com</label><br>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6 ">
-                                        <button class="btn viewprofile leftcol rightcol" type="button" (click)="onClick($event)">View
-                                        </button>
-                                    </div>
-                                    <div class="col-6 ">
-                                        <button class="btn viewprofile leftcol leftcol">Invite</button>
-                                    </div>
-                                </div>
-                                <hr>
-                            </div>
-                        </div>      
+                        <button class="btn viewprofile1">Search</button>
+
                     </div>
-          <div class="col-3">
-                    <div class="card">
-                        <div class="ribbon">
-                            <span class="ribbon3">
-                                    <label class="text-desc text-center">Kscore : 
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                    </label>
-                            </span>
-                        </div>
-        
-                        <div class="card-body ">
-                                <div class="center">
-                                <div class="img-center">
-                                    <img class="img-circle" src="../../../../../../assets/images/shefali.jpg">
-                                </div><br><br>
-                                <h6 class="name">Shefali Patil</h6>
-                                <label class="email">shefali@gmail.com</label><br>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 ">
-                                    <button class="btn viewprofile leftcol rightcol" type="button" (click)="onClick($event)">View
-                                    </button>
-                                </div>
-                                <div class="col-6 ">
-                                    <button class="btn viewprofile leftcol leftcol">Invite</button>
-                                </div>
-                            </div>
-                            <hr>
-                        </div>
-                    </div>      
-                </div>
-          <div class="col-3">
-                    <div class="card">
-                        <div class="ribbon">
-                            <span class="ribbon3">
-                                    <label class="text-desc text-center">Kscore : 
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                    </label>
-                            </span>
-                        </div>
-        
-                        <div class="card-body ">
-                                <div class="center">
-                                <div class="img-center">
-                                    <img class="img-circle" src="../../../../../../assets/images/irshad.jpeg">
-                                </div><br><br>
-                                <h6 class="name">Irshad Ahmed</h6>
-                                <label class="email">irshad@gmail.com</label><br>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 ">
-                                    <button class="btn viewprofile leftcol rightcol" type="button" (click)="onClick($event)">View
-                                    </button>
-                                </div>
-                                <div class="col-6 ">
-                                    <button class="btn viewprofile leftcol leftcol">Invite</button>
-                                </div>
-                            </div>
-                            <hr>
-                        </div>
-                    </div>      
-                </div>
-    </div>   
+                </form>
+            </div>
 
-    <div class="row ">
-            <div class="col-3">
-                    <div class="card">
-                        <div class="ribbon">
-                            <span class="ribbon3">
-                                    <label class="text-desc text-center">Kscore : 
-                                            <span class="fa fa-star checked givmargin"></span>
-                                            <span class="fa fa-star checked givmargin"></span>
-                                            <span class="fa fa-star checked givmargin"></span>
-                                            <span class="fa fa-star checked givmargin"></span>
-                                            <span class="fa fa-star givmargin"></span>
-                                    </label>
-                            </span>
-                        </div>
-        
-                        <div class="card-body ">
-                                <div class="center">
-                                <div class="img-center">
-                                    <img class="img-circle" src="../../../../../../assets/images/akhshay.png">
-                                </div><br><br>
-                                <h6 class="name">Akshay Adhawade</h6>
-                                <label class="email">akshay@gmail.com</label><br>
-                               
-        
-                            </div>
-                            <div class="row">
-                                <div class="col-6 leftcol">
-                                    <button class="btn viewprofile leftcol" type="button" (click)="onClick($event)">View
-                                    </button>
-                                </div>
-                                <div class="col-6">
-                                    <button class="btn viewprofile leftcol">Invite</button>
-                                </div>
-                            </div>
-                            <hr>
-                        </div>
-                    </div>      
-                </div>
+
+        </div>
+        <div class="row ">
             <div class="col-3">
                 <div class="card">
                     <div class="ribbon">
                         <span class="ribbon3">
-                                <label class="text-desc text-center">Kscore : 
-                                        <span class="fa fa-star checked givmargin"></span>
-                                        <span class="fa fa-star checked givmargin"></span>
-                                        <span class="fa fa-star checked givmargin"></span>
-                                        <span class="fa fa-star checked givmargin"></span>
-                                        <span class="fa fa-star givmargin"></span>
-                                </label>
+                            <label class="text-desc text-center">Kscore :
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                            </label>
                         </span>
                     </div>
-    
+
                     <div class="card-body ">
-                            <div class="center">
+                        <div class="center">
+                            <div class="img-center">
+                                <img class="img-circle" src="../../../../../../assets/images/jothipawar.jpg">
+                            </div><br><br>
+                            <h6 class="name">Jyoti Pawar</h6>
+                            <label class="email">jyoti@gmail.com</label><br>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 ">
+                                <button class="btn viewprofile leftcol rightcol" type="button"
+                                    (click)="onClick($event)">View
+                                </button>
+                            </div>
+                            <div class="col-6 ">
+                                <button class="btn viewprofile leftcol leftcol">Invite</button>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card">
+                    <div class="ribbon">
+                        <span class="ribbon3">
+                            <label class="text-desc text-center">Kscore :
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star"></span>
+                            </label>
+                        </span>
+                    </div>
+
+                    <div class="card-body ">
+                        <div class="center">
                             <div class="img-center">
                                 <img class="img-circle" src="../../../../../../assets/images/irshad.jpeg">
                             </div><br><br>
                             <h6 class="name">Irshad Hukkeri</h6>
                             <label class="email">irshad@gmail.com</label><br>
-                               
-    
+                        </div>
+                        <div class="row">
+                            <div class="col-6 ">
+                                <button class="btn viewprofile leftcol rightcol" type="button"
+                                    (click)="onClick($event)">View
+                                </button>
+                            </div>
+                            <div class="col-6 ">
+                                <button class="btn viewprofile leftcol leftcol">Invite</button>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card">
+                    <div class="ribbon">
+                        <span class="ribbon3">
+                            <label class="text-desc text-center">Kscore :
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star"></span>
+                            </label>
+                        </span>
+                    </div>
+
+                    <div class="card-body ">
+                        <div class="center">
+                            <div class="img-center">
+                                <img class="img-circle" src="../../../../../../assets/images/shefali.jpg">
+                            </div><br><br>
+                            <h6 class="name">Shefali Patil</h6>
+                            <label class="email">shefali@gmail.com</label><br>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 ">
+                                <button class="btn viewprofile leftcol rightcol" type="button"
+                                    (click)="onClick($event)">View
+                                </button>
+                            </div>
+                            <div class="col-6 ">
+                                <button class="btn viewprofile leftcol leftcol">Invite</button>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card">
+                    <div class="ribbon">
+                        <span class="ribbon3">
+                            <label class="text-desc text-center">Kscore :
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                            </label>
+                        </span>
+                    </div>
+
+                    <div class="card-body ">
+                        <div class="center">
+                            <div class="img-center">
+                                <img class="img-circle" src="../../../../../../assets/images/akhshay.png">
+                            </div><br><br>
+                            <h6 class="name">Akshay Adhawade</h6>
+                            <label class="email">akshay@gmail.com</label><br>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 ">
+                                <button class="btn viewprofile leftcol rightcol" type="button"
+                                    (click)="onClick($event)">View
+                                </button>
+                            </div>
+                            <div class="col-6 ">
+                                <button class="btn viewprofile leftcol leftcol">Invite</button>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row ">
+            <div class="col-3">
+                <div class="card">
+                    <div class="ribbon">
+                        <span class="ribbon3">
+                            <label class="text-desc text-center">Kscore :
+                                <span class="fa fa-star checked givmargin"></span>
+                                <span class="fa fa-star checked givmargin"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                            </label>
+                        </span>
+                    </div>
+
+                    <div class="card-body ">
+                        <div class="center">
+                            <div class="img-center">
+                                <img class="img-circle" src="../../../../../../assets/images/shefali.jpg">
+                            </div><br><br>
+                            <h6 class="name">Shefali Patil</h6>
+                            <label class="email">shefali@gmail.com</label><br>
+
+
                         </div>
                         <div class="row">
                             <div class="col-6 leftcol">
@@ -260,85 +227,121 @@
                         </div>
                         <hr>
                     </div>
-                </div>      
+                </div>
             </div>
             <div class="col-3">
-                    <div class="card">
-                        <div class="ribbon">
-                            <span class="ribbon3">
-                                    <label class="text-desc text-center">Kscore : 
-                                            <span class="fa fa-star checked givmargin"></span>
-                                            <span class="fa fa-star checked givmargin"></span>
-                                            <span class="fa fa-star checked givmargin"></span>
-                                            <span class="fa fa-star givmargin"></span>
-                                            <span class="fa fa-star givmargin"></span>
-                                    </label>
-                            </span>
-                        </div>
-        
-                        <div class="card-body ">
-                                <div class="center">
-                                <div class="img-center">
-                                    <img class="img-circle" src="../../../../../../assets/images/irshad.jpeg">
-                                </div><br><br>
-                                <h6 class="name">Irshad Hukkeri</h6>
-                                <label class="email">irshad@gmail.com</label><br>
-                               
-        
-                            </div>
-                            <div class="row">
-                                <div class="col-6 leftcol">
-                                    <button class="btn viewprofile leftcol" type="button" (click)="onClick($event)">View
-                                    </button>
-                                </div>
-                                <div class="col-6">
-                                    <button class="btn viewprofile leftcol">Invite</button>
-                                </div>
-                            </div>
-                            <hr>
-                        </div>
-                    </div>      
-                </div>
-                <div class="col-3">
-                        <div class="card">
-                            <div class="ribbon">
-                                <span class="ribbon3">
-                                        <label class="text-desc text-center">Kscore : 
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star"></span>
-                                                <span class="fa fa-star"></span>
-                                        </label>
-                                </span>
-                            </div>
-            
-                            <div class="card-body ">
-                                    <div class="center">
-                                    <div class="img-center">
-                                        <img class="img-circle" src="../../../../../../assets/images/irshad.jpeg">
-                                    </div><br><br>
-                                    <h6 class="name">Irshad Hukkeri</h6>
-                                    <label class="email">irshad@gmail.com</label><br>
-                                       
-            
-                                </div>
-                                <div class="row">
-                                    <div class="col-6 leftcol">
-                                        <button class="btn viewprofile leftcol" type="button" (click)="onClick($event)">View
-                                        </button>
-                                    </div>
-                                    <div class="col-6">
-                                        <button class="btn viewprofile leftcol">Invite</button>
-                                    </div>
-                                </div>
-                                <hr>
-                            </div>
-                        </div>      
+                <div class="card">
+                    <div class="ribbon">
+                        <span class="ribbon3">
+                            <label class="text-desc text-center">Kscore :
+                                <span class="fa fa-star checked givmargin"></span>
+                                <span class="fa fa-star checked givmargin"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                            </label>
+                        </span>
                     </div>
-        </div>   
-    
-                  
+
+                    <div class="card-body ">
+                        <div class="center">
+                            <div class="img-center">
+                                <img class="img-circle" src="../../../../../../assets/images/irshad.jpeg">
+                            </div><br><br>
+                            <h6 class="name">Irshad Hukkeri</h6>
+                            <label class="email">irshad@gmail.com</label><br>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-6 leftcol">
+                                <button class="btn viewprofile leftcol" type="button" (click)="onClick($event)">View
+                                </button>
+                            </div>
+                            <div class="col-6">
+                                <button class="btn viewprofile leftcol">Invite</button>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card">
+                    <div class="ribbon">
+                        <span class="ribbon3">
+                            <label class="text-desc text-center">Kscore :
+                                <span class="fa fa-star checked givmargin"></span>
+                                <span class="fa fa-star checked givmargin"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                            </label>
+                        </span>
+                    </div>
+
+                    <div class="card-body ">
+                        <div class="center">
+                            <div class="img-center">
+                                <img class="img-circle" src="../../../../../../assets/images/jothipawar.jpg">
+                            </div><br><br>
+                            <h6 class="name">Jyoti Pawar</h6>
+                            <label class="email">jyoti@gmail.com</label><br>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-6 leftcol">
+                                <button class="btn viewprofile leftcol" type="button" (click)="onClick($event)">View
+                                </button>
+                            </div>
+                            <div class="col-6">
+                                <button class="btn viewprofile leftcol">Invite</button>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card">
+                    <div class="ribbon">
+                        <span class="ribbon3">
+                            <label class="text-desc text-center">Kscore :
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                            </label>
+                        </span>
+                    </div>
+
+                    <div class="card-body ">
+                        <div class="center">
+                            <div class="img-center">
+                                <img class="img-circle" src="../../../../../../assets/images/akhshay.png">
+                            </div><br><br>
+                            <h6 class="name">Akshay Patil</h6>
+                            <label class="email">akshay@gmail.com</label><br>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-6 leftcol">
+                                <button class="btn viewprofile leftcol" type="button" (click)="onClick($event)">View
+                                </button>
+                            </div>
+                            <div class="col-6">
+                                <button class="btn viewprofile leftcol">Invite</button>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </div>
-    

@@ -11,7 +11,7 @@
     font-weight: 400;
 }
 
-img .freelancer-img{
+img .freelancer-img {
     width: 10rem;
     height: 10rem;
 }
@@ -32,13 +32,37 @@ img .freelancer-img{
     background: transparent !important;
 }
 
-.table td,
-.table th {
-    padding: .75rem;
-    vertical-align: top;
+// .table td,
+// .table th {
+//     padding: .75rem;
+//     vertical-align: top;
+//     border: none !important;
+// }
+
+table tbody tr th {
+    text-transform: uppercase;
+    font-size: 12px;
+    padding-left: 4rem;
+    width: 30%;
     border: none !important;
 }
 
+table tbody tr td {
+    letter-spacing: 1px;
+    font-size: 12px;
+    // width: 70%;
+    margin-left: 1rem;
+    font: 12px "Montserrat Regular";
+    border: none !important;
+}
+
+.table tbody+tbody {
+    border: none !important;
+}
+
+.padding-none {
+    padding-left: 1rem !important;
+}
 
 .card .card-body img {
     width: 5rem;

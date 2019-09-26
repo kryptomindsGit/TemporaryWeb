@@ -11,12 +11,12 @@ import { AuthService } from 'src/app/auth/shared/service/auth.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  emailName:any;
+  emailName: any;
   public userRole: any;
   public email_id: any;
   public congnitoID: any;
   public isUportUser: any;
-  public profile_img:any;
+  public profile_img: any;
 
   public indepUserDetails: any = [];
   public empUserDetails: any = [];
@@ -61,17 +61,17 @@ export class HeaderComponent implements OnInit {
 
     }
 
-    var baseName =this.email_id;
+    var baseName = this.email_id;
     console.log("log");
-    
+
     baseName = baseName.substring(0, baseName.indexOf('@'));
     this.emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1);
 
-    if(this.userRole == "Freelancer"){
+    if (this.userRole == "Freelancer") {
       this.profile_img = '../../../assets/images/khemraj.jpeg';
-    }else if (this.userRole == "Employer"){
-      this.profile_img = '../../../assets/images/jothipawar.jpg';
-    }else{
+    } else if (this.userRole == "Employer") {
+      this.profile_img = '../../../assets/images/bhushan.png';
+    } else {
       this.profile_img = '../../../assets/images/bule_img.png';
     }
 
@@ -85,7 +85,7 @@ export class HeaderComponent implements OnInit {
         this.freelancerDetailsArr = resData[0];
         console.log(this.freelancerDetailsArr);
 
-        if (this.freelancerDetailsArr == null) {  
+        if (this.freelancerDetailsArr == null) {
           this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/add']);
         } else {
           this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email_id]);

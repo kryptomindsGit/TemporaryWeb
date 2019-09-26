@@ -396,7 +396,8 @@ button:focus {
 }
 
 a:not([href]):not([tabindex]) {
-    color: $text-color;
+    color: #000;
+    // background: $bg-front-color;
 }
 
 a:not([href]):not([tabindex]):hover {
@@ -404,6 +405,25 @@ a:not([href]):not([tabindex]):hover {
     background: $bg-front-color;
     text-decoration: none;
 }
+
+// .autocomplete-container .suggestions-container {
+//     position: absolute;
+//     width: 100%;
+//     background: $bg-back-color;
+//     height: auto;
+//     box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
+//     box-sizing: border-box;
+// }
+
+// a:not([href]):not([tabindex]) {
+//     color: $text-color;
+// }
+
+// a:not([href]):not([tabindex]):hover {
+//     color: $text-color;
+//     background: $bg-front-color;
+//     text-decoration: none;
+// }
 
 .btn_add {
     background: #064d86;

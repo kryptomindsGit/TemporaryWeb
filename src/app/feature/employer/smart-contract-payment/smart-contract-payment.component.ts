@@ -6,6 +6,7 @@ import { EmpProfileService } from '../profile/shared/service/profile.service';
 import { trigger, transition, useAnimation } from '@angular/animations';
 import { bounce } from 'ng-animate';
 import { ToastrService } from 'ngx-toastr';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-smart-contract-payment',
@@ -22,45 +23,45 @@ import { ToastrService } from 'ngx-toastr';
 export class SmartContractPaymentComponent implements OnInit {
 
 
-//Milestone Related Variables
-milestoneForm : FormGroup;
-scheduleForm : FormGroup;
-fileForm : FormGroup;
+  //Milestone Related Variables
+  milestoneForm: FormGroup;
+  scheduleForm: FormGroup;
+  fileForm: FormGroup;
 
-i : any;
-showModal : boolean = false;
-workPackageID : any;
-approvedEmp: boolean  = false;
-approvedRev: boolean = false;
-milestoneArr = [];
-projectName : any;
-empId:any;
-uploadedFile:any;
-
-
-public loading = false;
-public smartcontractform: any;
-//payment section realated variables
-
-//Payment Shedule related Variables
-contractAddr : string ; 
-fileName:string;
-fileObj:string;
-emailId:string;
-payerAcc="0xDbc71C18Ab38edc4b7E2cd926e2Bd53cA8e8E52E";
-payeeAcc="0xD4496dA2a4b376fC8Ce4786EB6B71483436077c4";
-paymentMethod="Crypto";
-teamMemberArr = [
-                  {memberId: 1 ,status :'pending'},
-                  {memberId: 2 ,status:'completed'},
-                  {memberId: 3 ,status:'rejected'}
-                ];
-paymentMethodArr = ['paypal','net-backing'];
-currencyArr = ['ETH','INR', 'USD' , 'IDR' , 'AUD' , 'EUR'];
+  i: any;
+  showModal: boolean = false;
+  workPackageID: any;
+  approvedEmp: boolean = false;
+  approvedRev: boolean = false;
+  milestoneArr = [];
+  projectName: any;
+  empId: any;
+  uploadedFile: any;
 
 
-  contractStatus : string ="";
-  searchFreelancer:number;
+  public loading = false;
+  public smartcontractform: any;
+  //payment section realated variables
+
+  //Payment Shedule related Variables
+  contractAddr: string;
+  fileName: string;
+  fileObj: string;
+  emailId: string;
+  payerAcc = "0xDbc71C18Ab38edc4b7E2cd926e2Bd53cA8e8E52E";
+  payeeAcc = "0xD4496dA2a4b376fC8Ce4786EB6B71483436077c4";
+  paymentMethod = "Crypto";
+  teamMemberArr = [
+    { memberId: 1, status: 'pending' },
+    { memberId: 2, status: 'completed' },
+    { memberId: 3, status: 'rejected' }
+  ];
+  paymentMethodArr = ['paypal', 'net-backing'];
+  currencyArr = ['ETH', 'INR', 'USD', 'IDR', 'AUD', 'EUR'];
+
+
+  contractStatus: string = "";
+  searchFreelancer: number;
   constructor(
     private __fb: FormBuilder,
     private __paymentService: SmartContractService,
@@ -130,19 +131,19 @@ currencyArr = ['ETH','INR', 'USD' , 'IDR' , 'AUD' , 'EUR'];
 
   createScheduleForm() {
     this.scheduleForm = this.__fb.group({
-        scheduleDetails: this.__fb.array([this.__fb.group({
-          paymentAmount:['',[Validators.required]] , 
-          // payerAccount:['',[Validators.required]],
-          payerAccount:'0xDbc71C18Ab38edc4b7E2cd926e2Bd53cA8e8E52E',
-          payeeAccount:'0xD4496dA2a4b376fC8Ce4786EB6B71483436077c4',
-          payerName:['',[Validators.required]],
-          payeeName:['',[Validators.required]],
-          paymentMethod:'Crypto',
-          paymentCurrency:['',[Validators.required]],
-          paymentStatus:['',[Validators.required]],
-          paymentDate:['',[Validators.required]],
-          milestoneId:['',[Validators.required]]
-        })
+      scheduleDetails: this.__fb.array([this.__fb.group({
+        paymentAmount: ['', [Validators.required]],
+        // payerAccount:['',[Validators.required]],
+        payerAccount: '0xDbc71C18Ab38edc4b7E2cd926e2Bd53cA8e8E52E',
+        payeeAccount: '0xD4496dA2a4b376fC8Ce4786EB6B71483436077c4',
+        payerName: ['', [Validators.required]],
+        payeeName: ['', [Validators.required]],
+        paymentMethod: 'Crypto',
+        paymentCurrency: ['', [Validators.required]],
+        paymentStatus: ['', [Validators.required]],
+        paymentDate: ['', [Validators.required]],
+        milestoneId: ['', [Validators.required]]
+      })
       ])
     });
   }
@@ -202,79 +203,111 @@ currencyArr = ['ETH','INR', 'USD' , 'IDR' , 'AUD' , 'EUR'];
 
   }
 
+  // onDeployContract() {
+  //   this.loading = true;
+
+  //   const payload = {
+  //     projectId: this.workPackageID
+  //   }
+
+  //   this.__paymentService.deployContractData(payload).then((workData: any) => {
+  //     console.log("Data is successfully saved", workData);
+
+  //     this.contractAddr = workData.ContractAddress;
+
+  //     this.__paymentService.postMilestoneData(this.milestoneForm.controls.milestoneDetails.value,this.workPackageID).then((workData: any) =>{
+  //       console.log("Data is successfully saved" ,workData);
+  //       this.toastr.success('Milestones saved Successfully!!');
+  //       this.milestoneArr=workData.responseObject;
+
+  //       const addrData={
+  //         smartContractAddr : this.contractAddr
+  //       }
+
+  //       this.__workService.updateContractAddress(this.workPackageID, addrData).then((resData: any) => {
+  //         this.loading = false;
+  //       });
+  //     });
+
+
+  //   });
+  // }
+
   onDeployContract() {
     this.loading = true;
-
     const payload = {
       projectId: this.workPackageID
     }
-
+    for (let i = 0; i < this.milestoneForm.controls.milestoneDetails.value.length; i++) {
+      let newStartDate = formatDate((this.milestoneForm.controls.milestoneDetails.value)[i].startDate, "yyyy-MM-dd", 'en-Us');
+      let newEndDate = formatDate((this.milestoneForm.controls.milestoneDetails.value)[i].endDate, "yyyy-MM-dd", 'en-Us');
+      let newDueDate = formatDate((this.milestoneForm.controls.milestoneDetails.value)[i].paymentConditionDueDate, "yyyy-MM-dd", 'en-Us');
+      (this.milestoneForm.controls.milestoneDetails.value)[i].startDate = newStartDate;
+      (this.milestoneForm.controls.milestoneDetails.value)[i].endDate = newEndDate;
+      (this.milestoneForm.controls.milestoneDetails.value)[i].paymentConditionDueDate = newDueDate;
+    }
+    console.log("data for milstones", this.milestoneForm.controls.milestoneDetails.value);
     this.__paymentService.deployContractData(payload).then((workData: any) => {
       console.log("Data is successfully saved", workData);
-
       this.contractAddr = workData.ContractAddress;
-
-      this.__paymentService.postMilestoneData(this.milestoneForm.controls.milestoneDetails.value,this.workPackageID).then((workData: any) =>{
-        console.log("Data is successfully saved" ,workData);
+      console.log("data for milstones", this.milestoneForm.controls.milestoneDetails.value);
+      this.__paymentService.postMilestoneData(this.milestoneForm.controls.milestoneDetails.value, this.workPackageID).then((workData: any) => {
+        console.log("Data is successfully saved", workData);
         this.toastr.success('Milestones saved Successfully!!');
-        this.milestoneArr=workData.responseObject;
-
-        const addrData={
-          smartContractAddr : this.contractAddr
+        this.milestoneArr = workData.responseObject;
+        const addrData = {
+          smartContractAddr: this.contractAddr
         }
-
         this.__workService.updateContractAddress(this.workPackageID, addrData).then((resData: any) => {
           this.loading = false;
         });
       });
-
-
     });
   }
 
-  async onDeployMilestone(i:any){
-    
-    this.loading = true;
-    console.log("addr "+this.contractAddr);
+  async onDeployMilestone(i: any) {
+
+    // this.loading = true;
+    console.log("addr " + this.contractAddr);
     let dueDate = new Date().getDate();
 
     const payload = {
-      milestoneStr:this.milestoneArr[i].milestoneName,
-      reviewAddrs:"0xd15eE84e3308249E178D8Fb8f20BD7A03b358ee5",
-      startDate:this.milestoneArr[i].startDate,
-      endDate:this.milestoneArr[i].endDate,
+      milestoneStr: this.milestoneArr[i].milestoneName,
+      reviewAddrs: "0xd15eE84e3308249E178D8Fb8f20BD7A03b358ee5",
+      startDate: this.milestoneArr[i].startDate,
+      endDate: this.milestoneArr[i].endDate,
       dueDate: this.milestoneArr[i].paymentConditionDueDate,
-      amount:"0.01",
-      contractAddr:this.contractAddr,
+      amount: "0.01",
+      contractAddr: this.contractAddr,
     }
- 
-   console.log("addmile " ,payload);
 
-    await this.__paymentService.deployMilestoneData(payload).then((workData: any) =>{
-      console.log("Data is successfully saved" ,workData);
-      this.loading = false;
+    console.log("addmile ", payload);
+
+    await this.__paymentService.deployMilestoneData(payload).then((workData: any) => {
+      console.log("Data is successfully saved", workData);
+      // this.loading = false;
     });
 
     console.log("Payload for addMiles");
 
-        
+
     const payloads = {
-      milestoneStr:this.milestoneArr[i].milestoneName,
-      reviewAddrs:"0xd15eE84e3308249E178D8Fb8f20BD7A03b358ee5",
-      startDate:this.milestoneArr[i].startDate,
-      endDate:this.milestoneArr[i].endDate,
-      dueDate:new Date(),
-      amount:0.01,
-      currency:this.milestoneArr[i].currencyCd,
-      contractAddress:this.contractAddr,
-      freeAddr:'0xD4496dA2a4b376fC8Ce4786EB6B71483436077c4',
-      empAddr:'0xDbc71C18Ab38edc4b7E2cd926e2Bd53cA8e8E52E'
+      milestoneStr: this.milestoneArr[i].milestoneName,
+      reviewAddrs: "0xd15eE84e3308249E178D8Fb8f20BD7A03b358ee5",
+      startDate: this.milestoneArr[i].startDate,
+      endDate: this.milestoneArr[i].endDate,
+      dueDate: new Date(),
+      amount: 0.01,
+      currency: this.milestoneArr[i].currencyCd,
+      contractAddress: this.contractAddr,
+      freeAddr: '0xD4496dA2a4b376fC8Ce4786EB6B71483436077c4',
+      empAddr: '0xDbc71C18Ab38edc4b7E2cd926e2Bd53cA8e8E52E'
     }
 
     console.log("Payload for addMilestone");
-    
-    this.__paymentService.deployMilestoneData1(payloads).then((workData: any) =>{
-      console.log("Data is successfully saved" ,workData);
+
+    this.__paymentService.deployMilestoneData1(payloads).then((workData: any) => {
+      console.log("Data is successfully saved", workData);
     });
   }
 
@@ -335,7 +368,7 @@ currencyArr = ['ETH','INR', 'USD' , 'IDR' , 'AUD' , 'EUR'];
   }
 
   onSaveSchedule() {
-
+    this.loading = true;
     for (let i = 0; i < (this.milestoneForm.controls.milestoneDetails.value).length; i++) {
       this.onDeployMilestone(i);
     }
@@ -362,10 +395,11 @@ currencyArr = ['ETH','INR', 'USD' , 'IDR' , 'AUD' , 'EUR'];
 
     console.log("Array scheduleDetailsArr", scheduleDetailsArr);
 
-    this.__paymentService.postScheduleData(this.scheduleForm.controls.scheduleDetails.value).then((workData: any) =>{
-    console.log("Data is successfully saved" ,workData);
-    this.milestoneArr=workData.responseObject;
-    this.toastr.success('Payment Details saved Successfully!!');
+    this.__paymentService.postScheduleData(this.scheduleForm.controls.scheduleDetails.value).then((workData: any) => {
+      console.log("Data is successfully saved", workData);
+      this.loading = false;
+      this.milestoneArr = workData.responseObject;
+      this.toastr.success('Payment Details saved Successfully!!');
 
     });
   }

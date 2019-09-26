@@ -34,7 +34,8 @@ CARD CSS
   margin-top: 0.3rem;
   float: none;
   border: 0px;
-  background: #282b2f;
+  // background: #282b2f;
+  background:$bg-front-color;
 }
 
 
@@ -66,7 +67,7 @@ CARD CSS
   border-radius: 3px;
   font-weight: 400;
   color: #a5a8ad;
-  background: #282b2f;
+  // background: #282b2f;
   border-top: 1px solid rgba(255, 255, 255, 0.09);
 }
 

@@ -23,6 +23,9 @@ export class AddComponent implements OnInit {
   loading = false;
   addWorkPackage: any;
 
+  calAvgRate:any = '$20';
+  calculateAvgRate:boolean = false;
+
   //Static Arrays 
   complexityArr = ['High', 'Medium', 'Low'];
   skillLevelArr = ['Moderate', 'Intermediate', 'Beginner'];
@@ -235,5 +238,11 @@ export class AddComponent implements OnInit {
   }
   onSubmit() {
     this.saveDetails();
+  }
+
+
+  //calculateAvgRate()
+  calulateAvgRate(){
+    this.calculateAvgRate=this.calculateAvgRate ? false : true;;
   }
 }
