@@ -26,8 +26,7 @@ export class AllWorkPackagesComponent implements OnInit {
   allWorkPackages(email:any){
     this.__workService.getAllWorkPackageData(email).then((resData: any) => {
       console.log("Data of skills" +  resData.responseObject);
-      this.workArr = resData.responseObject;
-     
+      this.workArr = resData.responseObject;    
     });
   } 
 
@@ -37,7 +36,7 @@ export class AllWorkPackagesComponent implements OnInit {
     console.log("wp id is :" ,this.wpId);
     this.wpId = this.workArr[index].workPackageId;
     localStorage.setItem("workpackageId",this.wpId);
- 
+    
   }
   gotoWorkpackage(index){
     console.log("index :" ,index);

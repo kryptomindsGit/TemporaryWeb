@@ -51,10 +51,6 @@ CARD CSS
   text-align: center;
 }
 
-.card-header1 h6 {
-  margin-top: 1rem;
-  color: #04afda;
-}
 
 .worktable {
   color: $text-color;
@@ -66,17 +62,10 @@ CARD CSS
   width: 100%;
   border-radius: 3px;
   font-weight: 400;
-  color: #a5a8ad;
-  // background: #282b2f;
+  background: #282b2f;
   border-top: 1px solid rgba(255, 255, 255, 0.09);
 }
 
-
-.text-muted {
-  font-size: 0.9rem;
-  color: #6c757d !important;
-  float: left;
-}
 
 /*-----------------------------------------------------------------------
 FORM CSS

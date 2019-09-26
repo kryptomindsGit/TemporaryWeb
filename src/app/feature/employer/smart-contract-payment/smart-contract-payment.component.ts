@@ -199,9 +199,6 @@ export class SmartContractPaymentComponent implements OnInit {
     this.scheduleDetailsArr.removeAt(index);
   }
 
-  saveMilestones() {
-
-  }
 
   // onDeployContract() {
   //   this.loading = true;
@@ -269,7 +266,6 @@ export class SmartContractPaymentComponent implements OnInit {
 
     // this.loading = true;
     console.log("addr " + this.contractAddr);
-    let dueDate = new Date().getDate();
 
     const payload = {
       milestoneStr: this.milestoneArr[i].milestoneName,

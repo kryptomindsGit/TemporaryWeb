@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 //components
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FullLayoutEnduserComponent } from './core/component/full-layout-enduser/full-layout-enduser.component';
+import { LoginComponent } from './auth/component/login/login.component';
 
 //Routing
 const routes: Routes = [
@@ -28,12 +29,16 @@ const routes: Routes = [
     loadChildren: () => import('./shared/shared.module').then(module => module.SharedModule)
   },
   {
-    path: 'landing',
-    component: FullLayoutEnduserComponent
+    path: 'login',
+    component: LoginComponent
   },
+  // {
+  //   path: 'landing',
+  //   component: FullLayoutEnduserComponent
+  // },
   {
     path: '',
-    redirectTo: '/landing',
+    redirectTo: '/login',
     pathMatch: 'full'
   },
 ];

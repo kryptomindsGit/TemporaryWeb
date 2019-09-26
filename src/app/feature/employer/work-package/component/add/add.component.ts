@@ -30,7 +30,7 @@ export class AddComponent implements OnInit {
   complexityArr = ['High', 'Medium', 'Low'];
   skillLevelArr = ['Moderate', 'Intermediate', 'Beginner'];
   projectTypeArr = ['Full-time', 'Part-time'];
-  currencyArr = ['INR', 'USD', 'IDR', 'AUD', 'EUR'];
+  currencyArr = ['ETH','INR', 'USD', 'IDR', 'AUD', 'EUR'];
   countries = [];
   durationArr = ['days', 'months', 'years'];
   allDomainArr = [];

@@ -77,18 +77,17 @@
               </div>
               <div class="col-6">
                 <div class="form-group form-input">
-                  <!-- <select class="formStyle" formControlName="complexity" id="complexity">
-                    <option disabled value="">Select Complexity ▼</option>
+                  <select class="formStyle" formControlName="complexity" id="complexity" required>
+                    <!-- <option disabled value="">Select Complexity </option> -->
                     <option id="option_txt" *ngFor="let complexity of complexityArr" [value]="complexity">
                       {{complexity}}</option>
-                  </select> -->
-
-                  <select formControlName="complexity" id="complexity" required>
+                  </select>
+                  <!-- <select formControlName="complexity" id="complexity" required>
                     <option disabled value=""></option>
                     <option value="High">High</option>
                     <option value="Medium">Medium</option>
                     <option value="Low">Low</option>
-                  </select>
+                  </select> -->
                   <label for="complexity" class="form-label">Complexity</label>
                   <div
                     *ngIf="projectForm.controls['complexity'].invalid && (projectForm.controls['complexity'].dirty || projectForm.controls['complexity'].touched)"
@@ -179,37 +178,25 @@
             </div>
             <br>
             <div class="row">
-              <div class="col-12">
-                <div class="row">
-                  <div class="col-3">
-                    <div class="form-group form-input">
-                      <!-- <select formControlName="budgetCurrencyCode" id="currency">
-                        <option disabled value="">Currency ▼</option>
-                        <option id="option_txt" *ngFor="let currency of currencyArr" [value]="currency">{{currency}}
-                        </option>
-                      </select> -->
-
-                      <select formControlName="budgetCurrencyCode" id="currency" required>
-                        <option disabled value=""></option>
-                        <option value="ETH">ETH</option>
-                        <option value="INR">INR</option>
-                        <option value="USD">USD</option>
-                        <option value="IDR">IDR</option>
-                        <option value="AUD">AUD</option>
-                        <option value="EUR">EUR</option>
-
-                      </select>
-                      <label for="currency" class="form-label">Currency</label>
-
-                      <div
-                        *ngIf="projectForm.controls['budgetCurrencyCode'].invalid && (projectForm.controls['budgetCurrencyCode'].dirty || projectForm.controls['budgetCurrencyCode'].touched)"
-                        class="text-danger error-msg">
-                        <div *ngIf="projectForm.controls['budgetCurrencyCode'].errors.required">
-                          Currency is required.
+              <div class="col-3">
+                
+                        <div class="form-group form-input">
+                          <select formControlName="budgetCurrencyCode" id="currency">
+                            <option disabled value="">Currency  </option>
+                            <option id="option_txt" *ngFor="let currency of currencyArr" [value]="currency">{{currency}}
+                            </option>
+                          </select>
+    
+                          <div
+                            *ngIf="projectForm.controls['budgetCurrencyCode'].invalid && (projectForm.controls['budgetCurrencyCode'].dirty || projectForm.controls['budgetCurrencyCode'].touched)"
+                            class="text-danger error-msg">
+                            <div *ngIf="projectForm.controls['budgetCurrencyCode'].errors.required">
+                              Currency is required.
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
+                    
                   <div class="col-3">
                     <div class="form-group form-input">
                       <input type="text" formControlName="budgetAmt" id="budgetAmt" value="" required />
@@ -224,12 +211,19 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-6">
+
+               
+              <div class="col-3">
+             
                     <div class="form-group form-input">
                       <input type="file" name="chooseFile" >
                     </div>
-                </div>
-              </div>
+                  </div>
+                
+                    <button class="btn viewprofile1" (click)="calCost()">Calculate</button>
+                  
+                 
+             
             </div>
           </div>
                               <!-- <div class=col-5>
@@ -275,9 +269,8 @@
           </form>
         </div>
       </div>
+    
     </div>
-  </div>
-
 
   <div class="card">
       <div class="card-header">
@@ -396,11 +389,10 @@
                   </div>
              </div>
         </div>
-      <!-- </div>
-    </div>
-  </div> -->
+      
+  
   <button class="btn submit-button" (click)="onSubmit()">Submit</button>
 </div>
-
+</div>
 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="addWorkPackage">
 </ngx-loading>

@@ -14,14 +14,15 @@ import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FullLayoutEnduserComponent } from './core/component/full-layout-enduser/full-layout-enduser.component';
-
+import { LoginComponent } from './auth/component/login/login.component';
 
 
 //Components
 const COMPONENTS = [
   AppComponent,
   PageNotFoundComponent,
-  FullLayoutEnduserComponent
+  FullLayoutEnduserComponent,
+  LoginComponent
 
 ];
 
@@ -55,6 +56,7 @@ const MODULES = [
   ],
   imports: [
     ...MODULES,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,6 +3,7 @@ import { SwiperOptions } from 'swiper';
 import { WorkPackageService } from '../../shared/service/work-package.service';
 import { Router } from '@angular/router';
 import { SearchFreelancerComponent } from '../search-freelancer/search-freelancer.component';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-view',
@@ -32,6 +33,8 @@ export class ViewComponent implements OnInit {
   startDate: string;
   fromDate: string;
   toDate: string ;
+  creation : string;
+
   budgetCurrency: string;
   workId:any;
   //Arr
@@ -58,9 +61,16 @@ export class ViewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+  
+   console.log("date creation" , this.creation);
  
     this.workId = localStorage.getItem("workpackageId");
     this.getWorkPackage(this.workId);
+    console.log("creation" , this.creation);
+
+    let random = Math.floor(Math.random() * (999999 - 100000)) + 100000;
+
+    console.log("random",random);
     
   }
   onClick(event) {
@@ -95,6 +105,7 @@ export class ViewComponent implements OnInit {
       this.durationYears = resData.responseObject.durationYears;
       this.durationMonths = resData.responseObject.durationMonths;
       this.durationDays = resData.responseObject.durationDays;
+      this.creation= formatDate(new Date(), 'dd MMM yyyy ', 'en-US', '+0530');
     });
 
     this.__workService.getSkillPackageData(id).then((resData: any) => {

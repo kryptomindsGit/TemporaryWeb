@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-8">
-                <label for="workPackage" class="headinglable">Work Packages</label>
+                <h6 style="margin-top:1rem">Work-Packages</h6>
             </div>
         </div>
     
@@ -11,7 +11,7 @@
                     <div class="card-body" >
                         <div class="row ">
                             <div class="col-2">
-                                <label class="text-muted" >Project Name :</label>
+                                <label  >Project Name :</label>
                             </div>
                             <div class="col-6">
                                 <h6 (click)="gotoWorkpackage(i)">{{data.projectName}}</h6>
@@ -19,7 +19,7 @@
                         </div>
                         <div class="row">
                             <div class="col-2">
-                                <label class="text-muted"> Description :</label>
+                                <label > Description :</label>
                             </div>
                             <div class="col-9">
                                 <h6>{{data.projectDescription}}</h6>
@@ -29,7 +29,7 @@
                             <div class="col-md-4">
                                 <div class="row">
                                     <div class="col-6">
-                                        <label class="text-muted">Budget :</label>
+                                        <label >Budget :</label>
                                     </div>
                                     <div class="col-6">
                                         <h6>{{data.budgetCurrencyCode}} {{data.budget}} </h6>
@@ -37,7 +37,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
-                                        <label class="text-muted">Estimated Cost :</label>
+                                        <label >Estimated Cost :</label>
                                     </div>
                                     <div class="col-6">
                                         <h6>{{data.budgetCurrencyCode}} {{data.estimatedCost}}</h6>
@@ -48,7 +48,7 @@
                             <div class="col-md-8">
                                     <div class="row">
                                             <div class="col-3">
-                                                <label class="text-muted">Complexity Level:</label>
+                                                <label >Complexity Level:</label>
                                             </div>
                                             <div class="col-6">
                                                 <h6>{{data.complexity}}</h6>
@@ -56,7 +56,7 @@
                                         </div>
                                         <div class="row">
                                                 <div class="col-3">
-                                                    <label class="text-muted">Start Date :</label>
+                                                    <label >Start Date :</label>
                                                 </div>
                                                 <div class="col-6">
                                                     <h6>{{data.approxStartDate | date : "dd MMM yyyy"}}</h6>
@@ -69,7 +69,7 @@
                             <div class="col-4">
                                 <div class="row">
                                     <div class="col-6">
-                                        <label class="text-muted">Duration :</label>
+                                        <label >Duration :</label>
                                     </div>
                                     <div class="col-4">
                                         <h6>{{data.durationYears}} years</h6>
@@ -79,7 +79,7 @@
                             <!-- <div class="col-4">
                                 <div class="row">
                                     <div class="col-6">
-                                        <label class="text-muted">Duration Months :</label>
+                                        <label >Duration Months :</label>
                                     </div>
                                     <div class="col-4">
                                         <h6>{{data.durationMonths}}</h6>
@@ -90,7 +90,7 @@
                                 
                                 <div class="row">
                                     <div class="col-6">
-                                        <label class="text-muted">Duration Days :</label>
+                                        <label >Duration Days :</label>
                                     </div>
                                     <div class="col-6">
                                         <h6>{{data.durationDays}}</h6>

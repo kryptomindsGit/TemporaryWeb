@@ -51,9 +51,12 @@
                 <a [routerLink]="['/feature/feature/full-layout/employer/emp/proj-timeline']"
                         class="list-group-item list-group-item-action bg-color-dark"><i class="fa fa-calendar"
                                 aria-hidden="true"></i> Project Timeline</a>
-                <a [routerLink]="['/feature/feature/full-layout/employer/emp/block-timeline']"
+                <a *ngIf="isEmployer" [routerLink]="['/feature/feature/full-layout/employer/emp/block-timeline']"
                         class="list-group-item list-group-item-action bg-color-dark"><i class="fa fa-calendar"
                                 aria-hidden="true"></i> User Timeline</a>
+                <a *ngIf="!isEmployer" [routerLink]="['/feature/feature/full-layout/independent/indp/free-blockchain-timeline']"
+                class="list-group-item list-group-item-action bg-color-dark"><i class="fa fa-calendar"
+                        aria-hidden="true"></i> User Timeline</a>
                 <!-- <a [routerLink]="['/feature/feature/full-layout/employer/emp/smartpayment']"
                         class="list-group-item list-group-item-action bg-color-dark"><i class="fa fa-credit-card"
                                 aria-hidden="true"></i> Payments</a> -->

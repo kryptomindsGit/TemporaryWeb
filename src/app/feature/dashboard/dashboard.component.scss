@@ -1,20 +1,66 @@
 @import "../../../assets/css/theme_colors";
 
-.container-fluid {
-    background: $bg-back-color;
-    font-family: 'Montserrat';
-}
+.container {
+    font: 14px "Montserrat Regular";
+    background-color: $bg-back-color;
+    color: $text-color;
+    padding: 1rem;
+    // overflow: scroll;
+    font-weight: 400;
+    width: 100%;
+    height: auto;
+  }
+  
+  // .container{
+  //   max-width: 90% !important;
+  //   position: relative;
+  //   }
+  p {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  hr {
+    box-sizing: content-box;
+    height: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  
+  /*-----------------------------------------------------------------------
+  CARD CSS
+  -------------------------------------------------------------------------*/
+  
+  .card {
+    height: auto !important;
+    margin-top: 0.3rem;
+    float: none;
+    border: 0px;
+    background: transparent !important;
+  }
+  
+  
+  .card .card-header {
+    background: transparent !important;
+    padding: .72rem .30rem;
+  
+  }
+  
+  .worktable {
+    color: $text-color;
+    background: transparent !important;
+  }
+  
+  
+  .card-body {
+    border-radius: 3px;
+    font-weight: 400;
+    color: $text-color;
 
-.container-fluid .card {
     background: $bg-front-color;
-    box-shadow: 0px 0px 32px 0px rgba(0, 0, 0, 0.22);
-}
+  }
 
-.container-fluid .card .chart {
-    text-align: center;
-}
-
-.container-fluid .card .chart img {
-    width: 10rem;
-    height: 10rem;
-}
+  .tech{
+      width:100%;
+      height:100%;
+  }
