@@ -118,7 +118,7 @@ export class UportLoginComponent implements OnInit {
       if (data.length == 0) {
         this.loading = false;
         console.log("User needs to sign up");
-        this.__router.navigate(['/auth/auth/sign-up']);
+        this.__router.navigate(['/auth/auth/uport-signup']);
       } else {
         this.loading = false;
         this.uPortDetailsArr = data[0];
