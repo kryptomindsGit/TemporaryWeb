@@ -96,7 +96,7 @@
                                 <div class="form-group form-input col">
                                     <select (change)="setCountryID($event.target.value)" formControlName="country"
                                         id="country" required>
-                                        <option *ngFor="let country of countryArr" [ngValue]="country.name">
+                                        <option *ngFor="let country of countryArr" [value]="country.id">
                                             {{country.name}}
                                         </option>
                                     </select>
@@ -112,7 +112,7 @@
                                     <select (change)="setStateID($event.target.value)" formControlName="province"
                                         id="state" required>
                                         <!-- <option disabled value="">State</option> -->
-                                        <option *ngFor="let state of stateArr" [ngValue]="state.name">{{state.name}}
+                                        <option *ngFor="let state of stateArr" [value]="state.id">{{state.name}}
                                         </option>
                                     </select>
                                     <label class="form-label" for="state">State<span>*</span></label>
@@ -127,7 +127,7 @@
                                 <div class="form-group form-input col">
                                     <select formControlName="city" id="city" required>
                                         <!-- <option disabled value="">City</option> -->
-                                        <option *ngFor="let city of cityArr" [ngValue]="city.name">{{city.name}}
+                                        <option *ngFor="let city of cityArr" [value]="city.id">{{city.name}}
                                         </option>
                                     </select>
                                     <label class="form-label" for="city">City<span>*</span></label>
