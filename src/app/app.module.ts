@@ -14,7 +14,8 @@ import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FullLayoutEnduserComponent } from './core/component/full-layout-enduser/full-layout-enduser.component';
-import { LoginComponent } from './auth/component/login/login.component';
+import { AuthModule } from './auth/auth.module';
+// import { LoginComponent } from './auth/component/login/login.component';
 
 
 //Components
@@ -22,7 +23,7 @@ const COMPONENTS = [
   AppComponent,
   PageNotFoundComponent,
   FullLayoutEnduserComponent,
-  LoginComponent
+  // LoginComponent
 
 ];
 
@@ -47,7 +48,8 @@ const MODULES = [
   }),
   ToastrModule.forRoot({
     timeOut: 2000,
-  }) // ToastrModule added
+  }),// ToastrModule added
+  AuthModule
 ];
 
 @NgModule({
