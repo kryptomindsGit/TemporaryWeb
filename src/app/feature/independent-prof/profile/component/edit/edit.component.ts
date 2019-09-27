@@ -46,6 +46,8 @@ export class EditComponent implements OnInit {
   public congnitoID: any = [];
   public eduCatArr: any = [];
   public eduArr: any = [];
+  public eduList: any = [];
+  public eduListbyId: any = [];
   public skills: any = [];
   public categ: any = [];
 
@@ -529,6 +531,19 @@ export class EditComponent implements OnInit {
       this.eduArr = resData;
     })
   }
+
+    /**
+ * @method getAllEducation
+ * @param eduCat_id
+ * @description get all education values based on selected education category id.
+ */
+
+
+setEduListByCatId(eduCat_id, i) {
+  this.eduListbyId[eduCat_id] = this.eduList.filter((item) => item.edu_cat_id == eduCat_id);
+  this.qualificationDetails.get('qualification')['controls'][i].patchValue({ edu_cat_id: eduCat_id, edu_type_id: '' });
+
+}
 
   /**
    * @method getSkillsByID
