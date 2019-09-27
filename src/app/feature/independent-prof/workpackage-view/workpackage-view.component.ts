@@ -50,8 +50,8 @@ allInvitations = [
   projectDesc : string ="SEngine Precision Medicine is a biotech startup based in Seattle, WA providing a CLIA approved laboratory developed test designed to identify the best drug for each cancer patient. We do this by performing what can be thought of as a personalized clinical trial, but in the lab rather than in the patient. This helps avoid the terrible side effects that can occur by taking the wrong drug,…";
   estimatedCost: number =  320 ;
   complexity : string ="High";
-  fromDate : string = "14 jan 2019";
-  toDate : string = "1 june 2019";
+  fromDate : string = "14 jan 2020";
+  toDate : string = "1 Sep 2020";
 
      
   //other variables
