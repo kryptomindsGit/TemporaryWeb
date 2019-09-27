@@ -4,35 +4,87 @@
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="col-3">
+                <div class="col-6">
                     <div class="row">
-                        <label class="text-color">
-                            Project ID : {{workPackageID}}
-                        </label>
+                        <div class="col-4">
+                                <label class="text-color">
+                                        Project ID : 
+                                    </label>
+                        </div>
+                        <div class="col-8">
+                                {{workPackageID}}
+                        </div>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-6">
                     <div class="row">
-                        <label class="text-color">
-                            Project Name : {{projectName}}
-                        </label>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="row">
-                        <label class="text-color">
-                            Employer Name : {{empId}}
-                        </label>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="row">
-                        <label class="text-color">
-                            Contract Status : {{contractStatus}}
-                        </label>
+                        <div class="col-4">
+                                <label class="text-color">
+                                        Project Name : 
+                                    </label>
+                        </div>
+                        <div class="col-8">
+                                {{projectName}}
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="row">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4">
+                                    <label class="text-color">
+                                            Employer Name : 
+                                        </label>
+                            </div>
+                            <div class="col-8">
+                                    {{empId}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4">
+                                    <label class="text-color">
+                                            Contract Status : 
+                                        </label>
+                            </div>
+                            <div class="col-8">
+                                    {{contractStatus}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-4">
+                                        <label class="text-color">
+                                                Start Date : 
+                                            </label>
+                                </div>
+                                <div class="col-8">
+                                        {{approxStartDate | date: 'dd MMM yyyy'}}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-6">
+                            <div class="row">
+                                <div class="col-4">
+                                        <label class="text-color">
+                                                Contract Status : 
+                                            </label>
+                                </div>
+                                <div class="col-8">
+                                        {{contractStatus}}
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                
+
+
+         
         </div>
     </div>
 
@@ -51,8 +103,8 @@
             <label>Note : <span>*</span> &nbsp;fields are mandatory .</label>
             <div class="row">
                 <div class="col-12">
-                    <form class="table-responsive" [formGroup]="milestoneForm">
-                        <table class="table table-dark  table-bordered worktable">
+                    <form class="" [formGroup]="milestoneForm">
+                        <table class="table table-dark  table-bordered worktable table-responsive">
                             <thead>
                                 <tr>
                                     <th>Milestone<span>*</span></th>
@@ -113,8 +165,8 @@
                                     </td>
                                     <td><select formControlName="freelancerId" id="teamMember">
                                             <option disabled value="">Team Member</option>
-                                            <option id="option_type" *ngFor="let  team of  teamMemberArr"
-                                                [value]=" team.memberId">{{team.memberId}}</option>
+                                            <option id="option_type" *ngFor="let  team of  teamMemberArray"
+                                                [value]=" team.memberId">{{team.name}}</option>
                                         </select>
                                     </td>
                                     <td><input type="text" formControlName="amountPayable" placeholder="Amount "></td>

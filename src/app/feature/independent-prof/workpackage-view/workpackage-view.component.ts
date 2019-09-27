@@ -17,7 +17,7 @@ export class WorkpackageViewComponent implements OnInit {
   duration:string = "3 Months";
   startDate: string= "12 jan 2019";
   endDate: string= "02 apr 2019";
-  employer:string="Joseph Sharif";
+  employer:string="Bhushan Mahajan";
   region:string="India";
   budget:string="$300";
   description:string="I had this issue the problem here is that the form is being called way to quick before the initialisation in the ionViewLoaded is happening. As soon as you move it to the constructor it works properly. Also, the same code in a normal NG2 app works in the ngOnInit is this a Bug or something else?";
@@ -27,10 +27,10 @@ export class WorkpackageViewComponent implements OnInit {
 searchByArr = ['Project Id' , 'Project Name' , 'Skill' , 'Duration','Start date' , 'Employer Name' ,'Region' , 'Budget'];
 allInvitations = [ 
                     {
-                      projectId:221232244 ,duration: 3 ,startDate:"12 jan 2019",endDate:"02 apr 2019",employer:"Joseph Sharif",region:"India",budget:"$400",description:"I had this issue the problem here is that the form is being called way to quick before the initialisation in the ionViewLoaded is happening. As soon as you move it to the constructor it works properly. Also, the same code in a normal NG2 app works in the ngOnInit is this a Bug or something else?"
+                      projectId:221232244 ,duration: 3 ,startDate:"12 jan 2019",endDate:"02 apr 2019",employer:"Bhushan Mahajan",region:"India",budget:"$400",description:"I had this issue the problem here is that the form is being called way to quick before the initialisation in the ionViewLoaded is happening. As soon as you move it to the constructor it works properly. Also, the same code in a normal NG2 app works in the ngOnInit is this a Bug or something else?"
                     },
                     {
-                      projectId:985655244, duration: 5,startDate:"17 jan 2019",endDate:"04 apr 2019",employer:"Joseph Sharif",region:"India",budget:"$400",description:"I had this issue the problem here is that the form is being called way to quick before the initialisation in the ionViewLoaded is happening. As soon as you move it to the constructor it works properly. Also, the same code in a normal NG2 app works in the ngOnInit is this a Bug or something else?"
+                      projectId:985655244, duration: 5,startDate:"17 jan 2019",endDate:"04 apr 2019",employer:"Bhushan Mahajan",region:"India",budget:"$400",description:"I had this issue the problem here is that the form is being called way to quick before the initialisation in the ionViewLoaded is happening. As soon as you move it to the constructor it works properly. Also, the same code in a normal NG2 app works in the ngOnInit is this a Bug or something else?"
                     }
                  ]
   

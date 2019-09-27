@@ -363,7 +363,7 @@
                                                     <input type="text" formControlName="responsibilities"
                                                         id="responsibilities" required />
                                                     <label for="responsibilities"
-                                                        class="form-label">Responsibility<span>*</span></label>
+                                                        class="form-label">Responsibilities<span>*</span></label>
                                                 </div>
 
                                                 <div class="form-group col-md-2">
@@ -387,7 +387,7 @@
                                         <div class="row">
                                             <div class="col-10">
                                                 <div *ngFor="let item of strengthArr.controls; let i=index">
-                                                    <hr *ngIf="i>0">
+                                                    <!-- <hr *ngIf="i>0"> -->
                                                     <div class="row" [formGroupName]="i">
                                                         <div class="form-group form-input col-9">
                                                             <!-- <input type="text" formControlName="strength" id="strength"
@@ -427,7 +427,7 @@
                                         <div class="row">
                                             <div class="col-10">
                                                 <div *ngFor="let item of weaknessArr.controls; let i=index">
-                                                    <hr *ngIf="i>0">
+                                                    <!-- <hr *ngIf="i>0"> -->
                                                     <div class="row" [formGroupName]="i">
                                                         <div class="form-group form-input col-9">
                                                             <!-- <input type="text" formControlName="weakness" id="weakness"
@@ -466,7 +466,7 @@
                                         <div class="row">
                                             <div class="col-10">
                                                 <div *ngFor="let item of portfolioArr.controls; let i=index">
-                                                    <hr *ngIf="i>0">
+                                                    <!-- <hr *ngIf="i>0"> -->
                                                     <div class="row" [formGroupName]="i">
                                                         <div class="form-group form-input col-9">
                                                             <input type="text" formControlName="portfolio"
@@ -508,7 +508,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group form-input col">
+                                <!-- <div class="form-group form-input col">
                                     <input type="text" formControlName="psychomatric" id="psychomatric" required />
                                     <label for="psychomatric" class="form-label">Psychometric test results</label>
                                     <div *ngIf="workExpDetails.controls['psychomatric'].invalid && (workExpDetails.controls['psychomatric'].dirty || workExpDetails.controls['psychomatric'].touched)"
@@ -518,7 +518,7 @@
                                             required.
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="form-group form-input col">
                                     <input type="text" formControlName="references" id="references" required />
                                     <label for="references" class="form-label">References</label>
@@ -620,7 +620,7 @@
                         <div class="container-skill">
                             <div class="row">
                                 <div class="col-3">
-                                    <div class="card skill-container">
+                                    <div class="card skill-container ">
                                         <div class="card-header cardHeader">
                                             <div class="form">
                                                 <div class="note">
@@ -649,7 +649,7 @@
                                                         </ng-template>
                                                     </div>
                                                     <div>
-                                                        <table class="table">
+                                                        <table class="table customCard">
                                                             <tr *ngFor="let skill of categ; let i = index">
                                                                 <td>
                                                                     <a id="link" (click)="selectEvent(skill)">
@@ -711,7 +711,7 @@
                                                             <input type="text" formControlName="rate_hour"
                                                                 id="rate_skill" required />
                                                             <label for="rate_skill" class="form-label"
-                                                                style="font-size: 0.6rem">Rate Hour(USD)</label>
+                                                                style="font-size: 0.6rem">Rate per Hour (USD)</label>
                                                             <div *ngIf="skillRateArr.controls[i].get('rate_hour').invalid && (skillRateArr.controls[i].get('rate_hour').dirty || skillRateArr.controls[i].get('rate_hour').touched)"
                                                                 class="text-danger error-msg-skill">
                                                                 <div
@@ -725,7 +725,7 @@
                                                             <input type="text" formControlName="skill_exp"
                                                                 id="exp_skill" required />
                                                             <label for="exp_skill" class="form-label"
-                                                                style="font-size: 0.6rem">Experience(Year)</label>
+                                                                style="font-size: 0.6rem">Experience (Year)</label>
                                                             <div *ngIf="skillRateArr.controls[i].get('skill_exp').invalid && (skillRateArr.controls[i].get('skill_exp').dirty || skillRateArr.controls[i].get('skill_exp').touched)"
                                                                 class="text-danger error-msg-skill">
                                                                 <div

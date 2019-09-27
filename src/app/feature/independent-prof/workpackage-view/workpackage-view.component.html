@@ -85,7 +85,7 @@
                                                                     <label class="text-muted1">Employer :</label>
                                                                 </div>
                                                                 <div class="col-8">
-                                                                    <img class="img-circle" src="../../../../../../assets/images/jyotipawar.jpg">
+                                                                    <img class="img-circle" src="../../../../../../assets/images/khemraj.jpeg">
                                                                     <br>
                                                                     <span class="text-muted2">Khemraj Adhawade</span>
                                                                     <br>
@@ -163,7 +163,7 @@
                                                                         <label class="text-muted1">Employer :</label>
                                                                     </div>
                                                                     <div class="col-8">
-                                                                        <br><img class="img-circle" src="../../../../../../assets/images/jyotipawar.jpg">
+                                                                        <br><img class="img-circle" src="../../../../../../assets/images/khemraj.jpeg">
                                                                         <br>
                                                                         <span class="text-muted2">Khemraj Adhawade</span>
                                                                         <br>
@@ -239,7 +239,7 @@
                                                                             <label class="text-muted1">Employer :</label>
                                                                         </div>
                                                                         <div class="col-8">
-                                                                            <br><img class="img-circle" src="../../../../../../assets/images/jyotipawar.jpg">
+                                                                            <br><img class="img-circle" src="../../../../../../assets/images/khemraj.jpeg">
                                                                             <br>
                                                                             <span class="text-muted2">Khemraj Adhawade</span>
                                                                             <br>
@@ -322,7 +322,7 @@
                                                                         <label class="text-muted1">Employer :</label>
                                                                     </div>
                                                                     <div class="col-8">
-                                                                        <br><img class="img-circle" src="../../../../../../assets/images/jyotipawar.jpg">
+                                                                        <br><img class="img-circle" src="../../../../../../assets/images/khemraj.jpeg">
                                                                         <br>
                                                                         <span class="text-muted2">Khemraj Adhawade</span>
                                                                         <br>
@@ -400,7 +400,7 @@
                                                                             <label class="text-muted1">Employer :</label>
                                                                         </div>
                                                                         <div class="col-8">
-                                                                            <br><img class="img-circle" src="../../../../../../assets/images/jyotipawar.jpg">
+                                                                            <br><img class="img-circle" src="../../../../../../assets/images/khemraj.jpeg">
                                                                             <br>
                                                                             <span class="text-muted2">Khemraj Adhawade</span>
                                                                             <br>
@@ -476,7 +476,7 @@
                                                                                 <label class="text-muted1">Employer :</label>
                                                                             </div>
                                                                             <div class="col-8">
-                                                                                <br><img class="img-circle" src="../../../../../../assets/images/jyotipawar.jpg">
+                                                                                <br><img class="img-circle" src="../../../../../../assets/images/khemraj.jpeg">
                                                                                 <br>
                                                                                 <span class="text-muted2">Khemraj Adhawade</span>
                                                                                 <br>
@@ -582,7 +582,7 @@
                       
                     
                     <h4>Invitations</h4>
-                    <table class="table table-hover table-dark table-custom spacing8">
+                    <table class="table table-hover table-dark table-custom table-responsive">
                             <thead>
                               <tr>
                                 <th scope="col">Project Id</th>
@@ -591,7 +591,7 @@
                                 <th scope="col">Duration</th>
                                 <th scope="col">Start Date</th>
                                 <th scope="col">End Date</th>
-                                <th scope="col">Employer</th>
+                                <th scope="col" style="text-align: center;">Employer</th>
                                 <th scope="col">Region</th>
                                 <th scope="col">Budget</th>
                                 <th scope="col">Action</th>
@@ -603,14 +603,18 @@
                                 <td class="setwidth">
                                     <button class="btn viewprofile" (click)="onClick($event)">view</button>
                                 </td>
-                                <td class="setwidth"><button class="btn viewprofile" (click)="onClick($event)">view</button></td>
+                                <td class="setwidth">
+                                    <button class="btn viewprofile" (click)="onClick($event)">view</button>
+                                </td>
                                 <td  class="setwidth">{{data.duration}}</td>
                                 <td class="setwidth">{{data.startDate | date :  "dd MMM yyyy" }}</td>
                                 <td class="setwidth">{{data.endDate | date :  "dd MMM yyyy" }}</td>
-                                <td class="setwidthimg"><img class="img-circle" src="../../../../../../assets/images/jyotipawar.jpg">  {{data.employer}}</td>
+                                <td class="setwidthimg"><img class="img-circle" src="../../../../../../assets/images/bhushan.png">  <br>
+                                    {{data.employer}}</td>
                                 <td class="setwidth">{{data.region}}</td>
                                 <td>{{data.budget}}</td>
-                                <td><button class="btn btn-accept">Accept</button><button class="btn btn-reject">Reject</button></td>
+                                <td><button class="btn btn-accept">Accept</button>
+                                    <br><button class="btn btn-reject">Reject</button></td>
                               </tr>
                             </tbody>
                           </table>

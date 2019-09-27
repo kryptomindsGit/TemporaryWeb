@@ -84,7 +84,9 @@ CARD CSS
   background: $bg-front-color;
 }
 
-
+table {
+overflow: auto;
+}
 table thead tr th {
   color: $text-color;
   font-size: 0.7rem;

@@ -62,7 +62,8 @@ CARD CSS
   width: 100%;
   border-radius: 3px;
   font-weight: 400;
-  background: #282b2f;
+  background: $bg-front-color;
+ // background: #282b2f;
   border-top: 1px solid rgba(255, 255, 255, 0.09);
 }
 

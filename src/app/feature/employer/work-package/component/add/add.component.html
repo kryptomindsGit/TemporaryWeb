@@ -7,10 +7,10 @@
         </div>
         <div class="card-body">
           <form class="workpackage" [formGroup]="projectForm">
-            <label class="text-color">Posted by (Employer): </label> {{employerName}}
+            <label class="text-color">Posted by (Employer): &nbsp; &nbsp;  {{employerName}}</label>
             <!-- <button (click)="onProfileView()" class="btn viewprofile">View Profile</button> -->
             <hr>
-            <span> Need Reviewer </span> <input type="checkbox" formControlName="yes_reviewer" (change)="isReviewer()"
+            <span> Need Reviewer  &nbsp; &nbsp;</span> <input type="checkbox" formControlName="yes_reviewer" (change)="isReviewer()"
               (change)="show = !show" ng-model="show" [value]="true">
             <div class="row" *ngIf="show" id="divshow">
               <table class="table table-dark table-responsive table-bordered worktable">
@@ -59,7 +59,7 @@
         </div>
         <div class="card-body">
           <form class="workpackage" [formGroup]="projectForm">
-            <label class="text-color">Posted Date  : </label> {{ todayDate }}
+            <label class="text-color">Posted Date: &nbsp; &nbsp;  {{ todayDate }}</label>
 
             <div class="row">
               <div class="col-6">

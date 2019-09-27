@@ -204,7 +204,7 @@ a {
   color: #ffffff;
   border-color: rgba(127, 128, 129, 0.966);
   background: transparent !important;
-  width: 60%;
+  // width: 60%;
   margin-top: 1rem;
   float: right;
 }
@@ -505,6 +505,9 @@ img:hover {
 
 .setwidthimg {
   width: 13rem;
+  // align-content: center;
+  // justify-content: center;
+  text-align: center;
 }
 
 .btn-accept {
@@ -512,7 +515,7 @@ img:hover {
   color: #ffffff;
   border-color: rgba(127, 128, 129, 0.966);
   background: green !important;
-  width: 30%;
+ // width: 30%;
 }
 
 
@@ -521,8 +524,8 @@ img:hover {
   color: #ffffff;
   border-color: rgba(127, 128, 129, 0.966);
   background: rgb(252, 32, 3) !important;
-  width: 30%;
-  margin-left: 20px;
+ // width: 30%;
+  margin-top: 10px;
 }
 
 // .formStyle {

@@ -23,7 +23,7 @@ export class AddComponent implements OnInit {
   loading = false;
   addWorkPackage: any;
 
-  calAvgRate:any = '$20';
+  calAvgRate:any = 'ETH 0.2';
   calculateAvgRate:boolean = false;
 
   //Static Arrays 

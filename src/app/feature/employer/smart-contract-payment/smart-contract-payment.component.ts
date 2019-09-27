@@ -35,6 +35,7 @@ export class SmartContractPaymentComponent implements OnInit {
   approvedRev: boolean = false;
   milestoneArr = [];
   projectName: any;
+  approxStartDate:any;
   empId: any;
   uploadedFile: any;
 
@@ -55,6 +56,11 @@ export class SmartContractPaymentComponent implements OnInit {
     { memberId: 1, status: 'pending' },
     { memberId: 2, status: 'completed' },
     { memberId: 3, status: 'rejected' }
+  ];
+  teamMemberArray = [
+    { memberId: 1, name: 'Khemraj Adhawade' },
+    { memberId: 2, name: 'Irshad Ahmed' },
+    { memberId: 3, name: 'Jyoti Pawar' }
   ];
   paymentMethodArr = ['paypal', 'net-backing'];
   currencyArr = ['ETH', 'INR', 'USD', 'IDR', 'AUD', 'EUR'];
@@ -101,6 +107,7 @@ export class SmartContractPaymentComponent implements OnInit {
       this.projectName = resData.responseObject.projectName;
       this.contractStatus = resData.responseObject.contractStatus;
       this.contractAddr = resData.responseObject.smartContractAddr;
+      this.approxStartDate= resData.responseObject.approxStartDate;
     });
   }
 
