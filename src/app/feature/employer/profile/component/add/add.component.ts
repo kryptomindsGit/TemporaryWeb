@@ -142,6 +142,8 @@ export class AddComponent implements OnInit {
    */
   setCountryID(country_id) {
     this.getStateByID(country_id)
+    console.log("Country ID:",country_id );
+    
   }
 
   /**

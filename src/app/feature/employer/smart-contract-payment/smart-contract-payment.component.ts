@@ -308,6 +308,7 @@ export class SmartContractPaymentComponent implements OnInit {
     
     await this.__paymentService.deployMilestoneData1(payloads).then((workData: any) =>{
       console.log("Data is successfully saved" ,workData);
+      this.loading = false;
     });
   }
 
@@ -380,6 +381,7 @@ export class SmartContractPaymentComponent implements OnInit {
   }
 
   scheduleDetailMethod(i: any) {
+    // this.loading = true;
     const scheduleDetailsArr = {
       paymentAmount: (this.scheduleForm.controls.scheduleDetails.value)[i].paymentAmount,
       payerAccount: this.payerAcc,

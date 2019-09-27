@@ -40,7 +40,7 @@ export class AddComponent implements OnInit {
   //Date 
   today = new Date();
   todayDate: string;
-  employerName: string;
+  employerName: string = "Bhushan Mahajan";
   email: any;
   //skill related variables
 
