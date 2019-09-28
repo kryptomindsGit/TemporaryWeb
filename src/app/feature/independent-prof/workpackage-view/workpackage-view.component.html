@@ -48,8 +48,7 @@
                                         <input type="text" placeholder="Budget">
                                     </div>
                                     <div class="col-5">
-                                            <button class="btn viewprofile1" (click)="onSearch()">Search</button>
-    
+                                            <button class="btn viewprofile1"><a data-toggle="tab" aria-expanded="true" href="#searchhome">Search</a></button>
                                     </div>
                                 </div>
     
@@ -60,7 +59,7 @@
     
             <ul class="nav nav-tabs options">
                     <li class="active"><a  data-toggle="tab" aria-expanded="true" href="#home">Recommendations</a></li>
-                    <li><a data-toggle="tab" href="#menu1">Invitations</a></li>
+                    <li><a data-toggle="tab" aria-expanded="true" href="#menu1">Invitations</a></li>
                   </ul>
                   
                   <div class="tab-content">
@@ -609,76 +608,619 @@
                                     </div>
                     </div>
                     <div id="menu1" aria-expanded="false" class="tab-pane fade">
-                      
+                        <h4>Invitations</h4>
+                        <table class="table table-hover table-dark table-custom table-responsive">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">Project Id</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Skill Details</th>
+                                    <th scope="col">Duration</th>
+                                    <th scope="col">Start Date</th>
+                                    <th scope="col">End Date</th>
+                                    <th scope="col" style="text-align: center;">Employer</th>
+                                    <th scope="col">Region</th>
+                                    <th scope="col">Budget</th>
+                                    <th scope="col">Action</th>
+                                  </tr>
+                                </thead>
+                                <tbody *ngFor="let data of allInvitations">
+                                  <tr>
+                                    <th scope="row" class="setwidth" (click)="showModel()">{{data.projectId}}</th>
+                                    <td class="setwidth">
+                                        <button class="btn viewprofile" (click)="onClick($event)">view</button>
+                                    </td>
+                                    <td class="setwidth">
+                                        <button class="btn viewprofile" (click)="onClick($event)">view</button>
+                                    </td>
+                                    <td  class="setwidth">{{data.duration}}</td>
+                                    <td class="setwidth">{{data.startDate | date :  "dd MMM yyyy" }}</td>
+                                    <td class="setwidth">{{data.endDate | date :  "dd MMM yyyy" }}</td>
+                                    <td class="setwidthimg"><img class="img-circle" src="../../../../../../assets/images/bhushan.png">  <br>
+                                        {{data.employer}}</td>
+                                    <td class="setwidth">{{data.region}}</td>
+                                    <td>{{data.budget}}</td>
+                                    <td><button class="btn btn-accept">Accept</button>
+                                        <br><button class="btn btn-reject">Reject</button></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+            
+                              <div class="modal" id="myModal" [style.display]="showModal ? 'block' : 'none'">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="center">
+                                                <h6>Project Description</h6>
+                                            </div>
                     
-                    <h4>Invitations</h4>
-                    <table class="table table-hover table-dark table-custom table-responsive">
-                            <thead>
-                              <tr>
-                                <th scope="col">Project Id</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Skill Details</th>
-                                <th scope="col">Duration</th>
-                                <th scope="col">Start Date</th>
-                                <th scope="col">End Date</th>
-                                <th scope="col" style="text-align: center;">Employer</th>
-                                <th scope="col">Region</th>
-                                <th scope="col">Budget</th>
-                                <th scope="col">Action</th>
-                              </tr>
-                            </thead>
-                            <tbody *ngFor="let data of allInvitations">
-                              <tr>
-                                <th scope="row" class="setwidth" (click)="showModel()">{{data.projectId}}</th>
-                                <td class="setwidth">
-                                    <button class="btn viewprofile" (click)="onClick($event)">view</button>
-                                </td>
-                                <td class="setwidth">
-                                    <button class="btn viewprofile" (click)="onClick($event)">view</button>
-                                </td>
-                                <td  class="setwidth">{{data.duration}}</td>
-                                <td class="setwidth">{{data.startDate | date :  "dd MMM yyyy" }}</td>
-                                <td class="setwidth">{{data.endDate | date :  "dd MMM yyyy" }}</td>
-                                <td class="setwidthimg"><img class="img-circle" src="../../../../../../assets/images/bhushan.png">  <br>
-                                    {{data.employer}}</td>
-                                <td class="setwidth">{{data.region}}</td>
-                                <td>{{data.budget}}</td>
-                                <td><button class="btn btn-accept">Accept</button>
-                                    <br><button class="btn btn-reject">Reject</button></td>
-                              </tr>
-                            </tbody>
-                          </table>
-        
-                          <div class="modal" id="myModal" [style.display]="showModal ? 'block' : 'none'">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="center">
-                                            <h6>Project Description</h6>
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                    
+                                            <!-- <h4 class="modal-title">User Details:</h4> -->
                                         </div>
-                
-                                    <!-- Modal Header -->
-                                    <div class="modal-header">
-                
-                                        <!-- <h4 class="modal-title">User Details:</h4> -->
-                                    </div>
-                                    
-                                    <!-- Modal body -->
-                                    <div class="modal-body">
-                                        <p>{{description}}</p>
                                         
-                                    </div>
-                                    
-                                    <!-- Modal footer -->
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-warning" data-dismiss="modal" (click) = "hide()">Close</button>
-                                    </div>
-                                    
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                            <p>{{description}}</p>
+                                            
+                                        </div>
+                                        
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-warning" data-dismiss="modal" (click) = "hide()">Close</button>
+                                        </div>
+                                        
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-    
-                          
-                  </div>
+        
+                              
+                      </div>
+                    <div id="searchhome" class="tab-pane fade">
+                        <h4>Search Result</h4>
+                        <swiper [config]="config">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                       
+                                        <div class="row">
+                                            <div class="col-md-4">                                 
+                                                <div class="card ">
+                                                    <div  class="card-body ">                    
+                                                        <div class="center">
+                                                            <h5>{{projectName}}</h5>
+                                                            <hr> 
+                                                        </div>
+                                                        <p>{{projectDesc}}</p>
+                                                            
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <label class="text-muted1">Employer :</label>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                <img class="img-circle" src="../../../../../../assets/images/shefali.jpg">
+                                                                <span class="text-muted2">Shefali Bhavekar</span>
+                                                            </div> 
+                                                        </div>
+            
+                                                        <div class="row">
+                                                            <div class="col-5">
+                                                                    <div class="row">
+                                                                            <div class="col-6">
+                                                                                <label class="text-muted">Budget :</label>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                $400
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                                <div class="col-6">
+                                                                                    <label class="text-muted">Country :</label>
+                                                                                </div>
+                                                                                <div class="col-6">
+                                                                                        <!-- <img src="../../../../assets/images/india-flag-icon-62.png"> -->
+                                                                                India
+                                                                                </div>
+                                                                            </div>
+                            
+                                                            </div>
+                                                            <div class="col-7">
+                                                                    <div class="row">
+                                                                            <div class="col-6">
+                                                                                <label class="text-muted">Duration :</label>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                8 Months
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-6">
+                                                                                <label class="text-muted">Start Date :</label>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                14 Jan 2020
+                                                                            </div>
+                                                                        </div>
+                                                            </div>
+                                                        </div>
+                                                       
+                                                        <div class="row">
+                                                                <div class="col-3">
+                                                                    <label class="text-muted">Skills :</label>
+                                                                </div>
+                                                                <div class="col-9">
+                                                                   Php, Java , Html5 , CSS3
+                                                                </div>
+                                                            </div>
+                                                          
+                                                       
+                                                        <button class="btn apply-button" (click)="show = !show ; goDown(target)" ng-model="show">Apply </button>
+                                                        <button class="btn viewprofile2" (click)="show = !show ; goDown(target)" ng-model="show">Show Details </button>
+                                                    </div>
+                                                </div>
+                
+                                            </div>
+                                            <div class="col-md-4">                                 
+                                                    <div class="card ">
+                                                        <div  class="card-body ">                    
+                                                            <div class="center">
+                                                                <h5>Hybrid Mobile Application</h5>
+                                                                <hr> 
+                                                            </div>
+                                                            <p>Need an expert to develop Hybrid mobile application. Web panel is already developed. This will be long term engagement for suitable candidate. We will discuss in details the requirement with shortlisted candidate. You need to sign NDA before starting work.</p>
+                                                                
+                                                            <div class="row">
+                                                                <div class="col-4">
+                                                                    <label class="text-muted1">Employer :</label>
+                                                                </div>
+                                                                <div class="col-8">
+                                                                    <img class="img-circle" src="../../../../../../assets/images/bhushan.png">
+                                                            
+                                                                    <span class="text-muted2">Bhushan Mahajan</span>
+                                                                    
+                                                                </div> 
+                                                            </div>
+                
+                                                            <div class="row">
+                                                                <div class="col-6">
+                                                                        <div class="row">
+                                                                                <div class="col-6">
+                                                                                    <label class="text-muted">Budget :</label>
+                                                                                </div>
+                                                                                <div class="col-6">
+                                                                                    INR 25000
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                    <div class="col-6">
+                                                                                        <label class="text-muted">Country :</label>
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                            <!-- <img src="../../../../assets/images/india-flag-icon-62.png"> -->
+                                                                                    India
+                                                                                    </div>
+                                                                                </div>
+                                
+                                                                </div>
+                                                                <div class="col-6">
+                                                                        <div class="row">
+                                                                                <div class="col-6">
+                                                                                    <label class="text-muted">Duration :</label>
+                                                                                </div>
+                                                                                <div class="col-6">
+                                                                                    6 Months
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col-6">
+                                                                                    <label class="text-muted">Start Date :</label>
+                                                                                </div>
+                                                                                <div class="col-6">
+                                                                                    03 Dec 2019
+                                                                                </div>
+                                                                            </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                    <div class="col-3">
+                                                                        <label class="text-muted">Skills :</label>
+                                                                    </div>
+                                                                    <div class="col-9">
+                                                                            Java, Angular, Photoshop, Bootstrap, Springboot, MYSQL
+                                                                    </div>
+                                                                </div>
+                                                              
+                                                            <button class="btn apply-button" (click)="show = !show" ng-model="show">Apply </button>
+                                                            <button class="btn viewprofile2" (click)="show = !show" ng-model="show">Show Details </button>
+                                                        </div>
+                                                    </div>
+                    
+                                                </div>
+                                                <div class="col-md-4">                                 
+                                                        <div class="card ">
+                                                            <div  class="card-body ">                    
+                                                                <div class="center">
+                                                                    <h5>Restaurant POS System</h5>
+                                                                    <hr> 
+                                                                </div>
+                                                                <p>Build me the same application Restaurant POS System - Android
+                                                                        With the basic features as follows:
+                                                                        Admin Panel:
+                                                                        - Add / delete / edit (Food Categories, Menu Items) support multi languages (item name, description)
+                                                                        - Add / delete / edit employees (Sales)
+                                                                        - Sale Management (All Order), Sale Report
+                                                                        
+                                                                        Native Android App:
+                                                                        - Show menu with FlipBook Style (on touch screen 19 inch size, 16: 9 aspect ratio)
+                                                                        - Add to Card from menu
+                                                                        - View Card and Print (58mm Thermal Printer)</p>
+                                                                    
+                                                                <div class="row">
+                                                                    <div class="col-3">
+                                                                        <label class="text-muted1">Employer :</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <img class="img-circle" src="../../../../../../assets/images/irshad2.jpeg">
+                                                                        
+                                                                        <span class="text-muted2">Shakir Ahmed</span>
+                                                                        
+                                                                    </div> 
+                                                                </div>
+                    
+                                                                <div class="row">
+                                                                    <div class="col-6">
+                                                                            <div class="row">
+                                                                                    <div class="col-6">
+                                                                                        <label class="text-muted">Budget :</label>
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                        $300
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                        <div class="col-6">
+                                                                                            <label class="text-muted">Country :</label>
+                                                                                        </div>
+                                                                                        <div class="col-6">
+                                                                                                <!-- <img src="../../../../assets/images/india-flag-icon-62.png"> -->
+                                                                                        India
+                                                                                        </div>
+                                                                                    </div>
+                                    
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                            <div class="row">
+                                                                                    <div class="col-6">
+                                                                                        <label class="text-muted">Duration :</label>
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                        6 Months
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <div class="col-6">
+                                                                                        <label class="text-muted">Start Date :</label>
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                        3 sep 2019
+                                                                                    </div>
+                                                                                </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                        <div class="col-3">
+                                                                            <label class="text-muted">Skills :</label>
+                                                                        </div>
+                                                                        <div class="col-9">
+                                                                           Php, Java , Html5 , CSS3, Bootstrap
+                                                                        </div>
+                                                                    </div>
+                                                                  
+                                                                
+                                                               
+                                                                <button class="btn apply-button" (click)="show = !show" ng-model="show">Apply </button>
+                                                                <button class="btn viewprofile2" (click)="show = !show" ng-model="show">Show Details </button>
+                                                            </div>
+                                                        </div>                     
+                                                    </div>
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                       
+                                            <div class="row">
+                                                    <div class="col-md-4">                                 
+                                                            <div class="card ">
+                                                                <div  class="card-body ">                    
+                                                                    <div class="center">
+                                                                        <h5>Restaurant POS System</h5>
+                                                                        <hr> 
+                                                                    </div>
+                                                                    <p>Build me the same application Restaurant POS System - Android
+                                                                            With the basic features as follows:
+                                                                            Admin Panel:
+                                                                            - Add / delete / edit (Food Categories, Menu Items) support multi languages (item name, description)
+                                                                            - Add / delete / edit employees (Sales)
+                                                                            - Sale Management (All Order), Sale Report
+                                                                            
+                                                                            Native Android App:
+                                                                            - Show menu with FlipBook Style (on touch screen 19 inch size, 16: 9 aspect ratio)
+                                                                            - Add to Card from menu
+                                                                            - View Card and Print (58mm Thermal Printer)</p>
+                                                                        
+                                                                    <div class="row">
+                                                                        <div class="col-3">
+                                                                            <label class="text-muted1">Employer :</label>
+                                                                        </div>
+                                                                        <div class="col-8">
+                                                                            <img class="img-circle" src="../../../../../../assets/images/irshad2.jpeg">
+                                                                            
+                                                                            <span class="text-muted2">Shakir Ahmed</span>
+                                                                            
+                                                                        </div> 
+                                                                    </div>
+                        
+                                                                    <div class="row">
+                                                                        <div class="col-6">
+                                                                                <div class="row">
+                                                                                        <div class="col-6">
+                                                                                            <label class="text-muted">Budget :</label>
+                                                                                        </div>
+                                                                                        <div class="col-6">
+                                                                                            $300
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                            <div class="col-6">
+                                                                                                <label class="text-muted">Country :</label>
+                                                                                            </div>
+                                                                                            <div class="col-6">
+                                                                                                    <!-- <img src="../../../../assets/images/india-flag-icon-62.png"> -->
+                                                                                            India
+                                                                                            </div>
+                                                                                        </div>
+                                        
+                                                                        </div>
+                                                                        <div class="col-6">
+                                                                                <div class="row">
+                                                                                        <div class="col-6">
+                                                                                            <label class="text-muted">Duration :</label>
+                                                                                        </div>
+                                                                                        <div class="col-6">
+                                                                                            6 Months
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="col-6">
+                                                                                            <label class="text-muted">Start Date :</label>
+                                                                                        </div>
+                                                                                        <div class="col-6">
+                                                                                            3 sep 2019
+                                                                                        </div>
+                                                                                    </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                            <div class="col-3">
+                                                                                <label class="text-muted">Skills :</label>
+                                                                            </div>
+                                                                            <div class="col-9">
+                                                                               Php, Java , Html5 , CSS3, Bootstrap
+                                                                            </div>
+                                                                        </div>
+                                                                      
+                                                                    
+                                                                   
+                                                                    <button class="btn apply-button" (click)="show = !show" ng-model="show">Apply </button>
+                                                                    <button class="btn viewprofile2" (click)="show = !show" ng-model="show">Show Details </button>
+                                                                </div>
+                                                            </div>                     
+                                                        </div>
+                                                <div class="col-md-4">                                 
+                                                    <div class="card ">
+                                                        <div  class="card-body ">                    
+                                                            <div class="center">
+                                                                <h5>{{projectName}}</h5>
+                                                                <hr> 
+                                                            </div>
+                                                            <p>{{projectDesc}}</p>
+                                                                
+                                                            <div class="row">
+                                                                <div class="col-4">
+                                                                    <label class="text-muted1">Employer :</label>
+                                                                </div>
+                                                                <div class="col-8">
+                                                                    <img class="img-circle" src="../../../../../../assets/images/shefali.jpg">
+                                                                    
+                                                                    <span class="text-muted2">Shefali Bhavekar</span>
+                                                                    
+                                                                </div> 
+                                                            </div>
+                
+                                                            <div class="row">
+                                                                <div class="col-6">
+                                                                        <div class="row">
+                                                                                <div class="col-7">
+                                                                                    <label class="text-muted">Budget :</label>
+                                                                                </div>
+                                                                                <div class="col-5">
+                                                                                    $400
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                    <div class="col-6">
+                                                                                        <label class="text-muted">Country :</label>
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                            <!-- <img src="../../../../assets/images/india-flag-icon-62.png"> -->
+                                                                                    India
+                                                                                    </div>
+                                                                                </div>
+                                
+                                                                </div>
+                                                                <div class="col-6">
+                                                                        <div class="row">
+                                                                                <div class="col-6">
+                                                                                    <label class="text-muted">Duration :</label>
+                                                                                </div>
+                                                                                <div class="col-6">
+                                                                                    6 Months
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col-6">
+                                                                                    <label class="text-muted">Start Date :</label>
+                                                                                </div>
+                                                                                <div class="col-6">
+                                                                                    03 oct 2019
+                                                                                </div>
+                                                                            </div>
+                                                                </div>
+                                                            </div>
+                                                           
+                                                            <div class="row">
+                                                                    <div class="col-3">
+                                                                        <label class="text-muted">Skills :</label>
+                                                                    </div>
+                                                                    <div class="col-9">
+                                                                       Php, Java , Html5 , CSS3
+                                                                    </div>
+                                                                </div>
+                                                              
+                                                           
+                                                            <button class="btn apply-button" (click)="show = !show" ng-model="show">Apply </button>
+                                                            <button class="btn viewprofile2" (click)="show = !show" ng-model="show">Show Details </button>
+                                                        </div>
+                                                    </div>
+                    
+                                                </div>
+                                                
+                                                <div class="col-md-4">                                 
+                                                        <div class="card ">
+                                                            <div  class="card-body ">                    
+                                                                <div class="center">
+                                                                    <h5>Hotel Management System</h5>
+                                                                    <hr> 
+                                                                </div>
+                                                                <p>Build me the same application Restaurant POS System - Android
+                                                                        With the basic features as follows:
+                                                                        Admin Panel:
+                                                                        - Add / delete / edit (Food Categories, Menu Items) support multi languages (item name, description)
+                                                                        - Add / delete / edit employees (Sales)
+                                                                        - Sale Management (All Order), Sale Report
+                                                                        
+                                                                        Native Android App:
+                                                                        - Show menu with FlipBook Style (on touch screen 19 inch size, 16: 9 aspect ratio)
+                                                                        - Add to Card from menu
+                                                                        - View Card and Print (58mm Thermal Printer)</p>
+                                                                    
+                                                                <div class="row">
+                                                                    <div class="col-3">
+                                                                        <label class="text-muted1">Employer :</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <img class="img-circle" src="../../../../../../assets/images/irshad2.jpeg">
+                                                                        
+                                                                        <span class="text-muted2">Shakir Ahmed</span>
+                                                                        
+                                                                    </div> 
+                                                                </div>
+                    
+                                                                <div class="row">
+                                                                    <div class="col-6">
+                                                                            <div class="row">
+                                                                                    <div class="col-6">
+                                                                                        <label class="text-muted">Budget :</label>
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                        $200
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                        <div class="col-6">
+                                                                                            <label class="text-muted">Country :</label>
+                                                                                        </div>
+                                                                                        <div class="col-6">
+                                                                                                <!-- <img src="../../../../assets/images/india-flag-icon-62.png"> -->
+                                                                                        India
+                                                                                        </div>
+                                                                                    </div>
+                                    
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                            <div class="row">
+                                                                                    <div class="col-6">
+                                                                                        <label class="text-muted">Duration :</label>
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                        6 Months
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <div class="col-6">
+                                                                                        <label class="text-muted">Start Date :</label>
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                        3 Jan 2020
+                                                                                    </div>
+                                                                                </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                        <div class="col-3">
+                                                                            <label class="text-muted">Skills :</label>
+                                                                        </div>
+                                                                        <div class="col-9">
+                                                                           Dot net, Angular
+                                                                        </div>
+                                                                    </div>
+                                                                  
+                                                                
+                                                               
+                                                                <button class="btn apply-button" (click)="show = !show" ng-model="show">Apply </button>
+                                                                <button class="btn viewprofile2" (click)="show = !show" ng-model="show">Show Details </button>
+                                                            </div>
+                                                        </div>                     
+                                                    </div>
+                                               
+                                            </div>
+                                        </div>
+                                </div>
+                                <!-- Add Pagination -->
+                                <div class="swiper-pagination"></div>
+                                <!-- Add Arrows -->
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                            </swiper>
+            
+                              <div class="modal" id="myModal" [style.display]="showModal ? 'block' : 'none'">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="center">
+                                                <h6>Project Description</h6>
+                                            </div>
+                    
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                    
+                                            <!-- <h4 class="modal-title">User Details:</h4> -->
+                                        </div>
+                                        
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                            <p>{{description}}</p>
+                                            
+                                        </div>
+                                        
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-warning" data-dismiss="modal" (click) = "hide()">Close</button>
+                                        </div>
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                </div>
+                    
     
     
                   <div class="row container-fluid" #target *ngIf="show" id="divshow" >

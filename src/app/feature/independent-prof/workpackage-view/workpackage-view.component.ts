@@ -109,15 +109,15 @@ allInvitations = [
     this.show = ! this.show ; 
   }
 
-  onSearch(){
-    const searchData ={
-      searchFreelancer: this.searchForm.controls.searchBy.value,
-      data: this.searchForm.controls.data.value
-    }
+  // onSearch(){
+  //   const searchData ={
+  //     searchFreelancer: this.searchForm.controls.searchBy.value,
+  //     data: this.searchForm.controls.data.value
+  //   }
 
-    console.log("search Data : " , searchData);
+  //   console.log("search Data : " , searchData);
     
-  }
+  // }
 
   
   goDown(e1:HTMLElement){
