@@ -4,18 +4,19 @@
     background: $bg-front-color;
     // box-shadow: 0px 0px 32px 0px rgba(0, 0, 0, 0.22);
     flex-shrink: none;
-    bottom:0px;
-    height:30px;
-    width:100%;
-    position:fixed;
+    bottom: 0px;
+    height: 30px;
+    width: 100%;
+    // position: relative;
     font-family: 'Neo Latina';
 }
-.container small{
+
+.container small {
     float: right;
     margin-right: 10rem;
 }
 
-.container small img{
+.container small img {
     width: 1rem;
     height: 1rem;
 }

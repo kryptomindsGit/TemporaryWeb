@@ -2,19 +2,8 @@
 
 @import "./assets/css/variables";
 @import "./assets/css/theme_colors";
-
 @import "~ng-pick-datetime/assets/style/picker.min.css";
 
-// @font-face {
-//   font-family: 'Montserrat Regular';
-//   font-style: normal;
-//   font-weight: 400;
-//   src: local('Montserrat Regular'), local('Montserrat-Regular'),
-//     url('./assets/font/Montserrat-14/Montserrat-v14-latin-regular.woff2') format('woff2'),
-//     /* Chrome 26+, Opera 23+, Firefox 39+ */
-//     url('./assets/font/Montserrat-14/Montserrat-v14-latin-regular.woff') format('woff');
-//   /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-// }
 
 @font-face {
   font-family: "Montserrat Regular";
@@ -23,20 +12,15 @@
   src: url('./assets/font/montserrat-14/montserrat-v14-latin-regular.ttf');
 }
 
-// html {
-//   overflow: -moz-scrollbars-vertical;
-//   overflow-y: scroll;
-// }
-
 html {
   // overflow: scroll;
-  overflow: -moz-scrollbars-vertical;
+  // overflow: -moz-scrollbars-vertical;
   background: $bg-back-color;
 }
 
 ::-webkit-scrollbar {
-  width: 0.5rem;
-  height: 0.5rem;
+  width: 0.3rem;
+  height: 0.3rem;
   background: transparent !important;
 }
 
@@ -55,11 +39,127 @@ html {
 // }
 
 body {
-  font: 14px "Montserrat Regular";
+  overflow-x: hidden;
+  font: $font-size-label "Montserrat Regular";
   background: $bg-back-color;
   color: #898989;
+  // overflow: -moz-scrollbars-vertical;
+  // overflow: auto;
+  font-weight: 400;
+
+}
+
+
+/*-----------------------------------------------------------------------
+FORM CSS
+-------------------------------------------------------------------------*/
+.container-fluid {
+  font: $font-size-label "Montserrat Regular";
+  background-color: $bg-back-color;
+  color: $text-color;
   overflow: auto;
   font-weight: 400;
+  // width: 100%;
+  // height: 100vh;
+}
+
+form {
+  padding: 2.5rem;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.form-input {
+  padding-top: 20px;
+}
+
+.form-label {
+  position: absolute;
+  transition: 0.25s ease;
+  -moz-transition: 0.25s ease;
+  -webkit-transition: 0.25s ease;
+  -o-transition: 0.25s ease;
+  -ms-transition: 0.25s ease;
+  color: $text-color;
+  top: 1.5rem;
+}
+
+// CSS for autofill background Start
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  caret-color: $text-color;
+  -webkit-text-fill-color: $text-color !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  caret-color: $text-color;
+  -webkit-text-fill-color: $text-color !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  caret-color: $text-color;
+  -webkit-text-fill-color: $text-color !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+// CSS for autofill background End
+
+input,
+textarea {
+  transition: 0.3s ease;
+  -moz-transition: 0.3s ease;
+  -webkit-transition: 0.3s ease;
+  -o-transition: 0.3s ease;
+  -ms-transition: 0.3s ease;
+  padding-top: 10px;
+  -webkit-appearance: none;
+}
+
+select {
+  transition: 0.3s ease;
+  -moz-transition: 0.3s ease;
+  -webkit-transition: 0.3s ease;
+  -o-transition: 0.3s ease;
+  -ms-transition: 0.3s ease;
+  padding-top: 10px;
+  -webkit-appearance: 0.3s ease;
+}
+
+
+input:focus+.form-label,
+input:valid+.form-label,
+select:focus+.form-label,
+select:valid+.form-label,
+textarea:focus+.form-label,
+textarea:valid+.form-label {
+  top: 1px;
+  font-size: $font-size-label;
+  color: $blue-color;
+  background: transparent !important;
+}
+
+input,
+select,
+textarea {
+  box-sizing: border-box;
+  width: 100%;
+  display: block;
+  border: none;
+  font-family: "Montserrat Regular";
+  color: $text-color;
+  background: transparent;
+  border-bottom: 1px solid $text-color;
+  padding: 4px 0;
 }
 
 option {
@@ -71,3 +171,354 @@ option {
   color: $bg-dropdown-color;
 }
 
+input:focus,
+select:focus,
+textarea:focus {
+  border-bottom: 1px solid $blue-color;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px transparent inset;
+}
+
+input::-webkit-input-placeholder {
+  color: $text-color;
+}
+
+input::-moz-placeholder {
+  color: $text-color;
+}
+
+input:-ms-input-placeholder {
+  color: $text-color;
+}
+
+input:-moz-placeholder {
+  color: $text-color;
+}
+
+//select
+select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px transparent inset;
+}
+
+select::-webkit-select-placeholder {
+  color: $text-color;
+}
+
+select::-moz-placeholder {
+  color: $text-color;
+}
+
+select:-ms-select-placeholder {
+  color: $text-color;
+}
+
+select:-moz-placeholder {
+  color: $text-color;
+}
+
+// Textarea
+//select
+textarea:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px transparent inset;
+}
+
+textarea::-webkit-textarea-placeholder {
+  color: $text-color;
+}
+
+textarea::-moz-placeholder {
+  color: $text-color;
+}
+
+textarea:-ms-textarea-placeholder {
+  color: $text-color;
+}
+
+textarea:-moz-placeholder {
+  color: $text-color;
+}
+
+input,
+textarea {
+  outline: none;
+  appearance: unset !important;
+  -moz-appearance: unset !important;
+  -webkit-appearance: unset !important;
+  -o-appearance: unset !important;
+  -ms-appearance: unset !important;
+}
+
+// select {
+//   outline: none;
+//   appearance: unset !important;
+//   -moz-appearance: unset !important;
+//   -webkit-appearance: unset !important;
+//   -o-appearance: unset !important;
+//   -ms-appearance: unset !important;
+// }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button,
+textarea::-webkit-outer-spin-button,
+textarea::-webkit-inner-spin-button {
+  appearance: none !important;
+  -moz-appearance: none !important;
+  -webkit-appearance: none !important;
+  -o-appearance: none !important;
+  -ms-appearance: none !important;
+  margin: 0;
+}
+
+// select::-webkit-outer-spin-button,
+// select::-webkit-inner-spin-button {
+//   appearance: none !important;
+//   -moz-appearance: none !important;
+//   -webkit-appearance: none !important;
+//   -o-appearance: none !important;
+//   -ms-appearance: none !important;
+//   margin: 0;
+// }
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -o-box-shadow: none !important;
+  -ms-box-shadow: none !important;
+}
+
+input[type=checkbox] {
+  appearance: checkbox !important;
+  -moz-appearance: checkbox !important;
+  -webkit-appearance: checkbox !important;
+  -o-appearance: checkbox !important;
+  -ms-appearance: checkbox !important;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-width: 0;
+}
+
+input[type="checkbox"]:checked {
+  background: $btn-bg-color;
+}
+
+input[type=radio] {
+  appearance: radio !important;
+  -moz-appearance: radio !important;
+  -webkit-appearance: radio !important;
+  -o-appearance: radio !important;
+  -ms-appearance: radio !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+textarea:focus,
+button:focus {
+  outline: none !important;
+  background: $bg-front-color;
+}
+
+#btn-30 {
+  display: flex;
+  justify-content: center;
+  margin: 1rem auto;
+  width: 30%;
+  background: $btn-bg-color !important;
+  font-size: $font-size-botton;
+  color: $white-color;
+  border: none
+}
+
+#btn-30:hover {
+  color: #000;
+  background: $blue-color;
+}
+
+#btn-60 {
+  display: flex;
+  justify-content: center;
+  margin: 1rem auto;
+  width: 60%;
+  background: $btn-bg-color !important;
+  font-size: $font-size-botton;
+  color: $white-color;
+  border: none
+}
+
+#btn-60:hover {
+  color: #000;
+  background: $btn-bg-color;
+}
+
+#btn-70 {
+  display: flex;
+  justify-content: center;
+  margin: 1rem auto;
+  width: 70%;
+  background: $btn-bg-color !important;
+  font-size: $font-size-botton;
+  color: $white-color;
+  border: none
+}
+
+#btn-70:hover {
+  color: #000;
+  background: $btn-bg-color;
+}
+
+#btn-equal {
+  display: flex;
+  justify-content: center;
+  margin: 1rem auto;
+  width: 100%;
+  background: $btn-bg-color !important;
+  font-size: $font-size-botton;
+  color: $white-color;
+  border: none
+}
+
+#btn-equal:hover {
+  color: #000;
+  background: $blue-color;
+}
+
+.btnBlue {
+  border: none;
+  border-radius: 2rem;
+  padding: 0.5rem 1rem;
+  width: 6rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: $btn-bg-color !important;
+  color: $text-color;
+  float: center;
+  margin: 20px auto;
+}
+
+.btnBlue:hover {
+  color: #000;
+  background: $blue-color;
+}
+
+.btnadd {
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.3rem;
+  width: 2.5rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: $btn-bg-color !important;
+  color: $text-color;
+  float: right;
+  margin-left: 0.2rem;
+}
+
+.btnadd:hover {
+  color: #000;
+  background: $blue-color;
+}
+
+.btnCancel {
+  border: none;
+  border-radius: 2rem;
+  padding: 1%;
+  width: 8rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: $btn-bg-color !important;
+  color: $text-color;
+  float: center;
+  margin: 20px auto;
+}
+
+.btnCancel:hover {
+  color: #000;
+  background: $blue-color;
+}
+
+.btnSave {
+  border: none;
+  border-radius: 2rem;
+  padding: 1%;
+  width: 8rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: $btn-bg-color;
+  color: $text-color;
+  float: center;
+  margin: 20px auto;
+}
+
+.btnSave:hover {
+  color: #000;
+  background: $blue-color;
+}
+
+
+.btnNext {
+  border: none !important;
+  border-radius: 2rem;
+  padding: 1%;
+  width: 8rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: $btn-bg-color !important;
+  color: $white-color;
+  float: right;
+  margin-bottom: 20px;
+}
+
+.btnNext:hover {
+  color: #000;
+  background: $blue-color;
+}
+
+.btnPrevious {
+  border: none !important;
+  border-radius: 2rem;
+  padding: 1%;
+  width: 8rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: $btn-bg-color !important;
+  color: $white-color;
+  float: left;
+  margin-bottom: 20px;
+}
+
+.btnPrevious:hover {
+  color: #000;
+  background: $blue-color;
+}
+
+hr {
+  box-sizing: content-box;
+  height: 0;
+}
+
+.error-msg {
+  display: block;
+  // position: relative;
+  font-size: $font-size-error-msg;
+  bottom: -2em;
+  margin-top: 0.2rem;
+  // margin-bottom: 0.1rem;
+}
+
+// note span text font
+span .text-font {
+  font-size: $font-size-note-msg;
+}
+
+span .redstar {
+  color: red;
+  font-size: 0.8rem;
+  margin-left: 0.2rem;
+  font-weight: normal;
+}

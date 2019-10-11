@@ -13,23 +13,35 @@
                                 [ngClass]="{'error': employerProfileForm.controls['comapany_name'].errors && !employerProfileForm.controls['comapany_name'].pristine}">
                                 <input type="text" formControlName="comapany_name" autocomplete="off" id="comapany_name"
                                     required />
-                                <label for="comapany_name" class="form-label">Company Name <span>*</span></label>
+                                <label for="comapany_name" class="form-label">Company Name <span class="redstar"
+                                        class="redstar">*</span></label>
 
-                                <div *ngIf="employerProfileForm.controls['comapany_name'].invalid && (employerProfileForm.controls['comapany_name'].dirty || employerProfileForm.controls['comapany_name'].touched)"
+                                <div *ngIf="submitted && formValidation.comapany_name.errors || employerProfileForm.get('comapany_name').invalid && (employerProfileForm.get('comapany_name').dirty || employerProfileForm.get('comapany_name').touched)"
                                     class="text-danger error-msg">
-                                    <div [hidden]="!employerProfileForm.controls['comapany_name'].errors.required">
-                                        Company name is required.</div>
+
+                                    <div *ngIf="employerProfileForm.get('comapany_name').errors.required">
+                                        Company name is required.
+                                    </div>
+                                    <div *ngIf="employerProfileForm.get('comapany_name').errors.maxlength">
+                                        Company name must be at least 25 characters long.
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="form-group form-input col">
                                 <input type="text" formControlName="website_addr" autocomplete="off" id="website_addr"
                                     required />
-                                <label for="website_addr" class="form-label">Website Address<span>*</span></label>
-                                <div *ngIf="employerProfileForm.controls['website_addr'].invalid && (employerProfileForm.controls['website_addr'].dirty || employerProfileForm.controls['website_addr'].touched)"
+                                <label for="website_addr" class="form-label">Website Address<span class="redstar"
+                                        class="redstar">*</span></label>
+                                <div *ngIf="submitted && formValidation.website_addr.errors || employerProfileForm.get('website_addr').invalid && (employerProfileForm.get('website_addr').dirty || employerProfileForm.get('website_addr').touched)"
                                     class="text-danger error-msg">
-                                    <div [hidden]="!employerProfileForm.controls['website_addr'].errors.required">
-                                        Website address is required.</div>
+
+                                    <div *ngIf="employerProfileForm.get('website_addr').errors.required">
+                                        Website address is required.
+                                    </div>
+                                    <div *ngIf="employerProfileForm.get('website_addr').errors.maxlength">
+                                        Website address must be at least 25 characters long.
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -38,22 +50,34 @@
                             <div class="form-group form-input col">
                                 <input type="text" formControlName="address_line_one" autocomplete="off"
                                     id="address_line_one" required />
-                                <label for="address_line_one" class="form-label">Address Line 1<span>*</span></label>
-                                <div *ngIf="employerProfileForm.controls['address_line_one'].invalid && (employerProfileForm.controls['address_line_one'].dirty || employerProfileForm.controls['address_line_one'].touched)"
+                                <label for="address_line_one" class="form-label">Address Line 1<span
+                                        class="redstar">*</span></label>
+                                <div *ngIf="submitted && formValidation.address_line_one.errors || employerProfileForm.get('address_line_one').invalid && (employerProfileForm.get('address_line_one').dirty || employerProfileForm.get('address_line_one').touched)"
                                     class="text-danger error-msg">
-                                    <div [hidden]="!employerProfileForm.controls['address_line_one'].errors.required">
-                                        Address line one is required.</div>
+
+                                    <div *ngIf="employerProfileForm.get('address_line_one').errors.required">
+                                        Address Line 1 is required.
+                                    </div>
+                                    <div *ngIf="employerProfileForm.get('address_line_one').errors.maxlength">
+                                        Address Line 1 must be at least 25 characters long.
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="form-group form-input col">
                                 <input type="text" formControlName="address_line_two" autocomplete="off"
                                     id="address_line_two" required />
-                                <label for="address_line_two" class="form-label">Address Line 2<span>*</span></label>
-                                <div *ngIf="employerProfileForm.controls['address_line_two'].invalid && (employerProfileForm.controls['address_line_two'].dirty || employerProfileForm.controls['address_line_two'].touched)"
+                                <label for="address_line_two" class="form-label">Address Line 2<span
+                                        class="redstar">*</span></label>
+                                <div *ngIf="submitted && formValidation.address_line_two.errors || employerProfileForm.get('address_line_two').invalid && (employerProfileForm.get('address_line_two').dirty || employerProfileForm.get('address_line_two').touched)"
                                     class="text-danger error-msg">
-                                    <div [hidden]="!employerProfileForm.controls['address_line_two'].errors.required">
-                                        Address line two is required.</div>
+
+                                    <div *ngIf="employerProfileForm.get('address_line_two').errors.required">
+                                        Address Line 2 is required.
+                                    </div>
+                                    <div *ngIf="employerProfileForm.get('address_line_two').errors.maxlength">
+                                        Address Line 2 must be at least 25 characters long.
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -66,8 +90,8 @@
                                     <option *ngFor="let country of countryArr" [value]="country.id">{{country.name}}
                                     </option>
                                 </select>
-                                <label for="country" class="form-label">Country<span>*</span></label>
-                                <div *ngIf="employerProfileForm.controls['country'].invalid && (employerProfileForm.controls['country'].dirty || employerProfileForm.controls['country'].touched)"
+                                <label for="country" class="form-label">Country<span class="redstar">*</span></label>
+                                <div *ngIf="submitted && formValidation.country.errors || employerProfileForm.controls['country'].invalid && (employerProfileForm.controls['country'].dirty || employerProfileForm.controls['country'].touched)"
                                     class="text-danger error-msg">
                                     <div [hidden]="!employerProfileForm.controls['country'].errors.required">Country is
                                         required.</div>
@@ -80,8 +104,8 @@
                                     <option *ngFor="let state of stateArr" [value]="state.id">{{state.name}}
                                     </option>
                                 </select>
-                                <label for="state" class="form-label">State<span>*</span></label>
-                                <div *ngIf="employerProfileForm.controls['state'].invalid && (employerProfileForm.controls['state'].dirty || employerProfileForm.controls['state'].touched)"
+                                <label for="state" class="form-label">State<span class="redstar">*</span></label>
+                                <div *ngIf="submitted && formValidation.state.errors || employerProfileForm.controls['state'].invalid && (employerProfileForm.controls['state'].dirty || employerProfileForm.controls['state'].touched)"
                                     class="text-danger error-msg">
                                     <div [hidden]="!employerProfileForm.controls['state'].errors.required">State is
                                         required.</div>
@@ -93,8 +117,8 @@
                                     <!-- <option disabled value="">City</option> -->
                                     <option *ngFor="let city of cityArr" [value]="city.id">{{city.name}}</option>
                                 </select>
-                                <label for="city" class="form-label">City<span>*</span></label>
-                                <div *ngIf="employerProfileForm.controls['city'].invalid && (employerProfileForm.controls['city'].dirty || employerProfileForm.controls['city'].touched)"
+                                <label for="city" class="form-label">City<span class="redstar">*</span></label>
+                                <div *ngIf="submitted && formValidation.city.errors || employerProfileForm.controls['city'].invalid && (employerProfileForm.controls['city'].dirty || employerProfileForm.controls['city'].touched)"
                                     class="text-danger error-msg">
                                     <div [hidden]="!employerProfileForm.controls['city'].errors.required">City is
                                         required.</div>
@@ -103,19 +127,26 @@
                             <div class="form-group form-input col">
                                 <input type="text" formControlName="zipcode" autocomplete="off" id="postal_code"
                                     required />
-                                <label for="postal_code" class="form-label">Postal code<span>*</span></label>
-                                <div *ngIf="employerProfileForm.controls['zipcode'].invalid && (employerProfileForm.controls['zipcode'].dirty || employerProfileForm.controls['zipcode'].touched)"
+                                <label for="postal_code" class="form-label">Postal code<span
+                                        class="redstar">*</span></label>
+                                <div *ngIf="submitted && formValidation.zipcode.errors || employerProfileForm.get('zipcode').invalid && (employerProfileForm.get('zipcode').dirty || employerProfileForm.get('zipcode').touched)"
                                     class="text-danger error-msg">
-                                    <div [hidden]="!employerProfileForm.controls['zipcode'].errors.required">Postal code
-                                        is required.</div>
+
+                                    <div *ngIf="employerProfileForm.get('zipcode').errors.required">
+                                        Postal code is required.
+                                    </div>
+                                    <div *ngIf="employerProfileForm.get('zipcode').errors.pattern">
+                                        Postal code must be number.
+                                    </div>
+                                    <div *ngIf="employerProfileForm.get('zipcode').errors.maxlength">
+                                        Postal code must be at least 6 characters long.
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="form-group form-input col-6">
-                                <!-- <input type="text" formControlName="business_cat" autocomplete="off" id="business_cat"
-                                    required /> -->
                                 <select formControlName="business_cat" autocomplete="off" id="business_cat" required>
                                     <option disabled value=""></option>
                                     <option value="IT">IT</option>
@@ -124,8 +155,9 @@
                                     <option value="Retail">Retail</option>
                                     <option value="Others">Others</option>
                                 </select>
-                                <label for="business_cat" class="form-label">Business Category<span>*</span></label>
-                                <div *ngIf="employerProfileForm.controls['business_cat'].invalid && (employerProfileForm.controls['business_cat'].dirty || employerProfileForm.controls['business_cat'].touched)"
+                                <label for="business_cat" class="form-label">Business Category<span
+                                        class="redstar">*</span></label>
+                                <div *ngIf="submitted && formValidation.business_cat.errors || employerProfileForm.controls['business_cat'].invalid && (employerProfileForm.controls['business_cat'].dirty || employerProfileForm.controls['business_cat'].touched)"
                                     class="text-danger error-msg">
                                     <div [hidden]="!employerProfileForm.controls['business_cat'].errors.required">
                                         Business category is required.</div>
@@ -137,68 +169,37 @@
                             <div class="form-group form-input col">
                                 <input type="text" formControlName="company_profile" autocomplete="off"
                                     id="company_profile" required />
-                                <label for="company_profile" class="form-label">Company Profile<span>*</span></label>
-                                <div *ngIf="employerProfileForm.controls['company_profile'].invalid && (employerProfileForm.controls['company_profile'].dirty || employerProfileForm.controls['company_profile'].touched)"
+                                <label for="company_profile" class="form-label">Company Profile<span
+                                        class="redstar">*</span></label>
+                                <div *ngIf="submitted && formValidation.company_profile.errors || employerProfileForm.get('company_profile').invalid && (employerProfileForm.get('company_profile').dirty || employerProfileForm.get('company_profile').touched)"
                                     class="text-danger error-msg">
-                                    <div [hidden]="!employerProfileForm.controls['company_profile'].errors.required">
-                                        Company profile is required.</div>
+
+                                    <div *ngIf="employerProfileForm.get('company_profile').errors.required">
+                                        Company Profile is required.
+                                    </div>
+                                    <div *ngIf="employerProfileForm.get('company_profile').errors.maxlength">
+                                        Company Profile must be at least 25 characters long.
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="form-group form-input col">
                                 <input type="text" formControlName="company_rep_det" autocomplete="off"
                                     id="company_rep_det" required />
-                                <label for="company_rep_det" class="form-label">Company Representative Name<span>*</span></label>
-                                <div *ngIf="employerProfileForm.controls['company_rep_det'].invalid && (employerProfileForm.controls['company_rep_det'].dirty || employerProfileForm.controls['company_rep_det'].touched)"
+                                <label for="company_rep_det" class="form-label">Company Representative
+                                    Name<span class="redstar">*</span></label>
+                                <div *ngIf="submitted && formValidation.company_rep_det.errors || employerProfileForm.get('company_rep_det').invalid && (employerProfileForm.get('company_rep_det').dirty || employerProfileForm.get('company_rep_det').touched)"
                                     class="text-danger error-msg">
-                                    <div [hidden]="!employerProfileForm.controls['company_rep_det'].errors.required">
-                                        Company representative details are required.</div>
+
+                                    <div *ngIf="employerProfileForm.get('company_rep_det').errors.required">
+                                        Company Representative is required.
+                                    </div>
+                                    <div *ngIf="employerProfileForm.get('company_rep_det').errors.maxlength">
+                                        Company Representative must be at least 25 characters long.
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- <div formArrayName="documents_personal">
-                            <div class="row">
-                                <div class="col-11">
-                                    <div *ngFor="let item of documentArr.controls; let i=index">
-                                        <hr *ngIf="i>0">
-                                        <div class="row" formGroupName="{{i}}">
-                                            <div class="form-group form-input col-4">
-                                                <select (change)="setDocTypeCatID($event.target.value)"
-                                                    formControlName="file_type">
-                                                    <option disabled value="">Document type</option>
-                                                    <option id="option_txt" *ngFor="let docType of docTypeArr"
-                                                        [value]="docType.doc_type_id">{{docType.doc_type}}
-                                                    </option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group form-input col-4">
-                                                <input type="file" class="document_name" name="chooseFile"
-                                                    id="chooseFile" (change)="handleFileInput($event)"
-                                                    formControlName="file_name">
-
-                                            </div>
-
-                                            <div class=col-2>
-                                                <input type="button" class="btnBlue" id="upload" value="UPLOAD"
-                                                    (click)="uploadPersonalFile()">
-                                            </div>
-                                            <div class="form-group col-2">
-                                                <button type="button" *ngIf="documentArr.controls.length > 1"
-                                                    class="btn btnadd" (click)="deleteDocument(i)">-</button>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-1 btnadd-right">
-                                    <div class="form-group col-2">
-                                        <button type="button" class="btn btnaddRight" (click)="addDocument()">+</button>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div> -->
 
                         <div formArrayName="documents">
                             <div class="row">
@@ -209,12 +210,18 @@
                                             <div class="form-group form-input col-3">
                                                 <select (change)="setDocTypeCatID($event.target.value)"
                                                     formControlName="docType" id="document_type" required>
-                                                    <!-- <option disabled value="">Document Type</option> -->
                                                     <option id="option_txt" *ngFor="let doctypefile of docTypeArr"
                                                         [value]="doctypefile.doc_type_id">{{doctypefile.doc_type}}
                                                     </option>
                                                 </select>
                                                 <label class="form-label" for="document_type">Document Type</label>
+                                                <div *ngIf="documentArr.controls[i].get('docType').invalid && (documentArr.controls[i].get('docType').dirty || documentArr.controls[i].get('docType').touched)"
+                                                    class="text-danger error-msg">
+                                                    <div
+                                                        [hidden]="!documentArr.controls[i].get('docType').errors?.required">
+                                                        Document type is required.
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="form-group form-input col-5">
                                                 <div class="file-upload">
@@ -222,6 +229,13 @@
                                                         <input type="file" class="document_name" name="chooseFile"
                                                             id="file_name" (change)="handleFileInput($event)"
                                                             formControlName="chooseFile">
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="documentArr.controls[i].get('chooseFile').invalid && (documentArr.controls[i].get('chooseFile').dirty || documentArr.controls[i].get('chooseFile').touched)"
+                                                    class="text-danger error-msg">
+                                                    <div
+                                                        [hidden]="!documentArr.controls[i].get('chooseFile').errors?.required">
+                                                        Document name is required.
                                                     </div>
                                                 </div>
                                             </div>

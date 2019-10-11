@@ -21,6 +21,9 @@ export class LoginComponent implements OnInit {
   public loading = false;
   customLoadingTemplate: any;
 
+  //Validation variable
+  public submitted = false;
+
   public emailID: string;
   public uportUser: string = "false";
 
@@ -50,51 +53,63 @@ export class LoginComponent implements OnInit {
   valData() {
     this.loginForm = this.__fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]]
     });
   }
+
+  // convenience getter for easy access to form fields
+  get formValidation() { return this.loginForm.controls; }
 
   /**
    * @name onSubmit
    * @description submit login info
    */
   onSubmit() {
-    this.loading = true;
+    this.submitted = true;
+    console.log("Lgin data:", this.loginForm.value);
 
-    const loginPayload = {
-      email: this.loginForm.controls.email.value,
-      password: this.loginForm.controls.password.value
-    }
-    console.log("login data", loginPayload);
-
-    this.__authService.login(loginPayload).subscribe((resData: any) => {
-
-      if (resData.status == "SUCCESS") {
-        this.__authService.getUportInfo(loginPayload.email).then((data: any) => {
-          this.loading = false;
-          console.log("Res:", data[0]);
-          console.log("Data:", data[0]);
+    // stop here if form is invalid
+    if (this.loginForm.invalid) {
+      return;
+    } else {
+      // console.log("Lgin data:", this.loginForm.value);
 
 
-          var baseName = data[0].email;
-          baseName = baseName.substring(0, baseName.indexOf('@'));
-          const emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1);
+      this.loading = true;
 
-          this.toastr.success(emailName, 'Welcome ');
-          localStorage.setItem('uid', data[0].uid);
-          localStorage.setItem('uportUser', this.uportUser);
-          localStorage.setItem('email', data[0].email);
-          this.__router.navigate(['/feature/feature/full-layout/dashboard'])
-        })
-      } else if (resData.status == "ERROR") {
-        this.loading = false;
-        this.toastr.error(resData.response.message);
-        this.__router.navigate(['/auth/auth/login'])
+      const loginPayload = {
+        email: this.loginForm.controls.email.value,
+        password: this.loginForm.controls.password.value
       }
 
-    })
+      this.__authService.login(loginPayload).subscribe((resData: any) => {
+
+        if (resData.status == "SUCCESS") {
+          this.__authService.getUportInfo(loginPayload.email).then((data: any) => {
+            this.loading = false;
+            console.log("Res:", data[0]);
+            console.log("Data:", data[0]);
 
 
+            var baseName = data[0].email;
+            baseName = baseName.substring(0, baseName.indexOf('@'));
+            const emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1);
+
+            this.toastr.success(emailName, 'Welcome ');
+            localStorage.setItem('uid', data[0].uid);
+            localStorage.setItem('uportUser', this.uportUser);
+            localStorage.setItem('email', data[0].email);
+            this.__router.navigate(['/feature/feature/full-layout/dashboard'])
+          })
+        } else if (resData.status == "ERROR") {
+          this.loading = false;
+          this.toastr.error(resData.response.message);
+          this.__router.navigate(['/auth/auth/login'])
+        }
+
+      })
+
+    }
   }
 
 

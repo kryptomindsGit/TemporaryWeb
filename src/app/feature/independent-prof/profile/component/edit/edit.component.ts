@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class EditComponent implements OnInit {
 
-  // FormGroup object
+  // FormGroup object's
   public personalDetails: FormGroup;
   public qualificationDetails: FormGroup;
   public workExpDetails: FormGroup;
@@ -23,10 +23,11 @@ export class EditComponent implements OnInit {
   public yearArr = ['2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']
   public gradeArr = ['A', 'B', 'C', 'D', 'E', 'F'];
 
-  // Variable's
+  // Loader Variable's
   public editprofilefreelancer: any;
   public loading = false;
 
+  // Variable's
   public showMainContent: number = 1;
   public isUportUser: string;
   public email: string;
@@ -37,32 +38,41 @@ export class EditComponent implements OnInit {
   public checkMarked: string;
   public edu_catId: number;
 
+  // Document Variable's
   public fileType: any;
   public fileName: any;
   public fileObj: any;
 
+  //skill variables.
+  keyword = 'skill_cat_name';
+  skillItem: any = [];
 
-  // Array's
+  // Education Array's
   public congnitoID: any = [];
   public eduCatArr: any = [];
   public eduArr: any = [];
   public eduList: any = [];
   public eduListbyId: any = [];
+
+  // Skill Array's
   public skills: any = [];
   public categ: any = [];
 
+  // Address Array's
   public countryArr: any = [];
   public stateArr: any = [];
   public cityArr: any = [];
   public stateByIdArr: any = [];
   public cityByIdArr: any = [];
-  public freelancerArr: any = [];
 
+  // REST get API's Array's
+  public freelancerArr: any = [];
   public qualityArray: any = [];
   public freelancerEduArr: any = [];
   public freelancerOrgArr: any = [];
   public freelancerPortArr: any = [];
 
+  // Document Array's
   public FileArrData: any = [];
   public freelancerDocsArr: any = [];
   public docTypeArr: any = [];
@@ -70,14 +80,10 @@ export class EditComponent implements OnInit {
   public documentQualArray: any = [];
   public documentWorkArray: any = [];
 
+  // Skill Array's
   public freelancerSkillDetailsArr: any = [];
   public skillArr: any = [];
   public skillList: any = [];
-
-
-  //skill variables.
-  keyword = 'skill_cat_name';
-  skillItem: any = [];
 
   constructor(
     private __fb: FormBuilder,
@@ -112,10 +118,10 @@ export class EditComponent implements OnInit {
     /**
     * @description validate all form's fileds
     */
-    this.valPersonalProfile();
-    this.valQualificationProfile();
-    this.valWorlExpProfile();
-    this.valSkillsProfile();
+    this.validatePersonalProfile();
+    this.validateQualificationProfile();
+    this.validateWorlExpProfile();
+    this.validateSkillsProfile();
 
     /**
       * @description Get API call function
@@ -139,28 +145,28 @@ export class EditComponent implements OnInit {
    * @name valPersonalProfile
    * @description validating the Personal details form fields
    */
-  valPersonalProfile() {
+  validatePersonalProfile() {
     this.personalDetails = this.__fb.group({
       prefix: ['', Validators.required],
       first_name: ['', Validators.compose([
-        Validators.required,
+        Validators.required, Validators.maxLength(20),
         Validators.pattern('^[a-zA-Z \-\']+')
       ])],
       middle_name: ['', Validators.compose([
-        Validators.required,
+        Validators.required, Validators.maxLength(20),
         Validators.pattern('^[a-zA-Z \-\']+')
       ])],
       last_name: ['', Validators.compose([
-        Validators.required,
+        Validators.required, Validators.maxLength(20),
         Validators.pattern('^[a-zA-Z \-\']+')
       ])],
-      address_one: ['', Validators.required],
-      address_two: ['', Validators.required],
+      address_one: ['', [Validators.required, Validators.maxLength(25)]],
+      address_two: ['', [Validators.required, Validators.maxLength(25)]],
       country: ['', Validators.required],
       province: ['', Validators.required],
       city: ['', Validators.required],
       postal_code: ['', Validators.compose([
-        Validators.required,
+        Validators.required, Validators.maxLength(8), Validators.minLength(6),
         Validators.pattern("^[0-9]*$")
       ])],
       documents_personal: this.__fb.array([]),
@@ -171,7 +177,7 @@ export class EditComponent implements OnInit {
    * @name valQualificationProfile
    * @description validating the Qualification details form fields
    */
-  valQualificationProfile() {
+  validateQualificationProfile() {
     this.qualificationDetails = this.__fb.group({
       qualification: this.__fb.array([]),
     });
@@ -181,15 +187,15 @@ export class EditComponent implements OnInit {
    * @name valWorlExpProfile
    * @description validating the Work Exp details form fields
    */
-  valWorlExpProfile() {
+  validateWorlExpProfile() {
     this.workExpDetails = this.__fb.group({
       org_details: this.__fb.array([]),
       strength: this.__fb.array([]),
       weakness: this.__fb.array([]),
       portfolios: this.__fb.array([]),
-      references: ['', Validators.required],
-      area_of_expertise: ['', Validators.required],
-      psychomatric: ['', Validators.required],
+      references: ['', [Validators.required, Validators.maxLength(25)]],
+      area_of_expertise: ['', [Validators.required, Validators.maxLength(25)]],
+      psychomatric: ['', [Validators.required, Validators.maxLength(25)]],
       isFreelancer: ['', Validators.required],
       documents_work: this.__fb.array([])
     });
@@ -199,7 +205,7 @@ export class EditComponent implements OnInit {
    * @name valSkillsProfile
    * @description validating the Skill details form fields
    */
-  valSkillsProfile() {
+  validateSkillsProfile() {
     this.skillDetails = this.__fb.group({
       skills: this.__fb.array([]),
     });
@@ -532,18 +538,18 @@ export class EditComponent implements OnInit {
     })
   }
 
-    /**
- * @method getAllEducation
- * @param eduCat_id
- * @description get all education values based on selected education category id.
- */
+  /**
+* @method getAllEducation
+* @param eduCat_id
+* @description get all education values based on selected education category id.
+*/
 
 
-setEduListByCatId(eduCat_id, i) {
-  this.eduListbyId[eduCat_id] = this.eduList.filter((item) => item.edu_cat_id == eduCat_id);
-  this.qualificationDetails.get('qualification')['controls'][i].patchValue({ edu_cat_id: eduCat_id, edu_type_id: '' });
+  setEduListByCatId(eduCat_id, i) {
+    this.eduListbyId[eduCat_id] = this.eduList.filter((item) => item.edu_cat_id == eduCat_id);
+    this.qualificationDetails.get('qualification')['controls'][i].patchValue({ edu_cat_id: eduCat_id, edu_type_id: '' });
 
-}
+  }
 
   /**
    * @method getSkillsByID

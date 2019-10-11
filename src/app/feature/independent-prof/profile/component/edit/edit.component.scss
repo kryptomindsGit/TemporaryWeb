@@ -4,13 +4,13 @@
       BASIC CSS
 -------------------------------------------------------------------------*/
 
-.container-fluid {
-    font: 14px "Montserrat Regular";
-    background-color: $bg-back-color;
-    color: $text-color;
-    overflow: hidden;
-    font-weight: 400;
-}
+// .container-fluid {
+//     font: 14px "Montserrat Regular";
+//     background-color: $bg-back-color;
+//     color: $text-color;
+//     overflow: hidden;
+//     font-weight: 400;
+// }
 
 .card-body {
     padding: 0%;
@@ -97,266 +97,266 @@
 /*-----------------------------------------------------------------------
 FORM CSS
 -------------------------------------------------------------------------*/
-form {
-    padding: 20px 40px 20px 40px;
-}
+// form {
+//     padding: 20px 40px 20px 40px;
+// }
 
-.form-group {
-    margin-bottom: 20px;
-    position: relative;
-}
+// .form-group {
+//     margin-bottom: 20px;
+//     position: relative;
+// }
 
-.form-input {
-    padding-top: 20px;
-}
+// .form-input {
+//     padding-top: 20px;
+// }
 
-.form-label {
-    position: absolute;
-    transition: 0.25s ease;
-    -moz-transition: 0.25s ease;
-    -webkit-transition: 0.25s ease;
-    -o-transition: 0.25s ease;
-    -ms-transition: 0.25s ease;
-    color: $text-color;
-    left: 1rem;
-    top: 23px;
-}
+// .form-label {
+//     position: absolute;
+//     transition: 0.25s ease;
+//     -moz-transition: 0.25s ease;
+//     -webkit-transition: 0.25s ease;
+//     -o-transition: 0.25s ease;
+//     -ms-transition: 0.25s ease;
+//     color: $text-color;
+//     left: 1rem;
+//     top: 23px;
+// }
 
-// CSS for autofill background Start
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-    caret-color: $text-color;
-    -webkit-text-fill-color: $text-color !important;
-    transition: background-color 5000s ease-in-out 0s;
-}
+// // CSS for autofill background Start
+// input:-webkit-autofill,
+// input:-webkit-autofill:hover,
+// input:-webkit-autofill:focus,
+// textarea:-webkit-autofill,
+// textarea:-webkit-autofill:hover,
+// textarea:-webkit-autofill:focus,
+// select:-webkit-autofill,
+// select:-webkit-autofill:hover,
+// select:-webkit-autofill:focus {
+//     caret-color: $text-color;
+//     -webkit-text-fill-color: $text-color !important;
+//     transition: background-color 5000s ease-in-out 0s;
+// }
 
-// CSS for autofill background End
+// // CSS for autofill background End
 
-input,
-select {
-    transition: 0.3s ease;
-    -moz-transition: 0.3s ease;
-    -webkit-transition: 0.3s ease;
-    -o-transition: 0.3s ease;
-    -ms-transition: 0.3s ease;
-    padding-top: 10px;
-    -webkit-appearance: none;
-}
+// input,
+// select {
+//     transition: 0.3s ease;
+//     -moz-transition: 0.3s ease;
+//     -webkit-transition: 0.3s ease;
+//     -o-transition: 0.3s ease;
+//     -ms-transition: 0.3s ease;
+//     padding-top: 10px;
+//     -webkit-appearance: none;
+// }
 
-input:focus+.form-label,
-input:valid+.form-label,
-select:focus+.form-label,
-select:valid+.form-label {
-    top: 1px;
-    font-size: 0.9rem;
-    color: $blue-color;
-    background: transparent !important;
-}
+// input:focus+.form-label,
+// input:valid+.form-label,
+// select:focus+.form-label,
+// select:valid+.form-label {
+//     top: 1px;
+//     font-size: 0.9rem;
+//     color: $blue-color;
+//     background: transparent !important;
+// }
 
-input,
-select {
-    box-sizing: border-box;
-    width: 100%;
-    display: block;
-    border: none;
-    font-family: "Montserrat Regular";
-    color: $text-color;
-    background: transparent;
-    border-bottom: 1px solid $text-color;
-    padding: 4px 0;
-}
+// input,
+// select {
+//     box-sizing: border-box;
+//     width: 100%;
+//     display: block;
+//     border: none;
+//     font-family: "Montserrat Regular";
+//     color: $text-color;
+//     background: transparent;
+//     border-bottom: 1px solid $text-color;
+//     padding: 4px 0;
+// }
 
-input:focus,
-select:focus {
-    border-bottom: 1px solid $blue-color;
-}
+// input:focus,
+// select:focus {
+//     border-bottom: 1px solid $blue-color;
+// }
 
-input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 30px transparent inset;
-}
+// input:-webkit-autofill {
+//     -webkit-box-shadow: 0 0 0 30px transparent inset;
+// }
 
-input::-webkit-input-placeholder {
-    color: $text-color;
-}
+// input::-webkit-input-placeholder {
+//     color: $text-color;
+// }
 
-input::-moz-placeholder {
-    color: $text-color;
-}
+// input::-moz-placeholder {
+//     color: $text-color;
+// }
 
-input:-ms-input-placeholder {
-    color: $text-color;
-}
+// input:-ms-input-placeholder {
+//     color: $text-color;
+// }
 
-input:-moz-placeholder {
-    color: $text-color;
-}
+// input:-moz-placeholder {
+//     color: $text-color;
+// }
 
-//select
-select:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 30px transparent inset;
-}
+// //select
+// select:-webkit-autofill {
+//     -webkit-box-shadow: 0 0 0 30px transparent inset;
+// }
 
-select::-webkit-select-placeholder {
-    color: $text-color;
-}
+// select::-webkit-select-placeholder {
+//     color: $text-color;
+// }
 
-select::-moz-placeholder {
-    color: $text-color;
-}
+// select::-moz-placeholder {
+//     color: $text-color;
+// }
 
-select:-ms-select-placeholder {
-    color: $text-color;
-}
+// select:-ms-select-placeholder {
+//     color: $text-color;
+// }
 
-select:-moz-placeholder {
-    color: $text-color;
-}
+// select:-moz-placeholder {
+//     color: $text-color;
+// }
 
-input,
-select,
-textarea {
-    outline: none;
-    appearance: unset !important;
-    -moz-appearance: unset !important;
-    -webkit-appearance: unset !important;
-    -o-appearance: unset !important;
-    -ms-appearance: unset !important;
-}
+// input,
+// select,
+// textarea {
+//     outline: none;
+//     appearance: unset !important;
+//     -moz-appearance: unset !important;
+//     -webkit-appearance: unset !important;
+//     -o-appearance: unset !important;
+//     -ms-appearance: unset !important;
+// }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button,
-select::-webkit-outer-spin-button,
-select::-webkit-inner-spin-button {
-    appearance: none !important;
-    -moz-appearance: none !important;
-    -webkit-appearance: none !important;
-    -o-appearance: none !important;
-    -ms-appearance: none !important;
-    margin: 0;
-}
+// input::-webkit-outer-spin-button,
+// input::-webkit-inner-spin-button,
+// select::-webkit-outer-spin-button,
+// select::-webkit-inner-spin-button {
+//     appearance: none !important;
+//     -moz-appearance: none !important;
+//     -webkit-appearance: none !important;
+//     -o-appearance: none !important;
+//     -ms-appearance: none !important;
+//     margin: 0;
+// }
 
-input:focus,
-select:focus,
-textarea:focus {
-    outline: none;
-    box-shadow: none !important;
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    -o-box-shadow: none !important;
-    -ms-box-shadow: none !important;
-}
+// input:focus,
+// select:focus,
+// textarea:focus {
+//     outline: none;
+//     box-shadow: none !important;
+//     -moz-box-shadow: none !important;
+//     -webkit-box-shadow: none !important;
+//     -o-box-shadow: none !important;
+//     -ms-box-shadow: none !important;
+// }
 
-input[type=checkbox] {
-    appearance: checkbox !important;
-    -moz-appearance: checkbox !important;
-    -webkit-appearance: checkbox !important;
-    -o-appearance: checkbox !important;
-    -ms-appearance: checkbox !important;
-    width: 0.9rem;
-    height: 0.9rem;
-    border-width: 0;
-}
+// input[type=checkbox] {
+//     appearance: checkbox !important;
+//     -moz-appearance: checkbox !important;
+//     -webkit-appearance: checkbox !important;
+//     -o-appearance: checkbox !important;
+//     -ms-appearance: checkbox !important;
+//     width: 0.9rem;
+//     height: 0.9rem;
+//     border-width: 0;
+// }
 
-input[type="checkbox"]:checked {
-    background: #064d86;
-}
+// input[type="checkbox"]:checked {
+//     background: #064d86;
+// }
 
-input[type=radio] {
-    appearance: radio !important;
-    -moz-appearance: radio !important;
-    -webkit-appearance: radio !important;
-    -o-appearance: radio !important;
-    -ms-appearance: radio !important;
-}
+// input[type=radio] {
+//     appearance: radio !important;
+//     -moz-appearance: radio !important;
+//     -webkit-appearance: radio !important;
+//     -o-appearance: radio !important;
+//     -ms-appearance: radio !important;
+// }
 
-input:focus,
-select:focus,
-textarea:focus,
-button:focus {
-    outline: none !important;
-    background: $bg-front-color;
-}
+// input:focus,
+// select:focus,
+// textarea:focus,
+// button:focus {
+//     outline: none !important;
+//     background: $bg-front-color;
+// }
 
-#btn-30 {
-    display: flex;
-    justify-content: center;
-    margin: 1rem auto;
-    width: 30%;
-    background: $blue-color;
-    font-size: 15px;
-    color: #9e9d9d;
-    border: none
-}
+// #btn-30 {
+//     display: flex;
+//     justify-content: center;
+//     margin: 1rem auto;
+//     width: 30%;
+//     background: $blue-color;
+//     font-size: 15px;
+//     color: #9e9d9d;
+//     border: none
+// }
 
-#btn-30:hover {
-    color: #000;
-    background: $blue-color;
-}
+// #btn-30:hover {
+//     color: #000;
+//     background: $blue-color;
+// }
 
-#btn-70 {
-    display: flex;
-    justify-content: center;
-    margin: 1rem auto;
-    width: 70%;
-    background: #064d86;
-    font-size: 15px;
-    color: #9e9d9d;
-    border: none
-}
+// #btn-70 {
+//     display: flex;
+//     justify-content: center;
+//     margin: 1rem auto;
+//     width: 70%;
+//     background: #064d86;
+//     font-size: 15px;
+//     color: #9e9d9d;
+//     border: none
+// }
 
-#btn-70:hover {
-    color: #000;
-    background: #064d86;
-}
+// #btn-70:hover {
+//     color: #000;
+//     background: #064d86;
+// }
 
-#btn-equal {
-    display: flex;
-    justify-content: center;
-    margin: 1rem auto;
-    width: 100%;
-    background: #064d86;
-    font-size: 15px;
-    color: #9e9d9d;
-    border: none
-}
+// #btn-equal {
+//     display: flex;
+//     justify-content: center;
+//     margin: 1rem auto;
+//     width: 100%;
+//     background: #064d86;
+//     font-size: 15px;
+//     color: #9e9d9d;
+//     border: none
+// }
 
-#btn-equal:hover {
-    color: #000;
-    background: $blue-color;
-}
+// #btn-equal:hover {
+//     color: #000;
+//     background: $blue-color;
+// }
 
-.btnNext {
-    border: none;
-    border-radius: 2rem;
-    padding: 1%;
-    width: 8rem;
-    text-transform: uppercase;
-    cursor: pointer;
-    background: #064d86;
-    color: #fff;
-    float: right;
-    margin-bottom: 20px;
-}
+// .btnNext {
+//     border: none;
+//     border-radius: 2rem;
+//     padding: 1%;
+//     width: 8rem;
+//     text-transform: uppercase;
+//     cursor: pointer;
+//     background: #064d86;
+//     color: #fff;
+//     float: right;
+//     margin-bottom: 20px;
+// }
 
-.btnPrevious {
-    border: none;
-    border-radius: 2rem;
-    padding: 1%;
-    width: 8rem;
-    text-transform: uppercase;
-    cursor: pointer;
-    background: #064d86;
-    color: #fff;
-    float: left;
-    margin-bottom: 20px;
-}
+// .btnPrevious {
+//     border: none;
+//     border-radius: 2rem;
+//     padding: 1%;
+//     width: 8rem;
+//     text-transform: uppercase;
+//     cursor: pointer;
+//     background: #064d86;
+//     color: #fff;
+//     float: left;
+//     margin-bottom: 20px;
+// }
 
 .checkbox-grid-row {
     overflow: hidden;
@@ -398,6 +398,11 @@ button:focus {
 a:not([href]):not([tabindex]) {
     color: #000;
     // background: $bg-front-color;
+}
+
+.customCard tr td a {
+    color: #fff !important;
+    cursor: pointer;
 }
 
 a:not([href]):not([tabindex]):hover {
@@ -498,18 +503,27 @@ input[type='file'] {
     float: right;
 }
 
-.error-msg {
+// .error-msg {
+//     display: block;
+//     position: absolute;
+//     font-size: 0.8rem;
+//     bottom: -2em;
+//     margin-bottom: 0.2rem;
+// }
+
+.error-msg-skill {
     display: block;
     position: absolute;
-    font-size: 0.8rem;
+    font-size: 0.6rem;
     bottom: -2em;
     margin-bottom: 0.2rem;
 }
 
-span {
+.redstar {
     color: red;
-    font-size: 1rem;
+    font-size: 0.8rem;
     margin-left: 0.2rem;
+    font-weight: normal;
 }
 
 table tr td p {
@@ -521,118 +535,118 @@ table tr td p {
   -------------------------------------------------------------------------*/
 
 /****  floating-Lable style start ****/
-.floating-label {
-    position: relative;
-    margin-bottom: 20px;
-}
+// .floating-label {
+//     position: relative;
+//     margin-bottom: 20px;
+// }
 
-.floating-select {
-    font-size: 14px;
-    padding: 4px 4px;
-    display: block;
-    width: 100%;
-    height: 30px;
-    background-color: transparent;
-    border: none;
-    border-bottom: 1px solid $text-color;
-}
+// .floating-select {
+//     font-size: 14px;
+//     padding: 4px 4px;
+//     display: block;
+//     width: 100%;
+//     height: 30px;
+//     background-color: transparent;
+//     border: none;
+//     border-bottom: 1px solid $text-color;
+// }
 
-.floating-select:focus {
-    outline: none;
-    border-bottom: 2px solid #064d86;
-}
+// .floating-select:focus {
+//     outline: none;
+//     border-bottom: 2px solid #064d86;
+// }
 
-.selectlabel {
-    color: #999;
-    font-size: 14px;
-    font-weight: normal;
-    position: absolute;
-    pointer-events: none;
-    left: 5px;
-    top: 5px;
-    transition: 0.2s ease all;
-    -moz-transition: 0.2s ease all;
-    -webkit-transition: 0.2s ease all;
-}
+// .selectlabel {
+//     color: #999;
+//     font-size: 14px;
+//     font-weight: normal;
+//     position: absolute;
+//     pointer-events: none;
+//     left: 5px;
+//     top: 5px;
+//     transition: 0.2s ease all;
+//     -moz-transition: 0.2s ease all;
+//     -webkit-transition: 0.2s ease all;
+// }
 
-.floating-select:focus~label,
-.floating-select:not([value=""]):valid~label {
-    top: -18px;
-    font-size: 14px;
-    color: #064d86;
-}
+// .floating-select:focus~label,
+// .floating-select:not([value=""]):valid~label {
+//     top: -18px;
+//     font-size: 14px;
+//     color: #064d86;
+// }
 
-/* active state */
-.floating-select:focus~.bar:before,
-.floating-select:focus~.bar:after {
-    width: 50%;
-}
+// /* active state */
+// .floating-select:focus~.bar:before,
+// .floating-select:focus~.bar:after {
+//     width: 50%;
+// }
 
-*,
-*:before,
-*:after {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
+// *,
+// *:before,
+// *:after {
+//     -webkit-box-sizing: border-box;
+//     -moz-box-sizing: border-box;
+//     box-sizing: border-box;
+// }
 
-.floating-textarea {
-    min-height: 30px;
-    max-height: 260px;
-    overflow: hidden;
-    overflow-x: hidden;
-}
+// .floating-textarea {
+//     min-height: 30px;
+//     max-height: 260px;
+//     overflow: hidden;
+//     overflow-x: hidden;
+// }
 
-/* highlighter */
-.highlight {
-    position: absolute;
-    height: 50%;
-    width: 100%;
-    top: 15%;
-    left: 0;
-    pointer-events: none;
-    opacity: 0.5;
-}
+// /* highlighter */
+// .highlight {
+//     position: absolute;
+//     height: 50%;
+//     width: 100%;
+//     top: 15%;
+//     left: 0;
+//     pointer-events: none;
+//     opacity: 0.5;
+// }
 
-/* active state */
-.floating-select:focus~.highlight {
-    -webkit-animation: inputHighlighter 0.3s ease;
-    -moz-animation: inputHighlighter 0.3s ease;
-    animation: inputHighlighter 0.3s ease;
-}
+// /* active state */
+// .floating-select:focus~.highlight {
+//     -webkit-animation: inputHighlighter 0.3s ease;
+//     -moz-animation: inputHighlighter 0.3s ease;
+//     animation: inputHighlighter 0.3s ease;
+// }
 
 /* animation */
-@-webkit-keyframes inputHighlighter {
-    from {
-        background: #064d86;
-    }
+// @-webkit-keyframes inputHighlighter {
+//     from {
+//         background: #064d86;
+//     }
 
-    to {
-        width: 0;
-        background: transparent;
-    }
-}
+//     to {
+//         width: 0;
+//         background: transparent;
+//     }
+// }
 
-@-moz-keyframes inputHighlighter {
-    from {
-        background: #064d86;
-    }
+// @-moz-keyframes inputHighlighter {
+//     from {
+//         background: #064d86;
+//     }
 
-    to {
-        width: 0;
-        background: transparent;
-    }
-}
+//     to {
+//         width: 0;
+//         background: transparent;
+//     }
+// }
 
-@keyframes inputHighlighter {
-    from {
-        background: #064d86;
-    }
+// @keyframes inputHighlighter {
+//     from {
+//         background: #064d86;
+//     }
 
-    to {
-        width: 0;
-        background: transparent;
-    }
-}
+//     to {
+//         width: 0;
+//         background: transparent;
+//     }
+// }
 
 /****  floating-Lable style end ****/

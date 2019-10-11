@@ -3,17 +3,15 @@
 /*-----------------------------------------------------------------------
       BASIC CSS
 -------------------------------------------------------------------------*/
-// .row {
-//     margin-right: 0px !important;
-// }
 
-.container-fluid {
-    font: 14px "Montserrat Regular";
-    background-color: $bg-back-color;
-    color: $text-color;
-    overflow: auto;
-    font-weight: 400;
-}
+
+// .container-fluid {
+//     font: 14px "Montserrat Regular";
+//     background-color: $bg-back-color;
+//     color: $text-color;
+//     overflow: auto;
+//     font-weight: 400;
+// }
 
 .card-body {
     padding: 0%;
@@ -97,9 +95,9 @@
     letter-spacing: 0.1em
 }
 
-// /*-----------------------------------------------------------------------
-// FORM CSS
-// -------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------
+FORM CSS
+-------------------------------------------------------------------------*/
 // form {
 //     padding: 20px 40px 20px 40px;
 // }
@@ -143,8 +141,7 @@
 // // CSS for autofill background End
 
 // input,
-// select,
-// textarea {
+// select {
 //     transition: 0.3s ease;
 //     -moz-transition: 0.3s ease;
 //     -webkit-transition: 0.3s ease;
@@ -157,18 +154,15 @@
 // input:focus+.form-label,
 // input:valid+.form-label,
 // select:focus+.form-label,
-// select:valid+.form-label,
-// textarea:focus+.form-label,
-// textarea:valid+.form-label {
+// select:valid+.form-label {
 //     top: 1px;
-//     font-size: 11px;
+//     font-size: 0.9rem;
 //     color: $blue-color;
 //     background: transparent !important;
 // }
 
 // input,
-// select,
-// textarea {
+// select {
 //     box-sizing: border-box;
 //     width: 100%;
 //     display: block;
@@ -180,9 +174,17 @@
 //     padding: 4px 0;
 // }
 
+// option {
+//     font-weight: normal;
+//     display: block;
+//     white-space: pre;
+//     min-height: 1.2em;
+//     padding: 0px 2px 1px;
+//     color: $bg-dropdown-color;
+// }
+
 // input:focus,
-// select:focus,
-// textarea:focus {
+// select:focus {
 //     border-bottom: 1px solid $blue-color;
 // }
 
@@ -206,6 +208,26 @@
 //     color: $text-color;
 // }
 
+// //select
+// select:-webkit-autofill {
+//     -webkit-box-shadow: 0 0 0 30px transparent inset;
+// }
+
+// select::-webkit-select-placeholder {
+//     color: $text-color;
+// }
+
+// select::-moz-placeholder {
+//     color: $text-color;
+// }
+
+// select:-ms-select-placeholder {
+//     color: $text-color;
+// }
+
+// select:-moz-placeholder {
+//     color: $text-color;
+// }
 
 // input,
 // select,
@@ -219,7 +241,9 @@
 // }
 
 // input::-webkit-outer-spin-button,
-// input::-webkit-inner-spin-button {
+// input::-webkit-inner-spin-button,
+// select::-webkit-outer-spin-button,
+// select::-webkit-inner-spin-button {
 //     appearance: none !important;
 //     -moz-appearance: none !important;
 //     -webkit-appearance: none !important;
@@ -251,7 +275,7 @@
 // }
 
 // input[type="checkbox"]:checked {
-//     background: $btn-bg-color;
+//     background: #064d86;
 // }
 
 // input[type=radio] {
@@ -262,279 +286,87 @@
 //     -ms-appearance: radio !important;
 // }
 
+// input:focus,
+// select:focus,
+// textarea:focus,
+// button:focus {
+//     outline: none !important;
+//     background: $bg-front-color;
+// }
 
-/*-----------------------------------------------------------------------
-FORM CSS
--------------------------------------------------------------------------*/
-form {
-    padding: 20px 40px 20px 40px;
-}
+// #btn-30 {
+//     display: flex;
+//     justify-content: center;
+//     margin: 1rem auto;
+//     width: 30%;
+//     background: $blue-color;
+//     font-size: 15px;
+//     color: #9e9d9d;
+//     border: none
+// }
 
-.form-group {
-    margin-bottom: 20px;
-    position: relative;
-}
+// #btn-30:hover {
+//     color: #000;
+//     background: $blue-color;
+// }
 
-.form-input {
-    padding-top: 20px;
-}
+// #btn-70 {
+//     display: flex;
+//     justify-content: center;
+//     margin: 1rem auto;
+//     width: 70%;
+//     background: $btn-bg-color;
+//     font-size: 15px;
+//     color: #9e9d9d;
+//     border: none
+// }
 
-.form-label {
-    position: absolute;
-    transition: 0.25s ease;
-    -moz-transition: 0.25s ease;
-    -webkit-transition: 0.25s ease;
-    -o-transition: 0.25s ease;
-    -ms-transition: 0.25s ease;
-    color: $text-color;
-    left: 1rem;
-    top: 23px;
-}
+// #btn-70:hover {
+//     color: #000;
+//     background: $btn-bg-color;
+// }
 
-// CSS for autofill background Start
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-    caret-color: $text-color;
-    -webkit-text-fill-color: $text-color !important;
-    transition: background-color 5000s ease-in-out 0s;
-}
+// #btn-equal {
+//     display: flex;
+//     justify-content: center;
+//     margin: 1rem auto;
+//     width: 100%;
+//     background: $btn-bg-color;
+//     font-size: 15px;
+//     color: #9e9d9d;
+//     border: none
+// }
 
-// CSS for autofill background End
+// #btn-equal:hover {
+//     color: #000;
+//     background: $blue-color;
+// }
 
-input,
-select {
-    transition: 0.3s ease;
-    -moz-transition: 0.3s ease;
-    -webkit-transition: 0.3s ease;
-    -o-transition: 0.3s ease;
-    -ms-transition: 0.3s ease;
-    padding-top: 10px;
-    -webkit-appearance: none;
-}
+// .btnNext {
+//     border: none !important;
+//     border-radius: 2rem;
+//     padding: 1%;
+//     width: 8rem;
+//     text-transform: uppercase;
+//     cursor: pointer;
+//     background: $btn-bg-color;
+//     color: #fff;
+//     float: right;
+//     margin-bottom: 20px;
+// }
 
-input:focus+.form-label,
-input:valid+.form-label,
-select:focus+.form-label,
-select:valid+.form-label {
-    top: 1px;
-    font-size: 0.9rem;
-    color: $blue-color;
-    background: transparent !important;
-}
-
-input,
-select {
-    box-sizing: border-box;
-    width: 100%;
-    display: block;
-    border: none;
-    font-family: "Montserrat Regular";
-    color: $text-color;
-    background: transparent;
-    border-bottom: 1px solid $text-color;
-    padding: 4px 0;
-}
-
-option {
-    font-weight: normal;
-    display: block;
-    white-space: pre;
-    min-height: 1.2em;
-    padding: 0px 2px 1px;
-    color: $bg-dropdown-color;
-}
-
-input:focus,
-select:focus {
-    border-bottom: 1px solid $blue-color;
-}
-
-input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 30px transparent inset;
-}
-
-input::-webkit-input-placeholder {
-    color: $text-color;
-}
-
-input::-moz-placeholder {
-    color: $text-color;
-}
-
-input:-ms-input-placeholder {
-    color: $text-color;
-}
-
-input:-moz-placeholder {
-    color: $text-color;
-}
-
-//select
-select:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 30px transparent inset;
-}
-
-select::-webkit-select-placeholder {
-    color: $text-color;
-}
-
-select::-moz-placeholder {
-    color: $text-color;
-}
-
-select:-ms-select-placeholder {
-    color: $text-color;
-}
-
-select:-moz-placeholder {
-    color: $text-color;
-}
-
-input,
-select,
-textarea {
-    outline: none;
-    appearance: unset !important;
-    -moz-appearance: unset !important;
-    -webkit-appearance: unset !important;
-    -o-appearance: unset !important;
-    -ms-appearance: unset !important;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button,
-select::-webkit-outer-spin-button,
-select::-webkit-inner-spin-button {
-    appearance: none !important;
-    -moz-appearance: none !important;
-    -webkit-appearance: none !important;
-    -o-appearance: none !important;
-    -ms-appearance: none !important;
-    margin: 0;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-    outline: none;
-    box-shadow: none !important;
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    -o-box-shadow: none !important;
-    -ms-box-shadow: none !important;
-}
-
-input[type=checkbox] {
-    appearance: checkbox !important;
-    -moz-appearance: checkbox !important;
-    -webkit-appearance: checkbox !important;
-    -o-appearance: checkbox !important;
-    -ms-appearance: checkbox !important;
-    width: 0.9rem;
-    height: 0.9rem;
-    border-width: 0;
-}
-
-input[type="checkbox"]:checked {
-    background: #064d86;
-}
-
-input[type=radio] {
-    appearance: radio !important;
-    -moz-appearance: radio !important;
-    -webkit-appearance: radio !important;
-    -o-appearance: radio !important;
-    -ms-appearance: radio !important;
-}
-
-input:focus,
-select:focus,
-textarea:focus,
-button:focus {
-    outline: none !important;
-    background: $bg-front-color;
-}
-
-#btn-30 {
-    display: flex;
-    justify-content: center;
-    margin: 1rem auto;
-    width: 30%;
-    background: $blue-color;
-    font-size: 15px;
-    color: #9e9d9d;
-    border: none
-}
-
-#btn-30:hover {
-    color: #000;
-    background: $blue-color;
-}
-
-#btn-70 {
-    display: flex;
-    justify-content: center;
-    margin: 1rem auto;
-    width: 70%;
-    background: $btn-bg-color;
-    font-size: 15px;
-    color: #9e9d9d;
-    border: none
-}
-
-#btn-70:hover {
-    color: #000;
-    background: $btn-bg-color;
-}
-
-#btn-equal {
-    display: flex;
-    justify-content: center;
-    margin: 1rem auto;
-    width: 100%;
-    background: $btn-bg-color;
-    font-size: 15px;
-    color: #9e9d9d;
-    border: none
-}
-
-#btn-equal:hover {
-    color: #000;
-    background: $blue-color;
-}
-
-.btnNext {
-    border: none !important;
-    border-radius: 2rem;
-    padding: 1%;
-    width: 8rem;
-    text-transform: uppercase;
-    cursor: pointer;
-    background: $btn-bg-color;
-    color: #fff;
-    float: right;
-    margin-bottom: 20px;
-}
-
-.btnPrevious {
-    border: none !important;
-    border-radius: 2rem;
-    padding: 1%;
-    width: 8rem;
-    text-transform: uppercase;
-    cursor: pointer;
-    background: $btn-bg-color;
-    color: #fff;
-    float: left;
-    margin-bottom: 20px;
-}
+// .btnPrevious {
+//     border: none !important;
+//     border-radius: 2rem;
+//     padding: 1%;
+//     width: 8rem;
+//     text-transform: uppercase;
+//     cursor: pointer;
+//     background: $btn-bg-color;
+//     color: #fff;
+//     float: left;
+//     margin-bottom: 20px;
+// }
 
 .checkbox-grid-row {
     overflow: hidden;
@@ -558,7 +390,7 @@ button:focus {
     text-transform: uppercase;
     cursor: pointer;
     background: $btn-bg-color;
-    color: #fff;
+    color: $white-color;
     float: right;
     margin-bottom: 20px;
     align-content: center;
@@ -577,8 +409,9 @@ a:not([href]):not([tabindex]) {
     color: #000;
     // background: $bg-front-color;
 }
-.customCard tr td a{
-    color: #fff !important;
+
+.customCard tr td a {
+    color: $white-color !important;
     cursor: pointer;
 }
 
@@ -623,7 +456,7 @@ button:focus {
     text-transform: uppercase;
     cursor: pointer;
     background: $btn-bg-color;
-    color: #9e9d9d;
+    color: $white-color;
     float: center;
     margin: 20px auto;
 }
@@ -638,7 +471,7 @@ button:focus {
     font-size: 1rem;
     cursor: pointer;
     background: $btn-bg-color;
-    color: #9e9d9d;
+    color: $white-color;
     float: right;
 }
 
@@ -652,7 +485,7 @@ button:focus {
     font-size: 1rem;
     cursor: pointer;
     background: $btn-bg-color;
-    color: #9e9d9d;
+    color: $white-color;
     float: right;
 }
 
@@ -666,7 +499,7 @@ button:focus {
     font-size: 1rem;
     cursor: pointer;
     background: $btn-bg-color;
-    color: #9e9d9d;
+    color: $white-color;
     float: left;
 }
 
@@ -674,13 +507,13 @@ button:focus {
     float: right;
 }
 
-.error-msg {
-    display: block;
-    position: absolute;
-    font-size: 0.8rem;
-    bottom: -2em;
-    margin-bottom: 0.2rem;
-}
+// .error-msg {
+//     display: block;
+//     position: absolute;
+//     font-size: 0.8rem;
+//     bottom: -2em;
+//     margin-bottom: 0.2rem;
+// }
 
 .error-msg-skill {
     display: block;
@@ -690,7 +523,7 @@ button:focus {
     margin-bottom: 0.2rem;
 }
 
-span {
+.redstar {
     color: red;
     font-size: 0.8rem;
     margin-left: 0.2rem;

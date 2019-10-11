@@ -1,16 +1,17 @@
 @import "../../../assets/css/theme_colors";
 
-body {
-    width: 100%;
-    background: $bg-back-color;
-    color: $text-color;
-    left: 0%;
-    right: 0%;
-}
+// body {
+//     width: 100%;
+//     background: $bg-back-color;
+//     color: $text-color;
+//     left: 0%;
+//     right: 0%;
+// }
 
 #page-content-wrapper {
     width: 100% !important;
     min-height: 100vh !important;
     background: $bg-back-color;
     color: $text-color;
+    margin-top: 6.8rem;
 }

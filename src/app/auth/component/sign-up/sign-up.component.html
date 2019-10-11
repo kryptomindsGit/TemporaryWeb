@@ -9,17 +9,15 @@
                 <div class="form-group form-input">
                     <input type="text" formControlName="email" name="name" id="email" value="" required />
                     <label for="email" class="form-label">Email</label>
-
-                    <div *ngIf="signupForm.controls['email'].invalid && (signupForm.controls['email'].dirty || signupForm.controls['email'].touched)"
+                    <div *ngIf="submitted && formValidation.email.errors || signupForm.get('email').invalid && (signupForm.get('email').dirty || signupForm.get('email').touched)"
                         class="text-danger error-msg">
-                        <div [hidden]="!signupForm.controls['email'].errors.required">
+
+                        <div *ngIf="signupForm.get('email').errors.required">
                             Email is required.
                         </div>
-                    </div>
-                    <div *ngIf="signupForm.controls['email'].invalid && (signupForm.controls['email'].dirty || signupForm.controls['email'].touched)"
-                        class="text-danger error-msg">
-                        <div *ngIf="signupForm.controls['email'].errors.email">
-                            require valid Email address.
+
+                        <div *ngIf="signupForm.get('email').errors.email">
+                            Require valid Email address.
                         </div>
                     </div>
                 </div>
@@ -27,34 +25,31 @@
                 <div class="form-group form-input">
                     <input type="password" formControlName="password" name="name" id="password" value="" required />
                     <label for="password" class="form-label">Password</label>
-                    <span class="text-font">(Enter one uppercase, one special character, minimum 8 characters)</span>
+                    <!-- <span class="text-font">(Enter one uppercase, one special character, minimum 8 characters)</span> -->
 
-                    <div *ngIf="signupForm.controls['password'].invalid && (signupForm.controls['password'].dirty || signupForm.controls['password'].touched)"
+                    <div *ngIf="submitted && formValidation.password.errors || signupForm.get('password').invalid && (signupForm.get('password').dirty || signupForm.get('password').touched)"
                         class="text-danger error-msg">
-                        <div [hidden]="!signupForm.controls['password'].errors.required">
+
+                        <div *ngIf="signupForm.get('password').errors.required" class="mt-2">
                             Password is required.
                         </div>
-                    </div>
 
-                    <div *ngIf="signupForm.controls['password'].invalid && (signupForm.controls['password'].dirty || signupForm.controls['password'].touched)"
-                        class="text-danger error-msg">
-                        <div *ngIf="signupForm.controls['password'].errors.minLength">
-                            Require min 8 character.
+                        <div *ngIf="signupForm.get('password').errors.pattern">
+                            Password should contain one uppercase, one digit, one special character, minimum 8 and
+                            maximum 20 characters long.
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group form-input">
-                    <!-- <label for="country" class="form-label">Country</label> -->
                     <select formControlName="custom_country" id="country" required>
-                        <!-- <option disabled value="">Country</option> -->
                         <option *ngFor="let country of countryArr" [ngValue]="country.name">
                             {{country.name}}
                         </option>
                     </select>
-                    <label  class="form-label" for="country">Country</label>
+                    <label class="form-label" for="country">Country</label>
 
-                    <div *ngIf="signupForm.controls['custom_country'].invalid && (signupForm.controls['custom_country'].dirty || signupForm.controls['custom_country'].touched)"
+                    <div *ngIf="submitted && formValidation.custom_country.errors || signupForm.controls['custom_country'].invalid && (signupForm.controls['custom_country'].dirty || signupForm.controls['custom_country'].touched)"
                         class="text-danger error-msg">
                         <div [hidden]="!signupForm.controls['custom_country'].errors.required">
                             Country is required.
@@ -66,12 +61,28 @@
                     <input type="text" formControlName="phone_no" name="name" id="phone_number" value="" required />
                     <label for="phone_number" class="form-label">Phone Number</label>
                     <span class="text-font">(Enter Phone number with format: +91 and 10 digit)</span>
-                    <div *ngIf="signupForm.controls['phone_no'].invalid && (signupForm.controls['phone_no'].dirty || signupForm.controls['phone_no'].touched)"
+
+                    <div *ngIf="submitted && formValidation.phone_no.errors || signupForm.get('phone_no').invalid && (signupForm.get('phone_no').dirty || signupForm.get('phone_no').touched)"
+                        class="text-danger error-msg">
+
+                        <div *ngIf="signupForm.get('phone_no').errors.required">
+                            Phone no is required.
+                        </div>
+
+                        <!-- <div *ngIf="signupForm.get('phone_no').errors.isValidContactNumber">
+                            Require valid Phone number with format: +91 and 10 digit.
+                        </div> -->
+
+                        <!-- <div *ngIf="signupForm.get('phone_no').errors.pattern">
+                            Require valid Phone number with format: +91 and 10 digit.
+                        </div> -->
+                    </div>
+                    <!-- <div *ngIf="signupForm.controls['phone_no'].invalid && (signupForm.controls['phone_no'].dirty || signupForm.controls['phone_no'].touched)"
                         class="text-danger error-msg">
                         <div [hidden]="!signupForm.controls['phone_no'].errors.required">
                             Phone Number is required.
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <br>
@@ -103,7 +114,7 @@
                         </div>
 
                     </div>
-                    <div *ngIf="signupForm.controls['custom_role'].invalid && (signupForm.controls['custom_role'].dirty || signupForm.controls['custom_role'].touched)"
+                    <div *ngIf="submitted && formValidation.custom_role.errors || signupForm.controls['custom_role'].invalid && (signupForm.controls['custom_role'].dirty || signupForm.controls['custom_role'].touched)"
                         class="text-danger error-msg">
                         <div [hidden]="!signupForm.controls['custom_role'].errors.required">
                             Role is required.
@@ -111,8 +122,7 @@
                     </div>
                 </div>
 
-                <button type="button" #focusableSubmit class="btn" id="btn-60"
-                    [disabled]="signupForm.pristine || signupForm.invalid" (click)="onSubmit()">Sign up</button>
+                <button type="button" #focusableSubmit class="btn" id="btn-60" (click)="onSubmit()">Sign up</button>
             </form>
 
 

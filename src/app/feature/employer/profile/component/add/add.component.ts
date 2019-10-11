@@ -6,12 +6,17 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 
+//Custome global validation
+import { GlobalValidationDirective } from '../../../../../shared/global-validation.directive';
+
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss']
 })
 export class AddComponent implements OnInit {
+
+  submitted = false;
 
   // FormGroup object's
   public employerProfileForm: FormGroup;
@@ -79,25 +84,28 @@ export class AddComponent implements OnInit {
    */
   valEmpProfile() {
     this.employerProfileForm = this.__fb.group({
-      comapany_name: ['', Validators.required],
-      website_addr: ['', Validators.required],
-      address_line_one: ['', Validators.required],
-      address_line_two: ['', Validators.required],
-      country: ['', Validators.required],
-      state: ['', Validators.required],
-      city: ['', Validators.required],
-      zipcode: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      business_cat: ['', Validators.required],
-      company_profile: ['', Validators.required],
-      company_rep_det: ['', Validators.required],
+      comapany_name: ['', [Validators.required, Validators.maxLength(25)]],
+      website_addr: ['', [Validators.required, Validators.maxLength(25)]],
+      address_line_one: ['', [Validators.required, Validators.maxLength(25)]],
+      address_line_two: ['', [Validators.required, Validators.maxLength(25)]],
+      country: ['', [Validators.required, Validators.maxLength(25)]],
+      state: ['', [Validators.required, Validators.maxLength(25)]],
+      city: ['', [Validators.required, Validators.maxLength(25)]],
+      zipcode: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.maxLength(6)]],
+      business_cat: ['', [Validators.required, Validators.maxLength(25)]],
+      company_profile: ['', [Validators.required, Validators.maxLength(25)]],
+      company_rep_det: ['', [Validators.required, Validators.maxLength(25)]],
       documents: this.__fb.array([this.__fb.group(
         {
-          chooseFile: ['', Validators.required],
-          docType: ['', Validators.required]
+          chooseFile: ['', [Validators.required, Validators.maxLength(25)]],
+          docType: ['', [Validators.required, Validators.maxLength(25)]]
         }
       )]),
     })
   }
+
+  // convenience getter for easy access to form fields
+  get formValidation() { return this.employerProfileForm.controls; }
 
   /**
   * @description FormArray (Dynamicaly create input)
@@ -142,8 +150,8 @@ export class AddComponent implements OnInit {
    */
   setCountryID(country_id) {
     this.getStateByID(country_id)
-    console.log("Country ID:",country_id );
-    
+    console.log("Country ID:", country_id);
+
   }
 
   /**
@@ -242,48 +250,52 @@ export class AddComponent implements OnInit {
    * @description submit the form fileds values
    */
   onSubmit() {
-    this.loading = true;
-    console.log(this.employerProfileForm);
-    let documensFile: any = [
-      'file_name',
-      'file_type'
-    ];
+    this.submitted = true;
+    if (this.employerProfileForm.invalid) {
+      return;
+    } else {
+      this.loading = true;
+      console.log(this.employerProfileForm);
+      let documensFile: any = [
+        'file_name',
+        'file_type'
+      ];
 
-    documensFile = [
-      ...this.documentFileArr
-    ];
+      documensFile = [
+        ...this.documentFileArr
+      ];
 
-    const employerProfileVal = {
-      cognito_id: this.congnitoId,
-      uid: this.uid,
-      email: this.email_id,
-      company_name: this.employerProfileForm.controls.comapany_name.value,
-      website_addr: this.employerProfileForm.controls.website_addr.value,
-      address_line_1: this.employerProfileForm.controls.address_line_one.value,
-      address_line_2: this.employerProfileForm.controls.address_line_two.value,
-      country: this.employerProfileForm.controls.country.value,
-      state: this.employerProfileForm.controls.state.value,
-      city: this.employerProfileForm.controls.city.value,
-      zipcode: this.employerProfileForm.controls.zipcode.value,
-      company_profile: this.employerProfileForm.controls.company_profile.value,
-      business_cat: this.employerProfileForm.controls.business_cat.value,
-      company_rep_det: this.employerProfileForm.controls.company_rep_det.value,
-      chooseFile: documensFile,
+      const employerProfileVal = {
+        cognito_id: this.congnitoId,
+        uid: this.uid,
+        email: this.email_id,
+        company_name: this.employerProfileForm.controls.comapany_name.value,
+        website_addr: this.employerProfileForm.controls.website_addr.value,
+        address_line_1: this.employerProfileForm.controls.address_line_one.value,
+        address_line_2: this.employerProfileForm.controls.address_line_two.value,
+        country: this.employerProfileForm.controls.country.value,
+        state: this.employerProfileForm.controls.state.value,
+        city: this.employerProfileForm.controls.city.value,
+        zipcode: this.employerProfileForm.controls.zipcode.value,
+        company_profile: this.employerProfileForm.controls.company_profile.value,
+        business_cat: this.employerProfileForm.controls.business_cat.value,
+        company_rep_det: this.employerProfileForm.controls.company_rep_det.value,
+        chooseFile: documensFile,
+      }
+      console.log(" Submit values:", employerProfileVal);
+
+      this.__profileService.createEmployer(employerProfileVal).then((resData: any) => {
+        console.log(resData);
+        this.loading = false;
+        if (resData.status == 'success') {
+          this.toastr.success("Profile added Successfully");
+          this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view', this.email_id]);
+        }
+        else if (resData.status == 'error') {
+          this.toastr.error("Profile not saved");
+        }
+      });
     }
-    console.log(" Submit values:", employerProfileVal);
-
-    this.__profileService.createEmployer(employerProfileVal).then((resData: any) => {
-      console.log(resData);
-      this.loading = false;
-      if (resData.status == 'success') {
-        this.toastr.success("Profile added Successfully");
-        this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view', this.email_id]);
-      }
-      else if (resData.status == 'error') {
-        this.toastr.error("Profile not saved");
-      }
-    });
-
   }
 
   /**

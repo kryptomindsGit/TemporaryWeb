@@ -1,7 +1,14 @@
 <div class="row">
   <div class="col-12">
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <!-- <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button> -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+
+      <div class="sidebar-heading text-center">
+        <img src="../../../assets/images/konnecteum_logo.png" alt="Konnecteum"><br>
+        <h6 class="logo-font">Konnecteum</h6>
+      </div>
+
+      <button class="btn togglebtn" data-toggle="collapse" href="#sidebar-wrapper" id="menu-toggle"><i
+          class="fa fa-bars" aria-hidden="true"></i></button>
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,8 +37,8 @@
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" (click)="onLogout()">Logout</a>
             </div>
-            <label >{{emailName}} <span>({{userRole}})</span></label>
-           
+            <label>{{emailName}} <span>({{userRole}})</span></label>
+
             <!-- <label >( {{userRole}} )</label> -->
           </li>
         </ul>

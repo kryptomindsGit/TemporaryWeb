@@ -23,14 +23,14 @@ export class AddComponent implements OnInit {
   loading = false;
   addWorkPackage: any;
 
-  calAvgRate:any = 'ETH 1';
-  calculateAvgRate:boolean = false;
+  calAvgRate: any = 'ETH 1';
+  calculateAvgRate: boolean = false;
 
   //Static Arrays 
   complexityArr = ['High', 'Medium', 'Low'];
   skillLevelArr = ['Moderate', 'Intermediate', 'Beginner'];
   projectTypeArr = ['Full-time', 'Part-time'];
-  currencyArr = ['ETH','INR', 'USD', 'IDR', 'AUD', 'EUR'];
+  currencyArr = ['ETH', 'INR', 'USD', 'IDR', 'AUD', 'EUR'];
   countries = [];
   durationArr = ['days', 'months', 'years'];
   allDomainArr = [];
@@ -79,8 +79,8 @@ export class AddComponent implements OnInit {
 
   createProjectForm() {
     this.projectForm = this.fb.group({
-      proj_name: ['', [Validators.required]],
-      proj_desc: ['', [Validators.required]],
+      proj_name: ['', [Validators.required, Validators.maxLength(25)]],
+      proj_desc: ['', [Validators.required, Validators.maxLength(25)]],
       complexity: ['', [Validators.required]],
       duration_option: ['', [Validators.required]],
       durationYears: ['', [Validators.required]],
@@ -242,7 +242,7 @@ export class AddComponent implements OnInit {
 
 
   //calculateAvgRate()
-  calulateAvgRate(){
-    this.calculateAvgRate=this.calculateAvgRate ? false : true;;
+  calulateAvgRate() {
+    this.calculateAvgRate = this.calculateAvgRate ? false : true;;
   }
 }

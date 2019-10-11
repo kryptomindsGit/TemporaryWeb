@@ -17,6 +17,7 @@ export class UportSignUpComponent implements OnInit {
   //Variables
   public loading = false;
   public showMsg: string;
+  public submitted = false;
 
   //Array's
   public countryArr: any;
@@ -29,8 +30,8 @@ export class UportSignUpComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.valData();
-    this.getAllCountry();
+    this.validateData();
+    this.getCountry();
   }
 
   hello() {
@@ -39,23 +40,23 @@ export class UportSignUpComponent implements OnInit {
   }
 
   /**
-   * @name valData
+   * @name validateData
    * @description validate uport sign-up form data
    */
-  valData() {
+  validateData() {
     this.uportSignupForm = this.__fb.group({
       email: ['', [Validators.required, Validators.email]],
-      phone_no: ['', Validators.required],
+      phone_no: ['', [Validators.required, Validators.pattern('^[0-9\-\']+')]],
       role: ['', Validators.required],
       country: ['', [Validators.required, Validators.pattern('^[a-zA-Z \-\']+')]]
     });
   }
 
   /**
- * @method getAllCountry
+ * @method getCountry
  * @description get all country values.
  */
-  getAllCountry() {
+  getCountry() {
     this.__profileService.getFreelancerCountry().then((resData: any) => {
       this.countryArr = resData;
       console.log("countryArr:", this.countryArr);
@@ -63,49 +64,57 @@ export class UportSignUpComponent implements OnInit {
     })
   }
 
+  // convenience getter for easy access to form fields
+  get formValidation() { return this.uportSignupForm.controls; }
+
   /**
    * @name onSubmit
    * @description submit uport sipn-up info
    */
   onSubmit() {
-    this.loading = true;
-    console.log("Inside Submit btn");
+    this.submitted = true;
+    if (this.uportSignupForm.invalid) {
+      return;
+    } else {
 
-    const signupUportPayload = {
-      email: this.uportSignupForm.controls.email.value,
-      phone_no: this.uportSignupForm.controls.phone_no.value,
-      role: this.uportSignupForm.controls.role.value,
-      country: this.uportSignupForm.controls.country.value,
-      flag: 'Y'
-    }
+      this.loading = true;
+      console.log("Inside Submit btn");
 
-    console.log(signupUportPayload);
-
-
-
-    this.__authService.getUportInfo(this.uportSignupForm.controls.email.value).then((resData: any) => {
-      console.log("Res data :", resData == null);
-      console.log("Res data :", resData.length);
-      console.log("Res data :", resData.length > 0);
-      console.log("Res data :", resData[0]);
-
-      if (resData == null || resData[0] == undefined) {
-        let email = "email";
-        let flag = 'y';
-        localStorage.setItem(email, this.uportSignupForm.controls.email.value);
-
-        this.__authService.uportSignup(signupUportPayload).then((resData: any) => {
-          this.loading = false;
-          console.log("uportSignup ", resData);
-          this.showMsg = resData.message;
-          this.__router.navigate(['/auth/auth/uport-login']);
-        });
-      } else {
-        this.loading = false;
-        console.log("Your have signed up already with this email id please login...!!!");
-        this.__router.navigate(['/auth/auth/uport-login']);
+      const signupUportPayload = {
+        email: this.uportSignupForm.controls.email.value,
+        phone_no: this.uportSignupForm.controls.phone_no.value,
+        role: this.uportSignupForm.controls.role.value,
+        country: this.uportSignupForm.controls.country.value,
+        flag: 'Y'
       }
-    });
 
+      console.log(signupUportPayload);
+
+
+
+      this.__authService.getUportInfo(this.uportSignupForm.controls.email.value).then((resData: any) => {
+        console.log("Res data :", resData == null);
+        console.log("Res data :", resData.length);
+        console.log("Res data :", resData.length > 0);
+        console.log("Res data :", resData[0]);
+
+        if (resData == null || resData[0] == undefined) {
+          let email = "email";
+          let flag = 'y';
+          localStorage.setItem(email, this.uportSignupForm.controls.email.value);
+
+          this.__authService.uportSignup(signupUportPayload).then((resData: any) => {
+            this.loading = false;
+            console.log("uportSignup ", resData);
+            this.showMsg = resData.message;
+            this.__router.navigate(['/auth/auth/uport-login']);
+          });
+        } else {
+          this.loading = false;
+          console.log("Your have signed up already with this email id please login...!!!");
+          this.__router.navigate(['/auth/auth/uport-login']);
+        }
+      });
+    }
   }
 }

@@ -5,7 +5,7 @@
 -------------------------------------------------------------------------*/
 
 .section {
-  font: 14px "Montserrat Regular";
+  font: $font-size-label "Montserrat Regular";
   background-color: $bg-back-color;
   color: $text-color;
   font-weight: 400;
@@ -17,15 +17,15 @@
 }
 
 
-p{
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 hr {
   box-sizing: content-box;
   height: 0;
-  border-top: 1px solid rgba(255,255,255,0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 
@@ -120,7 +120,7 @@ form {
 
 .apply-button1 {
   font-size: 0.7rem;
-  color: #ffffff;
+  color: $white-color;
   border-color: rgba(127, 128, 129, 0.966);
   background: transparent !important;
   width: 10%;
@@ -173,7 +173,7 @@ a {
 
 .apply-button {
   font-size: 0.7rem;
-  color: #ffffff;
+  color: $white-color;
   border-color: rgba(127, 128, 129, 0.966);
   background: transparent !important;
   width: 30%;
@@ -187,7 +187,7 @@ a {
 
 .viewprofile2 {
   font-size: 0.7rem;
-  color: #ffffff;
+  color: $white-color;
   border-color: rgba(127, 128, 129, 0.966);
   background: transparent !important;
   width: 30%;
@@ -201,7 +201,7 @@ a {
 
 .viewprofile {
   font-size: 0.7rem;
-  color: #ffffff;
+  color: $white-color;
   border-color: rgba(127, 128, 129, 0.966);
   background: transparent !important;
   // width: 60%;
@@ -247,7 +247,8 @@ textarea {
   box-sizing: border-box;
   display: block;
   border: none;
-  font-family: "Montserrat Regular";;
+  font-family: "Montserrat Regular";
+  ;
   color: $text-color;
   background: transparent;
   border-bottom: 1px solid $text-color;
@@ -512,19 +513,19 @@ img:hover {
 
 .btn-accept {
   font-size: 0.7rem;
-  color: #ffffff;
+  color: $white-color;
   border-color: rgba(127, 128, 129, 0.966);
   background: green !important;
- // width: 30%;
+  // width: 30%;
 }
 
 
 .btn-reject {
   font-size: 0.7rem;
-  color: #ffffff;
+  color: $white-color;
   border-color: rgba(127, 128, 129, 0.966);
   background: rgb(252, 32, 3) !important;
- // width: 30%;
+  // width: 30%;
   margin-top: 10px;
 }
 
@@ -537,7 +538,7 @@ h4 {
   text-align: center;
 }
 
-.tab-content{
+.tab-content {
   font: 14px "Montserrat Regular";
   background-color: $bg-back-color;
   color: $text-color;

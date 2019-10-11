@@ -7,11 +7,11 @@
         </div>
         <div class="card-body">
           <form class="workpackage" [formGroup]="projectForm">
-            <label class="text-color">Posted by (Employer): &nbsp; &nbsp;  {{employerName}}</label>
+            <label class="text-color">Posted by (Employer): &nbsp; &nbsp; {{employerName}}</label>
             <!-- <button (click)="onProfileView()" class="btn viewprofile">View Profile</button> -->
             <hr>
-            <span> Need Reviewer  &nbsp; &nbsp;</span> <input type="checkbox" formControlName="yes_reviewer" (change)="isReviewer()"
-              (change)="show = !show" ng-model="show" [value]="true">
+            <span> Need Reviewer &nbsp; &nbsp;</span> <input type="checkbox" formControlName="yes_reviewer"
+              (change)="isReviewer()" (change)="show = !show" ng-model="show" [value]="true">
             <div class="row" *ngIf="show" id="divshow">
               <table class="table table-dark table-responsive table-bordered worktable">
                 <thead>
@@ -59,7 +59,7 @@
         </div>
         <div class="card-body">
           <form class="workpackage" [formGroup]="projectForm">
-            <label class="text-color">Posted Date: &nbsp; &nbsp;  {{ todayDate }}</label>
+            <label class="text-color">Posted Date: &nbsp; &nbsp; {{ todayDate }}</label>
 
             <div class="row">
               <div class="col-6">
@@ -67,10 +67,15 @@
                   <input type="text" formControlName="proj_name" id="proj_name" value="" required />
                   <label for="proj_desc" class="form-label">Project Name</label>
                   <div
-                    *ngIf="projectForm.controls['proj_name'].invalid && (projectForm.controls['proj_name'].dirty || projectForm.controls['proj_name'].touched)"
+                    *ngIf="projectForm.get('proj_name').invalid && (projectForm.get('proj_name').dirty || projectForm.get('proj_name').touched)"
                     class="text-danger error-msg">
-                    <div *ngIf="projectForm.controls['proj_name'].errors.required">
+
+                    <div *ngIf="projectForm.get('proj_name').errors.required">
                       Project Name is required.
+                    </div>
+
+                    <div *ngIf="projectForm.get('proj_name').errors.maxlength">
+                      Project Name must be at least 25 characters long.
                     </div>
                   </div>
                 </div>
@@ -103,10 +108,15 @@
               <textarea type="text" formControlName="proj_desc" id="proj_desc" value="" required></textarea>
               <label for="proj_desc" class="form-label">Project Description</label>
               <div
-                *ngIf="projectForm.controls['proj_desc'].invalid && (projectForm.controls['proj_desc'].dirty || projectForm.controls['proj_desc'].touched)"
+                *ngIf="projectForm.get('proj_desc').invalid && (projectForm.get('proj_desc').dirty || projectForm.get('proj_desc').touched)"
                 class="text-danger error-msg">
-                <div *ngIf="projectForm.controls['proj_desc'].errors.required">
+
+                <div *ngIf="projectForm.get('proj_desc').errors.required">
                   Project Description is required.
+                </div>
+
+                <div *ngIf="projectForm.get('proj_desc').errors.maxlength">
+                  Project Description must be at least 25 characters long.
                 </div>
               </div>
             </div>
@@ -135,10 +145,11 @@
                           <input type="text" formControlName="durationMonths" value="" required />
                           <label for="duration" class="form-label">Months</label>
                           <div
-                            *ngIf="projectForm.controls['durationMonths'].invalid && (projectForm.controls['durationMonths'].dirty || projectForm.controls['durationMonths'].touched)"
+                            *ngIf="projectForm.get('durationMonths').invalid && (projectForm.get('durationMonths').dirty || projectForm.get('durationMonths').touched)"
                             class="text-danger error-msg">
-                            <div *ngIf="projectForm.controls['durationMonths'].errors.required">
-                              Enter no. of months.
+
+                            <div *ngIf="projectForm.get('durationMonths').errors.required">
+                              Months is required.
                             </div>
                           </div>
                         </div>
@@ -148,10 +159,11 @@
                           <input type="text" formControlName="durationDays" value="" required />
                           <label for="durationDays" class="form-label">Days</label>
                           <div
-                            *ngIf="projectForm.controls['durationDays'].invalid && (projectForm.controls['durationDays'].dirty || projectForm.controls['durationDays'].touched)"
+                            *ngIf="projectForm.get('durationDays').invalid && (projectForm.get('durationDays').dirty || projectForm.get('durationDays').touched)"
                             class="text-danger error-msg">
-                            <div *ngIf="projectForm.controls['durationDays'].errors.required">
-                              Enter no. of days.
+
+                            <div *ngIf="projectForm.get('durationDays').errors.required">
+                              Days is required.
                             </div>
                           </div>
                         </div>
@@ -165,7 +177,7 @@
                   <input type=text [owlDateTimeTrigger]="dt3" formControlName="proj_start_date" id="datePicker3 "
                     id="estimated_startdate" [owlDateTime]="dt3" required>
                   <label for="estimated_startdate" class="form-label">Estimated Start Date</label>
-                    <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+                  <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
                   <div
                     *ngIf="projectForm.controls['proj_start_date'].invalid && (projectForm.controls['proj_start_date'].dirty || projectForm.controls['proj_start_date'].touched)"
                     class="text-danger error-msg">
@@ -181,7 +193,7 @@
               <div class="col-3">
                 <div class="form-group form-input">
                   <select formControlName="budgetCurrencyCode" id="currency">
-                    <option disabled value="">Currency  </option>
+                    <option disabled value="">Currency </option>
                     <option id="option_txt" *ngFor="let currency of currencyArr" [value]="currency">{{currency}}
                     </option>
                   </select>
@@ -195,7 +207,7 @@
                   </div>
                 </div>
               </div>
-                    
+
               <div class="col-3">
                 <div class="form-group form-input">
                   <input type="text" formControlName="budgetAmt" id="budgetAmt" value="" required />
@@ -211,144 +223,147 @@
                 </div>
               </div>
 
-               
-              <div class="col-3">
-                    <div class="form-group form-input">
-                      <input type="file" name="chooseFile" >
-                    </div>
+
+              <div class="col-6">
+                <div class="form-group form-input">
+                  <input type="file" name="chooseFile">
+                </div>
               </div>
-                    <!-- <button class="btn viewprofile1" (click)="calCost()">Calculate</button> -->
-             
-          </div>
-                              
-                
+              <!-- <button class="btn viewprofile1" (click)="calCost()">Calculate</button> -->
+
+            </div>
+
+
           </form>
         </div>
       </div>
-    
+
     </div>
 
-  <div class="card">
+    <div class="card">
       <div class="card-header">
-          <h6>Skill Details </h6>
-        </div>
+        <h6>Skill Details </h6>
+      </div>
       <div class="card-body table-responsive">
-          <div class="row">
-              <div class="col-12">
-                  <form [formGroup]="skillForm">
-                     
-                              <table class="table table-dark  table-bordered worktable">
-                                  <thead>
-                                      <tr>
-                                        <th class="setwidth1">Domain</th>
-                                        <th class="setwidth1">Skill</th>
-                                        <th class="setwidth">Expertise</th>
-                                        <th>Availability</th>
-                                        <th>No. of team members</th>
-                                        <th >Preferred Country</th>
-                                        <th>Rate/hour</th>
-                                        <th>Currency</th>
-                                        <th>Avg. Rate/hour</th>                                    
-                                        <th class="setwidth">Start Date </th>
-                                        <th class="setwidth">End Date</th>
-                                        <th  class="noborder">                              
-                                          <button type="button" class="btn increment" (click)="addSkill()">+</button>
-                                        </th>  
-                                      </tr>
-                                    </thead>
+        <div class="row">
+          <div class="col-12">
+            <form [formGroup]="skillForm">
 
-                                    <tbody formArrayName="skillDetails">
-                                        <tr *ngFor="let item of skillDetailsArr.controls; let i=index" [formGroupName]="i">
-                                          <td scope="row">
-                                            <select formControlName="domainId" id="domain" (change)="getAllDomainSkills($event.target.value, i)">
-                                              <option disabled value="">Domain </option>
-                                              <option id="domain_option" *ngFor="let allDomain of allDomainArr"
-                                                [value]="allDomain.skill_cat_id">{{allDomain.skill_cat_name}}</option>
-                                            </select>
-                                          </td>
-                      
-                                          <td scope="row">
-                                            <select formControlName="skill" id="skill">
-                                              <option disabled value="">Skills </option>
-                                              <option id="option_skill" *ngFor="let allSkills of domainSkillsList[skillForm.get('skillDetails')['controls'][i].controls['domainId'].value]" [value]="allSkills.skill_id">
-                                                {{allSkills.skill_name}}</option>
-                                            </select>
-                                          </td>
-                                          <td scope="row">
-                                            <select formControlName="skillLevel" id=" skillLevel">
-                                              <option disabled value=""> Level  </option>
-                                              <option id="option_level" *ngFor="let skillLevel of skillLevelArr" [value]="skillLevel">
-                                                {{skillLevel}}</option>
-                                            </select>
-                                          </td>
-                                          <td scope="row">
-                                            <select formControlName="availability" id=" projectType">
-                                              <option disabled value="">Availability  </option>
-                                              <option id="option_type" *ngFor="let  projectType of  projectTypeArr" [value]=" projectType">
-                                                {{projectType}}</option>
-                                            </select>
-                                          </td>
-                                          <td scope="row">
-                                            <input type="text" formControlName="teamMembers" placeholder="Members">
-                                          </td>
-                                          <td scope="row">
-                                            <select formControlName="country" id="country">
-                                              <option disabled value="">Country  </option>
-                                              <option id="option_type" *ngFor="let  country of  countries" [value]="country.name">
-                                                {{country.name}}</option>
-                                            </select>
-                      
-                                          </td>
-                                          <td scope="row">
-                                            <input formControlName="ratePerHour" type="text" placeholder="Rate/hour">
-                                          </td>
-                                          <td scope="row">
-                                            <select formControlName="currencyCode" id="currency">
-                                              <option disabled value="">Currency  </option>
-                                              <option id="option_txt" *ngFor="let currency of currencyArr" [value]="currency">{{currency}}
-                                              </option>
-                                            </select>
-                      
-                                          </td>
-                                          <td scope="row">
-                                              <div *ngIf="!calculateAvgRate">
-                                                <button type="button" class="btn calbutton" (click)="calulateAvgRate()">Calculate</button>
-                                              </div>
-                                            <div *ngIf="calculateAvgRate">
-                                                <label for="calcAvrRate">{{calAvgRate}}</label>
-                                                <!-- <input type="text" id="calcAvrRate"> -->
-                                           </div>
-                                            
-                                          </td>
-                                         
-                                          <td scope="row">
-                                            <input type=text [owlDateTimeTrigger]="dt1" formControlName="startDate" id="datePicker1"
-                                              placeholder="Date" [owlDateTime]="dt1">
-                                            <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
-                                            <!-- <input type="text" formControlName="skill_start_date" >  -->
-                                          </td>
-                                          <td scope="row">
-                                            <input type=text [owlDateTimeTrigger]="dt2" formControlName="endDate" id="datePicker2"
-                                              placeholder="Date" [owlDateTime]="dt2">
-                                            <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
-                                            <!-- <input type="text" formControlName="skill_end_date" >  -->
-                      
-                                          </td>
-                                          <td  class="noborder">
-                                              <button type="button" class="btn increment" (click)="removeSkill(i)">-</button>
-                                            </td>
-                                        </tr>
-                                      </tbody>
-                              </table>
-                           </form>
+              <table class="table table-dark  table-bordered worktable">
+                <thead>
+                  <tr>
+                    <th class="setwidth1">Domain</th>
+                    <th class="setwidth1">Skill</th>
+                    <th class="setwidth">Expertise</th>
+                    <th>Availability</th>
+                    <th>No. of team members</th>
+                    <th>Preferred Country</th>
+                    <th>Rate/hour</th>
+                    <th>Currency</th>
+                    <th>Avg. Rate/hour</th>
+                    <th class="setwidth">Start Date </th>
+                    <th class="setwidth">End Date</th>
+                    <th class="noborder">
+                      <button type="button" class="btn increment" (click)="addSkill()">+</button>
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody formArrayName="skillDetails">
+                  <tr *ngFor="let item of skillDetailsArr.controls; let i=index" [formGroupName]="i">
+                    <td scope="row">
+                      <select formControlName="domainId" id="domain"
+                        (change)="getAllDomainSkills($event.target.value, i)">
+                        <option disabled value="">Domain </option>
+                        <option id="domain_option" *ngFor="let allDomain of allDomainArr"
+                          [value]="allDomain.skill_cat_id">{{allDomain.skill_cat_name}}</option>
+                      </select>
+                    </td>
+
+                    <td scope="row">
+                      <select formControlName="skill" id="skill">
+                        <option disabled value="">Skills </option>
+                        <option id="option_skill"
+                          *ngFor="let allSkills of domainSkillsList[skillForm.get('skillDetails')['controls'][i].controls['domainId'].value]"
+                          [value]="allSkills.skill_id">
+                          {{allSkills.skill_name}}</option>
+                      </select>
+                    </td>
+                    <td scope="row">
+                      <select formControlName="skillLevel" id=" skillLevel">
+                        <option disabled value=""> Level </option>
+                        <option id="option_level" *ngFor="let skillLevel of skillLevelArr" [value]="skillLevel">
+                          {{skillLevel}}</option>
+                      </select>
+                    </td>
+                    <td scope="row">
+                      <select formControlName="availability" id=" projectType">
+                        <option disabled value="">Availability </option>
+                        <option id="option_type" *ngFor="let  projectType of  projectTypeArr" [value]=" projectType">
+                          {{projectType}}</option>
+                      </select>
+                    </td>
+                    <td scope="row">
+                      <input type="text" formControlName="teamMembers" placeholder="Members">
+                    </td>
+                    <td scope="row">
+                      <select formControlName="country" id="country">
+                        <option disabled value="">Country </option>
+                        <option id="option_type" *ngFor="let  country of  countries" [value]="country.name">
+                          {{country.name}}</option>
+                      </select>
+
+                    </td>
+                    <td scope="row">
+                      <input formControlName="ratePerHour" type="text" placeholder="Rate/hour">
+                    </td>
+                    <td scope="row">
+                      <select formControlName="currencyCode" id="currency">
+                        <option disabled value="">Currency </option>
+                        <option id="option_txt" *ngFor="let currency of currencyArr" [value]="currency">{{currency}}
+                        </option>
+                      </select>
+
+                    </td>
+                    <td scope="row">
+                      <div *ngIf="!calculateAvgRate">
+                        <button type="button" class="btn calbutton" (click)="calulateAvgRate()">Calculate</button>
                       </div>
-                  </div>
-             </div>
+                      <div *ngIf="calculateAvgRate">
+                        <label for="calcAvrRate">{{calAvgRate}}</label>
+                        <!-- <input type="text" id="calcAvrRate"> -->
+                      </div>
+
+                    </td>
+
+                    <td scope="row">
+                      <input type=text [owlDateTimeTrigger]="dt1" formControlName="startDate" id="datePicker1"
+                        placeholder="Date" [owlDateTime]="dt1">
+                      <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                      <!-- <input type="text" formControlName="skill_start_date" >  -->
+                    </td>
+                    <td scope="row">
+                      <input type=text [owlDateTimeTrigger]="dt2" formControlName="endDate" id="datePicker2"
+                        placeholder="Date" [owlDateTime]="dt2">
+                      <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                      <!-- <input type="text" formControlName="skill_end_date" >  -->
+
+                    </td>
+                    <td class="noborder">
+                      <button type="button" class="btn increment" (click)="removeSkill(i)">-</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </form>
+          </div>
         </div>
-      
-  
-  <button class="btn submit-button" (click)="onSubmit()">Submit</button>
-</div>
+      </div>
+    </div>
+
+
+    <button class="btn submit-button" (click)="onSubmit()">Submit</button>
+  </div>
 </div>
 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="addWorkPackage">
 </ngx-loading>

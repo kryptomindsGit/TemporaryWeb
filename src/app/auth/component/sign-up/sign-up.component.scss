@@ -3,15 +3,15 @@
 -------------------------------------------------------------------------*/
 @import "../../../../assets/css/theme_colors";
 
-.container-fluid {
-  font: 14px "Montserrat Regular";
-  background-color: $bg-back-color;
-  color: $text-color;
-  overflow: auto;
-  font-weight: 400;
-  width: 100%;
-  height: 100vh;
-}
+// .container-fluid {
+//   font: 14px "Montserrat Regular";
+//   background-color: $bg-back-color;
+//   color: $text-color;
+//   overflow: auto;
+//   font-weight: 400;
+//   width: 100%;
+//   height: 100vh;
+// }
 
 /*-----------------------------------------------------------------------
 CARD CSS
@@ -48,255 +48,257 @@ CARD CSS
 /*-----------------------------------------------------------------------
 FORM CSS
 -------------------------------------------------------------------------*/
-form {
-  padding: 1rem 2rem;
-}
-
-.form-group {
-  margin-bottom: 1rem;
-  position: relative;
-}
-
-.form-input {
-  padding-top: 1.2rem;
-}
-
-.form-label {
-  position: absolute;
-  transition: 0.25s ease;
-  -moz-transition: 0.25s ease;
-  -webkit-transition: 0.25s ease;
-  -o-transition: 0.25s ease;
-  -ms-transition: 0.25s ease;
-  color: $text-color;
-  left: 0;
-  top: 23px;
-}
-// CSS for autofill background Start
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-    caret-color: $text-color;
-    -webkit-text-fill-color: $text-color !important;
-    transition: background-color 5000s ease-in-out 0s;
-}
-
-// CSS for autofill background End
-
-input,
-select {
-    transition: 0.3s ease;
-    -moz-transition: 0.3s ease;
-    -webkit-transition: 0.3s ease;
-    -o-transition: 0.3s ease;
-    -ms-transition: 0.3s ease;
-    padding-top: 10px;
-    -webkit-appearance: none;
-}
-
-input:focus+.form-label,
-input:valid+.form-label,
-select:focus+.form-label,
-select:valid+.form-label {
-    top: 1px;
-    font-size: 0.9rem;
-    color: $blue-color;
-    background: transparent !important;
-}
-
-input,select{
-    box-sizing: border-box;
-    width: 100%;
-    display: block;
-    border: none;
-    font-family: "Montserrat Regular";
-    color: $text-color;
-    background: transparent;
-    border-bottom: 1px solid $text-color;
-    padding: 4px 0;
-}
-
-// option {
-//     font-weight: normal;
-//     display: block;
-//     white-space: pre;
-//     min-height: 1.2em;
-//     padding: 0px 2px 1px;
-//     color: $bg-dropdown-color;
+// form {
+//   padding: 1rem 2rem;
 // }
 
-input:focus,
-select:focus {
-    border-bottom: 1px solid $blue-color;
-}
+// .form-group {
+//   margin-bottom: 1rem;
+//   position: relative;
+// }
 
-input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 30px transparent inset;
-}
+// .form-input {
+//   padding-top: 1.2rem;
+// }
 
-input::-webkit-input-placeholder {
-    color: $text-color;
-}
+// .form-label {
+//   position: absolute;
+//   transition: 0.25s ease;
+//   -moz-transition: 0.25s ease;
+//   -webkit-transition: 0.25s ease;
+//   -o-transition: 0.25s ease;
+//   -ms-transition: 0.25s ease;
+//   color: $text-color;
+//   left: 0;
+//   top: 23px;
+// }
 
-input::-moz-placeholder {
-    color: $text-color;
-}
+// // CSS for autofill background Start
+// input:-webkit-autofill,
+// input:-webkit-autofill:hover,
+// input:-webkit-autofill:focus,
+// textarea:-webkit-autofill,
+// textarea:-webkit-autofill:hover,
+// textarea:-webkit-autofill:focus,
+// select:-webkit-autofill,
+// select:-webkit-autofill:hover,
+// select:-webkit-autofill:focus {
+//   caret-color: $text-color;
+//   -webkit-text-fill-color: $text-color !important;
+//   transition: background-color 5000s ease-in-out 0s;
+// }
 
-input:-ms-input-placeholder {
-    color: $text-color;
-}
+// // CSS for autofill background End
 
-input:-moz-placeholder {
-    color: $text-color;
-}
+// input,
+// select {
+//   transition: 0.3s ease;
+//   -moz-transition: 0.3s ease;
+//   -webkit-transition: 0.3s ease;
+//   -o-transition: 0.3s ease;
+//   -ms-transition: 0.3s ease;
+//   padding-top: 10px;
+//   -webkit-appearance: none;
+// }
 
-//select
-select:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 30px transparent inset;
-}
+// input:focus+.form-label,
+// input:valid+.form-label,
+// select:focus+.form-label,
+// select:valid+.form-label {
+//   top: 1px;
+//   font-size: 0.9rem;
+//   color: $blue-color;
+//   background: transparent !important;
+// }
 
-select::-webkit-select-placeholder {
-    color: $text-color;
-}
+// input,
+// select {
+//   box-sizing: border-box;
+//   width: 100%;
+//   display: block;
+//   border: none;
+//   font-family: "Montserrat Regular";
+//   color: $text-color;
+//   background: transparent;
+//   border-bottom: 1px solid $text-color;
+//   padding: 4px 0;
+// }
 
-select::-moz-placeholder {
-    color: $text-color;
-}
+// // option {
+// //     font-weight: normal;
+// //     display: block;
+// //     white-space: pre;
+// //     min-height: 1.2em;
+// //     padding: 0px 2px 1px;
+// //     color: $bg-dropdown-color;
+// // }
 
-select:-ms-select-placeholder {
-    color: $text-color;
-}
+// input:focus,
+// select:focus {
+//   border-bottom: 1px solid $blue-color;
+// }
 
-select:-moz-placeholder {
-    color: $text-color;
-}
+// input:-webkit-autofill {
+//   -webkit-box-shadow: 0 0 0 30px transparent inset;
+// }
 
-input,
-select,
-textarea {
-    outline: none;
-    appearance: unset !important;
-    -moz-appearance: unset !important;
-    -webkit-appearance: unset !important;
-    -o-appearance: unset !important;
-    -ms-appearance: unset !important;
-}
+// input::-webkit-input-placeholder {
+//   color: $text-color;
+// }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button,
-select::-webkit-outer-spin-button,
-select::-webkit-inner-spin-button {
-    appearance: none !important;
-    -moz-appearance: none !important;
-    -webkit-appearance: none !important;
-    -o-appearance: none !important;
-    -ms-appearance: none !important;
-    margin: 0;
-}
+// input::-moz-placeholder {
+//   color: $text-color;
+// }
 
-input:focus,
-select:focus,
-textarea:focus {
-    outline: none;
-    box-shadow: none !important;
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    -o-box-shadow: none !important;
-    -ms-box-shadow: none !important;
-}
+// input:-ms-input-placeholder {
+//   color: $text-color;
+// }
 
-input[type=checkbox] {
-    appearance: checkbox !important;
-    -moz-appearance: checkbox !important;
-    -webkit-appearance: checkbox !important;
-    -o-appearance: checkbox !important;
-    -ms-appearance: checkbox !important;
-    width: 0.9rem;
-    height: 0.9rem;
-    border-width: 0;
-}
+// input:-moz-placeholder {
+//   color: $text-color;
+// }
 
-input[type="checkbox"]:checked {
-    background: #064d86;
-}
+// //select
+// select:-webkit-autofill {
+//   -webkit-box-shadow: 0 0 0 30px transparent inset;
+// }
 
-input[type=radio] {
-    appearance: radio !important;
-    -moz-appearance: radio !important;
-    -webkit-appearance: radio !important;
-    -o-appearance: radio !important;
-    -ms-appearance: radio !important;
-}
+// select::-webkit-select-placeholder {
+//   color: $text-color;
+// }
 
-input:focus,
-select:focus,
-textarea:focus,
-button:focus {
-    outline: none !important;
-    background: $bg-front-color;
-}
+// select::-moz-placeholder {
+//   color: $text-color;
+// }
+
+// select:-ms-select-placeholder {
+//   color: $text-color;
+// }
+
+// select:-moz-placeholder {
+//   color: $text-color;
+// }
+
+// input,
+// select,
+// textarea {
+//   outline: none;
+//   appearance: unset !important;
+//   -moz-appearance: unset !important;
+//   -webkit-appearance: unset !important;
+//   -o-appearance: unset !important;
+//   -ms-appearance: unset !important;
+// }
+
+// input::-webkit-outer-spin-button,
+// input::-webkit-inner-spin-button,
+// select::-webkit-outer-spin-button,
+// select::-webkit-inner-spin-button {
+//   appearance: none !important;
+//   -moz-appearance: none !important;
+//   -webkit-appearance: none !important;
+//   -o-appearance: none !important;
+//   -ms-appearance: none !important;
+//   margin: 0;
+// }
+
+// input:focus,
+// select:focus,
+// textarea:focus {
+//   outline: none;
+//   box-shadow: none !important;
+//   -moz-box-shadow: none !important;
+//   -webkit-box-shadow: none !important;
+//   -o-box-shadow: none !important;
+//   -ms-box-shadow: none !important;
+// }
+
+// input[type=checkbox] {
+//   appearance: checkbox !important;
+//   -moz-appearance: checkbox !important;
+//   -webkit-appearance: checkbox !important;
+//   -o-appearance: checkbox !important;
+//   -ms-appearance: checkbox !important;
+//   width: 0.9rem;
+//   height: 0.9rem;
+//   border-width: 0;
+// }
+
+// input[type="checkbox"]:checked {
+//   background: #064d86;
+// }
+
+// input[type=radio] {
+//   appearance: radio !important;
+//   -moz-appearance: radio !important;
+//   -webkit-appearance: radio !important;
+//   -o-appearance: radio !important;
+//   -ms-appearance: radio !important;
+// }
+
+// input:focus,
+// select:focus,
+// textarea:focus,
+// button:focus {
+//   outline: none !important;
+//   background: $bg-front-color;
+// }
 
 .text-font {
   font-size: 0.7rem;
 }
 
-.radio-inline {
-  margin-left: 1rem;
-}
+// .radio-inline {
+//   margin-left: 1rem;
+// }
 
-#btn-30 {
-  display: flex;
-  justify-content: center;
-  margin: 1rem auto;
-  width: 30%;
-  background: $blue-color;
-  font-size: 15px;
-  color: #9e9d9d;
-  border: none
-}
+// #btn-30 {
+//   display: flex;
+//   justify-content: center;
+//   margin: 1rem auto;
+//   width: 30%;
+//   background: $blue-color;
+//   font-size: 15px;
+//   color: #9e9d9d;
+//   border: none
+// }
 
-#btn-30:hover {
-  color: #000;
-  background: $blue-color;
-}
+// #btn-30:hover {
+//   color: #000;
+//   background: $blue-color;
+// }
 
-#btn-60 {
-  display: flex;
-  justify-content: center;
-  margin: 1rem auto;
-  width: 60%;
-  background: #064d86;
-  font-size: 15px;
-  color: #9e9d9d;
-  border: none
-}
+// #btn-60 {
+//   display: flex;
+//   justify-content: center;
+//   margin: 1rem auto;
+//   width: 60%;
+//   background: #064d86;
+//   font-size: 15px;
+//   color: #9e9d9d;
+//   border: none
+// }
 
-#btn-60:hover {
-  color: #000;
-  background: #064d86;
-}
+// #btn-60:hover {
+//   color: #000;
+//   background: #064d86;
+// }
 
-#btn-equal {
-  display: flex;
-  justify-content: center;
-  margin: 1rem auto;
-  width: 100%;
-  background: #064d86;
-  font-size: 15px;
-  color: #9e9d9d;
-  border: none
-}
+// #btn-equal {
+//   display: flex;
+//   justify-content: center;
+//   margin: 1rem auto;
+//   width: 100%;
+//   background: #064d86;
+//   font-size: 15px;
+//   color: #9e9d9d;
+//   border: none
+// }
 
-#btn-equal:hover {
-  color: #000;
-  background: $blue-color;
-}
+// #btn-equal:hover {
+//   color: #000;
+//   background: $blue-color;
+// }
 
 .hr-text {
   line-height: 1em;
@@ -309,10 +311,10 @@ button:focus {
   opacity: .5;
 }
 
-hr {
-  box-sizing: content-box;
-  height: 0;
-}
+// hr {
+//   box-sizing: content-box;
+//   height: 0;
+// }
 
 .hr-text:before {
   content: '';
@@ -351,20 +353,13 @@ a {
   font-weight: 300px;
   color: $text-color;
 }
-.error-msg {
-  display: block;
-  position: absolute;
-  font-size: 0.8rem;
-  bottom: -2em;
-  margin-bottom: 0.2rem;
-}
 
 // .error-msg {
 //   display: block;
 //   position: absolute;
 //   font-size: 0.8rem;
 //   bottom: -2em;
-//   margin-bottom: 0.4rem;
+//   margin-bottom: 0.2rem;
 // }
 
 /*-----------------------------------------------------------------------

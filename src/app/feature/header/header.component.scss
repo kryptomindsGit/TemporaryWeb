@@ -11,20 +11,20 @@
 nav {
     background: $bg-front-color;
     font-family: "Montserrat Regular";
-    width:100%;
+    width: 100%;
 }
 
 
-label{
+label {
     font-size: 0.9rem;
     margin-bottom: 0rem !important;
 }
 
-span{
+span {
     font-size: 0.7rem;
 }
 
-.fontchange{
+.fontchange {
     font-size: 0.8rem;
 }
 
@@ -56,4 +56,46 @@ span{
     border-radius: 50%;
     font-size: 1.2rem;
     margin: 0.5rem;
+}
+
+.togglebtn {
+    font-size: 1.5rem;
+    color: $text-color;
+}
+
+.btn.focus,
+.btn:focus {
+    outline: 0;
+    box-shadow: none !important;
+}
+
+//Sidebar icon
+.logo-font {
+    font-family: 'Neo Latina';
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.sidebar-heading {
+    padding: 0.875rem 2rem;
+    font-size: 1.2rem;
+}
+
+.sidebar-heading img {
+    width: 1.8rem;
+    height: 1.8rem;
+    margin: 0.1rem auto;
+    // margin-left:5.7rem;
+    // margin-top:0.7rem;
+}
+
+
+.sidebar-heading h6 {
+    color: $text-color;
+    font-size: 1rem;
+    text-align: center;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    position: relative;
 }

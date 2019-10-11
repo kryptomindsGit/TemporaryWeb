@@ -9,35 +9,29 @@
                 <div class="form-group form-input">
                     <input type="text" formControlName="email" name="name" id="email" value="" required />
                     <label for="email" class="form-label">Email</label>
-
-                    <div *ngIf="uportSignupForm.controls['email'].invalid && (uportSignupForm.controls['email'].dirty || uportSignupForm.controls['email'].touched)"
+                    <div *ngIf="submitted && formValidation.email.errors|| uportSignupForm.get('email').invalid && (uportSignupForm.get('email').dirty || uportSignupForm.get('email').touched)"
                         class="text-danger error-msg">
-                        <div [hidden]="!uportSignupForm.controls['email'].errors.required">
+
+                        <div *ngIf="uportSignupForm.get('email').errors.required">
                             Email is required.
                         </div>
-                    </div>
 
-                    <div *ngIf="uportSignupForm.controls['email'].invalid && (uportSignupForm.controls['email'].dirty || uportSignupForm.controls['email'].touched)"
-                        class="text-danger error-msg">
-                        <div [hidden]="!uportSignupForm.controls['email'].errors.email">
-                            required valid Email address.
+                        <div *ngIf="uportSignupForm.get('email').errors.email">
+                            Require valid Email address.
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group form-input">
-                    <!-- <input type="text" formControlName="country" name="name" id="country" value="" required />
-                    <label for="country" class="form-label">Country</label> -->
 
                     <select formControlName="country" id="country" required>
-                        <!-- <option disabled value="">Country</option> -->
                         <option *ngFor="let country of countryArr" [ngValue]="country.name">
                             {{country.name}}
                         </option>
                     </select>
-                    <label  class="form-label" for="country">Country</label>
+                    <label class="form-label" for="country">Country</label>
 
-                    <div *ngIf="uportSignupForm.controls['country'].invalid && (uportSignupForm.controls['country'].dirty || uportSignupForm.controls['country'].touched)"
+                    <div *ngIf="submitted && formValidation.country.errors|| uportSignupForm.controls['country'].invalid && (uportSignupForm.controls['country'].dirty || uportSignupForm.controls['country'].touched)"
                         class="text-danger error-msg">
                         <div [hidden]="!uportSignupForm.controls['country'].errors.required">
                             Country is required.
@@ -50,10 +44,15 @@
                     <label for="phone_number" class="form-label">Phone Number</label>
                     <span class="text-font">( Enter Phone number with format: +91 and 10 digit )</span>
 
-                    <div *ngIf="uportSignupForm.controls['phone_no'].invalid && (uportSignupForm.controls['phone_no'].dirty || uportSignupForm.controls['phone_no'].touched)"
+                    <div *ngIf="submitted && formValidation.phone_no.errors|| uportSignupForm.get('phone_no').invalid && (uportSignupForm.get('phone_no').dirty || uportSignupForm.get('phone_no').touched)"
                         class="text-danger error-msg">
-                        <div [hidden]="!uportSignupForm.controls['phone_no'].errors.required">
-                            Phone Number is required.
+
+                        <div *ngIf="uportSignupForm.get('phone_no').errors.required">
+                            Phone no is required.
+                        </div>
+
+                        <div *ngIf="uportSignupForm.get('phone_no').errors.pattern">
+                            Require valid Phone number with format: +91 and 10 digit.
                         </div>
                     </div>
                 </div>
@@ -85,7 +84,7 @@
                         </div>
 
                     </div>
-                    <div *ngIf="uportSignupForm.controls['role'].invalid && (uportSignupForm.controls['role'].dirty || uportSignupForm.controls['role'].touched)"
+                    <div *ngIf="submitted && formValidation.role.errors|| uportSignupForm.controls['role'].invalid && (uportSignupForm.controls['role'].dirty || uportSignupForm.controls['role'].touched)"
                         class="text-danger error-msg">
                         <div [hidden]="!uportSignupForm.controls['role'].errors.required">
                             Role is required.
@@ -96,8 +95,7 @@
                 <br>
                 <br>
 
-                <button type="button" #focusableSubmit class="btn" id="btn-60"
-                    [disabled]="uportSignupForm.pristine || uportSignupForm.invalid" (click)="onSubmit()">Sign
+                <button type="button" #focusableSubmit class="btn" id="btn-60" (click)="onSubmit()">Sign
                     up</button>
             </form>
 

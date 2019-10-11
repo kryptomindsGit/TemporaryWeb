@@ -58,7 +58,7 @@ const MODULES = [
   ],
   imports: [
     ...MODULES,
-    
+
   ],
   providers: [],
   bootstrap: [AppComponent]
