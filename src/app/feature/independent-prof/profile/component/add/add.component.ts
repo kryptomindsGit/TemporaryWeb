@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { IndeptProfileService } from '../../shared/service/profile.service';
 import { ToastrService } from 'ngx-toastr';
-
+// 
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
@@ -301,7 +301,7 @@ export class AddComponent implements OnInit {
   getCountry() {
     this.__profileService.getFreelancerCountry().then((resData: any) => {
       this.countryArr = resData;
-    })
+    });
   }
 
   /**
@@ -853,6 +853,10 @@ export class AddComponent implements OnInit {
     this.__router.navigate(['/auth/auth/login']);
   }
 
+
+  validDate(event){
+
+  }
 
   /**
  * @name onCancel

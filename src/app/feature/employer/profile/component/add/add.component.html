@@ -84,10 +84,10 @@
 
                         <div class="row">
                             <div class="form-group form-input col">
-                                <select (change)="setCountryID($event.target.value)" formControlName="country"
+                                <select (change)="setStateListByCountryId($event.target.value)" formControlName="country"
                                     autocomplete="off" id="country" required>
                                     <!-- <option disabled value="">Country</option> -->
-                                    <option *ngFor="let country of countryArr" [value]="country.id">{{country.name}}
+                                    <option *ngFor="let country of countryArr" [value]="country.countryId">{{country.countryName}}
                                     </option>
                                 </select>
                                 <label for="country" class="form-label">Country<span class="redstar">*</span></label>
@@ -98,10 +98,11 @@
                                 </div>
                             </div>
                             <div class="form-group form-input col">
-                                <select class="formStyle" (change)="setStateID($event.target.value)"
-                                    formControlName="state" id="state" required>
-                                    <!-- <option disabled value="">State</option> -->
-                                    <option *ngFor="let state of stateArr" [value]="state.id">{{state.name}}
+                                <select class="formStyle" (change)="setCityListByStateId($event.target.value)"
+                                    formControlName="state"  id="state" required>
+                                    <option 
+                                    *ngFor="let state of stateArrByCountryId[employerProfileForm.get('country').value]"
+                                    [value]="state.stateId">{{state.stateName}}
                                     </option>
                                 </select>
                                 <label for="state" class="form-label">State<span class="redstar">*</span></label>
@@ -115,7 +116,9 @@
                             <div class="form-group form-input col">
                                 <select class="formStyle" formControlName="city" id="city" required>
                                     <!-- <option disabled value="">City</option> -->
-                                    <option *ngFor="let city of cityArr" [value]="city.id">{{city.name}}</option>
+                                    <option 
+                                    *ngFor="let city of cityArrByStateId[employerProfileForm.get('state').value]"
+                                    [value]="city.cityId">{{city.cityName}}</option>
                                 </select>
                                 <label for="city" class="form-label">City<span class="redstar">*</span></label>
                                 <div *ngIf="submitted && formValidation.city.errors || employerProfileForm.controls['city'].invalid && (employerProfileForm.controls['city'].dirty || employerProfileForm.controls['city'].touched)"

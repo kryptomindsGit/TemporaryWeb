@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { CustomGlobalService } from 'src/app/feature/shared/service/custom-global.service';
 
 //Custome global validation
 import { GlobalValidationDirective } from '../../../../../shared/global-validation.directive';
@@ -45,6 +46,8 @@ export class AddComponent implements OnInit {
   public cityArr: any = [];
   public fileType: any;
 
+  public stateArrByCountryId=[];
+  public cityArrByStateId = [];
 
   constructor(
     private __fb: FormBuilder,
@@ -52,7 +55,8 @@ export class AddComponent implements OnInit {
     private __freelancerProfileService: IndeptProfileService,
     private __authService: AuthService,
     private __router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private __customGlobalService: CustomGlobalService
   ) { }
 
   ngOnInit() {
@@ -74,7 +78,9 @@ export class AddComponent implements OnInit {
 
     //Calling Function's
     this.valEmpProfile();
-    this.getAllCountry();
+    this.getCountryList();
+    this.getStateList();
+    this.getCityList();
     this.getDocumentsTypeCat(4);
   }
 
@@ -132,59 +138,48 @@ export class AddComponent implements OnInit {
 
   }
 
-
   /**
   * @method getAllCountry
   * @description get all country values.
   */
-  getAllCountry() {
-    this.__profileService.getEmpCountry().then((resData: any) => {
-      this.countryArr = resData;
+  getCountryList() {
+    this.__customGlobalService.getCountryList().then((resData: any) => {
+      this.countryArr = resData.responseObject;
+      console.log("Countries: ", this.countryArr);
+      
     })
   }
 
-  /**
-   * @method setCountryID
-   * @param country_id
-   * @description get the selected country id and pass to getStateByID method.
-   */
-  setCountryID(country_id) {
-    this.getStateByID(country_id)
-    console.log("Country ID:", country_id);
-
-  }
-
-  /**
-   * @method getStateByID
-   * @param country_id
-   * @description get the all state values based on selected country id.
-   */
-  getStateByID(country_id) {
-    this.__profileService.getEmpStateByID(country_id).then((resData: any) => {
-      this.stateArr = resData;
+  getStateList() {
+    this.__customGlobalService.getStateList().then((resData: any) => {
+      this.stateArr = resData.responseObject;
+      console.log("State: ", this.stateArr);
+      
     })
   }
 
-  /**
-   * @method setStateID
-   * @param state_id
-   * @description get the selected state id and pass to getCityByID method.
-   */
-  setStateID(state_id) {
-    this.getCityByID(state_id)
+  setStateListByCountryId(countryId) {
+    console.log("id country" , countryId);
+    this.stateArrByCountryId[countryId] = this.stateArr.filter((item) => item.masterCountry.countryId == countryId);
+    console.log(this.stateArrByCountryId);
+    // this.employerProfileForm.get('state')['controls'].patchValue({ countryId : this.stateArrByCountryId[countryId].masterCountry.countryId, stateId: '' });
   }
 
-  /**
-   * @method getCityByID
-   * @param state_id
-   * @description get the all city values based on selected state id.
-   */
-  getCityByID(state_id) {
-    this.__profileService.getEmpCityByID(state_id).then((resData: any) => {
-      this.cityArr = resData;
-      console.log(this.cityArr)
+  getCityList() {
+    this.__customGlobalService.getCityList().then((resData: any) => {
+      this.cityArr = resData.responseObject;
+      console.log("City: ", this.cityArr);
+      
     })
   }
+
+  setCityListByStateId(stateId) {
+    console.log("id state" , stateId);
+    this.cityArrByStateId[stateId] = this.cityArr.filter((item) => item.masterStates.stateId == stateId);
+    console.log(this.cityArrByStateId);
+    // this.employerProfileForm.get('state')['controls'].patchValue({ countryId : this.stateArrByCountryId[countryId].masterCountry.countryId, stateId: '' });
+  }
+  
 
   /**
     * @name 
@@ -250,37 +245,46 @@ export class AddComponent implements OnInit {
    * @description submit the form fileds values
    */
   onSubmit() {
-    this.submitted = true;
-    if (this.employerProfileForm.invalid) {
-      return;
-    } else {
-      this.loading = true;
-      console.log(this.employerProfileForm);
-      let documensFile: any = [
-        'file_name',
-        'file_type'
-      ];
+    this.loading = true;
+    console.log(this.employerProfileForm);
+    let documensFile: any = [
+      'file_name',
+      'file_type'
+    ];
 
-      documensFile = [
-        ...this.documentFileArr
-      ];
+    documensFile = [
+      ...this.documentFileArr
+    ];
 
-      const employerProfileVal = {
-        cognito_id: this.congnitoId,
-        uid: this.uid,
-        email: this.email_id,
-        company_name: this.employerProfileForm.controls.comapany_name.value,
-        website_addr: this.employerProfileForm.controls.website_addr.value,
-        address_line_1: this.employerProfileForm.controls.address_line_one.value,
-        address_line_2: this.employerProfileForm.controls.address_line_two.value,
-        country: this.employerProfileForm.controls.country.value,
-        state: this.employerProfileForm.controls.state.value,
-        city: this.employerProfileForm.controls.city.value,
-        zipcode: this.employerProfileForm.controls.zipcode.value,
-        company_profile: this.employerProfileForm.controls.company_profile.value,
-        business_cat: this.employerProfileForm.controls.business_cat.value,
-        company_rep_det: this.employerProfileForm.controls.company_rep_det.value,
-        chooseFile: documensFile,
+  
+    const employerProfileVal = {
+      uid: this.uid,
+      // emailId: this.email_id,
+      emailId : "emp@employer.com",
+      companyName: this.employerProfileForm.controls.comapany_name.value,
+      website: this.employerProfileForm.controls.website_addr.value,
+      addressOne: this.employerProfileForm.controls.address_line_one.value,
+      addressTwo: this.employerProfileForm.controls.address_line_two.value,
+      country: this.employerProfileForm.controls.country.value,
+      stateProvince: this.employerProfileForm.controls.state.value,
+      city: this.employerProfileForm.controls.city.value,
+      zipCode: this.employerProfileForm.controls.zipcode.value,
+      companyProfile: this.employerProfileForm.controls.company_profile.value,
+      businessCategory: this.employerProfileForm.controls.business_cat.value,
+      companyRepresentativeName: this.employerProfileForm.controls.company_rep_det.value,
+      chooseFile: documensFile,
+    }
+    console.log(" Submit values:", employerProfileVal);
+
+    this.__profileService.createEmployer(employerProfileVal).then((resData: any) => {
+      console.log(resData);
+      this.loading = false;
+      if (resData.status == 'success') {
+        this.toastr.success("Profile added Successfully");
+        this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view', this.email_id]);
+      }
+      else if (resData.status == 'error') {
+        this.toastr.error("Profile not saved");
       }
       console.log(" Submit values:", employerProfileVal);
 
@@ -295,7 +299,7 @@ export class AddComponent implements OnInit {
           this.toastr.error("Profile not saved");
         }
       });
-    }
+    });
   }
 
   /**

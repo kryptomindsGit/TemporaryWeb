@@ -125,8 +125,16 @@ form {
   position: relative;
 }
 
-.form-input {
-  padding-top: 21px;
+.setwidth {
+  min-width:10rem;
+}
+
+.setwidth1{
+  min-width:12.5rem;
+}
+
+.cal-icon{
+  margin-top:0.5rem;  
 }
 
 .form-label {
@@ -364,9 +372,6 @@ span {
   border-radius: .25rem;
 }
 
-.setwidth {
-  min-width: 1rem;
-}
 
 .increment {
   border-radius: 50%;

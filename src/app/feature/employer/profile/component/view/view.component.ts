@@ -58,8 +58,15 @@ export class ViewComponent implements OnInit {
    * @description call get API for employer details 
    */
   getEmployerDetails() {
-    this.__profileService.getEmployerByEmailId(this.emailId).then((resData: any) => {
-      this.employerDetailsArr = resData[0];
+    // this.__profileService.getEmployerByEmailId(this.emailId).then((resData: any) => {
+    //   this.employerDetailsArr = resData[0];
+    //   console.log(this.employerDetailsArr);
+
+    // });
+    this.__profileService.getEmployerByEmailId("emp@employer.com").then((resData: any) => {
+      console.log("res for get " , resData);
+      
+      this.employerDetailsArr = resData.responseObject;
       console.log(this.employerDetailsArr);
 
     });

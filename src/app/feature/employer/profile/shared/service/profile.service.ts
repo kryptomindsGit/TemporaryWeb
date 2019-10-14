@@ -10,6 +10,7 @@ import { BLOCKCHAIN_URL } from '../../../../../constant/constant-url';
 import { UPORT_URL } from '../../../../../constant/constant-url';
 import { AWS_URL } from '../../../../../constant/constant-url';
 import { map } from 'rxjs/operators';
+import { SPRING_URL } from '../../../../../constant/constant-url';
 
 //CORS
 const httpOptions = {
@@ -130,7 +131,7 @@ export class EmpProfileService {
 
   async getEmployerByEmailId(email: string) {
     try {
-      let res = await this.__http.get(`${BASE_URL}/employer/` + email, httpOptions).toPromise();
+      let res = await this.__http.get(`${SPRING_URL}/employer/profile-details/` + email, httpOptions).toPromise();
       return res;
     } catch (error) {
       await this.handleError(error);
@@ -139,16 +140,20 @@ export class EmpProfileService {
 
   async createEmployer(employerData: any) {
     try {
-      let result = await this.__http.post(`${BASE_URL}/employers`, employerData, httpOptions).toPromise();
+      let result = await this.__http.post(`${SPRING_URL}/employer/profile-details`, employerData, httpOptions).toPromise();
       return result;
     } catch (error) {
       await this.handleError(error);
     }
   }
 
-  async updateEmployer(id: any, employerData: any) {
+  async updateEmployer( employerData: any) {
+    console.log("before send data: ", employerData);
+    
     try {
-      let result = await this.__http.put(`${BASE_URL}/employer/` + id, employerData, httpOptions).toPromise();
+      let result = await this.__http.post(`${SPRING_URL}/employer/update` , employerData, httpOptions).toPromise();
+      console.log("Res Value:", result);
+      
       return result;
     } catch (error) {
       await this.handleError(error);
@@ -164,35 +169,7 @@ export class EmpProfileService {
     }
   }
 
-  // Employer country GET API call
-  async getEmpCountry() {
-    try {
-      let res = await this.__http.get(`${BASE_URL}/countries`, httpOptions).toPromise();
-      return res;
-    } catch (error) {
-      await this.handleError(error);
-    }
-  }
-
-  // Employer state by country id GET API call
-  async getEmpStateByID(id: number) {
-    try {
-      let res = await this.__http.get(`${BASE_URL}/states/${id}`, httpOptions).toPromise();
-      return res;
-    } catch (error) {
-      await this.handleError(error);
-    }
-  }
-
-  // Employer city by state id GET API call
-  async getEmpCityByID(id: number) {
-    try {
-      let res = await this.__http.get(`${BASE_URL}/cities/${id}`, httpOptions).toPromise();
-      return res;
-    } catch (error) {
-      await this.handleError(error);
-    }
-  }
+ 
 
   // Error Handler
   handleError(error) {

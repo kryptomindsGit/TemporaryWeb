@@ -43,13 +43,13 @@
                                             <tr>
                                                 <th>Name: </th>
                                                 <td>
-                                                    {{employerDetailsArr.cmp_name}}
+                                                    {{employerDetailsArr.companyName}}
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>Email: </th>
                                                 <td>
-                                                    {{emailId}}
+                                                    {{employerDetailsArr.emailId}}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -66,39 +66,37 @@
                                             <tr>
                                                 <th>Address: </th>
                                                 <td>
-                                                    <li>{{employerDetailsArr.cmp_addr}}</li>
-                                                    <li>{{employerDetailsArr.cmp_addr_2}}</li>
-                                                    <!-- <li>City : {{employerDetailsArr.city}}</li> -->
-                                                    <li>City : Pune</li>
-                                                    <!-- <li>State: {{employerDetailsArr.state}}</li> -->
-                                                    <li>State: Maharashtra</li>
-                                                    <li>Country: {{employerDetailsArr.country}}</li>
-                                                    <li>Postal Code : {{employerDetailsArr.zipcode}}</li>
+                                                    <li>Address Line 1 : {{employerDetailsArr.addressOne}}</li>
+                                                    <li>Address Line 2 : {{employerDetailsArr.addressTwo}}</li>
+                                                    <li>City : {{employerDetailsArr.masterCity.cityName}}</li> 
+                                                    <li>State: {{employerDetailsArr.masterState.stateName}}</li>
+                                                    <li>Country: {{employerDetailsArr.masterCountry.countryName}}</li>
+                                                    <li>Postal Code : {{employerDetailsArr.zipCode}}</li>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <!-- <tr>
                                                 <th>Country: </th>
                                                 <td>
                                                     {{employerDetailsArr.country}}
                                                 </td>
-                                            </tr>
+                                            </tr> -->
                                             <tr>
                                                 <th>Company Profile:
                                                 </th>
                                                 <td>
-                                                    {{employerDetailsArr.cpm_profile}}
+                                                    {{employerDetailsArr.companyProfile}}
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>Company Representative: </th>
                                                 <td>
-                                                    {{employerDetailsArr.cmp_reprentative}}
+                                                    {{employerDetailsArr.companyRepresentative}}
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>Business Category: </th>
                                                 <td>
-                                                    {{employerDetailsArr.business_cat}}
+                                                    {{employerDetailsArr.typeOfBusiness}}
                                                 </td>
                                             </tr>
 
