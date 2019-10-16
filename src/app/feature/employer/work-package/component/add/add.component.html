@@ -326,10 +326,13 @@
 
                     </td>
                     <td scope="row">
-                      <div *ngIf="!calculateAvgRate">
-                        <button type="button" class="btn calbutton" (click)="calulateAvgRate()">Calculate</button>
+                      <div *ngIf="!calculateAvgRate1">
+                        <button type="button" class="btn calbutton" (click)="calulateAvgRatePayscale()">Calculate from PayScale</button>
                       </div>
-                      <div *ngIf="calculateAvgRate">
+                      <div *ngIf="!calculateAvgRate">
+                        <button type="button" class="btn calbutton" (click)="calulateAvgRate()">Calculate from XXXX</button>
+                      </div>
+                      <div *ngIf="calculateAvgRate1">
                         <label for="calcAvrRate">{{calAvgRate}}</label>
                         <!-- <input type="text" id="calcAvrRate"> -->
                       </div>

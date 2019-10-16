@@ -13,7 +13,7 @@
             <input type="text" formControlName="email" name="email" id="email" value="" required />
             <label for="email" class="form-label">Email</label>
 
-            <div
+            <!-- <div
               *ngIf="submitted ||  formValidation.email.invalid && (formValidation.email.dirty || formValidation.email.touched)"
               class="text-danger error-msg">
 
@@ -24,14 +24,14 @@
               <div *ngIf="formValidation.email.errors.email">
                 Require valid Email address.
               </div>
-            </div>
+            </div> -->
           </div>
 
           <div class="form-group form-input">
             <input type="password" formControlName="password" name="password" id="password" value="" required
               (keyup.enter)="focusableSubmit.click()" />
             <label for="password" class="form-label">Password</label>
-            <div
+            <!-- <div
               *ngIf="submitted || formValidation.password.invalid && (formValidation.password.dirty || formValidation.password.touched)"
               class="text-danger error-msg">
 
@@ -46,7 +46,7 @@
               <div *ngIf="formValidation.password.errors.maxLength">
                 Password minimum 15 characters long.
               </div>
-            </div>
+            </div> -->
           </div>
 
           <br>

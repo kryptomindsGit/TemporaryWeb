@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../shared/service/auth.service';
 import { Router } from '@angular/router';
 import { IndeptProfileService } from 'src/app/feature/independent-prof/profile/shared/service/profile.service';
+import { CustomGlobalService } from 'src/app/feature/shared/service/custom-global.service';
 
 @Component({
   selector: 'app-uport-sign-up',
@@ -26,12 +27,14 @@ export class UportSignUpComponent implements OnInit {
     private __fb: FormBuilder,
     private __authService: AuthService,
     private __router: Router,
-    private __profileService: IndeptProfileService
+    private __profileService: IndeptProfileService,
+    private __customGlobalService: CustomGlobalService
+
   ) { }
 
   ngOnInit() {
     this.validateData();
-    this.getCountry();
+    this.getCountryList();
   }
 
   hello() {
@@ -56,9 +59,9 @@ export class UportSignUpComponent implements OnInit {
  * @method getCountry
  * @description get all country values.
  */
-  getCountry() {
-    this.__profileService.getFreelancerCountry().then((resData: any) => {
-      this.countryArr = resData;
+  getCountryList() {
+    this.__customGlobalService.getCountryList().then((resData: any) => {
+      this.countryArr = resData.responseObject;
       console.log("countryArr:", this.countryArr);
 
     })
@@ -90,9 +93,12 @@ export class UportSignUpComponent implements OnInit {
 
       console.log(signupUportPayload);
 
+      const userDataPayload = {
+        emialId : this.uportSignupForm.controls.email.value
+      }
 
 
-      this.__authService.getUportInfo(this.uportSignupForm.controls.email.value).then((resData: any) => {
+      this.__authService.getSignUpData(userDataPayload).then((resData: any) => {
         console.log("Res data :", resData == null);
         console.log("Res data :", resData.length);
         console.log("Res data :", resData.length > 0);
@@ -103,7 +109,7 @@ export class UportSignUpComponent implements OnInit {
           let flag = 'y';
           localStorage.setItem(email, this.uportSignupForm.controls.email.value);
 
-          this.__authService.uportSignup(signupUportPayload).then((resData: any) => {
+          this.__authService.saveSignUpData(signupUportPayload).then((resData: any) => {
             this.loading = false;
             console.log("uportSignup ", resData);
             this.showMsg = resData.message;

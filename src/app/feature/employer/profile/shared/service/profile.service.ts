@@ -131,7 +131,7 @@ export class EmpProfileService {
 
   async getEmployerByEmailId(email: string) {
     try {
-      let res = await this.__http.get(`${SPRING_URL}/employer/profile-details/` + email, httpOptions).toPromise();
+      let res = await this.__http.get(`${SPRING_URL}/employer/profile/` + email, httpOptions).toPromise();
       return res;
     } catch (error) {
       await this.handleError(error);
@@ -140,7 +140,7 @@ export class EmpProfileService {
 
   async createEmployer(employerData: any) {
     try {
-      let result = await this.__http.post(`${SPRING_URL}/employer/profile-details`, employerData, httpOptions).toPromise();
+      let result = await this.__http.post(`${SPRING_URL}/employer/profile`, employerData, httpOptions).toPromise();
       return result;
     } catch (error) {
       await this.handleError(error);

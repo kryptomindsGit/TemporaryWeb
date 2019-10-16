@@ -567,11 +567,11 @@ export class EditComponent implements OnInit {
    * @description get API for all skill category of independent prof 
    */
   getAllSkillCategory() {
-    this.__profileService.getFreelancerCategory().then((resData: any) => {
-      this.categ = resData;
-      console.log("Skill Category", this.categ);
+    // this.__profileService.getFreelancerCategory().then((resData: any) => {
+    //   this.categ = resData;
+    //   console.log("Skill Category", this.categ);
 
-    })
+    // })
   }
 
   /**

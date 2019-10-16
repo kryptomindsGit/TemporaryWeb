@@ -43,8 +43,8 @@
 
                 <div class="form-group form-input">
                     <select formControlName="custom_country" id="country" required>
-                        <option *ngFor="let country of countryArr" [ngValue]="country.name">
-                            {{country.name}}
+                        <option *ngFor="let country of countryArr" [ngValue]="country.countryId">
+                            {{country.countryName}}
                         </option>
                     </select>
                     <label class="form-label" for="country">Country</label>
@@ -94,21 +94,21 @@
                         <div class="col-4">
                             <label class="radio-inline">
                                 <input type="radio" formControlName="custom_role" name="custom_role"
-                                    (keyup.enter)="focusableSubmit.click()" value="Freelancer" class="radiobutton">
+                                    (keyup.enter)="focusableSubmit.click()" value="1" class="radiobutton">
                                 Freelancer
                             </label>
                         </div>
                         <div class="col-4">
                             <label class="radio-inline">
                                 <input type="radio" formControlName="custom_role" name="custom_role"
-                                    (keyup.enter)="focusableSubmit.click()" value="Employer" class="radiobutton">
+                                    (keyup.enter)="focusableSubmit.click()" value="2" class="radiobutton">
                                 Employer
                             </label>
                         </div>
                         <div class="col-4">
                             <label class="radio-inline">
                                 <input type="radio" formControlName="custom_role" name="custom_role"
-                                    (keyup.enter)="focusableSubmit.click()" value="Partner" class="radiobutton">
+                                    (keyup.enter)="focusableSubmit.click()" value="3" class="radiobutton">
                                 Partner
                             </label>
                         </div>

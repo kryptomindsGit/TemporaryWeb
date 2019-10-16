@@ -51,6 +51,54 @@ export class CustomGlobalService {
     }
   }
 
+  async getEducationCategoryList() {
+    try {
+      let res = await this.__http.get(`${SPRING_URL}/master/edu-domains`, httpOptions).toPromise();
+      return res;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
+  async getEducationTypeList() {
+    try {
+      let res = await this.__http.get(`${SPRING_URL}/master/edu-types`, httpOptions).toPromise();
+      return res;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
+  
+  async getSkillDomainList() {
+    try {
+      let res = await this.__http.get(`${SPRING_URL}/master/domains`, httpOptions).toPromise();
+      return res;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
+  
+  async getSkillTypeList() {
+    try {
+      let res = await this.__http.get(`${SPRING_URL}/master/skills`, httpOptions).toPromise();
+      return res;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
+  async getPersonalAttributeList() {
+    try {
+      let res = await this.__http.get(`${SPRING_URL}/master/personal-attributes`, httpOptions).toPromise();
+      return res;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
+
   // Error Handler
   handleError(error) {
     let errorMessage = '';

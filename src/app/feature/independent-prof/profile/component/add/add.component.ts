@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { IndeptProfileService } from '../../shared/service/profile.service';
 import { ToastrService } from 'ngx-toastr';
+import { CustomGlobalService } from 'src/app/feature/shared/service/custom-global.service';
 // 
 @Component({
   selector: 'app-add',
@@ -26,7 +27,7 @@ export class AddComponent implements OnInit {
   public gradeArr = ['A', 'B', 'C', 'D', 'E', 'F'];
 
   /* skill variables. */
-  keyword = 'skill_cat_name';
+  keyword = 'domainName';
   skillItem: any = [];
 
   /* Loader Variable's */
@@ -62,6 +63,7 @@ export class AddComponent implements OnInit {
   public skill: any = [];
   public categ: any = [];
 
+
   /* Address related Array's */
   public countryArr: any = [];
   public stateArr: any = [];
@@ -74,6 +76,12 @@ export class AddComponent implements OnInit {
   public documentWorkArray: any = [];
   public documentFileArr: any = [];
 
+  public stateArrByCountryId=[];
+  public cityArrByStateId = [];
+  public eduTypeArrByEduCatList=[];
+  public skillArrBySkillCatList=[];
+  public personalAttributes = [];
+
   constructor(
     /* Constructor variable's */
     private __fb: FormBuilder,
@@ -81,6 +89,7 @@ export class AddComponent implements OnInit {
     private __authService: AuthService,
     private __router: Router,
     private toastr: ToastrService,
+    private __customGlobalService: CustomGlobalService
   ) {
 
   }
@@ -111,10 +120,14 @@ export class AddComponent implements OnInit {
     this.validateSkillsProfile();
 
     //Call get REST API's function
-    this.getEducationCat();
-    this.getEducationList();
-    this.getSkillCategory();
-    this.getCountry();
+    this.getEducationCategoryList();
+    this.getEducationTypeList();
+    this.getPersonalAttributes();
+    this.getSkillCategoryList();
+    this.getSkillTypeList();
+    this.getCountryList();
+    this.getStateList();
+    this.getCityList();
     this.getDocumentsTypeCat(1);
   }
 
@@ -145,8 +158,8 @@ export class AddComponent implements OnInit {
       ])],
       documents_personal: this.__fb.array([this.__fb.group(
         {
-          file_name: [''],
-          file_type: ['']
+          documentUrl: [''],
+          documentTypeId: ['']
         })]),
     });
   }
@@ -158,10 +171,10 @@ export class AddComponent implements OnInit {
   validateQualificationProfile() {
     this.qualificationDetails = this.__fb.group({
       qualification: this.__fb.array([this.__fb.group({
-        edu_cat_id: ['', Validators.required],
-        edu_type_id: ['', Validators.required],
+        docCatId: ['', Validators.required],
+        docTypeId: ['', Validators.required],
         university: ['', [Validators.required, Validators.maxLength(25)]],
-        passing_year: ['', Validators.required],
+        passingYear: ['', Validators.required],
         percentage: ['', [
           Validators.required,
           Validators.pattern("^[0-9]*$"),
@@ -180,10 +193,10 @@ export class AddComponent implements OnInit {
   validateWorlExpProfile() {
     this.workExpDetails = this.__fb.group({
       org_details: this.__fb.array([this.__fb.group({
-        org_name: ['', [Validators.required, Validators.maxLength(25)]],
-        org_designation: ['', [Validators.required, Validators.maxLength(25)]],
-        start_date: ['', Validators.required],
-        end_date: ['', Validators.required],
+        organization: ['', [Validators.required, Validators.maxLength(25)]],
+        designation: ['', [Validators.required, Validators.maxLength(25)]],
+        startDate: ['', Validators.required],
+        endDate: ['', Validators.required],
         responsibilities: ['', [Validators.required, Validators.maxLength(25)]]
       })]),
       strength: this.__fb.array([this.__fb.group({ strength: '' })]),
@@ -193,7 +206,7 @@ export class AddComponent implements OnInit {
       area_of_expertise: ['', [Validators.required, Validators.maxLength(25)]],
       psychomatric: ['', [Validators.required, Validators.maxLength(25)]],
       isFreelancer: ['', Validators.required],
-      documents_work: this.__fb.array([this.__fb.group({ file_type: ['', Validators.required], file_name: ['', Validators.required] })]),
+      documents_work: this.__fb.array([this.__fb.group({ documentTypeId: ['', Validators.required], documentUrl: ['', Validators.required] })]),
     });
   }
 
@@ -224,9 +237,10 @@ export class AddComponent implements OnInit {
    * @name getEducationCat
    * @description get API for all education category of independent prof 
    */
-  getEducationCat() {
-    this.__profileService.getFreelancerEduCat().then((resData: any) => {
-      this.eduCatArr = resData;
+  getEducationCategoryList() {
+    this.__customGlobalService.getEducationCategoryList().then((resData: any) => {
+      this.eduCatArr = resData.responseObject;
+      console.log("Education categories " , this.eduCatArr);
     })
   }
 
@@ -234,21 +248,18 @@ export class AddComponent implements OnInit {
    * @name getEducationList
    * @description get API for all education data in List
    */
-  getEducationList() {
-    this.__profileService.getFreelancerEduList().then((resData: any) => {
-      this.eduList = resData;
-      console.log('eduList: ', this.eduList);
+  getEducationTypeList() {
+    this.__customGlobalService.getEducationTypeList().then((resData: any) => {
+      this.eduList = resData.responseObject;
+      console.log('eduList : ', this.eduList);
     })
   }
 
-  // /**
-  //  * @method setEduCatByID
-  //  * @param eduCat_id
-  //  * @description get the education category id and pass it to getAllEducation method.
-  //  */
-  // setEduCatByID(eduCat_id) {
-  //   this.getAllEducation(eduCat_id);
-  // }
+  setEduTypeListByEduCategoryId(eduCatId , i) {
+    
+    this.eduTypeArrByEduCatList[eduCatId] = this.eduList.filter((item) => item.masterEduDomain.eduDomainId == eduCatId);
+    console.log(this.eduTypeArrByEduCatList);
+  }
 
   /**
    * @method getAllEducation
@@ -261,16 +272,16 @@ export class AddComponent implements OnInit {
     })
   }
 
+
+
   /**
  * @method getAllEducation
  * @param eduCat_id
  * @description get all education values based on selected education category id.
  */
-
-
   setEduListByCatId(eduCat_id, i) {
-    this.eduListbyId[eduCat_id] = this.eduList.filter((item) => item.edu_cat_id == eduCat_id);
-    this.qualificationDetails.get('qualification')['controls'][i].patchValue({ edu_cat_id: eduCat_id, edu_type_id: '' });
+    this.eduListbyId[eduCat_id] = this.eduList.filter((item) => item.docCatId == eduCat_id);
+    this.qualificationDetails.get('qualification')['controls'][i].patchValue({ docCatId: eduCat_id, docTypeId: '' });
 
   }
   /**
@@ -285,70 +296,70 @@ export class AddComponent implements OnInit {
   }
 
   /**
-   * @name getSkillCategory
+   * @name getSkillCategoryList
    * @description get API for all skill category of independent prof 
    */
-  getSkillCategory() {
-    this.__profileService.getFreelancerCategory().then((resData: any) => {
-      this.categ = resData;
+  getSkillCategoryList() {
+    this.__customGlobalService.getSkillDomainList().then((resData: any) => {
+      this.categ = resData.responseObject;
+      console.log("skill cat" , this.categ );
     })
   }
 
+  getSkillTypeList(){
+    this.__customGlobalService.getSkillTypeList().then((resData: any) => {
+      this.skills = resData.responseObject;
+      console.log("skill cat" , this.categ );
+    })
+  }
+
+  setSkillArrBySkillCatList(skillDomainId){
+    this.skillArrBySkillCatList[skillDomainId] = this.skills.filter((item) => item.masterDomain.domainId == skillDomainId);
+    console.log(this.skillArrBySkillCatList);
+  }
+
   /**
-   * @method getCountry
+   * @method getCountryList
    * @description get all country values.
    */
-  getCountry() {
-    this.__profileService.getFreelancerCountry().then((resData: any) => {
-      this.countryArr = resData;
+  getCountryList() {
+    this.__customGlobalService.getCountryList().then((resData: any) => {
+      this.countryArr = resData.responseObject;
+      console.log("CountryArr:", this.countryArr);
+      
     });
   }
 
-  /**
-   * @method setCountryID
-   * @param country_id
-   * @description get the selected country id and pass to getStateByID method.
-   */
-  setCountryID(country_id) {
-    console.log("country_id", country_id);
 
-    this.getStateByID(country_id)
-  }
-
-  /**
-   * @method getStateByID
-   * @param country_id
-   * @description get the all state values based on selected country id.
-   */
-  getStateByID(country_id) {
-
-    this.__profileService.getFreelancerStateByID(country_id).then((resData: any) => {
-      this.stateArr = resData;
-      console.log("this.stateArr", this.stateArr);
-
+  getStateList() {
+    this.__customGlobalService.getStateList().then((resData: any) => {
+      this.stateArr = resData.responseObject;
+      console.log("State: ", this.stateArr);
+      
     })
   }
 
-  /**
-   * @method setStateID
-   * @param state_id
-   * @description get the selected state id and pass to getCityByID method.
-   */
-  setStateID(state_id) {
-    this.getCityByID(state_id)
+  setStateListByCountryId(countryId) {
+    console.log("id country" , countryId);
+    this.stateArrByCountryId[countryId] = this.stateArr.filter((item) => item.masterCountry.countryId == countryId);
+    console.log(this.stateArrByCountryId);
   }
 
-  /**
-   * @method getCityByID
-   * @param state_id
-   * @description get the all city values based on selected state id.
-   */
-  getCityByID(state_id) {
-    this.__profileService.getFreelancerCityByID(state_id).then((resData: any) => {
-      this.cityArr = resData;
-      console.log(this.cityArr)
+  getCityList() {
+    this.__customGlobalService.getCityList().then((resData: any) => {
+      this.cityArr = resData.responseObject;
+      console.log("City: ", this.cityArr);
+      
     })
   }
+
+  setCityListByStateId(stateId) {
+    console.log("id state" , stateId);
+    this.cityArrByStateId[stateId] = this.cityArr.filter((item) => item.masterStates.stateId == stateId);
+    console.log(this.cityArrByStateId);
+    // this.employerProfileForm.get('state')['controls'].patchValue({ countryId : this.stateArrByCountryId[countryId].masterCountry.countryId, stateId: '' });
+  }
+
 
   /**
    * @method setDocTypeCatID
@@ -356,16 +367,25 @@ export class AddComponent implements OnInit {
    * @description get the zipcode based on selected city id.
    */
   setDocTypeCatID(id) {
-    console.log(this.doc_cat_id = id);
+    this.doc_cat_id = id;
   }
 
+  getPersonalAttributes(){
+    this.__customGlobalService.getPersonalAttributeList().then((resData: any) => {
+      this.personalAttributes = resData.responseObject;
+      console.log("personal atrributes: ", this.personalAttributes);
+      
+    })
+  }
   /**
    * @name getDocumentsTypeCat
    * @description get API for all document category type of independent prof 
    */
   getDocumentsTypeCat(index) {
     this.__profileService.getFreelancerDocumentByCat(index).then((resData: any) => {
-      this.docTypeArr = resData;
+      this.docTypeArr = resData.responseObject;
+      console.log("Document array " , this.docTypeArr);
+      
     })
 
   }
@@ -401,10 +421,10 @@ export class AddComponent implements OnInit {
   addQualification() {
     this.qualfArr.push(this.__fb.group(
       {
-        edu_cat_id: '',
-        edu_type_id: '',
+        docCatId: '',
+        docTypeId: '',
         university: '',
-        passing_year: '',
+        passingYear: '',
         percentage: '',
         grade: '',
         doc_name: ''
@@ -426,10 +446,10 @@ export class AddComponent implements OnInit {
   addResponsibility() {
     this.orgArr.push(this.__fb.group(
       {
-        org_name: '',
-        org_designation: '',
-        start_date: '',
-        end_date: '',
+        organization: '',
+        designation: '',
+        startDate: '',
+        endDate: '',
         responsibilities: ''
       }));
   }
@@ -497,8 +517,8 @@ export class AddComponent implements OnInit {
   addDocument() {
     this.documentArr.push(this.__fb.group(
       {
-        file_name: '',
-        file_type: ''
+        documentUrl: '',
+        documentTypeId: ''
       }
     ));
   }
@@ -522,8 +542,8 @@ export class AddComponent implements OnInit {
   addWorkDocument() {
     this.workdocumentArr.push(this.__fb.group(
       {
-        file_name: '',
-        file_type: ''
+        documentUrl: '',
+        documentTypeId: ''
       }
     ));
   }
@@ -608,15 +628,16 @@ export class AddComponent implements OnInit {
          console.log(event.body);
          this.toastr.success(this.fileName, "Successfully uploaded");
        } */
-      // file upload progress end
+     // file upload progress end
     });
 
-    await this.documentPersonalArray.push(
+    //await 
+    this.documentPersonalArray.push(
       {
-        'file_name': this.FileArrData.fileId,
-        'file_type': this.doc_cat_id
+        'documentUrl': this.FileArrData.fileId,
+        'documentTypeId': this.doc_cat_id
       });
-    console.log(this.documentPersonalArray);
+    console.log("Personal Document " , this.documentPersonalArray);
   }
 
   uploadEducationFile() {
@@ -634,8 +655,8 @@ export class AddComponent implements OnInit {
 
     this.documentQualArray.push(
       {
-        'file_name': this.FileArrData.fileId,
-        'file_type': 4
+        'documentUrl': this.FileArrData.fileId,
+        'documentTypeId': 4
       });
     console.log(this.documentQualArray);
   }
@@ -655,10 +676,10 @@ export class AddComponent implements OnInit {
 
     this.documentWorkArray.push(
       {
-        'file_name': this.FileArrData.fileId,
-        'file_type': this.doc_cat_id
+        'documentUrl': this.FileArrData.fileId,
+        'documentTypeId': this.doc_cat_id
       });
-    console.log(this.documentWorkArray);
+    console.log("work document" ,this.documentWorkArray);
   }
 
 
@@ -667,13 +688,116 @@ export class AddComponent implements OnInit {
    * @description submit the form filed value to serer through REST API
    */
 
+
+  savePersonalDetails(){
+    const personalData = {
+      email: this.email,
+      prefix: this.personalDetails.controls.prefix.value,
+      firstName: this.personalDetails.controls.first_name.value,
+      middleName: this.personalDetails.controls.middle_name.value,
+      lastName: this.personalDetails.controls.last_name.value,
+      addressLine1: this.personalDetails.controls.address_one.value,
+      addressLine2: this.personalDetails.controls.address_two.value,
+      country: this.personalDetails.controls.country.value,
+      province: this.personalDetails.controls.province.value,
+      city: this.personalDetails.controls.city.value,
+      postalCode: this.personalDetails.controls.postal_code.value,
+      freelancerDocuments: this.documentPersonalArray
+    }
+
+    console.log('Freelancer Payload Value : ', personalData);
+
+    this.__profileService.savePersonalDetails(personalData).then((resData: any) => {
+      console.log("Res Data:", resData);
+      this.loading = false;
+      if (resData.status == 'success') {
+        this.toastr.success("Profile added Successfully");
+        this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
+      }
+      else if (resData.status == 'error') {
+        this.toastr.error("Profile not saved");
+      }
+    });
+  }
+
+
+  saveEducationDetails(){
+
+   console.log("qualification details" ,  this.qualificationDetails.controls.qualification.value);
+
+    this.__profileService.saveEducationDetails(this.qualificationDetails.controls.qualification.value).then((resData: any) => {
+        console.log("Res Data:", resData);
+        this.loading = false;
+        if (resData.status == 'success') {
+          this.toastr.success("Profile added Successfully");
+          this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
+        }
+        else if (resData.status == 'error') {
+          this.toastr.error("Profile not saved");
+        }
+    });
+  }
+
+  saveWorkDetails(){
+
+    let portfolioArray = [];
+    let i;
+    for(i = 0 ; i < this.workExpDetails.controls.portfolios.value.length ; i++){
+      portfolioArray[i]=this.workExpDetails.controls.portfolios.value[i].portfolio;
+    }
+    console.log("portfolioArr" , portfolioArray);
+
+
+    let strengthArr = [];
+    for(i = 0 ; i < this.workExpDetails.controls.strength.value.length ; i++){
+      strengthArr[i]=this.workExpDetails.controls.strength.value[i].strength;
+    }
+    console.log("strength" , this.workExpDetails.controls.strength.value);
+    console.log("strength" , strengthArr);
+
+
+    let weaknessArr = [];
+    for(i = 0 ; i <  this.workExpDetails.controls.weakness.value.length ; i++){
+      weaknessArr[i]=this.workExpDetails.controls.weakness.value[i].weakness;
+    }
+    console.log("weaknessArr" , weaknessArr);
+    console.log("weaknessArr" , weaknessArr);
+
+    
+    // console.log("work details" ,  this.workExpDetails.controls.org_details.value);
+   // console.log()
+    const orgDetailsPayload = {
+      email: this.email,
+      freelancerOrgDetails : this.workExpDetails.controls.org_details.value,
+      portfolio: portfolioArray,
+      freelancerDocument : this.documentWorkArray,
+      areaOfExpertise : this.workExpDetails.controls.area_of_expertise.value,
+      personalAttributeStrength :  strengthArr,
+      personalAttributeWeakness : weaknessArr
+    }
+
+    console.log("org details " , orgDetailsPayload);
+  
+     this.__profileService.saveWorkDetails(orgDetailsPayload).then((resData: any) => {
+        console.log("Res Data:", resData);
+        this.loading = false;
+        if (resData.status == 'success') {
+          this.toastr.success("Profile added Successfully");
+          this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
+        }
+        else if (resData.status == 'error') {
+          this.toastr.error("Profile not saved");
+        }
+    });
+  }
+
   onSubmitDetails() {
 
     this.loading = true;
 
     let documentArr: any = [
-      'file_name',
-      'file_type'
+      'documentUrl',
+      'documentTypeId'
     ];
 
     let qualitiesArr: any = [
@@ -694,6 +818,7 @@ export class AddComponent implements OnInit {
         weaknesses: this.workExpDetails.controls.weakness.value
       },
     ];
+
     console.log(qualitiesArr);
     const freelancerProfilePayload = {};
     if (this.isUportUser == "false") {
@@ -722,20 +847,20 @@ export class AddComponent implements OnInit {
         is_interviewer: this.workExpDetails.controls.isFreelancer.value,
         skills: this.skillRateArr.value
       }
-      console.log('Freelancer Payload Value : ', freelancerProfilePayload);
-      this.__profileService.createFreelancer(freelancerProfilePayload).then((resData: any) => {
-        console.log("Res Data:", resData);
+      // console.log('Freelancer Payload Value : ', freelancerProfilePayload);
+      // this.__profileService.createFreelancer(freelancerProfilePayload).then((resData: any) => {
+      //   console.log("Res Data:", resData);
 
-        this.loading = false;
+      //   this.loading = false;
 
-        if (resData.status == 'success') {
-          this.toastr.success("Profile added Successfully");
-          this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
-        }
-        else if (resData.status == 'error') {
-          this.toastr.error("Profile not saved");
-        }
-      });
+      //   if (resData.status == 'success') {
+      //     this.toastr.success("Profile added Successfully");
+      //     this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
+      //   }
+      //   else if (resData.status == 'error') {
+      //     this.toastr.error("Profile not saved");
+      //   }
+      // });
     }
     else {
 
@@ -765,75 +890,74 @@ export class AddComponent implements OnInit {
         skills: this.skillRateArr.value
       }
       console.log('Freelancer Payload Value : ', freelancerProfilePayload);
-      this.__profileService.createFreelancer(freelancerProfilePayload).then((resData: any) => {
-        console.log(resData);
-        this.loading = false;
+      // this.__profileService.createFreelancer(freelancerProfilePayload).then((resData: any) => {
+      //   console.log(resData);
+      //   this.loading = false;
 
-        if (resData.status == 'success') {
-          this.toastr.success("Profile added Successfully");
-          this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
-        }
-        else if (resData.status == 'error') {
-          this.toastr.error("Profile not saved");
-        }
+      //   if (resData.status == 'success') {
+      //     this.toastr.success("Profile added Successfully");
+      //     this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
+      //   }
+      //   else if (resData.status == 'error') {
+      //     this.toastr.error("Profile not saved");
+      //   }
 
-      });
+      // });
     }
   }
 
   ShowNextButton(index) {
     console.log("Value :", this.showMainContent);
 
+
     if (this.showMainContent == 1) {
       this.showMainContent = index;
 
       this.submitted = true;
-      if (this.personalDetails.invalid) {
-        console.log("dhfkjhdkshk");
-        this.showMainContent = 1;
+      // if (this.personalDetails.invalid) {
+      //   this.showMainContent = 1;
 
-        return;
-      } else {
-        console.log("Next btn in 1 page");
+      //   return;
+      // } else {
         this.showMainContent = 2;
-      }
+      // }
 
 
     } else if (this.showMainContent == 2) {
       this.showMainContent = index;
 
-      this.submitted = true;
-      if (this.qualificationDetails.invalid) {
-        this.showMainContent = 2;
-        return;
-      } else {
+      // this.submitted = true;
+      // if (this.qualificationDetails.invalid) {
+      //   this.showMainContent = 2;
+      //   return;
+      // } else {
         console.log("Next btn in 2 page");
         this.showMainContent = 3;
-      }
+      // }
 
     } else if (this.showMainContent == 3) {
       this.showMainContent = index;
 
       this.submitted = true;
 
-      if (this.workExpDetails.invalid) {
-        this.showMainContent = 3;
-        return;
-      } else {
+      // if (this.workExpDetails.invalid) {
+      //   this.showMainContent = 3;
+      //   return;
+      // } else {
         console.log("Next btn in 3 page");
         this.showMainContent = 4;
-      }
+      // }
     } else if (this.showMainContent == 4) {
       this.showMainContent = index;
 
       this.submitted = true;
-      if (this.skillDetails.invalid) {
-        this.showMainContent = 4
-        return;
-      } else {
+      // if (this.skillDetails.invalid) {
+      //   this.showMainContent = 4
+      //   return;
+      // } else {
         console.log("Next btn in 4 page");
         this.showMainContent = 4;
-      }
+      // }
 
     } else {
       console.log("Nothing to save");

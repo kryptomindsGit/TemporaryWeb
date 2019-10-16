@@ -214,7 +214,7 @@
                                                 <select (change)="setDocTypeCatID($event.target.value)"
                                                     formControlName="docType" id="document_type" required>
                                                     <option id="option_txt" *ngFor="let doctypefile of docTypeArr"
-                                                        [value]="doctypefile.doc_type_id">{{doctypefile.doc_type}}
+                                                        [value]="doctypefile.documentTypeId">{{doctypefile.documentTypeName}}
                                                     </option>
                                                 </select>
                                                 <label class="form-label" for="document_type">Document Type</label>

@@ -71,11 +71,15 @@ export class EditComponent implements OnInit {
     let isUportUser = localStorage.getItem("uportUser");
 
     if (isUportUser == "false") {
+      console.log("I am not an uport user");
+      
       const user = this.__authService.decode();
       this.congnitoId = user["cognito:username"];
       this.emailId = user["email"];
       this.uid = user["uid"];
     } else {
+      console.log("I am an uport user");
+
       this.congnitoId = "TEST"
       this.uid = localStorage.getItem("uid");
       this.emailId = localStorage.getItem("email");
@@ -138,14 +142,11 @@ export class EditComponent implements OnInit {
    * @description call get API for employer file details 
    */
   async getEmplyeeDetails() {
-
-    this.emailId = "emp@employer.com"; //testing
+    console.log("email while calling ", this.emailId);
     await this.__profileService.getEmployerByEmailId(this.emailId).then((data: any) => {
       console.log("Res Data: ",data.responseObject);
       this.employerArr = data.responseObject;
       console.log(this.employerArr);
-      console.log("gjgjdsfkjggkjggkjgkg");
-      // this.setCityListByStateId(this.employerArr.masterState.stateId);
     });
 
     
@@ -281,61 +282,6 @@ async getCityList() {
     this.setCityListByStateId(this.employerArr.masterState.stateId);
   })
 }
-
-
-
-
-  // /**
-  // * @method getAllCountry
-  // * @description get all country values.
-  // */
-  // getAllCountry() {
-  //   this.__profileService.getEmpCountry().then((resData: any) => {
-  //     this.countryArr = resData;
-  //   })
-  // }
-
-  // /**
-  //  * @method setCountryID
-  //  * @param country_id
-  //  * @description get the selected country id and pass to getStateListByCountryID method.
-  //  */
-  // setCountryID(country_id) {
-  //   this.getStateListByCountryID(country_id)
-  // }
-
-  // /**
-  //  * @method getStateListByCountryID
-  //  * @param country_id
-  //  * @description get the all state values based on selected country id.
-  //  */
-  // async getStateListByCountryID(country_id) {
-  //   await this.__profileService.getEmpStateByID(country_id).then((resData: any) => {
-  //     this.stateArr = resData;
-  //   })
-  // }
-
-  // /**
-  //  * @method setStateID
-  //  * @param state_id
-  //  * @description get the selected state id and pass to getCityListByStateID method.
-  //  */
-  // setStateID(state_id) {
-  //   this.getCityListByStateID(state_id)
-  // }
-
-  // /**
-  //  * @method getCityListByStateID
-  //  * @param state_id
-  //  * @description get the all city values based on selected state id.
-  //  */
-  // async getCityListByStateID(state_id) {
-  //   await this.__profileService.getEmpCityByID(state_id).then((resData: any) => {
-  //     this.cityArr = resData;
-  //     console.log(this.cityArr)
-  //   })
-  // }
-
   /**
     * @name 
     * @description file handler
@@ -383,7 +329,9 @@ async getCityList() {
 
   getDocumentsTypeCat(index) {
     this.__freelancerProfileService.getFreelancerDocumentByCat(index).then((resData: any) => {
-      this.docTypeArr = resData;
+      this.docTypeArr = resData.responseObject;
+      console.log("response for doc cat" ,  this.docTypeArr);
+       
     })
 
   }
@@ -407,8 +355,6 @@ async getCityList() {
       ...this.documentFileArr
     ];
 
-
-    this.emailId = "emp@employer.com";
     const employerProfileVal = {
       emailId : this.emailId,
       companyName: this.employerProfileForm.controls.comapany_name.value,
@@ -426,7 +372,7 @@ async getCityList() {
     }
     console.log(" Submit values:", employerProfileVal);
 
-    this.__profileService.updateEmployer( employerProfileVal).then((resData: any) => {
+    this.__profileService.updateEmployer(employerProfileVal).then((resData: any) => {
       console.log(resData);
       this.loading = false;
       if (resData.status == 'success') {

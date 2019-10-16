@@ -112,29 +112,39 @@ export class UportLoginComponent implements OnInit {
 
     console.log("email from JWT " + this.email);
 
-    this.__authService.getUportInfo(this.email).then((data: any) => {
-      console.log("data from database : ", data);
+    const userDataPaylaod = {
+      emailId : this.email
+    }
+
+    this.__authService.getSignUpData(userDataPaylaod).then((data: any) => {
+      console.log("data from database : ", data.responseObject);
 
       if (data.length == 0) {
         this.loading = false;
         console.log("User needs to sign up");
         this.__router.navigate(['/auth/auth/uport-signup']);
       } else {
+
+      
         this.loading = false;
-        this.uPortDetailsArr = data[0];
+        this.uPortDetailsArr =  data.responseObject.User;
+
+        if(this.uPortDetailsArr.cognitoId == null){
+            //update cognito id
+        }
 
         let role = this.uPortDetailsArr.role;
-        let country = this.uPortDetailsArr.country;
+        // let country = this.uPortDetailsArr.country;
         let phone = this.uPortDetailsArr.phone_num;
 
         localStorage.setItem("role", role);
         console.log("port detail ", this.uPortDetailsArr);
 
-        localStorage.setItem("country", country);
-        localStorage.setItem("email", this.email);
+        // localStorage.setItem("country", country);
+        // localStorage.setItem("email", this.email);
         localStorage.setItem("phone_no", phone);
-        localStorage.setItem('uid', this.uPortDetailsArr.uid);
-        localStorage.setItem('email', this.uPortDetailsArr.email);
+        localStorage.setItem('uid', this.uPortDetailsArr.userId);
+        localStorage.setItem('email', this.uPortDetailsArr.emailId);
 
         var baseName = this.email;
         baseName = baseName.substring(0, baseName.indexOf('@'));

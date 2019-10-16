@@ -10,7 +10,7 @@ import { throwError } from 'rxjs';
 import { BASE_URL } from '../../../constant/constant-url';
 import { UPORT_URL } from '../../../constant/constant-url';
 import { AWS_URL } from '../../../constant/constant-url';
-
+import { SPRING_URL } from '../../../constant/constant-url';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -44,6 +44,8 @@ export class AuthService {
   }
 
   async register(userInfo: any) {
+    console.log("aws cognito register method");
+    
     try {
       let res = await this.__http.post(`${AWS_URL}/signup`, userInfo, httpOptions).toPromise();
       return res;
@@ -87,24 +89,35 @@ export class AuthService {
     }
   }
 
-  async uportSignup(user: any): Promise<any> {
+  async saveSignUpData(user: any): Promise<any> {
 
     try {
-      let result = await this.__http.post(`${BASE_URL}/uportsignup`, user, httpOptions).toPromise();
+      let result = await this.__http.post(`${SPRING_URL}/auth/signup`, user, httpOptions).toPromise();
       return result;
     } catch (error) {
       await this.handleError(error);
     }
   }
 
-  async getUportInfo(email: any): Promise<any> {
+  async getSignUpData(payload: any): Promise<any> {
     try {
-      let result = await this.__http.get(`${BASE_URL}/uportsignup/${email}`, httpOptions).toPromise();
+      let result = await this.__http.post(`${SPRING_URL}/auth/login` , payload , httpOptions).toPromise();
       return result;
     } catch (error) {
       await this.handleError(error);
     }
   }
+
+  async getSecurityToken(payload: any): Promise<any> {
+    try {
+      let result = await this.__http.post(`${SPRING_URL}/auth/getToken` , payload , httpOptions).toPromise();
+      return result;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+  
+
 
   async updateDid(data: any): Promise<any> {
     try {

@@ -24,7 +24,7 @@ export class AddComponent implements OnInit {
   addWorkPackage: any;
 
   calAvgRate: any = 'ETH 1';
-  calculateAvgRate: boolean = false;
+  calculateAvgRate1: boolean = false;
 
   //Static Arrays 
   complexityArr = ['High', 'Medium', 'Low'];
@@ -174,10 +174,10 @@ export class AddComponent implements OnInit {
   }
 
   getAllDomain() {
-    this.__profileService.getFreelancerCategory().then((data: any) => {
-      this.allDomainArr = data;
-      console.log("Domain Values", this.allDomainArr);
-    })
+    // this.__profileService.getFreelancerCategory().then((data: any) => {
+    //   this.allDomainArr = data;
+    //   console.log("Domain Values", this.allDomainArr);
+    // })
   }
 
   isReviewer() {
@@ -242,7 +242,7 @@ export class AddComponent implements OnInit {
 
 
   //calculateAvgRate()
-  calulateAvgRate() {
-    this.calculateAvgRate = this.calculateAvgRate ? false : true;;
+  calulateAvgRatePayscale() {
+    this.calculateAvgRate1 = this.calculateAvgRate1 ? false : true;;
   }
 }

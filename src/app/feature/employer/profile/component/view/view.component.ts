@@ -63,7 +63,7 @@ export class ViewComponent implements OnInit {
     //   console.log(this.employerDetailsArr);
 
     // });
-    this.__profileService.getEmployerByEmailId("emp@employer.com").then((resData: any) => {
+    this.__profileService.getEmployerByEmailId(this.emailId).then((resData: any) => {
       console.log("res for get " , resData);
       
       this.employerDetailsArr = resData.responseObject;

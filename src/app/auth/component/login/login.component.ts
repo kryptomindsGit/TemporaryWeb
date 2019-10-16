@@ -77,28 +77,39 @@ export class LoginComponent implements OnInit {
 
       this.loading = true;
 
-      const loginPayload = {
+      const cognitologinPayload = {
         email: this.loginForm.controls.email.value,
         password: this.loginForm.controls.password.value
       }
 
-      this.__authService.login(loginPayload).subscribe((resData: any) => {
+      const databaseloginPayload = {
+        emailId: this.loginForm.controls.email.value
+      }
+
+      this.__authService.login(cognitologinPayload).subscribe((resData: any) => {
 
         if (resData.status == "SUCCESS") {
-          this.__authService.getUportInfo(loginPayload.email).then((data: any) => {
+          this.__authService.getSecurityToken(databaseloginPayload).then((data: any) => {
+            console.log("Token : " , data.responseObject);
+            
+          })
+          
+          this.__authService.getSignUpData(databaseloginPayload).then((data: any) => {
             this.loading = false;
-            console.log("Res:", data[0]);
-            console.log("Data:", data[0]);
+            console.log("resData" , data.responseObject);
+          
+            if(data.responseObject.User.cognitoId == null) {
+              //update cognitoID
+            }
 
-
-            var baseName = data[0].email;
+            var baseName = data.responseObject.User.emailId;
             baseName = baseName.substring(0, baseName.indexOf('@'));
             const emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1);
 
             this.toastr.success(emailName, 'Welcome ');
-            localStorage.setItem('uid', data[0].uid);
+            localStorage.setItem('uid', data.responseObject.User.userId);
             localStorage.setItem('uportUser', this.uportUser);
-            localStorage.setItem('email', data[0].email);
+            localStorage.setItem('email', data.responseObject.User.emailId);
             this.__router.navigate(['/feature/feature/full-layout/dashboard'])
           })
         } else if (resData.status == "ERROR") {

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { IndeptProfileService } from 'src/app/feature/independent-prof/profile/shared/service/profile.service';
 import { GlobalValidationDirective } from '../../../shared/global-validation.directive'
+import { CustomGlobalService } from 'src/app/feature/shared/service/custom-global.service';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -19,7 +20,7 @@ export class SignUpComponent implements OnInit {
   public loading = false;
   public showMsg: string;
   public submitted = false;
-
+  phoneNo : String ;
   //Array's
   public showMsgCognito: any = [];
   public countryArr: any = [];
@@ -30,11 +31,13 @@ export class SignUpComponent implements OnInit {
     private __router: Router,
     private toastr: ToastrService,
     private __profileService: IndeptProfileService,
+    private __customGlobalService: CustomGlobalService
+
   ) { }
 
   ngOnInit() {
     this.validateData();
-    this.getCountry();
+    this.getCountryList();
   }
 
   /**
@@ -55,11 +58,10 @@ export class SignUpComponent implements OnInit {
   * @method getCountry
   * @description get all country values.
   */
-  getCountry() {
-    this.__profileService.getFreelancerCountry().then((resData: any) => {
-      this.countryArr = resData;
+  getCountryList() {
+    this.__customGlobalService.getCountryList().then((resData: any) => {
+      this.countryArr = resData.responseObject;
       console.log("countryArr:", this.countryArr);
-
     })
   }
 
@@ -72,45 +74,56 @@ export class SignUpComponent implements OnInit {
    */
   onSubmit() {
     this.submitted = true;
-    console.log("Lgin data:", this.signupForm.value);
+    console.log("Login data:", this.signupForm.value);
 
     // stop here if form is invalid
-    if (this.signupForm.invalid) {
-      return;
-    } else {
-      this.loading = true;
+    // if (this.signupForm.invalid) {
+    //   return;
+    // } else {
+      // this.loading = true;
+
+      let role :any = this.signupForm.controls.custom_role.value;
+      if(role == 1){
+        role = "Freelancer"
+      }else if(role == 2){
+        role = "Employer"
+
+      }else{
+        role = "Partner"
+
+      }
       const signupPayload = {
         email: this.signupForm.controls.email.value,
         password: this.signupForm.controls.password.value,
         phone_no: this.signupForm.controls.phone_no.value,
-        custom_role: this.signupForm.controls.custom_role.value,
-        custom_country: this.signupForm.controls.custom_country.value
+        custom_role: role,
+        custom_country: this.countryArr[this.signupForm.controls.custom_country.value].countryName
+      }
+
+      this.phoneNo = this.signupForm.controls.phone_no.value;
+      const cognitoPayload = {
+        isUportUser: 0,
+        emailId: signupPayload.email,
+        contactNo:this.phoneNo.substring(3, 13),
+        role: this.signupForm.controls.custom_role.value,
+        country: this.signupForm.controls.custom_country.value
       }
 
       console.log("Sing up Data:", signupPayload);
+      console.log("cognito payload" , cognitoPayload );
 
       this.__authService.register(signupPayload).then((resData: any) => {
         console.log("Res:", resData);
 
         if (resData.status == "SUCCESS") {
-
-
           setTimeout(() => {
             this.loading = false;
             this.toastr.success(resData.message);
             this.__router.navigate(['/auth/auth/login']);
           }, 5000);
-
-          const cognitoPayload = {
-            flag: "N",
-            email: signupPayload.email,
-            phone_no: signupPayload.phone_no,
-            role: signupPayload.custom_role,
-            country: signupPayload.custom_country
-          }
-
-          this.__authService.uportSignup(cognitoPayload).then((resData: any) => {
-            this.showMsg = resData;
+          
+          this.__authService.saveSignUpData(cognitoPayload).then((resData: any) => {
+            this.showMsg = resData;           
           });
 
         } else if (resData.status == "ERROR") {
@@ -121,9 +134,6 @@ export class SignUpComponent implements OnInit {
           this.toastr.warning(resData.response.message);
         }
       });
-
-
-    }
   }
 
 }

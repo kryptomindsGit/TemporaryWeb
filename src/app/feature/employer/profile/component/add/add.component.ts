@@ -65,6 +65,7 @@ export class AddComponent implements OnInit {
 
     if (isUportUser == "false") {
       const user = this.__authService.decode();
+      console.log(" decode \n" , user);
       this.congnitoId = user["cognito:username"];
       this.email_id = user["email"];
       this.uid = localStorage.getItem("uid");
@@ -233,8 +234,11 @@ export class AddComponent implements OnInit {
 
     await this.documentFileArr.push(
       {
-        'file_name': this.FileArrData.fileId,
-        'file_type': this.doc_cat_id
+        // 'documentUrl': this.FileArrData.fileId,
+        // 'docTypeId': this.doc_cat_id
+
+        'documentUrl': "testing.txt" , // for testing hard-coded
+        'docTypeId': 9
       });
     console.log(this.documentFileArr);
   }
@@ -248,8 +252,8 @@ export class AddComponent implements OnInit {
     this.loading = true;
     console.log(this.employerProfileForm);
     let documensFile: any = [
-      'file_name',
-      'file_type'
+      'documentUrl',
+      'docTypeId'
     ];
 
     documensFile = [
@@ -258,9 +262,7 @@ export class AddComponent implements OnInit {
 
   
     const employerProfileVal = {
-      uid: this.uid,
-      // emailId: this.email_id,
-      emailId : "emp@employer.com",
+      emailId: this.email_id,
       companyName: this.employerProfileForm.controls.comapany_name.value,
       website: this.employerProfileForm.controls.website_addr.value,
       addressOne: this.employerProfileForm.controls.address_line_one.value,
@@ -272,7 +274,7 @@ export class AddComponent implements OnInit {
       companyProfile: this.employerProfileForm.controls.company_profile.value,
       businessCategory: this.employerProfileForm.controls.business_cat.value,
       companyRepresentativeName: this.employerProfileForm.controls.company_rep_det.value,
-      chooseFile: documensFile,
+      employerDocuments: documensFile,
     }
     console.log(" Submit values:", employerProfileVal);
 
@@ -287,18 +289,6 @@ export class AddComponent implements OnInit {
         this.toastr.error("Profile not saved");
       }
       console.log(" Submit values:", employerProfileVal);
-
-      this.__profileService.createEmployer(employerProfileVal).then((resData: any) => {
-        console.log(resData);
-        this.loading = false;
-        if (resData.status == 'success') {
-          this.toastr.success("Profile added Successfully");
-          this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view', this.email_id]);
-        }
-        else if (resData.status == 'error') {
-          this.toastr.error("Profile not saved");
-        }
-      });
     });
   }
 
@@ -308,9 +298,8 @@ export class AddComponent implements OnInit {
    */
   getDocumentsTypeCat(index) {
     this.__freelancerProfileService.getFreelancerDocumentByCat(index).then((resData: any) => {
-      this.docTypeArr = resData;
+      this.docTypeArr = resData.responseObject;
       console.log("docTypeArr:", this.docTypeArr);
-
     });
   }
 

@@ -4,6 +4,7 @@ import { throwError } from 'rxjs';
 
 //Constant URL
 import { BASE_URL } from '../../../../../constant/constant-url';
+import { SPRING_URL } from '../../../../../constant/constant-url';
 // import { BASE_URL_ADDRESS } from '../../../../../constant/constant-url';
 import { BLOCKCHAIN_URL } from '../../../../../constant/constant-url';
 import { UPORT_URL } from '../../../../../constant/constant-url';
@@ -139,22 +140,22 @@ export class IndeptProfileService {
     }
   }
 
-  // Independent Prof skill category GET API call
-  async getFreelancerCategory() {
-    try {
-      let res = await this.__http.get(`${BASE_URL}/freelancer/skillcat`, httpOptions).toPromise();
-      return res;
-    } catch (error) {
-      await this.handleError(error);
-    }
-  }
+  // // Independent Prof skill category GET API call
+  // async getFreelancerCategory() {
+  //   try {
+  //     let res = await this.__http.get(`${BASE_URL}/freelancer/skillcat`, httpOptions).toPromise();
+  //     return res;
+  //   } catch (error) {
+  //     await this.handleError(error);
+  //   }
+  // }
 
   // Independent Prof documents by id GET API call
   async getFreelancerDocumentByCat(id: any) {
     try {
       console.log("doc cat id : " + id);
 
-      let res = await this.__http.get(`${BASE_URL}/freelancer/doctypes/${id}`, httpOptions).toPromise();
+      let res = await this.__http.get(`${SPRING_URL}/master/document-type/` + id, httpOptions).toPromise();
       return res;
     } catch (error) {
       await this.handleError(error);
@@ -263,9 +264,27 @@ export class IndeptProfileService {
   //   }
   // }
 
-  async createFreelancer(freelancer: any) {
+  async savePersonalDetails(freelancer: any) {
     try {
-      let res = await this.__http.post(`${BASE_URL}/freelancer/freelancers`, freelancer, httpOptions).toPromise();
+      let res = await this.__http.post(`${SPRING_URL}/freelancer/profile`, freelancer, httpOptions).toPromise();
+      return res;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
+  async saveEducationDetails(freelancer: any) {
+    try {
+      let res = await this.__http.post(`${SPRING_URL}/freelancer/education`, freelancer, httpOptions).toPromise();
+      return res;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
+  async saveWorkDetails(freelancer: any) {
+    try {
+      let res = await this.__http.post(`${SPRING_URL}/freelancer/work-experience`, freelancer, httpOptions).toPromise();
       return res;
     } catch (error) {
       await this.handleError(error);
