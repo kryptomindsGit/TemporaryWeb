@@ -22,6 +22,5 @@ export const AWS_IP = 'http://13.233.118.187:';
 export const BASE_URL = AWS_IP + '3060'; //(shefali - Node Server)
 export const AWS_URL = AWS_IP + '3030'; // (Bhushan - cognito AWS server)
 export const UPORT_URL = AWS_IP + '3000'; // (Bhushan - uport Node server)
-// export const SPRING_URL = AWS_IP + '8090';  // (Bhushan - Spring server)
-export const SPRING_URL = "http://192.168.0.3:8090";
+export const SPRING_URL = AWS_IP + '8090';  // (Bhushan - Spring server)
 //*/
