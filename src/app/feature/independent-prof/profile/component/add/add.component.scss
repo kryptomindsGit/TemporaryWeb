@@ -78,9 +78,14 @@
 .table th {
     padding: .75rem;
     vertical-align: top;
-    border: none !important;
+    border-top: none !important;
 }
 
+.worktable {
+    color: $text-color;
+    background: transparent !important;
+    border-right: 1rem solid #ffffff !important;
+  }
 .card .card-body img {
     width: 5rem;
     height: 5rem;
@@ -98,7 +103,9 @@
     margin: 1rem auto;
     letter-spacing: 0.1em
 }
-
+.setcollength{
+    min-width: 10rem;
+}
 /*-----------------------------------------------------------------------
 FORM CSS
 -------------------------------------------------------------------------*/

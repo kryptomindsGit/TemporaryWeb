@@ -788,7 +788,7 @@
                                                         <table class="table customCard">
                                                             <tr *ngFor="let skill of categ; let i = index">
                                                                 <td>
-                                                                    <a id="link" (click)="setSkillArrBySkillCatList($event.target.value)">
+                                                                    <a id="link" (click)="setSkillArrBySkillCatList(skill.domainId)">
                                                                         {{skill.domainName}}</a>
                                                                 </td>
                                                             </tr>
@@ -812,10 +812,10 @@
                                             <ul class="checkbox-grid-row">
                                                 <li>
                                                     <label class="checkbox-grid-col"
-                                                        *ngFor="let item of skills; let i = index">
+                                                        *ngFor="let item of skillArrBySkillCatList; let i = index">
                                                         <input type="checkbox"
-                                                            (click)="onChange(item.skill_name,item.skill_id,$event.target.checked)">
-                                                        {{item.skill_name}}
+                                                            (click)="onChange(item.skillName,item.skillId,$event.target.checked)">
+                                                        {{item.skillName}}
                                                     </label>
                                                 </li>
                                             </ul>
@@ -834,20 +834,66 @@
                                         <div class="card-body skill-innner-container skill-selected-container">
 
                                             <div formArrayName="skills">
-                                                <div *ngFor="let item of skillRateArr.controls; let i=index"
-                                                    [formGroupName]="i">
-                                                    <div class="row">
-                                                        <div class="form-group form-input col-4">
+                                                <div >
+                                                    
+                <table class="table table-dark  table-bordered table-sm worktable">
+                        <thead>
+                            <tr>
+                                <th class="setcollength">Skill Name<span>*</span>
+                                </th>
+                                <th class="setcollength" >Expertise Level</th>
+                                <th class="setcollength">Currency</th>
+                                <th class="setcollength">Rate / hr</th>
+                                <th class="setcollength">Experience(Year)</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let item of skillRateArr.controls; let i=index"
+                        [formGroupName]="i">
+                            <tr>
+                                <td>
+                                    {{item.value.skillName}}
+
+                                </td>
+                                <td>
+                                    <select formControlName="expertise">
+                                        <option value="High">High</option>
+                                        <option value="Intermediate">Intermediate</option>
+                                        <option value="Beginner">Beginner</option>
+                                    </select>
+                                </td>
+                                <td>
+                                        <label> 
+                                            <select formControlName="currency">
+                                                <option  *ngFor="let currency of currencyList" [value]="currency.currencyId">
+                                                    {{currency.currencyName}}
+                                                </option>
+                                            </select></label>
+                                    </td>
+                                <td>
+                                    <input type="text" formControlName="rateHour" id="rate_skill" required />
+                                </td>
+
+                                <td>
+                                    <input type="text" formControlName="skillExperience" id="exp_skill" required />
+                                </td>
+                               
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                                                    <!-- <div class="row ">
+                                                        <div class="form-group form-input col-3">
                                                             <label style="font-size: 0.7rem" class="label-skill"
                                                                 formControlName="skill_name">
                                                                 {{item.value.skill_name}}
                                                             </label>
                                                         </div>
-                                                        <div class="form-group form-input col-4">
+                                                        <div class="form-group form-input col-3 setcollength">
                                                             <input type="text" formControlName="rate_hour"
                                                                 id="rate_skill" required />
                                                             <label for="rate_skill" class="form-label"
-                                                                style="font-size: 0.6rem">Rate per Hour (USD)</label>
+                                                                style="font-size: 0.6rem">Expertise Level</label>
                                                             <div *ngIf="skillRateArr.controls[i].get('rate_hour').invalid && (skillRateArr.controls[i].get('rate_hour').dirty || skillRateArr.controls[i].get('rate_hour').touched)"
                                                                 class="text-danger error-msg-skill">
                                                                 <div
@@ -857,7 +903,35 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group form-input col-4">
+                                                        <div class="form-group form-input col-2 setcollength">
+                                                                <input type="text" formControlName="rate_hour"
+                                                                    id="rate_skill" required />
+                                                                <label for="rate_skill" class="form-label"
+                                                                    style="font-size: 0.6rem">Rate per Hour (USD)</label>
+                                                                <div *ngIf="skillRateArr.controls[i].get('rate_hour').invalid && (skillRateArr.controls[i].get('rate_hour').dirty || skillRateArr.controls[i].get('rate_hour').touched)"
+                                                                    class="text-danger error-msg-skill">
+                                                                    <div
+                                                                        [hidden]="!skillRateArr.controls[i].get('rate_hour').errors?.required">
+                                                                        Rate/Hour is
+                                                                        required.
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group form-input col-2 setcollength">
+                                                                    <input type="text" formControlName="rate_hour"
+                                                                        id="rate_skill" required />
+                                                                    <label for="rate_skill" class="form-label"
+                                                                        style="font-size: 0.6rem">Currency</label>
+                                                                    <div *ngIf="skillRateArr.controls[i].get('rate_hour').invalid && (skillRateArr.controls[i].get('rate_hour').dirty || skillRateArr.controls[i].get('rate_hour').touched)"
+                                                                        class="text-danger error-msg-skill">
+                                                                        <div
+                                                                            [hidden]="!skillRateArr.controls[i].get('rate_hour').errors?.required">
+                                                                            Rate/Hour is
+                                                                            required.
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        <div class="form-group form-input col-2 setcollength">
                                                             <input type="text" formControlName="skill_exp"
                                                                 id="exp_skill" required />
                                                             <label for="exp_skill" class="form-label"
@@ -871,7 +945,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
 
 
@@ -884,7 +958,7 @@
                     </div>
                     <!-- [disabled]="skillDetails.controls.skillRateArr.controls.pristine || skillDetails.controls.skillRateArr.controls.invalid" -->
                     <button type="button" class="btnPrevious" (click)="ShowNextButton(3)">Previous</button>
-                    <button type="button" class="btnNext" (click)="onSubmitDetails()"
+                    <button type="button" class="btnNext" (click)="onSaveSkills()"
                         [disabled]="skillDetails.invalid">Save</button>
 
                 </form>

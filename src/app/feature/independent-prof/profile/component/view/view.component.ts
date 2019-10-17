@@ -69,18 +69,18 @@ export class ViewComponent implements OnInit {
 
     // get API call function's
     this.getFreelancerDetails();
-    this.getFreelancerDocuments();
-    this.getFreelancerEducation();
-    this.getFreelancerOrganization();
-    this.getFreelancerSkillDetails();
-    this.getQualitiesById(this.__id);
-    this.getFreelancerPortfolio();
+    // this.getFreelancerDocuments();
+    // this.getFreelancerEducation();
+    // this.getFreelancerOrganization();
+    // this.getFreelancerSkillDetails();
+    // this.getQualitiesById(this.__id);
+    // this.getFreelancerPortfolio();
   }
 
 
   getFreelancerDetails() {
     this.__profileService.getFreelancerByEmail(this.email_addr).then((resData: any) => {
-      this.freeDetailsArr = resData[0];
+      this.freeDetailsArr = resData;
       console.log("Basic Details", this.freeDetailsArr);
     });
   }

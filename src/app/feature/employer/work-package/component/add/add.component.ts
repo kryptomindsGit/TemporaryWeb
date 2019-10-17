@@ -240,7 +240,7 @@ export class AddComponent implements OnInit {
     this.saveDetails();
   }
 
-
+  
   //calculateAvgRate()
   calulateAvgRatePayscale() {
     this.calculateAvgRate1 = this.calculateAvgRate1 ? false : true;;

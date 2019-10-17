@@ -235,7 +235,7 @@ export class IndeptProfileService {
   // Independent Prof by email id GET API call
   async getFreelancerByEmail(email: any) {
     try {
-      let res = await this.__http.get(`${BASE_URL}/freelancer/freelancers/${email}`, httpOptions).toPromise();
+      let res = await this.__http.get(`${SPRING_URL}/freelancer/${email}`, httpOptions).toPromise();
       return res;
     } catch (error) {
       await this.handleError(error);
@@ -290,6 +290,16 @@ export class IndeptProfileService {
       await this.handleError(error);
     }
   }
+
+  async saveSkillDetails(freelancer: any) {
+    try {
+      let res = await this.__http.post(`${SPRING_URL}/freelancer/skills`, freelancer, httpOptions).toPromise();
+      return res;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
 
   async updateFreelancer(id: any, freelancer: any) {
     try {
