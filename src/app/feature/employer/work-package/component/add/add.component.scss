@@ -286,6 +286,11 @@ form {
   background: #064d86;
   border-radius: 0.5rem;
   margin-left: 1rem;
+ text-align: center;
+}
+
+.margin-button{
+  margin-top: 1rem;
 }
 
 .noborder {
@@ -293,7 +298,11 @@ form {
 }
 
 .setwidth1 {
-  min-width: 12rem;
+  min-width: 16rem;
+}
+
+.diffcolor{
+  color: #1ae565;
 }
 
 .viewprofile {
@@ -374,7 +383,7 @@ img {
 }
 
 .setwidth {
-  min-width: 8rem;
+  min-width: 10rem;
 }
 
 

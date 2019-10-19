@@ -255,12 +255,12 @@
                     <th class="setwidth1">Domain</th>
                     <th class="setwidth1">Skill</th>
                     <th class="setwidth">Expertise</th>
-                    <th>Availability</th>
-                    <th>No. of team members</th>
-                    <th>Preferred Country</th>
+                    <th class="setwidth">Availability</th>
+                    <th >No. of team members</th>
+                    <th class="setwidth">Preferred Country</th>
                     <th>Rate/hour</th>
-                    <th>Currency</th>
-                    <th>Avg. Rate/hour</th>
+                    <th class="setwidth">Currency</th>
+                    <th  class="setwidth1">Avg. Rate/hour</th>
                     <th class="setwidth">Start Date </th>
                     <th class="setwidth">End Date</th>
                     <th class="noborder">
@@ -276,7 +276,7 @@
                         (change)="getAllDomainSkills($event.target.value, i)">
                         <option disabled value="">Domain </option>
                         <option id="domain_option" *ngFor="let allDomain of allDomainArr"
-                          [value]="allDomain.skill_cat_id">{{allDomain.skill_cat_name}}</option>
+                          [value]="allDomain.domainId">{{allDomain.domainName}}</option>
                       </select>
                     </td>
 
@@ -284,9 +284,9 @@
                       <select formControlName="skill" id="skill">
                         <option disabled value="">Skills </option>
                         <option id="option_skill"
-                          *ngFor="let allSkills of domainSkillsList[skillForm.get('skillDetails')['controls'][i].controls['domainId'].value]"
-                          [value]="allSkills.skill_id">
-                          {{allSkills.skill_name}}</option>
+                          *ngFor="let allSkills of domainSkillsList"
+                          [value]="allSkills.skillId">
+                          {{allSkills.skillName}}</option>
                       </select>
                     </td>
                     <td scope="row">
@@ -309,8 +309,8 @@
                     <td scope="row">
                       <select formControlName="country" id="country">
                         <option disabled value="">Country </option>
-                        <option id="option_type" *ngFor="let  country of  countries" [value]="country.name">
-                          {{country.name}}</option>
+                        <option id="option_type" *ngFor="let  country of  countries" [value]="country.countryId">
+                          {{country.countryName}}</option>
                       </select>
 
                     </td>
@@ -326,16 +326,23 @@
 
                     </td>
                     <td scope="row">
-                      <div *ngIf="!calculateAvgRate1">
-                        <button type="button" class="btn calbutton" (click)="calulateAvgRatePayscale()">Calculate from PayScale</button>
-                      </div>
-                      <div *ngIf="!calculateAvgRate">
-                        <button type="button" class="btn calbutton" (click)="calulateAvgRate()">Calculate from XXXX</button>
-                      </div>
-                      <div *ngIf="calculateAvgRate1">
-                        <label for="calcAvrRate">{{calAvgRate}}</label>
-                        <!-- <input type="text" id="calcAvrRate"> -->
-                      </div>
+                      
+                     
+                          <label *ngIf="calculateAvgRate" ><span class = "diffcolor"> from PayScale :  </span> {{ avgRatePayscale }} </label>
+                        
+                          <button type="button" class="btn calbutton "  *ngIf="!calculateAvgRate" (click)="calulateAvgRate(no=1,i)">Calculate from PayScale</button>
+                        
+                     
+                          <label *ngIf="calculateAvgRate1" ><span class = "diffcolor"> from Glassdoor :  </span> {{ avgRateGlassdoor }} </label>
+                        
+                          <button type="button" *ngIf="!calculateAvgRate1"  class="btn calbutton margin-button" (click)="calulateAvgRate(no=2,i)">Calculate from Glassdoor</button>
+                        
+
+                     
+                          <label *ngIf="calculateAvgRate2" ><span class = "diffcolor"> from LinkedIn :  </span> {{ avgRateLinkedIn }} </label>
+                        
+                          <button type="button" *ngIf="!calculateAvgRate2"  class="btn calbutton margin-button" (click)="calulateAvgRate(no=3,i)">Calculate from LinkedIn</button>
+                        
 
                     </td>
 

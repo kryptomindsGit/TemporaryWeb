@@ -14,6 +14,8 @@ const httpOptions = {
 };
 
 import { SPRING_URL } from '../../../constant/constant-url';
+import { SPRING_AVG_RATE_URL } from '../../../constant/constant-url';
+
 
 @Injectable({
   providedIn: 'root'
@@ -106,6 +108,21 @@ export class CustomGlobalService {
       await this.handleError(error);
     }
   }
+
+  async getAvgRateForSkill(country:any , skill:any) {
+    try {
+      const parameters = "country="+country+"&"+"skill="+skill;
+      console.log("parameters",parameters);
+      
+      let res = await this.__http.post(`${SPRING_AVG_RATE_URL}/salary?${parameters}`, httpOptions).toPromise();
+      // let res = await this.__http.post(`${SPRING_AVG_RATE_URL}/`, httpOptions).toPromise();
+
+      return res;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
 
 
   // Error Handler

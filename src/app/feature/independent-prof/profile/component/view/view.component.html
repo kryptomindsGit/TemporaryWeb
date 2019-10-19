@@ -192,8 +192,8 @@
                                     <tr>
                                         <th>Name:</th>
                                         <td>
-                                            {{freeDetailsArr.prefix}} {{freeDetailsArr.first_name}}
-                                            {{freeDetailsArr.middle_name}} {{freeDetailsArr.last_name}}
+                                            {{freeDetailsArr.prefix}} {{freeDetailsArr.firstName}}
+                                            {{freeDetailsArr.middleName}} {{freeDetailsArr.lastName}}
                                         </td>
                                     </tr>
                                     <tr>
@@ -221,20 +221,20 @@
                                     <tr>
                                         <th>Address: </th>
                                         <td>
-                                            <li>Address Line 1 : {{freeDetailsArr.line_1}}</li>
-                                            <li>Address Line 2 : {{freeDetailsArr.line_2}}</li>
-                                            <li>City : {{freeDetailsArr.city}}, State :
-                                                {{freeDetailsArr.state}},
-                                                Country : {{freeDetailsArr.country}}</li>
-                                            <li>Postal Code : {{freeDetailsArr.code}}</li>
+                                            <li>Address Line 1 : {{freeDetailsArr.addressLine1}}</li>
+                                            <li>Address Line 2 : {{freeDetailsArr.addressLine2}}</li>
+                                            <li>City : {{freeDetailsArr.city.cityName}}, State :
+                                                {{freeDetailsArr.province.stateName}},
+                                                Country : {{freeDetailsArr.country.countryName}}</li>
+                                            <li>Postal Code : {{freeDetailsArr.postalCode}}</li>
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <th>Strength: </th>
-                                        <div *ngFor="let strength of qualityArray; let i=index">
-                                            <td *ngIf="strength.strengths != null">
-                                                {{strength.strengths}}
+                                        <div *ngFor="let strength of strengthArr; let i=index">
+                                            <td>
+                                                {{strength.personalAttribute.attributeName }}
                                             </td>
                                         </div>
 
@@ -242,9 +242,9 @@
 
                                     <tr>
                                         <th>Weakness: </th>
-                                        <div *ngFor="let weakness of qualityArray; let i=index">
-                                            <td *ngIf="weakness.weaknesses != null">
-                                                {{weakness.weaknesses}}
+                                        <div *ngFor="let weakness of weaknessArr; let i=index">
+                                            <td>
+                                                {{weakness.personalAttribute.attributeName}}
                                             </td>
                                         </div>
                                     </tr>
@@ -253,7 +253,7 @@
                                         <th>Portfolio: </th>
                                         <td>
                                             <div *ngFor="let portfolio of freelancerPortArr; let i=index">
-                                                <li>{{ portfolio.port_addr }}</li>
+                                                <li>{{ portfolio.portfolioUrl }}</li>
                                             </div>
                                         </td>
                                     </tr>
@@ -279,9 +279,10 @@
                                         <td>
                                             <div *ngFor="let education of freeEduArr; let i=index">
                                                 <hr *ngIf="i>0">
-                                                <li>Degree : {{ education.edu_name }}</li>
+                                                <li>Degree Domain: {{ education.masterEduDomain.eduDomainName }}</li>
+                                                <li>Degree : {{ education.masterEduType.educationTypeName }}</li>
                                                 <li>Grade : {{ education.grade }}, Passing Year :
-                                                    {{ education.passing_year }},
+                                                    {{ education.passingYear }},
                                                     Percentage : {{ education.percentage }}</li>
                                                 <li>University : {{ education.university }}</li>
 
@@ -311,9 +312,9 @@
                                             <div *ngFor="let orag of freelancerOrgArr; let i=index">
                                                 <hr *ngIf="i>0">
                                                 <li>Name : {{ orag.org_name }}</li>
-                                                <li>Designation : {{ orag.org_designation }}</li>
-                                                <li>Start Date : {{ orag.start_date | date : 'dd MMM yyyy' }}</li>
-                                                <li>End Date : {{ orag.end_date | date : 'dd MMM yyyy' }}</li>
+                                                <li>Designation : {{ orag.designation }}</li>
+                                                <li>Start Date : {{ orag.startDate | date : 'dd MMM yyyy' }}</li>
+                                                <li>End Date : {{ orag.endDate | date : 'dd MMM yyyy' }}</li>
                                                 <li>Responsibilities : {{ orag.responsibilities }}</li>
                                             </div>
                                         </td>
@@ -322,7 +323,7 @@
                                     <tr>
                                         <th>Area of Expertise: </th>
                                         <td>
-                                            {{freeDetailsArr.area_of_experties}}
+                                            {{freeDetailsArr.areaOfExpertise}}
                                         </td>
                                     </tr>
 
@@ -336,7 +337,7 @@
                                     <tr>
                                         <th>Reference: </th>
                                         <td>
-                                            {{freeDetailsArr.reference}}
+                                            {{freeDetailsArr.referName}}
                                         </td>
                                     </tr>
 
@@ -344,13 +345,15 @@
                                         <th>Skills: </th>
                                         <table>
                                             <tr>
+                                                <th class="padding-none">Domain Name</th>
                                                 <th class="padding-none">Skill Name</th>
                                                 <th class="padding-none">Year of Experience</th>
                                             </tr>
                                             <tbody *ngFor="let skill of freeSkillDetailsArr; let i=index">
                                                 <tr>
-                                                    <td>{{ skill.skill_name }}</td>
-                                                    <td>2 Year</td>
+                                                    <td>{{ skill.skillId.masterDomain.domainName }}</td>
+                                                    <td>{{ skill.skillId.skillName }}</td>
+                                                    <td>{{skill.noYrsExpForSkill}} Years</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -399,8 +402,8 @@
                                             </tr>
                                             <tbody *ngFor="let document of freeDocsArr; let i=index">
                                                 <tr>
-                                                    <td width="30%">{{document.doc_type}}</td>
-                                                    <td width="60%">{{ document.doc_name }}</td>
+                                                    <td width="30%">{{document.masterDocumentType.documentTypeName}}</td>
+                                                    <td width="60%">{{ document.documentUrl }}</td>
                                                     <td width="30%"><a style="color:#1051dd; font-size: 1rem;"
                                                             (click)="getHashDataBlockChainPDF(document.doc_name)"><i
                                                                 class="fa fa-download" aria-hidden="true"></i>

@@ -741,7 +741,12 @@ export class AddComponent implements OnInit {
 
    console.log("qualification details" ,  this.qualificationDetails.controls.qualification.value);
 
-    this.__profileService.saveEducationDetails(this.qualificationDetails.controls.qualification.value).then((resData: any) => {
+    const eductionPayload = {
+      educationDetails :  this.qualificationDetails.controls.qualification.value,
+      emailId : this.email
+    }
+
+    this.__profileService.saveEducationDetails(eductionPayload).then((resData: any) => {
         console.log("Res Data:", resData);
         this.loading = false;
         if (resData.status == 'success') {
@@ -782,7 +787,7 @@ export class AddComponent implements OnInit {
     // console.log("work details" ,  this.workExpDetails.controls.org_details.value);
    // console.log()
     const orgDetailsPayload = {
-      email: this.email,
+      emailId: this.email,
       freelancerOrgDetails : this.workExpDetails.controls.org_details.value,
       portfolio: portfolioArray,
       freelancerDocument : this.documentWorkArray,
