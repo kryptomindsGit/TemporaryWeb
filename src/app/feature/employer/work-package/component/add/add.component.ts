@@ -14,44 +14,44 @@ import { CustomGlobalService } from 'src/app/feature/shared/service/custom-globa
 })
 export class AddComponent implements OnInit {
 
-  //FormGroup
-  // basicForm : FormGroup;
+  //form groups
   projectForm: FormGroup;
   skillForm: FormGroup;
   i: any;
-  show: boolean;
 
   loading = false;
   addWorkPackage: any;
 
-  calAvgRate: any = 'ETH 1';
   calculateAvgRate: boolean = false;
   calculateAvgRate1: boolean = false;
   calculateAvgRate2: boolean = false;
+  show: boolean;
 
 
   //Static Arrays 
   complexityArr = ['High', 'Medium', 'Low'];
   skillLevelArr = ['Moderate', 'Intermediate', 'Beginner'];
   projectTypeArr = ['Full-time', 'Part-time'];
-  currencyArr = ['ETH', 'INR', 'USD', 'IDR', 'AUD', 'EUR'];
-  countries = [];
   durationArr = ['days', 'months', 'years'];
-  allDomainArr = [];
-  allSkillsArr = [];
-  wpId: any;
-  domainSkillsList: any = [];
+
+  //arrays 
+  allDomainArr : any = [];
+  allSkillsArr : any = [];
+  countries : any= [];
+  currencyArr : any = [];
+  domainSkillsList : any = [];
+
   //Date 
   today = new Date();
   todayDate: string;
   employerName: string = "Bhushan Mahajan";
   email: any;
-  //skill related variables
 
+  //skill related variables
   avgRatePayscale : any = 0 ; 
   avgRateLinkedIn : any = 0;
   avgRateGlassdoor : any = 0;
-
+  wpId: any;
   durationYears: number;
   durationMonths: number;
   durationDays: number;
@@ -223,19 +223,12 @@ export class AddComponent implements OnInit {
       });
   }
 
-  calCost() {
-    this.costEstimated = this.projectForm.controls.budgetCurrencyCode.value + " 230";
-  }
-
   onProfileView() {
     this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view', this.email]);
   }
+  
   onSubmit() {
     this.saveDetails();
-  }
-
-  //calculateAvgRate()
-  calulateAvgRatePayscale() {
   }
 
   calulateAvgRate(no,position){
@@ -260,7 +253,5 @@ export class AddComponent implements OnInit {
   
       }
     })
-    
-   
-    }
+  }
 }

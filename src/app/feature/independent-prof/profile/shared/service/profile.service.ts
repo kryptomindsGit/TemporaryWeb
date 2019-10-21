@@ -250,12 +250,10 @@ export class IndeptProfileService {
       'X-Authorization':localStorage.getItem('userAuthToken')
     })} 
 
-    
-    
     console.log("http-options : ",httpOptions);
     
     try {
-      let res = await this.__http.get(`${SPRING_URL}/freelancer/${email}`, httpOptions).toPromise();
+      let res = await this.__http.get(`${SPRING_URL}/freelancer/view-profile`, httpOptions).toPromise();
       return res;
     } catch (error) {
       await this.handleError(error);
