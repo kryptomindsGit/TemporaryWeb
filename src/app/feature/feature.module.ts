@@ -10,15 +10,17 @@ import { FooterComponent } from './footer/footer.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { FullLayoutComponent } from './full-layout/full-layout.component';
 import { PaymentSmartcontractComponent } from './payment-smartcontract/payment-smartcontract.component';
+import { ChatBoxComponent } from './chat-box/chat-box.component';
 
 //Components
 const COMPONENTS = [
-  FeatureComponent, 
-  DashboardComponent, 
-  HeaderComponent, 
-  FooterComponent, 
-  SidebarComponent, 
-  FullLayoutComponent
+  FeatureComponent,
+  DashboardComponent,
+  HeaderComponent,
+  FooterComponent,
+  SidebarComponent,
+  FullLayoutComponent,
+  ChatBoxComponent
 ];
 
 //Modules

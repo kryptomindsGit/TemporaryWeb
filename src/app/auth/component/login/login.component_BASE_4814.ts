@@ -81,19 +81,27 @@ export class LoginComponent implements OnInit {
         email: this.loginForm.controls.email.value,
         password: this.loginForm.controls.password.value
       }
+
       const databaseloginPayload = {
         emailId: this.loginForm.controls.email.value
       }
+
       this.__authService.login(cognitologinPayload).subscribe((resData: any) => {
 
         if (resData.status == "SUCCESS") {
+          this.__authService.getSecurityToken(databaseloginPayload).then((data: any) => {
+            console.log("Token : " , data.responseObject);
+            
+          })
+          
           this.__authService.getSignUpData(databaseloginPayload).then((data: any) => {
             this.loading = false;
-            console.log("resData", data.responseObject);
-
-            if (data.responseObject.User.cognitoId == null) {
-              //TODO: update cognitoID
+            console.log("resData" , data.responseObject);
+          
+            if(data.responseObject.User.cognitoId == null) {
+              //update cognitoID
             }
+
             var baseName = data.responseObject.User.emailId;
             baseName = baseName.substring(0, baseName.indexOf('@'));
             const emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1);
@@ -102,7 +110,6 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('uid', data.responseObject.User.userId);
             localStorage.setItem('uportUser', this.uportUser);
             localStorage.setItem('email', data.responseObject.User.emailId);
-            localStorage.setItem('userAuthToken', data.authtoken);
             this.__router.navigate(['/feature/feature/full-layout/dashboard'])
           })
         } else if (resData.status == "ERROR") {

@@ -81,9 +81,11 @@ export class LoginComponent implements OnInit {
         email: this.loginForm.controls.email.value,
         password: this.loginForm.controls.password.value
       }
+
       const databaseloginPayload = {
         emailId: this.loginForm.controls.email.value
       }
+
       this.__authService.login(cognitologinPayload).subscribe((resData: any) => {
 
         if (resData.status == "SUCCESS") {
@@ -92,7 +94,7 @@ export class LoginComponent implements OnInit {
             console.log("resData", data.responseObject);
 
             if (data.responseObject.User.cognitoId == null) {
-              //TODO: update cognitoID
+              //update cognitoID
             }
             var baseName = data.responseObject.User.emailId;
             baseName = baseName.substring(0, baseName.indexOf('@'));

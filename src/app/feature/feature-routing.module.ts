@@ -9,6 +9,7 @@ import { FooterComponent } from './footer/footer.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { FullLayoutComponent } from './full-layout/full-layout.component';
 import { PageNotFoundComponent } from '../page-not-found/page-not-found.component';
+import { ChatBoxComponent } from './chat-box/chat-box.component';
 
 //Routing
 const routes: Routes = [
@@ -47,7 +48,11 @@ const routes: Routes = [
           {
             path: 'independent',
             loadChildren: () => import('./independent-prof/independent-prof.module').then(module => module.IndependentProfModule)
-          }
+          },
+          {
+            path: 'chatbox',
+            component: ChatBoxComponent
+          },
         ]
       }
       // {
