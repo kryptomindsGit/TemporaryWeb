@@ -54,10 +54,6 @@ export class AuthService {
     }
   }
 
-  // register(user: any) {
-  //   return this.__http.post(`${AWS_URL}signup`, user, httpOptions);
-  // }
-
   isAuthenticated(): boolean {
     return localStorage.getItem('access_token') != null;
   }
@@ -99,7 +95,7 @@ export class AuthService {
     }
   }
 
-  async getSignUpData(payload: any): Promise<any> {
+  async getUserLoginData(payload: any): Promise<any> {
     try {
       let result = await this.__http.post(`${SPRING_URL}/auth/login` , payload , httpOptions).toPromise();
       return result;
@@ -108,6 +104,28 @@ export class AuthService {
     }
   }
 
+  async updateUserData(payload: any): Promise<any> {
+    console.log("*********update Payload******** ",payload);
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET',
+        'Access-Control-Allow-Origin': '*',
+        'X-Authorization':localStorage.getItem('userAuthToken')
+      })
+    };
+
+    try {
+      let result = await this.__http.post(`${SPRING_URL}/freelancer/user-update` , payload , httpOptions).toPromise();
+      return result;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }  
+  
+  
   async getSecurityToken(payload: any): Promise<any> {
     try {
       let result = await this.__http.post(`${SPRING_URL}/auth/getToken` , payload , httpOptions).toPromise();

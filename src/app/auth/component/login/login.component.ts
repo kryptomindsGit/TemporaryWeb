@@ -84,26 +84,49 @@ export class LoginComponent implements OnInit {
       const databaseloginPayload = {
         emailId: this.loginForm.controls.email.value
       }
+      
+
       this.__authService.login(cognitologinPayload).subscribe((resData: any) => {
-
         if (resData.status == "SUCCESS") {
-          this.__authService.getSignUpData(databaseloginPayload).then((data: any) => {
-            this.loading = false;
-            console.log("resData", data.responseObject);
 
-            if (data.responseObject.User.cognitoId == null) {
-              //TODO: update cognitoID
-            }
-            var baseName = data.responseObject.User.emailId;
-            baseName = baseName.substring(0, baseName.indexOf('@'));
-            const emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1);
+          this.__authService.getUserLoginData(databaseloginPayload).then((data: any) => {
 
-            this.toastr.success(emailName, 'Welcome ');
-            localStorage.setItem('uid', data.responseObject.User.userId);
-            localStorage.setItem('uportUser', this.uportUser);
-            localStorage.setItem('email', data.responseObject.User.emailId);
-            localStorage.setItem('userAuthToken', data.authtoken);
-            this.__router.navigate(['/feature/feature/full-layout/dashboard'])
+                localStorage.setItem('uid', data.responseObject.User.userId);
+                localStorage.setItem('uportUser', this.uportUser);
+                localStorage.setItem('email', data.responseObject.User.emailId);
+                localStorage.setItem('userAuthToken', data.authtoken);
+              
+                this.loading = false;
+
+                if (data.responseObject.User.cognitoId == null) {
+                  const cognitoUpdatePayload = {
+                    cognitoId : resData.response.payload.sub
+                  }
+                  this.__authService.updateUserData(cognitoUpdatePayload).then((resData: any) => {                
+                  });
+                }
+
+                console.log("User Data : " , data );
+                console.log("**********logged in ************", data.responseObject.User.isLoggedIn);
+                
+                
+                if(data.responseObject.User.isLoggedIn == false){
+                  // let val : Boolean = false;
+                  const loggedInFlagPayload = {
+                    isLoggedIn : 1
+                  }
+                  this.__authService.updateUserData(loggedInFlagPayload).then((resData: any) => {  
+                    console.log("Logged in value : " ,resData );                                  
+                  });
+                }
+
+                var baseName = data.responseObject.User.emailId;
+                baseName = baseName.substring(0, baseName.indexOf('@'));
+                const emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1);
+
+                this.toastr.success(emailName, 'Welcome ');
+              
+                this.__router.navigate(['/feature/feature/full-layout/dashboard'])
           })
         } else if (resData.status == "ERROR") {
           this.loading = false;

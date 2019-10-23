@@ -89,7 +89,7 @@ export class LoginComponent implements OnInit {
       this.__authService.login(cognitologinPayload).subscribe((resData: any) => {
 
         if (resData.status == "SUCCESS") {
-          this.__authService.getSignUpData(databaseloginPayload).then((data: any) => {
+          this.__authService.getUserLoginData(databaseloginPayload).then((data: any) => {
             this.loading = false;
             console.log("resData" , data.responseObject);
           

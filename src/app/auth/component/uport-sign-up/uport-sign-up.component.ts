@@ -98,7 +98,7 @@ export class UportSignUpComponent implements OnInit {
       }
 
 
-      this.__authService.getSignUpData(userDataPayload).then((resData: any) => {
+      this.__authService.getUserLoginData(userDataPayload).then((resData: any) => {
         console.log("Res data :", resData == null);
         console.log("Res data :", resData.length);
         console.log("Res data :", resData.length > 0);

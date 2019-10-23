@@ -72,7 +72,7 @@ export class ViewComponent implements OnInit {
 
 
   getFreelancerDetails() {
-    this.__profileService.getFreelancerByEmail(this.email_addr).then((resData: any) => {    
+    this.__profileService.getFreelancerByEmail().then((resData: any) => {    
       console.log(resData.responseObject);     
       this.freeDetailsArr = resData.responseObject.freelancerProfile;
       this.freeSkillDetailsArr = resData.responseObject.skills,

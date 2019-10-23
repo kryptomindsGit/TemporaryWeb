@@ -116,7 +116,7 @@ export class UportLoginComponent implements OnInit {
       emailId : this.email
     }
 
-    this.__authService.getSignUpData(userDataPaylaod).then((data: any) => {
+    this.__authService.getUserLoginData(userDataPaylaod).then((data: any) => {
       console.log("data from database : ", data.responseObject);
 
       if (data.length == 0) {

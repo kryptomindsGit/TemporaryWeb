@@ -14,7 +14,14 @@ nav {
     width: 100%;
 }
 
-
+.dot {
+    height: 8px;
+    width: 8px;
+    background-color: rgb(4, 255, 66);
+    border-radius: 50%;
+    display: inline-block;
+    margin-bottom: 5px;
+}
 label {
     font-size: 0.9rem;
     margin-bottom: 0rem !important;
@@ -72,7 +79,7 @@ span {
 //Sidebar icon
 .logo-font {
     font-family: 'Neo Latina';
-    font-size: 1.5rem;
+    font-size: 0.5rem;
     margin-bottom: 1rem;
 }
 

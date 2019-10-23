@@ -81,14 +81,14 @@ export class HeaderComponent implements OnInit {
     console.log("Indise userRoleInfo", this.userRole);
     if (this.userRole == "Freelancer") {
       console.log("Inside Freelancer");
-      this.__idptProfileService.getFreelancerByEmail(this.email_id).then((resData: any) => {
+      this.__idptProfileService.getFreelancerByEmail().then((resData: any) => {
         this.freelancerDetailsArr = resData[0];
         console.log(this.freelancerDetailsArr);
 
         if (this.freelancerDetailsArr == null) {
           this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/add']);
         } else {
-          this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email_id]);
+          this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view']);
         }
       });
     }

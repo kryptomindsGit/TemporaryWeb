@@ -820,6 +820,8 @@ export class AddComponent implements OnInit {
     this.__profileService.saveSkillDetails(skillPayload).then((resData: any) => {
         console.log("Res Data:", resData);
         this.loading = false;
+        this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view/', this.email]);
+
         if (resData.responseObjec.message == 'success') {
           this.toastr.success("Profile added Successfully");
           this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);

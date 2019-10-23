@@ -85,6 +85,17 @@ export class EditComponent implements OnInit {
   public skillArr: any = [];
   public skillList: any = [];
 
+
+
+  //
+  public freeSkillDetailsArr = [];
+  public freeStrengthArr= [];
+  public freeWeaknessArr= [];
+  public freePortfolioArr = [];
+  public freeWorkDetailArr = [];
+  public freeEducationArr = [];
+  public freeDocumentArr = [];
+
   constructor(
     private __fb: FormBuilder,
     private __profileService: IndeptProfileService,
@@ -138,6 +149,8 @@ export class EditComponent implements OnInit {
     this.getFreelancerOrganization();
     this.getFreelancerPortfolio();
     // this.setAllFreelancerData();
+
+    this.getFreelancerDetails();
 
   }
 
@@ -213,10 +226,23 @@ export class EditComponent implements OnInit {
 
 
   async getFreelancerDetails() {
-    await this.__profileService.getFreelancerByEmail(this.__id).then((data: any) => {
-      this.freelancerArr = data[0];
-      console.log("Res getFreelancerDetails:", this.freelancerArr);
+
+    await this.__profileService.getFreelancerByEmail().then((resData: any) => {    
+      console.log(resData.responseObject);     
+      this.freelancerArr = resData.responseObject.freelancerProfile;
+      this.freeSkillDetailsArr = resData.responseObject.skills,
+      this.freePortfolioArr = resData.responseObject.portfolio,
+      this.freeWorkDetailArr = resData.responseObject.workExperience,
+      this.freeStrengthArr = resData.responseObject.strength,
+      this.freeWeaknessArr = resData.responseObject.weakness,
+      this.freeEducationArr = resData.responseObject.freelancerEdu
+      this.freeDocumentArr = resData.responseObject.freelancerDocument
     });
+    
+    // await this.__profileService.getFreelancerByEmail(this.__id).then((data: any) => {
+    //   this.freelancerArr = data[0];
+    //   console.log("Res getFreelancerDetails:", this.freelancerArr);
+    // });
 
     this.checkMarked = this.freelancerArr.is_interviewer;
 

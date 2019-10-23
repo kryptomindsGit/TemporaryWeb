@@ -3,7 +3,6 @@ import { HttpHeaders, HttpClient, HttpEventType } from '@angular/common/http';
 
 import { SPRING_URL } from '../../../constant/constant-url';
 import { throwError } from 'rxjs';
-import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 // import { ChatBoxComponent } from '../chat-box.component';
 
@@ -56,7 +55,7 @@ export class ChatboxService {
     if (this.currentUserName) {
       console.log("Initialize Connection");
       let ws = new SockJS(`${SPRING_URL}/websocket`);
-      this.stompClient = Stomp.over(ws);
+      // this.stompClient = Stomp.over(ws);
       this.stompClient.connect({}, this.onConnected, this.onError);
       // const _this = this;
       // _this.stompClient.connect({}, function (frame) {
