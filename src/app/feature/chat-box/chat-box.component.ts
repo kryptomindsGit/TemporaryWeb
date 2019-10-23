@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Observable } from 'rxjs';
 declare var require: any
 import decode from 'jwt-decode';
 // import { ChatboxService } from './service/chatbox.service';
 import { ChatWindowService } from './service/chat-window.service';
+import { SPRING_URL } from 'src/app/constant/constant-url';
+import { HttpHeaders } from '@angular/common/http';
 
 // import { ChatWindowService } from './service/chat-window.service';
+// const headers = new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' });
 
 @Component({
   selector: 'app-chat-box',
@@ -19,13 +22,16 @@ export class ChatBoxComponent implements OnInit {
   resObject: any = [];
   respObject: any = [];
   newResMessage: any = [];
+  public eventName: any;
+  public URL: any;
+  public tagId: string;
   senderEmail: any;
   sendMsg: any;
   greeting: any;
   name: string;
 
   emailId: string;
-  sendMessage: any;
+  // sendMessage: any;
   date: Date = new Date();
 
   senderMessages: any = [];
@@ -40,9 +46,17 @@ export class ChatBoxComponent implements OnInit {
     // private __chatboxService: ChatboxService,
     private __chatboxService: ChatWindowService,
 
-
+    // private zone: NgZone
     // private __chatboxService: ChatWindowService
   ) {
+
+    // this.zone = new NgZone({ enableLongStackTrace: false });
+    // this.URL = `${SPRING_URL}/translation`;
+    // console.log("URL :", this.URL);
+
+    // this.watch().subscribe(resData => {
+    //   console.log("Res of Event Listener:", resData);
+    // });
 
     //   this.activeUser = [
     //     {
@@ -206,7 +220,14 @@ export class ChatBoxComponent implements OnInit {
     // this.__chatboxService = new ChatboxService(new ChatBoxComponent());
     // this.sendUserMessage();
     this.decodeJWT()
-    // this.getUserMessage();
+    this.getUserMessage();
+  }
+
+  getUserMessage(): void {
+    this.__chatboxService.eventListenWatch().subscribe(
+      (resData) => {
+        console.log("Res of Event Listener:", resData);
+      });
   }
 
   decodeJWT() {
@@ -227,7 +248,7 @@ export class ChatBoxComponent implements OnInit {
    * @param messages 
    * @description send message details to spring API
    */
-  sendUserMessage(messages: string) {
+  sendMessage(messages: string) {
     this.reqObject.push(messages);
 
     console.log("Send msg:", this.reqObject)
