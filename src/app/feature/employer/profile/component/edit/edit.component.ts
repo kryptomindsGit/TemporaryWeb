@@ -65,45 +65,23 @@ export class EditComponent implements OnInit {
   }
 
  ngOnInit() {
-
-    
-
     let isUportUser = localStorage.getItem("uportUser");
 
     if (isUportUser == "false") {
-      console.log("I am not an uport user");
-      
-      const user = this.__authService.decode();
+       const user = this.__authService.decode();
       this.congnitoId = user["cognito:username"];
       this.emailId = user["email"];
       this.uid = user["uid"];
     } else {
-      console.log("I am an uport user");
-
       this.congnitoId = "TEST"
       this.uid = localStorage.getItem("uid");
       this.emailId = localStorage.getItem("email");
-      // this.country = localStorage.getItem("country");
     }
-
-    //Calling Function's
 
     this.valEmpProfile();
     this.getDocumentsTypeCat(4);
-
-     this.getEmplyeeDetails();
-     
-    
-
-    // await this.getDetails();
+    this.getEmplyeeDetails();
   }
-
-  // getDetails(){
-  //   this.getDocumentsTypeCat(4);
-
-  //   this.getEmplyeeDetails();
-  // }
-  
 
   /**
    * @name valEmpProfile
@@ -142,18 +120,13 @@ export class EditComponent implements OnInit {
    * @description call get API for employer file details 
    */
   async getEmplyeeDetails() {
-    console.log("email while calling ", this.emailId);
+
     await this.__profileService.getEmployerByEmailId(this.emailId).then((data: any) => {
-      console.log("Res Data: ",data.responseObject);
       this.employerArr = data.responseObject;
-      console.log(this.employerArr);
     });
 
-    
-    // await this.populateStateList();
-    // await this.populateCityList();
-
     if (this.employerArr != null) {
+
       this.employerProfileForm.patchValue({
         comapany_name: this.employerArr.companyName,
         website_addr: this.employerArr.website,
@@ -240,45 +213,35 @@ export class EditComponent implements OnInit {
  async getCountryList() {
   await this.__customGlobalService.getCountryList().then((resData: any) => {
     this.countryArr = resData.responseObject;
-    console.log("Countries: ", this.countryArr);
-    
   })
 }
 
 async getStateList() {
  await this.__customGlobalService.getStateList().then((resData: any) => {
     this.stateArr = resData.responseObject;
-    console.log("State: ", this.stateArr);
     this.setStateListByCountryId(this.employerArr.masterCountry.countryId);
   })
 }
 
 setStateListByCountryId(countryId) {
-  console.log("id country" , countryId);
-  
   this.stateArrByCountryId[countryId] = this.stateArr.filter((item) => item.masterCountry.countryId == countryId);
-  console.log(this.stateArrByCountryId);
   this.employerProfileForm.patchValue({
     country: this.employerArr.masterCountry.countryId,
     state: this.employerArr.masterState.stateId,
   });
-  // this.employerProfileForm.get('state')['controls'].patchValue({ countryId : this.stateArrByCountryId[countryId].masterCountry.countryId, stateId: '' });
 }
 
 
 setCityListByStateId(stateId) {
-  console.log("id state" , stateId);
   this.cityArrByStateId[stateId] = this.cityArr.filter((item) => item.masterStates.stateId == stateId);
-  console.log(this.cityArrByStateId);
   this.employerProfileForm.patchValue({
     city: this.employerArr.masterCity.cityId,
   });
-  // this.employerProfileForm.get('state')['controls'].patchValue({ countryId : this.stateArrByCountryId[countryId].masterCountry.countryId, stateId: '' });
 } 
+
 async getCityList() {
  await this.__customGlobalService.getCityList().then((resData: any) => {
     this.cityArr = resData.responseObject;
-    console.log("City: ", this.cityArr);
     this.setCityListByStateId(this.employerArr.masterState.stateId);
   })
 }
@@ -309,8 +272,6 @@ async getCityList() {
     await this.__profileService.postDocHashData(this.fileObj, this.emailId, this.fileName).then((event) => {
       this.FileArrData = event;
       this.loading = false;
-
-      console.log("File Resp:", this.FileArrData.fileId);
       if (this.FileArrData) {
         this.toastr.success(this.fileName, "Successfully uploaded");
       } else {
@@ -329,9 +290,7 @@ async getCityList() {
 
   getDocumentsTypeCat(index) {
     this.__freelancerProfileService.getFreelancerDocumentByCat(index).then((resData: any) => {
-      this.docTypeArr = resData.responseObject;
-      console.log("response for doc cat" ,  this.docTypeArr);
-       
+      this.docTypeArr = resData.responseObject;       
     })
 
   }

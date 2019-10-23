@@ -82,7 +82,7 @@ export class HeaderComponent implements OnInit {
     if (this.userRole == "Freelancer") {
       console.log("Inside Freelancer");
       this.__idptProfileService.getFreelancerByEmail().then((resData: any) => {
-        this.freelancerDetailsArr = resData[0];
+        this.freelancerDetailsArr = resData.responseObject;
         console.log(this.freelancerDetailsArr);
 
         if (this.freelancerDetailsArr == null) {
@@ -101,7 +101,7 @@ export class HeaderComponent implements OnInit {
         if (this.employerDetailsArr == null) {
           this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/add']);
         } else {
-          this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view', this.email_id]);
+          this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view']);
         }
       });
     }
@@ -114,7 +114,7 @@ export class HeaderComponent implements OnInit {
         if (this.partnerDetailsArr == null) {
           this.__router.navigate(['/feature/feature/full-layout/partner/part/profile/profile/add']);
         } else {
-          this.__router.navigate(['/feature/feature/full-layout/partner/part/profile/profile/view', this.email_id]);
+          this.__router.navigate(['/feature/feature/full-layout/partner/part/profile/profile/view']);
         }
       });
     }
@@ -126,11 +126,25 @@ export class HeaderComponent implements OnInit {
     * @description call Logout
     */
   onLogout() {
-    this.__authService.logout();
-    this.__router.navigate(['/auth/auth/login']);
+
+    const databaseloginPayload = {
+      emailId: this.email_id
+    }
+    
+    this.__authService.getUserLoginData(databaseloginPayload).then((data: any) => {
+      console.log("user data at Logout",data);
+      console.log("data.responseObject.User.isLoggedIn : " , data.responseObject.User.isLoggedIn );
+      
+        if(data.responseObject.User.isLoggedIn == true){
+          const loggedInFlagPayload = {
+            isLoggedIn : 0
+          }
+          this.__authService.updateUserData(loggedInFlagPayload).then((resData: any) => {  
+             console.log("Logged in value : " ,resData );  
+             this.__authService.logout();
+            this.__router.navigate(['/auth/auth/login']);                                
+          });
+        }
+    });
   }
-
-
 }
-
-

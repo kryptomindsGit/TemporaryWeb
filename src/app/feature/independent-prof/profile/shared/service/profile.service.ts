@@ -159,7 +159,16 @@ export class IndeptProfileService {
     }
   }
 
+  async getFreelancerDocumentByCat(id: any) {
+    try {
+      console.log("doc cat id : " + id);
 
+      let res = await this.__http.get(`${SPRING_URL}/master/document-type/` + id, httpOptions).toPromise();
+      return res;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
 
 
 
@@ -202,16 +211,7 @@ export class IndeptProfileService {
 
   
   // Independent Prof documents by id GET API call
-  async getFreelancerDocumentByCat(id: any) {
-    try {
-      console.log("doc cat id : " + id);
-
-      let res = await this.__http.get(`${SPRING_URL}/master/document-type/` + id, httpOptions).toPromise();
-      return res;
-    } catch (error) {
-      await this.handleError(error);
-    }
-  }
+  
 
   // Independent Prof documents by id GET API call
   async getFreelancerDocumentById(id: any) {

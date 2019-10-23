@@ -5,7 +5,7 @@
                 <h6>PROFILE DETAILS</h6>
                 <div class="card">
                     <div class="card-body others-card">
-                        <form [formGroup]="personalDetails" novalidate>
+                        <form [formGroup]="personalDetailFormpersonalDetailFormpersonalDetailForm" novalidate>
                             <div class="row">
 
                                 <div class="form-group form-input col-2">
@@ -16,9 +16,9 @@
                                     </select>
                                     <label for="prefixes" class="form-label">Prefix<span
                                             class="redstar">*</span></label>
-                                    <div *ngIf="submitted && personalFormValidation.prefix.errors || personalDetails.controls['prefix'].invalid && (personalDetails.controls['prefix'].dirty || personalDetails.controls['prefix'].touched)"
+                                    <div *ngIf="submitted && personalFormValidation.prefix.errors || personalDetailFormpersonalDetailFormpersonalDetailForm.controls['prefix'].invalid && (personalDetailFormpersonalDetailFormpersonalDetailForm.controls['prefix'].dirty || personalDetailFormpersonalDetailFormpersonalDetailForm.controls['prefix'].touched)"
                                         class="text-danger error-msg">
-                                        <div [hidden]="!personalDetails.controls['prefix'].errors.required">Prefix is
+                                        <div [hidden]="!personalDetailFormpersonalDetailFormpersonalDetailForm.controls['prefix'].errors.required">Prefix is
                                             required.
                                         </div>
                                     </div>
@@ -28,14 +28,14 @@
                                     <label for="first_name" class="form-label">First Name<span
                                             class="redstar">*</span></label>
 
-                                    <div *ngIf="submitted && personalFormValidation.first_name.errors || personalDetails.get('first_name').invalid && (personalDetails.get('first_name').dirty || personalDetails.get('first_name').touched)"
+                                    <div *ngIf="submitted && personalFormValidation.first_name.errors || personalDetailFormpersonalDetailFormpersonalDetailForm.get('first_name').invalid && (personalDetailFormpersonalDetailFormpersonalDetailForm.get('first_name').dirty || personalDetailFormpersonalDetailFormpersonalDetailForm.get('first_name').touched)"
                                         class="text-danger error-msg">
 
-                                        <div *ngIf="personalDetails.get('first_name').errors.required">
+                                        <div *ngIf="personalDetailFormpersonalDetailFormpersonalDetailForm.get('first_name').errors.required">
                                             First Name is required.
                                         </div>
 
-                                        <div *ngIf="personalDetails.get('first_name').errors.maxlength">
+                                        <div *ngIf="personalDetailFormpersonalDetailFormpersonalDetailForm.get('first_name').errors.maxlength">
                                             First Name maximum 20 characters long.
                                         </div>
                                     </div>
@@ -50,14 +50,14 @@
                                     <label for="last_name" class="form-label">Last Name<span
                                             class="redstar">*</span></label>
 
-                                    <div *ngIf="submitted && personalFormValidation.last_name.errors || personalDetails.get('last_name').invalid && (personalDetails.get('last_name').dirty || personalDetails.get('last_name').touched)"
+                                    <div *ngIf="submitted && personalFormValidation.last_name.errors || personalDetailFormpersonalDetailFormpersonalDetailForm.get('last_name').invalid && (personalDetailFormpersonalDetailFormpersonalDetailForm.get('last_name').dirty || personalDetailFormpersonalDetailFormpersonalDetailForm.get('last_name').touched)"
                                         class="text-danger error-msg">
 
-                                        <div *ngIf="personalDetails.get('last_name').errors.required">
+                                        <div *ngIf="personalDetailFormpersonalDetailFormpersonalDetailForm.get('last_name').errors.required">
                                             Last Name is required.
                                         </div>
 
-                                        <div *ngIf="personalDetails.get('last_name').errors.maxlength">
+                                        <div *ngIf="personalDetailFormpersonalDetailFormpersonalDetailForm.get('last_name').errors.maxlength">
                                             Last Name maximum 20 characters long.
                                         </div>
                                     </div>
@@ -70,14 +70,14 @@
                                     <label for="address_one" class="form-label">Address Line 1<span
                                             class="redstar">*</span></label>
 
-                                    <div *ngIf="submitted && personalFormValidation.address_one.errors || personalDetails.get('address_one').invalid && (personalDetails.get('address_one').dirty || personalDetails.get('address_one').touched)"
+                                    <div *ngIf="submitted && personalFormValidation.address_one.errors || personalDetailFormpersonalDetailFormpersonalDetailForm.get('address_one').invalid && (personalDetailFormpersonalDetailFormpersonalDetailForm.get('address_one').dirty || personalDetailFormpersonalDetailFormpersonalDetailForm.get('address_one').touched)"
                                         class="text-danger error-msg">
 
-                                        <div *ngIf="personalDetails.get('address_one').errors.required">
+                                        <div *ngIf="personalDetailFormpersonalDetailFormpersonalDetailForm.get('address_one').errors.required">
                                             Address Line 1 is required.
                                         </div>
 
-                                        <div *ngIf="personalDetails.get('address_one').errors.maxlength">
+                                        <div *ngIf="personalDetailFormpersonalDetailFormpersonalDetailForm.get('address_one').errors.maxlength">
                                             Address Line 1 maximum 25 characters long.
                                         </div>
                                     </div>
@@ -87,14 +87,14 @@
                                     <label for="address_two" class="form-label">Address Line 2<span
                                             class="redstar">*</span></label>
 
-                                    <div *ngIf="submitted && personalFormValidation.address_two.errors || personalDetails.get('address_two').invalid && (personalDetails.get('address_two').dirty || personalDetails.get('address_two').touched)"
+                                    <div *ngIf="submitted && personalFormValidation.address_two.errors || personalDetailFormpersonalDetailFormpersonalDetailForm.get('address_two').invalid && (personalDetailFormpersonalDetailFormpersonalDetailForm.get('address_two').dirty || personalDetailFormpersonalDetailFormpersonalDetailForm.get('address_two').touched)"
                                         class="text-danger error-msg">
 
-                                        <div *ngIf="personalDetails.get('address_two').errors.required">
+                                        <div *ngIf="personalDetailFormpersonalDetailFormpersonalDetailForm.get('address_two').errors.required">
                                             Address Line 2 is required.
                                         </div>
 
-                                        <div *ngIf="personalDetails.get('address_two').errors.maxlength">
+                                        <div *ngIf="personalDetailFormpersonalDetailFormpersonalDetailForm.get('address_two').errors.maxlength">
                                             Address Line 2 maximum 25 characters long.
                                         </div>
                                     </div>
@@ -111,9 +111,9 @@
                                     </select>
                                     <label for="country" class="form-label">Country<span
                                             class="redstar">*</span></label>
-                                    <!-- <div *ngIf="submitted && personalFormValidation.country.errors || personalDetails.controls['country'].invalid && (personalDetails.controls['country'].dirty || personalDetails.controls['country'].touched)"
+                                    <!-- <div *ngIf="submitted && personalFormValidation.country.errors || personalDetailFormpersonalDetailFormpersonalDetailForm.controls['country'].invalid && (personalDetailFormpersonalDetailFormpersonalDetailForm.controls['country'].dirty || personalDetailFormpersonalDetailFormpersonalDetailForm.controls['country'].touched)"
                                         class="text-danger error-msg">
-                                        <div [hidden]="!personalDetails.controls['country'].errors.required">Country is
+                                        <div [hidden]="!personalDetailFormpersonalDetailFormpersonalDetailForm.controls['country'].errors.required">Country is
                                             required.
                                         </div>
                                     </div> -->
@@ -122,14 +122,14 @@
                                     <select (change)="setCityListByStateId($event.target.value)" formControlName="province"
                                         id="state" required>
                                         <!-- <option disabled value="">State</option> -->
-                                        <option *ngFor="let state of stateArrByCountryId[personalDetails.get('country').value]"
+                                        <option *ngFor="let state of stateArrByCountryId[personalDetailFormpersonalDetailFormpersonalDetailForm.get('country').value]"
                                         [value]="state.stateId">{{state.stateName}}
                                         </option>
                                     </select>
                                     <label class="form-label" for="state">State<span class="redstar">*</span></label>
-                                    <!-- <div *ngIf="submitted && personalFormValidation.province.errors || personalDetails.controls['province'].invalid && (personalDetails.controls['province'].dirty || personalDetails.controls['province'].touched)"
+                                    <!-- <div *ngIf="submitted && personalFormValidation.province.errors || personalDetailFormpersonalDetailFormpersonalDetailForm.controls['province'].invalid && (personalDetailFormpersonalDetailFormpersonalDetailForm.controls['province'].dirty || personalDetailFormpersonalDetailFormpersonalDetailForm.controls['province'].touched)"
                                         class="text-danger error-msg">
-                                        <div [hidden]="!personalDetails.controls['province'].errors.required">State is
+                                        <div [hidden]="!personalDetailFormpersonalDetailFormpersonalDetailForm.controls['province'].errors.required">State is
                                             required.
                                         </div>
                                     </div> -->
@@ -139,15 +139,15 @@
                                     <select formControlName="city" id="city" required>
                                         <!-- <option disabled value="">City</option> -->
                                         <option 
-                                        *ngFor="let city of cityArrByStateId[personalDetails.get('province').value]"
+                                        *ngFor="let city of cityArrByStateId[personalDetailFormpersonalDetailFormpersonalDetailForm.get('province').value]"
                                         [value]="city.cityId">{{city.cityName}}
                                         </option>
                                     </select>
                                     <label class="form-label" for="city">City<span class="redstar">*</span></label>
 
-                                    <!-- <div *ngIf="submitted && personalFormValidation.city.errors || personalDetails.controls['city'].invalid && (personalDetails.controls['city'].dirty || personalDetails.controls['city'].touched)"
+                                    <!-- <div *ngIf="submitted && personalFormValidation.city.errors || personalDetailFormpersonalDetailFormpersonalDetailForm.controls['city'].invalid && (personalDetailFormpersonalDetailFormpersonalDetailForm.controls['city'].dirty || personalDetailFormpersonalDetailFormpersonalDetailForm.controls['city'].touched)"
                                         class="text-danger error-msg">
-                                        <div [hidden]="!personalDetails.controls['city'].errors.required">City is
+                                        <div [hidden]="!personalDetailFormpersonalDetailFormpersonalDetailForm.controls['city'].errors.required">City is
                                             required.
                                         </div>
                                     </div> -->
@@ -157,13 +157,13 @@
                                     <label for="postal_code" class="form-label">Postal code<span
                                             class="redstar">*</span></label>
 
-                                    <div *ngIf="submitted && personalFormValidation.postal_code.errors || personalDetails.controls['postal_code'].invalid && (personalDetails.controls['postal_code'].dirty || personalDetails.controls['postal_code'].touched)"
+                                    <div *ngIf="submitted && personalFormValidation.postal_code.errors || personalDetailFormpersonalDetailFormpersonalDetailForm.controls['postal_code'].invalid && (personalDetailFormpersonalDetailFormpersonalDetailForm.controls['postal_code'].dirty || personalDetailFormpersonalDetailFormpersonalDetailForm.controls['postal_code'].touched)"
                                         class="text-danger error-msg">
-                                        <div [hidden]="!personalDetails.controls['postal_code'].errors.required">Postal
+                                        <div [hidden]="!personalDetailFormpersonalDetailFormpersonalDetailForm.controls['postal_code'].errors.required">Postal
                                             code is required.</div>
-                                        <div [hidden]="!personalDetails.controls['postal_code'].errors.minLength">
+                                        <div [hidden]="!personalDetailFormpersonalDetailFormpersonalDetailForm.controls['postal_code'].errors.minLength">
                                             Postal code should be min 6 digit and max 8 digit.</div>
-                                        <div [hidden]="!personalDetails.controls['postal_code'].errors.pattern">Postal
+                                        <div [hidden]="!personalDetailFormpersonalDetailFormpersonalDetailForm.controls['postal_code'].errors.pattern">Postal
                                             code should be number.</div>
                                     </div>
                                 </div>
@@ -228,7 +228,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" class="btnNext" (click)="ShowNextButton(2)" (click)="savePersonalDetails()">Next</button>
+                            <button type="button" class="btnNext" (click)="ShowNextButton(2)" (click)="savepersonalDetailFormpersonalDetailFormpersonalDetailForm()">Next</button>
                         </form>
                     </div>
                 </div>
@@ -238,7 +238,7 @@
                 <h6>EDUCATION DETAILS</h6>
                 <div class="card">
                     <div class="card-body others-card">
-                        <form [formGroup]="qualificationDetails" novalidate>
+                        <form [formGroup]="qualificationDetailForm" novalidate>
                             <div formArrayName="qualification">
                                 <div class="row">
                                     <div class="col-11">
@@ -247,7 +247,7 @@
                                             <div class="row" [formGroupName]="i">
                                                 <div class="form-group form-input col-3">
                                                     <select (change)="setEduTypeListByEduCategoryId($event.target.value,i)"
-                                                        formControlName="docCatId" id="qual_cat" required>
+                                                        formControlName="eduCatId" id="qual_cat" required>
                                                         <option *ngFor="let eduCat of eduCatArr"
                                                             [value]="eduCat.eduDomainId">
                                                             {{eduCat.eduDomainName}}</option>
@@ -265,9 +265,9 @@
 
 
                                                 <div class="form-group form-input col-3">
-                                                    <select formControlName="docTypeId" id="qualification" required>  
+                                                    <select formControlName="eduTypeId" id="qualification" required>  
                                                         <option
-                                                        *ngFor="let edu of eduTypeArrByEduCatList[qualificationDetails.get('qualification')['controls'][i].controls['docCatId'].value]" [value]="edu.educationTypeId">
+                                                        *ngFor="let edu of eduTypeArrByEduCatList[qualificationDetailForm.get('qualification')['controls'][i].controls['eduCatId'].value]" [value]="edu.educationTypeId">
                                                         {{edu.educationTypeName}}
                                                         </option>
                                                     </select>
@@ -395,7 +395,7 @@
                 <h6>WORK EXPERIENCE DETAILS</h6>
                 <div class="card">
                     <div class="card-body others-card">
-                        <form [formGroup]="workExpDetails" novalidate>
+                        <form [formGroup]="workExpDetailsForm" novalidate>
                             <div formArrayName="org_details">
                                 <div class="row">
                                     <div class="col-11">
@@ -623,14 +623,14 @@
                                     <label for="area_of_expertise" class="form-label">Area of
                                         Expertise<span class="redstar">*</span></label>
 
-                                    <div *ngIf="workExpDetails.get('area_of_expertise').invalid && (workExpDetails.get('area_of_expertise').dirty || workExpDetails.get('area_of_expertise').touched)"
+                                    <div *ngIf="workExpDetailsForm.get('area_of_expertise').invalid && (workExpDetailsForm.get('area_of_expertise').dirty || workExpDetailsForm.get('area_of_expertise').touched)"
                                         class="text-danger error-msg">
 
-                                        <div *ngIf="workExpDetails.get('area_of_expertise').errors.required">
+                                        <div *ngIf="workExpDetailsForm.get('area_of_expertise').errors.required">
                                             Area of Expertise is required.
                                         </div>
 
-                                        <div *ngIf="workExpDetails.get('area_of_expertise').errors.maxlength">
+                                        <div *ngIf="workExpDetailsForm.get('area_of_expertise').errors.maxlength">
                                             Area of Expertise maximum 25 characters long.
                                         </div>
                                     </div>
@@ -639,9 +639,9 @@
                                 <!-- <div class="form-group form-input col">
                                     <input type="text" formControlName="psychomatric" id="psychomatric" required />
                                     <label for="psychomatric" class="form-label">Psychometric test results</label>
-                                    <div *ngIf="workExpDetails.controls['psychomatric'].invalid && (workExpDetails.controls['psychomatric'].dirty || workExpDetails.controls['psychomatric'].touched)"
+                                    <div *ngIf="workExpDetailsForm.controls['psychomatric'].invalid && (workExpDetailsForm.controls['psychomatric'].dirty || workExpDetailsForm.controls['psychomatric'].touched)"
                                         class="text-danger error-msg">
-                                        <div [hidden]="!workExpDetails.controls['psychomatric'].errors.required">
+                                        <div [hidden]="!workExpDetailsForm.controls['psychomatric'].errors.required">
                                             Psychometric results is
                                             required.
                                         </div>
@@ -650,14 +650,14 @@
                                 <div class="form-group form-input col">
                                     <input type="text" formControlName="references" id="references" required />
                                     <label for="references" class="form-label">References</label>
-                                    <div *ngIf="workExpDetails.get('references').invalid && (workExpDetails.get('references').dirty || workExpDetails.get('references').touched)"
+                                    <div *ngIf="workExpDetailsForm.get('references').invalid && (workExpDetailsForm.get('references').dirty || workExpDetailsForm.get('references').touched)"
                                         class="text-danger error-msg">
 
-                                        <div *ngIf="workExpDetails.get('references').errors.required">
+                                        <div *ngIf="workExpDetailsForm.get('references').errors.required">
                                             References is required.
                                         </div>
 
-                                        <div *ngIf="workExpDetails.get('references').errors.maxlength">
+                                        <div *ngIf="workExpDetailsForm.get('references').errors.maxlength">
                                             References maximum 25 characters long.
                                         </div>
                                     </div>
@@ -751,7 +751,7 @@
             </div>
 
             <div class="skill-details-form" *ngIf="showMainContent == 4">
-                <form [formGroup]="skillDetails">
+                <form [formGroup]="skillDetailForm">
                     <div class="form-content">
                         <div class="container-skill">
                             <div class="row">
@@ -956,10 +956,10 @@
                             </div>
                         </div>
                     </div>
-                    <!-- [disabled]="skillDetails.controls.skillRateArr.controls.pristine || skillDetails.controls.skillRateArr.controls.invalid" -->
+                    <!-- [disabled]="skillDetailForm.controls.skillRateArr.controls.pristine || skillDetailForm.controls.skillRateArr.controls.invalid" -->
                     <button type="button" class="btnPrevious" (click)="ShowNextButton(3)">Previous</button>
                     <button type="button" class="btnNext" (click)="onSaveSkills()"
-                        [disabled]="skillDetails.invalid">Save</button>
+                        [disabled]="skillDetailForm.invalid">Save</button>
 
                 </form>
 

@@ -4,6 +4,7 @@ import { IndeptProfileService } from '../../shared/service/profile.service';
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { CustomGlobalService } from 'src/app/feature/shared/service/custom-global.service';
 
 @Component({
   selector: 'app-edit',
@@ -13,10 +14,10 @@ import { ToastrService } from 'ngx-toastr';
 export class EditComponent implements OnInit {
 
   // FormGroup object's
-  public personalDetails: FormGroup;
-  public qualificationDetails: FormGroup;
-  public workExpDetails: FormGroup;
-  public skillDetails: FormGroup;
+  public personalDetailsForm: FormGroup;
+  public qualificationDetailsForm: FormGroup;
+  public workExpDetailsForm: FormGroup;
+  public skillDetailsForm: FormGroup;
 
   // Static Array variables
   public prefixArr = ['Mr', 'Mrs', 'Miss'];
@@ -49,24 +50,18 @@ export class EditComponent implements OnInit {
 
   // Education Array's
   public congnitoID: any = [];
-  public eduCatArr: any = [];
   public eduArr: any = [];
-  public eduList: any = [];
-  public eduListbyId: any = [];
+  public eduListArrbyId: any = [];
 
   // Skill Array's
-  public skills: any = [];
-  public categ: any = [];
+
 
   // Address Array's
-  public countryArr: any = [];
-  public stateArr: any = [];
-  public cityArr: any = [];
+  
   public stateByIdArr: any = [];
   public cityByIdArr: any = [];
 
   // REST get API's Array's
-  public freelancerArr: any = [];
   public qualityArray: any = [];
   public freelancerEduArr: any = [];
   public freelancerOrgArr: any = [];
@@ -81,20 +76,36 @@ export class EditComponent implements OnInit {
   public documentWorkArray: any = [];
 
   // Skill Array's
-  public freelancerSkillDetailsArr: any = [];
+  public freelancerSkillDetailsFormArr: any = [];
   public skillArr: any = [];
   public skillList: any = [];
 
 
 
-  //
-  public freeSkillDetailsArr = [];
-  public freeStrengthArr= [];
-  public freeWeaknessArr= [];
-  public freePortfolioArr = [];
-  public freeWorkDetailArr = [];
-  public freeEducationArr = [];
-  public freeDocumentArr = [];
+  //used by shefali
+  public freelancerArr : any = [];
+  public freeSkillDetailArr : any = [];
+  public freeStrengthArr : any = [];
+  public freeWeaknessArr : any = [];
+  public freePortfolioArr : any = [];
+  public freeWorkDetailArr : any = [];
+  public freeEducationArr : any = [];
+  public freeDocumentArr : any = [];
+  public countryArr : any = [];
+  public stateArr : any = [];
+  public cityArr : any = [];
+  public stateArrByCountryId : any = [];
+  public cityArrByStateId : any = [];
+  public eduCatArr : any = [];
+  public eduTypeArr : any = [];
+  public personalAttributeArr : any = [];
+  public currencyArr : any = [];
+  public skills : any = [];
+  public skillCatArr : any = []; 
+  public skillArrBySkillCatList : any = [];
+  public eduTypeArrByEduCatList : any = [];
+
+
 
   constructor(
     private __fb: FormBuilder,
@@ -102,9 +113,11 @@ export class EditComponent implements OnInit {
     private __authService: AuthService,
     private __router: Router,
     private __activatedRoute: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private __customGlobalService: CustomGlobalService
+
   ) {
-    this.__id = this.__activatedRoute.snapshot.params.id;
+    // this.__id = this.__activatedRoute.snapshot.params.id;
   }
 
   ngOnInit() {
@@ -137,48 +150,50 @@ export class EditComponent implements OnInit {
     /**
       * @description Get API call function
       */
-    this.getAllCountry();
-    this.getFreelancerDetails();
-    this.getAllEducationCat();
-    this.getAllSkillCategory();
-    this.getDocumentsTypeCat(1);
+    // this.getFreelancerDetails();
+    // this.getAllEducationCat();
+    // this.getAllSkillCategory();
+    // this.getDocumentsTypeCat(1);
 
-    this.getFreelancerSkillDetails();
-    this.getQualitiesById();
-    this.getFreelancerDocuments();
-    this.getFreelancerOrganization();
-    this.getFreelancerPortfolio();
+    // this.getFreelancerSkillDetailsForm();
+    // this.getQualitiesById();
+    // this.getFreelancerDocuments();
+    // this.getFreelancerOrganization();
+    // this.getFreelancerPortfolio();
     // this.setAllFreelancerData();
 
     this.getFreelancerDetails();
-
+    this.getEducationCategoryList();
+    this.getEducationTypeList();
+    this.getPersonalAttributes();
+    this.getSkillCategoryList();
+    this.getSkillTypeList();
+    this.getDocumentsTypeCat(1);
+    this.getCurrencyList();
   }
+  
 
-  /**
-   * @name valPersonalProfile
-   * @description validating the Personal details form fields
-   */
   validatePersonalProfile() {
-    this.personalDetails = this.__fb.group({
+    this.personalDetailsForm = this.__fb.group({
       prefix: ['', Validators.required],
-      first_name: ['', Validators.compose([
+      firstName: ['', Validators.compose([
         Validators.required, Validators.maxLength(20),
         Validators.pattern('^[a-zA-Z \-\']+')
       ])],
-      middle_name: ['', Validators.compose([
+      middleName: ['', Validators.compose([
         Validators.required, Validators.maxLength(20),
         Validators.pattern('^[a-zA-Z \-\']+')
       ])],
-      last_name: ['', Validators.compose([
+      lastName: ['', Validators.compose([
         Validators.required, Validators.maxLength(20),
         Validators.pattern('^[a-zA-Z \-\']+')
       ])],
-      address_one: ['', [Validators.required, Validators.maxLength(25)]],
-      address_two: ['', [Validators.required, Validators.maxLength(25)]],
+      addressLine1: ['', [Validators.required, Validators.maxLength(25)]],
+      addressLine2: ['', [Validators.required, Validators.maxLength(25)]],
       country: ['', Validators.required],
       province: ['', Validators.required],
       city: ['', Validators.required],
-      postal_code: ['', Validators.compose([
+      postalCode: ['', Validators.compose([
         Validators.required, Validators.maxLength(8), Validators.minLength(6),
         Validators.pattern("^[0-9]*$")
       ])],
@@ -186,22 +201,14 @@ export class EditComponent implements OnInit {
     });
   }
 
-  /**
-   * @name valQualificationProfile
-   * @description validating the Qualification details form fields
-   */
   validateQualificationProfile() {
-    this.qualificationDetails = this.__fb.group({
+    this.qualificationDetailsForm = this.__fb.group({
       qualification: this.__fb.array([]),
     });
   }
 
-  /**
-   * @name valWorlExpProfile
-   * @description validating the Work Exp details form fields
-   */
   validateWorlExpProfile() {
-    this.workExpDetails = this.__fb.group({
+    this.workExpDetailsForm = this.__fb.group({
       org_details: this.__fb.array([]),
       strength: this.__fb.array([]),
       weakness: this.__fb.array([]),
@@ -214,109 +221,283 @@ export class EditComponent implements OnInit {
     });
   }
 
-  /**
-   * @name valSkillsProfile
-   * @description validating the Skill details form fields
-   */
   validateSkillsProfile() {
-    this.skillDetails = this.__fb.group({
+    this.skillDetailsForm = this.__fb.group({
       skills: this.__fb.array([]),
     });
   }
 
+  getCountryList() {
+    this.__customGlobalService.getCountryList().then((resData: any) => {
+      this.countryArr = resData.responseObject;
+    })
+  }
+
+  getStateList() {
+    this.__customGlobalService.getStateList().then((resData: any) => {
+      this.stateArr = resData.responseObject;
+      this.setStateListByCountryId(this.freelancerArr.country.countryId);
+    })
+  }
+
+  setStateListByCountryId(countryId) {    
+    this.stateArrByCountryId[countryId] = this.stateArr.filter((item) => item.masterCountry.countryId == countryId);
+    this.personalDetailsForm.patchValue({
+      country: this.freelancerArr.country.countryId,
+      province: this.freelancerArr.province.stateId,
+    });
+  }
+
+  getCityList(){
+    this.__customGlobalService.getCityList().then((resData: any) => {
+      this.cityArr = resData.responseObject;
+      this.setCityListByStateId(this.freelancerArr.province.stateId);
+    })
+  }
+
+  setCityListByStateId(stateId){
+    this.cityArrByStateId[stateId] = this.cityArr.filter((item) => item.masterStates.stateId == stateId);
+    this.personalDetailsForm.patchValue({
+      city: this.freelancerArr.city.cityId,
+    });
+  }
+
+  getEducationCategoryList() {
+    this.__customGlobalService.getEducationCategoryList().then((resData: any) => {
+      this.eduCatArr = resData.responseObject;
+    })
+  }
+
+  setEduTypeListByEduCategoryId(eduCatId) {
+    this.eduTypeArrByEduCatList[eduCatId] = this.eduTypeArr.filter((item) => item.masterEduDomain.eduDomainId == eduCatId); 
+  }
+
+  getEducationTypeList() {
+    this.__customGlobalService.getEducationTypeList().then((resData: any) => {
+      this.eduTypeArr = resData.responseObject;
+    })
+  }
+
+  getPersonalAttributes(){
+    this.__customGlobalService.getPersonalAttributeList().then((resData: any) => {
+      this.personalAttributeArr = resData.responseObject;      
+    })
+  }
+
+  getSkillCategoryList() {
+    this.__customGlobalService.getSkillDomainList().then((resData: any) => {
+      this.skillCatArr = resData.responseObject;
+    })
+  }
+
+  getSkillTypeList(){
+    this.__customGlobalService.getSkillTypeList().then((resData: any) => {
+      this.skills = resData.responseObject;
+    })
+  }
+  
+  setSkillArrBySkillCatList(skillDomainId){ 
+    this.skillArrBySkillCatList = this.skills.filter((item) => item.masterDomain.domainId == skillDomainId);
+  }
+
+  getCurrencyList(){
+    this.__customGlobalService.getCountryList().then((resData: any) => {
+      this.currencyArr = resData.responseObject;
+    })
+  }
 
   async getFreelancerDetails() {
 
     await this.__profileService.getFreelancerByEmail().then((resData: any) => {    
-      console.log(resData.responseObject);     
+      console.log("Freelancer Data : " ,resData );
+      
       this.freelancerArr = resData.responseObject.freelancerProfile;
-      this.freeSkillDetailsArr = resData.responseObject.skills,
+      this.freeEducationArr = resData.responseObject.freelancerEdu
+      this.freeSkillDetailArr = resData.responseObject.skills,
       this.freePortfolioArr = resData.responseObject.portfolio,
       this.freeWorkDetailArr = resData.responseObject.workExperience,
       this.freeStrengthArr = resData.responseObject.strength,
       this.freeWeaknessArr = resData.responseObject.weakness,
-      this.freeEducationArr = resData.responseObject.freelancerEdu
       this.freeDocumentArr = resData.responseObject.freelancerDocument
+     
+      this.setFreelancerArr();
+      this.setFreeEducationArr();
+      this.setFreeWorkDetailArr();
+      this.setFreeStrengthArr();
+      this.setFreeWeaknessArr();
+      this.setFreePortfolioArr();
+      this.setFreeDocumentArr();
+      this.setSkillDetailArr();
     });
-    
-    // await this.__profileService.getFreelancerByEmail(this.__id).then((data: any) => {
-    //   this.freelancerArr = data[0];
-    //   console.log("Res getFreelancerDetails:", this.freelancerArr);
-    // });
-
+  }
+ 
+  async setFreelancerArr(){
     this.checkMarked = this.freelancerArr.is_interviewer;
 
-    await this.populateStateList();
-    await this.populateCityList();
-
     if (this.freelancerArr != null) {
-      this.personalDetails.patchValue({
+
+      this.personalDetailsForm.patchValue({
         prefix: this.freelancerArr.prefix,
-        first_name: this.freelancerArr.first_name,
-        middle_name: this.freelancerArr.middle_name,
-        last_name: this.freelancerArr.last_name,
-        address_one: this.freelancerArr.line_1,
-        address_two: this.freelancerArr.line_2,
-        country: this.freelancerArr.country,
-        province: this.freelancerArr.state,
-        city: this.freelancerArr.city,
-        postal_code: this.freelancerArr.code,
+        firstName: this.freelancerArr.firstName,
+        middleName: this.freelancerArr.middleName,
+        lastName: this.freelancerArr.lastName,
+        addressLine1: this.freelancerArr.addressLine1,
+        addressLine2: this.freelancerArr.addressLine2,
+        postalCode: this.freelancerArr.postalCode,
       });
 
-      this.workExpDetails.patchValue({
+      this.workExpDetailsForm.patchValue({
         references: this.freelancerArr.reference,
-        area_of_expertise: this.freelancerArr.area_of_experties,
+        area_of_expertise: this.freelancerArr.areaOfExpertise,
         psychomatric: this.freelancerArr.psyco_result,
         isFreelancer: this.freelancerArr.is_interviewer
       });
+
+      await this.getCountryList();
+      await this.getStateList();
+      await this.getCityList();
     }
-
-
-    // this.personalDetails.setControl('documents_personal', this.__fb.array(
-    //   this.documentArr.file_name || [],
-    //   this.documentArr.file_type || [],
-    // ));
-
   }
-  async populateStateList() {
-    for (let i = 0; i < this.countryArr.length; i++) {
-      if (this.countryArr[i].name == this.freelancerArr.country) {
-        let countryID = this.countryArr[i].id;
-        await this.getStateListByCountryID(countryID);
+
+  async setFreeEducationArr(){
+    console.log("freeEducationArr", this.freeEducationArr);
+    
+    if (this.freeEducationArr.length > 0) {
+      for (let index = 0; index < this.freeEducationArr.length; index++) {
+        // this.edu_catId = this.freeEducationArr[index].masterEduDomain.eduDomainId;
+        // this.setEduTypeListByEduCategoryId(this.freeEducationArr[index].masterEduDomain.eduDomainId);
+        console.log("this.freeEducationArr[index].masterEduDomain.eduDomainId \n", this.freeEducationArr[index].masterEduDomain.eduDomainId);
+        this.setEduTypeListByEduCategoryId(this.freeEducationArr[index].masterEduDomain.eduDomainId);
+        this.qualfArr.push(this.__fb.group(
+          {
+            edu_cat_name: this.freeEducationArr[index].masterEduDomain.eduDomainName,
+            edu_type_name: this.freeEducationArr[index].masterEduType.educationTypeName,
+            edu_cat_id: this.freeEducationArr[index].masterEduDomain.eduDomainId,
+            edu_type_id: this.freeEducationArr[index].masterEduType.educationTypeId,
+            university: this.freeEducationArr[index].university,
+            passing_year: this.freeEducationArr[index].passingYear,
+            percentage: this.freeEducationArr[index].percentage,
+            grade: this.freeEducationArr[index].grade,
+            // doc_name: docName,
+            edu_id: this.freeEducationArr[index].edu_id
+          }
+        ));
       }
-    }
-  }
-  async populateCityList() {
-    for (let i = 0; i < this.stateArr.length; i++) {
-      if (this.stateArr[i].name == this.freelancerArr.state) {
-        let stateID = this.stateArr[i].id;
-        this.getCityListByStateID(stateID);
-      }
+    } else {
+      this.addQualification();
     }
   }
 
-  getFreelancerSkillDetails() {
+  setFreeWorkDetailArr(){
+    if (this.freeWorkDetailArr.length > 0) {
+      for (let index = 0; index < this.freeWorkDetailArr.length; index++) {
+        this.orgArr.push(this.__fb.group(
+          {
+            org_name: this.freeWorkDetailArr[index].organization,
+            org_designation: this.freeWorkDetailArr[index].designation,
+            start_date: this.freeWorkDetailArr[index].startDate,
+            end_date: this.freeWorkDetailArr[index].endDate,
+            responsibilities: this.freeWorkDetailArr[index].responsibilities,
+            org_id: this.freeWorkDetailArr[index].freelancerWorkExperienceId
+          }
+        ));
+      }
+    } else {
+      this.addResponsibility()
+    }
+  }
+
+  setFreeStrengthArr(){
+    if (this.freeStrengthArr.length > 0) {
+        this.freeStrengthArr.forEach(item => {
+          this.strengthArr.push(
+            this.__fb.group({
+              strength: item.strengths,
+              quality_id: item.quality_id
+            })
+          )
+        });
+    } else {
+        this.addStrength();
+    }
+  }
+
+  setFreeWeaknessArr(){
+    if (this.freeWeaknessArr.length > 0) {
+      this.freeWeaknessArr.forEach(item => {
+        this.weaknessArr.push(
+          this.__fb.group({
+            weakness: item.weaknesses,
+            quality_id: item.quality_id
+          })
+        )
+      });
+    } else {
+      this.addWeakness();
+    }
+
+  }
+
+  setFreePortfolioArr(){
+    if (this.freePortfolioArr.length > 0) {
+      let portflio = this.workExpDetailsForm.get('portfolios') as FormArray;
+      for (let index = 0; index < this.freePortfolioArr.length; index++) {
+        portflio.push(this.__fb.group({
+          portfolio: this.freePortfolioArr[index].portfolioUrl,
+          port_id: this.freePortfolioArr[index].portfolioUrlId
+        }));
+      }
+    } else {
+      this.addPortfolio();
+    }
+  }
+
+  setFreeDocumentArr(){
+
+
+  }
+  setSkillDetailArr(){
+    if (this.freeSkillDetailArr.length > 0) {
+      let skillCat_ID = this.freeSkillDetailArr[0].skill_cat_id;
+      this.setSkillArrBySkillCatList(skillCat_ID);
+
+      for (let index = 0; index < this.freeSkillDetailArr.length; index++) {
+        this.skillRateArr.push(this.__fb.group(
+          {
+            skill_name: this.freeSkillDetailArr[index].skillId.skillName,
+            rate_hour: this.freeSkillDetailArr[index].hourlyRate,
+            skill: this.freeSkillDetailArr[index].freelancerSkillId
+          }
+        ));
+      }
+    } else {
+      this.selectEvent(0);
+      this.setSkillArrBySkillCatList(1);
+    }
+  }
+
+
+  getFreelancerSkillDetailsForm() {
     this.__profileService.getFreelancerSkillById(this.__id).then((data: any) => {
-      this.freelancerSkillDetailsArr = data;
-      console.log("Res getFreelancerSkillDetails:", this.freelancerSkillDetailsArr);
-      if (this.freelancerSkillDetailsArr.length > 0) {
-        let skillCat_ID = this.freelancerSkillDetailsArr[0].skill_cat_id;
-        this.getSkillsByID(skillCat_ID);
+      this.freelancerSkillDetailsFormArr = data;
+      if (this.freelancerSkillDetailsFormArr.length > 0) {
+        let skillCat_ID = this.freelancerSkillDetailsFormArr[0].skill_cat_id;
+        this.setSkillArrBySkillCatList(skillCat_ID);
 
-        for (let index = 0; index < this.freelancerSkillDetailsArr.length; index++) {
+        for (let index = 0; index < this.freelancerSkillDetailsFormArr.length; index++) {
           this.skillRateArr.push(this.__fb.group(
             {
-              skill_name: this.freelancerSkillDetailsArr[index].skill_name,
-              rate_hour: this.freelancerSkillDetailsArr[index].rate_per_hr,
-              skill: this.freelancerSkillDetailsArr[index].skill_id
+              skill_name: this.freelancerSkillDetailsFormArr[index].skill_name,
+              rate_hour: this.freelancerSkillDetailsFormArr[index].rate_per_hr,
+              skill: this.freelancerSkillDetailsFormArr[index].skill_id
             }
           ));
         }
       } else {
         this.selectEvent(0);
-        this.getSkillsByID(1);
+        this.setSkillArrBySkillCatList(1);
       }
-      console.log("jyoti:", this.skillDetails);
+      console.log("jyoti:", this.skillDetailsForm);
     });
   }
 
@@ -517,7 +698,7 @@ export class EditComponent implements OnInit {
     this.__profileService.getFreelancerPortfolioById(this.__id).then((data: any) => {
       this.freelancerPortArr = data;
       if (this.freelancerPortArr.length > 0) {
-        let portflio = this.workExpDetails.get('portfolios') as FormArray;
+        let portflio = this.workExpDetailsForm.get('portfolios') as FormArray;
         for (let index = 0; index < this.freelancerPortArr.length; index++) {
           portflio.push(this.__fb.group({
             portfolio: this.freelancerPortArr[index].port_addr,
@@ -534,10 +715,10 @@ export class EditComponent implements OnInit {
   }
 
   setAllFreelancerData() {
-    this.personalDetails.get('prefix').setValue(this.freelancerArr.prefix);
-    this.personalDetails.get('first_name').setValue(this.freelancerArr.first_name);
-    this.personalDetails.get('middle_name').setValue(this.freelancerArr.middle_name);
-    this.personalDetails.get('last_name').setValue(this.freelancerArr.last_name);
+    this.personalDetailsForm.get('prefix').setValue(this.freelancerArr.prefix);
+    this.personalDetailsForm.get('firstName').setValue(this.freelancerArr.firstName);
+    this.personalDetailsForm.get('middleName').setValue(this.freelancerArr.middleName);
+    this.personalDetailsForm.get('lastName').setValue(this.freelancerArr.lastName);
   }
 
 
@@ -547,22 +728,22 @@ export class EditComponent implements OnInit {
    * @name getAllEducationCat
    * @description get API for all education category of independent prof 
    */
-  getAllEducationCat() {
-    this.__profileService.getFreelancerEduCat().then((resData: any) => {
-      this.eduCatArr = resData;
-    })
-  }
+  // getAllEducationCat() {
+  //   this.__profileService.getFreelancerEduCat().then((resData: any) => {
+  //     this.eduCatArr = resData;
+  //   })
+  // }
 
   /**
    * @method getAllEducation
    * @param eduCat_id
    * @description get all education values based on selected education category id.
    */
-  setEduCatByID(eduCat_id) {
-    this.__profileService.getFreelancerEducname(eduCat_id).then((resData: any) => {
-      this.eduArr = resData;
-    })
-  }
+  // setEduCatByID(eduCat_id) {
+  //   this.__profileService.getFreelancerEducname(eduCat_id).then((resData: any) => {
+  //     this.eduArr = resData;
+  //   })
+  // }
 
   /**
 * @method getAllEducation
@@ -571,27 +752,23 @@ export class EditComponent implements OnInit {
 */
 
 
-  setEduListByCatId(eduCat_id, i) {
-    this.eduListbyId[eduCat_id] = this.eduList.filter((item) => item.edu_cat_id == eduCat_id);
-    this.qualificationDetails.get('qualification')['controls'][i].patchValue({ edu_cat_id: eduCat_id, edu_type_id: '' });
+  // setEduListArrByCatId(eduCat_id, i) {
+  //   this.eduListArrbyId[eduCat_id] = this.eduTypeArr.filter((item) => item.edu_cat_id == eduCat_id);
+  //   this.qualificationDetailsForm.get('qualification')['controls'][i].patchValue({ edu_cat_id: eduCat_id, edu_type_id: '' });
 
-  }
+  // }
 
   /**
    * @method getSkillsByID
    * @param skill_cat_id
    * @description get all education category values
    */
-  getSkillsByID(skill_cat_id) {
-    this.__profileService.getFreelancerSkills(skill_cat_id).then((resData: any) => {
-      this.skills = resData;
-    })
-  }
+  // getSkillsByID(skill_cat_id) {
+  //   this.__profileService.getFreelancerSkills(skill_cat_id).then((resData: any) => {
+  //     this.skills = resData;
+  //   })
+ // }
 
-  /**
-   * @name getAllSkillCategory
-   * @description get API for all skill category of independent prof 
-   */
   getAllSkillCategory() {
     // this.__profileService.getFreelancerCategory().then((resData: any) => {
     //   this.categ = resData;
@@ -600,15 +777,7 @@ export class EditComponent implements OnInit {
     // })
   }
 
-  /**
-   * @method getAllCountry
-   * @description get all country values.
-   */
-  getAllCountry() {
-    this.__profileService.getFreelancerCountry().then((resData: any) => {
-      this.countryArr = resData;
-    })
-  }
+  
 
   /**
    * @method setCountryID
@@ -681,7 +850,7 @@ export class EditComponent implements OnInit {
 
     const skills = item;
     const skill_id = skills.skill_cat_id;
-    this.getSkillsByID(skill_id)
+    this.setSkillArrBySkillCatList(skill_id)
   }
 
   onChangeSearch(val: string) {
@@ -698,7 +867,7 @@ export class EditComponent implements OnInit {
   */
 
   get qualfArr() {
-    return this.qualificationDetails.get('qualification') as FormArray;
+    return this.qualificationDetailsForm.get('qualification') as FormArray;
   }
 
   addQualification() {
@@ -723,7 +892,7 @@ export class EditComponent implements OnInit {
   */
 
   get orgArr() {
-    return this.workExpDetails.get('org_details') as FormArray;
+    return this.workExpDetailsForm.get('org_details') as FormArray;
   }
 
   addResponsibility() {
@@ -746,7 +915,7 @@ export class EditComponent implements OnInit {
   */
 
   get strengthArr() {
-    return this.workExpDetails.get('strength') as FormArray;
+    return this.workExpDetailsForm.get('strength') as FormArray;
   }
 
   addStrength() {
@@ -762,7 +931,7 @@ export class EditComponent implements OnInit {
   */
 
   get weaknessArr() {
-    return this.workExpDetails.get('weakness') as FormArray;
+    return this.workExpDetailsForm.get('weakness') as FormArray;
   }
 
   addWeakness() {
@@ -779,7 +948,7 @@ export class EditComponent implements OnInit {
   */
 
   get portfolioArr() {
-    return this.workExpDetails.get('portfolios') as FormArray;
+    return this.workExpDetailsForm.get('portfolios') as FormArray;
   }
 
   addPortfolio() {
@@ -794,7 +963,7 @@ export class EditComponent implements OnInit {
   * @description Documents FormArray (Dynamicaly create input)
   */
   get documentArr() {
-    return this.personalDetails.get('documents_personal') as FormArray;
+    return this.personalDetailsForm.get('documents_personal') as FormArray;
   }
 
   addDocument() {
@@ -815,7 +984,7 @@ export class EditComponent implements OnInit {
   */
 
   get workdocumentArr() {
-    return this.workExpDetails.get('documents_work') as FormArray;
+    return this.workExpDetailsForm.get('documents_work') as FormArray;
   }
 
   addWorkDocument() {
@@ -836,7 +1005,7 @@ export class EditComponent implements OnInit {
  */
 
   get skillRateArr() {
-    return this.skillDetails.get('skills') as FormArray;
+    return this.skillDetailsForm.get('skills') as FormArray;
   }
 
   onChange(skill: string, skill_id: number, isChecked: boolean) {
@@ -953,10 +1122,10 @@ export class EditComponent implements OnInit {
 
     qualitiesArr = [
       {
-        strengths: this.workExpDetails.controls.strength.value
+        strengths: this.workExpDetailsForm.controls.strength.value
       },
       {
-        weaknesses: this.workExpDetails.controls.weakness.value
+        weaknesses: this.workExpDetailsForm.controls.weakness.value
       },
     ];
     console.log(qualitiesArr);
@@ -965,25 +1134,25 @@ export class EditComponent implements OnInit {
       const freelancerProfilePayload = {
         cognito_id: this.congnitoID,
         email: this.email,
-        prefix: this.personalDetails.controls.prefix.value,
-        first_name: this.personalDetails.controls.first_name.value,
-        middle_name: this.personalDetails.controls.middle_name.value,
-        last_name: this.personalDetails.controls.last_name.value,
-        address_one: this.personalDetails.controls.address_one.value,
-        address_two: this.personalDetails.controls.address_two.value,
-        country: this.personalDetails.controls.country.value,
-        province: this.personalDetails.controls.province.value,
-        city: this.personalDetails.controls.city.value,
-        postal_code: this.personalDetails.controls.postal_code.value,
+        prefix: this.personalDetailsForm.controls.prefix.value,
+        firstName: this.personalDetailsForm.controls.firstName.value,
+        middleName: this.personalDetailsForm.controls.middleName.value,
+        lastName: this.personalDetailsForm.controls.lastName.value,
+        addressLine1: this.personalDetailsForm.controls.addressLine1.value,
+        addressLine2: this.personalDetailsForm.controls.addressLine2.value,
+        country: this.personalDetailsForm.controls.country.value,
+        province: this.personalDetailsForm.controls.province.value,
+        city: this.personalDetailsForm.controls.city.value,
+        postalCode: this.personalDetailsForm.controls.postalCode.value,
         documents: documentArr,
-        edu_details: this.qualificationDetails.controls.qualification.value,
-        org_details: this.workExpDetails.controls.org_details.value,
+        edu_details: this.qualificationDetailsForm.controls.qualification.value,
+        org_details: this.workExpDetailsForm.controls.org_details.value,
         qualities: qualitiesArr,
-        portfolio: this.workExpDetails.controls.portfolios.value,
-        references: this.workExpDetails.controls.references.value,
-        area_of_experties: this.workExpDetails.controls.area_of_expertise.value,
-        psychomatric: this.workExpDetails.controls.psychomatric.value,
-        is_interviewer: this.workExpDetails.controls.isFreelancer.value,
+        portfolio: this.workExpDetailsForm.controls.portfolios.value,
+        references: this.workExpDetailsForm.controls.references.value,
+        area_of_experties: this.workExpDetailsForm.controls.area_of_expertise.value,
+        psychomatric: this.workExpDetailsForm.controls.psychomatric.value,
+        is_interviewer: this.workExpDetailsForm.controls.isFreelancer.value,
         skills: this.skillRateArr.value,
         uid: 0
       }
@@ -1004,25 +1173,25 @@ export class EditComponent implements OnInit {
       const freelancerProfilePayload = {
         cognito_id: this.email,
         email: this.email,
-        prefix: this.personalDetails.controls.prefix.value,
-        first_name: this.personalDetails.controls.first_name.value,
-        middle_name: this.personalDetails.controls.middle_name.value,
-        last_name: this.personalDetails.controls.last_name.value,
-        address_one: this.personalDetails.controls.address_one.value,
-        address_two: this.personalDetails.controls.address_two.value,
-        country: this.personalDetails.controls.country.value,
-        province: this.personalDetails.controls.province.value,
-        city: this.personalDetails.controls.city.value,
-        postal_code: this.personalDetails.controls.postal_code.value,
+        prefix: this.personalDetailsForm.controls.prefix.value,
+        firstName: this.personalDetailsForm.controls.firstName.value,
+        middleName: this.personalDetailsForm.controls.middleName.value,
+        lastName: this.personalDetailsForm.controls.lastName.value,
+        addressLine1: this.personalDetailsForm.controls.addressLine1.value,
+        addressLine2: this.personalDetailsForm.controls.addressLine2.value,
+        country: this.personalDetailsForm.controls.country.value,
+        province: this.personalDetailsForm.controls.province.value,
+        city: this.personalDetailsForm.controls.city.value,
+        postalCode: this.personalDetailsForm.controls.postalCode.value,
         documents: documentArr,
-        edu_details: this.qualificationDetails.controls.qualification.value,
-        org_details: this.workExpDetails.controls.org_details.value,
+        edu_details: this.qualificationDetailsForm.controls.qualification.value,
+        org_details: this.workExpDetailsForm.controls.org_details.value,
         qualities: qualitiesArr,
-        portfolio: this.workExpDetails.controls.portfolios.value,
-        references: this.workExpDetails.controls.references.value,
-        area_of_experties: this.workExpDetails.controls.area_of_expertise.value,
-        psychomatric: this.workExpDetails.controls.psychomatric.value,
-        is_interviewer: this.workExpDetails.controls.isFreelancer.value,
+        portfolio: this.workExpDetailsForm.controls.portfolios.value,
+        references: this.workExpDetailsForm.controls.references.value,
+        area_of_experties: this.workExpDetailsForm.controls.area_of_expertise.value,
+        psychomatric: this.workExpDetailsForm.controls.psychomatric.value,
+        is_interviewer: this.workExpDetailsForm.controls.isFreelancer.value,
         skills: this.skillRateArr.value,
         uid: 0
       }

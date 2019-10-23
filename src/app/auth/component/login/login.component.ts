@@ -85,49 +85,50 @@ export class LoginComponent implements OnInit {
 
           this.__authService.getUserLoginData(databaseloginPayload).then((data: any) => {
 
-            localStorage.setItem('uid', data.responseObject.User.userId);
-            localStorage.setItem('uportUser', this.uportUser);
-            localStorage.setItem('email', data.responseObject.User.emailId);
-            localStorage.setItem('userAuthToken', data.authtoken);
+                localStorage.setItem('uid', data.responseObject.User.userId);
+                localStorage.setItem('uportUser', this.uportUser);
+                localStorage.setItem('email', data.responseObject.User.emailId);
+                localStorage.setItem('userAuthToken', data.authtoken);
+              
+                this.loading = false;
 
-            this.loading = false;
+                if (data.responseObject.User.cognitoId == null) {
+                  const cognitoUpdatePayload = {
+                    cognitoId : resData.response.payload.sub
+                  }
+                  this.__authService.updateUserData(cognitoUpdatePayload).then((resData: any) => {                
+                  });
+                }
 
-            if (data.responseObject.User.cognitoId == null) {
-              const cognitoUpdatePayload = {
-                cognitoId: resData.response.payload.sub
-              }
-              this.__authService.updateUserData(cognitoUpdatePayload).then((resData: any) => {
-              });
-            }
+                console.log("User Data : " , data );
+                console.log("**********logged in ************", data.responseObject.User.isLoggedIn);
+                
+                
+                if(data.responseObject.User.isLoggedIn == false){
+                  // let val : Boolean = false;
+                  const loggedInFlagPayload = {
+                    isLoggedIn : 1
+                  }
+                  this.__authService.updateUserData(loggedInFlagPayload).then((resData: any) => {  
+                    console.log("Logged in value : " ,resData );
+                    this.__router.navigate(['/feature/feature/full-layout/dashboard'])
+                    var baseName = data.responseObject.User.emailId;
+                    baseName = baseName.substring(0, baseName.indexOf('@'));
+                    const emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1);
 
-            console.log("User Data : ", data);
-            console.log("**********logged in ************", data.responseObject.User.isLoggedIn);
-
-
-            if (data.responseObject.User.isLoggedIn == false) {
-              // let val : Boolean = false;
-              const loggedInFlagPayload = {
-                isLoggedIn: 1
-              }
-              this.__authService.updateUserData(loggedInFlagPayload).then((resData: any) => {
-                console.log("Logged in value : ", resData);
-              });
-            }
-
-            var baseName = data.responseObject.User.emailId;
-            baseName = baseName.substring(0, baseName.indexOf('@'));
-            const emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1);
-
-            this.toastr.success(emailName, 'Welcome ');
-
-            this.__router.navigate(['/feature/feature/full-layout/dashboard'])
+                    this.toastr.success(emailName, 'Welcome ');
+                                
+                  });
+                }
+   
           })
         } else if (resData.status == "ERROR") {
           this.loading = false;
           this.toastr.error(resData.response.message);
           this.__router.navigate(['/auth/auth/login'])
         }
-      });
+      })
+
     }
   }
   /**

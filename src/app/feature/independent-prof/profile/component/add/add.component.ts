@@ -16,10 +16,10 @@ import { CustomGlobalService } from 'src/app/feature/shared/service/custom-globa
 export class AddComponent implements OnInit {
 
   /* FormGroup object's */
-  public personalDetails: FormGroup;
-  public qualificationDetails: FormGroup;
-  public workExpDetails: FormGroup;
-  public skillDetails: FormGroup;
+  public personalDetailForm: FormGroup;
+  public qualificationDetailForm: FormGroup;
+  public workExpDetailsForm: FormGroup;
+  public skillDetailsForm: FormGroup;
 
   /* Static Array variables */
   public prefixArr = ['Mr', 'Mrs', 'Miss'];
@@ -28,12 +28,9 @@ export class AddComponent implements OnInit {
 
   /* skill variables. */
   keyword = 'domainName';
-  skillItem: any = [];
 
   /* Loader Variable's */
   public loading = false;
-  public addprofilefreelancer: any;
-
 
   /* Variable's */
   public submitted = false;
@@ -53,35 +50,31 @@ export class AddComponent implements OnInit {
 
   /* Education related Array's */
   public congnitoID: any = [];
-  public eduCatArr: any = [];
-  public eduList: any = [];
-  public eduListbyId: any = [];
-  public eduArr: any = [];
 
   /* Skill related Array's */
-  public skills: any = [];
   public skill: any = [];
   public categ: any = [];
 
-
-  /* Address related Array's */
-  public countryArr: any = [];
-  public stateArr: any = [];
-  public cityArr: any = [];
-
-  /* Document related Array's */
-  public docTypeArr: any = [];
+  /* Document related Arrays */
   public documentPersonalArray: any = [];
   public documentQualArray: any = [];
   public documentWorkArray: any = [];
   public documentFileArr: any = [];
 
-  public stateArrByCountryId=[];
-  public cityArrByStateId = [];
-  public eduTypeArrByEduCatList=[];
-  public skillArrBySkillCatList=[];
-  public personalAttributes = [];
-  public currencyList = [];
+  /* Master Data Related Arrays */ 
+  public countryArr : any = [];
+  public stateArr : any = [];
+  public cityArr : any = [];
+  public stateArrByCountryId : any = [];
+  public cityArrByStateId : any = [];
+  public eduCatArr: any = [];
+  public eduTypeList : any = [];
+  public eduTypeArrByEduCatList : any = [];
+  public skills: any = [];
+  public skillArrBySkillCatList : any = [];
+  public personalAttributes : any = [];
+  public currencyList : any = [];
+  public docTypeArr: any = [];
 
   constructor(
     /* Constructor variable's */
@@ -96,7 +89,6 @@ export class AddComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.isUportUser = localStorage.getItem("uportUser");
 
     if (this.isUportUser == "false") {
@@ -138,7 +130,7 @@ export class AddComponent implements OnInit {
    * @description validating the Personal details form fields
    */
   validatePersonalProfile() {
-    this.personalDetails = this.__fb.group({
+    this.personalDetailForm = this.__fb.group({
       prefix: ['', Validators.required],
       first_name: ['', Validators.compose([
         Validators.required, Validators.maxLength(20),
@@ -171,10 +163,10 @@ export class AddComponent implements OnInit {
    * @description validating the Qualification details form fields
    */
   validateQualificationProfile() {
-    this.qualificationDetails = this.__fb.group({
+    this.qualificationDetailForm = this.__fb.group({
       qualification: this.__fb.array([this.__fb.group({
-        docCatId: ['', Validators.required],
-        docTypeId: ['', Validators.required],
+        eduCatId: ['', Validators.required],
+        eduTypeId: ['', Validators.required],
         university: ['', [Validators.required, Validators.maxLength(25)]],
         passingYear: ['', Validators.required],
         percentage: ['', [
@@ -193,7 +185,7 @@ export class AddComponent implements OnInit {
    * @description validating the Work Exp details form fields
    */
   validateWorlExpProfile() {
-    this.workExpDetails = this.__fb.group({
+    this.workExpDetailsForm = this.__fb.group({
       org_details: this.__fb.array([this.__fb.group({
         organization: ['', [Validators.required, Validators.maxLength(25)]],
         designation: ['', [Validators.required, Validators.maxLength(25)]],
@@ -217,23 +209,23 @@ export class AddComponent implements OnInit {
    * @description validating the Skill details form fields
    */
   validateSkillsProfile() {
-    this.skillDetails = this.__fb.group({
+    this.skillDetailsForm = this.__fb.group({
       skills: this.__fb.array([])
     });
   }
 
 
   // convenience getter for easy access to form fields of Personal Form.
-  get personalFormValidation() { return this.personalDetails.controls; }
+  get personalFormValidation() { return this.personalDetailForm.controls; }
 
   // convenience getter for easy access to form fields of Qualification Form.
-  get qualifFormValidation() { return this.qualificationDetails.get('qualification') as FormArray; }
+  get qualifFormValidation() { return this.qualificationDetailForm.get('qualification') as FormArray; }
 
   // convenience getter for easy access to form fields of Work Exp Form.
-  get workExpFormValidation() { return this.workExpDetails.controls; }
+  get workExpFormValidation() { return this.workExpDetailsForm.controls; }
 
   // convenience getter for easy access to form fields of Skill Management Form.
-  get skillMangFormValidation() { return this.skillDetails.controls; }
+  get skillMangFormValidation() { return this.skillDetailsForm.controls; }
 
   /**
    * @name getEducationCat
@@ -242,201 +234,98 @@ export class AddComponent implements OnInit {
   getEducationCategoryList() {
     this.__customGlobalService.getEducationCategoryList().then((resData: any) => {
       this.eduCatArr = resData.responseObject;
-      console.log("Education categories " , this.eduCatArr);
     })
   }
 
-  /**
-   * @name getEducationList
-   * @description get API for all education data in List
-   */
   getEducationTypeList() {
     this.__customGlobalService.getEducationTypeList().then((resData: any) => {
-      this.eduList = resData.responseObject;
-      console.log('eduList : ', this.eduList);
+      this.eduTypeList = resData.responseObject;
     })
   }
 
   setEduTypeListByEduCategoryId(eduCatId , i) {
-    
-    this.eduTypeArrByEduCatList[eduCatId] = this.eduList.filter((item) => item.masterEduDomain.eduDomainId == eduCatId);
-    console.log(this.eduTypeArrByEduCatList);
+    this.eduTypeArrByEduCatList[eduCatId] = this.eduTypeList.filter((item) => item.masterEduDomain.eduDomainId == eduCatId);
   }
 
-  /**
-   * @method getAllEducation
-   * @param eduCat_id
-   * @description get all education values based on selected education category id.
-   */
-  setEduCatByID(eduCat_id) {
-    this.__profileService.getFreelancerEducname(eduCat_id).then((resData: any) => {
-      this.eduArr = resData;
-    })
-  }
-
-
-
-  /**
- * @method getAllEducation
- * @param eduCat_id
- * @description get all education values based on selected education category id.
- */
-  setEduListByCatId(eduCat_id, i) {
-    this.eduListbyId[eduCat_id] = this.eduList.filter((item) => item.docCatId == eduCat_id);
-    this.qualificationDetails.get('qualification')['controls'][i].patchValue({ docCatId: eduCat_id, docTypeId: '' });
-
-  }
-  /**
-   * @method getSkillsByID
-   * @param skill_cat_id
-   * @description get all education category values
-   */
-  getSkillsByID(skill_cat_id) {
-    this.__profileService.getFreelancerSkills(skill_cat_id).then((resData: any) => {
-      this.skills = resData;
-    })
-  }
-
-  /**
-   * @name getSkillCategoryList
-   * @description get API for all skill category of independent prof 
-   */
   getSkillCategoryList() {
     this.__customGlobalService.getSkillDomainList().then((resData: any) => {
       this.categ = resData.responseObject;
-      console.log("skill cat" , this.categ );
     })
   }
-
-  
 
   getSkillTypeList(){
     this.__customGlobalService.getSkillTypeList().then((resData: any) => {
       this.skills = resData.responseObject;
-      console.log("skills arrrrrrrrrrrr" , this.skills );
     })
   }
 
-  setSkillArrBySkillCatList(skillDomainId){
-    console.log("skill domain id " , skillDomainId );
-    
+  setSkillArrBySkillCatList(skillDomainId){ 
     this.skillArrBySkillCatList = this.skills.filter((item) => item.masterDomain.domainId == skillDomainId);
-    console.log("skill array sorted" , this.skillArrBySkillCatList);
   }
 
-  /**
-   * @method getCountryList
-   * @description get all country values.
-   */
   getCountryList() {
     this.__customGlobalService.getCountryList().then((resData: any) => {
       this.countryArr = resData.responseObject;
-      console.log("CountryArr:", this.countryArr);
-      
     });
   }
-
-
   getStateList() {
     this.__customGlobalService.getStateList().then((resData: any) => {
       this.stateArr = resData.responseObject;
-      console.log("State: ", this.stateArr);
-      
     })
   }
 
   setStateListByCountryId(countryId) {
-    console.log("id country" , countryId);
     this.stateArrByCountryId[countryId] = this.stateArr.filter((item) => item.masterCountry.countryId == countryId);
-    console.log(this.stateArrByCountryId);
   }
 
   getCityList() {
     this.__customGlobalService.getCityList().then((resData: any) => {
-      this.cityArr = resData.responseObject;
-      console.log("City: ", this.cityArr);
-      
+      this.cityArr = resData.responseObject;      
     })
   }
 
   setCityListByStateId(stateId) {
-    console.log("id state" , stateId);
     this.cityArrByStateId[stateId] = this.cityArr.filter((item) => item.masterStates.stateId == stateId);
-    console.log(this.cityArrByStateId);
-    // this.employerProfileForm.get('state')['controls'].patchValue({ countryId : this.stateArrByCountryId[countryId].masterCountry.countryId, stateId: '' });
   }
 
   getCurrencyList(){
     this.__customGlobalService.getCountryList().then((resData: any) => {
       this.currencyList = resData.responseObject;
-      console.log("currencyList: ", this.currencyList);
     })
-  }
-
-  /**
-   * @method setDocTypeCatID
-   * @param city_id
-   * @description get the zipcode based on selected city id.
-   */
-  setDocTypeCatID(id) {
-    this.doc_cat_id = id;
   }
 
   getPersonalAttributes(){
     this.__customGlobalService.getPersonalAttributeList().then((resData: any) => {
-      this.personalAttributes = resData.responseObject;
-      console.log("personal atrributes: ", this.personalAttributes);
-      
+      this.personalAttributes = resData.responseObject;      
     })
   }
-  /**
-   * @name getDocumentsTypeCat
-   * @description get API for all document category type of independent prof 
-   */
+
+  setDocTypeCatID(id) {
+    this.doc_cat_id = id;
+  }
+
   getDocumentsTypeCat(index) {
     this.__profileService.getFreelancerDocumentByCat(index).then((resData: any) => {
-      this.docTypeArr = resData.responseObject;
-      console.log("Document array " , this.docTypeArr);
-      
-    })
+      this.docTypeArr = resData.responseObject;      
+  })
 
   }
 
-  /**
-   * @method selectEvent
-   * @param item
-   * @description get the selected skill id and pass to getSkillsByID.
-   */
   selectEvent(item) {
     const skills = item;
     const skill_id = skills.skill_cat_id;
-    console.log("item:",item);
-    
     this.setSkillArrBySkillCatList(item.domainId)
   }
 
-  onChangeSearch(val: string) {
-    // fetch remote data from here
-    // And reassign the 'data' which is binded to 'data' property.
-  }
-
-  onFocused(e) {
-    // do something when input is focused
-  }
-
-  /**
-  * @description Qualification FormArray (Dynamicaly create input)
-  */
-
   get qualfArr() {
-    return this.qualificationDetails.get('qualification') as FormArray;
+    return this.qualificationDetailForm.get('qualification') as FormArray;
   }
 
   addQualification() {
     this.qualfArr.push(this.__fb.group(
       {
-        docCatId: '',
-        docTypeId: '',
+        eduCatId: '',
+        eduTypeId: '',
         university: '',
         passingYear: '',
         percentage: '',
@@ -449,12 +338,8 @@ export class AddComponent implements OnInit {
     this.qualfArr.removeAt(index);
   }
 
-  /**
-  * @description Orgnization FormArray (Dynamicaly create input)
-  */
-
   get orgArr() {
-    return this.workExpDetails.get('org_details') as FormArray;
+    return this.workExpDetailsForm.get('org_details') as FormArray;
   }
 
   addResponsibility() {
@@ -472,12 +357,8 @@ export class AddComponent implements OnInit {
     this.orgArr.removeAt(index);
   }
 
-  /**
-  * @description strength FormArray (Dynamicaly create input)
-  */
-
   get strengthArr() {
-    return this.workExpDetails.get('strength') as FormArray;
+    return this.workExpDetailsForm.get('strength') as FormArray;
   }
 
   addStrength() {
@@ -488,12 +369,8 @@ export class AddComponent implements OnInit {
     this.strengthArr.removeAt(index);
   }
 
-  /**
-  * @description weakness FormArray (Dynamicaly create input)
-  */
-
   get weaknessArr() {
-    return this.workExpDetails.get('weakness') as FormArray;
+    return this.workExpDetailsForm.get('weakness') as FormArray;
   }
 
   addWeakness() {
@@ -504,13 +381,8 @@ export class AddComponent implements OnInit {
     this.weaknessArr.removeAt(index);
   }
 
-
-  /**
-  * @description portfolio FormArray (Dynamicaly create input)
-  */
-
   get portfolioArr() {
-    return this.workExpDetails.get('portfolios') as FormArray;
+    return this.workExpDetailsForm.get('portfolios') as FormArray;
   }
 
   addPortfolio() {
@@ -521,11 +393,8 @@ export class AddComponent implements OnInit {
     this.portfolioArr.removeAt(index);
   }
 
-  /**
-  * @description Documents FormArray (Dynamicaly create input)
-  */
   get documentArr() {
-    return this.personalDetails.get('documents_personal') as FormArray;
+    return this.personalDetailForm.get('documents_personal') as FormArray;
   }
 
   addDocument() {
@@ -541,16 +410,12 @@ export class AddComponent implements OnInit {
     this.documentArr.removeAt(index);
   }
 
-  /**
-  * @description Work Documents FormArray (Dynamicaly create input)
-  */
-
   get workdocumentArr() {
-    return this.workExpDetails.get('documents_work') as FormArray;
+    return this.workExpDetailsForm.get('documents_work') as FormArray;
   }
 
   getValidity(i) {
-    return (<FormArray>this.workExpDetails.get('documents_work')).controls[i].invalid;
+    return (<FormArray>this.workExpDetailsForm.get('documents_work')).controls[i].invalid;
   }
 
   addWorkDocument() {
@@ -566,17 +431,11 @@ export class AddComponent implements OnInit {
     this.workdocumentArr.removeAt(index);
   }
 
-  /**
- * @description Skill FormArray (Dynamicaly create input)
- */
-
   get skillRateArr() {
-    return this.skillDetails.get('skills') as FormArray;
+    return this.skillDetailsForm.get('skills') as FormArray;
   }
 
   onChange(skill: string, skill_id: number, isChecked: boolean) {
-    console.log("jyoti", skill);
-
     if (isChecked && skill != null) {
       this.skillRateArr.push(this.__fb.group(
         {
@@ -591,29 +450,18 @@ export class AddComponent implements OnInit {
     else {
       let index = this.skillRateArr.controls.findIndex(x => x.value.skill == skill_id);
       this.skillRateArr.removeAt(index);
-      console.log(this.skillRateArr)
     }
-    console.log("this.skillRateArr", this.skillRateArr);
-
   }
 
-  /**
-   * @description File Handler
-   */
-
   setDocTypeCatType(inputValue) {
-    console.log(inputValue);
     this.fileType = inputValue
   }
 
   handleFileInput(event) {
     if (event.target.files.length > 0) {
-
       const file = event.target.files[0];
       this.fileName = file.name.replace(" ", "");
       this.fileObj = file;
-      console.log("File name:", this.fileName);
-      console.log("File obj:", this.fileObj);
     }
   }
 
@@ -623,36 +471,19 @@ export class AddComponent implements OnInit {
 
     this.fileUploadProgress = '0%';
     await this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
-      this.FileArrData = event;
-      this.loading = false;
-      console.log("Data Resp:", this.FileArrData);
-      console.log("Resp File ID:", this.FileArrData.fileId);
-
-      if (this.FileArrData) {
-        this.toastr.success(this.fileName, "Successfully uploaded");
-      } else {
-        this.toastr.error(this.fileName, "File not uploaded");
-      }
-
-      // file upload progress start
-      /* if (event.type === HttpEventType.UploadProgress) {
-         this.fileUploadProgress = Math.round(event.loaded / event.total * 100) + '%';
-         console.log(this.fileUploadProgress);
-       } else if (event.type === HttpEventType.Response) {
-         this.fileUploadProgress = '';
-         console.log(event.body);
-         this.toastr.success(this.fileName, "Successfully uploaded");
-       } */
-     // file upload progress end
+        this.FileArrData = event;
+        this.loading = false;
+        if (this.FileArrData) {
+          this.toastr.success(this.fileName, "Successfully uploaded");
+        } else {
+          this.toastr.error(this.fileName, "File not uploaded");
+        }
     });
 
-    //await 
-    this.documentPersonalArray.push(
-      {
+    this.documentPersonalArray.push({
         'documentUrl': this.FileArrData.fileId,
         'documentTypeId': this.doc_cat_id
       });
-    console.log("Personal Document " , this.documentPersonalArray);
   }
 
   uploadEducationFile() {
@@ -660,7 +491,6 @@ export class AddComponent implements OnInit {
     this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
       this.FileArrData = event;
       this.loading = false;
-      console.log("File Resp:", this.FileArrData.fileId);
       if (this.FileArrData) {
         this.toastr.success(this.fileName, "Successfully uploaded");
       } else {
@@ -668,12 +498,10 @@ export class AddComponent implements OnInit {
       }
     });
 
-    this.documentQualArray.push(
-      {
+    this.documentQualArray.push({
         'documentUrl': this.FileArrData.fileId,
         'documentTypeId': 4
       });
-    console.log(this.documentQualArray);
   }
 
   uploadWorkExpFile() {
@@ -681,7 +509,6 @@ export class AddComponent implements OnInit {
     this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
       this.FileArrData = event;
       this.loading = false;
-      console.log("File Resp:", this.FileArrData.fileId);
       if (this.FileArrData) {
         this.toastr.success(this.fileName, "Successfully uploaded");
       } else {
@@ -689,43 +516,28 @@ export class AddComponent implements OnInit {
       }
     });
 
-    this.documentWorkArray.push(
-      {
+    this.documentWorkArray.push( {
         'documentUrl': this.FileArrData.fileId,
         'documentTypeId': this.doc_cat_id
       });
-    console.log("work document" ,this.documentWorkArray);
   }
 
-
-  /**
-   * @name onSubmitDetails
-   * @description submit the form filed value to serer through REST API
-   */
-
-
-  savePersonalDetails(){
-    console.log("email" , this.email);
-    
+  savePersonalDetailForm(){    
     const personalData = {
       emailId: this.email,
-      prefix: this.personalDetails.controls.prefix.value,
-      firstName: this.personalDetails.controls.first_name.value,
-      middleName: this.personalDetails.controls.middle_name.value,
-      lastName: this.personalDetails.controls.last_name.value,
-      addressLine1: this.personalDetails.controls.address_one.value,
-      addressLine2: this.personalDetails.controls.address_two.value,
-      country: this.personalDetails.controls.country.value,
-      province: this.personalDetails.controls.province.value,
-      city: this.personalDetails.controls.city.value,
-      postalCode: this.personalDetails.controls.postal_code.value,
+      prefix: this.personalDetailForm.controls.prefix.value,
+      firstName: this.personalDetailForm.controls.first_name.value,
+      middleName: this.personalDetailForm.controls.middle_name.value,
+      lastName: this.personalDetailForm.controls.last_name.value,
+      addressLine1: this.personalDetailForm.controls.address_one.value,
+      addressLine2: this.personalDetailForm.controls.address_two.value,
+      country: this.personalDetailForm.controls.country.value,
+      province: this.personalDetailForm.controls.province.value,
+      city: this.personalDetailForm.controls.city.value,
+      postalCode: this.personalDetailForm.controls.postal_code.value,
       freelancerDocuments: this.documentPersonalArray
     }
-
-    console.log('Freelancer Payload Value : ', personalData);
-
     this.__profileService.savePersonalDetails(personalData).then((resData: any) => {
-      console.log("Res Data:", resData);
       this.loading = false;
       if (resData.status == 'success') {
         this.toastr.success("Profile added Successfully");
@@ -738,16 +550,11 @@ export class AddComponent implements OnInit {
 
 
   saveEducationDetails(){
-
-   console.log("qualification details" ,  this.qualificationDetails.controls.qualification.value);
-
     const eductionPayload = {
-      educationDetails :  this.qualificationDetails.controls.qualification.value,
+      educationDetails :  this.qualificationDetailForm.controls.qualification.value,
       emailId : this.email
     }
-
     this.__profileService.saveEducationDetails(eductionPayload).then((resData: any) => {
-        console.log("Res Data:", resData);
         this.loading = false;
         if (resData.status == 'success') {
           this.toastr.success("Profile added Successfully");
@@ -759,47 +566,29 @@ export class AddComponent implements OnInit {
   }
 
   saveWorkDetails(){
-
     let portfolioArray = [];
     let i;
-    for(i = 0 ; i < this.workExpDetails.controls.portfolios.value.length ; i++){
-      portfolioArray[i]=this.workExpDetails.controls.portfolios.value[i].portfolio;
+    for(i = 0 ; i < this.workExpDetailsForm.controls.portfolios.value.length ; i++){
+      portfolioArray[i]=this.workExpDetailsForm.controls.portfolios.value[i].portfolio;
     }
-    console.log("portfolioArr" , portfolioArray);
-
-
     let strengthArr = [];
-    for(i = 0 ; i < this.workExpDetails.controls.strength.value.length ; i++){
-      strengthArr[i]=this.workExpDetails.controls.strength.value[i].strength;
+    for(i = 0 ; i < this.workExpDetailsForm.controls.strength.value.length ; i++){
+      strengthArr[i]=this.workExpDetailsForm.controls.strength.value[i].strength;
     }
-    console.log("strength" , this.workExpDetails.controls.strength.value);
-    console.log("strength" , strengthArr);
-
-
     let weaknessArr = [];
-    for(i = 0 ; i <  this.workExpDetails.controls.weakness.value.length ; i++){
-      weaknessArr[i]=this.workExpDetails.controls.weakness.value[i].weakness;
+    for(i = 0 ; i <  this.workExpDetailsForm.controls.weakness.value.length ; i++){
+      weaknessArr[i]=this.workExpDetailsForm.controls.weakness.value[i].weakness;
     }
-    console.log("weaknessArr" , weaknessArr);
-    console.log("weaknessArr" , weaknessArr);
-
-    
-    // console.log("work details" ,  this.workExpDetails.controls.org_details.value);
-   // console.log()
     const orgDetailsPayload = {
       emailId: this.email,
-      freelancerOrgDetails : this.workExpDetails.controls.org_details.value,
+      freelancerOrgDetails : this.workExpDetailsForm.controls.org_details.value,
       portfolio: portfolioArray,
       freelancerDocument : this.documentWorkArray,
-      areaOfExpertise : this.workExpDetails.controls.area_of_expertise.value,
+      areaOfExpertise : this.workExpDetailsForm.controls.area_of_expertise.value,
       personalAttributeStrength :  strengthArr,
       personalAttributeWeakness : weaknessArr
     }
-
-     console.log("org details " , orgDetailsPayload);
-  
-     this.__profileService.saveWorkDetails(orgDetailsPayload).then((resData: any) => {
-        console.log("Res Data:", resData);
+    this.__profileService.saveWorkDetails(orgDetailsPayload).then((resData: any) => {
         this.loading = false;
         if (resData.responseObjec.message == 'success') {
           this.toastr.success("Profile added Successfully");
@@ -815,10 +604,7 @@ export class AddComponent implements OnInit {
       freelancerSkills: this.skillRateArr.value,
       emailId : this.email
     }
-    console.log("skill array :" , skillPayload);
-    
     this.__profileService.saveSkillDetails(skillPayload).then((resData: any) => {
-        console.log("Res Data:", resData);
         this.loading = false;
         this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view/', this.email]);
 
@@ -834,14 +620,11 @@ export class AddComponent implements OnInit {
 
 
   ShowNextButton(index) {
-    console.log("Value :", this.showMainContent);
-
-
     if (this.showMainContent == 1) {
       this.showMainContent = index;
 
       this.submitted = true;
-      // if (this.personalDetails.invalid) {
+      // if (this.personalDetailForm.invalid) {
       //   this.showMainContent = 1;
 
       //   return;
@@ -854,11 +637,10 @@ export class AddComponent implements OnInit {
       this.showMainContent = index;
 
       // this.submitted = true;
-      // if (this.qualificationDetails.invalid) {
+      // if (this.qualificationDetailForm.invalid) {
       //   this.showMainContent = 2;
       //   return;
       // } else {
-        console.log("Next btn in 2 page");
         this.showMainContent = 3;
       // }
 
@@ -867,27 +649,24 @@ export class AddComponent implements OnInit {
 
       this.submitted = true;
 
-      // if (this.workExpDetails.invalid) {
+      // if (this.workExpDetailsForm.invalid) {
       //   this.showMainContent = 3;
       //   return;
       // } else {
-        console.log("Next btn in 3 page");
         this.showMainContent = 4;
       // }
     } else if (this.showMainContent == 4) {
       this.showMainContent = index;
 
       this.submitted = true;
-      // if (this.skillDetails.invalid) {
+      // if (this.skillDetailsForm.invalid) {
       //   this.showMainContent = 4
       //   return;
       // } else {
-        console.log("Next btn in 4 page");
         this.showMainContent = 4;
       // }
 
     } else {
-      console.log("Nothing to save");
     }
   }
 
@@ -903,18 +682,4 @@ export class AddComponent implements OnInit {
     this.__authService.logout();
     this.__router.navigate(['/auth/auth/login']);
   }
-
-
-  validDate(event){
-
-  }
-
-  /**
- * @name onCancel
- * @description call Cancel the process
- */
-  //  onCancel() {
-  //   this.employerProfileForm.reset();
-  // }
-
 }
