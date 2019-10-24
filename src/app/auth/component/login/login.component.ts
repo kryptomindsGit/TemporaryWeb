@@ -115,9 +115,7 @@ export class LoginComponent implements OnInit {
                     var baseName = data.responseObject.User.emailId;
                     baseName = baseName.substring(0, baseName.indexOf('@'));
                     const emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1);
-
-                    this.toastr.success(emailName, 'Welcome ');
-                                
+                    this.toastr.success(emailName, 'Welcome ');             
                   });
                 }
    
@@ -136,7 +134,7 @@ export class LoginComponent implements OnInit {
    * @description get connect with server event to listen continuously. 
    */
   getConnectWithServer() {
-    this.__eventSourceService.getServerSentEvent(`${SPRING_URL}/event/chat`).subscribe((eventData) => {
+    this.__eventSourceService.getServerSentEvent().subscribe((eventData) => {
       console.log("Servcer Event Connect");
       this.toastr.success('You can chat!!! ');
     });

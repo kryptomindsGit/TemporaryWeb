@@ -3,7 +3,7 @@ import { HttpHeaders, HttpClient, HttpEventType } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SPRING_URL } from '../../../constant/constant-url';
 import { throwError } from 'rxjs';
-import * as SockJS from 'sockjs-client';
+// import * as SockJS from 'sockjs-client';
 // import { ChatBoxComponent } from '../chat-box.component';
 
 //CORS
@@ -54,7 +54,7 @@ export class ChatboxService {
 
     if (this.currentUserName) {
       console.log("Initialize Connection");
-      let ws = new SockJS(`${SPRING_URL}/websocket`);
+      // let ws = new SockJS(`${SPRING_URL}/websocket`);
       // this.stompClient = Stomp.over(ws);
       this.stompClient.connect({}, this.onConnected, this.onError);
       // const _this = this;

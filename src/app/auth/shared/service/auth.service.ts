@@ -24,6 +24,7 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
 
   constructor(
@@ -45,7 +46,7 @@ export class AuthService {
 
   async register(userInfo: any) {
     console.log("aws cognito register method");
-    
+
     try {
       let res = await this.__http.post(`${AWS_URL}/signup`, userInfo, httpOptions).toPromise();
       return res;
@@ -59,9 +60,6 @@ export class AuthService {
   }
 
   logout() {
-    // localStorage.removeItem('access_token');
-    // localStorage.removeItem('email');
-    // localStorage.removeItem('uid');
     localStorage.clear();
 
   }
@@ -97,7 +95,7 @@ export class AuthService {
 
   async getUserLoginData(payload: any): Promise<any> {
     try {
-      let result = await this.__http.post(`${SPRING_URL}/auth/login` , payload , httpOptions).toPromise();
+      let result = await this.__http.post(`${SPRING_URL}/auth/login`, payload, httpOptions).toPromise();
       return result;
     } catch (error) {
       await this.handleError(error);
@@ -105,36 +103,36 @@ export class AuthService {
   }
 
   async updateUserData(payload: any): Promise<any> {
-    console.log("*********update Payload******** ",payload);
-    
+    console.log("*********update Payload******** ", payload);
+
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Allow-Methods': 'GET',
         'Access-Control-Allow-Origin': '*',
-        'X-Authorization':localStorage.getItem('userAuthToken')
+        'X-Authorization': localStorage.getItem('userAuthToken')
       })
     };
 
     try {
-      let result = await this.__http.post(`${SPRING_URL}/freelancer/user-update` , payload , httpOptions).toPromise();
-      return result;
-    } catch (error) {
-      await this.handleError(error);
-    }
-  }  
-  
-  
-  async getSecurityToken(payload: any): Promise<any> {
-    try {
-      let result = await this.__http.post(`${SPRING_URL}/auth/getToken` , payload , httpOptions).toPromise();
+      let result = await this.__http.post(`${SPRING_URL}/freelancer/user-update`, payload, httpOptions).toPromise();
       return result;
     } catch (error) {
       await this.handleError(error);
     }
   }
-  
+
+
+  async getSecurityToken(payload: any): Promise<any> {
+    try {
+      let result = await this.__http.post(`${SPRING_URL}/auth/getToken`, payload, httpOptions).toPromise();
+      return result;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
 
 
   async updateDid(data: any): Promise<any> {

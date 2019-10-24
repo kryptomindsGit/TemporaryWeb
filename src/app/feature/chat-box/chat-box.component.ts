@@ -220,15 +220,15 @@ export class ChatBoxComponent implements OnInit {
     // this.__chatboxService = new ChatboxService(new ChatBoxComponent());
     // this.sendUserMessage();
     this.decodeJWT()
-    this.getUserMessage();
+    // this.getUserMessage();
   }
 
-  getUserMessage(): void {
-    this.__chatboxService.eventListenWatch().subscribe(
-      (resData) => {
-        console.log("Res of Event Listener:", resData);
-      });
-  }
+  // getUserMessage(): void {
+  //   this.__chatboxService.eventListenWatch().subscribe(
+  //     (resData) => {
+  //       console.log("Res of Event Listener:", resData);
+  //     });
+  // }
 
   decodeJWT() {
     let token = localStorage.getItem('access_token')
