@@ -5,7 +5,7 @@
                 <h6>PROFILE DETAILS</h6>
                 <div class="card">
                     <div class="card-body others-card">
-                        <form [formGroup]="personalDetailFormpersonalDetailFormpersonalDetailForm" novalidate>
+                        <form [formGroup]="personalDetailForm" novalidate>
                             <div class="row">
 
                                 <div class="form-group form-input col-2">
@@ -16,9 +16,9 @@
                                     </select>
                                     <label for="prefixes" class="form-label">Prefix<span
                                             class="redstar">*</span></label>
-                                    <div *ngIf="submitted && personalFormValidation.prefix.errors || personalDetailFormpersonalDetailFormpersonalDetailForm.controls['prefix'].invalid && (personalDetailFormpersonalDetailFormpersonalDetailForm.controls['prefix'].dirty || personalDetailFormpersonalDetailFormpersonalDetailForm.controls['prefix'].touched)"
+                                    <div *ngIf="submitted && personalFormValidation.prefix.errors || personalDetailForm.controls['prefix'].invalid && (personalDetailForm.controls['prefix'].dirty || personalDetailForm.controls['prefix'].touched)"
                                         class="text-danger error-msg">
-                                        <div [hidden]="!personalDetailFormpersonalDetailFormpersonalDetailForm.controls['prefix'].errors.required">Prefix is
+                                        <div [hidden]="!personalDetailForm.controls['prefix'].errors.required">Prefix is
                                             required.
                                         </div>
                                     </div>
@@ -28,14 +28,14 @@
                                     <label for="first_name" class="form-label">First Name<span
                                             class="redstar">*</span></label>
 
-                                    <div *ngIf="submitted && personalFormValidation.first_name.errors || personalDetailFormpersonalDetailFormpersonalDetailForm.get('first_name').invalid && (personalDetailFormpersonalDetailFormpersonalDetailForm.get('first_name').dirty || personalDetailFormpersonalDetailFormpersonalDetailForm.get('first_name').touched)"
+                                    <div *ngIf="submitted && personalFormValidation.first_name.errors || personalDetailForm.get('first_name').invalid && (personalDetailForm.get('first_name').dirty || personalDetailForm.get('first_name').touched)"
                                         class="text-danger error-msg">
 
-                                        <div *ngIf="personalDetailFormpersonalDetailFormpersonalDetailForm.get('first_name').errors.required">
+                                        <div *ngIf="personalDetailForm.get('first_name').errors.required">
                                             First Name is required.
                                         </div>
 
-                                        <div *ngIf="personalDetailFormpersonalDetailFormpersonalDetailForm.get('first_name').errors.maxlength">
+                                        <div *ngIf="personalDetailForm.get('first_name').errors.maxlength">
                                             First Name maximum 20 characters long.
                                         </div>
                                     </div>
@@ -50,14 +50,14 @@
                                     <label for="last_name" class="form-label">Last Name<span
                                             class="redstar">*</span></label>
 
-                                    <div *ngIf="submitted && personalFormValidation.last_name.errors || personalDetailFormpersonalDetailFormpersonalDetailForm.get('last_name').invalid && (personalDetailFormpersonalDetailFormpersonalDetailForm.get('last_name').dirty || personalDetailFormpersonalDetailFormpersonalDetailForm.get('last_name').touched)"
+                                    <div *ngIf="submitted && personalFormValidation.last_name.errors || personalDetailForm.get('last_name').invalid && (personalDetailForm.get('last_name').dirty || personalDetailForm.get('last_name').touched)"
                                         class="text-danger error-msg">
 
-                                        <div *ngIf="personalDetailFormpersonalDetailFormpersonalDetailForm.get('last_name').errors.required">
+                                        <div *ngIf="personalDetailForm.get('last_name').errors.required">
                                             Last Name is required.
                                         </div>
 
-                                        <div *ngIf="personalDetailFormpersonalDetailFormpersonalDetailForm.get('last_name').errors.maxlength">
+                                        <div *ngIf="personalDetailForm.get('last_name').errors.maxlength">
                                             Last Name maximum 20 characters long.
                                         </div>
                                     </div>
@@ -70,14 +70,14 @@
                                     <label for="address_one" class="form-label">Address Line 1<span
                                             class="redstar">*</span></label>
 
-                                    <div *ngIf="submitted && personalFormValidation.address_one.errors || personalDetailFormpersonalDetailFormpersonalDetailForm.get('address_one').invalid && (personalDetailFormpersonalDetailFormpersonalDetailForm.get('address_one').dirty || personalDetailFormpersonalDetailFormpersonalDetailForm.get('address_one').touched)"
+                                    <div *ngIf="submitted && personalFormValidation.address_one.errors || personalDetailForm.get('address_one').invalid && (personalDetailForm.get('address_one').dirty || personalDetailForm.get('address_one').touched)"
                                         class="text-danger error-msg">
 
-                                        <div *ngIf="personalDetailFormpersonalDetailFormpersonalDetailForm.get('address_one').errors.required">
+                                        <div *ngIf="personalDetailForm.get('address_one').errors.required">
                                             Address Line 1 is required.
                                         </div>
 
-                                        <div *ngIf="personalDetailFormpersonalDetailFormpersonalDetailForm.get('address_one').errors.maxlength">
+                                        <div *ngIf="personalDetailForm.get('address_one').errors.maxlength">
                                             Address Line 1 maximum 25 characters long.
                                         </div>
                                     </div>
@@ -87,14 +87,14 @@
                                     <label for="address_two" class="form-label">Address Line 2<span
                                             class="redstar">*</span></label>
 
-                                    <div *ngIf="submitted && personalFormValidation.address_two.errors || personalDetailFormpersonalDetailFormpersonalDetailForm.get('address_two').invalid && (personalDetailFormpersonalDetailFormpersonalDetailForm.get('address_two').dirty || personalDetailFormpersonalDetailFormpersonalDetailForm.get('address_two').touched)"
+                                    <div *ngIf="submitted && personalFormValidation.address_two.errors || personalDetailForm.get('address_two').invalid && (personalDetailForm.get('address_two').dirty || personalDetailForm.get('address_two').touched)"
                                         class="text-danger error-msg">
 
-                                        <div *ngIf="personalDetailFormpersonalDetailFormpersonalDetailForm.get('address_two').errors.required">
+                                        <div *ngIf="personalDetailForm.get('address_two').errors.required">
                                             Address Line 2 is required.
                                         </div>
 
-                                        <div *ngIf="personalDetailFormpersonalDetailFormpersonalDetailForm.get('address_two').errors.maxlength">
+                                        <div *ngIf="personalDetailForm.get('address_two').errors.maxlength">
                                             Address Line 2 maximum 25 characters long.
                                         </div>
                                     </div>
@@ -111,9 +111,9 @@
                                     </select>
                                     <label for="country" class="form-label">Country<span
                                             class="redstar">*</span></label>
-                                    <!-- <div *ngIf="submitted && personalFormValidation.country.errors || personalDetailFormpersonalDetailFormpersonalDetailForm.controls['country'].invalid && (personalDetailFormpersonalDetailFormpersonalDetailForm.controls['country'].dirty || personalDetailFormpersonalDetailFormpersonalDetailForm.controls['country'].touched)"
+                                    <!-- <div *ngIf="submitted && personalFormValidation.country.errors || personalDetailForm.controls['country'].invalid && (personalDetailForm.controls['country'].dirty || personalDetailForm.controls['country'].touched)"
                                         class="text-danger error-msg">
-                                        <div [hidden]="!personalDetailFormpersonalDetailFormpersonalDetailForm.controls['country'].errors.required">Country is
+                                        <div [hidden]="!personalDetailForm.controls['country'].errors.required">Country is
                                             required.
                                         </div>
                                     </div> -->
@@ -122,14 +122,14 @@
                                     <select (change)="setCityListByStateId($event.target.value)" formControlName="province"
                                         id="state" required>
                                         <!-- <option disabled value="">State</option> -->
-                                        <option *ngFor="let state of stateArrByCountryId[personalDetailFormpersonalDetailFormpersonalDetailForm.get('country').value]"
+                                        <option *ngFor="let state of stateArrByCountryId[personalDetailForm.get('country').value]"
                                         [value]="state.stateId">{{state.stateName}}
                                         </option>
                                     </select>
                                     <label class="form-label" for="state">State<span class="redstar">*</span></label>
-                                    <!-- <div *ngIf="submitted && personalFormValidation.province.errors || personalDetailFormpersonalDetailFormpersonalDetailForm.controls['province'].invalid && (personalDetailFormpersonalDetailFormpersonalDetailForm.controls['province'].dirty || personalDetailFormpersonalDetailFormpersonalDetailForm.controls['province'].touched)"
+                                    <!-- <div *ngIf="submitted && personalFormValidation.province.errors || personalDetailForm.controls['province'].invalid && (personalDetailForm.controls['province'].dirty || personalDetailForm.controls['province'].touched)"
                                         class="text-danger error-msg">
-                                        <div [hidden]="!personalDetailFormpersonalDetailFormpersonalDetailForm.controls['province'].errors.required">State is
+                                        <div [hidden]="!personalDetailForm.controls['province'].errors.required">State is
                                             required.
                                         </div>
                                     </div> -->
@@ -139,15 +139,15 @@
                                     <select formControlName="city" id="city" required>
                                         <!-- <option disabled value="">City</option> -->
                                         <option 
-                                        *ngFor="let city of cityArrByStateId[personalDetailFormpersonalDetailFormpersonalDetailForm.get('province').value]"
+                                        *ngFor="let city of cityArrByStateId[personalDetailForm.get('province').value]"
                                         [value]="city.cityId">{{city.cityName}}
                                         </option>
                                     </select>
                                     <label class="form-label" for="city">City<span class="redstar">*</span></label>
 
-                                    <!-- <div *ngIf="submitted && personalFormValidation.city.errors || personalDetailFormpersonalDetailFormpersonalDetailForm.controls['city'].invalid && (personalDetailFormpersonalDetailFormpersonalDetailForm.controls['city'].dirty || personalDetailFormpersonalDetailFormpersonalDetailForm.controls['city'].touched)"
+                                    <!-- <div *ngIf="submitted && personalFormValidation.city.errors || personalDetailForm.controls['city'].invalid && (personalDetailForm.controls['city'].dirty || personalDetailForm.controls['city'].touched)"
                                         class="text-danger error-msg">
-                                        <div [hidden]="!personalDetailFormpersonalDetailFormpersonalDetailForm.controls['city'].errors.required">City is
+                                        <div [hidden]="!personalDetailForm.controls['city'].errors.required">City is
                                             required.
                                         </div>
                                     </div> -->
@@ -157,18 +157,67 @@
                                     <label for="postal_code" class="form-label">Postal code<span
                                             class="redstar">*</span></label>
 
-                                    <div *ngIf="submitted && personalFormValidation.postal_code.errors || personalDetailFormpersonalDetailFormpersonalDetailForm.controls['postal_code'].invalid && (personalDetailFormpersonalDetailFormpersonalDetailForm.controls['postal_code'].dirty || personalDetailFormpersonalDetailFormpersonalDetailForm.controls['postal_code'].touched)"
+                                    <div *ngIf="submitted && personalFormValidation.postal_code.errors || personalDetailForm.controls['postal_code'].invalid && (personalDetailForm.controls['postal_code'].dirty || personalDetailForm.controls['postal_code'].touched)"
                                         class="text-danger error-msg">
-                                        <div [hidden]="!personalDetailFormpersonalDetailFormpersonalDetailForm.controls['postal_code'].errors.required">Postal
+                                        <div [hidden]="!personalDetailForm.controls['postal_code'].errors.required">Postal
                                             code is required.</div>
-                                        <div [hidden]="!personalDetailFormpersonalDetailFormpersonalDetailForm.controls['postal_code'].errors.minLength">
+                                        <div [hidden]="!personalDetailForm.controls['postal_code'].errors.minLength">
                                             Postal code should be min 6 digit and max 8 digit.</div>
-                                        <div [hidden]="!personalDetailFormpersonalDetailFormpersonalDetailForm.controls['postal_code'].errors.pattern">Postal
+                                        <div [hidden]="!personalDetailForm.controls['postal_code'].errors.pattern">Postal
                                             code should be number.</div>
                                     </div>
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="form-group form-input col-4">
+                                    <select 
+                                    formControlName="languagePreferred" id="languagePreferred" required>
+                                    <!-- <option disabled value="">Document type</option> -->
+                                    <option id="option_txt" *ngFor="let language of languageArr"
+                                        [value]="language.languageId">{{language.languageName}}
+                                    </option>
+                                </select>
+                                <label class="form-label" for="languagePreferred">Preffered Language</label>
+                                <!-- <div *ngIf="languageArr.controls[i].get('languagePreferred').invalid && (languageArr.controls[i].get('languagePreferred').dirty || languageArr.controls[i].get('languagePreferred').touched)"
+                                    class="text-danger error-msg">
+                                    <div
+                                        [hidden]="!languageArr.controls[i].get('languagePreferred').errors?.required">
+                                        Document type is required.
+                                    </div>
+                                </div> -->
+                                </div>
+                                <div class="form-group form-input col-4">
+                                    <select 
+                                    formControlName="availabilityForWork" id="availabilityForWork" required>
+                                    <option  value="Full Time">Full Time </option>
+                                    <option  value="Part Time">Part Time </option>
+                                </select>
+                                <label class="form-label" for="availabilityForWork">Availability for Work</label>
+                                <!-- <div *ngIf="languageArr.controls[i].get('languagePreferred').invalid && (languageArr.controls[i].get('languagePreferred').dirty || languageArr.controls[i].get('languagePreferred').touched)"
+                                    class="text-danger error-msg">
+                                    <div
+                                        [hidden]="!languageArr.controls[i].get('languagePreferred').errors?.required">
+                                        Document type is required.
+                                    </div>
+                                </div> -->
+                                </div>
+                                <div class="form-group form-input col-4">
+                                    <select 
+                                    formControlName="preferredPaymentMethod" id="preferredPaymentMethod" required>
+                                    <option  value="Fiat">Fiat</option>
+                                    <option  value="Crypto">Crypto</option>
+                                </select>
+                                <label class="form-label" for="preferredPaymentMethod">Payment Method</label>
+                                <!-- <div *ngIf="languageArr.controls[i].get('languagePreferred').invalid && (languageArr.controls[i].get('languagePreferred').dirty || languageArr.controls[i].get('languagePreferred').touched)"
+                                    class="text-danger error-msg">
+                                    <div
+                                        [hidden]="!languageArr.controls[i].get('languagePreferred').errors?.required">
+                                        Document type is required.
+                                    </div>
+                                </div> -->
+                                </div>
+                            </div>
 
 
                             <div formArrayName="documents_personal">
@@ -210,7 +259,7 @@
 
                                                 <div class=col-2>
                                                     <button type="button" class="btnBlue" id="upload" value="UPLOAD"
-                                                        (click)="uploadPersonalFile()"></button>
+                                                        (click)="uploadPersonalFile()">Upload</button>
                                                 </div>
                                                 <div class="form-group col-2">
                                                     <button type="button" *ngIf="documentArr.controls.length > 1"
@@ -228,7 +277,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" class="btnNext" (click)="ShowNextButton(2)" (click)="savepersonalDetailFormpersonalDetailFormpersonalDetailForm()">Next</button>
+                            <button type="button" class="btnNext" (click)="ShowNextButton(2)" (click)="savePersonalDetailForm()">Next</button>
                         </form>
                     </div>
                 </div>
@@ -345,8 +394,24 @@
                                                         </div>
                                                     </div> -->
                                                 </div>
-
-                                                <div class="form-group form-input col-4">
+                                                <div class="form-group form-input col-2">
+                                                    <select (change)="setDocTypeCatID($event.target.value)"
+                                                        formControlName="documentTypeId" id="document_type" required>
+                                                        <!-- <option disabled value="">Document type</option> -->
+                                                        <option id="option_txt" *ngFor="let docType of docTypeArr"
+                                                            [value]="docType.documentTypeId">{{docType.documentTypeName}}
+                                                        </option>
+                                                    </select>
+                                                    <label class="form-label" for="document_type">Document type</label>
+                                                    <div *ngIf="documentArr.controls[i].get('documentTypeId').invalid && (documentArr.controls[i].get('documentTypeId').dirty || documentArr.controls[i].get('documentTypeId').touched)"
+                                                        class="text-danger error-msg">
+                                                        <div
+                                                            [hidden]="!documentArr.controls[i].get('documentTypeId').errors?.required">
+                                                            Document type is required.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group form-input col-3">
                                                     <div class="file-upload">
                                                         <div class="file-select">
                                                             <input type="file" class="document_name" name="chooseFile"
@@ -366,7 +431,7 @@
                                                     <input type="button" class="btnBlue" id="upload" value="UPLOAD"
                                                         (click)="uploadEducationFile()">
                                                 </div>
-                                                <div class="form-group form-input col-2">
+                                                <div class="form-group form-input col-1">
                                                     <button type="button" *ngIf="qualfArr.controls.length > 1"
                                                         class="btn btnaddQaul"
                                                         (click)="deleteQualification(i)">-</button>
@@ -882,70 +947,7 @@
                             </tr>
                         </tbody>
                     </table>
-                                                    <!-- <div class="row ">
-                                                        <div class="form-group form-input col-3">
-                                                            <label style="font-size: 0.7rem" class="label-skill"
-                                                                formControlName="skill_name">
-                                                                {{item.value.skill_name}}
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-group form-input col-3 setcollength">
-                                                            <input type="text" formControlName="rate_hour"
-                                                                id="rate_skill" required />
-                                                            <label for="rate_skill" class="form-label"
-                                                                style="font-size: 0.6rem">Expertise Level</label>
-                                                            <div *ngIf="skillRateArr.controls[i].get('rate_hour').invalid && (skillRateArr.controls[i].get('rate_hour').dirty || skillRateArr.controls[i].get('rate_hour').touched)"
-                                                                class="text-danger error-msg-skill">
-                                                                <div
-                                                                    [hidden]="!skillRateArr.controls[i].get('rate_hour').errors?.required">
-                                                                    Rate/Hour is
-                                                                    required.
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group form-input col-2 setcollength">
-                                                                <input type="text" formControlName="rate_hour"
-                                                                    id="rate_skill" required />
-                                                                <label for="rate_skill" class="form-label"
-                                                                    style="font-size: 0.6rem">Rate per Hour (USD)</label>
-                                                                <div *ngIf="skillRateArr.controls[i].get('rate_hour').invalid && (skillRateArr.controls[i].get('rate_hour').dirty || skillRateArr.controls[i].get('rate_hour').touched)"
-                                                                    class="text-danger error-msg-skill">
-                                                                    <div
-                                                                        [hidden]="!skillRateArr.controls[i].get('rate_hour').errors?.required">
-                                                                        Rate/Hour is
-                                                                        required.
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group form-input col-2 setcollength">
-                                                                    <input type="text" formControlName="rate_hour"
-                                                                        id="rate_skill" required />
-                                                                    <label for="rate_skill" class="form-label"
-                                                                        style="font-size: 0.6rem">Currency</label>
-                                                                    <div *ngIf="skillRateArr.controls[i].get('rate_hour').invalid && (skillRateArr.controls[i].get('rate_hour').dirty || skillRateArr.controls[i].get('rate_hour').touched)"
-                                                                        class="text-danger error-msg-skill">
-                                                                        <div
-                                                                            [hidden]="!skillRateArr.controls[i].get('rate_hour').errors?.required">
-                                                                            Rate/Hour is
-                                                                            required.
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                        <div class="form-group form-input col-2 setcollength">
-                                                            <input type="text" formControlName="skill_exp"
-                                                                id="exp_skill" required />
-                                                            <label for="exp_skill" class="form-label"
-                                                                style="font-size: 0.6rem">Experience (Year)</label>
-                                                            <div *ngIf="skillRateArr.controls[i].get('skill_exp').invalid && (skillRateArr.controls[i].get('skill_exp').dirty || skillRateArr.controls[i].get('skill_exp').touched)"
-                                                                class="text-danger error-msg-skill">
-                                                                <div
-                                                                    [hidden]="!skillRateArr.controls[i].get('skill_exp').errors.required">
-                                                                    skill exp is
-                                                                    required.
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div> -->
+                                                    
                                                 </div>
 
 

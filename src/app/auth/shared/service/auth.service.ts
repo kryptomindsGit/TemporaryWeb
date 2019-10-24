@@ -106,7 +106,7 @@ export class AuthService {
     console.log("*********update Payload******** ", payload);
 
     const httpOptions = {
-      headers: new HttpHeaders({
+      headers: new HttpHeaders({     
         'Content-Type': 'application/json',
         'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Allow-Methods': 'GET',

@@ -50,6 +50,13 @@ export class IndeptProfileService {
       formData.append('cognitoId', cognitoId);
       formData.append('fileName', fileName);
 
+      // let formData = {
+      //   fileData : fileData,
+      //   cognitoId : cognitoId,
+      //   fileName : fileName
+      // }
+      console.log(formData);
+      
       let res = await this.__http.post(`${BLOCKCHAIN_URL}/sendHash/`, formData).toPromise();
       return res;
     } catch (error) {

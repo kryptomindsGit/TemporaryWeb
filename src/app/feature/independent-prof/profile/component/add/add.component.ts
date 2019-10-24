@@ -25,7 +25,7 @@ export class AddComponent implements OnInit {
   public prefixArr = ['Mr', 'Mrs', 'Miss'];
   public yearArr = ['2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']
   public gradeArr = ['A', 'B', 'C', 'D', 'E', 'F'];
-
+  public availabilityArr = ['Full Time' , "Part Time"];
   /* skill variables. */
   keyword = 'domainName';
 
@@ -75,6 +75,7 @@ export class AddComponent implements OnInit {
   public personalAttributes : any = [];
   public currencyList : any = [];
   public docTypeArr: any = [];
+  public languageArr : any = [];
 
   constructor(
     /* Constructor variable's */
@@ -123,12 +124,9 @@ export class AddComponent implements OnInit {
     this.getCityList();
     this.getDocumentsTypeCat(1);
     this.getCurrencyList();
+    this.getLanguageList();
   }
 
-  /**
-   * @name valPersonalProfile
-   * @description validating the Personal details form fields
-   */
   validatePersonalProfile() {
     this.personalDetailForm = this.__fb.group({
       prefix: ['', Validators.required],
@@ -150,6 +148,9 @@ export class AddComponent implements OnInit {
         Validators.required, Validators.maxLength(8), Validators.minLength(6),
         Validators.pattern("^[0-9]*$")
       ])],
+      preferredPaymentMethod:['', Validators.required],
+      availabilityForWork:['', Validators.required],
+      languagePreferred:['', Validators.required],
       documents_personal: this.__fb.array([this.__fb.group(
         {
           documentUrl: [''],
@@ -158,10 +159,6 @@ export class AddComponent implements OnInit {
     });
   }
 
-  /**
-   * @name valQualificationProfile
-   * @description validating the Qualification details form fields
-   */
   validateQualificationProfile() {
     this.qualificationDetailForm = this.__fb.group({
       qualification: this.__fb.array([this.__fb.group({
@@ -180,10 +177,6 @@ export class AddComponent implements OnInit {
     });
   }
 
-  /**
-   * @name valWorlExpProfile
-   * @description validating the Work Exp details form fields
-   */
   validateWorlExpProfile() {
     this.workExpDetailsForm = this.__fb.group({
       org_details: this.__fb.array([this.__fb.group({
@@ -204,45 +197,27 @@ export class AddComponent implements OnInit {
     });
   }
 
-  /**
-   * @name valSkillsProfile
-   * @description validating the Skill details form fields
-   */
   validateSkillsProfile() {
     this.skillDetailsForm = this.__fb.group({
       skills: this.__fb.array([])
     });
   }
 
-
-  // convenience getter for easy access to form fields of Personal Form.
   get personalFormValidation() { return this.personalDetailForm.controls; }
-
-  // convenience getter for easy access to form fields of Qualification Form.
   get qualifFormValidation() { return this.qualificationDetailForm.get('qualification') as FormArray; }
-
-  // convenience getter for easy access to form fields of Work Exp Form.
   get workExpFormValidation() { return this.workExpDetailsForm.controls; }
-
-  // convenience getter for easy access to form fields of Skill Management Form.
   get skillMangFormValidation() { return this.skillDetailsForm.controls; }
 
-  /**
-   * @name getEducationCat
-   * @description get API for all education category of independent prof 
-   */
   getEducationCategoryList() {
     this.__customGlobalService.getEducationCategoryList().then((resData: any) => {
       this.eduCatArr = resData.responseObject;
     })
   }
-
   getEducationTypeList() {
     this.__customGlobalService.getEducationTypeList().then((resData: any) => {
       this.eduTypeList = resData.responseObject;
     })
   }
-
   setEduTypeListByEduCategoryId(eduCatId , i) {
     this.eduTypeArrByEduCatList[eduCatId] = this.eduTypeList.filter((item) => item.masterEduDomain.eduDomainId == eduCatId);
   }
@@ -252,17 +227,14 @@ export class AddComponent implements OnInit {
       this.categ = resData.responseObject;
     })
   }
-
   getSkillTypeList(){
     this.__customGlobalService.getSkillTypeList().then((resData: any) => {
       this.skills = resData.responseObject;
     })
   }
-
   setSkillArrBySkillCatList(skillDomainId){ 
     this.skillArrBySkillCatList = this.skills.filter((item) => item.masterDomain.domainId == skillDomainId);
   }
-
   getCountryList() {
     this.__customGlobalService.getCountryList().then((resData: any) => {
       this.countryArr = resData.responseObject;
@@ -273,44 +245,45 @@ export class AddComponent implements OnInit {
       this.stateArr = resData.responseObject;
     })
   }
-
   setStateListByCountryId(countryId) {
     this.stateArrByCountryId[countryId] = this.stateArr.filter((item) => item.masterCountry.countryId == countryId);
   }
-
   getCityList() {
     this.__customGlobalService.getCityList().then((resData: any) => {
       this.cityArr = resData.responseObject;      
     })
   }
-
   setCityListByStateId(stateId) {
     this.cityArrByStateId[stateId] = this.cityArr.filter((item) => item.masterStates.stateId == stateId);
   }
-
   getCurrencyList(){
     this.__customGlobalService.getCountryList().then((resData: any) => {
       this.currencyList = resData.responseObject;
     })
   }
-
   getPersonalAttributes(){
     this.__customGlobalService.getPersonalAttributeList().then((resData: any) => {
       this.personalAttributes = resData.responseObject;      
     })
   }
-
+  getLanguageList(){
+    this.__customGlobalService.getLanguageList().then((resData: any) => {
+      this.languageArr = resData.responseObject; 
+      console.log("language_name" ,this.languageArr );
+           
+    })
+  }
   setDocTypeCatID(id) {
     this.doc_cat_id = id;
+    console.log("doc cat id" , this.doc_cat_id);
+    this.getDocumentsTypeCat(this.doc_cat_id);
   }
 
   getDocumentsTypeCat(index) {
     this.__profileService.getFreelancerDocumentByCat(index).then((resData: any) => {
       this.docTypeArr = resData.responseObject;      
-  })
-
+     })
   }
-
   selectEvent(item) {
     const skills = item;
     const skill_id = skills.skill_cat_id;
@@ -443,7 +416,6 @@ export class AddComponent implements OnInit {
           skillId: skill_id,
           rateHour: '',
           skillExperience: '',
-          expertise:'',
         }
       ));
     }
@@ -468,22 +440,20 @@ export class AddComponent implements OnInit {
 
   async uploadPersonalFile() {
     this.loading = true;
-
     this.fileUploadProgress = '0%';
     await this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
         this.FileArrData = event;
         this.loading = false;
         if (this.FileArrData) {
           this.toastr.success(this.fileName, "Successfully uploaded");
+          this.documentPersonalArray.push({
+            'documentUrl': this.FileArrData.fileId,
+            'documentTypeId': this.doc_cat_id
+          });
         } else {
           this.toastr.error(this.fileName, "File not uploaded");
         }
     });
-
-    this.documentPersonalArray.push({
-        'documentUrl': this.FileArrData.fileId,
-        'documentTypeId': this.doc_cat_id
-      });
   }
 
   uploadEducationFile() {
@@ -523,6 +493,7 @@ export class AddComponent implements OnInit {
   }
 
   savePersonalDetailForm(){    
+    this.getDocumentsTypeCat(2);
     const personalData = {
       emailId: this.email,
       prefix: this.personalDetailForm.controls.prefix.value,
@@ -535,34 +506,43 @@ export class AddComponent implements OnInit {
       province: this.personalDetailForm.controls.province.value,
       city: this.personalDetailForm.controls.city.value,
       postalCode: this.personalDetailForm.controls.postal_code.value,
+      preferredPaymentMethod:this.personalDetailForm.controls.preferredPaymentMethod.value,
+      availabilityForWork:this.personalDetailForm.controls.availabilityForWork.value,
+      languagePreferred:this.personalDetailForm.controls.languagePreferred.value,
       freelancerDocuments: this.documentPersonalArray
     }
-    this.__profileService.savePersonalDetails(personalData).then((resData: any) => {
-      this.loading = false;
-      if (resData.status == 'success') {
-        this.toastr.success("Profile added Successfully");
-      }
-      else if (resData.responseObjec.message == 'error') {
-        this.toastr.error("Profile not saved");
-      }
-    });
+    console.log("personalData" , personalData);
+    
+    // this.__profileService.savePersonalDetails(personalData).then((resData: any) => {
+    //   this.loading = false;
+    //   if (resData.status == 'success') {
+    //     this.toastr.success("Profile added Successfully");
+    //   }
+    //   else if (resData.responseObjec.message == 'error') {
+    //     this.toastr.error("Profile not saved");
+    //   }
+    // });
   }
 
 
   saveEducationDetails(){
+    this.getDocumentsTypeCat(3);
     const eductionPayload = {
       educationDetails :  this.qualificationDetailForm.controls.qualification.value,
-      emailId : this.email
+      freelancerDocuments: this.documentQualArray
     }
-    this.__profileService.saveEducationDetails(eductionPayload).then((resData: any) => {
-        this.loading = false;
-        if (resData.status == 'success') {
-          this.toastr.success("Profile added Successfully");
-        }
-        else if (resData.responseObjec.message == 'error') {
-          this.toastr.error("Profile not saved");
-        }
-    });
+
+    console.log("personalData" , eductionPayload);
+
+    // this.__profileService.saveEducationDetails(eductionPayload).then((resData: any) => {
+    //     this.loading = false;
+    //     if (resData.status == 'success') {
+    //       this.toastr.success("Profile added Successfully");
+    //     }
+    //     else if (resData.responseObjec.message == 'error') {
+    //       this.toastr.error("Profile not saved");
+    //     }
+    // });
   }
 
   saveWorkDetails(){
@@ -586,17 +566,21 @@ export class AddComponent implements OnInit {
       freelancerDocument : this.documentWorkArray,
       areaOfExpertise : this.workExpDetailsForm.controls.area_of_expertise.value,
       personalAttributeStrength :  strengthArr,
-      personalAttributeWeakness : weaknessArr
+      personalAttributeWeakness : weaknessArr,
+      freelancerDocuments: this.documentWorkArray
     }
-    this.__profileService.saveWorkDetails(orgDetailsPayload).then((resData: any) => {
-        this.loading = false;
-        if (resData.responseObjec.message == 'success') {
-          this.toastr.success("Profile added Successfully");
-        }
-        else if (resData.status == 'error') {
-          this.toastr.error("Profile not saved");
-        }
-    });
+
+    console.log("personalData" , orgDetailsPayload);
+
+    // this.__profileService.saveWorkDetails(orgDetailsPayload).then((resData: any) => {
+    //     this.loading = false;
+    //     if (resData.responseObjec.message == 'success') {
+    //       this.toastr.success("Profile added Successfully");
+    //     }
+    //     else if (resData.status == 'error') {
+    //       this.toastr.error("Profile not saved");
+    //     }
+    // });
   }
 
   onSaveSkills(){
@@ -604,18 +588,21 @@ export class AddComponent implements OnInit {
       freelancerSkills: this.skillRateArr.value,
       emailId : this.email
     }
-    this.__profileService.saveSkillDetails(skillPayload).then((resData: any) => {
-        this.loading = false;
-        this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view/', this.email]);
 
-        if (resData.responseObjec.message == 'success') {
-          this.toastr.success("Profile added Successfully");
-          this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
-        }
-        else if (resData.status == 'error') {
-          this.toastr.error("Profile not saved");
-        }
-    });
+    console.log("personalData" , skillPayload);
+    
+    // this.__profileService.saveSkillDetails(skillPayload).then((resData: any) => {
+    //     this.loading = false;
+    //     this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view/', this.email]);
+
+    //     if (resData.responseObjec.message == 'success') {
+    //       this.toastr.success("Profile added Successfully");
+    //       this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
+    //     }
+    //     else if (resData.status == 'error') {
+    //       this.toastr.error("Profile not saved");
+    //     }
+    // });
   }
 
 

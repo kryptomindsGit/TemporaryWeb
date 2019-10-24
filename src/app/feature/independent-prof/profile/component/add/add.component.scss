@@ -385,7 +385,7 @@ FORM CSS
 }
 
 .checkbox-grid-col {
-    float: left;
+    // float: left;
     padding: 1px;
     margin-right: 5px;
     width: 30%;
@@ -463,7 +463,7 @@ button:focus {
     border: none;
     border-radius: 2rem;
     padding: 0.5rem 1rem;
-    width: 6rem;
+    width: 7rem;
     text-transform: uppercase;
     cursor: pointer;
     background: $btn-bg-color;

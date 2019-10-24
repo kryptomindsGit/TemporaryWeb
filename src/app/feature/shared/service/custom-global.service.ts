@@ -109,6 +109,16 @@ export class CustomGlobalService {
     }
   }
 
+  
+  async getLanguageList() {
+    try {
+      let res = await this.__http.get(`${SPRING_URL}/master/languages`, httpOptions).toPromise();
+      return res;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
   async getAvgRateForSkill(country:any , skill:any) {
     try {
       const parameters = "country="+country+"&"+"skill="+skill;

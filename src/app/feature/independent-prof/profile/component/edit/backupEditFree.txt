@@ -1,0 +1,164 @@
+getFreelancerPortfolio() {
+    this.__profileService.getFreelancerPortfolioById(this.__id).then((data: any) => {
+      this.freelancerPortArr = data;
+      if (this.freelancerPortArr.length > 0) {
+        let portflio = this.workExpDetailsForm.get('portfolios') as FormArray;
+        for (let index = 0; index < this.freelancerPortArr.length; index++) {
+          portflio.push(this.__fb.group({
+            portfolio: this.freelancerPortArr[index].port_addr,
+            port_id: this.freelancerPortArr[index].port_id
+          }));
+        }
+      } else {
+        this.addPortfolio();
+      }
+      console.log("Res this.freelancerPortArr:", this.freelancerPortArr);
+
+
+    });
+  }
+
+
+  getFreelancerOrganization() {
+    this.__profileService.getFreelancerOrgById(this.__id).then((data: any) => {
+      this.freelancerOrgArr = data;
+
+      console.log("Res this.freelancerOrgArr:", this.freelancerOrgArr);
+      if (this.freelancerOrgArr.length > 0) {
+        for (let index = 0; index < this.freelancerOrgArr.length; index++) {
+          this.orgArr.push(this.__fb.group(
+            {
+              organization: this.freelancerOrgArr[index].organization,
+              designation: this.freelancerOrgArr[index].designation,
+              startDate: this.freelancerOrgArr[index].startDate,
+              endDate: this.freelancerOrgArr[index].endDate,
+              responsibilities: this.freelancerOrgArr[index].responsibilities,
+              org_id: this.freelancerOrgArr[index].org_id
+            }
+          ));
+        }
+      } else {
+        this.addResponsibility()
+      }
+
+
+    });
+  }
+
+  getFreelancerEducation(document) {
+
+    let docName = document;
+    this.__profileService.getFreelancerEduById(this.__id).then((data: any) => {
+      this.freelancerEduArr = data;
+
+      console.log("Res this.freelancerEduArr:", this.freelancerEduArr);
+      if (this.freelancerEduArr.length > 0) {
+        for (let index = 0; index < this.freelancerEduArr.length; index++) {
+          this.edu_catId = this.freelancerEduArr[index].eduCatId;
+
+          this.qualfArr.push(this.__fb.group(
+            {
+              eduDomainName: this.freelancerEduArr[index].eduDomainName,
+              edu_type_name: this.freelancerEduArr[index].edu_name,
+              eduCatId: this.freelancerEduArr[index].eduCatId,
+              eduTypeId: this.freelancerEduArr[index].eduTypeId,
+              university: this.freelancerEduArr[index].university,
+              passingYear: this.freelancerEduArr[index].passingYear,
+              percentage: this.freelancerEduArr[index].percentage,
+              grade: this.freelancerEduArr[index].grade,
+              doc_name: docName,
+              edu_id: this.freelancerEduArr[index].edu_id
+            }
+          ));
+
+          this.getAllEducation(this.edu_catId);
+
+        }
+      } else {
+        this.addQualification();
+      }
+
+    });
+  }
+
+  getAllEducation(eduCat_id) {
+    this.__profileService.getFreelancerEducname(eduCat_id).then((data: any) => {
+      this.eduArr = data;
+    })
+  }
+
+  
+
+  
+getQualitiesById() {
+    this.__profileService.getFreelancerQuality(this.__id).then((data: any) => {
+      this.qualityArray = data;
+
+      console.log("Res this.qualityArray:", this.qualityArray);
+
+
+      let strengthQual = this.qualityArray.filter(
+        function (item) {
+          return item.strengths != null;
+        }
+      );
+
+      let weaknessQual = this.qualityArray.filter(
+        function (item) {
+          return item.weaknesses != null;
+        }
+      );
+
+      if (strengthQual.length > 0) {
+        strengthQual.forEach(item => {
+          this.strengthArr.push(
+            this.__fb.group({
+              strength: item.strengths,
+              quality_id: item.quality_id
+            })
+          )
+        });
+      } else {
+        this.addStrength();
+      }
+
+      if (weaknessQual.length > 0) {
+        weaknessQual.forEach(item => {
+          this.weaknessArr.push(
+            this.__fb.group({
+              weakness: item.weaknesses,
+              quality_id: item.quality_id
+            })
+          )
+        });
+      } else {
+        this.addWeakness();
+      }
+
+    });
+  }
+
+
+getFreelancerSkillDetailsForm() {
+    this.__profileService.getFreelancerSkillById(this.__id).then((data: any) => {
+      this.freelancerSkillDetailsFormArr = data;
+      if (this.freelancerSkillDetailsFormArr.length > 0) {
+        let skillCat_ID = this.freelancerSkillDetailsFormArr[0].skill_cat_id;
+        this.setSkillArrBySkillCatList(skillCat_ID);
+
+        for (let index = 0; index < this.freelancerSkillDetailsFormArr.length; index++) {
+          this.skillRateArr.push(this.__fb.group(
+            {
+              skillName: this.freelancerSkillDetailsFormArr[index].skillName,
+              rate_hour: this.freelancerSkillDetailsFormArr[index].rate_per_hr,
+              skill: this.freelancerSkillDetailsFormArr[index].skill_id
+            }
+          ));
+        }
+      } else {
+        this.selectEvent(0);
+        this.setSkillArrBySkillCatList(1);
+      }
+      console.log("jyoti:", this.skillDetailsForm);
+    });
+  }

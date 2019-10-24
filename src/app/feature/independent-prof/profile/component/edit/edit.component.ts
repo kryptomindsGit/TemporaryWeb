@@ -120,7 +120,7 @@ export class EditComponent implements OnInit {
     // this.__id = this.__activatedRoute.snapshot.params.id;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
 
     this.isUportUser = localStorage.getItem("uportUser");
 
@@ -161,15 +161,15 @@ export class EditComponent implements OnInit {
     // this.getFreelancerOrganization();
     // this.getFreelancerPortfolio();
     // this.setAllFreelancerData();
+    await this.getEducationCategoryList();
+    await this.getEducationTypeList();
+    await this.getSkillCategoryList();
+    await this.getSkillTypeList();
+    await this.getCurrencyList();
+    await this.getPersonalAttributes();
+    await this.getDocumentsTypeCat(1);
 
     this.getFreelancerDetails();
-    this.getEducationCategoryList();
-    this.getEducationTypeList();
-    this.getPersonalAttributes();
-    this.getSkillCategoryList();
-    this.getSkillTypeList();
-    this.getDocumentsTypeCat(1);
-    this.getCurrencyList();
   }
   
 
@@ -200,13 +200,11 @@ export class EditComponent implements OnInit {
       documents_personal: this.__fb.array([]),
     });
   }
-
   validateQualificationProfile() {
     this.qualificationDetailsForm = this.__fb.group({
       qualification: this.__fb.array([]),
     });
   }
-
   validateWorlExpProfile() {
     this.workExpDetailsForm = this.__fb.group({
       org_details: this.__fb.array([]),
@@ -220,23 +218,44 @@ export class EditComponent implements OnInit {
       documents_work: this.__fb.array([])
     });
   }
-
   validateSkillsProfile() {
     this.skillDetailsForm = this.__fb.group({
       skills: this.__fb.array([]),
     });
   }
 
+  /**
+   * @author Shefali Bhavekar ( Date : 10-24-2019 )
+   * @method getCountryList()
+   * @description get all countries from mysql-database(using SpringBoot-API).
+   */
   getCountryList() {
     this.__customGlobalService.getCountryList().then((resData: any) => {
       this.countryArr = resData.responseObject;
     })
   }
 
+  /**
+   * @author Shefali Bhavekar ( Date : 10-24-2019 )
+   * @method getStateList()
+   * @description get all states from mysql-database(using SpringBoot-API).
+   */
   getStateList() {
     this.__customGlobalService.getStateList().then((resData: any) => {
       this.stateArr = resData.responseObject;
       this.setStateListByCountryId(this.freelancerArr.country.countryId);
+    })
+  }
+
+   /**
+   * @author Shefali Bhavekar ( Date : 10-24-2019 )
+   * @method getStateList()
+   * @description get all states from mysql-database(using SpringBoot-API).
+   */
+  getCityList(){
+    this.__customGlobalService.getCityList().then((resData: any) => {
+      this.cityArr = resData.responseObject;
+      this.setCityListByStateId(this.freelancerArr.province.stateId);
     })
   }
 
@@ -248,12 +267,7 @@ export class EditComponent implements OnInit {
     });
   }
 
-  getCityList(){
-    this.__customGlobalService.getCityList().then((resData: any) => {
-      this.cityArr = resData.responseObject;
-      this.setCityListByStateId(this.freelancerArr.province.stateId);
-    })
-  }
+  
 
   setCityListByStateId(stateId){
     this.cityArrByStateId[stateId] = this.cityArr.filter((item) => item.masterStates.stateId == stateId);
@@ -367,21 +381,21 @@ export class EditComponent implements OnInit {
         // this.edu_catId = this.freeEducationArr[index].masterEduDomain.eduDomainId;
         // this.setEduTypeListByEduCategoryId(this.freeEducationArr[index].masterEduDomain.eduDomainId);
         console.log("this.freeEducationArr[index].masterEduDomain.eduDomainId \n", this.freeEducationArr[index].masterEduDomain.eduDomainId);
-        this.setEduTypeListByEduCategoryId(this.freeEducationArr[index].masterEduDomain.eduDomainId);
         this.qualfArr.push(this.__fb.group(
           {
-            edu_cat_name: this.freeEducationArr[index].masterEduDomain.eduDomainName,
-            edu_type_name: this.freeEducationArr[index].masterEduType.educationTypeName,
-            edu_cat_id: this.freeEducationArr[index].masterEduDomain.eduDomainId,
-            edu_type_id: this.freeEducationArr[index].masterEduType.educationTypeId,
+            eduDomainName: this.freeEducationArr[index].masterEduDomain.eduDomainName,
+            educationTypeName: this.freeEducationArr[index].masterEduType.educationTypeName,
+            eduCatId: this.freeEducationArr[index].masterEduDomain.eduDomainId,
+            eduTypeId: this.freeEducationArr[index].masterEduType.educationTypeId,
             university: this.freeEducationArr[index].university,
-            passing_year: this.freeEducationArr[index].passingYear,
+            passingYear: this.freeEducationArr[index].passingYear,
             percentage: this.freeEducationArr[index].percentage,
             grade: this.freeEducationArr[index].grade,
             // doc_name: docName,
             edu_id: this.freeEducationArr[index].edu_id
           }
         ));
+        this.setEduTypeListByEduCategoryId(this.freeEducationArr[index].masterEduDomain.eduDomainId);
       }
     } else {
       this.addQualification();
@@ -393,12 +407,12 @@ export class EditComponent implements OnInit {
       for (let index = 0; index < this.freeWorkDetailArr.length; index++) {
         this.orgArr.push(this.__fb.group(
           {
-            org_name: this.freeWorkDetailArr[index].organization,
-            org_designation: this.freeWorkDetailArr[index].designation,
-            start_date: this.freeWorkDetailArr[index].startDate,
-            end_date: this.freeWorkDetailArr[index].endDate,
+            organization: this.freeWorkDetailArr[index].organization,
+            designation: this.freeWorkDetailArr[index].designation,
+            startDate: this.freeWorkDetailArr[index].startDate,
+            endDate: this.freeWorkDetailArr[index].endDate,
             responsibilities: this.freeWorkDetailArr[index].responsibilities,
-            org_id: this.freeWorkDetailArr[index].freelancerWorkExperienceId
+            freelancerWorkExperienceId: this.freeWorkDetailArr[index].freelancerWorkExperienceId
           }
         ));
       }
@@ -412,8 +426,8 @@ export class EditComponent implements OnInit {
         this.freeStrengthArr.forEach(item => {
           this.strengthArr.push(
             this.__fb.group({
-              strength: item.strengths,
-              quality_id: item.quality_id
+              strength: item.personalAttribute.attributeName,
+              strengthId: item.strengthId
             })
           )
         });
@@ -427,8 +441,8 @@ export class EditComponent implements OnInit {
       this.freeWeaknessArr.forEach(item => {
         this.weaknessArr.push(
           this.__fb.group({
-            weakness: item.weaknesses,
-            quality_id: item.quality_id
+            weakness: item.personalAttribute.attributeName,
+            weaknessId: item.weaknessId
           })
         )
       });
@@ -444,7 +458,7 @@ export class EditComponent implements OnInit {
       for (let index = 0; index < this.freePortfolioArr.length; index++) {
         portflio.push(this.__fb.group({
           portfolio: this.freePortfolioArr[index].portfolioUrl,
-          port_id: this.freePortfolioArr[index].portfolioUrlId
+          portfolioUrlId: this.freePortfolioArr[index].portfolioUrlId
         }));
       }
     } else {
@@ -456,6 +470,7 @@ export class EditComponent implements OnInit {
 
 
   }
+  
   setSkillDetailArr(){
     if (this.freeSkillDetailArr.length > 0) {
       let skillCat_ID = this.freeSkillDetailArr[0].skill_cat_id;
@@ -464,9 +479,10 @@ export class EditComponent implements OnInit {
       for (let index = 0; index < this.freeSkillDetailArr.length; index++) {
         this.skillRateArr.push(this.__fb.group(
           {
-            skill_name: this.freeSkillDetailArr[index].skillId.skillName,
-            rate_hour: this.freeSkillDetailArr[index].hourlyRate,
-            skill: this.freeSkillDetailArr[index].freelancerSkillId
+            skillName: this.freeSkillDetailArr[index].skillId.skillName,
+            rateHour: this.freeSkillDetailArr[index].hourlyRate,
+            skillExperience:this.freeSkillDetailArr[index].skillExperience,
+            freelancerSkillId: this.freeSkillDetailArr[index].freelancerSkillId
           }
         ));
       }
@@ -477,78 +493,9 @@ export class EditComponent implements OnInit {
   }
 
 
-  getFreelancerSkillDetailsForm() {
-    this.__profileService.getFreelancerSkillById(this.__id).then((data: any) => {
-      this.freelancerSkillDetailsFormArr = data;
-      if (this.freelancerSkillDetailsFormArr.length > 0) {
-        let skillCat_ID = this.freelancerSkillDetailsFormArr[0].skill_cat_id;
-        this.setSkillArrBySkillCatList(skillCat_ID);
+  
 
-        for (let index = 0; index < this.freelancerSkillDetailsFormArr.length; index++) {
-          this.skillRateArr.push(this.__fb.group(
-            {
-              skill_name: this.freelancerSkillDetailsFormArr[index].skill_name,
-              rate_hour: this.freelancerSkillDetailsFormArr[index].rate_per_hr,
-              skill: this.freelancerSkillDetailsFormArr[index].skill_id
-            }
-          ));
-        }
-      } else {
-        this.selectEvent(0);
-        this.setSkillArrBySkillCatList(1);
-      }
-      console.log("jyoti:", this.skillDetailsForm);
-    });
-  }
-
-  getQualitiesById() {
-    this.__profileService.getFreelancerQuality(this.__id).then((data: any) => {
-      this.qualityArray = data;
-
-      console.log("Res this.qualityArray:", this.qualityArray);
-
-
-      let strengthQual = this.qualityArray.filter(
-        function (item) {
-          return item.strengths != null;
-        }
-      );
-
-      let weaknessQual = this.qualityArray.filter(
-        function (item) {
-          return item.weaknesses != null;
-        }
-      );
-
-      if (strengthQual.length > 0) {
-        strengthQual.forEach(item => {
-          this.strengthArr.push(
-            this.__fb.group({
-              strength: item.strengths,
-              quality_id: item.quality_id
-            })
-          )
-        });
-      } else {
-        this.addStrength();
-      }
-
-      if (weaknessQual.length > 0) {
-        weaknessQual.forEach(item => {
-          this.weaknessArr.push(
-            this.__fb.group({
-              weakness: item.weaknesses,
-              quality_id: item.quality_id
-            })
-          )
-        });
-      } else {
-        this.addWeakness();
-      }
-
-    });
-  }
-
+  
 
   getFreelancerDocuments() {
     this.__profileService.getFreelancerDocumentById(this.__id).then((data: any) => {
@@ -564,8 +511,8 @@ export class EditComponent implements OnInit {
         isPersonal.forEach(item => {
           this.documentArr.push(
             this.__fb.group({
-              file_name: item.doc_name,
-              file_type: item.doc_type,
+              documentUrl: item.doc_name,
+              documentTypeId: item.doc_type,
               file_id: item.doc_type_id,
               doc_id: item.doc_id
             })
@@ -574,9 +521,9 @@ export class EditComponent implements OnInit {
 
         isPersonal.forEach(item => {
           this.documentPersonalArray.push({
-            file_name: item.doc_name,
-            file_type: item.doc_type,
-            file_type_id: item.doc_type_id,
+            documentUrl: item.doc_name,
+            documentTypeId: item.doc_type,
+            documentTypeId_id: item.doc_type_id,
             doc_id: item.doc_id
           });
         });
@@ -589,13 +536,13 @@ export class EditComponent implements OnInit {
       let isEducation = this.freelancerDocsArr.filter(item => item.doc_cat_name == 'educational');
       isEducation.forEach(item => {
         this.documentQualArray.push({
-          file_name: item.doc_name,
-          file_type: item.doc_type,
-          file_type_id: item.doc_type_id,
+          documentUrl: item.doc_name,
+          documentTypeId: item.doc_type,
+          documentTypeId_id: item.doc_type_id,
           doc_id: item.doc_id
         });
       });
-      this.getFreelancerEducation(isEducation);
+      // this.getFreelancerEducation(isEducation);
       // work exp document
       let isProfessional = this.freelancerDocsArr.filter(item => item.doc_cat_name == 'professional');
 
@@ -603,8 +550,8 @@ export class EditComponent implements OnInit {
         isProfessional.forEach(item => {
           this.workdocumentArr.push(
             this.__fb.group({
-              file_name: item.doc_name,
-              file_type: item.doc_type,
+              documentUrl: item.doc_name,
+              documentTypeId: item.doc_type,
               file_id: item.doc_type_id,
               doc_id: item.doc_id
             })
@@ -613,9 +560,9 @@ export class EditComponent implements OnInit {
 
         isProfessional.forEach(item => {
           this.documentWorkArray.push({
-            file_name: item.doc_name,
-            file_type: item.doc_type,
-            file_type_id: item.doc_type_id,
+            documentUrl: item.doc_name,
+            documentTypeId: item.doc_type,
+            documentTypeId_id: item.doc_type_id,
             doc_id: item.doc_id
           });
         });
@@ -626,94 +573,7 @@ export class EditComponent implements OnInit {
 
   }
 
-  getFreelancerEducation(document) {
-
-    let docName = document;
-    this.__profileService.getFreelancerEduById(this.__id).then((data: any) => {
-      this.freelancerEduArr = data;
-
-      console.log("Res this.freelancerEduArr:", this.freelancerEduArr);
-      if (this.freelancerEduArr.length > 0) {
-        for (let index = 0; index < this.freelancerEduArr.length; index++) {
-          this.edu_catId = this.freelancerEduArr[index].edu_cat_id;
-
-          this.qualfArr.push(this.__fb.group(
-            {
-              edu_cat_name: this.freelancerEduArr[index].edu_cat_name,
-              edu_type_name: this.freelancerEduArr[index].edu_name,
-              edu_cat_id: this.freelancerEduArr[index].edu_cat_id,
-              edu_type_id: this.freelancerEduArr[index].edu_type_id,
-              university: this.freelancerEduArr[index].university,
-              passing_year: this.freelancerEduArr[index].passing_year,
-              percentage: this.freelancerEduArr[index].percentage,
-              grade: this.freelancerEduArr[index].grade,
-              doc_name: docName,
-              edu_id: this.freelancerEduArr[index].edu_id
-            }
-          ));
-
-          this.getAllEducation(this.edu_catId);
-
-        }
-      } else {
-        this.addQualification();
-      }
-
-    });
-  }
-
-  getAllEducation(eduCat_id) {
-    this.__profileService.getFreelancerEducname(eduCat_id).then((data: any) => {
-      this.eduArr = data;
-    })
-  }
-
-  getFreelancerOrganization() {
-    this.__profileService.getFreelancerOrgById(this.__id).then((data: any) => {
-      this.freelancerOrgArr = data;
-
-      console.log("Res this.freelancerOrgArr:", this.freelancerOrgArr);
-      if (this.freelancerOrgArr.length > 0) {
-        for (let index = 0; index < this.freelancerOrgArr.length; index++) {
-          this.orgArr.push(this.__fb.group(
-            {
-              org_name: this.freelancerOrgArr[index].org_name,
-              org_designation: this.freelancerOrgArr[index].org_designation,
-              start_date: this.freelancerOrgArr[index].start_date,
-              end_date: this.freelancerOrgArr[index].end_date,
-              responsibilities: this.freelancerOrgArr[index].responsibilities,
-              org_id: this.freelancerOrgArr[index].org_id
-            }
-          ));
-        }
-      } else {
-        this.addResponsibility()
-      }
-
-
-    });
-  }
-
-  getFreelancerPortfolio() {
-    this.__profileService.getFreelancerPortfolioById(this.__id).then((data: any) => {
-      this.freelancerPortArr = data;
-      if (this.freelancerPortArr.length > 0) {
-        let portflio = this.workExpDetailsForm.get('portfolios') as FormArray;
-        for (let index = 0; index < this.freelancerPortArr.length; index++) {
-          portflio.push(this.__fb.group({
-            portfolio: this.freelancerPortArr[index].port_addr,
-            port_id: this.freelancerPortArr[index].port_id
-          }));
-        }
-      } else {
-        this.addPortfolio();
-      }
-      console.log("Res this.freelancerPortArr:", this.freelancerPortArr);
-
-
-    });
-  }
-
+  
   setAllFreelancerData() {
     this.personalDetailsForm.get('prefix').setValue(this.freelancerArr.prefix);
     this.personalDetailsForm.get('firstName').setValue(this.freelancerArr.firstName);
@@ -753,8 +613,8 @@ export class EditComponent implements OnInit {
 
 
   // setEduListArrByCatId(eduCat_id, i) {
-  //   this.eduListArrbyId[eduCat_id] = this.eduTypeArr.filter((item) => item.edu_cat_id == eduCat_id);
-  //   this.qualificationDetailsForm.get('qualification')['controls'][i].patchValue({ edu_cat_id: eduCat_id, edu_type_id: '' });
+  //   this.eduListArrbyId[eduCat_id] = this.eduTypeArr.filter((item) => item.eduCatId == eduCat_id);
+  //   this.qualificationDetailsForm.get('qualification')['controls'][i].patchValue({ eduCatId: eduCat_id, eduTypeId: '' });
 
   // }
 
@@ -873,10 +733,10 @@ export class EditComponent implements OnInit {
   addQualification() {
     this.qualfArr.push(this.__fb.group(
       {
-        edu_cat_id: '',
-        edu_type_id: '',
+        eduCatId: '',
+        eduTypeId: '',
         university: '',
-        passing_year: '',
+        passingYear: '',
         percentage: '',
         grade: '',
         doc_name: ''
@@ -898,10 +758,10 @@ export class EditComponent implements OnInit {
   addResponsibility() {
     this.orgArr.push(this.__fb.group(
       {
-        org_name: '',
-        org_designation: '',
-        start_date: '',
-        end_date: '',
+        organization: '',
+        designation: '',
+        startDate: '',
+        endDate: '',
         responsibilities: ''
       }));
   }
@@ -969,8 +829,8 @@ export class EditComponent implements OnInit {
   addDocument() {
     this.documentArr.push(this.__fb.group(
       {
-        file_name: '',
-        file_type: ''
+        documentUrl: '',
+        documentTypeId: ''
       }
     ));
   }
@@ -990,8 +850,8 @@ export class EditComponent implements OnInit {
   addWorkDocument() {
     this.workdocumentArr.push(this.__fb.group(
       {
-        file_name: '',
-        file_type: ''
+        documentUrl: '',
+        documentTypeId: ''
       }
     ));
   }
@@ -1013,9 +873,11 @@ export class EditComponent implements OnInit {
     if (isChecked && skill != null) {
       this.skillRateArr.push(this.__fb.group(
         {
-          skill_name: skill,
-          skill: skill_id,
-          rate_hour: ''
+          skillName: skill,
+          skillId: skill_id,
+          rateHour: '',
+          skillExperience: '',
+          freelancerSkillId:''
         }
       ));
     }
@@ -1057,8 +919,8 @@ export class EditComponent implements OnInit {
 
     await this.documentPersonalArray.push(
       {
-        'file_name': this.FileArrData.fileId,
-        'file_type': this.doc_cat_id
+        'documentUrl': this.FileArrData.fileId,
+        'documentTypeId': this.doc_cat_id
       });
     console.log(this.documentPersonalArray);
   }
@@ -1073,8 +935,8 @@ export class EditComponent implements OnInit {
 
     this.documentQualArray.push(
       {
-        'file_name': this.FileArrData.fileId,
-        'file_type': 4
+        'documentUrl': this.FileArrData.fileId,
+        'documentTypeId': 4
       });
     console.log(this.documentQualArray);
   }
@@ -1089,8 +951,8 @@ export class EditComponent implements OnInit {
 
     this.documentWorkArray.push(
       {
-        'file_name': this.FileArrData.fileId,
-        'file_type': this.doc_cat_id
+        'documentUrl': this.FileArrData.fileId,
+        'documentTypeId': this.doc_cat_id
       });
     console.log(this.documentWorkArray);
   }
@@ -1105,8 +967,8 @@ export class EditComponent implements OnInit {
   onSubmitDetails() {
 
     let documentArr: any = [
-      'file_name',
-      'file_type'
+      'documentUrl',
+      'documentTypeId'
     ];
 
     let qualitiesArr: any = [
