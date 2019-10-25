@@ -6,6 +6,7 @@ import { HttpClient, HttpEventType } from '@angular/common/http';
 import { IndeptProfileService } from '../../shared/service/profile.service';
 import { ToastrService } from 'ngx-toastr';
 import { CustomGlobalService } from 'src/app/feature/shared/service/custom-global.service';
+import { ThrowStmt } from '@angular/compiler';
 // 
 @Component({
   selector: 'app-add',
@@ -122,7 +123,8 @@ export class AddComponent implements OnInit {
     this.getCountryList();
     this.getStateList();
     this.getCityList();
-    this.getDocumentsTypeCat(1);
+    this.getDocumentList();
+    //this.getDocumentsTypeCat(1);
     this.getCurrencyList();
     this.getLanguageList();
   }
@@ -171,6 +173,7 @@ export class AddComponent implements OnInit {
           Validators.pattern("^[0-9]*$"),
           Validators.minLength(4),
         ]],
+        documentTypeId:['', Validators.required],
         grade: ['', Validators.required],
         doc_name: ['', Validators.required]
       })]),
@@ -222,6 +225,11 @@ export class AddComponent implements OnInit {
     this.eduTypeArrByEduCatList[eduCatId] = this.eduTypeList.filter((item) => item.masterEduDomain.eduDomainId == eduCatId);
   }
 
+  getDocumentList(){
+    this.__customGlobalService.getDocumentList().then((resData: any) => {
+      this.docTypeArr = resData.responseObject;
+    })
+  }
   getSkillCategoryList() {
     this.__customGlobalService.getSkillDomainList().then((resData: any) => {
       this.categ = resData.responseObject;
@@ -257,8 +265,10 @@ export class AddComponent implements OnInit {
     this.cityArrByStateId[stateId] = this.cityArr.filter((item) => item.masterStates.stateId == stateId);
   }
   getCurrencyList(){
-    this.__customGlobalService.getCountryList().then((resData: any) => {
+    this.__customGlobalService.getCurrencyList().then((resData: any) => {
       this.currencyList = resData.responseObject;
+      console.log("Currency List :  " ,  this.currencyList );
+      
     })
   }
   getPersonalAttributes(){
@@ -276,7 +286,7 @@ export class AddComponent implements OnInit {
   setDocTypeCatID(id) {
     this.doc_cat_id = id;
     console.log("doc cat id" , this.doc_cat_id);
-    this.getDocumentsTypeCat(this.doc_cat_id);
+    // this.getDocumentsTypeCat(this.doc_cat_id);
   }
 
   getDocumentsTypeCat(index) {
@@ -284,6 +294,7 @@ export class AddComponent implements OnInit {
       this.docTypeArr = resData.responseObject;      
      })
   }
+
   selectEvent(item) {
     const skills = item;
     const skill_id = skills.skill_cat_id;
@@ -303,6 +314,7 @@ export class AddComponent implements OnInit {
         passingYear: '',
         percentage: '',
         grade: '',
+        documentTypeId: '',
         doc_name: ''
       }));
   }
@@ -463,15 +475,14 @@ export class AddComponent implements OnInit {
       this.loading = false;
       if (this.FileArrData) {
         this.toastr.success(this.fileName, "Successfully uploaded");
+        this.documentQualArray.push({
+          'documentUrl': this.FileArrData.fileId,
+          'documentTypeId': this.doc_cat_id
+        });
       } else {
         this.toastr.error(this.fileName, "File not uploaded");
       }
     });
-
-    this.documentQualArray.push({
-        'documentUrl': this.FileArrData.fileId,
-        'documentTypeId': 4
-      });
   }
 
   uploadWorkExpFile() {
@@ -481,19 +492,18 @@ export class AddComponent implements OnInit {
       this.loading = false;
       if (this.FileArrData) {
         this.toastr.success(this.fileName, "Successfully uploaded");
+        this.documentWorkArray.push( {
+          'documentUrl': this.FileArrData.fileId,
+          'documentTypeId': this.doc_cat_id
+        });
       } else {
         this.toastr.error(this.fileName, "File not uploaded");
       }
     });
-
-    this.documentWorkArray.push( {
-        'documentUrl': this.FileArrData.fileId,
-        'documentTypeId': this.doc_cat_id
-      });
   }
 
   savePersonalDetailForm(){    
-    this.getDocumentsTypeCat(2);
+    //this.getDocumentsTypeCat(2);
     const personalData = {
       emailId: this.email,
       prefix: this.personalDetailForm.controls.prefix.value,
@@ -526,7 +536,7 @@ export class AddComponent implements OnInit {
 
 
   saveEducationDetails(){
-    this.getDocumentsTypeCat(3);
+    //this.getDocumentsTypeCat(3);
     const eductionPayload = {
       educationDetails :  this.qualificationDetailForm.controls.qualification.value,
       freelancerDocuments: this.documentQualArray
@@ -567,7 +577,6 @@ export class AddComponent implements OnInit {
       areaOfExpertise : this.workExpDetailsForm.controls.area_of_expertise.value,
       personalAttributeStrength :  strengthArr,
       personalAttributeWeakness : weaknessArr,
-      freelancerDocuments: this.documentWorkArray
     }
 
     console.log("personalData" , orgDetailsPayload);
@@ -586,23 +595,22 @@ export class AddComponent implements OnInit {
   onSaveSkills(){
     const skillPayload = {
       freelancerSkills: this.skillRateArr.value,
-      emailId : this.email
     }
 
     console.log("personalData" , skillPayload);
     
-    // this.__profileService.saveSkillDetails(skillPayload).then((resData: any) => {
-    //     this.loading = false;
-    //     this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view/', this.email]);
+    this.__profileService.saveSkillDetails(skillPayload).then((resData: any) => {
+        this.loading = false;
+        this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view']);
 
-    //     if (resData.responseObjec.message == 'success') {
-    //       this.toastr.success("Profile added Successfully");
-    //       this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
-    //     }
-    //     else if (resData.status == 'error') {
-    //       this.toastr.error("Profile not saved");
-    //     }
-    // });
+        if (resData.responseObjec.message == 'success') {
+          this.toastr.success("Profile added Successfully");
+          this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view']);
+        }
+        else if (resData.status == 'error') {
+          this.toastr.error("Profile not saved");
+        }
+    });
   }
 
 

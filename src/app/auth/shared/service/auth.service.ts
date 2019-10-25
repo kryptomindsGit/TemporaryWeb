@@ -72,7 +72,6 @@ export class AuthService {
     return (localStorage.getItem('access_token') !== null);
   }
 
-
   //uPort REST API calls
   async uporService(): Promise<any> {
     try {

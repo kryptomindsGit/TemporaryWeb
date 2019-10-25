@@ -144,7 +144,6 @@
                                         </option>
                                     </select>
                                     <label class="form-label" for="city">City<span class="redstar">*</span></label>
-
                                     <!-- <div *ngIf="submitted && personalFormValidation.city.errors || personalDetailForm.controls['city'].invalid && (personalDetailForm.controls['city'].dirty || personalDetailForm.controls['city'].touched)"
                                         class="text-danger error-msg">
                                         <div [hidden]="!personalDetailForm.controls['city'].errors.required">City is
@@ -296,12 +295,12 @@
                                             <div class="row" [formGroupName]="i">
                                                 <div class="form-group form-input col-3">
                                                     <select (change)="setEduTypeListByEduCategoryId($event.target.value,i)"
-                                                        formControlName="eduCatId" id="qual_cat" required>
+                                                        formControlName="eduCatId" id="eduCatId" required>
                                                         <option *ngFor="let eduCat of eduCatArr"
                                                             [value]="eduCat.eduDomainId">
                                                             {{eduCat.eduDomainName}}</option>
                                                     </select>
-                                                    <label class="form-label" for="qual_cat">Category<span
+                                                    <label class="form-label" for="eduCatId">Category<span
                                                             class="redstar">*</span></label>
                                                     <!-- <div *ngIf="submitted && qualfArr.controls[i].docCatId.errors || qualfArr.controls[i].get('docCatId').invalid && (qualfArr.controls[i].get('docCatId').dirty || qualfArr.controls[i].get('docCatId').touched)"
                                                         class="text-danger error-msg">
@@ -353,8 +352,7 @@
                                                         </option>
                                                     </select>
 
-                                                    <label class="form-label" for="passingYear">Passing
-                                                        year<span class="redstar">*</span></label>
+                                                    <label class="form-label" for="passingYear">Passing year<span class="redstar">*</span></label>
                                                     <!-- <div *ngIf="submitted && qualfArr.controls[i].passingYear.errors || qualfArr.controls[i].get('passingYear').invalid && (qualfArr.controls[i].get('passingYear').dirty || qualfArr.controls[i].get('passingYear').touched)"
                                                         class="text-danger error-msg">
                                                         <div
@@ -403,13 +401,13 @@
                                                         </option>
                                                     </select>
                                                     <label class="form-label" for="document_type">Document type</label>
-                                                    <div *ngIf="documentArr.controls[i].get('documentTypeId').invalid && (documentArr.controls[i].get('documentTypeId').dirty || documentArr.controls[i].get('documentTypeId').touched)"
+                                                    <!-- <div *ngIf="documentArr.controls[i].get('documentTypeId').invalid && (documentArr.controls[i].get('documentTypeId').dirty || documentArr.controls[i].get('documentTypeId').touched)"
                                                         class="text-danger error-msg">
                                                         <div
                                                             [hidden]="!documentArr.controls[i].get('documentTypeId').errors?.required">
                                                             Document type is required.
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                                 <div class="form-group form-input col-3">
                                                     <div class="file-upload">
@@ -816,7 +814,7 @@
             </div>
 
             <div class="skill-details-form" *ngIf="showMainContent == 4">
-                <form [formGroup]="skillDetailForm">
+                <form [formGroup]="skillDetailsForm">
                     <div class="form-content">
                         <div class="container-skill">
                             <div class="row">
@@ -928,12 +926,12 @@
                                     </select>
                                 </td>
                                 <td>
-                                        <label> 
+                                       
                                             <select formControlName="currency">
                                                 <option  *ngFor="let currency of currencyList" [value]="currency.currencyId">
-                                                    {{currency.currencyName}}
+                                                    {{currency.currency}}
                                                 </option>
-                                            </select></label>
+                                            </select>
                                     </td>
                                 <td>
                                     <input type="text" formControlName="rateHour" id="rate_skill" required />
@@ -958,10 +956,10 @@
                             </div>
                         </div>
                     </div>
-                    <!-- [disabled]="skillDetailForm.controls.skillRateArr.controls.pristine || skillDetailForm.controls.skillRateArr.controls.invalid" -->
+                    <!-- [disabled]="skillDetailsForm.controls.skillRateArr.controls.pristine || skillDetailsForm.controls.skillRateArr.controls.invalid" -->
                     <button type="button" class="btnPrevious" (click)="ShowNextButton(3)">Previous</button>
                     <button type="button" class="btnNext" (click)="onSaveSkills()"
-                        [disabled]="skillDetailForm.invalid">Save</button>
+                        [disabled]="skillDetailsForm.invalid">Save</button>
 
                 </form>
 

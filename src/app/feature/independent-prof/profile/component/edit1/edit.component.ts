@@ -378,9 +378,7 @@ export class EditComponent implements OnInit {
     
     if (this.freeEducationArr.length > 0) {
       for (let index = 0; index < this.freeEducationArr.length; index++) {
-        // this.edu_catId = this.freeEducationArr[index].masterEduDomain.eduDomainId;
-        // this.setEduTypeListByEduCategoryId(this.freeEducationArr[index].masterEduDomain.eduDomainId);
-        console.log("this.freeEducationArr[index].masterEduDomain.eduDomainId \n", this.freeEducationArr[index].masterEduDomain.eduDomainId);
+;
         this.qualfArr.push(this.__fb.group(
           {
             eduDomainName: this.freeEducationArr[index].masterEduDomain.eduDomainName,
@@ -467,7 +465,51 @@ export class EditComponent implements OnInit {
   }
 
   setFreeDocumentArr(){
+    console.log("this.freelancerDocsArr : \n", this.freeDocumentArr);
+    
+    let isPersonal = this.freeDocumentArr.filter(item => item.masterDocumentType.masterDocDomain.domainName == 'personal');
+    if (isPersonal.length > 0) {
+      isPersonal.forEach(item => {
+            this.documentArr.push(
+              this.__fb.group({
+                documentUrl: item.documentUrl,
+                documentTypeId: item.documentTypeId,
+                documentId: item.documentId
+              })
+            )
+        });
+    } else {
+      this.addDocument();
+    }
 
+    let isEducation = this.freelancerDocsArr.filter(item => item.masterDocumentType.masterDocDomain.domainName == 'educational');
+    if (isPersonal.length > 0) {  
+      isEducation.forEach(item => {
+          this.documentQualArray.push({
+            documentUrl: item.documentUrl,
+            documentTypeId: item.documentTypeId,
+            documentId: item.documentId
+          });
+        });
+    } else {
+      this.addDocument();
+    }
+
+    let isProfessional = this.freelancerDocsArr.filter(item => item.masterDocumentType.masterDocDomain.domainName == 'professional');
+
+      if (isProfessional.length > 0) {
+        isProfessional.forEach(item => {
+          this.workdocumentArr.push(
+            this.__fb.group({
+              documentUrl: item.documentUrl,
+              documentTypeId: item.documentTypeId,
+              documentId: item.documentId
+            })
+          )
+        });
+      } else {
+        this.addWorkDocument();
+      }
 
   }
   
@@ -490,90 +532,9 @@ export class EditComponent implements OnInit {
       this.selectEvent(0);
       this.setSkillArrBySkillCatList(1);
     }
-  }
-
-
-  
-
-  
-
-  getFreelancerDocuments() {
-    this.__profileService.getFreelancerDocumentById(this.__id).then((data: any) => {
-      this.freelancerDocsArr = data;
-      console.log("Ressdfsdf this.freelancerDocsArr:", this.freelancerDocsArr);
-      // personal document
-      let isPersonal = this.freelancerDocsArr.filter(item => item.doc_cat_name == 'personal');
-      console.log("isPersonal:", isPersonal.length);
-
-      if (isPersonal.length > 0) {
-        console.log("isPersonal", isPersonal);
-
-        isPersonal.forEach(item => {
-          this.documentArr.push(
-            this.__fb.group({
-              documentUrl: item.doc_name,
-              documentTypeId: item.doc_type,
-              file_id: item.doc_type_id,
-              doc_id: item.doc_id
-            })
-          )
-        });
-
-        isPersonal.forEach(item => {
-          this.documentPersonalArray.push({
-            documentUrl: item.doc_name,
-            documentTypeId: item.doc_type,
-            documentTypeId_id: item.doc_type_id,
-            doc_id: item.doc_id
-          });
-        });
-
-      } else {
-        this.addDocument();
-      }
-
-      // educational document
-      let isEducation = this.freelancerDocsArr.filter(item => item.doc_cat_name == 'educational');
-      isEducation.forEach(item => {
-        this.documentQualArray.push({
-          documentUrl: item.doc_name,
-          documentTypeId: item.doc_type,
-          documentTypeId_id: item.doc_type_id,
-          doc_id: item.doc_id
-        });
-      });
-      // this.getFreelancerEducation(isEducation);
-      // work exp document
-      let isProfessional = this.freelancerDocsArr.filter(item => item.doc_cat_name == 'professional');
-
-      if (isProfessional.length > 0) {
-        isProfessional.forEach(item => {
-          this.workdocumentArr.push(
-            this.__fb.group({
-              documentUrl: item.doc_name,
-              documentTypeId: item.doc_type,
-              file_id: item.doc_type_id,
-              doc_id: item.doc_id
-            })
-          )
-        });
-
-        isProfessional.forEach(item => {
-          this.documentWorkArray.push({
-            documentUrl: item.doc_name,
-            documentTypeId: item.doc_type,
-            documentTypeId_id: item.doc_type_id,
-            doc_id: item.doc_id
-          });
-        });
-      } else {
-        this.addWorkDocument();
-      }
-    });
 
   }
 
-  
   setAllFreelancerData() {
     this.personalDetailsForm.get('prefix').setValue(this.freelancerArr.prefix);
     this.personalDetailsForm.get('firstName').setValue(this.freelancerArr.firstName);
@@ -581,63 +542,6 @@ export class EditComponent implements OnInit {
     this.personalDetailsForm.get('lastName').setValue(this.freelancerArr.lastName);
   }
 
-
-
-
-  /**
-   * @name getAllEducationCat
-   * @description get API for all education category of independent prof 
-   */
-  // getAllEducationCat() {
-  //   this.__profileService.getFreelancerEduCat().then((resData: any) => {
-  //     this.eduCatArr = resData;
-  //   })
-  // }
-
-  /**
-   * @method getAllEducation
-   * @param eduCat_id
-   * @description get all education values based on selected education category id.
-   */
-  // setEduCatByID(eduCat_id) {
-  //   this.__profileService.getFreelancerEducname(eduCat_id).then((resData: any) => {
-  //     this.eduArr = resData;
-  //   })
-  // }
-
-  /**
-* @method getAllEducation
-* @param eduCat_id
-* @description get all education values based on selected education category id.
-*/
-
-
-  // setEduListArrByCatId(eduCat_id, i) {
-  //   this.eduListArrbyId[eduCat_id] = this.eduTypeArr.filter((item) => item.eduCatId == eduCat_id);
-  //   this.qualificationDetailsForm.get('qualification')['controls'][i].patchValue({ eduCatId: eduCat_id, eduTypeId: '' });
-
-  // }
-
-  /**
-   * @method getSkillsByID
-   * @param skill_cat_id
-   * @description get all education category values
-   */
-  // getSkillsByID(skill_cat_id) {
-  //   this.__profileService.getFreelancerSkills(skill_cat_id).then((resData: any) => {
-  //     this.skills = resData;
-  //   })
- // }
-
-  getAllSkillCategory() {
-    // this.__profileService.getFreelancerCategory().then((resData: any) => {
-    //   this.categ = resData;
-    //   console.log("Skill Category", this.categ);
-
-    // })
-  }
-
-  
 
   /**
    * @method setCountryID

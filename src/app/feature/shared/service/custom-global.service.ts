@@ -119,6 +119,14 @@ export class CustomGlobalService {
     }
   }
 
+  async getDocumentList() {
+    try {
+      let res = await this.__http.get(`${SPRING_URL}/master/document-types`, httpOptions).toPromise();
+      return res;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
   async getAvgRateForSkill(country:any , skill:any) {
     try {
       const parameters = "country="+country+"&"+"skill="+skill;
