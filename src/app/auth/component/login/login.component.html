@@ -13,44 +13,41 @@
             <input type="text" formControlName="email" name="email" id="email" value="" required />
             <label for="email" class="form-label">Email</label>
 
-            <!-- <div
-              *ngIf="submitted ||  formValidation.email.invalid && (formValidation.email.dirty || formValidation.email.touched)"
+            <div
+              *ngIf="submitted || formValidation.email.invalid && (formValidation.email.dirty || formValidation.email.touched)"
               class="text-danger error-msg">
 
-              <div *ngIf="formValidation.email.errors.required">
+              <div *ngIf="formValidation.email.errors?.required">
                 Email is required.
               </div>
 
-              <div *ngIf="formValidation.email.errors.email">
+              <div *ngIf="formValidation.email.errors?.email">
                 Require valid Email address.
               </div>
-            </div> -->
+            </div>
           </div>
 
           <div class="form-group form-input">
             <input type="password" formControlName="password" name="password" id="password" value="" required
               (keyup.enter)="focusableSubmit.click()" />
             <label for="password" class="form-label">Password</label>
-            <!-- <div
+            <div
               *ngIf="submitted || formValidation.password.invalid && (formValidation.password.dirty || formValidation.password.touched)"
               class="text-danger error-msg">
 
-              <div *ngIf="formValidation.password.errors.required">
+              <div *ngIf="formValidation.password.errors?.required">
                 Password is required.
               </div>
 
-              <div *ngIf="formValidation.password.errors.minLength">
+              <div *ngIf="formValidation.password.errors?.minLength">
                 Password minimum 8 characters.
               </div>
 
-              <div *ngIf="formValidation.password.errors.maxLength">
+              <div *ngIf="formValidation.password.errors?.maxLength">
                 Password minimum 15 characters long.
               </div>
-            </div> -->
+            </div>
           </div>
-
-          <br>
-          <br>
           <!-- <div class="checkbox"> -->
           <button type="button" class="btn" #focusableSubmit id="btn-30" (click)="onSubmit()">Login</button>
           <a id="forgetPassword"><i>Forgot Password ?</i></a>
@@ -58,7 +55,6 @@
           <button type="button" class="btn" id="btn-70" [routerLink]="['/auth/auth/uport-login']">Login (
             Passwordless)</button>
           <!-- </div> -->
-
         </form>
         <label id="option"> Don't have an account? </label>
         <div class="row">
@@ -71,7 +67,6 @@
               Passwordless )</button>
           </div>
         </div>
-
       </div>
     </div>
   </div>

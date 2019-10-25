@@ -84,7 +84,6 @@ export class AuthService {
   }
 
   async saveSignUpData(user: any): Promise<any> {
-
     try {
       let result = await this.__http.post(`${SPRING_URL}/auth/signup`, user, httpOptions).toPromise();
       return result;
@@ -103,8 +102,6 @@ export class AuthService {
   }
 
   async updateUserData(payload: any): Promise<any> {
-    console.log("*********update Payload******** ", payload);
-
     const httpOptions = {
       headers: new HttpHeaders({     
         'Content-Type': 'application/json',
