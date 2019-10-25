@@ -3,8 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../shared/service/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { EventSourceService } from '../../../shared/service/event-source.service'
-import { SPRING_URL } from '../../../constant/constant-url';
+import { ChatWindowService } from 'src/app/feature/chat-box/service/chat-window.service';
 
 @Component({
   selector: 'app-login',
@@ -38,7 +37,7 @@ export class LoginComponent implements OnInit {
     private __authService: AuthService,
     private __router: Router,
     private toastr: ToastrService,
-    private __eventSourceService: EventSourceService) { }
+    private __eventSourceService: ChatWindowService) { }
 
   ngOnInit() {
     this.valData();
@@ -124,7 +123,6 @@ export class LoginComponent implements OnInit {
    */
   getConnectWithServer() {
     this.__eventSourceService.getServerSentEvent().subscribe((eventData) => {
-      console.log("Servcer Event Connect", eventData);
       this.toastr.success('You can chat!!! ');
     });
   }

@@ -26,11 +26,11 @@ export class EventSourceService {
     private __zone: NgZone
   ) { }
 
-  getServerSentEvent() {
+  gerttServerSentEvent() {
     // this.eventURL = this.__http.post(`${SPRING_URL}/event/chat`, httpOptions);
     // console.log("fkghkfdkgjhfdh", this.eventURL);
-    this.eventURL = `${SPRING_URL}/memory/chat`;
-    this.eventName = 'second';
+    this.eventURL = `${SPRING_URL}/event/chat`;
+    this.eventName = 'translation';
     return Observable.create(observer => {
       // const eventSource = this.__sseService.getEventSource(this.eventURL);
       const eventSource = new EventSource(this.eventURL);

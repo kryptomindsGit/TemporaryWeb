@@ -64,7 +64,8 @@
                     <div class="mesgs">
                         <div class="msg_history">
 
-                            <div *ngFor="let msgs of newResMessage; let i=index">
+                            <!-- <div *ngIf="employer"> -->
+                            <!-- <div *ngFor="let msgs of newResMessage; let i=index">
                                 <div *ngFor="let msg of msgs.sender; let i=index">
                                     <div class="outgoing_msg">
                                         <div class="outgoing_msg_img">
@@ -73,7 +74,6 @@
                                         </div>
                                         <div class="sent_msg bubble-blue you">
                                             <p>{{msg}}</p>
-                                            <!-- <span class="time_date"> {{msg.date | date:'shortTime'}}</span> -->
                                         </div>
                                     </div>
                                 </div>
@@ -91,7 +91,38 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div> -->
+                            <!-- </div> -->
+                            <!-- <div *ngIf="freelancer"> -->
+                            <div *ngFor="let msgs of newResMessage; let i=index">
+                                <div *ngFor="let msg of msgs.sender; let i=index">
+                                    <div class="outgoing_msg">
+                                        <div class="outgoing_msg_img">
+                                            <img style="width: 30px; height: 30px;" class="rounded-circle"
+                                                src="../../../assets/images/jothipawar.jpg" alt="sunil">
+                                        </div>
+                                        <div class="sent_msg bubble-blue you">
+                                            <p>{{msg.eventResponse.originalText}}</p>
+                                            <!-- <span class="time_date"> {{msg.date | date:'shortTime'}}</span> -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div *ngFor="let msg of msgs.receiver; let i=index">
+                                    <div class="incoming_msg">
+                                        <div class="incoming_msg_img">
+                                            <img style="width: 30px; height: 30px;" class="rounded-circle"
+                                                src="../../../assets/images/akhshay.png" alt="sunil">
+                                        </div>
+                                        <div class="received_msg">
+                                            <div class="received_withd_msg bubble me">
+                                                <p>{{msg.eventResponse.result.translatedText}} </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <!-- </div> -->
                         </div>
                         <div class="type_msg">
                             <div class="input_msg_write">

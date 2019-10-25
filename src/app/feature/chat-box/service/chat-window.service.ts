@@ -27,76 +27,79 @@ export class ChatWindowService {
   tokenAuth: any;
   EVENT_URL: any;
   eventName: any;
+  springurl: any;
+  myData: any;
 
   constructor(
     private __http: HttpClient,
-    private zone: NgZone
+    private __zone: NgZone
   ) {
 
     this.EVENT_URL = `${SPRING_URL}/event/chat`;
-    this.zone = new NgZone({ enableLongStackTrace: false });
+    this.__zone = new NgZone({ enableLongStackTrace: false });
     this.tokenAuth = localStorage.getItem('userAuthToken');
   }
 
   // POST API call
   async senderUserMessage(senderMessage: any) {
     try {
-      console.log("Req Data:", senderMessage);
-      let res = await this.__http.post(`${SPRING_URL}/translation`, senderMessage).toPromise();
+      let res = await this.__http.post(`${SPRING_URL}/translation?`, senderMessage).toPromise();
       return res;
     } catch (error) {
       await this.handleError(error);
     }
   }
 
-
-  eventListenWatch(): Observable<object> {
-    return Observable.create((observer) => {
+  getServerSentEvent() {
+    // this.eventURL = this.__http.post(`${SPRING_URL}/event/chat`, httpOptions);
+    // console.log("fkghkfdkgjhfdh", this.eventURL);
+    this.EVENT_URL = `${SPRING_URL}/event/chat`;
+    this.eventName = 'translation';
+    return Observable.create(observer => {
+      // const eventSource = this.__sseService.getEventSource(this.eventURL);
       const eventSource = new EventSource(this.EVENT_URL);
-      // this.eventName = 'receiver3';
-      // var post_request = new XMLHttpRequest();
-      // eventSource.open("POST", this.EVENT_URL);
-      // eventSource.setRequestHeader("Content-Type", "application/json");
-      // eventSource.addEventListener(this.eventName, (event: any) => this.zone.run(() => {
-      //   console.log("EVENTNAME fdgdfgfdgfd:", event);
-      //   observer.next(JSON.parse(event.data));
-      //   eventSource.close();
-      // }));
-      // eventSource.onopen = (event) => this.zone.run(() => {
-      //   console.log("EVENT:", event);
-      //   observer.next(JSON.parse(event.data));
-      //   eventSource.close();
-      // });
-      eventSource.onmessage = (event) => this.zone.run(() => {
-        console.log("EVENT jhdfjsdkhfkjhdskfh:", event);
+
+      eventSource.addEventListener(this.eventName, (event: any) => this.__zone.run(() => {
+        console.log("on addEventListener function", event.data);
+        // this.myData = JSON.parse(event.data);
         observer.next(JSON.parse(event.data));
-        eventSource.close();
-      });
-      eventSource.onerror = error => this.zone.run(() => {
-        // console.log("TEST dsgkjdsbngkdsfb");
-        if (eventSource.readyState === eventSource.CLOSED) {
-          // console.log('The stream has been closed by the server.');
-          eventSource.close();
-          observer.complete();
-        } else {
-          observer.error(error);
-        }
-      });
+        // observer.next(event.data);
+        // eventSource.close();
+
+      }));
+
+      // eventSource.onmessage = (event: any) => {
+      //   this.__zone.run(() => {
+      //     console.log("on message function", event.data);
+      //     observer.next(event);
+      //     // observer.next(JSON.parse(event.data));
+      //     // eventSource.close();
+      //   })
+      // }
+
+      // eventSource.onopen = (event: any) => {
+      //   this.__zone.run(() => {
+      //     observer.next(event);
+      //     // observer.next(JSON.parse(event.data));
+      //     eventSource.close();
+      //     console.log("on open function", event);
+      //   })
+      // }
+
+      eventSource.onerror = error => {
+        this.__zone.run(() => {
+          if (eventSource.readyState === eventSource.CLOSED) {
+            console.log("on error function");
+            // eventSource.close();
+            observer.complete();
+          } else {
+            observer.error(error);
+          }
+        })
+      }
       return () => eventSource.close();
-    });
+    })
   }
-
-
-
-  // GET API call
-  // async receiverUserMessage() {
-  //   try {
-  //     let res = await this.__http.get(`${SPRING_URL}/translate/`, this.httpOptions).toPromise();
-  //     return res;
-  //   } catch (error) {
-  //     await this.handleError(error);
-  //   }
-  // }
 
   // Error Handler
   handleError(error) {
