@@ -24,6 +24,8 @@ export class ChatBoxComponent implements OnInit {
   respObject: any = [];
   evtRespObject: any = [];
   newResMessage: any = [];
+  senderMessage: any = [];
+  receiverMessage: any = [];
   messageDetails: any = [];
   public eventName: any;
   public URL: any;
@@ -100,21 +102,43 @@ export class ChatBoxComponent implements OnInit {
 
       this.respObject.push(eventData);
 
-      if (this.messageDetails.sender == this.jwtData.email) {
-        console.log("email id same");
-        this.sendUser = true;
-        this.receiverUser = false;
-        this.newResMessage = [
-          { messages: [...this.respObject] }
-        ];
-      } else if (this.messageDetails.sender != this.jwtData.email) {
-        console.log("not matched");
-        this.sendUser = false;
-        this.receiverUser = true;
-        this.newResMessage = [
-          { messages: [...this.respObject] }
-        ];
+      if (this.messageDetails.sender) {
+        if (this.messageDetails.sender == this.jwtData.email) {
+          console.log("email id same");
+          this.sendUser = true;
+          this.receiverUser = false;
+          this.newResMessage = [
+            { messages: [...this.respObject] }
+          ];
+        }
+        else {
+          console.log("not matched");
+          this.sendUser = false;
+          this.receiverUser = true;
+          this.newResMessage = [
+            { messages: [...this.respObject] }
+          ];
+        }
+      } else {
+        if (this.messageDetails.sender != this.jwtData.email) {
+          console.log("email id not same");
+          this.sendUser = false;
+          this.receiverUser = true;
+          this.newResMessage = [
+            { messages: [...this.respObject] }
+          ];
+        }
+        else {
+          console.log("not matched");
+          this.sendUser = true;
+          this.receiverUser = false;
+          this.newResMessage = [
+            { messages: [...this.respObject] }
+          ];
+        }
+
       }
+
     });
   }
 }
