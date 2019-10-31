@@ -24,6 +24,7 @@ export class ChatBoxComponent implements OnInit {
   respObject: any = [];
   evtRespObject: any = [];
   newResMessage: any = [];
+  messageDetails: any = [];
   public eventName: any;
   public URL: any;
   public tagId: string;
@@ -31,6 +32,10 @@ export class ChatBoxComponent implements OnInit {
   sendMsg: any;
   greeting: any;
   name: string;
+
+  sendUser: boolean = false;
+  receiverUser: boolean = false;
+
 
   emailId: string;
   // sendMessage: any;
@@ -71,14 +76,14 @@ export class ChatBoxComponent implements OnInit {
     // this.reqObject.push(messages);
 
     console.log("Send msg:", this.reqObject)
-    let messageDetails = {
+    this.messageDetails = {
       sourceLanguageCode: "en",
       targetLanguageCode: "hi",
       text: messages,
       sender: this.jwtData.email
     };
 
-    this.__chatboxService.senderUserMessage(messageDetails).then(
+    this.__chatboxService.senderUserMessage(this.messageDetails).then(
       (resData) => {
         // this.respObject.push(resData);
       },
@@ -95,24 +100,21 @@ export class ChatBoxComponent implements OnInit {
 
       this.respObject.push(eventData);
 
-      // for (let i = 0; i < this.respObject.length; i++) {
-      //   this.receiverEmail = this.respObject[i].eventResponse.sender;
-      //   console.log("Current User:", this.receiverEmail)
-      // }
-      // this.receiverEmail = this.respObject.eventResponse.sender;
-
-      // if (this.receiverEmail == this.jwtData.email) {
-      //   console.log("email id same");
-      //   // this.resObject = this.respObject;
-      // } else {
-      //   console.log("not matched");
-      this.newResMessage = [
-        { sender: [...this.respObject], receiver: [...this.respObject] }
-      ];
-      console.log("Response data: ", this.newResMessage);
-      // }
-
-
+      if (this.messageDetails.sender == this.jwtData.email) {
+        console.log("email id same");
+        this.sendUser = true;
+        this.receiverUser = false;
+        this.newResMessage = [
+          { messages: [...this.respObject] }
+        ];
+      } else if (this.messageDetails.sender != this.jwtData.email) {
+        console.log("not matched");
+        this.sendUser = false;
+        this.receiverUser = true;
+        this.newResMessage = [
+          { messages: [...this.respObject] }
+        ];
+      }
     });
   }
 }
