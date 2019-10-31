@@ -79,9 +79,9 @@
                                         <td>
                                             <li>Address Line 1 : {{freeDetailsArr.addressLine1}}</li>
                                             <li>Address Line 2 : {{freeDetailsArr.addressLine2}}</li>
-                                            <li>City : {{freeDetailsArr.city.cityName}}, State :
-                                                {{freeDetailsArr.province.stateName}},
-                                                Country : {{freeDetailsArr.country.countryName}}</li>
+                                            <li>City : {{cityName}}, State :
+                                                {{stateName}},
+                                                Country : {{countryName}}</li>
                                             <li>Postal Code : {{freeDetailsArr.postalCode}}</li>
                                         </td>
                                     </tr>
@@ -167,7 +167,7 @@
                                         <td>
                                             <div *ngFor="let orag of freelancerOrgArr; let i=index">
                                                 <hr *ngIf="i>0">
-                                                <li>Name : {{ orag.org_name }}</li>
+                                                <li>Name : {{ orag.organization}}</li>
                                                 <li>Designation : {{ orag.designation }}</li>
                                                 <li>Start Date : {{ orag.startDate | date : 'dd MMM yyyy' }}</li>
                                                 <li>End Date : {{ orag.endDate | date : 'dd MMM yyyy' }}</li>

@@ -104,6 +104,7 @@ export class EditComponent implements OnInit {
   public skillCatArr : any = []; 
   public skillArrBySkillCatList : any = [];
   public eduTypeArrByEduCatList : any = [];
+  public languageArr: any = [];
 
 
 
@@ -167,8 +168,8 @@ export class EditComponent implements OnInit {
     await this.getSkillTypeList();
     await this.getCurrencyList();
     await this.getPersonalAttributes();
-    await this.getDocumentsTypeCat(1);
-
+    // await this.getDocumentsTypeCat(1);
+    this.getDocumentList();
     this.getFreelancerDetails();
   }
   
@@ -197,6 +198,9 @@ export class EditComponent implements OnInit {
         Validators.required, Validators.maxLength(8), Validators.minLength(6),
         Validators.pattern("^[0-9]*$")
       ])],
+      preferredPaymentMethod:['', Validators.required],
+      availabilityForWork:['', Validators.required],
+      languagePreferred:['', Validators.required],
       documents_personal: this.__fb.array([]),
     });
   }
@@ -309,7 +313,20 @@ export class EditComponent implements OnInit {
       this.skills = resData.responseObject;
     })
   }
-  
+
+  getLanguageList(){
+    this.__customGlobalService.getLanguageList().then((resData: any) => {
+      this.languageArr = resData.responseObject;       
+      this.personalDetailsForm.patchValue({
+        languagePreferred: this.freelancerArr.languagePreferred.languageId,
+      });
+    })
+  }
+  getDocumentList(){
+    this.__customGlobalService.getDocumentList().then((resData: any) => {
+      this.docTypeArr = resData.responseObject;
+    })
+  }
   setSkillArrBySkillCatList(skillDomainId){ 
     this.skillArrBySkillCatList = this.skills.filter((item) => item.masterDomain.domainId == skillDomainId);
   }
@@ -321,7 +338,6 @@ export class EditComponent implements OnInit {
   }
 
   async getFreelancerDetails() {
-
     await this.__profileService.getFreelancerByEmail().then((resData: any) => {    
       console.log("Freelancer Data : " ,resData );
       
@@ -358,6 +374,9 @@ export class EditComponent implements OnInit {
         addressLine1: this.freelancerArr.addressLine1,
         addressLine2: this.freelancerArr.addressLine2,
         postalCode: this.freelancerArr.postalCode,
+        languagePreferred:this.freelancerArr.languagePreferred,
+        preferredPaymentMethod:this.freelancerArr.preferredPaymentMethod,
+        availabilityForWork:this.freelancerArr.availabilityForWork
       });
 
       this.workExpDetailsForm.patchValue({
@@ -370,6 +389,7 @@ export class EditComponent implements OnInit {
       await this.getCountryList();
       await this.getStateList();
       await this.getCityList();
+      await this.getLanguageList();
     }
   }
 
@@ -381,16 +401,13 @@ export class EditComponent implements OnInit {
 ;
         this.qualfArr.push(this.__fb.group(
           {
-            eduDomainName: this.freeEducationArr[index].masterEduDomain.eduDomainName,
-            educationTypeName: this.freeEducationArr[index].masterEduType.educationTypeName,
             eduCatId: this.freeEducationArr[index].masterEduDomain.eduDomainId,
             eduTypeId: this.freeEducationArr[index].masterEduType.educationTypeId,
             university: this.freeEducationArr[index].university,
             passingYear: this.freeEducationArr[index].passingYear,
             percentage: this.freeEducationArr[index].percentage,
             grade: this.freeEducationArr[index].grade,
-            // doc_name: docName,
-            edu_id: this.freeEducationArr[index].edu_id
+            educationDetailId: this.freeEducationArr[index].educationDetailId
           }
         ));
         this.setEduTypeListByEduCategoryId(this.freeEducationArr[index].masterEduDomain.eduDomainId);
@@ -424,7 +441,7 @@ export class EditComponent implements OnInit {
         this.freeStrengthArr.forEach(item => {
           this.strengthArr.push(
             this.__fb.group({
-              strength: item.personalAttribute.attributeName,
+              strength: item.personalAttribute.attributeId,
               strengthId: item.strengthId
             })
           )
@@ -439,7 +456,7 @@ export class EditComponent implements OnInit {
       this.freeWeaknessArr.forEach(item => {
         this.weaknessArr.push(
           this.__fb.group({
-            weakness: item.personalAttribute.attributeName,
+            weakness: item.personalAttribute.attributeId,
             weaknessId: item.weaknessId
           })
         )
@@ -643,6 +660,7 @@ export class EditComponent implements OnInit {
         passingYear: '',
         percentage: '',
         grade: '',
+        documentTypeId:'',
         doc_name: ''
       }));
   }
@@ -861,6 +879,91 @@ export class EditComponent implements OnInit {
     console.log(this.documentWorkArray);
   }
 
+  updatePersonalDetailForm(){
+    const personalData = {
+      emailId: this.email,
+      prefix: this.personalDetailsForm.controls.prefix.value,
+      firstName: this.personalDetailsForm.controls.firstName.value,
+      middleName: this.personalDetailsForm.controls.middleName.value,
+      lastName: this.personalDetailsForm.controls.lastName.value,
+      addressLine1: this.personalDetailsForm.controls.addressLine1.value,
+      addressLine2: this.personalDetailsForm.controls.addressLine2.value,
+      country: this.personalDetailsForm.controls.country.value,
+      province: this.personalDetailsForm.controls.province.value,
+      city: this.personalDetailsForm.controls.city.value,
+      postalCode: this.personalDetailsForm.controls.postalCode.value,
+      preferredPaymentMethod:this.personalDetailsForm.controls.preferredPaymentMethod.value,
+      availabilityForWork:this.personalDetailsForm.controls.availabilityForWork.value,
+      languagePreferred:this.personalDetailsForm.controls.languagePreferred.value.languageId,
+      freelancerDocuments: this.documentPersonalArray
+    }
+
+    console.log("Personal Details to be sent : \n" , personalData);
+    // this.__profileService.updateProfileInfo(personalData).then((resData: any) => {
+    //   this.loading = false;
+    //   if (resData.status == 'success') {
+    //     this.toastr.success("Profile added Successfully");
+    //   }
+    //   else if (resData.responseObjec.message == 'error') {
+    //     this.toastr.error("Profile not saved");
+    //   }
+    // });
+  }
+
+  updateEducationDetailForm(){
+    const eductionPayload = {
+      educationDetails :  this.qualificationDetailsForm.controls.qualification.value,
+      freelancerDocuments: this.documentQualArray
+    }
+
+    console.log("personalData" , eductionPayload);
+
+    // this.__profileService.updateEducationDetails(eductionPayload).then((resData: any) => {
+    //     this.loading = false;
+    //     if (resData.status == 'success') {
+    //       this.toastr.success("Profile added Successfully");
+    //     }
+    //     else if (resData.responseObjec.message == 'error') {
+    //       this.toastr.error("Profile not saved");
+    //     }
+    // });
+  }
+
+  updateOrganizationDetailForm(){
+    let portfolioArray = [];
+    let i;
+    for(i = 0 ; i < this.workExpDetailsForm.controls.portfolios.value.length ; i++){
+      portfolioArray[i]=this.workExpDetailsForm.controls.portfolios.value[i].portfolio;
+    }
+    let strengthArr = [];
+    for(i = 0 ; i < this.workExpDetailsForm.controls.strength.value.length ; i++){
+      strengthArr[i]=this.workExpDetailsForm.controls.strength.value[i].strength;
+    }
+    let weaknessArr = [];
+    for(i = 0 ; i <  this.workExpDetailsForm.controls.weakness.value.length ; i++){
+      weaknessArr[i]=this.workExpDetailsForm.controls.weakness.value[i].weakness;
+    }
+    const orgDetailsPayload = {
+      freelancerOrgDetails : this.workExpDetailsForm.controls.org_details.value,
+      portfolio: portfolioArray,
+      freelancerDocument : this.documentWorkArray,
+      areaOfExpertise : this.workExpDetailsForm.controls.area_of_expertise.value,
+      personalAttributeStrength :  strengthArr,
+      personalAttributeWeakness : weaknessArr,
+    }
+
+    console.log("personalData" , orgDetailsPayload);
+
+    this.__profileService.updateWorkDetails(orgDetailsPayload).then((resData: any) => {
+        this.loading = false;
+        if (resData.responseObjec.message == 'success') {
+          this.toastr.success("Profile added Successfully");
+        }
+        else if (resData.status == 'error') {
+          this.toastr.error("Profile not saved");
+        }
+    });
+  }
 
 
   /**
@@ -870,109 +973,109 @@ export class EditComponent implements OnInit {
 
   onSubmitDetails() {
 
-    let documentArr: any = [
-      'documentUrl',
-      'documentTypeId'
-    ];
+    // let documentArr: any = [
+    //   'documentUrl',
+    //   'documentTypeId'
+    // ];
 
-    let qualitiesArr: any = [
-      'strength',
-      'weakness'
-    ];
+    // let qualitiesArr: any = [
+    //   'strength',
+    //   'weakness'
+    // ];
 
-    console.log(documentArr.legth);
+    // console.log(documentArr.legth);
 
 
-    documentArr = [...this.documentPersonalArray, ...this.documentWorkArray, ...this.documentQualArray];
-    console.log(documentArr);
+    // documentArr = [...this.documentPersonalArray, ...this.documentWorkArray, ...this.documentQualArray];
+    // console.log(documentArr);
 
-    qualitiesArr = [
-      {
-        strengths: this.workExpDetailsForm.controls.strength.value
-      },
-      {
-        weaknesses: this.workExpDetailsForm.controls.weakness.value
-      },
-    ];
-    console.log(qualitiesArr);
-    const freelancerProfilePayload = {};
-    if (this.isUportUser == "false") {
-      const freelancerProfilePayload = {
-        cognito_id: this.congnitoID,
-        email: this.email,
-        prefix: this.personalDetailsForm.controls.prefix.value,
-        firstName: this.personalDetailsForm.controls.firstName.value,
-        middleName: this.personalDetailsForm.controls.middleName.value,
-        lastName: this.personalDetailsForm.controls.lastName.value,
-        addressLine1: this.personalDetailsForm.controls.addressLine1.value,
-        addressLine2: this.personalDetailsForm.controls.addressLine2.value,
-        country: this.personalDetailsForm.controls.country.value,
-        province: this.personalDetailsForm.controls.province.value,
-        city: this.personalDetailsForm.controls.city.value,
-        postalCode: this.personalDetailsForm.controls.postalCode.value,
-        documents: documentArr,
-        edu_details: this.qualificationDetailsForm.controls.qualification.value,
-        org_details: this.workExpDetailsForm.controls.org_details.value,
-        qualities: qualitiesArr,
-        portfolio: this.workExpDetailsForm.controls.portfolios.value,
-        references: this.workExpDetailsForm.controls.references.value,
-        area_of_experties: this.workExpDetailsForm.controls.area_of_expertise.value,
-        psychomatric: this.workExpDetailsForm.controls.psychomatric.value,
-        is_interviewer: this.workExpDetailsForm.controls.isFreelancer.value,
-        skills: this.skillRateArr.value,
-        uid: 0
-      }
-      console.log('Freelancer Payload Value : ', freelancerProfilePayload);
-      this.__profileService.updateFreelancer(this.email, freelancerProfilePayload).then((resData: any) => {
-        console.log("Resp Data:", resData);
-        if (resData.status == 'success') {
-          this.toastr.success("Profile added Successfully");
-          this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
-        }
-        else if (resData.status == 'error') {
-          this.toastr.error("Profile not saved");
-        }
-      });
-    }
-    else {
+    // qualitiesArr = [
+    //   {
+    //     strengths: this.workExpDetailsForm.controls.strength.value
+    //   },
+    //   {
+    //     weaknesses: this.workExpDetailsForm.controls.weakness.value
+    //   },
+    // ];
+    // console.log(qualitiesArr);
+    // const freelancerProfilePayload = {};
+    // if (this.isUportUser == "false") {
+    //   const freelancerProfilePayload = {
+    //     cognito_id: this.congnitoID,
+    //     email: this.email,
+    //     prefix: this.personalDetailsForm.controls.prefix.value,
+    //     firstName: this.personalDetailsForm.controls.firstName.value,
+    //     middleName: this.personalDetailsForm.controls.middleName.value,
+    //     lastName: this.personalDetailsForm.controls.lastName.value,
+    //     addressLine1: this.personalDetailsForm.controls.addressLine1.value,
+    //     addressLine2: this.personalDetailsForm.controls.addressLine2.value,
+    //     country: this.personalDetailsForm.controls.country.value,
+    //     province: this.personalDetailsForm.controls.province.value,
+    //     city: this.personalDetailsForm.controls.city.value,
+    //     postalCode: this.personalDetailsForm.controls.postalCode.value,
+    //     documents: documentArr,
+    //     edu_details: this.qualificationDetailsForm.controls.qualification.value,
+    //     org_details: this.workExpDetailsForm.controls.org_details.value,
+    //     qualities: qualitiesArr,
+    //     portfolio: this.workExpDetailsForm.controls.portfolios.value,
+    //     references: this.workExpDetailsForm.controls.references.value,
+    //     area_of_experties: this.workExpDetailsForm.controls.area_of_expertise.value,
+    //     psychomatric: this.workExpDetailsForm.controls.psychomatric.value,
+    //     is_interviewer: this.workExpDetailsForm.controls.isFreelancer.value,
+    //     skills: this.skillRateArr.value,
+    //     uid: 0
+    //   }
+    //   console.log('Freelancer Payload Value : ', freelancerProfilePayload);
+    //   this.__profileService.updateFreelancer(this.email, freelancerProfilePayload).then((resData: any) => {
+    //     console.log("Resp Data:", resData);
+    //     if (resData.status == 'success') {
+    //       this.toastr.success("Profile added Successfully");
+    //       this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
+    //     }
+    //     else if (resData.status == 'error') {
+    //       this.toastr.error("Profile not saved");
+    //     }
+    //   });
+    // }
+    // else {
 
-      const freelancerProfilePayload = {
-        cognito_id: this.email,
-        email: this.email,
-        prefix: this.personalDetailsForm.controls.prefix.value,
-        firstName: this.personalDetailsForm.controls.firstName.value,
-        middleName: this.personalDetailsForm.controls.middleName.value,
-        lastName: this.personalDetailsForm.controls.lastName.value,
-        addressLine1: this.personalDetailsForm.controls.addressLine1.value,
-        addressLine2: this.personalDetailsForm.controls.addressLine2.value,
-        country: this.personalDetailsForm.controls.country.value,
-        province: this.personalDetailsForm.controls.province.value,
-        city: this.personalDetailsForm.controls.city.value,
-        postalCode: this.personalDetailsForm.controls.postalCode.value,
-        documents: documentArr,
-        edu_details: this.qualificationDetailsForm.controls.qualification.value,
-        org_details: this.workExpDetailsForm.controls.org_details.value,
-        qualities: qualitiesArr,
-        portfolio: this.workExpDetailsForm.controls.portfolios.value,
-        references: this.workExpDetailsForm.controls.references.value,
-        area_of_experties: this.workExpDetailsForm.controls.area_of_expertise.value,
-        psychomatric: this.workExpDetailsForm.controls.psychomatric.value,
-        is_interviewer: this.workExpDetailsForm.controls.isFreelancer.value,
-        skills: this.skillRateArr.value,
-        uid: 0
-      }
-      console.log('Freelancer Payload Value : ', freelancerProfilePayload);
-      this.__profileService.updateFreelancer(this.email, freelancerProfilePayload).then((resData: any) => {
-        console.log("Resp Data:", resData);
-        if (resData.status == 'success') {
-          this.toastr.success("Profile added Successfully");
-          this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
-        }
-        else if (resData.status == 'error') {
-          this.toastr.error("Profile not saved");
-        }
-      });
-    }
+    //   const freelancerProfilePayload = {
+    //     cognito_id: this.email,
+    //     email: this.email,
+    //     prefix: this.personalDetailsForm.controls.prefix.value,
+    //     firstName: this.personalDetailsForm.controls.firstName.value,
+    //     middleName: this.personalDetailsForm.controls.middleName.value,
+    //     lastName: this.personalDetailsForm.controls.lastName.value,
+    //     addressLine1: this.personalDetailsForm.controls.addressLine1.value,
+    //     addressLine2: this.personalDetailsForm.controls.addressLine2.value,
+    //     country: this.personalDetailsForm.controls.country.value,
+    //     province: this.personalDetailsForm.controls.province.value,
+    //     city: this.personalDetailsForm.controls.city.value,
+    //     postalCode: this.personalDetailsForm.controls.postalCode.value,
+    //     documents: documentArr,
+    //     edu_details: this.qualificationDetailsForm.controls.qualification.value,
+    //     org_details: this.workExpDetailsForm.controls.org_details.value,
+    //     qualities: qualitiesArr,
+    //     portfolio: this.workExpDetailsForm.controls.portfolios.value,
+    //     references: this.workExpDetailsForm.controls.references.value,
+    //     area_of_experties: this.workExpDetailsForm.controls.area_of_expertise.value,
+    //     psychomatric: this.workExpDetailsForm.controls.psychomatric.value,
+    //     is_interviewer: this.workExpDetailsForm.controls.isFreelancer.value,
+    //     skills: this.skillRateArr.value,
+    //     uid: 0
+    //   }
+    //   console.log('Freelancer Payload Value : ', freelancerProfilePayload);
+    //   this.__profileService.updateFreelancer(this.email, freelancerProfilePayload).then((resData: any) => {
+    //     console.log("Resp Data:", resData);
+    //     if (resData.status == 'success') {
+    //       this.toastr.success("Profile added Successfully");
+    //       this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view', this.email]);
+    //     }
+    //     else if (resData.status == 'error') {
+    //       this.toastr.error("Profile not saved");
+    //     }
+    //   });
+    // }
   }
 
   ShowNextButton(index) {

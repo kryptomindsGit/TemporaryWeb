@@ -34,6 +34,9 @@ export class ViewComponent implements OnInit {
   public freeEduArr: any = [];
   public freelancerOrgArr: any = [];
   public freelancerPortArr: any = [];
+  cityName: any;
+  stateName: any;
+  countryName: any;
 
   constructor(
     private __fb: FormBuilder,
@@ -81,7 +84,10 @@ export class ViewComponent implements OnInit {
       this.strengthArr = resData.responseObject.strength,
       this.weaknessArr = resData.responseObject.weakness,
       this.freeEduArr = resData.responseObject.freelancerEdu
-      this.freeDocsArr = resData.responseObject.freelancerDocument
+      this.freeDocsArr = resData.responseObject.freelancerDocument,
+      this.cityName = resData.responseObject.freelancerProfile.city.cityName,
+      this.stateName = resData.responseObject.freelancerProfile.province.stateName,
+      this.countryName = resData.responseObject.freelancerProfile.country.countryName
     });
   }
 

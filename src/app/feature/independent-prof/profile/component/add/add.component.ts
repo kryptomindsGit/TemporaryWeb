@@ -523,15 +523,15 @@ export class AddComponent implements OnInit {
     }
     console.log("personalData" , personalData);
     
-    // this.__profileService.savePersonalDetails(personalData).then((resData: any) => {
-    //   this.loading = false;
-    //   if (resData.status == 'success') {
-    //     this.toastr.success("Profile added Successfully");
-    //   }
-    //   else if (resData.responseObjec.message == 'error') {
-    //     this.toastr.error("Profile not saved");
-    //   }
-    // });
+    this.__profileService.savePersonalDetails(personalData).then((resData: any) => {
+      this.loading = false;
+      if (resData.status == 'success') {
+        this.toastr.success("Profile added Successfully");
+      }
+      else if (resData.responseObjec.message == 'error') {
+        this.toastr.error("Profile not saved");
+      }
+    });
   }
 
 
@@ -544,15 +544,15 @@ export class AddComponent implements OnInit {
 
     console.log("personalData" , eductionPayload);
 
-    // this.__profileService.saveEducationDetails(eductionPayload).then((resData: any) => {
-    //     this.loading = false;
-    //     if (resData.status == 'success') {
-    //       this.toastr.success("Profile added Successfully");
-    //     }
-    //     else if (resData.responseObjec.message == 'error') {
-    //       this.toastr.error("Profile not saved");
-    //     }
-    // });
+    this.__profileService.saveEducationDetails(eductionPayload).then((resData: any) => {
+        this.loading = false;
+        if (resData.status == 'success') {
+          this.toastr.success("Profile added Successfully");
+        }
+        else if (resData.responseObjec.message == 'error') {
+          this.toastr.error("Profile not saved");
+        }
+    });
   }
 
   saveWorkDetails(){
@@ -581,15 +581,15 @@ export class AddComponent implements OnInit {
 
     console.log("personalData" , orgDetailsPayload);
 
-    // this.__profileService.saveWorkDetails(orgDetailsPayload).then((resData: any) => {
-    //     this.loading = false;
-    //     if (resData.responseObjec.message == 'success') {
-    //       this.toastr.success("Profile added Successfully");
-    //     }
-    //     else if (resData.status == 'error') {
-    //       this.toastr.error("Profile not saved");
-    //     }
-    // });
+    this.__profileService.saveWorkDetails(orgDetailsPayload).then((resData: any) => {
+        this.loading = false;
+        if (resData.responseObjec.message == 'success') {
+          this.toastr.success("Profile added Successfully");
+        }
+        else if (resData.status == 'error') {
+          this.toastr.error("Profile not saved");
+        }
+    });
   }
 
   onSaveSkills(){
