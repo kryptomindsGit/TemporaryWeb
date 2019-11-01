@@ -232,18 +232,18 @@
                                                     <select (change)="setDocTypeCatID($event.target.value)"
                                                         formControlName="documentTypeId" id="document_type" required>
                                                         <!-- <option disabled value="">Document type</option> -->
-                                                        <option id="option_txt" *ngFor="let docType of docTypeArr"
-                                                            [value]="docType.doc_type_id">{{docType.doc_type}}
+                                                        <option id="option_txt" *ngFor="let docType of personalDoc"
+                                                            [value]="docType.documentTypeId">{{docType.documentTypeName}}
                                                         </option>
                                                     </select>
                                                     <label class="form-label" for="document_type">Document type</label>
-                                                    <div *ngIf="documentArr.controls[i].get('documentTypeId').invalid && (documentArr.controls[i].get('documentTypeId').dirty || documentArr.controls[i].get('documentTypeId').touched)"
+                                                    <!-- <div *ngIf="documentArr.controls[i].get('documentTypeId').invalid && (documentArr.controls[i].get('documentTypeId').dirty || documentArr.controls[i].get('documentTypeId').touched)"
                                                         class="text-danger error-msg">
                                                         <div
                                                             [hidden]="!documentArr.controls[i].get('documentTypeId').errors?.required">
                                                             Document type is required.
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                                 <div class="form-group form-input col-4">
                                                     <input type="file" class="document_name" name="chooseFile"
@@ -397,23 +397,22 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                         
-                                                <!-- <div class="form-group form-input col-2">
-                                                    <select (change)="setDocTypeCatID($event.target.value)"
-                                                        formControlName="documentTypeId" id="document_type" required>
-                                                        <option id="option_txt" *ngFor="let docType of docTypeArr"
+<!--                                          
+                                                <div class="form-group form-input col-2">
+                                                    <select formControlName="documentTypeId" id="document_type" required>
+                                                        <option id="option_txt" *ngFor="let docType of educationalDoc"
                                                             [value]="docType.documentTypeId">{{docType.documentTypeName}}
                                                         </option>
                                                     </select>
-                                                    <label class="form-label" for="document_type">Document type</label>
-                                                    <div *ngIf="documentArr.controls[i].get('documentTypeId').invalid && (documentArr.controls[i].get('documentTypeId').dirty || documentArr.controls[i].get('documentTypeId').touched)"
+                                                    <label class="form-label" for="document_type">Document type</label> -->
+                                                    <!-- <div *ngIf="documentArr.controls[i].get('documentTypeId').invalid && (documentArr.controls[i].get('documentTypeId').dirty || documentArr.controls[i].get('documentTypeId').touched)"
                                                         class="text-danger error-msg">
                                                         <div
                                                             [hidden]="!documentArr.controls[i].get('documentTypeId').errors?.required">
                                                             Document type is required.
                                                         </div>
-                                                    </div>
-                                                </div> -->
+                                                    </div> 
+                                            //   </div>-->
                                                 <!-- <div class="form-group form-input col-3">
                                                     <div class="file-upload">
                                                         <div class="file-select">
@@ -449,7 +448,65 @@
 
 
                             </div>
+                            <div formArrayName="documents_educational">
+                                <div class="row">
+                                    <div class="col-11">
+                                        <div *ngFor="let item of educationalArr.controls; let i=index">
+                                            <hr *ngIf="i>0">
+                                            <div class="row" formGroupName="{{i}}">
+                                                <div class="form-group form-input col-4">
+                                                    <select (change)="setDocTypeCatID($event.target.value)"
+                                                        formControlName="documentTypeId" id="document_type" required>
+                                                        <!-- <option disabled value="">Document type</option> -->
+                                                        <option id="option_txt" *ngFor="let docType of educationalDoc"
+                                                            [value]="docType.documentTypeId">{{docType.documentTypeName}}
+                                                        </option>
+                                                    </select>
+                                                    <label class="form-label" for="document_type">Document type</label>
+                                                    <!-- <div *ngIf="documentArr.controls[i].get('documentTypeId').invalid && (documentArr.controls[i].get('documentTypeId').dirty || documentArr.controls[i].get('documentTypeId').touched)"
+                                                        class="text-danger error-msg">
+                                                        <div
+                                                            [hidden]="!documentArr.controls[i].get('documentTypeId').errors?.required">
+                                                            Document type is required.
+                                                        </div>
+                                                    </div> -->
+                                                </div>
+                                                <div class="form-group form-input col-4">
+                                                    <input type="file" class="document_name" name="chooseFile"
+                                                        id="chooseFile" (change)="handleFileInput($event)"
+                                                        formControlName="documentUrl">
+                                                    <div *ngIf="documentArr.controls[i].get('documentUrl').invalid && (documentArr.controls[i].get('documentUrl').dirty || documentArr.controls[i].get('documentUrl').touched)"
+                                                        class="text-danger error-msg">
+                                                        <div
+                                                            [hidden]="!documentArr.controls[i].get('documentUrl').errors?.required">
+                                                            Document name is required.
+                                                        </div>
+                                                    </div>
 
+                                                </div>
+
+                                                <div class=col-2>
+                                                    <input type="button" class="btnBlue" id="upload" value="UPLOAD"
+                                                        (click)="uploadEducationFile()">
+                                                </div>
+                                                <div class="form-group col-2">
+                                                    <button type="button" *ngIf="educationalArr.controls.length > 1"
+                                                        class="btn btnadd" (click)="deleteDocumentEdu(i)">-</button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-1 btnadd-right">
+                                        <div class="form-group col-2">
+                                            <button type="button" class="btn btnaddRight"
+                                                (click)="addDocumentEdu()">+</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
                             <button type="button" class="btnPrevious" (click)="ShowNextButton(1)">Previous</button>
 
                             <button type="button" class="btnNext" (click)="ShowNextButton(3)" (click)="updateEducationDetailForm()">Next</button>
@@ -755,18 +812,18 @@
                                             <div class="row" [formGroupName]="i">
                                                 <div class="form-group form-input col-3">
                                                     <select formControlName="documentTypeId" id="id_doc_type" required>
-
-                                                        <option *ngFor="let docType of docTypeArr"
-                                                            [value]="docType.doc_type_id">{{docType.doc_type}}</option>
+                                                        <option id="option_txt" *ngFor="let docType of professionalDoc"
+                                                        [value]="docType.documentTypeId">{{docType.documentTypeName}}
+                                                    </option>
                                                     </select>
                                                     <label class="form-label" for="id_doc_type">Document type</label>
-                                                    <div *ngIf="workdocumentArr.controls[i].get('documentTypeId').invalid && (workdocumentArr.controls[i].get('documentTypeId').dirty || workdocumentArr.controls[i].get('documentTypeId').touched)"
+                                                    <!-- <div *ngIf="workdocumentArr.controls[i].get('documentTypeId').invalid && (workdocumentArr.controls[i].get('documentTypeId').dirty || workdocumentArr.controls[i].get('documentTypeId').touched)"
                                                         class="text-danger error-msg">
                                                         <div
                                                             [hidden]="!workdocumentArr.controls[i].get('documentTypeId').errors?.required">
                                                             Document type is required.
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                                 <div class="form-group form-input col-5">
                                                     <div class="file-upload">
@@ -776,13 +833,13 @@
                                                                 formControlName="documentUrl">
                                                         </div>
                                                     </div>
-                                                    <div *ngIf="workdocumentArr.controls[i].get('documentUrl').invalid && (workdocumentArr.controls[i].get('documentUrl').dirty || workdocumentArr.controls[i].get('documentUrl').touched)"
+                                                    <!-- <div *ngIf="workdocumentArr.controls[i].get('documentUrl').invalid && (workdocumentArr.controls[i].get('documentUrl').dirty || workdocumentArr.controls[i].get('documentUrl').touched)"
                                                         class="text-danger error-msg">
                                                         <div
                                                             [hidden]="!workdocumentArr.controls[i].get('documentUrl').errors?.required">
                                                             Document name is required.
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                                 <div class=col-2>
                                                     <input type="button" class="btnBlue" id="upload" value="UPLOAD"
@@ -956,7 +1013,7 @@
                     </div>
                     <!-- [disabled]="skillDetailsForm.controls.skillRateArr.controls.pristine || skillDetailsForm.controls.skillRateArr.controls.invalid" -->
                     <button type="button" class="btnPrevious" (click)="ShowNextButton(3)">Previous</button>
-                    <button type="button" class="btnNext" (click)="onSubmitDetails()"
+                    <button type="button" class="btnNext" 
                         [disabled]="skillDetailsForm.invalid" (click)="updateSkill()">Save</button>
 
                 </form>

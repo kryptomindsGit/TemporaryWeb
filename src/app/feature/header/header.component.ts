@@ -65,7 +65,7 @@ export class HeaderComponent implements OnInit {
   userRoleInfo() {
     if (this.userRole == "Freelancer") {
       this.__idptProfileService.getFreelancerByEmail().then((resData: any) => {
-        this.freelancerDetailsArr = resData.responseObject;
+        this.freelancerDetailsArr = resData.responseObject.freelancerProfile;
         if (this.freelancerDetailsArr == null) {
           this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/add']);
         } else {

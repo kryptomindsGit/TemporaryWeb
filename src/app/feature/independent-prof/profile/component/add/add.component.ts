@@ -305,8 +305,6 @@ export class AddComponent implements OnInit {
         passingYear: '',
         percentage: '',
         grade: '',
-        documentTypeId: '',
-        doc_name: ''
       }));
   }
 
@@ -419,6 +417,7 @@ export class AddComponent implements OnInit {
           skillId: skill_id,
           rateHour: '',
           skillExperience: '',
+          expertiseLevel:''
         }
       ));
     }
@@ -442,55 +441,70 @@ export class AddComponent implements OnInit {
 
 
   async uploadPersonalFile() {
-    this.loading = true;
-    this.fileUploadProgress = '0%';
-    await this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
-        this.FileArrData = event;
-        this.loading = false;
-        if (this.FileArrData) {
-          this.toastr.success(this.fileName, "Successfully uploaded");
-          this.documentPersonalArray.push({
-            'documentUrl': this.FileArrData.fileId,
-            'documentTypeId': this.doc_cat_id
-          });
-        } else {
-          this.toastr.error(this.fileName, "File not uploaded");
-        }
-    });
+    
+    this.documentPersonalArray.push({
+      'documentUrl': this.fileName,
+      'documentTypeId': this.doc_cat_id
+  });
+    // this.loading = true;
+    // this.fileUploadProgress = '0%';
+    // await this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
+    //     this.FileArrData = event;
+    //     this.loading = false;
+    //     if (this.FileArrData) {
+    //       this.toastr.success(this.fileName, "Successfully uploaded");
+    //       this.documentPersonalArray.push({
+    //         'documentUrl': this.FileArrData.fileId,
+    //         'documentTypeId': this.doc_cat_id
+    //       });
+    //     } else {
+    //       this.toastr.error(this.fileName, "File not uploaded");
+    //     }
+    // });
   }
 
   uploadEducationFile() {
-    this.loading = true;
-    this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
-      this.FileArrData = event;
-      this.loading = false;
-      if (this.FileArrData) {
-        this.toastr.success(this.fileName, "Successfully uploaded");
-        this.documentQualArray.push({
-          'documentUrl': this.FileArrData.fileId,
-          'documentTypeId': this.doc_cat_id
-        });
-      } else {
-        this.toastr.error(this.fileName, "File not uploaded");
-      }
+
+    this.documentQualArray.push({
+        'documentUrl': this.fileName,
+        'documentTypeId': this.doc_cat_id
     });
+    
+    // this.loading = true;
+    // this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
+    //   this.FileArrData = event;
+    //   this.loading = false;
+    //   if (this.FileArrData) {
+    //     this.toastr.success(this.fileName, "Successfully uploaded");
+    //     this.documentQualArray.push({
+    //       'documentUrl': this.FileArrData.fileId,
+    //       'documentTypeId': this.doc_cat_id
+    //     });
+    //   } else {
+    //     this.toastr.error(this.fileName, "File not uploaded");
+    //   }
+    // });
   }
 
   uploadWorkExpFile() {
-    this.loading = true;
-    this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
-      this.FileArrData = event;
-      this.loading = false;
-      if (this.FileArrData) {
-        this.toastr.success(this.fileName, "Successfully uploaded");
-        this.documentWorkArray.push( {
-          'documentUrl': this.FileArrData.fileId,
-          'documentTypeId': this.doc_cat_id
-        });
-      } else {
-        this.toastr.error(this.fileName, "File not uploaded");
-      }
-    });
+    this.documentWorkArray.push({
+      'documentUrl': this.fileName,
+      'documentTypeId': this.doc_cat_id
+  });
+    // this.loading = true;
+    // this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
+    //   this.FileArrData = event;
+    //   this.loading = false;
+    //   if (this.FileArrData) {
+    //     this.toastr.success(this.fileName, "Successfully uploaded");
+    //     this.documentWorkArray.push( {
+    //       'documentUrl': this.FileArrData.fileId,
+    //       'documentTypeId': this.doc_cat_id
+    //     });
+    //   } else {
+    //     this.toastr.error(this.fileName, "File not uploaded");
+    //   }
+    // });
   }
 
   savePersonalDetailForm(){    
@@ -510,7 +524,9 @@ export class AddComponent implements OnInit {
       availabilityForWork:this.personalDetailForm.controls.availabilityForWork.value,
       languagePreferred:this.personalDetailForm.controls.languagePreferred.value,
       freelancerDocuments: this.documentPersonalArray
-    }    
+    }   
+    console.log("in personal : ",personalData);
+     
     this.__profileService.savePersonalDetails(personalData).then((resData: any) => {
       this.loading = false;
     });
@@ -522,6 +538,8 @@ export class AddComponent implements OnInit {
       educationDetails :  this.qualificationDetailForm.controls.qualification.value,
       freelancerDocuments: this.documentQualArray
     }
+    console.log("in education : ",eductionPayload);
+
     this.__profileService.saveEducationDetails(eductionPayload).then((resData: any) => {
         this.loading = false;
     });
@@ -537,6 +555,8 @@ export class AddComponent implements OnInit {
       personalAttributeStrength : this.workExpDetailsForm.controls.strength.value,
       personalAttributeWeakness : this.workExpDetailsForm.controls.weakness.value,
     }
+    console.log("in org : ",orgDetailsPayload);
+
     this.__profileService.saveWorkDetails(orgDetailsPayload).then((resData: any) => {
         this.loading = false;
     });
@@ -546,6 +566,8 @@ export class AddComponent implements OnInit {
     const skillPayload = {
       freelancerSkills: this.skillRateArr.value,
     }
+    console.log("in skill : ",skillPayload);
+
     this.__profileService.saveSkillDetails(skillPayload).then((resData: any) => {
         this.loading = false;
         this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view']);
