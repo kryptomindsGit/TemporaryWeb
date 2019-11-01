@@ -276,7 +276,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" class="btnNext" (click)="ShowNextButton(2)" (click)="savePersonalDetailForm()">Next</button>
+                            <button type="button" class="btnNext"  (click)="clickMethod(1)"  >Next</button>
                         </form>
                     </div>
                 </div>
@@ -445,9 +445,9 @@
 
                             </div>
 
-                            <button type="button" class="btnPrevious"  (click)="ShowNextButton(1)">Previous</button>
+                            <button type="button" class="btnPrevious"  (click)="showPrevious(1)">Previous</button>
 
-                            <button type="button" class="btnNext" (click)="saveEducationDetails()" (click)="ShowNextButton(3)">Next</button>
+                            <button type="button" class="btnNext" (click)="clickMethod(2)">Next</button>
 
                         </form>
                     </div>
@@ -804,9 +804,9 @@
 
 
 
-                            <button type="button" class="btnPrevious" (click)="ShowNextButton(2)">Previous</button>
+                            <button type="button" class="btnPrevious" (click)="showPrevious(2)">Previous</button>
 
-                            <button type=" button" class="btnNext" (click)="ShowNextButton(4)" (click)="saveWorkDetails()">Next</button>
+                            <button type=" button" class="btnNext" (click)="clickMethod(3)">Next</button>
 
                         </form>
                     </div>
@@ -957,8 +957,8 @@
                         </div>
                     </div>
                     <!-- [disabled]="skillDetailsForm.controls.skillRateArr.controls.pristine || skillDetailsForm.controls.skillRateArr.controls.invalid" -->
-                    <button type="button" class="btnPrevious" (click)="ShowNextButton(3)">Previous</button>
-                    <button type="button" class="btnNext" (click)="onSaveSkills()"
+                    <button type="button" class="btnPrevious" (click)="showPrevious(3)">Previous</button>
+                    <button type="button" class="btnNext" (click)="clickMethod(2)"
                         [disabled]="skillDetailsForm.invalid">Save</button>
 
                 </form>

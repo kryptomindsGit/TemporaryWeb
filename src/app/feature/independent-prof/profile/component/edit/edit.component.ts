@@ -45,16 +45,13 @@ export class EditComponent implements OnInit {
   public fileObj: any;
 
   //skill variables.
-  keyword = 'skill_cat_name';
+  keyword = 'domainName';
   skillItem: any = [];
 
   // Education Array's
   public congnitoID: any = [];
   public eduArr: any = [];
   public eduListArrbyId: any = [];
-
-  // Skill Array's
-
 
   // Address Array's
   
@@ -80,8 +77,6 @@ export class EditComponent implements OnInit {
   public skillArr: any = [];
   public skillList: any = [];
 
-
-
   //used by shefali
   public freelancerArr : any = [];
   public freeSkillDetailArr : any = [];
@@ -100,13 +95,11 @@ export class EditComponent implements OnInit {
   public eduTypeArr : any = [];
   public personalAttributeArr : any = [];
   public currencyArr : any = [];
-  public skills : any = [];
+  public skillsArr : any = [];
   public skillCatArr : any = []; 
   public skillArrBySkillCatList : any = [];
   public eduTypeArrByEduCatList : any = [];
   public languageArr: any = [];
-
-
 
   constructor(
     private __fb: FormBuilder,
@@ -116,30 +109,23 @@ export class EditComponent implements OnInit {
     private __activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
     private __customGlobalService: CustomGlobalService
-
   ) {
-    // this.__id = this.__activatedRoute.snapshot.params.id;
   }
 
   async ngOnInit() {
-
     this.isUportUser = localStorage.getItem("uportUser");
-
     if (this.isUportUser == "false") {
-
       const user = this.__authService.decode();
       this.congnitoID = user["cognito:username"];
       this.email = user["email"];
       this.uid = user["uid"];
       this.country = user["custom:country"];
-
     } else {
       this.congnitoID = "TEST";
       this.uid = localStorage.getItem("uid");
       this.email = localStorage.getItem("email");
       this.country = localStorage.getItem("country");
     }
-
     /**
     * @description validate all form's fileds
     */
@@ -147,30 +133,17 @@ export class EditComponent implements OnInit {
     this.validateQualificationProfile();
     this.validateWorlExpProfile();
     this.validateSkillsProfile();
-
     /**
       * @description Get API call function
-      */
-    // this.getFreelancerDetails();
-    // this.getAllEducationCat();
-    // this.getAllSkillCategory();
-    // this.getDocumentsTypeCat(1);
-
-    // this.getFreelancerSkillDetailsForm();
-    // this.getQualitiesById();
-    // this.getFreelancerDocuments();
-    // this.getFreelancerOrganization();
-    // this.getFreelancerPortfolio();
-    // this.setAllFreelancerData();
+    */
     await this.getEducationCategoryList();
     await this.getEducationTypeList();
     await this.getSkillCategoryList();
     await this.getSkillTypeList();
     await this.getCurrencyList();
     await this.getPersonalAttributes();
-    // await this.getDocumentsTypeCat(1);
-    this.getDocumentList();
-    this.getFreelancerDetails();
+    await this.getDocumentList();
+    await this.getFreelancerDetails();
   }
   
 
@@ -302,15 +275,17 @@ export class EditComponent implements OnInit {
     })
   }
 
-  getSkillCategoryList() {
-    this.__customGlobalService.getSkillDomainList().then((resData: any) => {
+  async getSkillCategoryList() {
+    await this.__customGlobalService.getSkillDomainList().then((resData: any) => {
       this.skillCatArr = resData.responseObject;
     })
   }
 
-  getSkillTypeList(){
-    this.__customGlobalService.getSkillTypeList().then((resData: any) => {
-      this.skills = resData.responseObject;
+  async getSkillTypeList(){
+    await this.__customGlobalService.getSkillTypeList().then((resData: any) => {
+      this.skillsArr = resData.responseObject;
+      console.log("Skilsssssssssss: ", this.skillsArr);
+      
     })
   }
 
@@ -327,13 +302,18 @@ export class EditComponent implements OnInit {
       this.docTypeArr = resData.responseObject;
     })
   }
+
   setSkillArrBySkillCatList(skillDomainId){ 
-    this.skillArrBySkillCatList = this.skills.filter((item) => item.masterDomain.domainId == skillDomainId);
+    this.skillArrBySkillCatList = this.skillsArr.filter((item) => item.masterDomain.domainId == skillDomainId);
+    console.log("Skill array:", this.skillArrBySkillCatList);
+    
   }
 
   getCurrencyList(){
-    this.__customGlobalService.getCountryList().then((resData: any) => {
+    this.__customGlobalService.getCurrencyList().then((resData: any) => {
       this.currencyArr = resData.responseObject;
+      console.log("currency : ", this.currencyArr);
+      
     })
   }
 
@@ -420,12 +400,14 @@ export class EditComponent implements OnInit {
   setFreeWorkDetailArr(){
     if (this.freeWorkDetailArr.length > 0) {
       for (let index = 0; index < this.freeWorkDetailArr.length; index++) {
+        let sdate =  this.freeWorkDetailArr[index].startDate.substring(0,10);
+        let edate =  this.freeWorkDetailArr[index].endDate.substring(0,10);
         this.orgArr.push(this.__fb.group(
           {
             organization: this.freeWorkDetailArr[index].organization,
             designation: this.freeWorkDetailArr[index].designation,
-            startDate: this.freeWorkDetailArr[index].startDate,
-            endDate: this.freeWorkDetailArr[index].endDate,
+            startDate:sdate,
+            endDate:edate,
             responsibilities: this.freeWorkDetailArr[index].responsibilities,
             freelancerWorkExperienceId: this.freeWorkDetailArr[index].freelancerWorkExperienceId
           }
@@ -473,8 +455,10 @@ export class EditComponent implements OnInit {
       for (let index = 0; index < this.freePortfolioArr.length; index++) {
         portflio.push(this.__fb.group({
           portfolio: this.freePortfolioArr[index].portfolioUrl,
-          portfolioUrlId: this.freePortfolioArr[index].portfolioUrlId
+          portfolioId: this.freePortfolioArr[index].portfolioUrlId
         }));
+
+
       }
     } else {
       this.addPortfolio();
@@ -512,41 +496,45 @@ export class EditComponent implements OnInit {
       this.addDocument();
     }
 
-    let isProfessional = this.freelancerDocsArr.filter(item => item.masterDocumentType.masterDocDomain.domainName == 'professional');
+    // let isProfessional = this.freelancerDocsArr.filter(item => item.masterDocumentType.masterDocDomain.domainName == 'professional');
 
-      if (isProfessional.length > 0) {
-        isProfessional.forEach(item => {
-          this.workdocumentArr.push(
-            this.__fb.group({
-              documentUrl: item.documentUrl,
-              documentTypeId: item.documentTypeId,
-              documentId: item.documentId
-            })
-          )
-        });
-      } else {
-        this.addWorkDocument();
-      }
+    //   if (isProfessional.length > 0) {
+    //     isProfessional.forEach(item => {
+    //       this.workdocumentArr.push(
+    //         this.__fb.group({
+    //           documentUrl: item.documentUrl,
+    //           documentTypeId: item.documentTypeId,
+    //           documentId: item.documentId
+    //         })
+    //       )
+    //     });
+    //   } else {
+    //     this.addWorkDocument();
+    //   }
 
   }
   
-  setSkillDetailArr(){
+  async setSkillDetailArr(){
+    console.log("freeSkillDetailArr " , this.freeSkillDetailArr);
     if (this.freeSkillDetailArr.length > 0) {
-      let skillCat_ID = this.freeSkillDetailArr[0].skill_cat_id;
+      let skillCat_ID = this.freeSkillDetailArr[0].skillId.masterDomain.domainId;
       this.setSkillArrBySkillCatList(skillCat_ID);
 
       for (let index = 0; index < this.freeSkillDetailArr.length; index++) {
         this.skillRateArr.push(this.__fb.group(
           {
             skillName: this.freeSkillDetailArr[index].skillId.skillName,
+            skillId: this.freeSkillDetailArr[index].skillId.skillId,
             rateHour: this.freeSkillDetailArr[index].hourlyRate,
-            skillExperience:this.freeSkillDetailArr[index].skillExperience,
-            freelancerSkillId: this.freeSkillDetailArr[index].freelancerSkillId
+            skillExperience:this.freeSkillDetailArr[index].noYrsExpForSkill,
+            freelancerSkillId: this.freeSkillDetailArr[index].freelancerSkillId,
+            currency : 1,
+            expertiseLevel:this.freeSkillDetailArr[index].expertiseLevel
           }
         ));
       }
     } else {
-      this.selectEvent(0);
+      this.selectEvent(this.freeSkillDetailArr[0].skillId.masterDomain);
       this.setSkillArrBySkillCatList(1);
     }
 
@@ -626,12 +614,9 @@ export class EditComponent implements OnInit {
    * @param item
    * @description get the selected skill id and pass to getSkillsByID.
    */
+  
   selectEvent(item) {
-    console.log("Skill click:", item);
-
-    const skills = item;
-    const skill_id = skills.skill_cat_id;
-    this.setSkillArrBySkillCatList(skill_id)
+    this.setSkillArrBySkillCatList(item.domainId)
   }
 
   onChangeSearch(val: string) {
@@ -660,8 +645,9 @@ export class EditComponent implements OnInit {
         passingYear: '',
         percentage: '',
         grade: '',
-        documentTypeId:'',
-        doc_name: ''
+        educationDetailId : 0
+        // documentTypeId:'',
+        // doc_name: ''
       }));
   }
 
@@ -701,7 +687,7 @@ export class EditComponent implements OnInit {
   }
 
   addStrength() {
-    this.strengthArr.push(this.__fb.group({ strength: '' }));
+    this.strengthArr.push(this.__fb.group({ strength: '',strengthId:0 }));
   }
 
   deleteStrength(index) {
@@ -717,7 +703,7 @@ export class EditComponent implements OnInit {
   }
 
   addWeakness() {
-    this.weaknessArr.push(this.__fb.group({ weakness: '' }));
+    this.weaknessArr.push(this.__fb.group({ weakness: '',weaknessId :0 }));
   }
 
   deleteWeakness(index) {
@@ -734,7 +720,7 @@ export class EditComponent implements OnInit {
   }
 
   addPortfolio() {
-    this.portfolioArr.push(this.__fb.group({ portfolio: '' }));
+    this.portfolioArr.push(this.__fb.group({ portfolio: '' ,portfolioId : 0}));
   }
 
   deletePortfolio(index) {
@@ -790,7 +776,7 @@ export class EditComponent implements OnInit {
     return this.skillDetailsForm.get('skills') as FormArray;
   }
 
-  onChange(skill: string, skill_id: number, isChecked: boolean) {
+  onChange(skill: string, skill_id: number, isChecked: boolean,i:any) {
     console.log("Skill selected:", skill, skill_id, isChecked);
     if (isChecked && skill != null) {
       this.skillRateArr.push(this.__fb.group(
@@ -798,14 +784,17 @@ export class EditComponent implements OnInit {
           skillName: skill,
           skillId: skill_id,
           rateHour: '',
+          currency : '',
           skillExperience: '',
-          freelancerSkillId:''
+          freelancerSkillId:'',
+          expertiseLevel:''
         }
       ));
     }
     else {
-      let index = this.skillRateArr.controls.findIndex(x => x.value == skill);
-      this.skillItem.removeAt(index);
+      console.log("dgfdhfh: ", i);
+      let index = this.skillRateArr.controls.findIndex(x => x.value === skill_id);
+      this.skillRateArr.removeAt(index);
     }
   }
 
@@ -898,15 +887,9 @@ export class EditComponent implements OnInit {
       freelancerDocuments: this.documentPersonalArray
     }
 
-    console.log("Personal Details to be sent : \n" , personalData);
+    // console.log("Personal Details to be sent : \n" , personalData);
     // this.__profileService.updateProfileInfo(personalData).then((resData: any) => {
     //   this.loading = false;
-    //   if (resData.status == 'success') {
-    //     this.toastr.success("Profile added Successfully");
-    //   }
-    //   else if (resData.responseObjec.message == 'error') {
-    //     this.toastr.error("Profile not saved");
-    //   }
     // });
   }
 
@@ -919,53 +902,42 @@ export class EditComponent implements OnInit {
     console.log("personalData" , eductionPayload);
 
     // this.__profileService.updateEducationDetails(eductionPayload).then((resData: any) => {
-    //     this.loading = false;
-    //     if (resData.status == 'success') {
-    //       this.toastr.success("Profile added Successfully");
-    //     }
-    //     else if (resData.responseObjec.message == 'error') {
-    //       this.toastr.error("Profile not saved");
-    //     }
+    //     this.loading = false;        
     // });
   }
 
   updateOrganizationDetailForm(){
-    let portfolioArray = [];
-    let i;
-    for(i = 0 ; i < this.workExpDetailsForm.controls.portfolios.value.length ; i++){
-      portfolioArray[i]=this.workExpDetailsForm.controls.portfolios.value[i].portfolio;
-    }
-    let strengthArr = [];
-    for(i = 0 ; i < this.workExpDetailsForm.controls.strength.value.length ; i++){
-      strengthArr[i]=this.workExpDetailsForm.controls.strength.value[i].strength;
-    }
-    let weaknessArr = [];
-    for(i = 0 ; i <  this.workExpDetailsForm.controls.weakness.value.length ; i++){
-      weaknessArr[i]=this.workExpDetailsForm.controls.weakness.value[i].weakness;
-    }
+   
+    
     const orgDetailsPayload = {
       freelancerOrgDetails : this.workExpDetailsForm.controls.org_details.value,
-      portfolio: portfolioArray,
+      portfolio: this.workExpDetailsForm.controls.portfolios.value,
       freelancerDocument : this.documentWorkArray,
       areaOfExpertise : this.workExpDetailsForm.controls.area_of_expertise.value,
-      personalAttributeStrength :  strengthArr,
-      personalAttributeWeakness : weaknessArr,
+      personalAttributeStrength :  this.workExpDetailsForm.controls.strength.value,
+      personalAttributeWeakness : this.workExpDetailsForm.controls.weakness.value,
     }
 
     console.log("personalData" , orgDetailsPayload);
-
     this.__profileService.updateWorkDetails(orgDetailsPayload).then((resData: any) => {
         this.loading = false;
-        if (resData.responseObjec.message == 'success') {
-          this.toastr.success("Profile added Successfully");
-        }
-        else if (resData.status == 'error') {
-          this.toastr.error("Profile not saved");
-        }
+        console.log("res \ n " ,resData);       
     });
   }
 
+  updateSkill(){
+    const skillPayload = {
+      freelancerSkills: this.skillRateArr.value,
+    }
 
+    console.log("personalData" , skillPayload);
+    this.__profileService.updateSkillDetails(skillPayload).then((resData: any) => {
+        this.loading = false;
+        console.log("data res" , resData);
+        
+        // this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view']);
+    });
+  }
   /**
    * @name onSubmitDetails
    * @description submit the form filed value to serer through REST API

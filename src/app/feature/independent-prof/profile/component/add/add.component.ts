@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { Router } from '@angular/router';
-import { HttpClient, HttpEventType } from '@angular/common/http';
 import { IndeptProfileService } from '../../shared/service/profile.service';
 import { ToastrService } from 'ngx-toastr';
 import { CustomGlobalService } from 'src/app/feature/shared/service/custom-global.service';
-import { ThrowStmt } from '@angular/compiler';
+import Swal from 'sweetalert2';
+
 // 
 @Component({
   selector: 'app-add',
@@ -124,7 +124,6 @@ export class AddComponent implements OnInit {
     this.getStateList();
     this.getCityList();
     this.getDocumentList();
-    //this.getDocumentsTypeCat(1);
     this.getCurrencyList();
     this.getLanguageList();
   }
@@ -266,9 +265,7 @@ export class AddComponent implements OnInit {
   }
   getCurrencyList(){
     this.__customGlobalService.getCurrencyList().then((resData: any) => {
-      this.currencyList = resData.responseObject;
-      console.log("Currency List :  " ,  this.currencyList );
-      
+      this.currencyList = resData.responseObject;      
     })
   }
   getPersonalAttributes(){
@@ -278,17 +275,13 @@ export class AddComponent implements OnInit {
   }
   getLanguageList(){
     this.__customGlobalService.getLanguageList().then((resData: any) => {
-      this.languageArr = resData.responseObject; 
-      console.log("language_name" ,this.languageArr );
-           
+      this.languageArr = resData.responseObject;            
     })
   }
   setDocTypeCatID(id) {
     this.doc_cat_id = id;
-    console.log("doc cat id" , this.doc_cat_id);
-    // this.getDocumentsTypeCat(this.doc_cat_id);
   }
-
+  
   getDocumentsTypeCat(index) {
     this.__profileService.getFreelancerDocumentByCat(index).then((resData: any) => {
       this.docTypeArr = resData.responseObject;      
@@ -296,8 +289,6 @@ export class AddComponent implements OnInit {
   }
 
   selectEvent(item) {
-    const skills = item;
-    const skill_id = skills.skill_cat_id;
     this.setSkillArrBySkillCatList(item.domainId)
   }
 
@@ -347,7 +338,7 @@ export class AddComponent implements OnInit {
   }
 
   addStrength() {
-    this.strengthArr.push(this.__fb.group({ strength: '' }));
+    this.strengthArr.push(this.__fb.group({ strength: '' ,strengthId : 0}));
   }
 
   deleteStrength(index) {
@@ -359,7 +350,7 @@ export class AddComponent implements OnInit {
   }
 
   addWeakness() {
-    this.weaknessArr.push(this.__fb.group({ weakness: '' }));
+    this.weaknessArr.push(this.__fb.group({ weakness: '', weaknessId:0 }));
   }
 
   deleteWeakness(index) {
@@ -503,7 +494,6 @@ export class AddComponent implements OnInit {
   }
 
   savePersonalDetailForm(){    
-    //this.getDocumentsTypeCat(2);
     const personalData = {
       emailId: this.email,
       prefix: this.personalDetailForm.controls.prefix.value,
@@ -520,75 +510,35 @@ export class AddComponent implements OnInit {
       availabilityForWork:this.personalDetailForm.controls.availabilityForWork.value,
       languagePreferred:this.personalDetailForm.controls.languagePreferred.value,
       freelancerDocuments: this.documentPersonalArray
-    }
-    console.log("personalData" , personalData);
-    
+    }    
     this.__profileService.savePersonalDetails(personalData).then((resData: any) => {
       this.loading = false;
-      if (resData.status == 'success') {
-        this.toastr.success("Profile added Successfully");
-      }
-      else if (resData.responseObjec.message == 'error') {
-        this.toastr.error("Profile not saved");
-      }
     });
   }
 
 
   saveEducationDetails(){
-    //this.getDocumentsTypeCat(3);
     const eductionPayload = {
       educationDetails :  this.qualificationDetailForm.controls.qualification.value,
       freelancerDocuments: this.documentQualArray
     }
-
-    console.log("personalData" , eductionPayload);
-
     this.__profileService.saveEducationDetails(eductionPayload).then((resData: any) => {
         this.loading = false;
-        if (resData.status == 'success') {
-          this.toastr.success("Profile added Successfully");
-        }
-        else if (resData.responseObjec.message == 'error') {
-          this.toastr.error("Profile not saved");
-        }
     });
   }
 
   saveWorkDetails(){
-    let portfolioArray = [];
-    let i;
-    for(i = 0 ; i < this.workExpDetailsForm.controls.portfolios.value.length ; i++){
-      portfolioArray[i]=this.workExpDetailsForm.controls.portfolios.value[i].portfolio;
-    }
-    let strengthArr = [];
-    for(i = 0 ; i < this.workExpDetailsForm.controls.strength.value.length ; i++){
-      strengthArr[i]=this.workExpDetailsForm.controls.strength.value[i].strength;
-    }
-    let weaknessArr = [];
-    for(i = 0 ; i <  this.workExpDetailsForm.controls.weakness.value.length ; i++){
-      weaknessArr[i]=this.workExpDetailsForm.controls.weakness.value[i].weakness;
-    }
     const orgDetailsPayload = {
       emailId: this.email,
       freelancerOrgDetails : this.workExpDetailsForm.controls.org_details.value,
-      portfolio: portfolioArray,
+      portfolio: this.workExpDetailsForm.controls.portfolios.value,
       freelancerDocument : this.documentWorkArray,
       areaOfExpertise : this.workExpDetailsForm.controls.area_of_expertise.value,
-      personalAttributeStrength :  strengthArr,
-      personalAttributeWeakness : weaknessArr,
+      personalAttributeStrength : this.workExpDetailsForm.controls.strength.value,
+      personalAttributeWeakness : this.workExpDetailsForm.controls.weakness.value,
     }
-
-    console.log("personalData" , orgDetailsPayload);
-
     this.__profileService.saveWorkDetails(orgDetailsPayload).then((resData: any) => {
         this.loading = false;
-        if (resData.responseObjec.message == 'success') {
-          this.toastr.success("Profile added Successfully");
-        }
-        else if (resData.status == 'error') {
-          this.toastr.error("Profile not saved");
-        }
     });
   }
 
@@ -596,85 +546,55 @@ export class AddComponent implements OnInit {
     const skillPayload = {
       freelancerSkills: this.skillRateArr.value,
     }
-
-    console.log("personalData" , skillPayload);
-    
     this.__profileService.saveSkillDetails(skillPayload).then((resData: any) => {
         this.loading = false;
         this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view']);
-
-        if (resData.responseObjec.message == 'success') {
-          this.toastr.success("Profile added Successfully");
-          this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view']);
-        }
-        else if (resData.status == 'error') {
-          this.toastr.error("Profile not saved");
-        }
     });
-  }
-
-
-  ShowNextButton(index) {
-    if (this.showMainContent == 1) {
-      this.showMainContent = index;
-
-      this.submitted = true;
-      // if (this.personalDetailForm.invalid) {
-      //   this.showMainContent = 1;
-
-      //   return;
-      // } else {
-        this.showMainContent = 2;
-      // }
-
-
-    } else if (this.showMainContent == 2) {
-      this.showMainContent = index;
-
-      // this.submitted = true;
-      // if (this.qualificationDetailForm.invalid) {
-      //   this.showMainContent = 2;
-      //   return;
-      // } else {
-        this.showMainContent = 3;
-      // }
-
-    } else if (this.showMainContent == 3) {
-      this.showMainContent = index;
-
-      this.submitted = true;
-
-      // if (this.workExpDetailsForm.invalid) {
-      //   this.showMainContent = 3;
-      //   return;
-      // } else {
-        this.showMainContent = 4;
-      // }
-    } else if (this.showMainContent == 4) {
-      this.showMainContent = index;
-
-      this.submitted = true;
-      // if (this.skillDetailsForm.invalid) {
-      //   this.showMainContent = 4
-      //   return;
-      // } else {
-        this.showMainContent = 4;
-      // }
-
-    } else {
-    }
   }
 
   ShowPreviousButton(index) {
     this.showMainContent = --index;
   }
 
-  /**
-    *@name onLogout 
-    * @description call Logout
-    */
   onLogout() {
     this.__authService.logout();
     this.__router.navigate(['/auth/auth/login']);
+  }
+
+  clickMethod(i: any) {
+    Swal.fire({
+      title: 'Save and Proceed',
+      text: "You won't be able to revert this",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Save it!'
+    }).then(async (result) => {
+      if (result.value) {
+        await Swal.fire(
+          'Saved!',
+          'Your data has been saved.',
+          'success'
+        )
+        this.showMainContent = i+1;
+
+        if(i==1)
+          this.savePersonalDetailForm();
+        else if(i==2)
+          this.saveEducationDetails();
+        else if(i==3)
+          this.saveWorkDetails();
+        else if(i==4)
+          this.onSaveSkills();
+        else  
+          ;  
+      }else{
+        this.showMainContent = i;
+      }
+    })
+  }
+  showPrevious(i:any){
+    this.showMainContent = i;
   }
 }

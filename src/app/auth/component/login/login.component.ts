@@ -63,12 +63,9 @@ export class LoginComponent implements OnInit {
    */
   onSubmit() {
     this.submitted = true;
-    console.log("Lgin data:", this.loginForm.value);
-    // stop here if form is invalid
     if (this.loginForm.invalid) {
       return;
     } else {
-      // console.log("Lgin data:", this.loginForm.value);
       this.loading = true;
       const cognitologinPayload = {
         email: this.loginForm.controls.email.value,
@@ -92,14 +89,11 @@ export class LoginComponent implements OnInit {
               this.__authService.updateUserData(cognitoUpdatePayload).then((resData: any) => {
               });
             }
-            console.log("User Data : ", data);
-            console.log("**********logged in ************", data.responseObject.User.isLoggedIn);
             if (data.responseObject.User.isLoggedIn == false) {
               const loggedInFlagPayload = {
                 isLoggedIn: 1
               }
               this.__authService.updateUserData(loggedInFlagPayload).then((resData: any) => {
-                console.log("Logged in value : ", resData);
                 this.getConnectWithServer();
                 this.__router.navigate(['/feature/feature/full-layout/dashboard'])
                 var baseName = data.responseObject.User.emailId;

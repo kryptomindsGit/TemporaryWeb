@@ -35,51 +35,50 @@ export class SidebarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
     this.isUportUser = localStorage.getItem("uportUser");
-
     if (this.isUportUser == "false") {
-
       const user = this.__authService.decode();
       this.congnitoID = user["cognito:username"];
-      console.log(this.congnitoID);
-
       this.email_id = user["email"];
-      console.log(this.email_id);
-
-      this.congnitoID = user["cognito:username"];
       this.userRole = user["custom:role"];
-      console.log(this.userRole);
-      // this.country = user["custom:country"];
-
     } else {
-
       this.email_id = localStorage.getItem("email");
       this.userRole = localStorage.getItem("role");
-      // this.country = localStorage.getItem("country");
-      console.log("Email Id is : " + this.email_id);
-
     }
-
     if (this.userRole != 'Employer') {
       this.isEmployer = false;
     }
   }
 
   userRoleInfo() {
-    console.log("Indise userRoleInfo", this.userRole);
     if (this.userRole == "Freelancer") {
-      console.log("Inside Freelancer");
-      this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/add']);
+      this.__idptProfileService.getFreelancerByEmail().then((resData: any) => {
+        this.freelancerDetailsArr = resData.responseObject;
+        if (this.freelancerDetailsArr == null) {
+          this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/add']);
+        } else {
+          this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view']);
+        }
+      });
     }
     else if (this.userRole == "Employer") {
-      console.log("Inside Employer");
-      this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/add']);
+      this.__empProfileService.getEmployerByEmailId(this.email_id).then((resData: any) => {
+        this.employerDetailsArr = resData[0];
+        if (this.employerDetailsArr == null) {
+          this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/add']);
+        } else {
+          this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view']);
+        }
+      });
     }
     else if (this.userRole == "Partner") {
-      console.log("Inside Partner");
-      this.__router.navigate(['/feature/feature/full-layout/partner/part/profile/profile/add']);
-    }
+      this.__partProfileService.getPartnerByEmailId(this.email_id).then((resData: any) => {
+        this.partnerDetailsArr = resData[0];
+        if (this.partnerDetailsArr == null) {
+          this.__router.navigate(['/feature/feature/full-layout/partner/part/profile/profile/add']);
+        } else {
+          this.__router.navigate(['/feature/feature/full-layout/partner/part/profile/profile/view']);
+        }
+      });    }
   }
-
 }

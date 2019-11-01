@@ -218,6 +218,23 @@ export class IndeptProfileService {
     }
   }
 
+  async updateSkillDetails(freelancer: any){
+    const httpOptions = {
+      headers: new HttpHeaders({
+      'Access-Control-Allow-Origin': '*',
+      'enctype': 'multipart/form-data',
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+      'X-Authorization':localStorage.getItem('userAuthToken')
+    })}
+    try {
+      let res = await this.__http.post(`${SPRING_URL}/freelancer/skill-update`, freelancer, httpOptions).toPromise();
+      return res;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
   async getFreelancerDocumentByCat(id: any) {
     try {
       console.log("doc cat id : " + id);

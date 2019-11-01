@@ -754,8 +754,7 @@
 
                                             <div class="row" [formGroupName]="i">
                                                 <div class="form-group form-input col-3">
-                                                    <select (change)="setDocTypeCatID($event.target.value)"
-                                                        formControlName="documentTypeId" id="id_doc_type" required>
+                                                    <select formControlName="documentTypeId" id="id_doc_type" required>
 
                                                         <option *ngFor="let docType of docTypeArr"
                                                             [value]="docType.doc_type_id">{{docType.doc_type}}</option>
@@ -832,7 +831,7 @@
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="ng-autocomplete">
-                                                        <ng-autocomplete [data]="categ" [searchKeyword]="keyword"
+                                                        <ng-autocomplete [data]="skillCatArr" [searchKeyword]="keyword"
                                                             (selected)='selectEvent($event)'
                                                             (inputChanged)='onChangeSearch($event.target.value)'
                                                             (inputFocused)='onFocused($event.target.value)'
@@ -850,7 +849,7 @@
                                                     </div>
                                                     <div>
                                                         <table class="table customCard">
-                                                            <tr *ngFor="let skill of categ; let i = index">
+                                                            <tr *ngFor="let skill of skillCatArr; let i = index">
                                                                 <td>
                                                                     <a id="link" (click)="setSkillArrBySkillCatList(skill.domainId)">
                                                                         {{skill.domainName}}</a>
@@ -878,7 +877,7 @@
                                                     <label class="checkbox-grid-col"
                                                         *ngFor="let item of skillArrBySkillCatList; let i = index">
                                                         <input type="checkbox"
-                                                            (click)="onChange(item.skillName,item.skillId,$event.target.checked)">
+                                                            (click)="onChange(item.skillName,item.skillId,$event.target.checked,i)">
                                                         {{item.skillName}}
                                                     </label>
                                                 </li>
@@ -912,15 +911,13 @@
                                 
                             </tr>
                         </thead>
-                        <tbody *ngFor="let item of skillRateArr.controls; let i=index"
-                        [formGroupName]="i">
+                        <tbody *ngFor="let item of skillRateArr.controls; let i=index" [formGroupName]="i">
                             <tr>
                                 <td>
                                     {{item.value.skillName}}
-
                                 </td>
                                 <td>
-                                    <select formControlName="expertise">
+                                    <select formControlName="expertiseLevel">
                                         <option value="High">High</option>
                                         <option value="Intermediate">Intermediate</option>
                                         <option value="Beginner">Beginner</option>
@@ -929,8 +926,8 @@
                                 <td>
                                         <label> 
                                             <select formControlName="currency">
-                                                <option  *ngFor="let currency of currencyList" [value]="currency.currencyId">
-                                                    {{currency.currencyName}}
+                                                <option  *ngFor="let currency of currencyArr" [value]="currency.currencyId">
+                                                    {{currency.currency}}
                                                 </option>
                                             </select></label>
                                     </td>
@@ -960,7 +957,7 @@
                     <!-- [disabled]="skillDetailsForm.controls.skillRateArr.controls.pristine || skillDetailsForm.controls.skillRateArr.controls.invalid" -->
                     <button type="button" class="btnPrevious" (click)="ShowNextButton(3)">Previous</button>
                     <button type="button" class="btnNext" (click)="onSubmitDetails()"
-                        [disabled]="skillDetailsForm.invalid">Save</button>
+                        [disabled]="skillDetailsForm.invalid" (click)="updateSkill()">Save</button>
 
                 </form>
 
