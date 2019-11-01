@@ -21,9 +21,14 @@ export class ChatBoxComponent implements OnInit {
   // Websocket variable's
   reqObject: any = [];
   resObject: any = [];
-  respObject: any = [];
+  senderObject: any = [];
+  receiverObject: any = [];
+  senderEmail: any;
   evtRespObject: any = [];
-  newResMessage: any = [];
+
+  newSenderMessage: any = [];
+  newReceiverMessage: any = [];
+
   senderMessage: any = [];
   receiverMessage: any = [];
   messageDetails: any = [];
@@ -98,47 +103,31 @@ export class ChatBoxComponent implements OnInit {
 
   getConnectWithServer() {
     this.__chatboxService.getServerSentEvent().subscribe((eventData) => {
-      console.log("Servcer Event Connect", eventData);
+      console.log("Servcer Event Connect", eventData.eventResponse.sender);
 
-      this.respObject.push(eventData);
+      this.senderEmail = this.messageDetails.sender;
 
-      if (this.messageDetails.sender) {
-        if (this.messageDetails.sender == this.jwtData.email) {
-          console.log("email id same");
-          this.sendUser = true;
-          this.receiverUser = false;
-          this.newResMessage = [
-            { messages: [...this.respObject] }
-          ];
-        }
-        else {
-          console.log("not matched");
-          this.sendUser = false;
-          this.receiverUser = true;
-          this.newResMessage = [
-            { messages: [...this.respObject] }
-          ];
-        }
-      } else {
-        if (this.messageDetails.sender != this.jwtData.email) {
-          console.log("email id not same");
-          this.sendUser = false;
-          this.receiverUser = true;
-          this.newResMessage = [
-            { messages: [...this.respObject] }
-          ];
-        }
-        else {
-          console.log("not matched");
-          this.sendUser = true;
-          this.receiverUser = false;
-          this.newResMessage = [
-            { messages: [...this.respObject] }
-          ];
-        }
+      if (this.senderEmail == eventData.eventResponse.sender) {
+        console.log("email matched");
+        this.senderObject.push(eventData);
+        this.sendUser = true;
+        this.receiverUser = false;
+        this.newSenderMessage = [
+          { messages: [...this.senderObject] }
+        ];
+        console.log("Sender array: ", this.newSenderMessage);
 
       }
-
+      else {
+        console.log("email not matched");
+        this.receiverObject.push(eventData);
+        this.sendUser = false;
+        this.receiverUser = true;
+        this.newReceiverMessage = [
+          { messages: [...this.receiverObject] }
+        ];
+        console.log("Receiver array: ", this.newReceiverMessage);
+      }
     });
   }
 }
