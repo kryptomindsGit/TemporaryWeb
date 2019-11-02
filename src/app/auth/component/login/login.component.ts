@@ -95,6 +95,10 @@ export class LoginComponent implements OnInit {
               }
               this.__authService.updateUserData(loggedInFlagPayload).then((resData: any) => {
                 this.getConnectWithServer();
+                this.__authService.getLoggedInUsers().then((resData: any) => {
+                  console.log("resData", resData);
+                }
+                );
                 this.__router.navigate(['/feature/feature/full-layout/dashboard'])
                 var baseName = data.responseObject.User.emailId;
                 baseName = baseName.substring(0, baseName.indexOf('@'));

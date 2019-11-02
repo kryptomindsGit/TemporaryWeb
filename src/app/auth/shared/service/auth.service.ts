@@ -100,6 +100,17 @@ export class AuthService {
     }
   }
 
+  
+  async getLoggedInUsers(): Promise<any> {
+    try {
+      let result = await this.__http.post(`${SPRING_URL}/auth/free-online`, httpOptions).toPromise();
+      return result;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
+
   async updateUserData(payload: any): Promise<any> {
     const httpOptions = {
       headers: new HttpHeaders({     
@@ -126,17 +137,6 @@ export class AuthService {
       return result;
     } catch (error) {
       await this.handleError(error);
-    }
-  }
-
-
-
-  async updateDid(data: any): Promise<any> {
-    try {
-      let result = await this.__http.put(`${BASE_URL}/uportsignup`, data, httpOptions).toPromise();
-      return result;
-    } catch (error) {
-      await this.handleError(error)
     }
   }
 

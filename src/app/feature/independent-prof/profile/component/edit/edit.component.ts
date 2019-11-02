@@ -55,7 +55,7 @@ export class EditComponent implements OnInit {
   public eduListArrbyId: any = [];
 
   // Address Array's
-  
+
   public stateByIdArr: any = [];
   public cityByIdArr: any = [];
 
@@ -79,31 +79,31 @@ export class EditComponent implements OnInit {
   public skillList: any = [];
 
   //used by shefali
-  public freelancerArr : any = [];
-  public freeSkillDetailArr : any = [];
-  public freeStrengthArr : any = [];
-  public freeWeaknessArr : any = [];
-  public freePortfolioArr : any = [];
-  public freeWorkDetailArr : any = [];
-  public freeEducationArr : any = [];
-  public freeDocumentArr : any = [];
-  public countryArr : any = [];
-  public stateArr : any = [];
-  public cityArr : any = [];
-  public stateArrByCountryId : any = [];
-  public cityArrByStateId : any = [];
-  public eduCatArr : any = [];
-  public eduTypeArr : any = [];
-  public personalAttributeArr : any = [];
-  public currencyArr : any = [];
-  public skillsArr : any = [];
-  public skillCatArr : any = []; 
-  public skillArrBySkillCatList : any = [];
-  public eduTypeArrByEduCatList : any = [];
+  public freelancerArr: any = [];
+  public freeSkillDetailArr: any = [];
+  public freeStrengthArr: any = [];
+  public freeWeaknessArr: any = [];
+  public freePortfolioArr: any = [];
+  public freeWorkDetailArr: any = [];
+  public freeEducationArr: any = [];
+  public freeDocumentArr: any = [];
+  public countryArr: any = [];
+  public stateArr: any = [];
+  public cityArr: any = [];
+  public stateArrByCountryId: any = [];
+  public cityArrByStateId: any = [];
+  public eduCatArr: any = [];
+  public eduTypeArr: any = [];
+  public personalAttributeArr: any = [];
+  public currencyArr: any = [];
+  public skillsArr: any = [];
+  public skillCatArr: any = [];
+  public skillArrBySkillCatList: any = [];
+  public eduTypeArrByEduCatList: any = [];
   public languageArr: any = [];
-  public personalDoc : any = [];
-  public educationalDoc : any = [];
-  public professionalDoc : any = [];
+  public personalDoc: any = [];
+  public educationalDoc: any = [];
+  public professionalDoc: any = [];
 
   constructor(
     private __fb: FormBuilder,
@@ -147,7 +147,7 @@ export class EditComponent implements OnInit {
     await this.getPersonalAttributes();
     await this.getFreelancerDetails();
   }
-  
+
 
   validatePersonalProfile() {
     this.personalDetailsForm = this.__fb.group({
@@ -173,9 +173,9 @@ export class EditComponent implements OnInit {
         Validators.required, Validators.maxLength(8), Validators.minLength(6),
         Validators.pattern("^[0-9]*$")
       ])],
-      preferredPaymentMethod:['', Validators.required],
-      availabilityForWork:['', Validators.required],
-      languagePreferred:['', Validators.required],
+      preferredPaymentMethod: ['', Validators.required],
+      availabilityForWork: ['', Validators.required],
+      languagePreferred: ['', Validators.required],
       documents_personal: this.__fb.array([]),
     });
   }
@@ -227,19 +227,19 @@ export class EditComponent implements OnInit {
     })
   }
 
-   /**
-   * @author Shefali Bhavekar ( Date : 10-24-2019 )
-   * @method getStateList()
-   * @description get all states from mysql-database(using SpringBoot-API).
-   */
-  getCityList(){
+  /**
+  * @author Shefali Bhavekar ( Date : 10-24-2019 )
+  * @method getStateList()
+  * @description get all states from mysql-database(using SpringBoot-API).
+  */
+  getCityList() {
     this.__customGlobalService.getCityList().then((resData: any) => {
       this.cityArr = resData.responseObject;
       this.setCityListByStateId(this.freelancerArr.province.stateId);
     })
   }
 
-  setStateListByCountryId(countryId) {    
+  setStateListByCountryId(countryId) {
     this.stateArrByCountryId[countryId] = this.stateArr.filter((item) => item.masterCountry.countryId == countryId);
     this.personalDetailsForm.patchValue({
       country: this.freelancerArr.country.countryId,
@@ -247,9 +247,9 @@ export class EditComponent implements OnInit {
     });
   }
 
-  
 
-  setCityListByStateId(stateId){
+
+  setCityListByStateId(stateId) {
     this.cityArrByStateId[stateId] = this.cityArr.filter((item) => item.masterStates.stateId == stateId);
     this.personalDetailsForm.patchValue({
       city: this.freelancerArr.city.cityId,
@@ -263,7 +263,7 @@ export class EditComponent implements OnInit {
   }
 
   setEduTypeListByEduCategoryId(eduCatId) {
-    this.eduTypeArrByEduCatList[eduCatId] = this.eduTypeArr.filter((item) => item.masterEduDomain.eduDomainId == eduCatId); 
+    this.eduTypeArrByEduCatList[eduCatId] = this.eduTypeArr.filter((item) => item.masterEduDomain.eduDomainId == eduCatId);
   }
 
   getEducationTypeList() {
@@ -272,9 +272,9 @@ export class EditComponent implements OnInit {
     })
   }
 
-  getPersonalAttributes(){
+  getPersonalAttributes() {
     this.__customGlobalService.getPersonalAttributeList().then((resData: any) => {
-      this.personalAttributeArr = resData.responseObject;      
+      this.personalAttributeArr = resData.responseObject;
     })
   }
 
@@ -284,75 +284,65 @@ export class EditComponent implements OnInit {
     })
   }
 
-  async getSkillTypeList(){
+  async getSkillTypeList() {
     await this.__customGlobalService.getSkillTypeList().then((resData: any) => {
-      this.skillsArr = resData.responseObject;      
+      this.skillsArr = resData.responseObject;
     })
   }
 
-  getLanguageList(){
+  getLanguageList() {
     this.__customGlobalService.getLanguageList().then((resData: any) => {
-      this.languageArr = resData.responseObject;       
+      this.languageArr = resData.responseObject;
       this.personalDetailsForm.patchValue({
         languagePreferred: this.freelancerArr.languagePreferred.languageId,
       });
     })
   }
 
-  getDocumentList(){
+  getDocumentList() {
     this.__customGlobalService.getDocumentList().then((resData: any) => {
       this.docTypeArr = resData.responseObject;
-      console.log("this.docTypeArr",this.docTypeArr);
-      let j=0,k=0,l=0;  
-      for(let i=0;i< this.docTypeArr.length;i++) {
-        if(this.docTypeArr[i].masterDocDomain.domainName == 'personal'){
-          this.personalDoc[j]=this.docTypeArr[i];
+      let j = 0, k = 0, l = 0;
+      for (let i = 0; i < this.docTypeArr.length; i++) {
+        if (this.docTypeArr[i].masterDocDomain.domainName == 'personal') {
+          this.personalDoc[j] = this.docTypeArr[i];
           j++;
         }
-        else if(this.docTypeArr[i].masterDocDomain.domainName == 'educational'){
-          this.educationalDoc[k]=this.docTypeArr[i];
+        else if (this.docTypeArr[i].masterDocDomain.domainName == 'educational') {
+          this.educationalDoc[k] = this.docTypeArr[i];
           k++;
         }
-        else if(this.docTypeArr[i].masterDocDomain.domainName == 'professional'){
-          this.professionalDoc[l]=this.docTypeArr[i];
+        else if (this.docTypeArr[i].masterDocDomain.domainName == 'professional') {
+          this.professionalDoc[l] = this.docTypeArr[i];
           l++;
         }
       }
     });
-    console.log("this.personalDoc",this.personalDoc);
-    console.log("this.educationalDoc",this.educationalDoc);
-    console.log("this.professionalDoc",this.professionalDoc);
-
   }
 
-  setSkillArrBySkillCatList(skillDomainId){ 
+  setSkillArrBySkillCatList(skillDomainId) {
     this.skillArrBySkillCatList = this.skillsArr.filter((item) => item.masterDomain.domainId == skillDomainId);
-    console.log("Skill array:", this.skillArrBySkillCatList);
-    
+
   }
 
-  getCurrencyList(){
+  getCurrencyList() {
     this.__customGlobalService.getCurrencyList().then((resData: any) => {
       this.currencyArr = resData.responseObject;
-      console.log("currency : ", this.currencyArr);
-      
     })
   }
 
   async getFreelancerDetails() {
     await this.getDocumentList();
-    await this.__profileService.getFreelancerByEmail().then((resData: any) => {    
-      console.log("Freelancer Data : " ,resData );
-      
+    await this.__profileService.getFreelancerByEmail().then((resData: any) => {
       this.freelancerArr = resData.responseObject.freelancerProfile;
       this.freeEducationArr = resData.responseObject.freelancerEdu
       this.freeSkillDetailArr = resData.responseObject.skills,
-      this.freePortfolioArr = resData.responseObject.portfolio,
-      this.freeWorkDetailArr = resData.responseObject.workExperience,
-      this.freeStrengthArr = resData.responseObject.strength,
-      this.freeWeaknessArr = resData.responseObject.weakness,
-      this.freeDocumentArr = resData.responseObject.freelancerDocument
-     
+        this.freePortfolioArr = resData.responseObject.portfolio,
+        this.freeWorkDetailArr = resData.responseObject.workExperience,
+        this.freeStrengthArr = resData.responseObject.strength,
+        this.freeWeaknessArr = resData.responseObject.weakness,
+        this.freeDocumentArr = resData.responseObject.freelancerDocument
+
       this.setFreelancerArr();
       this.setFreeDocumentArr();
       this.setFreeEducationArr();
@@ -363,8 +353,8 @@ export class EditComponent implements OnInit {
       this.setSkillDetailArr();
     });
   }
- 
-  async setFreelancerArr(){
+
+  async setFreelancerArr() {
     this.checkMarked = this.freelancerArr.is_interviewer;
 
     if (this.freelancerArr != null) {
@@ -377,9 +367,9 @@ export class EditComponent implements OnInit {
         addressLine1: this.freelancerArr.addressLine1,
         addressLine2: this.freelancerArr.addressLine2,
         postalCode: this.freelancerArr.postalCode,
-        languagePreferred:this.freelancerArr.languagePreferred,
-        preferredPaymentMethod:this.freelancerArr.preferredPaymentMethod,
-        availabilityForWork:this.freelancerArr.availabilityForWork
+        languagePreferred: this.freelancerArr.languagePreferred,
+        preferredPaymentMethod: this.freelancerArr.preferredPaymentMethod,
+        availabilityForWork: this.freelancerArr.availabilityForWork
       });
 
       this.workExpDetailsForm.patchValue({
@@ -396,12 +386,12 @@ export class EditComponent implements OnInit {
     }
   }
 
-  async setFreeEducationArr(){
+  async setFreeEducationArr() {
     console.log("freeEducationArr", this.freeEducationArr);
-    
+
     if (this.freeEducationArr.length > 0) {
       for (let index = 0; index < this.freeEducationArr.length; index++) {
-;
+        ;
         this.qualfArr.push(this.__fb.group(
           {
             eduCatId: this.freeEducationArr[index].masterEduDomain.eduDomainId,
@@ -420,17 +410,17 @@ export class EditComponent implements OnInit {
     }
   }
 
-  setFreeWorkDetailArr(){
+  setFreeWorkDetailArr() {
     if (this.freeWorkDetailArr.length > 0) {
       for (let index = 0; index < this.freeWorkDetailArr.length; index++) {
-        let sdate =  this.freeWorkDetailArr[index].startDate.substring(0,10);
-        let edate =  this.freeWorkDetailArr[index].endDate.substring(0,10);
+        let sdate = this.freeWorkDetailArr[index].startDate.substring(0, 10);
+        let edate = this.freeWorkDetailArr[index].endDate.substring(0, 10);
         this.orgArr.push(this.__fb.group(
           {
             organization: this.freeWorkDetailArr[index].organization,
             designation: this.freeWorkDetailArr[index].designation,
-            startDate:sdate,
-            endDate:edate,
+            startDate: sdate,
+            endDate: edate,
             responsibilities: this.freeWorkDetailArr[index].responsibilities,
             freelancerWorkExperienceId: this.freeWorkDetailArr[index].freelancerWorkExperienceId
           }
@@ -441,22 +431,22 @@ export class EditComponent implements OnInit {
     }
   }
 
-  setFreeStrengthArr(){
+  setFreeStrengthArr() {
     if (this.freeStrengthArr.length > 0) {
-        this.freeStrengthArr.forEach(item => {
-          this.strengthArr.push(
-            this.__fb.group({
-              strength: item.personalAttribute.attributeId,
-              strengthId: item.strengthId
-            })
-          )
-        });
+      this.freeStrengthArr.forEach(item => {
+        this.strengthArr.push(
+          this.__fb.group({
+            strength: item.personalAttribute.attributeId,
+            strengthId: item.strengthId
+          })
+        )
+      });
     } else {
-        this.addStrength();
+      this.addStrength();
     }
   }
 
-  setFreeWeaknessArr(){
+  setFreeWeaknessArr() {
     if (this.freeWeaknessArr.length > 0) {
       this.freeWeaknessArr.forEach(item => {
         this.weaknessArr.push(
@@ -471,7 +461,7 @@ export class EditComponent implements OnInit {
     }
   }
 
-  setFreePortfolioArr(){
+  setFreePortfolioArr() {
     if (this.freePortfolioArr.length > 0) {
       let portflio = this.workExpDetailsForm.get('portfolios') as FormArray;
       for (let index = 0; index < this.freePortfolioArr.length; index++) {
@@ -485,59 +475,88 @@ export class EditComponent implements OnInit {
     }
   }
 
-  async setFreeDocumentArr(){
-    console.log("this.freelancerDocsArr : \n", this.freeDocumentArr);
-    
+  async setFreeDocumentArr() {
     let isPersonal = this.freeDocumentArr.filter(item => item.masterDocumentType.masterDocDomain.domainName == 'personal');
     if (isPersonal.length > 0) {
       isPersonal.forEach(item => {
-            this.documentArr.push(
-              this.__fb.group({
-                documentUrl: item.documentUrl,
-                documentTypeId: item.masterDocumentType.documentTypeId,
-                documentId: item.documentId
-              })
-            )            
-        });
+        this.documentArr.push(
+          this.__fb.group({
+            documentUrl: item.documentUrl,
+            documentTypeId: item.masterDocumentType.documentTypeId,
+            documentId: item.documentId
+          })
+        )
+      });
+
+      isPersonal.forEach(item => {
+        this.documentPersonalArray.push(
+          this.__fb.group({
+            documentUrl: item.documentUrl,
+            documentTypeId: item.masterDocumentType.documentTypeId,
+            documentId: item.documentId
+          }).value
+        )
+      });
     } else {
       this.addDocument();
     }
 
     let isEducation = this.freeDocumentArr.filter(item => item.masterDocumentType.masterDocDomain.domainName == 'educational');
-    
-    console.log("education docs:",isEducation);
-    if (isEducation.length > 0) {  
+    if (isEducation.length > 0) {
       isEducation.forEach(item => {
-          this.educationalArr.push(
-            this.__fb.group({
-              documentUrl: item.documentUrl,
-              documentTypeId: item.masterDocumentType.documentTypeId,
-              documentId: item.documentId
-            })
-          )
-        });
+        this.educationalArr.push(
+          this.__fb.group({
+            documentUrl: item.documentUrl,
+            documentTypeId: item.masterDocumentType.documentTypeId,
+            documentId: item.documentId
+          })
+        )
+      });
+
+      isEducation.forEach(item => {
+        this.documentQualArray.push(
+          this.__fb.group({
+            documentUrl: item.documentUrl,
+            documentTypeId: item.masterDocumentType.documentTypeId,
+            documentId: item.documentId
+          }).value
+        )
+      });
+
+      console.log("documentQualArray", this.documentQualArray);
+      
     } else {
       this.addDocumentEdu();
     }
 
     let isProfessional = this.freeDocumentArr.filter(item => item.masterDocumentType.masterDocDomain.domainName == 'professional');
-      if (isProfessional.length > 0) {
-        isProfessional.forEach(item => {
-          this.workdocumentArr.push(
-            this.__fb.group({
-              documentUrl: item.documentUrl,
-              documentTypeId: item.masterDocumentType.documentTypeId,
-              documentId: item.documentId
-            })
-          )
-        });
-      } else {
-        this.addWorkDocument();
-      }
+    if (isProfessional.length > 0) {
+      isProfessional.forEach(item => {
+        this.workdocumentArr.push(
+          this.__fb.group({
+            documentUrl: item.documentUrl,
+            documentTypeId: item.masterDocumentType.documentTypeId,
+            documentId: item.documentId
+          }).value
+        )
+      });
+
+      isProfessional.forEach(item => {
+        this.documentWorkArray.push(
+          this.__fb.group({
+            documentUrl: item.documentUrl,
+            documentTypeId: item.masterDocumentType.documentTypeId,
+            documentId: item.documentId
+          })
+        )
+      });
+      console.log("documentWorkArray", this.documentWorkArray);
+    } else {
+      this.addWorkDocument();
+    }
   }
-  
-  async setSkillDetailArr(){
-    console.log("freeSkillDetailArr " , this.freeSkillDetailArr);
+
+  async setSkillDetailArr() {
     if (this.freeSkillDetailArr.length > 0) {
       let skillCat_ID = this.freeSkillDetailArr[0].skillId.masterDomain.domainId;
       this.setSkillArrBySkillCatList(skillCat_ID);
@@ -548,10 +567,10 @@ export class EditComponent implements OnInit {
             skillName: this.freeSkillDetailArr[index].skillId.skillName,
             skillId: this.freeSkillDetailArr[index].skillId.skillId,
             rateHour: this.freeSkillDetailArr[index].hourlyRate,
-            skillExperience:this.freeSkillDetailArr[index].noYrsExpForSkill,
+            skillExperience: this.freeSkillDetailArr[index].noYrsExpForSkill,
             freelancerSkillId: this.freeSkillDetailArr[index].freelancerSkillId,
-            currency : 1,
-            expertiseLevel:this.freeSkillDetailArr[index].expertiseLevel
+            currency: 1,
+            expertiseLevel: this.freeSkillDetailArr[index].expertiseLevel
           }
         ));
       }
@@ -614,9 +633,32 @@ export class EditComponent implements OnInit {
    * @param city_id
    * @description get the zipcode based on selected city id.
    */
-  setDocTypeCatID(id) {
+  setDocTypeCatID(id, i: any) {
     this.doc_cat_id = id
-    console.log( "id",this.doc_cat_id);
+    console.log("id", this.doc_cat_id);
+    if (this.doc_cat_id != null || this.doc_cat_id != undefined || this.doc_cat_id != 0) {
+      // if (this.documentPersonalArray[i] != null) {
+      //   this.documentPersonalArray[i].documentUrl = this.documentPersonalArray[i].documentUrl;
+      //   this.documentPersonalArray[i].documentTypeId = this.doc_cat_id;
+      //   console.log("Personal file id update", this.documentPersonalArray[i].documentTypeId);
+      // }
+      // else
+        if (this.documentQualArray[i] != null) {
+          {
+            this.documentQualArray[i].documentUrl = this.documentQualArray[i].documentUrl;
+            this.documentQualArray[i].documentTypeId = this.doc_cat_id;
+            console.log("Qual file id update", this.documentQualArray[i].documentTypeId);
+          }
+        }
+        else
+          if (this.documentWorkArray[i] != null) {
+            {
+              this.documentWorkArray[i].documentUrl = this.documentWorkArray[i].documentUrl;
+              this.documentWorkArray[i].documentTypeId = this.doc_cat_id;
+              console.log("Work Exp file id update", this.documentWorkArray[i].documentTypeId);
+            }
+          }
+    }
   }
 
   /**
@@ -635,7 +677,7 @@ export class EditComponent implements OnInit {
    * @param item
    * @description get the selected skill id and pass to getSkillsByID.
    */
-  
+
   selectEvent(item) {
     this.setSkillArrBySkillCatList(item.domainId)
   }
@@ -666,8 +708,8 @@ export class EditComponent implements OnInit {
         passingYear: '',
         percentage: '',
         grade: '',
-        educationDetailId : 0,
-        documentTypeId:'',
+        educationDetailId: 0,
+        documentTypeId: '',
         // doc_name: ''
       }));
   }
@@ -708,7 +750,7 @@ export class EditComponent implements OnInit {
   }
 
   addStrength() {
-    this.strengthArr.push(this.__fb.group({ strength: '',strengthId:0 }));
+    this.strengthArr.push(this.__fb.group({ strength: '', strengthId: 0 }));
   }
 
   deleteStrength(index) {
@@ -724,7 +766,7 @@ export class EditComponent implements OnInit {
   }
 
   addWeakness() {
-    this.weaknessArr.push(this.__fb.group({ weakness: '',weaknessId :0 }));
+    this.weaknessArr.push(this.__fb.group({ weakness: '', weaknessId: 0 }));
   }
 
   deleteWeakness(index) {
@@ -741,7 +783,7 @@ export class EditComponent implements OnInit {
   }
 
   addPortfolio() {
-    this.portfolioArr.push(this.__fb.group({ portfolio: '' ,portfolioId : 0}));
+    this.portfolioArr.push(this.__fb.group({ portfolio: '', portfolioId: 0 }));
   }
 
   deletePortfolio(index) {
@@ -758,7 +800,7 @@ export class EditComponent implements OnInit {
   get educationalArr() {
     return this.qualificationDetailsForm.get('documents_educational') as FormArray;
   }
-  
+
 
   addDocument() {
     this.documentArr.push(this.__fb.group(
@@ -767,6 +809,10 @@ export class EditComponent implements OnInit {
         documentTypeId: ''
       }
     ));
+  }
+
+  deleteDocument(index) {
+    this.documentArr.removeAt(index);
   }
 
   addDocumentEdu() {
@@ -780,10 +826,6 @@ export class EditComponent implements OnInit {
 
   deleteDocumentEdu(index) {
     this.educationalArr.removeAt(index);
-  }
-
-  deleteDocument(index) {
-    this.documentArr.removeAt(index);
   }
 
   /**
@@ -815,7 +857,7 @@ export class EditComponent implements OnInit {
     return this.skillDetailsForm.get('skills') as FormArray;
   }
 
-  onChange(skill: string, skill_id: number, isChecked: boolean,i:any) {
+  onChange(skill: string, skill_id: number, isChecked: boolean, i: any) {
     console.log("Skill selected:", skill, skill_id, isChecked);
     if (isChecked && skill != null) {
       this.skillRateArr.push(this.__fb.group(
@@ -823,10 +865,10 @@ export class EditComponent implements OnInit {
           skillName: skill,
           skillId: skill_id,
           rateHour: '',
-          currency : '',
+          currency: '',
           skillExperience: '',
-          freelancerSkillId:'',
-          expertiseLevel:''
+          freelancerSkillId: '',
+          expertiseLevel: ''
         }
       ));
     }
@@ -847,19 +889,33 @@ export class EditComponent implements OnInit {
   handleFileInput(event) {
     if (event.target.files.length > 0) {
 
-      const file = event.target.files[0];
-      this.fileName = file.name.replace(" ", "");
-      this.fileObj = file;
+      this.fileName = event.target.files[0];
+      console.log("hdfhhdfhdhf file", this.fileName.name);
+
+      // this.fileName = file.name.replace(" ", "");
+      this.fileObj = this.fileName;
     }
   }
 
 
-  async uploadPersonalFile() {
-    await this.documentPersonalArray.push(
-      {
-        'documentUrl': this.fileName,
-        'documentTypeId': this.doc_cat_id
-      });
+  uploadPersonalFile(i: any) {
+
+    if (this.documentPersonalArray[i] != null) {
+      if (this.fileName != null || this.fileName != undefined) {
+        this.documentPersonalArray[i].documentUrl = this.fileName.name;
+        this.documentPersonalArray[i].documentTypeId = this.documentPersonalArray[i].documentTypeId;
+        console.log("fileName update", this.documentPersonalArray[i].documentTypeId);
+
+      }
+    } else {
+      this.documentPersonalArray.push(
+        {
+          'documentUrl': this.fileName.name,
+          'documentTypeId': this.doc_cat_id,
+          'documentId': 0
+        });
+    }
+
     // this.loading = true;
     // await this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
     //   this.FileArrData = event;
@@ -879,35 +935,78 @@ export class EditComponent implements OnInit {
     // console.log(this.documentPersonalArray);
   }
 
-  uploadEducationFile() {
-    this.loading = true;
-    this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
-      this.FileArrData = event;
-      this.loading = false;
-    });
+  uploadEducationFile(i: any) {
+    console.log("value of I : ", i);
+    console.log("documentQualArray[i]: ", this.documentQualArray[i]);
+    if (this.documentQualArray[i] != null) {
+      if (this.fileName != null || this.fileName != undefined) {
+        this.documentQualArray[i].documentUrl = this.fileName.name;
+        this.documentQualArray[i].documentTypeId = this.documentQualArray[i].documentTypeId;
+        console.log("Qualfication fileName update", this.documentQualArray[i].documentTypeId);
 
-    this.documentQualArray.push(
-      {
-        'documentUrl': this.FileArrData.fileId,
-        'documentTypeId': 4
-      });
+      }
+    } else {
+      console.log("in else");
+
+      this.documentQualArray.push(
+        {
+          'documentUrl': this.fileName.name,
+          'documentTypeId': this.doc_cat_id,
+          'documentId': 0
+        });
+    }
+    console.log("uploaded files", this.documentQualArray);
+    // this.loading = true;
+    // this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
+    //   this.FileArrData = event;
+    //   this.loading = false;
+    // });
+
+    // this.documentQualArray.push(
+    //   {
+    //     'documentUrl': this.FileArrData.fileId,
+    //     'documentTypeId': 4
+    //   });
   }
 
-  uploadWorkExpFile() {
-    this.loading = true;
-    this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
-      this.FileArrData = event;
-      this.loading = false;
-    });
+  uploadWorkExpFile(i: any) {
 
-    this.documentWorkArray.push(
-      {
-        'documentUrl': this.FileArrData.fileId,
-        'documentTypeId': this.doc_cat_id
-      });
+    console.log("value of I : ", i);
+    console.log("documentWorkArray[i]: ", this.documentWorkArray[i]);
+    if (this.documentWorkArray[i] != null) {
+      if (this.fileName != null || this.fileName != undefined) {
+        this.documentWorkArray[i].documentUrl = this.fileName.name;
+        this.documentWorkArray[i].documentTypeId = this.documentWorkArray[i].documentTypeId;
+        console.log("Qualfication fileName update", this.documentWorkArray[i].documentTypeId);
+
+      }
+    } else {
+      console.log("in else");
+
+      this.documentWorkArray.push(
+        {
+          'documentUrl': this.fileName.name,
+          'documentTypeId': this.doc_cat_id,
+          'documentId': 0
+        });
+    }
+    console.log("uploaded files", this.documentWorkArray);
+
+    // this.loading = true;
+    // this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
+    //   this.FileArrData = event;
+    //   this.loading = false;
+    // });
+
+    // this.documentWorkArray.push(
+    //   {
+    //     'documentUrl': this.FileArrData.fileId,
+    //     'documentTypeId': this.doc_cat_id
+    //   });
   }
 
-  updatePersonalDetailForm(){
+  updatePersonalDetailForm() {
+
     const personalData = {
       emailId: this.email,
       prefix: this.personalDetailsForm.controls.prefix.value,
@@ -920,60 +1019,60 @@ export class EditComponent implements OnInit {
       province: this.personalDetailsForm.controls.province.value,
       city: this.personalDetailsForm.controls.city.value,
       postalCode: this.personalDetailsForm.controls.postalCode.value,
-      preferredPaymentMethod:this.personalDetailsForm.controls.preferredPaymentMethod.value,
-      availabilityForWork:this.personalDetailsForm.controls.availabilityForWork.value,
-      languagePreferred:this.personalDetailsForm.controls.languagePreferred.value.languageId,
-      freelancerDocuments: this.documentArr.value
+      preferredPaymentMethod: this.personalDetailsForm.controls.preferredPaymentMethod.value,
+      availabilityForWork: this.personalDetailsForm.controls.availabilityForWork.value,
+      languagePreferred: this.personalDetailsForm.controls.languagePreferred.value.languageId,
+      freelancerDocuments: this.documentPersonalArray
     }
-    console.log("personalData",personalData);
-    
-    this.__profileService.updateProfileInfo(personalData).then((resData: any) => {
+    console.log("Personal Details Object:", personalData);
+
+    // this.__profileService.updateProfileInfo(personalData).then((resData: any) => {
+    //   this.loading = false;
+    // });
+  }
+
+  updateEducationDetailForm() {
+    const eductionPayload = {
+      educationDetails: this.qualificationDetailsForm.controls.qualification.value,
+      freelancerDocuments: this.documentQualArray,
+    }
+
+    console.log("eductionPayload", eductionPayload);
+
+    this.__profileService.updateEducationDetails(eductionPayload).then((resData: any) => {
       this.loading = false;
     });
   }
 
-  updateEducationDetailForm(){
-    const eductionPayload = {
-      educationDetails :  this.qualificationDetailsForm.controls.qualification.value,
-      freelancerDocument : this.educationalArr.value,
-    }
+  updateOrganizationDetailForm() {
 
-    console.log("eductionPayload",eductionPayload);
 
-    // this.__profileService.updateEducationDetails(eductionPayload).then((resData: any) => {
-    //     this.loading = false;        
-    // });
-  }
-
-  updateOrganizationDetailForm(){
-   
-    
     const orgDetailsPayload = {
-      freelancerOrgDetails : this.workExpDetailsForm.controls.org_details.value,
+      freelancerOrgDetails: this.workExpDetailsForm.controls.org_details.value,
       portfolio: this.workExpDetailsForm.controls.portfolios.value,
-      freelancerDocument : this.educationalArr.value,
-      areaOfExpertise : this.workExpDetailsForm.controls.area_of_expertise.value,
-      personalAttributeStrength :  this.workExpDetailsForm.controls.strength.value,
-      personalAttributeWeakness : this.workExpDetailsForm.controls.weakness.value,
+      freelancerDocument: this.educationalArr.value,
+      areaOfExpertise: this.workExpDetailsForm.controls.area_of_expertise.value,
+      personalAttributeStrength: this.workExpDetailsForm.controls.strength.value,
+      personalAttributeWeakness: this.workExpDetailsForm.controls.weakness.value,
     }
 
-    console.log("orgDetailsPayload",orgDetailsPayload);
-    
+    console.log("orgDetailsPayload", orgDetailsPayload);
+
     // this.__profileService.updateWorkDetails(orgDetailsPayload).then((resData: any) => {
     //     this.loading = false;
     // });
   }
 
-  updateSkill(){
+  updateSkill() {
     const skillPayload = {
       freelancerSkills: this.skillRateArr.value,
     }
     this.__profileService.updateSkillDetails(skillPayload).then((resData: any) => {
-        this.loading = false;        
-        this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view']);
+      this.loading = false;
+      this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view']);
     });
   }
-  
+
 
   ShowNextButton(index) {
     this.showMainContent = index;
@@ -985,7 +1084,6 @@ export class EditComponent implements OnInit {
       this.getDocumentsTypeCat(this.showMainContent);
     } else if (this.showMainContent === 4) {
     } else {
-      console.log("Nothing to save");
     }
   }
 
