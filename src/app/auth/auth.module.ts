@@ -12,6 +12,7 @@ import { UportSignUpComponent } from './component/uport-sign-up/uport-sign-up.co
 import { AuthComponent } from './auth.component';
 import { UportLoginComponent } from './component/uport-login/uport-login.component';
 import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
+import { BnNgIdleService } from 'bn-ng-idle';
 
 // module's
 const MODULES = [
@@ -43,6 +44,7 @@ const COMPONENTS = [
   declarations: [
     ...COMPONENTS,
   ],
+  providers: [BnNgIdleService],
   imports: [
     ...MODULES
   ]

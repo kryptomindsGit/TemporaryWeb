@@ -61,7 +61,6 @@ export class AuthService {
 
   logout() {
     localStorage.clear();
-
   }
 
   decode() {
@@ -101,7 +100,16 @@ export class AuthService {
   }
 
   
-  async getLoggedInUsers(): Promise<any> {
+  async getLoggedInFreelancers(): Promise<any> {
+    try {
+      let result = await this.__http.post(`${SPRING_URL}/auth/free-online`, httpOptions).toPromise();
+      return result;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
+  async getLoggedInEmployers(): Promise<any> {
     try {
       let result = await this.__http.post(`${SPRING_URL}/auth/free-online`, httpOptions).toPromise();
       return result;
@@ -139,7 +147,6 @@ export class AuthService {
       await this.handleError(error);
     }
   }
-
   // Error Handler
   handleError(error) {
     let errorMessage = '';

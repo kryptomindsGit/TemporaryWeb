@@ -4,7 +4,7 @@
 ///*
 export const BASE_URL = 'http://192.168.0.18:3060'; //(shefali - Node Server)
 //export const BLOCKCHAIN_URL = 'http://52.90.191.63:5000'; //(Khemraj - Python Server)
-export const AWS_URL = "http://192.168.0.4:3030"; // (Bhushan - local cognito AWS server)
+export const AWS_URL = "http://192.168.0.18:3030"; // (Bhushan - local cognito AWS server)
 export const UPORT_URL = 'http://192.168.0.4:3000'; // (Bhushan - local uport Node server)
 export const SPRING_URL = "http://192.168.56.1:8090";  // (Bhushan - local Spring server)
 export const DEPLOY_CONTRACT_URL = "http://192.168.0.19:5001";

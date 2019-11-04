@@ -101,7 +101,6 @@ export class HeaderComponent implements OnInit {
     * @description call Logout
     */
   onLogout() {
-
     const databaseloginPayload = {
       emailId: this.email_id
     }

@@ -1050,7 +1050,7 @@ export class EditComponent implements OnInit {
     const orgDetailsPayload = {
       freelancerOrgDetails: this.workExpDetailsForm.controls.org_details.value,
       portfolio: this.workExpDetailsForm.controls.portfolios.value,
-      freelancerDocument: this.educationalArr.value,
+      freelancerDocument: this.documentWorkArray,
       areaOfExpertise: this.workExpDetailsForm.controls.area_of_expertise.value,
       personalAttributeStrength: this.workExpDetailsForm.controls.strength.value,
       personalAttributeWeakness: this.workExpDetailsForm.controls.weakness.value,
