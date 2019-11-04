@@ -100,18 +100,18 @@ export class AuthService {
   }
 
   
-  async getLoggedInFreelancers(): Promise<any> {
+  async getAllFreelancers(): Promise<any> {
     try {
-      let result = await this.__http.post(`${SPRING_URL}/auth/free-online`, httpOptions).toPromise();
+      let result = await this.__http.post(`${SPRING_URL}/auth/allFree`, httpOptions).toPromise();
       return result;
     } catch (error) {
       await this.handleError(error);
     }
   }
 
-  async getLoggedInEmployers(): Promise<any> {
+  async getAllEmployers(): Promise<any> {
     try {
-      let result = await this.__http.post(`${SPRING_URL}/auth/free-online`, httpOptions).toPromise();
+      let result = await this.__http.post(`${SPRING_URL}/auth/allEmp`, httpOptions).toPromise();
       return result;
     } catch (error) {
       await this.handleError(error);

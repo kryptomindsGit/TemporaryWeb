@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ChatWindowService } from 'src/app/feature/chat-box/service/chat-window.service';
 import { BnNgIdleService } from 'bn-ng-idle';
 import { runInThisContext } from 'vm';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -101,12 +102,12 @@ export class LoginComponent implements OnInit {
               this.__authService.updateUserData(loggedInFlagPayload).then((resData: any) => {
                 this.getConnectWithServer();
                 if(data.responseObject.User.role == 2 ){
-                  this.__authService.getLoggedInFreelancers().then((resData: any) => {
+                  this.__authService.getAllFreelancers().then((resData: any) => {
                     console.log("resData", resData);
                   }
                   );
                 }else if(data.responseObject.User.role == 1){
-                  this.__authService.getLoggedInEmployers().then((resData: any) => {
+                  this.__authService.getAllEmployers().then((resData: any) => {
                     console.log("resData", resData);
                   }
                   );
@@ -116,14 +117,7 @@ export class LoginComponent implements OnInit {
                 baseName = baseName.substring(0, baseName.indexOf('@'));
                 const emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1);
                 this.toastr.success(emailName, 'Welcome ');
-
-                this.bnIdle.startWatching(60).subscribe((isTimedOut: boolean) => {
-                  if (isTimedOut) {
-                    console.log('session expired');
-                    this.onLogout();
-                  }
-                });
-
+                this.sessionTimeOut();
               });
             }
           })
@@ -143,6 +137,29 @@ export class LoginComponent implements OnInit {
   getConnectWithServer() {
     this.__eventSourceService.getServerSentEvent().subscribe((eventData) => {
       this.toastr.success('You can chat!!! ');
+    });
+  }
+
+  sessionTimeOut(){
+    this.bnIdle.startWatching(1200).subscribe((isTimedOut: boolean) => {
+      if (isTimedOut) {
+        Swal.fire({
+          title: 'Session is going to expired.',
+          text: "Would you like to continue?",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, Continue!'
+        }).then(async (result) => {
+          if (!result.value) {
+            await Swal.fire(
+              'Bye,See You Soon!',
+            )
+            this.onLogout();     
+          }
+        })
+      }
     });
   }
 
