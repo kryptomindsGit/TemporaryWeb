@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ChatWindowService } from 'src/app/feature/chat-box/service/chat-window.service';
 import { BnNgIdleService } from 'bn-ng-idle';
-// import { runInThisContext } from 'vm';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -101,17 +100,6 @@ export class LoginComponent implements OnInit {
               }
               this.__authService.updateUserData(loggedInFlagPayload).then((resData: any) => {
                 this.getConnectWithServer();
-                // if(data.responseObject.User.role == 2 ){
-                //   this.__authService.getAllFreelancers().then((resData: any) => {
-                //     console.log("resData", resData);
-                //   }
-                //   );
-                // }else if(data.responseObject.User.role == 1){
-                //   this.__authService.getAllEmployers().then((resData: any) => {
-                //     console.log("resData", resData);
-                //   }
-                //   );
-                // }
                 this.__router.navigate(['/feature/feature/full-layout/dashboard'])
                 var baseName = data.responseObject.User.emailId;
                 baseName = baseName.substring(0, baseName.indexOf('@'));
@@ -150,13 +138,16 @@ export class LoginComponent implements OnInit {
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, Continue!'
+          confirmButtonText: 'Yes, Continue!',
+          cancelButtonText : 'Log out'
         }).then(async (result) => {
           if (!result.value) {
             await Swal.fire(
               'Bye,See You Soon!',
             )
-            this.onLogout();
+            this.onLogout();     
+          }else if(result.value){
+              this.sessionTimeOut();
           }
         })
       }
