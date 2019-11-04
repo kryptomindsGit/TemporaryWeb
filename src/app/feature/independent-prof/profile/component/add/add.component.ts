@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { IndeptProfileService } from '../../shared/service/profile.service';
 import { ToastrService } from 'ngx-toastr';
 import { CustomGlobalService } from 'src/app/feature/shared/service/custom-global.service';
-import Swal from 'sweetalert2';
+// import Swal from 'sweetalert2';
 
 // 
 @Component({
@@ -26,7 +26,7 @@ export class AddComponent implements OnInit {
   public prefixArr = ['Mr', 'Mrs', 'Miss'];
   public yearArr = ['2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']
   public gradeArr = ['A', 'B', 'C', 'D', 'E', 'F'];
-  public availabilityArr = ['Full Time' , "Part Time"];
+  public availabilityArr = ['Full Time', "Part Time"];
   /* skill variables. */
   keyword = 'domainName';
 
@@ -62,21 +62,21 @@ export class AddComponent implements OnInit {
   public documentWorkArray: any = [];
   public documentFileArr: any = [];
 
-  /* Master Data Related Arrays */ 
-  public countryArr : any = [];
-  public stateArr : any = [];
-  public cityArr : any = [];
-  public stateArrByCountryId : any = [];
-  public cityArrByStateId : any = [];
+  /* Master Data Related Arrays */
+  public countryArr: any = [];
+  public stateArr: any = [];
+  public cityArr: any = [];
+  public stateArrByCountryId: any = [];
+  public cityArrByStateId: any = [];
   public eduCatArr: any = [];
-  public eduTypeList : any = [];
-  public eduTypeArrByEduCatList : any = [];
+  public eduTypeList: any = [];
+  public eduTypeArrByEduCatList: any = [];
   public skills: any = [];
-  public skillArrBySkillCatList : any = [];
-  public personalAttributes : any = [];
-  public currencyList : any = [];
+  public skillArrBySkillCatList: any = [];
+  public personalAttributes: any = [];
+  public currencyList: any = [];
   public docTypeArr: any = [];
-  public languageArr : any = [];
+  public languageArr: any = [];
 
   constructor(
     /* Constructor variable's */
@@ -149,9 +149,9 @@ export class AddComponent implements OnInit {
         Validators.required, Validators.maxLength(8), Validators.minLength(6),
         Validators.pattern("^[0-9]*$")
       ])],
-      preferredPaymentMethod:['', Validators.required],
-      availabilityForWork:['', Validators.required],
-      languagePreferred:['', Validators.required],
+      preferredPaymentMethod: ['', Validators.required],
+      availabilityForWork: ['', Validators.required],
+      languagePreferred: ['', Validators.required],
       documents_personal: this.__fb.array([this.__fb.group(
         {
           documentUrl: [''],
@@ -172,7 +172,7 @@ export class AddComponent implements OnInit {
           Validators.pattern("^[0-9]*$"),
           Validators.minLength(4),
         ]],
-        documentTypeId:['', Validators.required],
+        documentTypeId: ['', Validators.required],
         grade: ['', Validators.required],
         doc_name: ['', Validators.required]
       })]),
@@ -220,11 +220,11 @@ export class AddComponent implements OnInit {
       this.eduTypeList = resData.responseObject;
     })
   }
-  setEduTypeListByEduCategoryId(eduCatId , i) {
+  setEduTypeListByEduCategoryId(eduCatId, i) {
     this.eduTypeArrByEduCatList[eduCatId] = this.eduTypeList.filter((item) => item.masterEduDomain.eduDomainId == eduCatId);
   }
 
-  getDocumentList(){
+  getDocumentList() {
     this.__customGlobalService.getDocumentList().then((resData: any) => {
       this.docTypeArr = resData.responseObject;
     })
@@ -234,12 +234,12 @@ export class AddComponent implements OnInit {
       this.categ = resData.responseObject;
     })
   }
-  getSkillTypeList(){
+  getSkillTypeList() {
     this.__customGlobalService.getSkillTypeList().then((resData: any) => {
       this.skills = resData.responseObject;
     })
   }
-  setSkillArrBySkillCatList(skillDomainId){ 
+  setSkillArrBySkillCatList(skillDomainId) {
     this.skillArrBySkillCatList = this.skills.filter((item) => item.masterDomain.domainId == skillDomainId);
   }
   getCountryList() {
@@ -257,35 +257,35 @@ export class AddComponent implements OnInit {
   }
   getCityList() {
     this.__customGlobalService.getCityList().then((resData: any) => {
-      this.cityArr = resData.responseObject;      
+      this.cityArr = resData.responseObject;
     })
   }
   setCityListByStateId(stateId) {
     this.cityArrByStateId[stateId] = this.cityArr.filter((item) => item.masterStates.stateId == stateId);
   }
-  getCurrencyList(){
+  getCurrencyList() {
     this.__customGlobalService.getCurrencyList().then((resData: any) => {
-      this.currencyList = resData.responseObject;      
+      this.currencyList = resData.responseObject;
     })
   }
-  getPersonalAttributes(){
+  getPersonalAttributes() {
     this.__customGlobalService.getPersonalAttributeList().then((resData: any) => {
-      this.personalAttributes = resData.responseObject;      
+      this.personalAttributes = resData.responseObject;
     })
   }
-  getLanguageList(){
+  getLanguageList() {
     this.__customGlobalService.getLanguageList().then((resData: any) => {
-      this.languageArr = resData.responseObject;            
+      this.languageArr = resData.responseObject;
     })
   }
   setDocTypeCatID(id) {
     this.doc_cat_id = id;
   }
-  
+
   getDocumentsTypeCat(index) {
     this.__profileService.getFreelancerDocumentByCat(index).then((resData: any) => {
-      this.docTypeArr = resData.responseObject;      
-     })
+      this.docTypeArr = resData.responseObject;
+    })
   }
 
   selectEvent(item) {
@@ -336,7 +336,7 @@ export class AddComponent implements OnInit {
   }
 
   addStrength() {
-    this.strengthArr.push(this.__fb.group({ strength: '' ,strengthId : 0}));
+    this.strengthArr.push(this.__fb.group({ strength: '', strengthId: 0 }));
   }
 
   deleteStrength(index) {
@@ -348,7 +348,7 @@ export class AddComponent implements OnInit {
   }
 
   addWeakness() {
-    this.weaknessArr.push(this.__fb.group({ weakness: '', weaknessId:0 }));
+    this.weaknessArr.push(this.__fb.group({ weakness: '', weaknessId: 0 }));
   }
 
   deleteWeakness(index) {
@@ -417,7 +417,7 @@ export class AddComponent implements OnInit {
           skillId: skill_id,
           rateHour: '',
           skillExperience: '',
-          expertiseLevel:''
+          expertiseLevel: ''
         }
       ));
     }
@@ -441,11 +441,11 @@ export class AddComponent implements OnInit {
 
 
   async uploadPersonalFile() {
-    
+
     this.documentPersonalArray.push({
       'documentUrl': this.fileName,
       'documentTypeId': this.doc_cat_id
-  });
+    });
     // this.loading = true;
     // this.fileUploadProgress = '0%';
     // await this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
@@ -466,10 +466,10 @@ export class AddComponent implements OnInit {
   uploadEducationFile() {
 
     this.documentQualArray.push({
-        'documentUrl': this.fileName,
-        'documentTypeId': this.doc_cat_id
+      'documentUrl': this.fileName,
+      'documentTypeId': this.doc_cat_id
     });
-    
+
     // this.loading = true;
     // this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
     //   this.FileArrData = event;
@@ -490,7 +490,7 @@ export class AddComponent implements OnInit {
     this.documentWorkArray.push({
       'documentUrl': this.fileName,
       'documentTypeId': this.doc_cat_id
-  });
+    });
     // this.loading = true;
     // this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
     //   this.FileArrData = event;
@@ -507,7 +507,7 @@ export class AddComponent implements OnInit {
     // });
   }
 
-  savePersonalDetailForm(){    
+  savePersonalDetailForm() {
     const personalData = {
       emailId: this.email,
       prefix: this.personalDetailForm.controls.prefix.value,
@@ -520,57 +520,57 @@ export class AddComponent implements OnInit {
       province: this.personalDetailForm.controls.province.value,
       city: this.personalDetailForm.controls.city.value,
       postalCode: this.personalDetailForm.controls.postal_code.value,
-      preferredPaymentMethod:this.personalDetailForm.controls.preferredPaymentMethod.value,
-      availabilityForWork:this.personalDetailForm.controls.availabilityForWork.value,
-      languagePreferred:this.personalDetailForm.controls.languagePreferred.value,
+      preferredPaymentMethod: this.personalDetailForm.controls.preferredPaymentMethod.value,
+      availabilityForWork: this.personalDetailForm.controls.availabilityForWork.value,
+      languagePreferred: this.personalDetailForm.controls.languagePreferred.value,
       freelancerDocuments: this.documentPersonalArray
-    }   
-    console.log("in personal : ",personalData);
-     
+    }
+    console.log("in personal : ", personalData);
+
     this.__profileService.savePersonalDetails(personalData).then((resData: any) => {
       this.loading = false;
     });
   }
 
 
-  saveEducationDetails(){
+  saveEducationDetails() {
     const eductionPayload = {
-      educationDetails :  this.qualificationDetailForm.controls.qualification.value,
+      educationDetails: this.qualificationDetailForm.controls.qualification.value,
       freelancerDocuments: this.documentQualArray
     }
-    console.log("in education : ",eductionPayload);
+    console.log("in education : ", eductionPayload);
 
     this.__profileService.saveEducationDetails(eductionPayload).then((resData: any) => {
-        this.loading = false;
+      this.loading = false;
     });
   }
 
-  saveWorkDetails(){
+  saveWorkDetails() {
     const orgDetailsPayload = {
       emailId: this.email,
-      freelancerOrgDetails : this.workExpDetailsForm.controls.org_details.value,
+      freelancerOrgDetails: this.workExpDetailsForm.controls.org_details.value,
       portfolio: this.workExpDetailsForm.controls.portfolios.value,
-      freelancerDocument : this.documentWorkArray,
-      areaOfExpertise : this.workExpDetailsForm.controls.area_of_expertise.value,
-      personalAttributeStrength : this.workExpDetailsForm.controls.strength.value,
-      personalAttributeWeakness : this.workExpDetailsForm.controls.weakness.value,
+      freelancerDocument: this.documentWorkArray,
+      areaOfExpertise: this.workExpDetailsForm.controls.area_of_expertise.value,
+      personalAttributeStrength: this.workExpDetailsForm.controls.strength.value,
+      personalAttributeWeakness: this.workExpDetailsForm.controls.weakness.value,
     }
-    console.log("in org : ",orgDetailsPayload);
+    console.log("in org : ", orgDetailsPayload);
 
     this.__profileService.saveWorkDetails(orgDetailsPayload).then((resData: any) => {
-        this.loading = false;
+      this.loading = false;
     });
   }
 
-  onSaveSkills(){
+  onSaveSkills() {
     const skillPayload = {
       freelancerSkills: this.skillRateArr.value,
     }
-    console.log("in skill : ",skillPayload);
+    console.log("in skill : ", skillPayload);
 
     this.__profileService.saveSkillDetails(skillPayload).then((resData: any) => {
-        this.loading = false;
-        this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view']);
+      this.loading = false;
+      this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view']);
     });
   }
 
@@ -583,40 +583,40 @@ export class AddComponent implements OnInit {
     this.__router.navigate(['/auth/auth/login']);
   }
 
-  clickMethod(i: any) {
-    Swal.fire({
-      title: 'Save and Proceed',
-      text: "You won't be able to revert this",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, Save it!'
-    }).then(async (result) => {
-      if (result.value) {
-        await Swal.fire(
-          'Saved!',
-          'Your data has been saved.',
-          'success'
-        )
-        this.showMainContent = i+1;
+  // clickMethod(i: any) {
+  //   Swal.fire({
+  //     title: 'Save and Proceed',
+  //     text: "You won't be able to revert this",
+  //     type: 'warning',
+  //     showCancelButton: true,
+  //     confirmButtonColor: '#3085d6',
+  //     cancelButtonColor: '#d33',
+  //     confirmButtonText: 'Yes, Save it!'
+  //   }).then(async (result) => {
+  //     if (result.value) {
+  //       await Swal.fire(
+  //         'Saved!',
+  //         'Your data has been saved.',
+  //         'success'
+  //       )
+  //       this.showMainContent = i + 1;
 
-        if(i==1)
-          this.savePersonalDetailForm();
-        else if(i==2)
-          this.saveEducationDetails();
-        else if(i==3)
-          this.saveWorkDetails();
-        else if(i==4)
-          this.onSaveSkills();
-        else  
-          ;  
-      }else{
-        this.showMainContent = i;
-      }
-    })
-  }
-  showPrevious(i:any){
+  //       if (i == 1)
+  //         this.savePersonalDetailForm();
+  //       else if (i == 2)
+  //         this.saveEducationDetails();
+  //       else if (i == 3)
+  //         this.saveWorkDetails();
+  //       else if (i == 4)
+  //         this.onSaveSkills();
+  //       else
+  //         ;
+  //     } else {
+  //       this.showMainContent = i;
+  //     }
+  //   })
+  // }
+  showPrevious(i: any) {
     this.showMainContent = i;
   }
 }

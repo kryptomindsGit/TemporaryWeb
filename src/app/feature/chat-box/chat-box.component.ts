@@ -109,24 +109,27 @@ export class ChatBoxComponent implements OnInit {
 
       if (this.senderEmail == eventData.eventResponse.sender) {
         console.log("email matched");
-        this.senderObject.push(eventData);
+        this.senderObject.push({
+          'sender': eventData.eventResponse.originalText,
+          'receiver': eventData.eventResponse.result.translatedText,
+          'user': 'sender'
+        });
+        console.log("Sender array: ", this.senderObject);
         this.sendUser = true;
         this.receiverUser = false;
-        this.newSenderMessage = [
-          { messages: [...this.senderObject] }
-        ];
-        console.log("Sender array: ", this.newSenderMessage);
-
+        this.newSenderMessage = [...this.senderObject];
       }
       else {
         console.log("email not matched");
-        this.receiverObject.push(eventData);
+        this.senderObject.push({
+          'sender': eventData.eventResponse.originalText,
+          'receiver': eventData.eventResponse.result.translatedText,
+          'user': 'receiver'
+        });
+        console.log("Receiver array: ", this.senderObject);
         this.sendUser = false;
         this.receiverUser = true;
-        this.newReceiverMessage = [
-          { messages: [...this.receiverObject] }
-        ];
-        console.log("Receiver array: ", this.newReceiverMessage);
+        this.newSenderMessage = [...this.senderObject];
       }
     });
   }

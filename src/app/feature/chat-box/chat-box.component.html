@@ -93,63 +93,61 @@
                             </div> -->
                             <!-- </div> -->
                             <!-- <div *ngIf="freelancer"> -->
-                            <div *ngIf="sendUser == true">
-                                <div *ngFor="let msgs of newSenderMessage; let i=index">
-                                    <div *ngFor="let msg of msgs.messages; let i=index">
-                                        <div *ngIf="sendUser == true" class="outgoing_msg">
-                                            <div class="outgoing_msg_img">
-                                                <img style="width: 30px; height: 30px;" class="rounded-circle"
-                                                    src="../../../assets/images/jothipawar.jpg" alt="sunil">
-                                            </div>
-                                            <div class="sent_msg bubble-blue you">
-                                                <p>{{msg.eventResponse.originalText}}</p>
-                                                <!-- <p>{{msg.eventResponse.result.translatedText}} </p> -->
-                                                <!-- <span class="time_date"> {{msg.date | date:'shortTime'}}</span> -->
-                                            </div>
+                            <div *ngFor="let msgs of newSenderMessage; let i=index">
+                                <div *ngIf="msgs.user == 'sender'; else receiverUser">
+                                    <div class="outgoing_msg">
+                                        <div class="outgoing_msg_img">
+                                            <img style="width: 30px; height: 30px;" class="rounded-circle"
+                                                src="../../../assets/images/jothipawar.jpg" alt="sunil">
                                         </div>
-                                        <!-- <div *ngIf="receiverUser == true" class="incoming_msg">
-                                            <div class="incoming_msg_img">
-                                                <img style="width: 30px; height: 30px;" class="rounded-circle"
-                                                    src="../../../assets/images/akhshay.png" alt="sunil">
-                                            </div>
-                                            <div class="received_msg">
-                                                <div class="received_withd_msg bubble me">
-                                                    <p>{{msg.eventResponse.result.translatedText}} </p>
-                                                </div>
-                                            </div>
-                                        </div> -->
+                                        <div class="sent_msg bubble-blue you">
+                                            <p>{{msgs.sender}}</p>
+                                            <p>{{msgs.receiver}} </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div *ngIf="receiverUser == true">
-                                <div *ngFor="let msgs of newReceiverMessage; let i=index">
-                                    <div *ngFor="let msg of msgs.messages; let i=index">
-                                        <!-- <div *ngIf="sendUser == true" class="outgoing_msg">
-                                            <div class="outgoing_msg_img">
-                                                <img style="width: 30px; height: 30px;" class="rounded-circle"
-                                                    src="../../../assets/images/jothipawar.jpg" alt="sunil">
-                                            </div>
-                                            <div class="sent_msg bubble-blue you">
-                                                <p>{{msg.eventResponse.originalText}}</p>
 
-                                            </div>
-                                        </div> -->
-                                        <div *ngIf="receiverUser == true" class="incoming_msg">
-                                            <div class="incoming_msg_img">
-                                                <img style="width: 30px; height: 30px;" class="rounded-circle"
-                                                    src="../../../assets/images/akhshay.png" alt="sunil">
-                                            </div>
-                                            <div class="received_msg">
-                                                <div class="received_withd_msg bubble me">
-                                                    <p>{{msg.eventResponse.result.translatedText}} </p>
-                                                    <!-- <p>{{msg.eventResponse.originalText}}</p> -->
-                                                </div>
+                                <ng-template #receiverUser>
+                                    <div class="incoming_msg">
+                                        <div class="incoming_msg_img">
+                                            <img style="width: 30px; height: 30px;" class="rounded-circle"
+                                                src="../../../assets/images/akhshay.png" alt="sunil">
+                                        </div>
+                                        <div class="received_msg">
+                                            <div class="received_withd_msg bubble me">
+                                                <p>{{msgs.receiver}} </p>
+                                                <p>{{msgs.sender}}</p>
                                             </div>
                                         </div>
                                     </div>
+                                </ng-template>
+
+                                <!-- <div *ngIf="sendUser == true">
+                                    <div class="outgoing_msg">
+                                        <div class="outgoing_msg_img">
+                                            <img style="width: 30px; height: 30px;" class="rounded-circle"
+                                                src="../../../assets/images/jothipawar.jpg" alt="sunil">
+                                        </div>
+                                        <div class="sent_msg bubble-blue you">
+                                            <p>{{msgs.sender}}</p>
+                                        </div>
+                                    </div>
                                 </div>
+
+                                <div *ngIf="receiverUser == true">
+                                    <div class="incoming_msg">
+                                        <div class="incoming_msg_img">
+                                            <img style="width: 30px; height: 30px;" class="rounded-circle"
+                                                src="../../../assets/images/akhshay.png" alt="sunil">
+                                        </div>
+                                        <div class="received_msg">
+                                            <div class="received_withd_msg bubble me">
+                                                <p>{{msgs.receiver}} </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
                             </div>
-                            <!-- </div> -->
                         </div>
                         <div class="type_msg">
                             <div class="input_msg_write">
