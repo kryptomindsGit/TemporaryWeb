@@ -88,7 +88,8 @@ img {
 
 .chat_ib h5 span {
     font-size: 13px;
-    float: right;
+    margin-left: 3%;
+    // float: left;
 }
 
 .chat_ib p {
@@ -318,4 +319,31 @@ img {
 .you::before {
     // box-shadow: 2px -2px 2px 0 rgba(178, 178, 178, .4);
     right: -5px;
+}
+
+.greentext {
+    color: rgb(4, 255, 66);
+}
+
+.redtext {
+    color: rgba(255, 42, 4, 0.651);
+}
+
+// active user 
+.greendot {
+    height: 8px;
+    width: 8px;
+    background-color: rgb(4, 255, 66);
+    border-radius: 50%;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.reddot {
+    height: 8px;
+    width: 8px;
+    background-color: rgba(255, 42, 4, 0.651);
+    border-radius: 50%;
+    display: inline-block;
+    margin-bottom: 5px;
 }

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ChatWindowService } from 'src/app/feature/chat-box/service/chat-window.service';
 import { BnNgIdleService } from 'bn-ng-idle';
-import { runInThisContext } from 'vm';
+// import { runInThisContext } from 'vm';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
     private toastr: ToastrService,
     private __eventSourceService: ChatWindowService,
     private bnIdle: BnNgIdleService,
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.valData();
@@ -101,17 +101,17 @@ export class LoginComponent implements OnInit {
               }
               this.__authService.updateUserData(loggedInFlagPayload).then((resData: any) => {
                 this.getConnectWithServer();
-                if(data.responseObject.User.role == 2 ){
-                  this.__authService.getAllFreelancers().then((resData: any) => {
-                    console.log("resData", resData);
-                  }
-                  );
-                }else if(data.responseObject.User.role == 1){
-                  this.__authService.getAllEmployers().then((resData: any) => {
-                    console.log("resData", resData);
-                  }
-                  );
-                }
+                // if(data.responseObject.User.role == 2 ){
+                //   this.__authService.getAllFreelancers().then((resData: any) => {
+                //     console.log("resData", resData);
+                //   }
+                //   );
+                // }else if(data.responseObject.User.role == 1){
+                //   this.__authService.getAllEmployers().then((resData: any) => {
+                //     console.log("resData", resData);
+                //   }
+                //   );
+                // }
                 this.__router.navigate(['/feature/feature/full-layout/dashboard'])
                 var baseName = data.responseObject.User.emailId;
                 baseName = baseName.substring(0, baseName.indexOf('@'));
@@ -121,7 +121,7 @@ export class LoginComponent implements OnInit {
               });
             }
           })
-       
+
         } else if (resData.status == "ERROR") {
           this.loading = false;
           this.toastr.error(resData.response.message);
@@ -140,7 +140,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  sessionTimeOut(){
+  sessionTimeOut() {
     this.bnIdle.startWatching(1200).subscribe((isTimedOut: boolean) => {
       if (isTimedOut) {
         Swal.fire({
@@ -156,7 +156,7 @@ export class LoginComponent implements OnInit {
             await Swal.fire(
               'Bye,See You Soon!',
             )
-            this.onLogout();     
+            this.onLogout();
           }
         })
       }
@@ -167,17 +167,17 @@ export class LoginComponent implements OnInit {
     const databaseloginPayload = {
       emailId: this.emailID
     }
-    
-    this.__authService.getUserLoginData(databaseloginPayload).then((data: any) => {      
-        if(data.responseObject.User.isLoggedIn == true){
-          const loggedInFlagPayload = {
-            isLoggedIn : 0
-          }
-          this.__authService.updateUserData(loggedInFlagPayload).then((resData: any) => {  
-             this.__authService.logout();
-            this.__router.navigate(['/auth/auth/login']);                                
-          });
+
+    this.__authService.getUserLoginData(databaseloginPayload).then((data: any) => {
+      if (data.responseObject.User.isLoggedIn == true) {
+        const loggedInFlagPayload = {
+          isLoggedIn: 0
         }
+        this.__authService.updateUserData(loggedInFlagPayload).then((resData: any) => {
+          this.__authService.logout();
+          this.__router.navigate(['/auth/auth/login']);
+        });
+      }
     });
   }
 }

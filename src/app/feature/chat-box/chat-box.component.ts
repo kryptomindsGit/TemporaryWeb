@@ -7,6 +7,7 @@ import { ChatWindowService } from './service/chat-window.service';
 import { SPRING_URL } from 'src/app/constant/constant-url';
 import { HttpHeaders } from '@angular/common/http';
 import { EventSourceService } from 'src/app/shared/service/event-source.service';
+import { AuthService } from 'src/app/auth/shared/service/auth.service';
 
 // import { ChatWindowService } from './service/chat-window.service';
 // const headers = new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' });
@@ -43,35 +44,46 @@ export class ChatBoxComponent implements OnInit {
   sendUser: boolean = false;
   receiverUser: boolean = false;
 
-
+  public userRole: any;
+  public userSelected: any = "";
+  public activeStatus: boolean;
+  userId: number;
   emailId: string;
   // sendMessage: any;
   date: Date = new Date();
 
   senderMessages: any = [];
   reciverMessages: any = [];
-  activeUser: any = [];
+  public activeUser: any = [];
+  public deactiveUser: any = [];
   public jwtData: any = [];
 
   userMessage: any = [];
   arrMessage: any = [];
 
+
+  public allusers: any = [];
+
   constructor(
     // private __eventSourceService: EventSourceService,
-    private __chatboxService: ChatWindowService
+    private __chatboxService: ChatWindowService,
+    private __authService: AuthService,
   ) {
   }
 
   ngOnInit() {
     this.decodeJWT();
     this.getConnectWithServer();
+    this.getOnlineUsers();
+    this.getAllUser();
   }
-
 
   decodeJWT() {
     let token = localStorage.getItem('access_token');
     this.jwtData = decode(token);
-    console.log("Res JWT Data: ", this.jwtData.email);
+    this.userRole = this.jwtData['custom:role'];
+    this.emailId = this.jwtData['email'];
+    console.log("Res JWT Data: ", this.emailId);
   }
 
   /**
@@ -81,18 +93,19 @@ export class ChatBoxComponent implements OnInit {
    */
   sendMessage(messages: string) {
     // this.reqObject.push(messages);
-
-    console.log("Send msg:", this.reqObject)
     this.messageDetails = {
       sourceLanguageCode: "en",
       targetLanguageCode: "hi",
       text: messages,
-      sender: this.jwtData.email
+      sender: this.jwtData.email,
+      receiver: this.userSelected
     };
+
+    console.log("Send messageDetails:", this.messageDetails)
 
     this.__chatboxService.senderUserMessage(this.messageDetails).then(
       (resData) => {
-        // this.respObject.push(resData);
+        // this.respObject.push(resData); 
       },
       error => {
         console.error("Error saving user!");
@@ -100,37 +113,104 @@ export class ChatBoxComponent implements OnInit {
       }
     );
   }
+  getAllUser() {
+    if (this.userRole == 'Employer') {
+      this.__authService.getAllFreelancers().then((resData: any) => {
+        this.allusers = resData.responseObject;
+        // this.allusers = this.allusers.filter(
+        //   active => active.isLoggedIn === true);
+        console.log("Freelancer Users", this.allusers);
+        this.getActivateUserAllList();
+      }
+      );
+    } else if (this.userRole == 'Freelancer') {
+      this.__authService.getAllEmployers().then((resData: any) => {
+        this.allusers = resData.responseObject;
+        // this.allusers = this.allusers.filter(
+        //   active => active.isLoggedIn === true);
+        // this.allusers.sort((a, b) => a.isLoggedIn.localeCompare(b.isLoggedIn));
+        console.log("Employer Users", this.allusers);
+        this.getActivateUserAllList();
+      }
+      );
+    }
+  }
+
+  getActivateUserAllList() {
+    this.allusers.forEach(element => {
+      console.log("element.isLoggedIn:", element.isLoggedIn);
+      if (element.isLoggedIn == true) {
+        this.activeUser = true;
+      }
+      else {
+        this.deactiveUser = false;
+      }
+    });
+  }
+
+  getOnlineUsers() {
+    this.__chatboxService.getOnlineUserList().subscribe((eventData) => {
+      console.log("Online Users:", eventData.onlineUsers);
+      let flag = 0;
+      if (this.userRole == 'Freelancer') {
+        this.userId = 2;
+      } else if (this.userRole == 'Employer') {
+        this.userId = 1;
+      }
+
+      this.allusers.forEach(element => {
+        if (element.emailId == eventData.onlineUsers.emailId) {
+          element.isLoggedIn = eventData.onlineUsers.isLoggedIn;
+          console.log("Online Logged In:", element.isLoggedIn);
+          flag = 1;
+        }
+      });
+      if (flag == 0 && eventData.onlineUsers.role == this.userId) {
+        this.allusers.forEach(element => {
+          if (element.emailId == eventData.onlineUsers.emailId) {
+            element.isLoggedIn = eventData.onlineUsers.isLoggedIn;
+          }
+        });
+        this.allusers.push(eventData.onlineUsers);
+        console.log("this.allusers after push ", this.allusers);
+      }
+    });
+  }
 
   getConnectWithServer() {
     this.__chatboxService.getServerSentEvent().subscribe((eventData) => {
-      console.log("Servcer Event Connect", eventData.eventResponse.sender);
-
       this.senderEmail = this.messageDetails.sender;
-
       if (this.senderEmail == eventData.eventResponse.sender) {
-        console.log("email matched");
         this.senderObject.push({
           'sender': eventData.eventResponse.originalText,
           'receiver': eventData.eventResponse.result.translatedText,
           'user': 'sender'
         });
-        console.log("Sender array: ", this.senderObject);
         this.sendUser = true;
         this.receiverUser = false;
         this.newSenderMessage = [...this.senderObject];
       }
       else {
-        console.log("email not matched");
         this.senderObject.push({
           'sender': eventData.eventResponse.originalText,
           'receiver': eventData.eventResponse.result.translatedText,
           'user': 'receiver'
         });
-        console.log("Receiver array: ", this.senderObject);
-        this.sendUser = false;
-        this.receiverUser = true;
-        this.newSenderMessage = [...this.senderObject];
+        console.log("receiver matched", this.messageDetails.receiver);
+
+        if (eventData.eventResponse.receiver == this.emailId) {
+          console.log("receiver matched");
+          this.sendUser = false;
+          this.receiverUser = true;
+          this.newSenderMessage = [...this.senderObject];
+        }
       }
     });
+  }
+
+  selectUser(selectedUser) {
+    this.userSelected = selectedUser.emailId;
+    this.activeStatus = selectedUser.isLoggedIn;
+    console.log("selected User", this.userSelected);
   }
 }

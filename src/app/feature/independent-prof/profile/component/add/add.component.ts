@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CustomGlobalService } from 'src/app/feature/shared/service/custom-global.service';
 import Swal from 'sweetalert2';
 
-// 
+
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',

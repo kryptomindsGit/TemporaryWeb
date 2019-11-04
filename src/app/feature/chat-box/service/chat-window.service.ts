@@ -50,13 +50,33 @@ export class ChatWindowService {
     }
   }
 
+  getOnlineUserList() {
+    this.EVENT_URL = `${SPRING_URL}/event/chat`;
+    return Observable.create(observer => {
+      const eventSource = new EventSource(this.EVENT_URL);
+      eventSource.addEventListener('loggedIn', (event: any) => this.__zone.run(() => {
+        console.log("listening online users", event.data);
+        observer.next(JSON.parse(event.data));
+      }));
+
+      eventSource.onerror = error => {
+        this.__zone.run(() => {
+          if (eventSource.readyState === eventSource.CLOSED) {
+            console.log("on error function");
+            observer.complete();
+          } else {
+            observer.error(error);
+          }
+        })
+      }
+      return () => eventSource.close();
+    })
+  }
+
   getServerSentEvent() {
-    // this.eventURL = this.__http.post(`${SPRING_URL}/event/chat`, httpOptions);
-    // console.log("fkghkfdkgjhfdh", this.eventURL);
     this.EVENT_URL = `${SPRING_URL}/event/chat`;
     this.eventName = 'translation';
     return Observable.create(observer => {
-      // const eventSource = this.__sseService.getEventSource(this.eventURL);
       const eventSource = new EventSource(this.EVENT_URL);
 
       eventSource.addEventListener(this.eventName, (event: any) => this.__zone.run(() => {

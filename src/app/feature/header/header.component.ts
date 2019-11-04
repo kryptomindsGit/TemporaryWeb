@@ -101,20 +101,22 @@ export class HeaderComponent implements OnInit {
     * @description call Logout
     */
   onLogout() {
+    console.log("jdhjkghdfkgklfdkl");
+
     const databaseloginPayload = {
       emailId: this.email_id
     }
-    
-    this.__authService.getUserLoginData(databaseloginPayload).then((data: any) => {      
-        if(data.responseObject.User.isLoggedIn == true){
-          const loggedInFlagPayload = {
-            isLoggedIn : 0
-          }
-          this.__authService.updateUserData(loggedInFlagPayload).then((resData: any) => {  
-             this.__authService.logout();
-            this.__router.navigate(['/auth/auth/login']);                                
-          });
+
+    this.__authService.getUserLoginData(databaseloginPayload).then((data: any) => {
+      if (data.responseObject.User.isLoggedIn == true) {
+        const loggedInFlagPayload = {
+          isLoggedIn: 0
         }
+        this.__authService.updateUserData(loggedInFlagPayload).then((resData: any) => {
+          this.__authService.logout();
+          this.__router.navigate(['/auth/auth/login']);
+        });
+      }
     });
   }
 }

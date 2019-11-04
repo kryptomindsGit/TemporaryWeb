@@ -11,6 +11,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { FullLayoutComponent } from './full-layout/full-layout.component';
 import { PaymentSmartcontractComponent } from './payment-smartcontract/payment-smartcontract.component';
 import { ChatBoxComponent } from './chat-box/chat-box.component';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 //Components
 const COMPONENTS = [
@@ -26,7 +27,8 @@ const COMPONENTS = [
 //Modules
 const MODULES = [
   CommonModule,
-  FeatureRoutingModule
+  FeatureRoutingModule,
+  AutocompleteLibModule
 ];
 
 @NgModule({
