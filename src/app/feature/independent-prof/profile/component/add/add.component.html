@@ -18,7 +18,8 @@
                                             class="redstar">*</span></label>
                                     <div *ngIf="submitted && personalFormValidation.prefix.errors || personalDetailForm.controls['prefix'].invalid && (personalDetailForm.controls['prefix'].dirty || personalDetailForm.controls['prefix'].touched)"
                                         class="text-danger error-msg">
-                                        <div [hidden]="!personalDetailForm.controls['prefix'].errors.required">Prefix is
+                                        <div [hidden]="!personalDetailForm.controls['prefix'].errors?.required">Prefix
+                                            is
                                             required.
                                         </div>
                                     </div>
@@ -31,11 +32,11 @@
                                     <div *ngIf="submitted && personalFormValidation.first_name.errors || personalDetailForm.get('first_name').invalid && (personalDetailForm.get('first_name').dirty || personalDetailForm.get('first_name').touched)"
                                         class="text-danger error-msg">
 
-                                        <div *ngIf="personalDetailForm.get('first_name').errors.required">
+                                        <div *ngIf="personalDetailForm.get('first_name').errors?.required">
                                             First Name is required.
                                         </div>
 
-                                        <div *ngIf="personalDetailForm.get('first_name').errors.maxlength">
+                                        <div *ngIf="personalDetailForm.get('first_name').errors?.maxlength">
                                             First Name maximum 20 characters long.
                                         </div>
                                     </div>
@@ -53,11 +54,11 @@
                                     <div *ngIf="submitted && personalFormValidation.last_name.errors || personalDetailForm.get('last_name').invalid && (personalDetailForm.get('last_name').dirty || personalDetailForm.get('last_name').touched)"
                                         class="text-danger error-msg">
 
-                                        <div *ngIf="personalDetailForm.get('last_name').errors.required">
+                                        <div *ngIf="personalDetailForm.get('last_name').errors?.required">
                                             Last Name is required.
                                         </div>
 
-                                        <div *ngIf="personalDetailForm.get('last_name').errors.maxlength">
+                                        <div *ngIf="personalDetailForm.get('last_name').errors?.maxlength">
                                             Last Name maximum 20 characters long.
                                         </div>
                                     </div>
@@ -73,11 +74,11 @@
                                     <div *ngIf="submitted && personalFormValidation.address_one.errors || personalDetailForm.get('address_one').invalid && (personalDetailForm.get('address_one').dirty || personalDetailForm.get('address_one').touched)"
                                         class="text-danger error-msg">
 
-                                        <div *ngIf="personalDetailForm.get('address_one').errors.required">
+                                        <div *ngIf="personalDetailForm.get('address_one').errors?.required">
                                             Address Line 1 is required.
                                         </div>
 
-                                        <div *ngIf="personalDetailForm.get('address_one').errors.maxlength">
+                                        <div *ngIf="personalDetailForm.get('address_one').errors?.maxlength">
                                             Address Line 1 maximum 25 characters long.
                                         </div>
                                     </div>
@@ -90,11 +91,11 @@
                                     <div *ngIf="submitted && personalFormValidation.address_two.errors || personalDetailForm.get('address_two').invalid && (personalDetailForm.get('address_two').dirty || personalDetailForm.get('address_two').touched)"
                                         class="text-danger error-msg">
 
-                                        <div *ngIf="personalDetailForm.get('address_two').errors.required">
+                                        <div *ngIf="personalDetailForm.get('address_two').errors?.required">
                                             Address Line 2 is required.
                                         </div>
 
-                                        <div *ngIf="personalDetailForm.get('address_two').errors.maxlength">
+                                        <div *ngIf="personalDetailForm.get('address_two').errors?.maxlength">
                                             Address Line 2 maximum 25 characters long.
                                         </div>
                                     </div>
@@ -103,53 +104,56 @@
 
                             <div class="row">
                                 <div class="form-group form-input col">
-                                    <select (change)="setStateListByCountryId($event.target.value)" formControlName="country"
-                                        id="country" required>
+                                    <select (change)="setStateListByCountryId($event.target.value)"
+                                        formControlName="country" id="country" required>
                                         <option *ngFor="let country of countryArr" [value]="country.countryId">
                                             {{country.countryName}}
                                         </option>
                                     </select>
                                     <label for="country" class="form-label">Country<span
                                             class="redstar">*</span></label>
-                                    <!-- <div *ngIf="submitted && personalFormValidation.country.errors || personalDetailForm.controls['country'].invalid && (personalDetailForm.controls['country'].dirty || personalDetailForm.controls['country'].touched)"
+                                    <div *ngIf="submitted && personalFormValidation.country.errors || personalDetailForm.controls['country'].invalid && (personalDetailForm.controls['country'].dirty || personalDetailForm.controls['country'].touched)"
                                         class="text-danger error-msg">
-                                        <div [hidden]="!personalDetailForm.controls['country'].errors.required">Country is
+                                        <div [hidden]="!personalDetailForm.controls['country'].errors?.required">Country
+                                            is
                                             required.
                                         </div>
-                                    </div> -->
+                                    </div>
                                 </div>
                                 <div class="form-group form-input col">
-                                    <select (change)="setCityListByStateId($event.target.value)" formControlName="province"
-                                        id="state" required>
+                                    <select (change)="setCityListByStateId($event.target.value)"
+                                        formControlName="province" id="state" required>
                                         <!-- <option disabled value="">State</option> -->
-                                        <option *ngFor="let state of stateArrByCountryId[personalDetailForm.get('country').value]"
-                                        [value]="state.stateId">{{state.stateName}}
+                                        <option
+                                            *ngFor="let state of stateArrByCountryId[personalDetailForm.get('country').value]"
+                                            [value]="state.stateId">{{state.stateName}}
                                         </option>
                                     </select>
                                     <label class="form-label" for="state">State<span class="redstar">*</span></label>
-                                    <!-- <div *ngIf="submitted && personalFormValidation.province.errors || personalDetailForm.controls['province'].invalid && (personalDetailForm.controls['province'].dirty || personalDetailForm.controls['province'].touched)"
+                                    <div *ngIf="submitted && personalFormValidation.province.errors || personalDetailForm.controls['province'].invalid && (personalDetailForm.controls['province'].dirty || personalDetailForm.controls['province'].touched)"
                                         class="text-danger error-msg">
-                                        <div [hidden]="!personalDetailForm.controls['province'].errors.required">State is
+                                        <div [hidden]="!personalDetailForm.controls['province'].errors?.required">State
+                                            is
                                             required.
                                         </div>
-                                    </div> -->
+                                    </div>
                                 </div>
 
                                 <div class="form-group form-input col">
                                     <select formControlName="city" id="city" required>
                                         <!-- <option disabled value="">City</option> -->
-                                        <option 
-                                        *ngFor="let city of cityArrByStateId[personalDetailForm.get('province').value]"
-                                        [value]="city.cityId">{{city.cityName}}
+                                        <option
+                                            *ngFor="let city of cityArrByStateId[personalDetailForm.get('province').value]"
+                                            [value]="city.cityId">{{city.cityName}}
                                         </option>
                                     </select>
                                     <label class="form-label" for="city">City<span class="redstar">*</span></label>
-                                    <!-- <div *ngIf="submitted && personalFormValidation.city.errors || personalDetailForm.controls['city'].invalid && (personalDetailForm.controls['city'].dirty || personalDetailForm.controls['city'].touched)"
+                                    <div *ngIf="submitted && personalFormValidation.city.errors || personalDetailForm.controls['city'].invalid && (personalDetailForm.controls['city'].dirty || personalDetailForm.controls['city'].touched)"
                                         class="text-danger error-msg">
-                                        <div [hidden]="!personalDetailForm.controls['city'].errors.required">City is
+                                        <div [hidden]="!personalDetailForm.controls['city'].errors?.required">City is
                                             required.
                                         </div>
-                                    </div> -->
+                                    </div>
                                 </div>
                                 <div class="form-group form-input col">
                                     <input type="text" formControlName="postal_code" id="postal_code" required />
@@ -158,11 +162,13 @@
 
                                     <div *ngIf="submitted && personalFormValidation.postal_code.errors || personalDetailForm.controls['postal_code'].invalid && (personalDetailForm.controls['postal_code'].dirty || personalDetailForm.controls['postal_code'].touched)"
                                         class="text-danger error-msg">
-                                        <div [hidden]="!personalDetailForm.controls['postal_code'].errors.required">Postal
+                                        <div [hidden]="!personalDetailForm.controls['postal_code'].errors?.required">
+                                            Postal
                                             code is required.</div>
-                                        <div [hidden]="!personalDetailForm.controls['postal_code'].errors.minLength">
+                                        <div [hidden]="!personalDetailForm.controls['postal_code'].errors?.minLength">
                                             Postal code should be min 6 digit and max 8 digit.</div>
-                                        <div [hidden]="!personalDetailForm.controls['postal_code'].errors.pattern">Postal
+                                        <div [hidden]="!personalDetailForm.controls['postal_code'].errors?.pattern">
+                                            Postal
                                             code should be number.</div>
                                     </div>
                                 </div>
@@ -170,51 +176,49 @@
 
                             <div class="row">
                                 <div class="form-group form-input col-4">
-                                    <select 
-                                    formControlName="languagePreferred" id="languagePreferred" required>
-                                    <!-- <option disabled value="">Document type</option> -->
-                                    <option id="option_txt" *ngFor="let language of languageArr"
-                                        [value]="language.languageId">{{language.languageName}}
-                                    </option>
-                                </select>
-                                <label class="form-label" for="languagePreferred">Preffered Language</label>
-                                <!-- <div *ngIf="languageArr.controls[i].get('languagePreferred').invalid && (languageArr.controls[i].get('languagePreferred').dirty || languageArr.controls[i].get('languagePreferred').touched)"
-                                    class="text-danger error-msg">
-                                    <div
-                                        [hidden]="!languageArr.controls[i].get('languagePreferred').errors?.required">
-                                        Document type is required.
+                                    <select formControlName="languagePreferred" id="languagePreferred" required>
+                                        <!-- <option disabled value="">Document type</option> -->
+                                        <option id="option_txt" *ngFor="let language of languageArr"
+                                            [value]="language.languageId">{{language.languageName}}
+                                        </option>
+                                    </select>
+                                    <label class="form-label" for="languagePreferred">Preffered Language</label>
+                                    <div *ngIf="submitted && personalFormValidation.languagePreferred.errors || personalDetailForm.controls['languagePreferred'].invalid && (personalDetailForm.controls['languagePreferred'].dirty || personalDetailForm.controls['languagePreferred'].touched)"
+                                        class="text-danger error-msg">
+                                        <div
+                                            [hidden]="!personalDetailForm.controls['languagePreferred'].errors?.required">
+                                            Language is required.
+                                        </div>
                                     </div>
-                                </div> -->
                                 </div>
                                 <div class="form-group form-input col-4">
-                                    <select 
-                                    formControlName="availabilityForWork" id="availabilityForWork" required>
-                                    <option  value="Full Time">Full Time </option>
-                                    <option  value="Part Time">Part Time </option>
-                                </select>
-                                <label class="form-label" for="availabilityForWork">Availability for Work</label>
-                                <!-- <div *ngIf="languageArr.controls[i].get('languagePreferred').invalid && (languageArr.controls[i].get('languagePreferred').dirty || languageArr.controls[i].get('languagePreferred').touched)"
-                                    class="text-danger error-msg">
-                                    <div
-                                        [hidden]="!languageArr.controls[i].get('languagePreferred').errors?.required">
-                                        Document type is required.
+                                    <select formControlName="availabilityForWork" id="availabilityForWork" required>
+                                        <option value="Full Time">Full Time </option>
+                                        <option value="Part Time">Part Time </option>
+                                    </select>
+                                    <label class="form-label" for="availabilityForWork">Availability for Work</label>
+                                    <div *ngIf="submitted && personalFormValidation.availabilityForWork.errors || personalDetailForm.controls['availabilityForWork'].invalid && (personalDetailForm.controls['availabilityForWork'].dirty || personalDetailForm.controls['availabilityForWork'].touched)"
+                                        class="text-danger error-msg">
+                                        <div
+                                            [hidden]="!personalDetailForm.controls['availabilityForWork'].errors?.required">
+                                            Availability is required.
+                                        </div>
                                     </div>
-                                </div> -->
                                 </div>
                                 <div class="form-group form-input col-4">
-                                    <select 
-                                    formControlName="preferredPaymentMethod" id="preferredPaymentMethod" required>
-                                    <option  value="Fiat">Fiat</option>
-                                    <option  value="Crypto">Crypto</option>
-                                </select>
-                                <label class="form-label" for="preferredPaymentMethod">Payment Method</label>
-                                <!-- <div *ngIf="languageArr.controls[i].get('languagePreferred').invalid && (languageArr.controls[i].get('languagePreferred').dirty || languageArr.controls[i].get('languagePreferred').touched)"
-                                    class="text-danger error-msg">
-                                    <div
-                                        [hidden]="!languageArr.controls[i].get('languagePreferred').errors?.required">
-                                        Document type is required.
+                                    <select formControlName="preferredPaymentMethod" id="preferredPaymentMethod"
+                                        required>
+                                        <option value="Fiat">Fiat</option>
+                                        <option value="Crypto">Crypto</option>
+                                    </select>
+                                    <label class="form-label" for="preferredPaymentMethod">Payment Method</label>
+                                    <div *ngIf="submitted && personalFormValidation.preferredPaymentMethod.errors || personalDetailForm.controls['preferredPaymentMethod'].invalid && (personalDetailForm.controls['preferredPaymentMethod'].dirty || personalDetailForm.controls['preferredPaymentMethod'].touched)"
+                                        class="text-danger error-msg">
+                                        <div
+                                            [hidden]="!personalDetailForm.controls['preferredPaymentMethod'].errors?.required">
+                                            Payment Method is required.
+                                        </div>
                                     </div>
-                                </div> -->
                                 </div>
                             </div>
 
@@ -230,7 +234,8 @@
                                                         formControlName="documentTypeId" id="document_type" required>
                                                         <!-- <option disabled value="">Document type</option> -->
                                                         <option id="option_txt" *ngFor="let docType of docTypeArr"
-                                                            [value]="docType.documentTypeId">{{docType.documentTypeName}}
+                                                            [value]="docType.documentTypeId">
+                                                            {{docType.documentTypeName}}
                                                         </option>
                                                     </select>
                                                     <label class="form-label" for="document_type">Document type</label>
@@ -276,7 +281,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" class="btnNext"  (click)="clickMethod(1)"  >Next</button>
+                            <button type="button" class="btnNext" (click)="clickMethod(1)">Next</button>
                         </form>
                     </div>
                 </div>
@@ -294,7 +299,8 @@
                                             <hr *ngIf="i>0">
                                             <div class="row" [formGroupName]="i">
                                                 <div class="form-group form-input col-3">
-                                                    <select (change)="setEduTypeListByEduCategoryId($event.target.value,i)"
+                                                    <select
+                                                        (change)="setEduTypeListByEduCategoryId($event.target.value,i)"
                                                         formControlName="eduCatId" id="eduCatId" required>
                                                         <option *ngFor="let eduCat of eduCatArr"
                                                             [value]="eduCat.eduDomainId">
@@ -302,32 +308,33 @@
                                                     </select>
                                                     <label class="form-label" for="eduCatId">Category<span
                                                             class="redstar">*</span></label>
-                                                    <!-- <div *ngIf="submitted && qualfArr.controls[i].docCatId.errors || qualfArr.controls[i].get('docCatId').invalid && (qualfArr.controls[i].get('docCatId').dirty || qualfArr.controls[i].get('docCatId').touched)"
+                                                    <div *ngIf="submitted && qualifFormValidation[i].eduCatId.errors || qualfArr.controls[i].get('eduCatId').invalid && (qualfArr.controls[i].get('eduCatId').dirty || qualfArr.controls[i].get('eduCatId').touched)"
                                                         class="text-danger error-msg">
                                                         <div
-                                                            [hidden]="!qualfArr.controls[i].get('docCatId').errors?.required">
+                                                            [hidden]="!qualfArr.controls[i].get('eduCatId').errors?.required">
                                                             Education category is required.
                                                         </div>
-                                                    </div> -->
+                                                    </div>
                                                 </div>
 
 
                                                 <div class="form-group form-input col-3">
-                                                    <select formControlName="eduTypeId" id="qualification" required>  
+                                                    <select formControlName="eduTypeId" id="qualification" required>
                                                         <option
-                                                        *ngFor="let edu of eduTypeArrByEduCatList[qualificationDetailForm.get('qualification')['controls'][i].controls['eduCatId'].value]" [value]="edu.educationTypeId">
-                                                        {{edu.educationTypeName}}
+                                                            *ngFor="let edu of eduTypeArrByEduCatList[qualificationDetailForm.get('qualification')['controls'][i].controls['eduCatId'].value]"
+                                                            [value]="edu.educationTypeId">
+                                                            {{edu.educationTypeName}}
                                                         </option>
                                                     </select>
                                                     <label class="form-label" for="qualification">Qualification<span
                                                             class="redstar">*</span></label>
-                                                    <!-- <div *ngIf="submitted && qualfArr.controls[i].docTypeId.errors || qualfArr.controls[i].get('docTypeId').invalid && (qualfArr.controls[i].get('docTypeId').dirty || qualfArr.controls[i].get('docTypeId').touched)"
+                                                    <div *ngIf="submitted && qualifFormValidation[i].eduTypeId.errors || qualfArr.controls[i].get('eduTypeId').invalid && (qualfArr.controls[i].get('eduTypeId').dirty || qualfArr.controls[i].get('eduTypeId').touched)"
                                                         class="text-danger error-msg">
                                                         <div
-                                                            [hidden]="!qualfArr.controls[i].get('docTypeId').errors?.required">
+                                                            [hidden]="!qualfArr.controls[i].get('eduTypeId').errors?.required">
                                                             Education type is required.
                                                         </div>
-                                                    </div> -->
+                                                    </div>
                                                 </div>
 
                                                 <div class="form-group form-input col-4">
@@ -335,13 +342,13 @@
                                                         required />
                                                     <label for="university" class="form-label">University<span
                                                             class="redstar">*</span></label>
-                                                    <!-- <div *ngIf="submitted && qualfArr.controls[i].university.errors || qualfArr.controls[i].get('university').invalid && (qualfArr.controls[i].get('university').dirty || qualfArr.controls[i].get('university').touched)"
+                                                    <div *ngIf="submitted && qualfArr.controls[i].university.errors || qualfArr.controls[i].get('university').invalid && (qualfArr.controls[i].get('university').dirty || qualfArr.controls[i].get('university').touched)"
                                                         class="text-danger error-msg">
                                                         <div
                                                             [hidden]="!qualfArr.controls[i].get('university').errors?.required">
                                                             University is required.
                                                         </div>
-                                                    </div> -->
+                                                    </div>
                                                 </div>
 
                                                 <div class="form-group form-input col-2">
@@ -352,14 +359,15 @@
                                                         </option>
                                                     </select>
 
-                                                    <label class="form-label" for="passingYear">Passing year<span class="redstar">*</span></label>
-                                                    <!-- <div *ngIf="submitted && qualfArr.controls[i].passingYear.errors || qualfArr.controls[i].get('passingYear').invalid && (qualfArr.controls[i].get('passingYear').dirty || qualfArr.controls[i].get('passingYear').touched)"
+                                                    <label class="form-label" for="passingYear">Passing year<span
+                                                            class="redstar">*</span></label>
+                                                    <div *ngIf="submitted && qualfArr.controls[i].passingYear.errors || qualfArr.controls[i].get('passingYear').invalid && (qualfArr.controls[i].get('passingYear').dirty || qualfArr.controls[i].get('passingYear').touched)"
                                                         class="text-danger error-msg">
                                                         <div
                                                             [hidden]="!qualfArr.controls[i].get('passingYear').errors?.required">
                                                             Passing year is required.
                                                         </div>
-                                                    </div> -->
+                                                    </div>
                                                 </div>
 
                                                 <div class="form-group form-input col-2">
@@ -367,13 +375,13 @@
                                                         required />
                                                     <label for="percentage" class="form-label">Percentage<span
                                                             class="redstar">*</span></label>
-                                                    <!-- <div *ngIf="submitted && qualfArr.controls[i].percentage.errors || qualfArr.controls[i].get('percentage').invalid && (qualfArr.controls[i].get('percentage').dirty || qualfArr.controls[i].get('percentage').touched)"
+                                                    <div *ngIf="submitted && qualfArr.controls[i].percentage.errors || qualfArr.controls[i].get('percentage').invalid && (qualfArr.controls[i].get('percentage').dirty || qualfArr.controls[i].get('percentage').touched)"
                                                         class="text-danger error-msg">
                                                         <div
                                                             [hidden]="!qualfArr.controls[i].get('percentage').errors?.required">
                                                             Percentage is required.
                                                         </div>
-                                                    </div> -->
+                                                    </div>
                                                 </div>
 
                                                 <div class="form-group form-input col-2">
@@ -384,30 +392,31 @@
                                                     </select>
                                                     <label class="form-label" for="grade">Grade<span
                                                             class="redstar">*</span></label>
-                                                    <!-- <div *ngIf="submitted && qualfArr.controls[i].grade.errors || qualfArr.controls[i].get('grade').invalid && (qualfArr.controls[i].get('grade').dirty || qualfArr.controls[i].get('grade').touched)"
+                                                    <div *ngIf="submitted && qualfArr.controls[i].grade.errors || qualfArr.controls[i].get('grade').invalid && (qualfArr.controls[i].get('grade').dirty || qualfArr.controls[i].get('grade').touched)"
                                                         class="text-danger error-msg">
                                                         <div
                                                             [hidden]="!qualfArr.controls[i].get('grade').errors?.required">
                                                             Grade is required.
                                                         </div>
-                                                    </div> -->
+                                                    </div>
                                                 </div>
                                                 <div class="form-group form-input col-2">
                                                     <select (change)="setDocTypeCatID($event.target.value)"
                                                         formControlName="documentTypeId" id="document_type" required>
                                                         <!-- <option disabled value="">Document type</option> -->
                                                         <option id="option_txt" *ngFor="let docType of docTypeArr"
-                                                            [value]="docType.documentTypeId">{{docType.documentTypeName}}
+                                                            [value]="docType.documentTypeId">
+                                                            {{docType.documentTypeName}}
                                                         </option>
                                                     </select>
                                                     <label class="form-label" for="document_type">Document type</label>
-                                                    <!-- <div *ngIf="documentArr.controls[i].get('documentTypeId').invalid && (documentArr.controls[i].get('documentTypeId').dirty || documentArr.controls[i].get('documentTypeId').touched)"
+                                                    <div *ngIf="qualfArr.controls[i].get('documentTypeId').invalid && (qualfArr.controls[i].get('documentTypeId').dirty || qualfArr.controls[i].get('documentTypeId').touched)"
                                                         class="text-danger error-msg">
                                                         <div
-                                                            [hidden]="!documentArr.controls[i].get('documentTypeId').errors?.required">
+                                                            [hidden]="!qualfArr.controls[i].get('documentTypeId').errors?.required">
                                                             Document type is required.
                                                         </div>
-                                                    </div> -->
+                                                    </div>
                                                 </div>
                                                 <div class="form-group form-input col-3">
                                                     <div class="file-upload">
@@ -417,13 +426,13 @@
                                                                 formControlName="doc_name" />
                                                         </div>
                                                     </div>
-                                                    <!-- <div *ngIf="qualfArr.controls[i].get('doc_name').invalid && (qualfArr.controls[i].get('doc_name').dirty || qualfArr.controls[i].get('doc_name').touched)"
+                                                    <div *ngIf="qualfArr.controls[i].get('doc_name').invalid && (qualfArr.controls[i].get('doc_name').dirty || qualfArr.controls[i].get('doc_name').touched)"
                                                         class="text-danger error-msg">
                                                         <div
                                                             [hidden]="!qualfArr.controls[i].get('doc_name').errors?.required">
                                                             Document name is required.
                                                         </div>
-                                                    </div> -->
+                                                    </div>
                                                 </div>
                                                 <div class=col-2>
                                                     <input type="button" class="btnBlue" id="upload" value="UPLOAD"
@@ -441,14 +450,9 @@
                                         <button type="button" class="btn btnadd" (click)="addQualification()">+</button>
                                     </div>
                                 </div>
-
-
                             </div>
-
-                            <button type="button" class="btnPrevious"  (click)="showPrevious(1)">Previous</button>
-
+                            <button type="button" class="btnPrevious" (click)="showPrevious(1)">Previous</button>
                             <button type="button" class="btnNext" (click)="clickMethod(2)">Next</button>
-
                         </form>
                     </div>
                 </div>
@@ -480,8 +484,8 @@
                                                 </div>
 
                                                 <div class="form-group form-input col-6">
-                                                    <input type="text" formControlName="designation"
-                                                        id="designation" required />
+                                                    <input type="text" formControlName="designation" id="designation"
+                                                        required />
                                                     <label for="designation" class="form-label">Designation<span
                                                             class="redstar">*</span></label>
                                                     <div *ngIf="orgArr.controls[i].get('designation').invalid && (orgArr.controls[i].get('designation').dirty || orgArr.controls[i].get('designation').touched)"
@@ -569,8 +573,10 @@
                                                                 required /> -->
                                                             <select formControlName="strength" id="strengths" required>
                                                                 <!-- <option disabled value="">Strength</option> -->
-                                                                <option *ngFor="let strength of personalAttributes" aria-placeholder="strengths"
-                                                                [value]="strength.attributeId">{{strength.attributeName}}</option>
+                                                                <option *ngFor="let strength of personalAttributes"
+                                                                    aria-placeholder="strengths"
+                                                                    [value]="strength.attributeId">
+                                                                    {{strength.attributeName}}</option>
                                                             </select>
                                                             <label for="strengths" class="form-label">Strength<span
                                                                     class="redstar">*</span></label>
@@ -611,8 +617,10 @@
                                                                 required /> -->
                                                             <select formControlName="weakness" id="weaknesses" required>
                                                                 <!-- <option disabled value=""></option> -->
-                                                                <option *ngFor="let weakness of personalAttributes" aria-placeholder="weakness"
-                                                                [value]="weakness.attributeId">{{weakness.attributeName}}</option>
+                                                                <option *ngFor="let weakness of personalAttributes"
+                                                                    aria-placeholder="weakness"
+                                                                    [value]="weakness.attributeId">
+                                                                    {{weakness.attributeName}}</option>
                                                             </select>
                                                             <label for="weaknesses" class="form-label">Weakness<span
                                                                     class="redstar">*</span></label>
@@ -698,18 +706,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- <div class="form-group form-input col">
-                                    <input type="text" formControlName="psychomatric" id="psychomatric" required />
-                                    <label for="psychomatric" class="form-label">Psychometric test results</label>
-                                    <div *ngIf="workExpDetailsForm.controls['psychomatric'].invalid && (workExpDetailsForm.controls['psychomatric'].dirty || workExpDetailsForm.controls['psychomatric'].touched)"
-                                        class="text-danger error-msg">
-                                        <div [hidden]="!workExpDetailsForm.controls['psychomatric'].errors.required">
-                                            Psychometric results is
-                                            required.
-                                        </div>
-                                    </div>
-                                </div> -->
                                 <div class="form-group form-input col">
                                     <input type="text" formControlName="references" id="references" required />
                                     <label for="references" class="form-label">References</label>
@@ -742,6 +738,13 @@
                                         name="isFreelancer" id="inlineRadio2" value="N">
                                     <label class="form-check-label" for="inlineRadio2">No</label>
                                 </div>
+                                <br>
+                                <div *ngIf="workExpDetailsForm.get('isFreelancer').invalid && (workExpDetailsForm.get('isFreelancer').dirty || workExpDetailsForm.get('isFreelancer').touched)"
+                                    class="text-danger error-msg">
+                                    <div *ngIf="workExpDetailsForm.get('isFreelancer').errors?.required">
+                                        Reviewer is required.
+                                    </div>
+                                </div>
                             </div>
 
                             <br>
@@ -757,7 +760,8 @@
                                                         formControlName="documentTypeId" id="id_doc_type" required>
 
                                                         <option *ngFor="let docType of docTypeArr"
-                                                            [value]="docType.documentTypeId">{{docType.documentTypeName}}</option>
+                                                            [value]="docType.documentTypeId">
+                                                            {{docType.documentTypeName}}</option>
                                                     </select>
                                                     <label class="form-label" for="id_doc_type">Document type</label>
                                                     <div *ngIf="workdocumentArr.controls[i].get('documentTypeId').invalid && (workdocumentArr.controls[i].get('documentTypeId').dirty || workdocumentArr.controls[i].get('documentTypeId').touched)"
@@ -833,8 +837,8 @@
                                                     <div class="ng-autocomplete">
                                                         <ng-autocomplete [data]="categ" [searchKeyword]="keyword"
                                                             (selected)='selectEvent($event)'
-                                                            (inputChanged)='onChangeSearch($event.target.value)'
-                                                            (inputFocused)='onFocused($event.target.value)'
+                                                            (inputChanged)='onChangeSearch($event)'
+                                                            (inputFocused)='onFocused($event)'
                                                             [itemTemplate]="itemTemplate"
                                                             [notFoundTemplate]="notFoundTemplate">
                                                         </ng-autocomplete>
@@ -851,7 +855,8 @@
                                                         <table class="table customCard">
                                                             <tr *ngFor="let skill of categ; let i = index">
                                                                 <td>
-                                                                    <a id="link" (click)="setSkillArrBySkillCatList(skill.domainId)">
+                                                                    <a id="link"
+                                                                        (click)="setSkillArrBySkillCatList(skill.domainId)">
                                                                         {{skill.domainName}}</a>
                                                                 </td>
                                                             </tr>
@@ -897,58 +902,54 @@
                                         <div class="card-body skill-innner-container skill-selected-container">
 
                                             <div formArrayName="skills">
-                                                <div >
-                                                    
-                <table class="table table-dark  table-bordered table-sm worktable">
-                        <thead>
-                            <tr>
-                                <th class="setcollength">Skill Name<span>*</span>
-                                </th>
-                                <th class="setcollength" >Expertise Level</th>
-                                <th class="setcollength">Currency</th>
-                                <th class="setcollength">Rate / hr</th>
-                                <th class="setcollength">Experience(Year)</th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody *ngFor="let item of skillRateArr.controls; let i=index"
-                        [formGroupName]="i">
-                            <tr>
-                                <td>
-                                    {{item.value.skillName}}
+                                                <div>
 
-                                </td>
-                                <td>
-                                    <select formControlName="expertise">
-                                        <option value="High">High</option>
-                                        <option value="Intermediate">Intermediate</option>
-                                        <option value="Beginner">Beginner</option>
-                                    </select>
-                                </td>
-                                <td>
-                                       
-                                            <select formControlName="currency">
-                                                <option  *ngFor="let currency of currencyList" [value]="currency.currencyId">
-                                                    {{currency.currency}}
-                                                </option>
-                                            </select>
-                                    </td>
-                                <td>
-                                    <input type="text" formControlName="rateHour" id="rate_skill" required />
-                                </td>
+                                                    <table class="table table-dark  table-bordered table-sm worktable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="setcollength">Skill Name<span>*</span>
+                                                                </th>
+                                                                <th class="setcollength">Expertise Level</th>
+                                                                <th class="setcollength">Currency</th>
+                                                                <th class="setcollength">Rate / hr</th>
+                                                                <th class="setcollength">Experience(Year)</th>
 
-                                <td>
-                                    <input type="text" formControlName="skillExperience" id="exp_skill" required />
-                                </td>
-                               
-                                
-                            </tr>
-                        </tbody>
-                    </table>
-                                                    
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody *ngFor="let item of skillRateArr.controls; let i=index"
+                                                            [formGroupName]="i">
+                                                            <tr>
+                                                                <td>
+                                                                    {{item.value.skillName}}
+                                                                </td>
+                                                                <td>
+                                                                    <select formControlName="expertiseLevel">
+                                                                        <option value="High">High</option>
+                                                                        <option value="Intermediate">Intermediate
+                                                                        </option>
+                                                                        <option value="Beginner">Beginner</option>
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <select formControlName="currency">
+                                                                        <option *ngFor="let currency of currencyList"
+                                                                            [value]="currency.currencyId">
+                                                                            {{currency.currency}}
+                                                                        </option>
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" formControlName="rateHour"
+                                                                        id="rate_skill" required />
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" formControlName="skillExperience"
+                                                                        id="exp_skill" required />
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
                                                 </div>
-
-
                                             </div>
                                         </div>
                                     </div>

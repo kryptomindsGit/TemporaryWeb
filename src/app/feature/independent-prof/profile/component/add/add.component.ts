@@ -288,8 +288,18 @@ export class AddComponent implements OnInit {
     })
   }
 
+  // Auto complete methods 
   selectEvent(item) {
     this.setSkillArrBySkillCatList(item.domainId)
+  }
+
+  onChangeSearch(val: string) {
+    // fetch remote data from here
+    // And reassign the 'data' which is binded to 'data' property.
+  }
+
+  onFocused(e) {
+    // do something when input is focused
   }
 
   get qualfArr() {
@@ -305,6 +315,8 @@ export class AddComponent implements OnInit {
         passingYear: '',
         percentage: '',
         grade: '',
+        documentTypeId: '',
+        doc_name: ''
       }));
   }
 
@@ -417,7 +429,8 @@ export class AddComponent implements OnInit {
           skillId: skill_id,
           rateHour: '',
           skillExperience: '',
-          expertiseLevel: ''
+          expertiseLevel: '',
+          currency: ''
         }
       ));
     }
