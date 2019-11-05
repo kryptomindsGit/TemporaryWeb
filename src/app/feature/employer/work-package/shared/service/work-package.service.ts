@@ -16,7 +16,8 @@ const httpOptions = {
     'Access-Control-Allow-Origin': '*',
     // 'enctype': 'multipart/form-data',
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT'
+    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+    'X-Authorization': localStorage.getItem('userAuthToken')
   })
 };
 
@@ -91,7 +92,6 @@ export class WorkPackageService {
 
   }
 
-  
   async updateContractAddress(workPackageId : any ,payload:any):Promise<any> {
     
     console.log("Package Data :" , workPackageId);
@@ -108,9 +108,7 @@ export class WorkPackageService {
   }
 
   //get all work packages
-  async getAllWorkPackageData(email : any):Promise<any> {
-    console.log("Package Data :" , email);
-    
+  async getAllWorkPackageData():Promise<any> {
     try {
       let res = await this.http.get(`${SPRING_URL}/workpackage/wp-all`,httpOptions).toPromise();
       console.log("data " ,res);
@@ -122,7 +120,6 @@ export class WorkPackageService {
   }
 
   //get all skills
-
 async getAllSkills():Promise<any> {
     
     try {

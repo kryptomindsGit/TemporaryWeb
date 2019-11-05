@@ -4,10 +4,40 @@
             <div class="personal-details-form" *ngIf="showMainContent == 1">
                 <h6>PROFILE DETAILS</h6>
                 <div class="card">
+                    <div class="card-body">
+                        <div class="container">
+                            <div class="row custom-wrapper">
+                                <div class="col-md-12">
+                                    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+                                        <div class="group-gap">
+                                            <div class="avatar-upload">
+                                                <div class="avatar-edit">
+                                                    <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg"
+                                                        #fileInput (change)="uploadFile($event)" />
+                                                </div>
+                                                <div class="avatar-preview">
+                                                    <div id="imagePreview"
+                                                        [style.backgroundImage]="'url('+ imageUrl +')'">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row text-center">
+                                            <div class="col-12">
+                                                <button type="submit" class="btn btn-primary text-center"
+                                                    (click)="fileInput.click()">Upload Image</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
                     <div class="card-body others-card">
                         <form [formGroup]="personalDetailForm" novalidate>
                             <div class="row">
-
                                 <div class="form-group form-input col-2">
                                     <select formControlName="prefix" id="prefixes" required>
                                         <option id="option_txt" *ngFor="let prefix of prefixArr" [value]="prefix">

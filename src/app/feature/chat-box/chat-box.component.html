@@ -6,20 +6,6 @@
 
                 <div class="inbox_people">
                     <div class="card-header">
-                        <!-- <div class="ng-autocomplete">
-                            <ng-autocomplete [data]="data" [searchKeyword]="keyword" (selected)='selectEvent($event)'
-                                (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
-                                [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
-                            </ng-autocomplete>
-
-                            <ng-template #itemTemplate let-item>
-                                <a [innerHTML]="item.name"></a>
-                            </ng-template>
-
-                            <ng-template #notFoundTemplate let-notFound>
-                                <div [innerHTML]="notFound"></div>
-                            </ng-template>
-                        </div> -->
                         <div class="headind_srch">
                             <div class="srch_bar">
                                 <div class="stylish-input-group">
@@ -35,8 +21,8 @@
                                 <div class="chat_list" (click)="selectUser(users)">
                                     <div class="chat_people" *ngIf="users.isLoggedIn == true ; else deactiveUser">
                                         <div class="chat_img">
-                                            <!-- <img class="rounded-circle" style="width: 50px; height: 40px;"
-                                                src="{{acticeUser.imageSrc}}" alt="sunil"> -->
+                                            <img class="rounded-circle" style="width: 50px; height: 40px;"
+                                                src="../../../assets/images/akhshay.png" alt="sunil">
                                         </div>
                                         <div class="chat_ib">
                                             <h5>{{users.emailId}}<span class="greendot"></span></h5>
@@ -48,8 +34,8 @@
 
                                     <ng-template #deactiveUser>
                                         <div class="chat_img">
-                                            <!-- <img class="rounded-circle" style="width: 50px; height: 40px;"
-                                                src="{{acticeUser.imageSrc}}" alt="sunil"> -->
+                                            <img class="rounded-circle" style="width: 50px; height: 40px;"
+                                                src="../../../assets/images/akhshay.png" alt="sunil">
                                         </div>
                                         <div class="chat_ib">
                                             <h5>{{users.emailId}}<span class="reddot"></span></h5>
@@ -127,35 +113,35 @@
                             <!-- </div> -->
                             <!-- <div *ngIf="freelancer"> -->
                             <div *ngFor="let msgs of newSenderMessage; let i=index">
-                                <div *ngIf="msgs.user == 'sender'; else receiverUser">
+                                <div *ngIf="msgs.user == 'sender' &&  msgs.receiver == userSelected; else receiverUser">
                                     <div class="outgoing_msg">
                                         <div class="outgoing_msg_img">
                                             <img style="width: 30px; height: 30px;" class="rounded-circle"
                                                 src="../../../assets/images/jothipawar.jpg" alt="sunil">
                                         </div>
                                         <div class="sent_msg bubble-blue you">
-                                            <p>{{msgs.sender}}</p>
-                                            <p>{{msgs.receiver}} </p>
+                                            <p>{{msgs.senderMsg}}</p>
+                                            <p>{{msgs.receiverMsg}} </p>
                                         </div>
                                     </div>
                                 </div>
 
                                 <ng-template #receiverUser>
-                                    <div class="incoming_msg">
+                                    <div class="incoming_msg" *ngIf="msgs.sender == userSelected">
                                         <div class="incoming_msg_img">
                                             <img style="width: 30px; height: 30px;" class="rounded-circle"
                                                 src="../../../assets/images/akhshay.png" alt="sunil">
                                         </div>
                                         <div class="received_msg">
                                             <div class="received_withd_msg bubble me">
-                                                <p>{{msgs.receiver}} </p>
-                                                <p>{{msgs.sender}}</p>
+                                                <p>{{msgs.receiverMsg}} </p>
+                                                <p>{{msgs.senderMsg}}</p>
                                             </div>
                                         </div>
                                     </div>
                                 </ng-template>
 
-                                <!-- <div *ngIf="sendUser == true">
+                               <!-- <div *ngIf="sendUser == true">
                                     <div class="outgoing_msg">
                                         <div class="outgoing_msg_img">
                                             <img style="width: 30px; height: 30px;" class="rounded-circle"
@@ -179,14 +165,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div> -->
+                                </div>  -->
                             </div>
                         </div>
                         <div class="type_msg">
                             <div class="input_msg_write">
-                                <input type="text" (keydown.enter)="sendMessage($event.target.value)" #titleInput
+                                <input type="text" (keydown.enter)="sendMessage($event.target.value)" (keydown.enter)="titleInput.value=''" #titleInput
                                     class="write_msg" placeholder="Type a message" />
-                                <button class="msg_send_btn" type="button" (click)="sendMessage(titleInput.value)"><i
+                                <button class="msg_send_btn" type="button" (click)="sendMessage(titleInput.value)" (click)="titleInput.value=''"><i
                                         class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                             </div>
                         </div>

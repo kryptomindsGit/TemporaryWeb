@@ -61,6 +61,8 @@ export class ChatBoxComponent implements OnInit {
   userMessage: any = [];
   arrMessage: any = [];
 
+  TypeMsg :any = "Type a Message";
+
 
   public allusers: any = [];
 
@@ -83,7 +85,6 @@ export class ChatBoxComponent implements OnInit {
     this.jwtData = decode(token);
     this.userRole = this.jwtData['custom:role'];
     this.emailId = this.jwtData['email'];
-    console.log("Res JWT Data: ", this.emailId);
   }
 
   /**
@@ -92,6 +93,7 @@ export class ChatBoxComponent implements OnInit {
    * @description send message details to spring API
    */
   sendMessage(messages: string) {
+
     // this.reqObject.push(messages);
     this.messageDetails = {
       sourceLanguageCode: "en",
@@ -100,15 +102,11 @@ export class ChatBoxComponent implements OnInit {
       sender: this.jwtData.email,
       receiver: this.userSelected
     };
-
-    console.log("Send messageDetails:", this.messageDetails)
-
     this.__chatboxService.senderUserMessage(this.messageDetails).then(
       (resData) => {
         // this.respObject.push(resData); 
       },
       error => {
-        console.error("Error saving user!");
         return Observable.throw(error);
       }
     );
@@ -119,7 +117,6 @@ export class ChatBoxComponent implements OnInit {
         this.allusers = resData.responseObject;
         // this.allusers = this.allusers.filter(
         //   active => active.isLoggedIn === true);
-        console.log("Freelancer Users", this.allusers);
         this.getActivateUserAllList();
       }
       );
@@ -129,7 +126,6 @@ export class ChatBoxComponent implements OnInit {
         // this.allusers = this.allusers.filter(
         //   active => active.isLoggedIn === true);
         // this.allusers.sort((a, b) => a.isLoggedIn.localeCompare(b.isLoggedIn));
-        console.log("Employer Users", this.allusers);
         this.getActivateUserAllList();
       }
       );
@@ -138,7 +134,6 @@ export class ChatBoxComponent implements OnInit {
 
   getActivateUserAllList() {
     this.allusers.forEach(element => {
-      console.log("element.isLoggedIn:", element.isLoggedIn);
       if (element.isLoggedIn == true) {
         this.activeUser = true;
       }
@@ -150,7 +145,6 @@ export class ChatBoxComponent implements OnInit {
 
   getOnlineUsers() {
     this.__chatboxService.getOnlineUserList().subscribe((eventData) => {
-      console.log("Online Users:", eventData.onlineUsers);
       let flag = 0;
       if (this.userRole == 'Freelancer') {
         this.userId = 2;
@@ -161,7 +155,6 @@ export class ChatBoxComponent implements OnInit {
       this.allusers.forEach(element => {
         if (element.emailId == eventData.onlineUsers.emailId) {
           element.isLoggedIn = eventData.onlineUsers.isLoggedIn;
-          console.log("Online Logged In:", element.isLoggedIn);
           flag = 1;
         }
       });
@@ -172,7 +165,6 @@ export class ChatBoxComponent implements OnInit {
           }
         });
         this.allusers.push(eventData.onlineUsers);
-        console.log("this.allusers after push ", this.allusers);
       }
     });
   }
@@ -182,32 +174,34 @@ export class ChatBoxComponent implements OnInit {
       this.senderEmail = this.messageDetails.sender;
       if (this.senderEmail == eventData.eventResponse.sender) {
         this.senderObject.push({
-          'sender': eventData.eventResponse.originalText,
-          'receiver': eventData.eventResponse.result.translatedText,
-          'user': 'sender'
+          'senderMsg': eventData.eventResponse.originalText,
+          'receiverMsg': eventData.eventResponse.result.translatedText,
+          'user': 'sender',
+          'sender': eventData.eventResponse.sender,
+          'receiver':eventData.eventResponse.receiver,
         });
         this.sendUser = true;
         this.receiverUser = false;
         this.newSenderMessage = [...this.senderObject];
+        console.log("this.newSenderMessage(Sender) \n" , this.newSenderMessage);
       }
       else {
         this.senderObject.push({
-          'sender': eventData.eventResponse.originalText,
-          'receiver': eventData.eventResponse.result.translatedText,
-          'user': 'receiver'
+          'senderMsg': eventData.eventResponse.originalText,
+          'receiverMsg': eventData.eventResponse.result.translatedText,
+          'user': 'receiver',
+          'receiver':eventData.eventResponse.receiver,
+          'sender': eventData.eventResponse.sender,
         });
-        console.log("receiver matched", this.messageDetails.receiver);
-
         if (eventData.eventResponse.receiver == this.emailId) {
-          console.log("receiver matched");
           this.sendUser = false;
           this.receiverUser = true;
           this.newSenderMessage = [...this.senderObject];
+          console.log("this.newSenderMessage(Receiver) \n" , this.newSenderMessage);
         }
       }
     });
   }
-
   selectUser(selectedUser) {
     this.userSelected = selectedUser.emailId;
     this.activeStatus = selectedUser.isLoggedIn;

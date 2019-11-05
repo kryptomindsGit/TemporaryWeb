@@ -20,11 +20,11 @@ export class AllWorkPackagesComponent implements OnInit {
 
   ngOnInit() {
     this.email = localStorage.getItem("email"); 
-    this.allWorkPackages(this.email);
+    this.allWorkPackages();
   }
 
-  allWorkPackages(email:any){
-    this.__workService.getAllWorkPackageData(email).then((resData: any) => {
+  allWorkPackages(){
+    this.__workService.getAllWorkPackageData().then((resData: any) => {
       console.log("Data of skills" +  resData.responseObject);
       this.workArr = resData.responseObject;    
     });
@@ -38,6 +38,7 @@ export class AllWorkPackagesComponent implements OnInit {
     localStorage.setItem("workpackageId",this.wpId);
     
   }
+  
   gotoWorkpackage(index){
     console.log("index :" ,index);
     this.wpId = this.workArr[index].workPackageId; 

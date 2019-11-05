@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild,ElementRef,ChangeDetectorRef} from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { Router } from '@angular/router';
@@ -85,10 +85,15 @@ export class AddComponent implements OnInit {
     private __authService: AuthService,
     private __router: Router,
     private toastr: ToastrService,
-    private __customGlobalService: CustomGlobalService
+    private __customGlobalService: CustomGlobalService,
+    private cd: ChangeDetectorRef
   ) {
 
   }
+
+  registrationForm = this.__fb.group({
+    file: [null]
+  }) 
 
   ngOnInit() {
     this.isUportUser = localStorage.getItem("uportUser");
@@ -632,4 +637,52 @@ export class AddComponent implements OnInit {
   showPrevious(i: any) {
     this.showMainContent = i;
   }
+  
+  @ViewChild('fileInput') el: ElementRef;
+  imageUrl: any = 'src/';
+  editFile: boolean = true;
+  removeUpload: boolean = false;
+
+  uploadFile(event) {
+    let reader = new FileReader(); // HTML5 FileReader API
+    let file = event.target.files[0];
+    if (event.target.files && event.target.files[0]) {
+      reader.readAsDataURL(file);
+
+      // When file uploads set it to file formcontrol
+      reader.onload = () => {
+        this.imageUrl = reader.result;
+        this.registrationForm.patchValue({
+          file: reader.result
+        });
+        this.editFile = false;
+        this.removeUpload = true;
+      }
+      // ChangeDetectorRef since file is loading outside the zone
+      this.cd.markForCheck();        
+    }
+  }
+
+  // Function to remove uploaded file
+  removeUploadedFile() {
+    let newFileList = Array.from(this.el.nativeElement.files);
+    this.imageUrl = 'https://i.pinimg.com/236x/d6/27/d9/d627d9cda385317de4812a4f7bd922e9--man--iron-man.jpg';
+    this.editFile = true;
+    this.removeUpload = false;
+    this.registrationForm.patchValue({
+      file: [null]
+    });
+  }
+  
+  // Submit Registration Form
+  onSubmit() {
+    this.submitted = true;
+    if(!this.registrationForm.valid) {
+      alert('Please fill all the required fields to create a super hero!')
+      return false;
+    } else {
+      console.log(this.registrationForm.value)
+    }
+  }
+
 }
