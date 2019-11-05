@@ -14,260 +14,319 @@
 // }
 
 .card-body {
-    padding: 0%;
-    overflow: auto;
+  padding: 0%;
+  overflow: auto;
 }
-.btncenter{
-    margin: auto;
+
+.btncenter {
+  margin: auto;
 }
+
 .group-gap {
-    margin-bottom: 20px;
-  }
+  margin-bottom: 20px;
+}
 
 .avatar-upload {
-    position: relative;
-    max-width: 205px;
-    margin: 10px auto 30px;
-    text-align: center;
-  }
-  
-  .avatar-upload .avatar-edit {
-    position: absolute;
-    right: 19px;
-    z-index: 1;
-    top: 13px;
-  }
-  
-  .avatar-upload .avatar-edit input {
-    display: none;
-  }
-  
-  .avatar-upload .avatar-edit .custom-label {
-    display: inline-block;
-    width: 34px;
-    height: 34px;
-    margin-bottom: 0;
-    border-radius: 100%;
-    background: #3efc78;
-    border: 1px solid transparent;
-    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
-    cursor: pointer;
-    font-weight: normal;
-    transition: all 0.2s ease-in-out;
-  }
-  
-  .avatar-upload .avatar-edit .upload-image {
-    background: #3efc78;
-  }
-  
-  .avatar-upload .avatar-edit .remove-image {
-    background: rgb(30, 152, 233);
-  }
-  
-  .avatar-upload .avatar-edit .custom-label:hover {
-    opacity: 1;
-  }
-  
-  .avatar-upload .avatar-edit .custom-label:after {
-    position: absolute;
-    text-align: center;
-    margin: auto;
-    top: 8px;
-    right: 0;
-    left: 2px;
-    width: 18px;
-  }
-  
-  .avatar-upload .avatar-edit .upload-image:after {
-    content: url('/assets/edit.svg');
-  }
-  
-  .avatar-upload .avatar-edit .remove-image:after {
-    content: url('/assets/close.svg');
-    left: 0px !important;
-  }
-  
-  .avatar-upload .avatar-preview {
-    width: 200px;
-    height: 200px;
-    display: center;
-    border-radius: 100%;
-    overflow: hidden;
-    border: 2px solid #fff;
-    -webkit-box-shadow: 0 0 45px rgba(0, 0, 0, .2);
-    -moz-box-shadow: 0 0 45px rgba(0, 0, 0, .2);
-    box-shadow: 0 0 45px rgba(0, 0, 0, .2);
-  }
-  
-  .avatar-upload .avatar-preview>div {
-    width: 100%;
-    height: 100%;
-    border-radius: 100%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-
-  
-.custom-select {
-    height: auto;
-    padding: 15px;
-    font-size: 14px;
-    cursor: pointer;
-    font-weight: 400;
-    color: #222222;
-    background-color: #FDFDFD;
-    border: 1px solid #312BC6;
-  }
-  
-  .custom-control-input:checked~.custom-control-label::before {
-    border-color: rgb(30, 152, 233);
-    background-color: rgb(30, 152, 233);
-  }
-  
-  .custom-control-input:focus~.custom-control-label::before {
-    box-shadow: none;
-  }
-  
-  .custom-control-label {
-    cursor: pointer;
-  }
-  
-  .error:focus,
-  .error {
-    border-color: rgb(30, 152, 233);
-    color: rgb(30, 152, 233);
-  }
-  
-  .invalid-feedback {
-    color: rgb(30, 152, 233);
-  }
-  
-  .btn-danger,
-  body .btn-danger:hover {
-    background: rgb(30, 152, 233);
-    border-color: rgb(30, 152, 233);
-    color: white;
-    margin-top:1rem;
-    align-items: center
+  position: relative;
+  max-width: 205px;
+  margin: 10px auto 30px;
+  text-align: center;
 }
 
-  .subjectList {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  
-  .subjectList li {
-    display: block;
-    width: 100%;
-    margin-bottom: 10px;
-  }
-  
-  .invalid-feedback {
-    display: block;
-  }
-  
-  .mb-3,
-  .my-3 {
-    margin-bottom: 15px !important;
-  }
-  
-  .custom-control {
-    margin-bottom: 5px;
-  }
-  
-  .custom-control label {
-    font-weight: 400;
-  }
-    
+.avatar-upload .avatar-edit {
+  position: absolute;
+  right: 19px;
+  z-index: 1;
+  top: 13px;
+}
+
+.avatar-upload .avatar-edit input {
+  display: none;
+}
+
+.avatar-upload .avatar-edit .custom-label {
+  display: inline-block;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 0;
+  border-radius: 100%;
+  background: #3efc78;
+  border: 1px solid transparent;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  font-weight: normal;
+  transition: all 0.2s ease-in-out;
+}
+
+.avatar-upload .avatar-edit .upload-image {
+  background: #3efc78;
+}
+
+.avatar-upload .avatar-edit .remove-image {
+  background: rgb(30, 152, 233);
+}
+
+.avatar-upload .avatar-edit .custom-label:hover {
+  opacity: 1;
+}
+
+.avatar-upload .avatar-edit .custom-label:after {
+  position: absolute;
+  text-align: center;
+  margin: auto;
+  top: 8px;
+  right: 0;
+  left: 2px;
+  width: 18px;
+}
+
+.avatar-upload .avatar-edit .upload-image:after {
+  content: url('/assets/edit.svg');
+}
+
+.avatar-upload .avatar-edit .remove-image:after {
+  content: url('/assets/close.svg');
+  left: 0px !important;
+}
+
+.avatar-upload .avatar-preview {
+  width: 200px;
+  height: 200px;
+  display: center;
+  border-radius: 100%;
+  overflow: hidden;
+  border: 2px solid #fff;
+  -webkit-box-shadow: 0 0 45px rgba(0, 0, 0, .2);
+  -moz-box-shadow: 0 0 45px rgba(0, 0, 0, .2);
+  box-shadow: 0 0 45px rgba(0, 0, 0, .2);
+}
+
+.avatar-upload .avatar-preview>div {
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+
+.custom-select {
+  height: auto;
+  padding: 15px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 400;
+  color: #222222;
+  background-color: #FDFDFD;
+  border: 1px solid #312BC6;
+}
+
+.custom-control-input:checked~.custom-control-label::before {
+  border-color: rgb(30, 152, 233);
+  background-color: rgb(30, 152, 233);
+}
+
+.custom-control-input:focus~.custom-control-label::before {
+  box-shadow: none;
+}
+
+.custom-control-label {
+  cursor: pointer;
+}
+
+.error:focus,
+.error {
+  border-color: rgb(30, 152, 233);
+  color: rgb(30, 152, 233);
+}
+
+.invalid-feedback {
+  color: rgb(30, 152, 233);
+}
+
+.btn-danger,
+body .btn-danger:hover {
+  background: rgb(30, 152, 233);
+  border-color: rgb(30, 152, 233);
+  color: white;
+  margin-top: 1rem;
+  align-items: center
+}
+
+.subjectList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.subjectList li {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.invalid-feedback {
+  display: block;
+}
+
+.mb-3,
+.my-3 {
+  margin-bottom: 15px !important;
+}
+
+.custom-control {
+  margin-bottom: 5px;
+}
+
+.custom-control label {
+  font-weight: 400;
+}
+
 /*-----------------------------------------------------------------------
   SKILL CARD CSS
   -------------------------------------------------------------------------*/
 
 .skill-checkbox-container {
-    max-height: 30rem;
-    padding: 0.1rem;
-    margin-right: 0.2rem !important;
-    margin-left: 0.2rem !important;
+  max-height: 30rem;
+  padding: 0.1rem;
+  margin-right: 0.2rem !important;
+  margin-left: 0.2rem !important;
 }
 
 .skill-container {
-    width: 100%;
-    height: 450px;
-    background: $bg-front-color;
+  width: 100%;
+  height: 450px;
+  background: $bg-front-color;
 }
 
 .skill-selected-container {
-    padding: 0.5rem !important;
+  padding: 0.5rem !important;
 }
 
 // .skill-innner-container {}
 
 .ng-autocomplete {
-    max-width: 100%;
-    padding: 0.1rem;
-    color: $text-color;
-    background: $bg-front-color;
+  max-width: 100%;
+  padding: 0.1rem;
+  color: $text-color;
+  background: $bg-front-color;
 }
 
 .autocomplete-container .input-container input {
-    background: $bg-front-color;
+  background: $bg-front-color;
 }
 
-.cal-icon{
-    margin-top:1.5rem;
-    float: right;
+.cal-icon {
+  margin-top: 1.5rem;
+  float: right;
 }
+
+.checkbox-grid-row {
+  overflow: hidden;
+  padding: 10px;
+}
+
+.checkbox-grid-col {
+  // float: left;
+  padding: 1px;
+  margin-right: 5px;
+  width: 30%;
+  color: $text-color;
+  display: inline-block;
+}
+
+.save_skills {
+  border: none;
+  border-radius: 1.5rem;
+  padding: 3% 4%;
+  width: 50%;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: $btn-bg-color;
+  color: $white-color;
+  float: right;
+  margin-bottom: 20px;
+  align-content: center;
+}
+
+.autocomplete-container .suggestions-container {
+  position: absolute;
+  width: 100%;
+  background: $bg-back-color;
+  height: auto;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
+  box-sizing: border-box;
+}
+
+a:not([href]):not([tabindex]) {
+  color: #000;
+  // background: $bg-front-color;
+}
+
+.customCard tr td a {
+  color: $white-color !important;
+  cursor: pointer;
+}
+
+a:not([href]):not([tabindex]):hover {
+  color: $text-color;
+  background: $bg-front-color;
+  text-decoration: none;
+}
+
 /*-----------------------------------------------------------------------
   CARD CSS
   -------------------------------------------------------------------------*/
 
 .card {
-    margin: 0 auto;
-    /* Added */
-    float: none;
-    /* Added */
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    /* Added */
-    // border-radius: 0.6rem;
-    background: $bg-front-color;
-    box-shadow: 5px 5px 32px 5px rgba(0, 0, 0, 0.22);
+  margin: 0 auto;
+  /* Added */
+  float: none;
+  /* Added */
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  /* Added */
+  // border-radius: 0.6rem;
+  background: $bg-front-color;
+  box-shadow: 5px 5px 32px 5px rgba(0, 0, 0, 0.22);
 }
 
 .table td,
 .table th {
-    padding: .75rem;
-    vertical-align: top;
-    border-top: none !important;
+  padding: .75rem;
+  vertical-align: top;
+  border-top: none !important;
 }
 
 .worktable {
-    color: $text-color;
-    background: transparent !important;
-    border-right: 1rem solid #ffffff !important;
-  }
+  color: $text-color;
+  background: transparent !important;
+  border-right: 1rem solid #ffffff !important;
+}
+
 .card .card-body img {
-    width: 5rem;
-    height: 5rem;
+  width: 5rem;
+  height: 5rem;
 }
 
 .center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }
 
 .card-body h4 {
-    text-align: center;
-    margin: 1rem auto;
-    letter-spacing: 0.1em
+  text-align: center;
+  margin: 1rem auto;
+  letter-spacing: 0.1em
 }
-.setcollength{
-    min-width: 10rem;
+
+.setcollength {
+  min-width: 10rem;
 }
+
 /*-----------------------------------------------------------------------
 FORM CSS
 -------------------------------------------------------------------------*/
@@ -541,143 +600,90 @@ FORM CSS
 //     margin-bottom: 20px;
 // }
 
-.checkbox-grid-row {
-    overflow: hidden;
-    padding: 10px;
-}
-
-.checkbox-grid-col {
-    // float: left;
-    padding: 1px;
-    margin-right: 5px;
-    width: 30%;
-    color: $text-color;
-    display: inline-block;
-}
-
-.save_skills {
-    border: none;
-    border-radius: 1.5rem;
-    padding: 3% 4%;
-    width: 50%;
-    text-transform: uppercase;
-    cursor: pointer;
-    background: $btn-bg-color;
-    color: $white-color;
-    float: right;
-    margin-bottom: 20px;
-    align-content: center;
-}
-
-.autocomplete-container .suggestions-container {
-    position: absolute;
-    width: 100%;
-    background: $bg-back-color;
-    height: auto;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
-    box-sizing: border-box;
-}
-
-a:not([href]):not([tabindex]) {
-    color: #000;
-    // background: $bg-front-color;
-}
-
-.customCard tr td a {
-    color: $white-color !important;
-    cursor: pointer;
-}
-
-a:not([href]):not([tabindex]):hover {
-    color: $text-color;
-    background: $bg-front-color;
-    text-decoration: none;
-}
-
 .btn_add {
-    background: $btn-bg-color;
+  background: $btn-bg-color;
 }
 
 .btn_remove {
-    background: $btn-bg-color;
+  background: $btn-bg-color;
 }
 
 input[type='file'] {
-    font-size: 15px;
+  font-size: 15px;
 }
 
 input[type="button"] {
-    outline: none !important;
+  outline: none !important;
 }
 
 input[type="button"]::-moz-focus-inner {
-    border: 0 !important;
+  border: 0 !important;
 }
 
 input:focus,
 select:focus,
 textarea:focus,
 button:focus {
-    outline: none !important;
+  outline: none !important;
 }
 
 .btnBlue {
-    border: none;
-    border-radius: 2rem;
-    padding: 0.5rem 1rem;
-    width: 7rem;
-    text-transform: uppercase;
-    cursor: pointer;
-    background: $btn-bg-color;
-    color: $white-color;
-    float: center;
-    margin: 20px auto;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.5rem 1rem;
+  width: 7rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: $btn-bg-color;
+  color: $white-color;
+  float: center;
+  margin: 20px auto;
 }
 
 .btnadd {
-    border: none;
-    border-radius: 0.5rem;
-    padding: 0.1rem;
-    margin: 20px auto;
-    width: 2rem;
-    height: 2rem;
-    font-size: 1rem;
-    cursor: pointer;
-    background: $btn-bg-color;
-    color: $white-color;
-    float: right;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.1rem;
+  margin: 20px auto;
+  width: 2rem;
+  height: 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  background: $btn-bg-color;
+  color: $white-color;
+  float: right;
 }
 
 .btnaddQaul {
-    border: none;
-    border-radius: 0.5rem;
-    padding: 0.1rem;
-    // margin: 20px auto;
-    width: 2rem;
-    height: 2rem;
-    font-size: 1rem;
-    cursor: pointer;
-    background: $btn-bg-color;
-    color: $white-color;
-    float: right;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.1rem;
+  // margin: 20px auto;
+  width: 2rem;
+  height: 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  background: $btn-bg-color;
+  color: $white-color;
+  float: right;
 }
 
 .btnaddRight {
-    border: none;
-    border-radius: 0.5rem;
-    padding: 0.1rem;
-    margin: 20px auto;
-    width: 2rem;
-    height: 2rem;
-    font-size: 1rem;
-    cursor: pointer;
-    background: $btn-bg-color;
-    color: $white-color;
-    float: left;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.1rem;
+  margin: 20px auto;
+  width: 2rem;
+  height: 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  background: $btn-bg-color;
+  color: $white-color;
+  float: left;
 }
 
 .btnadd-right {
-    float: right;
+  float: right;
 }
 
 // .error-msg {
@@ -689,20 +695,20 @@ button:focus {
 // }
 
 .error-msg-skill {
-    display: block;
-    position: absolute;
-    font-size: 0.6rem;
-    bottom: -2em;
-    margin-bottom: 0.2rem;
+  display: block;
+  position: absolute;
+  font-size: 0.6rem;
+  bottom: -2em;
+  margin-bottom: 0.2rem;
 }
 
 .redstar {
-    color: red;
-    font-size: 0.8rem;
-    margin-left: 0.2rem;
-    font-weight: normal;
+  color: red;
+  font-size: 0.8rem;
+  margin-left: 0.2rem;
+  font-weight: normal;
 }
 
 table tr td p {
-    color: $text-color;
+  color: $text-color;
 }

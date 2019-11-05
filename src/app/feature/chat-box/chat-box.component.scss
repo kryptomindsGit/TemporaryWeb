@@ -55,10 +55,10 @@ img {
     width: 100%;
 }
 
-.headind_srch {
-    padding: 10px;
-    overflow: hidden;
-}
+// .headind_srch {
+//     padding: 10px;
+//     overflow: hidden;
+// }
 
 .recent_heading h4 {
     color: $blue-color;
@@ -121,7 +121,7 @@ img {
 
 .chat_list {
     margin: 0;
-    padding: 1% 5%;
+    padding: 1% 1%;
 }
 
 .inbox_chat {
@@ -346,4 +346,64 @@ img {
     border-radius: 50%;
     display: inline-block;
     margin-bottom: 5px;
+}
+
+// Auto 
+.ng-autocomplete {
+    max-width: 100%;
+    // padding: 0.1rem;
+    color: $text-color;
+    background: $bg-front-color;
+}
+
+.input-container {
+    background: $bg-back-color;
+    color: $text-color;
+}
+
+.autocomplete-container .input-container input {
+    background-color: $bg-back-color;
+    color: $text-color;
+}
+
+.autocomplete-container .suggestions-container {
+    position: absolute;
+    width: 100%;
+    background: $bg-back-color;
+    height: auto;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
+    box-sizing: border-box;
+}
+
+.autocomplete-container .suggestions-container ul {
+    padding: 0;
+    margin: 0;
+    max-height: 240px;
+    overflow-y: auto;
+    // text-align: left;
+}
+
+.autocomplete-container .suggestions-container ul li {
+    position: relative;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    // text-align: left;
+}
+
+a:not([href]):not([tabindex]) {
+    color: #000;
+    // background: $bg-front-color;
+}
+
+.customCard tr td a {
+    color: $white-color !important;
+    cursor: pointer;
+}
+
+a:not([href]):not([tabindex]):hover {
+    color: $text-color;
+    background: $bg-front-color;
+    text-decoration: none;
 }

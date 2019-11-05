@@ -3,13 +3,26 @@
         <div class="col-4">
             <p>Recent User</p>
             <div class="card">
-
                 <div class="inbox_people">
                     <div class="card-header">
                         <div class="headind_srch">
+                            <p>Search</p>
                             <div class="srch_bar">
                                 <div class="stylish-input-group">
-                                    <input type="text" class="search-bar" placeholder="Search">
+                                    <div class="ng-autocomplete">
+                                        <ng-autocomplete [data]="allusers" [searchKeyword]="keyword"
+                                            (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)'
+                                            (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate"
+                                            [notFoundTemplate]="notFoundTemplate">
+                                        </ng-autocomplete>
+                                        <ng-template #itemTemplate let-item>
+                                            <a [innerHTML]="item.emailId"></a>
+                                        </ng-template>
+                                        <ng-template #notFoundTemplate let-notFound>
+                                            <div [innerHTML]="notFound"></div>
+                                        </ng-template>
+                                    </div>
+                                    <!-- <input type="text" class="search-bar" placeholder="Search"> -->
                                 </div>
                             </div>
                         </div>
@@ -21,30 +34,30 @@
                                 <div class="chat_list" (click)="selectUser(users)">
                                     <div class="chat_people" *ngIf="users.isLoggedIn == true ; else deactiveUser">
                                         <div class="chat_img">
+                                            <span class="greendot"></span>
                                             <img class="rounded-circle" style="width: 50px; height: 40px;"
                                                 src="../../../assets/images/akhshay.png" alt="sunil">
                                         </div>
                                         <div class="chat_ib">
-                                            <h5>{{users.emailId}}<span class="greendot"></span></h5>
-                                            <!-- <small>{{acticeUser.message}}
-                                            </small> -->
+                                            <h5>{{users.emailId}}</h5>
                                             <span class="time_date"> {{users.creationdate | date:'shortTime'}}</span>
                                         </div>
                                     </div>
 
                                     <ng-template #deactiveUser>
                                         <div class="chat_img">
+                                            <span class="reddot"></span>
                                             <img class="rounded-circle" style="width: 50px; height: 40px;"
                                                 src="../../../assets/images/akhshay.png" alt="sunil">
                                         </div>
                                         <div class="chat_ib">
-                                            <h5>{{users.emailId}}<span class="reddot"></span></h5>
-                                            <!-- <small>{{acticeUser.message}}
-                                            </small> -->
+                                            <h5>{{users.emailId}}</h5>
                                             <span class="time_date"> {{users.creationdate | date:'shortTime'}}</span>
                                         </div>
                                     </ng-template>
                                 </div>
+                                <br>
+                                <br>
                             </div>
 
                         </div>
@@ -141,7 +154,7 @@
                                     </div>
                                 </ng-template>
 
-                               <!-- <div *ngIf="sendUser == true">
+                                <!-- <div *ngIf="sendUser == true">
                                     <div class="outgoing_msg">
                                         <div class="outgoing_msg_img">
                                             <img style="width: 30px; height: 30px;" class="rounded-circle"
@@ -170,10 +183,12 @@
                         </div>
                         <div class="type_msg">
                             <div class="input_msg_write">
-                                <input type="text" (keydown.enter)="sendMessage($event.target.value)" (keydown.enter)="titleInput.value=''" #titleInput
-                                    class="write_msg" placeholder="Type a message" />
-                                <button class="msg_send_btn" type="button" (click)="sendMessage(titleInput.value)" (click)="titleInput.value=''"><i
-                                        class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                                <input type="text" (keydown.enter)="sendMessage($event.target.value)"
+                                    (keydown.enter)="titleInput.value=''" #titleInput class="write_msg"
+                                    placeholder="Type a message" />
+                                <button class="msg_send_btn" type="button" (click)="sendMessage(titleInput.value)"
+                                    (click)="titleInput.value=''"><i class="fa fa-paper-plane-o"
+                                        aria-hidden="true"></i></button>
                             </div>
                         </div>
                     </div>

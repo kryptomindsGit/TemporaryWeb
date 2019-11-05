@@ -27,6 +27,7 @@ export class ChatBoxComponent implements OnInit {
   senderEmail: any;
   evtRespObject: any = [];
 
+
   newSenderMessage: any = [];
   newReceiverMessage: any = [];
 
@@ -48,7 +49,7 @@ export class ChatBoxComponent implements OnInit {
   public userSelected: any = "";
   public activeStatus: boolean;
   userId: number;
-  emailId: string;
+  emailID: string;
   // sendMessage: any;
   date: Date = new Date();
 
@@ -61,10 +62,12 @@ export class ChatBoxComponent implements OnInit {
   userMessage: any = [];
   arrMessage: any = [];
 
-  TypeMsg :any = "Type a Message";
+  TypeMsg: any = "Type a Message";
 
 
   public allusers: any = [];
+
+  keyword = 'emailId'
 
   constructor(
     // private __eventSourceService: EventSourceService,
@@ -84,7 +87,7 @@ export class ChatBoxComponent implements OnInit {
     let token = localStorage.getItem('access_token');
     this.jwtData = decode(token);
     this.userRole = this.jwtData['custom:role'];
-    this.emailId = this.jwtData['email'];
+    this.emailID = this.jwtData['email'];
   }
 
   /**
@@ -111,21 +114,21 @@ export class ChatBoxComponent implements OnInit {
       }
     );
   }
+
   getAllUser() {
     if (this.userRole == 'Employer') {
       this.__authService.getAllFreelancers().then((resData: any) => {
         this.allusers = resData.responseObject;
-        // this.allusers = this.allusers.filter(
-        //   active => active.isLoggedIn === true);
+        console.log("All user list:", this.allusers);
+
         this.getActivateUserAllList();
       }
       );
     } else if (this.userRole == 'Freelancer') {
       this.__authService.getAllEmployers().then((resData: any) => {
         this.allusers = resData.responseObject;
-        // this.allusers = this.allusers.filter(
-        //   active => active.isLoggedIn === true);
-        // this.allusers.sort((a, b) => a.isLoggedIn.localeCompare(b.isLoggedIn));
+        console.log("All user list:", this.allusers);
+
         this.getActivateUserAllList();
       }
       );
@@ -178,26 +181,26 @@ export class ChatBoxComponent implements OnInit {
           'receiverMsg': eventData.eventResponse.result.translatedText,
           'user': 'sender',
           'sender': eventData.eventResponse.sender,
-          'receiver':eventData.eventResponse.receiver,
+          'receiver': eventData.eventResponse.receiver,
         });
         this.sendUser = true;
         this.receiverUser = false;
         this.newSenderMessage = [...this.senderObject];
-        console.log("this.newSenderMessage(Sender) \n" , this.newSenderMessage);
+        console.log("this.newSenderMessage(Sender) \n", this.newSenderMessage);
       }
       else {
         this.senderObject.push({
           'senderMsg': eventData.eventResponse.originalText,
           'receiverMsg': eventData.eventResponse.result.translatedText,
           'user': 'receiver',
-          'receiver':eventData.eventResponse.receiver,
+          'receiver': eventData.eventResponse.receiver,
           'sender': eventData.eventResponse.sender,
         });
-        if (eventData.eventResponse.receiver == this.emailId) {
+        if (eventData.eventResponse.receiver == this.emailID) {
           this.sendUser = false;
           this.receiverUser = true;
           this.newSenderMessage = [...this.senderObject];
-          console.log("this.newSenderMessage(Receiver) \n" , this.newSenderMessage);
+          console.log("this.newSenderMessage(Receiver) \n", this.newSenderMessage);
         }
       }
     });
@@ -206,5 +209,25 @@ export class ChatBoxComponent implements OnInit {
     this.userSelected = selectedUser.emailId;
     this.activeStatus = selectedUser.isLoggedIn;
     console.log("selected User", this.userSelected);
+  }
+
+  /**
+   * @name Autosearch
+   * @param item 
+   */
+  selectEvent(item) {
+    this.userSelected = item.emailId;
+    console.log("Selected Email:", this.userSelected);
+
+    // do something with selected item
+  }
+
+  onChangeSearch(val: string) {
+    // fetch remote data from here
+    // And reassign the 'data' which is binded to 'data' property.
+  }
+
+  onFocused(e) {
+    // do something when input is focused
   }
 }
