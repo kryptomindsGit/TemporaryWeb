@@ -30,7 +30,7 @@ export class EditComponent implements OnInit {
   public loading = false;
 
   // Variable's
-  public showMainContent: number = 1;
+  public showMainContent: number = 3;
   public isUportUser: string;
   public email: string;
   public country: string;
@@ -524,7 +524,7 @@ export class EditComponent implements OnInit {
       });
 
       console.log("documentQualArray", this.documentQualArray);
-      
+
     } else {
       this.addDocumentEdu();
     }
@@ -643,21 +643,21 @@ export class EditComponent implements OnInit {
       //   console.log("Personal file id update", this.documentPersonalArray[i].documentTypeId);
       // }
       // else
-        if (this.documentQualArray[i] != null) {
+      if (this.documentQualArray[i] != null) {
+        {
+          this.documentQualArray[i].documentUrl = this.documentQualArray[i].documentUrl;
+          this.documentQualArray[i].documentTypeId = this.doc_cat_id;
+          console.log("Qual file id update", this.documentQualArray[i].documentTypeId);
+        }
+      }
+      else
+        if (this.documentWorkArray[i] != null) {
           {
-            this.documentQualArray[i].documentUrl = this.documentQualArray[i].documentUrl;
-            this.documentQualArray[i].documentTypeId = this.doc_cat_id;
-            console.log("Qual file id update", this.documentQualArray[i].documentTypeId);
+            this.documentWorkArray[i].documentUrl = this.documentWorkArray[i].documentUrl;
+            this.documentWorkArray[i].documentTypeId = this.doc_cat_id;
+            console.log("Work Exp file id update", this.documentWorkArray[i].documentTypeId);
           }
         }
-        else
-          if (this.documentWorkArray[i] != null) {
-            {
-              this.documentWorkArray[i].documentUrl = this.documentWorkArray[i].documentUrl;
-              this.documentWorkArray[i].documentTypeId = this.doc_cat_id;
-              console.log("Work Exp file id update", this.documentWorkArray[i].documentTypeId);
-            }
-          }
     }
   }
 
