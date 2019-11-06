@@ -1,12 +1,42 @@
 <div class="container-fluid">
     <div class="row p-2" #addprofileemployer>
-        <div class="col-12">
-                
-                      
-            <div class="card">
+        <div class="col-12">           
+            
                 <div class="card-header">
                     <h6>PROFILE DETAILS</h6>
                 </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="container">
+                            <div class="row custom-wrapper">
+                                <div class="col-md-12">
+                                    <form [formGroup]="registrationForm" (ngSubmit)="onPhotoSubmit()">
+                                        <div class="group-gap">
+                                            <div class="avatar-upload">
+                                                <div class="avatar-edit">
+                                                    <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg"
+                                                        #fileInput (change)="uploadPhotoFile($event)" />
+                                                </div>
+                                                <div class="avatar-preview">
+                                                    <div id="imagePreview"
+                                                        [style.backgroundImage]="'url('+ imageUrl +')'">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row text-center">
+                                            <div class="col-12">
+                                                <button type="submit" class="btn btn-primary text-center"
+                                                    (click)="fileInput.click()">Upload Image</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
                 <div class="card-body">
                     <form [formGroup]="employerProfileForm">
                         <div class="row">
@@ -268,7 +298,7 @@
                             <div class="col-3"></div>
                             <div class="col-3">
 
-                                <button type="button" class="btn btnSave" (click)="onSubmit()"
+                                <button type="button" class="btn btnSave" (click)="onPhotoSubmit()" (click)="onSubmit()" 
                                     id="signUpButton">Save</button>
                             </div>
                             <div class="col-3">

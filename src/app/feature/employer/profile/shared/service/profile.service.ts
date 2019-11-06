@@ -123,7 +123,6 @@ export class EmpProfileService {
   }
 
   async getEmployerByEmailId() {
-
     try {
       let res = await this.__http.get(`${SPRING_URL}/employer/profile-view`, httpOptions).toPromise();
       return res;

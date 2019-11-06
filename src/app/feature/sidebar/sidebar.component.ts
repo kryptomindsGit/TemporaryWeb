@@ -54,8 +54,6 @@ export class SidebarComponent implements OnInit {
     if (this.userRole == "Freelancer") {
       this.__idptProfileService.getFreelancerByEmail().then((resData: any) => {
         this.freelancerDetailsArr = resData.responseObject.freelancerProfile;
-        console.log("this.freelancerDetailsArr",this.freelancerDetailsArr);
-        
         if (this.freelancerDetailsArr == null) {
           this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/add']);
         } else {
@@ -65,9 +63,7 @@ export class SidebarComponent implements OnInit {
     }
     else if (this.userRole == "Employer") {
       this.__empProfileService.getEmployerByEmailId().then((resData: any) => {
-        this.employerDetailsArr = resData.responseObject;
-        console.log("Data of an Employer" , resData.responseObject);
-        
+        this.employerDetailsArr = resData.responseObject.employerEnterprise;
         if (this.employerDetailsArr == null) {
           this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/add']);
         } else {

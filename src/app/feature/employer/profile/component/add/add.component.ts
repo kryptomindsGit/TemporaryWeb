@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
 import { EmpProfileService } from '../../shared/service/profile.service';
 import { IndeptProfileService } from '../../../../independent-prof/profile/shared/service/profile.service';
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
@@ -49,6 +49,11 @@ export class AddComponent implements OnInit {
   public stateArrByCountryId=[];
   public cityArrByStateId = [];
 
+  
+  registrationForm = this.__fb.group({
+    file: [null]
+  });
+
   constructor(
     private __fb: FormBuilder,
     private __profileService: EmpProfileService,
@@ -56,7 +61,8 @@ export class AddComponent implements OnInit {
     private __authService: AuthService,
     private __router: Router,
     private toastr: ToastrService,
-    private __customGlobalService: CustomGlobalService
+    private __customGlobalService: CustomGlobalService,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -110,13 +116,7 @@ export class AddComponent implements OnInit {
       )]),
     })
   }
-
-  // convenience getter for easy access to form fields
   get formValidation() { return this.employerProfileForm.controls; }
-
-  /**
-  * @description FormArray (Dynamicaly create input)
-  */
   get documentArr() {
     return this.employerProfileForm.get('documents') as FormArray;
   }
@@ -129,20 +129,13 @@ export class AddComponent implements OnInit {
       }
     ));
   }
-
   deleteDocument(index) {
     if (this.documentArr.length > 0) {
       this.documentArr.removeAt(index);
     } else {
 
     }
-
   }
-
-  /**
-  * @method getAllCountry
-  * @description get all country values.
-  */
   getCountryList() {
     this.__customGlobalService.getCountryList().then((resData: any) => {
       this.countryArr = resData.responseObject;
@@ -150,7 +143,6 @@ export class AddComponent implements OnInit {
       
     })
   }
-
   getStateList() {
     this.__customGlobalService.getStateList().then((resData: any) => {
       this.stateArr = resData.responseObject;
@@ -158,109 +150,51 @@ export class AddComponent implements OnInit {
       
     })
   }
-
   setStateListByCountryId(countryId) {
-    console.log("id country" , countryId);
     this.stateArrByCountryId[countryId] = this.stateArr.filter((item) => item.masterCountry.countryId == countryId);
-    console.log(this.stateArrByCountryId);
-    // this.employerProfileForm.get('state')['controls'].patchValue({ countryId : this.stateArrByCountryId[countryId].masterCountry.countryId, stateId: '' });
   }
-
   getCityList() {
     this.__customGlobalService.getCityList().then((resData: any) => {
       this.cityArr = resData.responseObject;
-      console.log("City: ", this.cityArr);
-      
     })
   }
-
   setCityListByStateId(stateId) {
-    console.log("id state" , stateId);
     this.cityArrByStateId[stateId] = this.cityArr.filter((item) => item.masterStates.stateId == stateId);
-    console.log(this.cityArrByStateId);
-    // this.employerProfileForm.get('state')['controls'].patchValue({ countryId : this.stateArrByCountryId[countryId].masterCountry.countryId, stateId: '' });
   }
-  
-
-  /**
-    * @name 
-    * @description file handler
-    */
   setDocTypeCatType(inputValue) {
     console.log(inputValue);
     this.fileType = inputValue
   }
-
-  /**
-   * @method setDocTypeCatID
-   * @param city_id
-   * @description get the zipcode based on selected city id.
-   */
   setDocTypeCatID(id) {
     console.log(this.doc_cat_id = id);
   }
-
   handleFileInput(event) {
     if (event.target.files.length > 0) {
-
       const file = event.target.files[0];
       this.fileName = file.name.replace(" ", "");
-      console.log("File name:", file.name, this.fileName);
       this.fileObj = file;
     }
   }
-
-
   async uploadFile() {
-    this.loading = true;
-    await this.__profileService.postDocHashData(this.fileObj, this.email_id, this.fileName).then((resData) => {
-      // this.FileArrData = resData;
-      this.loading = false;
-      this.FileArrData = resData,
-        (error) => this.error = error
-
-      if (this.FileArrData) {
-        this.toastr.success(this.fileName, "Successfully uploaded");
-      } else {
-        this.toastr.error(this.fileName, "File not uploaded");
-      }
-
-
-
-      console.log("Resp data:", this.FileArrData.Message);
-      console.log("File Resp:", this.FileArrData.fileId);
-    });
-    // this.FileArrData = "jkdhfjkhkdjshfkjhdskjfh"
-
-    await this.documentFileArr.push(
-      {
-        // 'documentUrl': this.FileArrData.fileId,
-        // 'docTypeId': this.doc_cat_id
-
-        'documentUrl': "testing.txt" , // for testing hard-coded
-        'docTypeId': 9
+    // this.loading = true;
+    // await this.__profileService.postDocHashData(this.fileObj, this.email_id, this.fileName).then((resData) => {
+    //   this.loading = false;
+    //   this.FileArrData = resData,
+    //     (error) => this.error = error
+    //   if (this.FileArrData) {
+    //     this.toastr.success(this.fileName, "Successfully uploaded");
+    //   } else {
+    //     this.toastr.error(this.fileName, "File not uploaded");
+    //   }
+    // });
+    await this.documentFileArr.push( {
+        'documentUrl': this.fileName,
+        'documentTypeId': this.doc_cat_id
       });
-    console.log(this.documentFileArr);
   }
 
-
-  /**
-   * @name onSubmit
-   * @description submit the form fileds values
-   */
   onSubmit() {
     this.loading = true;
-    console.log(this.employerProfileForm);
-    let documensFile: any = [
-      'documentUrl',
-      'docTypeId'
-    ];
-
-    documensFile = [
-      ...this.documentFileArr
-    ];
-
-  
     const employerProfileVal = {
       emailId: this.email_id,
       companyName: this.employerProfileForm.controls.comapany_name.value,
@@ -274,7 +208,8 @@ export class AddComponent implements OnInit {
       companyProfile: this.employerProfileForm.controls.company_profile.value,
       businessCategory: this.employerProfileForm.controls.business_cat.value,
       companyRepresentativeName: this.employerProfileForm.controls.company_rep_det.value,
-      employerDocuments: documensFile,
+      employerDocuments: this.documentFileArr,
+      logo:this.registrationForm.value.file
     }
     console.log(" Submit values:", employerProfileVal);
 
@@ -283,7 +218,7 @@ export class AddComponent implements OnInit {
       this.loading = false;
       if (resData.status == 'success') {
         this.toastr.success("Profile added Successfully");
-        this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view', this.email_id]);
+        this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view']);
       }
       else if (resData.status == 'error') {
         this.toastr.error("Profile not saved");
@@ -292,33 +227,65 @@ export class AddComponent implements OnInit {
     });
   }
 
-  /**
-   * @name getDocumentsTypeCat
-   * @description get API for all document category type of independent prof 
-   */
   getDocumentsTypeCat(index) {
     this.__freelancerProfileService.getFreelancerDocumentByCat(index).then((resData: any) => {
       this.docTypeArr = resData.responseObject;
-      console.log("docTypeArr:", this.docTypeArr);
     });
   }
-
-  /**
-   * @name onLogout
-   * @description call Logout 
-   */
 
   onLogout() {
     this.__authService.logout();
     this.__router.navigate(['/auth/auth/login']);
   }
 
-  /**
-  * @name onCancel
-  * @description call Cancel the process
-  */
   onCancel() {
     this.employerProfileForm.reset();
   }
 
+    // @ViewChild('fileInput') el: ElementRef;
+    imageUrl: any = 'src/';
+    editFile: boolean = true;
+    removeUpload: boolean = false;
+  
+    uploadPhotoFile(event) {
+      let reader = new FileReader(); // HTML5 FileReader API
+      let file = event.target.files[0];
+      if (event.target.files && event.target.files[0]) {
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          this.imageUrl = reader.result;
+          this.registrationForm.patchValue({
+            file: reader.result
+          });
+          this.editFile = false;
+          this.removeUpload = true;
+        }
+        // ChangeDetectorRef since file is loading outside the zone
+        this.cd.markForCheck();     
+        // reader.readAsBinaryString(file);   
+      }
+    }
+  
+    // Function to remove uploaded file
+    removeUploadedFile() {
+      // let newFileList = Array.from(this.el.nativeElement.files);
+      this.imageUrl = 'https://i.pinimg.com/236x/d6/27/d9/d627d9cda385317de4812a4f7bd922e9--man--iron-man.jpg';
+      this.editFile = true;
+      this.removeUpload = false;
+      this.registrationForm.patchValue({
+        file: [null]
+      });
+    }
+    
+    // Submit Registration Form
+    onPhotoSubmit() {
+      
+      if(!this.registrationForm.valid) {
+        alert('Please fill all the required fields to create a super hero!')
+        return false;
+      } else {
+        console.log(this.registrationForm.value)
+      }
+    }
+  
 }

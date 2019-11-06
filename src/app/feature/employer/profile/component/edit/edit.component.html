@@ -211,17 +211,17 @@
                                         <hr *ngIf="i>0">
                                         <div class="row" formGroupName="{{i}}">
                                             <div class="form-group form-input col-3">
-                                                <select (change)="setDocTypeCatID($event.target.value)"
-                                                    formControlName="docType" id="document_type" required>
+                                                <select (change)="setDocTypeCatID($event.target.value,i)"
+                                                    formControlName="documentTypeId" id="document_type" required>
                                                     <option id="option_txt" *ngFor="let doctypefile of docTypeArr"
-                                                        [value]="doctypefile.doc_type_id">{{doctypefile.doc_type}}
+                                                        [value]="doctypefile.documentTypeId">{{doctypefile.documentTypeName}}
                                                     </option>
                                                 </select>
                                                 <label class="form-label" for="document_type">Document Type</label>
-                                                <div *ngIf="documentArr.controls[i].get('docType').invalid && (documentArr.controls[i].get('docType').dirty || documentArr.controls[i].get('docType').touched)"
+                                                <div *ngIf="documentArr.controls[i].get('documentTypeId').invalid && (documentArr.controls[i].get('documentTypeId').dirty || documentArr.controls[i].get('documentTypeId').touched)"
                                                     class="text-danger error-msg">
                                                     <div
-                                                        [hidden]="!documentArr.controls[i].get('docType').errors?.required">
+                                                        [hidden]="!documentArr.controls[i].get('documentTypeId').errors?.required">
                                                         Document type is required.
                                                     </div>
                                                 </div>
@@ -231,20 +231,20 @@
                                                     <div class="file-select" id="document_file">
                                                         <input type="file" class="document_name" name="chooseFile"
                                                             id="file_name" (change)="handleFileInput($event)"
-                                                            formControlName="chooseFile">
+                                                            formControlName="documentUrl">
                                                     </div>
                                                 </div>
-                                                <div *ngIf="documentArr.controls[i].get('chooseFile').invalid && (documentArr.controls[i].get('chooseFile').dirty || documentArr.controls[i].get('chooseFile').touched)"
+                                                <div *ngIf="documentArr.controls[i].get('documentUrl').invalid && (documentArr.controls[i].get('documentUrl').dirty || documentArr.controls[i].get('documentUrl').touched)"
                                                     class="text-danger error-msg">
                                                     <div
-                                                        [hidden]="!documentArr.controls[i].get('chooseFile').errors?.required">
+                                                        [hidden]="!documentArr.controls[i].get('documentUrl').errors?.required">
                                                         Document name is required.
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class=col-2>
                                                 <input type="button" class="btnBlue" id="upload" value="UPLOAD"
-                                                    (click)="uploadFile()">
+                                                    (click)="uploadFile(i)">
                                             </div>
                                             <div class="form-group col-2">
                                                 <button type="button" class="btn btnadd"

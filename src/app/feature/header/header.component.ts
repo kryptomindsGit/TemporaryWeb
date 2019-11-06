@@ -63,10 +63,7 @@ export class HeaderComponent implements OnInit {
       });
     } else if (this.userRole == "Employer") {
       this.__empProfileService.getEmployerByEmailId().then((resData: any) => {
-        console.log("resData Employer Header : " , resData);
-        if(resData.responseObject != null ){
-          this.profile_img =atob(resData.responseObject.freelancerProfile.photo);
-        }
+        this.profile_img =atob(resData.responseObject.employerEnterprise.companyLogo);
       });
     } else {
       this.profile_img = '../../../assets/images/bule_img.png';
@@ -76,7 +73,7 @@ export class HeaderComponent implements OnInit {
     if (this.userRole == "Freelancer") {
       this.__idptProfileService.getFreelancerByEmail().then((resData: any) => {
         this.freelancerDetailsArr = resData.responseObject.freelancerProfile;
-        this.profile_img =atob(resData.responseObject.freelancerProfile.photo);
+     
         console.log();
         if (this.freelancerDetailsArr == null) {
           this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/add']);

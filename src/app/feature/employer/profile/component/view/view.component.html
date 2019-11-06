@@ -42,15 +42,11 @@
                                         <tbody>
                                             <tr>
                                                 <th>Name: </th>
-                                                <td>
-                                                    {{employerDetailsArr.companyName}}
-                                                </td>
+                                                <td>{{employerDetailsArr.companyName}}</td>
                                             </tr>
                                             <tr>
                                                 <th>Email: </th>
-                                                <td>
-                                                    {{employerDetailsArr.emailId}}
-                                                </td>
+                                                <td>{{employerDetailsArr.emailId}}</td>
                                             </tr>
                                             <tr>
                                                 <th>Bio: </th>
@@ -74,12 +70,6 @@
                                                     <li>Postal Code : {{employerDetailsArr.zipCode}}</li>
                                                 </td>
                                             </tr>
-                                            <!-- <tr>
-                                                <th>Country: </th>
-                                                <td>
-                                                    {{employerDetailsArr.country}}
-                                                </td>
-                                            </tr> -->
                                             <tr>
                                                 <th>Company Profile:
                                                 </th>
@@ -99,7 +89,6 @@
                                                     {{employerDetailsArr.typeOfBusiness}}
                                                 </td>
                                             </tr>
-
                                             <tr>
                                                 <th>Documents: </th>
                                                 <table>
@@ -110,8 +99,8 @@
                                                     </tr>
                                                     <tbody *ngFor="let document of employerFileArr; let i=index">
                                                         <tr>
-                                                            <td width="30%">{{document.doc_type}}</td>
-                                                            <td width="60%">{{ document.file_name }}</td>
+                                                            <td width="30%">{{document.masterDocumentType.documentTypeName}}</td>
+                                                            <td width="60%">{{ document.documentUrl }}</td>
                                                             <td width="30%"><a style="color:#1051dd; font-size: 1rem;"
                                                                     (click)="downloadFile(document.file_name)"><i
                                                                         class="fa fa-download" aria-hidden="true"></i>
@@ -120,37 +109,12 @@
                                                     </tbody>
                                                 </table>
                                             </tr>
-
-                                            <!-- <tr>
-                                                <th>Documents: </th>
-                                                <td>
-                                                    <div *ngFor="let document of employerFileArr; let i=index">
-                                                        <hr *ngIf="i>0">
-                                                        <table>
-                                                            <tr>
-                                                                <th width="30%">{{document.doc_type}}</th>
-                                                                <td width="70%">{{ document.file_name }}</td>
-                                                                <td width="20%"><a style="color:#1051dd; "
-                                                                        (click)="downloadFile(document.file_name)"><i
-                                                                            class="fa fa-download"
-                                                                            aria-hidden="true"></i>
-                                                                    </a></td>
-                                                            </tr>
-
-                                                        </table>
-
-                                                    </div>
-                                                </td>
-                                            </tr> -->
-
                                         </tbody>
                                     </table>
                                 </div>
-
                             </div>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>

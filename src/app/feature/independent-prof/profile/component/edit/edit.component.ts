@@ -641,11 +641,6 @@ export class EditComponent implements OnInit {
   setDocTypeCatID(id, i: any) {
     this.doc_cat_id = id
     if (this.doc_cat_id != null || this.doc_cat_id != undefined || this.doc_cat_id != 0) {
-      // if (this.documentPersonalArray[i] != null) {
-      //   this.documentPersonalArray[i].documentUrl = this.documentPersonalArray[i].documentUrl;
-      //   this.documentPersonalArray[i].documentTypeId = this.doc_cat_id;
-      // }
-      // else
       if (this.documentQualArray[i] != null) {
         {
           this.documentQualArray[i].documentUrl = this.documentQualArray[i].documentUrl;

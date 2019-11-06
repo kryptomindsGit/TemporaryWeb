@@ -29,12 +29,10 @@ export class ViewComponent implements OnInit {
     private __profileService: EmpProfileService,
     private __authService: AuthService,
     private __router: Router,
-    private __activatedRoute: ActivatedRoute,
   ) {
-    // this.emailId = this.__activatedRoute.snapshot.params.id;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     let isUportUser = localStorage.getItem("uportUser");
 
     if (isUportUser == "false") {
@@ -47,25 +45,20 @@ export class ViewComponent implements OnInit {
       this.uid = localStorage.getItem("uid");
       this.emailId = localStorage.getItem("email");
     }
-
     //call function's
-    this.getEmployerDetails();
+    await this.getEmployerDetails();
   }
-
   /**
    * @name getEmployerDetails
    * @description call get API for employer details 
    */
-  getEmployerDetails() {
-    // this.__profileService.getEmployerByEmailId(this.emailId).then((resData: any) => {
-    //   this.employerDetailsArr = resData[0];
-    //   console.log(this.employerDetailsArr);
-
-    // });
-    this.__profileService.getEmployerByEmailId().then((resData: any) => {      
-      this.employerDetailsArr = resData.responseObject;
-      console.log(this.employerDetailsArr);
-    });
+  async getEmployerDetails() {
+    await this.__profileService.getEmployerByEmailId().then((resData: any) => {      
+      this.employerDetailsArr = resData.responseObject.employerEnterprise;
+      this.employerFileArr = resData.responseObject.employerDocument;
+     });
+    console.log(" this.employerDetailsArr " ,  this.employerDetailsArr );
+    console.log(" this.employerFileArr " ,  this.employerFileArr);
   }
 
   /**
@@ -74,28 +67,14 @@ export class ViewComponent implements OnInit {
    */
   downloadFile(item) {
     this.loading = true;
-    console.log("Download")
     var filesave = item.substring(item.lastIndexOf("-") + 1);
-    console.log("file save:", filesave);
-
     this.__profileService.getDocHashData(item).then((data) => {
-      console.log("Blockchain get data done", data);
-
       this.loading = false;
-
       var file = new Blob([data.body], { type: 'application/octet-stream' });
       saveAs(file, filesave);
-      // var fileURL = URL.createObjectURL(file);
-      // window.open(fileURL);
-      // window.open(fileURL, '_blank');
     })
   }
-
   editProfile() {
-    console.log("Edit calling");
-
     this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/edit/', this.emailId]);
   }
-
-
 }

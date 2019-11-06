@@ -219,6 +219,8 @@ export class AddComponent implements OnInit {
   getEducationCategoryList() {
     this.__customGlobalService.getEducationCategoryList().then((resData: any) => {
       this.eduCatArr = resData.responseObject;
+      console.log("educat array", this.eduCatArr );
+      
     })
   }
   getEducationTypeList() {
@@ -546,11 +548,9 @@ export class AddComponent implements OnInit {
       freelancerDocuments: this.documentPersonalArray,
       photo: this.registrationForm.value.file
     }
-    console.log("in personal : ", personalData);
-
-    // this.__profileService.savePersonalDetails(personalData).then((resData: any) => {
-    //   this.loading = false;
-    // });
+    this.__profileService.savePersonalDetails(personalData).then((resData: any) => {
+      this.loading = false;
+    });
   }
 
 
@@ -559,8 +559,6 @@ export class AddComponent implements OnInit {
       educationDetails: this.qualificationDetailForm.controls.qualification.value,
       freelancerDocuments: this.documentQualArray
     }
-    console.log("in education : ", eductionPayload);
-
     this.__profileService.saveEducationDetails(eductionPayload).then((resData: any) => {
       this.loading = false;
     });
@@ -576,8 +574,6 @@ export class AddComponent implements OnInit {
       personalAttributeStrength: this.workExpDetailsForm.controls.strength.value,
       personalAttributeWeakness: this.workExpDetailsForm.controls.weakness.value,
     }
-    console.log("in org : ", orgDetailsPayload);
-
     this.__profileService.saveWorkDetails(orgDetailsPayload).then((resData: any) => {
       this.loading = false;
     });
@@ -587,8 +583,6 @@ export class AddComponent implements OnInit {
     const skillPayload = {
       freelancerSkills: this.skillRateArr.value,
     }
-    console.log("in skill : ", skillPayload);
-
     this.__profileService.saveSkillDetails(skillPayload).then((resData: any) => {
       this.loading = false;
       this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view']);

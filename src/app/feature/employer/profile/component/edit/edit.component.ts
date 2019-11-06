@@ -49,6 +49,7 @@ export class EditComponent implements OnInit {
 
   public stateArrByCountryId=[];
   public cityArrByStateId = [];
+  employerDocument: any;
 
   constructor(
     private __fb: FormBuilder,
@@ -101,12 +102,7 @@ export class EditComponent implements OnInit {
       business_cat: ['', [Validators.required, Validators.maxLength(25)]],
       company_profile: ['', [Validators.required, Validators.maxLength(25)]],
       company_rep_det: ['', [Validators.required, Validators.maxLength(25)]],
-      documents: this.__fb.array([this.__fb.group(
-        {
-          chooseFile: ['', [Validators.required, Validators.maxLength(25)]],
-          docType: ['', [Validators.required, Validators.maxLength(25)]]
-        }
-      )]),
+      documents: this.__fb.array([]),
     })
   }
   
@@ -122,11 +118,12 @@ export class EditComponent implements OnInit {
   async getEmplyeeDetails() {
 
     await this.__profileService.getEmployerByEmailId().then((data: any) => {
-      this.employerArr = data.responseObject;
+      this.employerArr = data.responseObject.employerEnterprise;
+      this.employerFileArr = data.responseObject.employerDocument;
+      console.log("emp doc " , this.employerFileArr);
+      
     });
-
     if (this.employerArr != null) {
-
       this.employerProfileForm.patchValue({
         comapany_name: this.employerArr.companyName,
         website_addr: this.employerArr.website,
@@ -140,32 +137,33 @@ export class EditComponent implements OnInit {
         company_profile: this.employerArr.companyProfile,
         company_rep_det: this.employerArr.companyRepresentative
       });
-
+      if (this.employerFileArr.length > 0) {
+        this.employerFileArr.forEach(item => {
+          this.documentArr.push(
+            this.__fb.group({
+              documentUrl: item.documentUrl,
+              documentTypeId: item.masterDocumentType.documentTypeId,
+              documentId: item.documentId
+            })
+          )
+        });   
+        
+        this.employerFileArr.forEach(item => {
+          this.documentFileArr.push(
+            this.__fb.group({
+              documentUrl: item.documentUrl,
+              documentTypeId: item.masterDocumentType.documentTypeId,
+              documentId: item.documentId
+            }).value
+          )
+        });   
+      } else {
+        this.addDocument();
+      }
       await this.getCountryList();
       await this.getStateList();
-      await this.getCityList();
-
-      // await this.__profileService.getEmployerFileById().then((resData: any) => {
-      //   this.employerFileArr = resData;
-
-      //   if (this.employerFileArr.length > 0) {
-
-      //     for (let index = 0; index < this.employerFileArr.length; index++) {
-      //       this.documentArr.push(this.__fb.group(
-      //         {
-      //           chooseFile: this.employerFileArr[index].file_name,
-      //           docType: this.employerFileArr[index].file_type,
-      //           file_id: this.employerFileArr[index].file_id,
-      //           part_id: this.employerFileArr[index].part_id
-      //         }));
-      //     }
-      //   } else {
-      //     this.addDocument();
-      //   }
-
-      // });
+      await this.getCityList();       
     }
-
   }
 
   async populateStateList() {
@@ -184,7 +182,6 @@ export class EditComponent implements OnInit {
       }
     }
   }
-
   /**
   * @description FormArray (Dynamicaly create input)
   */
@@ -195,16 +192,14 @@ export class EditComponent implements OnInit {
   addDocument() {
     this.documentArr.push(this.__fb.group(
       {
-        chooseFile: new FormControl(""),
-        docType: new FormControl("")
+        documentUrl: '',
+        documentTypeId: ''
       }
     ));
   }
-
   deleteDocument(index) {
     this.documentArr.removeAt(index);
   }
-
   /**
   * @method getAllCountry
   * @description get all country values.
@@ -214,14 +209,12 @@ export class EditComponent implements OnInit {
     this.countryArr = resData.responseObject;
   })
 }
-
 async getStateList() {
  await this.__customGlobalService.getStateList().then((resData: any) => {
     this.stateArr = resData.responseObject;
     this.setStateListByCountryId(this.employerArr.masterCountry.countryId);
   })
 }
-
 setStateListByCountryId(countryId) {
   this.stateArrByCountryId[countryId] = this.stateArr.filter((item) => item.masterCountry.countryId == countryId);
   this.employerProfileForm.patchValue({
@@ -244,29 +237,31 @@ async getCityList() {
     this.setCityListByStateId(this.employerArr.masterState.stateId);
   })
 }
-  /**
-    * @name 
-    * @description file handler
-    */
-  setDocTypeCatType(inputValue) {
-    console.log(inputValue);
-    this.fileType = inputValue
+
+handleFileInput(event) {
+  if (event.target.files.length > 0) {
+
+    const file = event.target.files[0];
+    this.fileName = file.name.replace(" ", "");
+    console.log("File name:", file.name);
+
+    this.fileObj = file;
   }
-
-  handleFileInput(event) {
-    if (event.target.files.length > 0) {
-
-      const file = event.target.files[0];
-      this.fileName = file.name.replace(" ", "");
-      console.log("File name:", file.name);
-
-      this.fileObj = file;
+}
+async uploadFile(i : any) {
+    if (this.documentFileArr[i] != null) {
+      if (this.fileName != null || this.fileName != undefined) {
+        this.documentFileArr[i].documentUrl = this.fileName;
+        this.documentFileArr[i].documentTypeId = this.documentFileArr[i].documentTypeId;
+      }
+    }else{
+      await this.documentFileArr.push(
+        {
+          'documentUrl': this.fileName,
+          'documentTypeId': this.doc_cat_id,
+          'documentId': 0
+        }); 
     }
-  }
-
-
-  async uploadFile() {
-
     // this.loading = true;
     // await this.__profileService.postDocHashData(this.fileObj, this.emailId, this.fileName).then((event) => {
     //   this.FileArrData = event;
@@ -282,23 +277,33 @@ async getCityList() {
     //     'file_name': this.FileArrData.fileId,
     //     'file_type': this.fileType
     //   });
-    await this.documentFileArr.push(
-      {
-        'file_name': this.fileName,
-        'file_type': this.fileType
-      });
+    // await this.documentFileArr.push(
+    //   {
+    //     'documentUrl': this.fileName,
+    //     'documentTypeId': this.fileType,
+    //     'documentId': 0
+    //   });
     console.log(this.documentFileArr);
   }
 
   getDocumentsTypeCat(index) {
     this.__freelancerProfileService.getFreelancerDocumentByCat(index).then((resData: any) => {
-      this.docTypeArr = resData.responseObject;       
+      this.docTypeArr = resData.responseObject;
+      console.log("docTypeArr" , this.docTypeArr);
     })
 
   }
 
-  setDocTypeCatID(id) {
-    console.log(this.doc_cat_id = id);
+  setDocTypeCatID(id : any , i :any) {
+    this.doc_cat_id = id;
+    if (this.doc_cat_id != null || this.doc_cat_id != undefined || this.doc_cat_id != 0) {
+      if (this.documentFileArr[i] != null) {
+        {
+          this.documentFileArr[i].documentUrl = this.documentFileArr[i].documentUrl;
+          this.documentFileArr[i].documentTypeId = this.doc_cat_id;
+        }
+      }
+    }
   }
 
   /**
@@ -306,16 +311,7 @@ async getCityList() {
    * @description submit the form fileds values
    */
   onSubmit() {
-    this.loading = true;
-    let documensFile: any = [
-      'file_name',
-      'file_type'
-    ];
-
-    documensFile = [
-      ...this.documentFileArr
-    ];
-
+    // this.loading = true;
     const employerProfileVal = {
       emailId : this.emailId,
       companyName: this.employerProfileForm.controls.comapany_name.value,
@@ -329,33 +325,20 @@ async getCityList() {
       companyProfile: this.employerProfileForm.controls.company_profile.value,
       businessCategory: this.employerProfileForm.controls.business_cat.value,
       companyRepresentativeName: this.employerProfileForm.controls.company_rep_det.value,
-      chooseFile: documensFile,
+      employerDocuments: this.documentFileArr,
     }
     console.log(" Submit values:", employerProfileVal);
-
     this.__profileService.updateEmployer(employerProfileVal).then((resData: any) => {
       console.log(resData);
-      this.loading = false;
-      if (resData.status == 'success') {
-        this.toastr.success("Profile added Successfully");
-        this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view', this.emailId]);
-      }
-      else if (resData.status == 'error') {
-        this.toastr.error("Profile not saved");
-      }
-      console.log(" Submit values:", employerProfileVal);
-
-      this.__profileService.updateEmployer(employerProfileVal).then((resData: any) => {
-        console.log(resData);
-        this.loading = false;
-        if (resData.status == 'success') {
-          this.toastr.success("Profile added Successfully");
-          this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view', this.emailId]);
-        }
-        else if (resData.status == 'error') {
-          this.toastr.error("Profile not saved");
-        }
-      });
+      this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view']);
+      // this.loading = false;
+      // if (resData.status == 'success') {
+      //   this.toastr.success("Profile added Successfully");
+      //   this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view', this.emailId]);
+      // }
+      // else if (resData.status == 'error') {
+      //   this.toastr.error("Profile not saved");
+      // }
     });
   }
 
