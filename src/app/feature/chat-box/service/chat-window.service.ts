@@ -80,7 +80,6 @@ export class ChatWindowService {
       const eventSource = new EventSource(this.EVENT_URL);
 
       eventSource.addEventListener(this.eventName, (event: any) => this.__zone.run(() => {
-        console.log("on addEventListener function", event.data);
         // this.myData = JSON.parse(event.data);
         observer.next(JSON.parse(event.data));
         // observer.next(event.data);

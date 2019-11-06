@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild,ElementRef,ChangeDetectorRef} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { Router } from '@angular/router';
@@ -94,7 +94,7 @@ export class AddComponent implements OnInit {
 
   registrationForm = this.__fb.group({
     file: [null]
-  }) 
+  })
 
   ngOnInit() {
     this.isUportUser = localStorage.getItem("uportUser");
@@ -526,8 +526,8 @@ export class AddComponent implements OnInit {
     // });
   }
 
-  savePersonalDetailForm() { 
-   
+  savePersonalDetailForm() {
+
     const personalData = {
       emailId: this.email,
       prefix: this.personalDetailForm.controls.prefix.value,
@@ -544,7 +544,7 @@ export class AddComponent implements OnInit {
       availabilityForWork: this.personalDetailForm.controls.availabilityForWork.value,
       languagePreferred: this.personalDetailForm.controls.languagePreferred.value,
       freelancerDocuments: this.documentPersonalArray,
-      photo:this.registrationForm.value.file
+      photo: this.registrationForm.value.file
     }
     console.log("in personal : ", personalData);
 
@@ -660,8 +660,7 @@ export class AddComponent implements OnInit {
         this.removeUpload = true;
       }
       // ChangeDetectorRef since file is loading outside the zone
-      this.cd.markForCheck();     
-      // reader.readAsBinaryString(file);   
+      this.cd.markForCheck();
     }
   }
 
@@ -675,11 +674,11 @@ export class AddComponent implements OnInit {
       file: [null]
     });
   }
-  
+
   // Submit Registration Form
   onSubmit() {
     this.submitted = true;
-    if(!this.registrationForm.valid) {
+    if (!this.registrationForm.valid) {
       alert('Please fill all the required fields to create a super hero!')
       return false;
     } else {

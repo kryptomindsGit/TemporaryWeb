@@ -19,71 +19,83 @@ import { AuthService } from 'src/app/auth/shared/service/auth.service';
 })
 export class ChatBoxComponent implements OnInit {
 
-  // Websocket variable's
-  reqObject: any = [];
-  resObject: any = [];
-  senderObject: any = [];
-  receiverObject: any = [];
-  senderEmail: any;
-  evtRespObject: any = [];
-
-
-  newSenderMessage: any = [];
-  newReceiverMessage: any = [];
-
-  senderMessage: any = [];
-  receiverMessage: any = [];
-  messageDetails: any = [];
-  public eventName: any;
-  public URL: any;
-  public tagId: string;
-  receiverEmail: any;
-  sendMsg: any;
-  greeting: any;
-  name: string;
-
-  sendUser: boolean = false;
-  receiverUser: boolean = false;
-
+  // Variables
+  public senderEmail: any;
+  public emailID: any;
+  public jwtData: any;
   public userRole: any;
   public userSelected: any = "";
+  public userId: any;
   public activeStatus: boolean;
-  userId: number;
-  emailID: string;
-  // sendMessage: any;
-  date: Date = new Date();
+  public activeUser: any;
+  public deactiveUser: any;
 
-  senderMessages: any = [];
-  reciverMessages: any = [];
-  public activeUser: any = [];
-  public deactiveUser: any = [];
-  public jwtData: any = [];
-
-  userMessage: any = [];
-  arrMessage: any = [];
-
-  TypeMsg: any = "Type a Message";
+  // Arrays
+  public messageObject: any = [];
+  public messageDetails: any = [];
+  public allUserArray: any = [];
+  public newMessageObject: any = [];
 
 
-  public allusers: any = [];
+
+
+
+  // Message: any = [];
+  // newReceiverMessage: any = [];
+
+  // senderMessage: any = [];
+  // receiverMessage: any = [];
+  // messageDetails: any = [];
+  // public eventName: any;
+  // public URL: any;
+  // public tagId: string;
+  // receiverEmail: any;
+  // sendMsg: any;
+  // greeting: any;
+  // name: string;
+
+  // sendUser: boolean = false;
+  // receiverUser: boolean = false;
+
+  // public userRole: any;
+  // public userSelected: any = "";
+  // public activeStatus: boolean;
+  // userId: number;
+  // emailID: string;
+  // // sendMessage: any;
+  // date: Date = new Date();
+
+  // senderMessages: any = [];
+  // reciverMessages: any = [];
+  // public activeUser: any = [];
+  // public deactiveUser: any = [];
+  // public jwtData: any = [];
+
+  // userMessage: any = [];
+  // arrMessage: any = [];
+
+  // localStorageArray: any = [];
+  // public allUserArray: any = [];
 
   keyword = 'emailId'
 
   constructor(
-    // private __eventSourceService: EventSourceService,
     private __chatboxService: ChatWindowService,
     private __authService: AuthService,
-  ) {
-  }
+  ) { }
 
   ngOnInit() {
-    this.decodeJWT();
-    this.getConnectWithServer();
-    this.getOnlineUsers();
+    this.decodeJWToken();
+    this.getServerChatEventCall();
+    this.getOnlineAllUser();
     this.getAllUser();
   }
 
-  decodeJWT() {
+  /**
+   * @name decodeJWToken()
+   * @description decode the JWT
+   */
+  decodeJWToken() {
     let token = localStorage.getItem('access_token');
     this.jwtData = decode(token);
     this.userRole = this.jwtData['custom:role'];
@@ -96,8 +108,6 @@ export class ChatBoxComponent implements OnInit {
    * @description send message details to spring API
    */
   sendMessage(messages: string) {
-
-    // this.reqObject.push(messages);
     this.messageDetails = {
       sourceLanguageCode: "en",
       targetLanguageCode: "hi",
@@ -107,7 +117,6 @@ export class ChatBoxComponent implements OnInit {
     };
     this.__chatboxService.senderUserMessage(this.messageDetails).then(
       (resData) => {
-        // this.respObject.push(resData); 
       },
       error => {
         return Observable.throw(error);
@@ -115,38 +124,50 @@ export class ChatBoxComponent implements OnInit {
     );
   }
 
+  /**
+   * @name getAllUser()
+   * @description call API for get registered Users from Server.
+   */
   getAllUser() {
     if (this.userRole == 'Employer') {
       this.__authService.getAllFreelancers().then((resData: any) => {
-        this.allusers = resData.responseObject;
-        console.log("All user list:", this.allusers);
-
-        this.getActivateUserAllList();
+        this.allUserArray = resData.responseObject;
+        console.log("All user list:", this.allUserArray);
+        this.getActiveAllUser();
       }
       );
     } else if (this.userRole == 'Freelancer') {
       this.__authService.getAllEmployers().then((resData: any) => {
-        this.allusers = resData.responseObject;
-        console.log("All user list:", this.allusers);
-
-        this.getActivateUserAllList();
+        this.allUserArray = resData.responseObject;
+        console.log("All user list:", this.allUserArray);
+        this.getActiveAllUser();
       }
       );
     }
   }
 
-  getActivateUserAllList() {
-    this.allusers.forEach(element => {
+  /**
+   * @name getActiveAllUser()
+   * @description call API for get active Users from Server.
+   */
+  getActiveAllUser() {
+    this.allUserArray.forEach(element => {
       if (element.isLoggedIn == true) {
         this.activeUser = true;
+        this.getLocalStorageSenderMessage();
       }
       else {
         this.deactiveUser = false;
+        this.getLocalStorageReceiverMessage();
       }
     });
   }
 
-  getOnlineUsers() {
+  /**
+   * @name getOnlineAllUser()
+   * @description call API for get online Users from Server.
+   */
+  getOnlineAllUser() {
     this.__chatboxService.getOnlineUserList().subscribe((eventData) => {
       let flag = 0;
       if (this.userRole == 'Freelancer') {
@@ -155,41 +176,44 @@ export class ChatBoxComponent implements OnInit {
         this.userId = 1;
       }
 
-      this.allusers.forEach(element => {
+      this.allUserArray.forEach(element => {
         if (element.emailId == eventData.onlineUsers.emailId) {
           element.isLoggedIn = eventData.onlineUsers.isLoggedIn;
           flag = 1;
         }
       });
       if (flag == 0 && eventData.onlineUsers.role == this.userId) {
-        this.allusers.forEach(element => {
+        this.allUserArray.forEach(element => {
           if (element.emailId == eventData.onlineUsers.emailId) {
             element.isLoggedIn = eventData.onlineUsers.isLoggedIn;
           }
         });
-        this.allusers.push(eventData.onlineUsers);
+        this.allUserArray.push(eventData.onlineUsers);
       }
     });
   }
 
-  getConnectWithServer() {
+  /**
+   * @name getServerChatEventCall()
+   * @description call API for lsten server chat message event.
+   */
+  getServerChatEventCall() {
     this.__chatboxService.getServerSentEvent().subscribe((eventData) => {
       this.senderEmail = this.messageDetails.sender;
       if (this.senderEmail == eventData.eventResponse.sender) {
-        this.senderObject.push({
+        this.messageObject.push({
           'senderMsg': eventData.eventResponse.originalText,
           'receiverMsg': eventData.eventResponse.result.translatedText,
           'user': 'sender',
           'sender': eventData.eventResponse.sender,
           'receiver': eventData.eventResponse.receiver,
         });
-        this.sendUser = true;
-        this.receiverUser = false;
-        this.newSenderMessage = [...this.senderObject];
-        console.log("this.newSenderMessage(Sender) \n", this.newSenderMessage);
+        var stringToStore = JSON.stringify(this.messageObject);
+        localStorage.setItem("senderObj", stringToStore);
+        this.getLocalStorageSenderMessage();
       }
       else {
-        this.senderObject.push({
+        this.messageObject.push({
           'senderMsg': eventData.eventResponse.originalText,
           'receiverMsg': eventData.eventResponse.result.translatedText,
           'user': 'receiver',
@@ -197,29 +221,35 @@ export class ChatBoxComponent implements OnInit {
           'sender': eventData.eventResponse.sender,
         });
         if (eventData.eventResponse.receiver == this.emailID) {
-          this.sendUser = false;
-          this.receiverUser = true;
-          this.newSenderMessage = [...this.senderObject];
-          console.log("this.newSenderMessage(Receiver) \n", this.newSenderMessage);
+          var stringToStore = JSON.stringify(this.messageObject);
+          localStorage.setItem("receiverObj", stringToStore);
+          this.getLocalStorageReceiverMessage();
         }
       }
+
+      // var messageBody = document.querySelector('#msg_history');
+      // messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
     });
-  }
-  selectUser(selectedUser) {
-    this.userSelected = selectedUser.emailId;
-    this.activeStatus = selectedUser.isLoggedIn;
-    console.log("selected User", this.userSelected);
   }
 
   /**
-   * @name Autosearch
+   * @name selectUser
+   * @param selectedUser 
+   * @description select user
+   */
+  selectUser(selectedUser) {
+    this.userSelected = selectedUser.emailId;
+    this.activeStatus = selectedUser.isLoggedIn;
+  }
+
+  /**
+   * @name selectEvent()
    * @param item 
+   * @description autosearch the users by email ID
    */
   selectEvent(item) {
     this.userSelected = item.emailId;
     console.log("Selected Email:", this.userSelected);
-
-    // do something with selected item
   }
 
   onChangeSearch(val: string) {
@@ -229,5 +259,19 @@ export class ChatBoxComponent implements OnInit {
 
   onFocused(e) {
     // do something when input is focused
+  }
+
+  getLocalStorageSenderMessage() {
+    var fromStorage = localStorage.getItem("senderObj");
+    var objectsFromStorage = JSON.parse(fromStorage)
+    this.newMessageObject = objectsFromStorage;
+    console.log("Local storegae(Sender) \n", this.newMessageObject);
+  }
+
+  getLocalStorageReceiverMessage() {
+    var fromStorage = localStorage.getItem("receiverObj");
+    var objectsFromStorage = JSON.parse(fromStorage)
+    this.newMessageObject = objectsFromStorage;
+    console.log("Local storegae(Receiver) \n", this.newMessageObject);
   }
 }

@@ -10,7 +10,7 @@
                             <div class="srch_bar">
                                 <div class="stylish-input-group">
                                     <div class="ng-autocomplete">
-                                        <ng-autocomplete [data]="allusers" [searchKeyword]="keyword"
+                                        <ng-autocomplete [data]="allUserArray" [searchKeyword]="keyword"
                                             (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)'
                                             (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate"
                                             [notFoundTemplate]="notFoundTemplate">
@@ -29,14 +29,15 @@
                     </div>
                     <div class="card-body">
                         <div class="inbox_chat">
-                            <div *ngFor="let users of allusers; let i=index">
+                            <div *ngFor="let users of allUserArray; let i=index">
                                 <hr *ngIf="i>0">
                                 <div class="chat_list" (click)="selectUser(users)">
                                     <div class="chat_people" *ngIf="users.isLoggedIn == true ; else deactiveUser">
                                         <div class="chat_img">
-                                            <span class="greendot"></span>
+
                                             <img class="rounded-circle" style="width: 50px; height: 40px;"
                                                 src="../../../assets/images/akhshay.png" alt="sunil">
+                                            <span class="greendot"></span>
                                         </div>
                                         <div class="chat_ib">
                                             <h5>{{users.emailId}}</h5>
@@ -46,9 +47,10 @@
 
                                     <ng-template #deactiveUser>
                                         <div class="chat_img">
-                                            <span class="reddot"></span>
+
                                             <img class="rounded-circle" style="width: 50px; height: 40px;"
                                                 src="../../../assets/images/akhshay.png" alt="sunil">
+                                            <span class="reddot"></span>
                                         </div>
                                         <div class="chat_ib">
                                             <h5>{{users.emailId}}</h5>
@@ -56,8 +58,8 @@
                                         </div>
                                     </ng-template>
                                 </div>
-                                <br>
-                                <br>
+                                <!-- <br>
+                                <br> -->
                             </div>
 
                         </div>
@@ -94,38 +96,8 @@
 
                 <div class="card-body">
                     <div class="mesgs">
-                        <div class="msg_history">
-                            <!-- <div *ngIf="employer"> -->
-                            <!-- <div *ngFor="let msgs of newResMessage; let i=index">
-                                <div *ngFor="let msg of msgs.sender; let i=index">
-                                    <div class="outgoing_msg">
-                                        <div class="outgoing_msg_img">
-                                            <img style="width: 30px; height: 30px;" class="rounded-circle"
-                                                src="../../../assets/images/jothipawar.jpg" alt="sunil">
-                                        </div>
-                                        <div class="sent_msg bubble-blue you">
-                                            <p>{{msg}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div *ngFor="let msg of msgs.receiver; let i=index">
-                                    <div class="incoming_msg">
-                                        <div class="incoming_msg_img">
-                                            <img style="width: 30px; height: 30px;" class="rounded-circle"
-                                                src="../../../assets/images/akhshay.png" alt="sunil">
-                                        </div>
-                                        <div class="received_msg">
-                                            <div class="received_withd_msg bubble me">
-                                                <p>{{msg.responseObject.result.translatedText}} </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
-                            <!-- </div> -->
-                            <!-- <div *ngIf="freelancer"> -->
-                            <div *ngFor="let msgs of newSenderMessage; let i=index">
+                        <div id="msg_history">
+                            <div *ngFor="let msgs of newMessageObject; let i=index" id="sendermessageID">
                                 <div *ngIf="msgs.user == 'sender' &&  msgs.receiver == userSelected; else receiverUser">
                                     <div class="outgoing_msg">
                                         <div class="outgoing_msg_img">
@@ -153,32 +125,6 @@
                                         </div>
                                     </div>
                                 </ng-template>
-
-                                <!-- <div *ngIf="sendUser == true">
-                                    <div class="outgoing_msg">
-                                        <div class="outgoing_msg_img">
-                                            <img style="width: 30px; height: 30px;" class="rounded-circle"
-                                                src="../../../assets/images/jothipawar.jpg" alt="sunil">
-                                        </div>
-                                        <div class="sent_msg bubble-blue you">
-                                            <p>{{msgs.sender}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div *ngIf="receiverUser == true">
-                                    <div class="incoming_msg">
-                                        <div class="incoming_msg_img">
-                                            <img style="width: 30px; height: 30px;" class="rounded-circle"
-                                                src="../../../assets/images/akhshay.png" alt="sunil">
-                                        </div>
-                                        <div class="received_msg">
-                                            <div class="received_withd_msg bubble me">
-                                                <p>{{msgs.receiver}} </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>  -->
                             </div>
                         </div>
                         <div class="type_msg">
