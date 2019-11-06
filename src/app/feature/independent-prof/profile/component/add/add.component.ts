@@ -77,6 +77,7 @@ export class AddComponent implements OnInit {
   public currencyList: any = [];
   public docTypeArr: any = [];
   public languageArr: any = [];
+  ProfilePhoto: any;
 
   constructor(
     /* Constructor variable's */
@@ -525,7 +526,8 @@ export class AddComponent implements OnInit {
     // });
   }
 
-  savePersonalDetailForm() {
+  savePersonalDetailForm() { 
+   
     const personalData = {
       emailId: this.email,
       prefix: this.personalDetailForm.controls.prefix.value,
@@ -541,13 +543,14 @@ export class AddComponent implements OnInit {
       preferredPaymentMethod: this.personalDetailForm.controls.preferredPaymentMethod.value,
       availabilityForWork: this.personalDetailForm.controls.availabilityForWork.value,
       languagePreferred: this.personalDetailForm.controls.languagePreferred.value,
-      freelancerDocuments: this.documentPersonalArray
+      freelancerDocuments: this.documentPersonalArray,
+      photo:this.registrationForm.value.file
     }
     console.log("in personal : ", personalData);
 
-    this.__profileService.savePersonalDetails(personalData).then((resData: any) => {
-      this.loading = false;
-    });
+    // this.__profileService.savePersonalDetails(personalData).then((resData: any) => {
+    //   this.loading = false;
+    // });
   }
 
 
@@ -637,8 +640,8 @@ export class AddComponent implements OnInit {
   showPrevious(i: any) {
     this.showMainContent = i;
   }
-  
-  @ViewChild('fileInput') el: ElementRef;
+
+  // @ViewChild('fileInput') el: ElementRef;
   imageUrl: any = 'src/';
   editFile: boolean = true;
   removeUpload: boolean = false;
@@ -648,8 +651,6 @@ export class AddComponent implements OnInit {
     let file = event.target.files[0];
     if (event.target.files && event.target.files[0]) {
       reader.readAsDataURL(file);
-
-      // When file uploads set it to file formcontrol
       reader.onload = () => {
         this.imageUrl = reader.result;
         this.registrationForm.patchValue({
@@ -659,13 +660,14 @@ export class AddComponent implements OnInit {
         this.removeUpload = true;
       }
       // ChangeDetectorRef since file is loading outside the zone
-      this.cd.markForCheck();        
+      this.cd.markForCheck();     
+      // reader.readAsBinaryString(file);   
     }
   }
 
   // Function to remove uploaded file
   removeUploadedFile() {
-    let newFileList = Array.from(this.el.nativeElement.files);
+    // let newFileList = Array.from(this.el.nativeElement.files);
     this.imageUrl = 'https://i.pinimg.com/236x/d6/27/d9/d627d9cda385317de4812a4f7bd922e9--man--iron-man.jpg';
     this.editFile = true;
     this.removeUpload = false;

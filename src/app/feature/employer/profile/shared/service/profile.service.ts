@@ -18,7 +18,8 @@ const httpOptions = {
     'Access-Control-Allow-Origin': '*',
     'enctype': 'multipart/form-data',
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT'
+    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+    'X-Authorization':localStorage.getItem('userAuthToken')
   })
 };
 
@@ -111,14 +112,6 @@ export class EmpProfileService {
     }
   }
 
-  async getEmployerFileById(id: any) {
-    try {
-      let result = await this.__http.get(`${BASE_URL}/employerfiles/` + id, httpOptions).toPromise();
-      return result;
-    } catch (error) {
-      await this.handleError(error);
-    }
-  }
 
   async getEmployer() {
     try {
@@ -129,9 +122,10 @@ export class EmpProfileService {
     }
   }
 
-  async getEmployerByEmailId(email: string) {
+  async getEmployerByEmailId() {
+
     try {
-      let res = await this.__http.get(`${SPRING_URL}/employer/profile/` + email, httpOptions).toPromise();
+      let res = await this.__http.get(`${SPRING_URL}/employer/profile-view`, httpOptions).toPromise();
       return res;
     } catch (error) {
       await this.handleError(error);
@@ -151,7 +145,7 @@ export class EmpProfileService {
     console.log("before send data: ", employerData);
     
     try {
-      let result = await this.__http.post(`${SPRING_URL}/employer/update` , employerData, httpOptions).toPromise();
+      let result = await this.__http.post(`${SPRING_URL}/employer/profile-update` , employerData, httpOptions).toPromise();
       console.log("Res Value:", result);
       
       return result;

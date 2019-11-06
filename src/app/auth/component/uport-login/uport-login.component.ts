@@ -47,7 +47,6 @@ export class UportLoginComponent implements OnInit {
     private __empProfileService: EmpProfileService,
     private __partProfileService: PartProfileService,
     private toastr: ToastrService,
-
     // public ngxSmartModalService: NgxSmartModalService,
     private zone: NgZone
   ) {
@@ -63,14 +62,12 @@ export class UportLoginComponent implements OnInit {
 
   async getQrcode() {
     await this.__authService.uporService().then((data: any) => {
-      console.log("data from response", data);
       this.qrData = data.image;
       this.tagId = data.tagID;
       // this.URL = 'http://uport-ebs-webapp-dev.ap-south-1.elasticbeanstalk.com/events/' + this.tagId;
       this.URL = `${UPORT_URL}/events/` + this.tagId;
       this.watch().subscribe(data => {
         let a = JSON.parse(JSON.stringify(data));
-        console.log("watch response", a.email);
         this.email = a.email;
         this.getuPortDetails(data);
       });
@@ -83,19 +80,15 @@ export class UportLoginComponent implements OnInit {
       const eventSource = new EventSource(this.URL);
       this.eventName = 'event_' + this.tagId;
       eventSource.addEventListener(this.eventName, (event: any) => this.zone.run(() => {
-        console.log("EVENTNAME:", event);
         observer.next(JSON.parse(event.data));
         eventSource.close();
       }));
       eventSource.onmessage = (event) => this.zone.run(() => {
-        console.log("EVENT:", event);
         observer.next(JSON.parse(event.data));
         eventSource.close();
       });
       eventSource.onerror = error => this.zone.run(() => {
-        console.log("TEST dsgkjdsbngkdsfb");
         if (eventSource.readyState === eventSource.CLOSED) {
-          console.log('The stream has been closed by the server.');
           eventSource.close();
           observer.complete();
         } else {
@@ -108,20 +101,13 @@ export class UportLoginComponent implements OnInit {
 
   getuPortDetails(jwtdata: any) {
     this.loading = true;
-    console.log("JWT token is :", jwtdata);
-
-    console.log("email from JWT " + this.email);
-
     const userDataPaylaod = {
       emailId : this.email
     }
 
     this.__authService.getUserLoginData(userDataPaylaod).then((data: any) => {
-      console.log("data from database : ", data.responseObject);
-
       if (data.length == 0) {
         this.loading = false;
-        console.log("User needs to sign up");
         this.__router.navigate(['/auth/auth/uport-signup']);
       } else {
 
@@ -130,18 +116,12 @@ export class UportLoginComponent implements OnInit {
         this.uPortDetailsArr =  data.responseObject.User;
 
         if(this.uPortDetailsArr.cognitoId == null){
-            //update cognito id
         }
 
         let role = this.uPortDetailsArr.role;
-        // let country = this.uPortDetailsArr.country;
         let phone = this.uPortDetailsArr.phone_num;
 
         localStorage.setItem("role", role);
-        console.log("port detail ", this.uPortDetailsArr);
-
-        // localStorage.setItem("country", country);
-        // localStorage.setItem("email", this.email);
         localStorage.setItem("phone_no", phone);
         localStorage.setItem('uid', this.uPortDetailsArr.userId);
         localStorage.setItem('email', this.uPortDetailsArr.emailId);
@@ -153,13 +133,12 @@ export class UportLoginComponent implements OnInit {
         this.toastr.success(emailName, 'Welcome to Konnecteum');
 
         this.__router.navigate(['/feature/feature/full-layout/dashboard'])
-
         // if (this.userRole == "Freelancer") {
-        //   console.log("Inside Freelancer");
+
         //   this.__idptProfileService.getFreelancerByEmail(this.email).then((resData: any) => {
         //     this.freelancerDetailsArr = resData[0];
-        //     console.log(this.freelancerDetailsArr);
-    
+
+        
         //     if (this.freelancerDetailsArr == null) {  
         //       this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/add']);
         //     } else {
@@ -168,11 +147,8 @@ export class UportLoginComponent implements OnInit {
         //   });
         // }
         // else if (this.userRole == "Employer") {
-        //   console.log("Inside Employer");
         //   this.__empProfileService.getEmployerByEmailId(this.email).then((resData: any) => {
-        //     this.employerDetailsArr = resData[0];
-        //     console.log(this.employerDetailsArr);
-    
+        //     this.employerDetailsArr = resData[0];    
         //     if (this.__empProfileService == null) {
         //       this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/add']);
         //     } else {
@@ -181,11 +157,8 @@ export class UportLoginComponent implements OnInit {
         //   });
         // }
         // else if (this.userRole == "Partner") {
-        //   console.log("Inside Partner");
         //   this.__partProfileService.getPartnerByEmailId(this.email).then((resData: any) => {
-        //     this.partnerDetailsArr = resData[0];
-        //     console.log(this.partnerDetailsArr);
-    
+        //     this.partnerDetailsArr = resData[0];    
         //     if (this.partnerDetailsArr == null) {
         //       this.__router.navigate(['/feature/feature/full-layout/partner/part/profile/profile/add']);
         //     } else {
@@ -193,7 +166,6 @@ export class UportLoginComponent implements OnInit {
         //     }
         //   });
         // } else {
-        //   console.log("error in routing based User Role");
         // }
       }
     });

@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { IndeptProfileService } from '../../shared/service/profile.service';
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { saveAs } from 'file-saver';
 
@@ -37,18 +38,22 @@ export class ViewComponent implements OnInit {
   cityName: any;
   stateName: any;
   countryName: any;
+  public profilePhoto :  any = "";
+  public img: string;
 
   constructor(
     private __fb: FormBuilder,
     private __profileService: IndeptProfileService,
     private __authService: AuthService,
     private __router: Router,
+    private sanitizer:DomSanitizer,
+
     private __activatedRoute: ActivatedRoute,
   ) {
     // this.email_addr = this.__activatedRoute.snapshot.params.id;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
 
     let isUportUser = localStorage.getItem("uportUser");
 
@@ -69,15 +74,17 @@ export class ViewComponent implements OnInit {
       this.email_addr = localStorage.getItem("email");
     }
 
-    this.getFreelancerDetails();
-
+    await this.getFreelancerDetails();
+    await this.trasform();
   }
 
 
-  getFreelancerDetails() {
-    this.__profileService.getFreelancerByEmail().then((resData: any) => {    
-      console.log(resData.responseObject);     
+  async getFreelancerDetails() {
+    
+    await this.__profileService.getFreelancerByEmail().then((resData: any) => {    
+      console.log("res",resData.responseObject);     
       this.freeDetailsArr = resData.responseObject.freelancerProfile;
+      this.profilePhoto = this.freeDetailsArr.photo;
       this.freeSkillDetailsArr = resData.responseObject.skills,
       this.freelancerPortArr = resData.responseObject.portfolio,
       this.freelancerOrgArr = resData.responseObject.workExperience,
@@ -116,11 +123,15 @@ export class ViewComponent implements OnInit {
     })
   }
 
+  trasform(){
+    console.log("trasforming......");
+    this.img = atob(this.profilePhoto);
+    
+    // this.profilePhoto= this.sanitizer.bypassSecurityTrustResourceUrl(this.profilePhoto);
+  }
 
   editProfile() {
     console.log("indise edit btn");
     this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/edit']);
   }
-
-
 }

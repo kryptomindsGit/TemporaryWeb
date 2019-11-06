@@ -3,6 +3,41 @@
         <div class="col-12">
             <div class="personal-details-form" *ngIf="showMainContent == 1">
                 <h6>PROFILE DETAILS</h6>
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h4 class="panel-title">
+                          <img [src]="img" alt="">
+                          <a data-toggle="collapse" class="txt-size" href="#collapse1" (click)="fileInput.click()">Change Profile Image</a>
+                        </h4>
+                      </div>
+                      <div id="collapse1" class="panel-collapse collapse">
+                        <div class="panel-body"> <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+                            <div class="group-gap">
+                                <div class="avatar-upload">
+                                    <div class="avatar-edit">
+                                        <input form type='file' id="imageUpload" accept=".png, .jpg, .jpeg"
+                                            #fileInput (change)="uploadFile($event)" />
+                                    </div>
+                                    <div class="avatar-preview">
+                                        <div id="imagePreview"
+                                            [style.backgroundImage]="'url('+ imageUrl +')'">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row text-center">
+                                <!-- <div class="col-12">
+                                    <button type="submit" class="btn btn-primary text-center"
+                                        (click)="fileInput.click()">Upload Image</button>
+                                </div> -->
+                            </div>
+                        </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+               
                 <div class="card">
                     <div class="card-body others-card">
                         <form [formGroup]="personalDetailsForm" novalidate>
@@ -275,7 +310,7 @@
                                 </div>
                             </div>
                             <button type="button" class="btnNext" (click)="ShowNextButton(2)"
-                                (click)="updatePersonalDetailForm()">Next</button>
+                                (click)="updatePersonalDetailForm()"  (click)="onSubmit()">Next</button>
                         </form>
                     </div>
                 </div>

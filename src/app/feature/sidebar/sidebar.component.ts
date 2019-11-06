@@ -64,8 +64,10 @@ export class SidebarComponent implements OnInit {
       });
     }
     else if (this.userRole == "Employer") {
-      this.__empProfileService.getEmployerByEmailId(this.email_id).then((resData: any) => {
-        this.employerDetailsArr = resData[0];
+      this.__empProfileService.getEmployerByEmailId().then((resData: any) => {
+        this.employerDetailsArr = resData.responseObject;
+        console.log("Data of an Employer" , resData.responseObject);
+        
         if (this.employerDetailsArr == null) {
           this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/add']);
         } else {

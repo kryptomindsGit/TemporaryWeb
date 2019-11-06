@@ -15,16 +15,41 @@ const httpOptions = {
 
 import { SPRING_URL } from '../../../constant/constant-url';
 import { SPRING_AVG_RATE_URL } from '../../../constant/constant-url';
+import { AuthService } from 'src/app/auth/shared/service/auth.service';
+import { IndeptProfileService } from '../../independent-prof/profile/shared/service/profile.service';
+import { PartProfileService } from '../../partner/profile/shared/service/profile.service';
+import { EmpProfileService } from '../../employer/profile/shared/service/profile.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomGlobalService {
+  isUportUser: string;
+  congnitoID: any;
+  userRole: any;
+  email_id: any;
+  profile_img: string;
 
   constructor(
-    private __http: HttpClient
-  ) { }
+    private __http: HttpClient,
+    private __authService: AuthService,
+    private __idptProfileService: IndeptProfileService,
+    private __empProfileService: EmpProfileService,
+    private __partProfileService: PartProfileService
+  ) { 
+
+    if (this.isUportUser == "false") {
+      const user = this.__authService.decode();
+      this.congnitoID = user["cognito:username"];
+      this.email_id = user["email"];
+      this.userRole = user["custom:role"];
+    } else {
+      this.email_id = localStorage.getItem("email");
+      this.userRole = localStorage.getItem("role");
+    }
+
+  }
 
   async getCountryList() {
     try {
@@ -81,6 +106,20 @@ export class CustomGlobalService {
     }
   }
 
+
+  getHeaderImage(){
+    if (this.userRole == "Freelancer") {
+     this.__idptProfileService.getFreelancerByEmail().then((resData: any) => {
+       this.profile_img =atob(resData.responseObject.freelancerProfile.photo);
+     });
+   } else if (this.userRole == "Employer") {
+     this.__empProfileService.getEmployerByEmailId().then((resData: any) => {
+       this.profile_img =atob(resData.responseObject.freelancerProfile.photo);
+     });
+   } else {
+     this.profile_img = '../../../assets/images/bule_img.png';
+   }
+ }
   
   async getSkillTypeList() {
     try {
@@ -140,9 +179,6 @@ export class CustomGlobalService {
       await this.handleError(error);
     }
   }
-
-
-
   // Error Handler
   handleError(error) {
     let errorMessage = '';
@@ -156,5 +192,4 @@ export class CustomGlobalService {
     console.log(" Error : ", errorMessage);
     return throwError(errorMessage);
   }
-
 }

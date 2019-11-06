@@ -4,6 +4,7 @@ import { IndeptProfileService } from '../independent-prof/profile/shared/service
 import { EmpProfileService } from '../employer/profile/shared/service/profile.service';
 import { PartProfileService } from '../partner/profile/shared/service/profile.service';
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
+import { CustomGlobalService } from '../shared/service/custom-global.service';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +17,7 @@ export class HeaderComponent implements OnInit {
   public email_id: any;
   public congnitoID: any;
   public isUportUser: any;
-  public profile_img: any;
+  public profile_img: string;
 
   public indepUserDetails: any = [];
   public empUserDetails: any = [];
@@ -31,7 +32,8 @@ export class HeaderComponent implements OnInit {
     private __authService: AuthService,
     private __idptProfileService: IndeptProfileService,
     private __empProfileService: EmpProfileService,
-    private __partProfileService: PartProfileService
+    private __partProfileService: PartProfileService,
+    private __globalService : CustomGlobalService
   ) { }
 
   ngOnInit() {
@@ -51,30 +53,40 @@ export class HeaderComponent implements OnInit {
     var baseName = this.email_id;
     baseName = baseName.substring(0, baseName.indexOf('@'));
     this.emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1);
+    this.getHeaderInage();
+  }
 
-    if (this.userRole == "Freelancer") {
-      this.profile_img = '../../../assets/images/khemraj.jpeg';
+  getHeaderInage(){
+     if (this.userRole == "Freelancer") {
+      this.__idptProfileService.getFreelancerByEmail().then((resData: any) => {
+        this.profile_img =atob(resData.responseObject.freelancerProfile.photo);
+      });
     } else if (this.userRole == "Employer") {
-      this.profile_img = '../../../assets/images/bhushan.png';
+      this.__empProfileService.getEmployerByEmailId().then((resData: any) => {
+        console.log("resData Employer Header : " , resData);
+        if(resData.responseObject != null ){
+          this.profile_img =atob(resData.responseObject.freelancerProfile.photo);
+        }
+      });
     } else {
       this.profile_img = '../../../assets/images/bule_img.png';
     }
-
   }
-
   userRoleInfo() {
     if (this.userRole == "Freelancer") {
       this.__idptProfileService.getFreelancerByEmail().then((resData: any) => {
         this.freelancerDetailsArr = resData.responseObject.freelancerProfile;
+        this.profile_img =atob(resData.responseObject.freelancerProfile.photo);
+        console.log();
         if (this.freelancerDetailsArr == null) {
           this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/add']);
-        } else {
+        } else {          
           this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view']);
         }
       });
     }
     else if (this.userRole == "Employer") {
-      this.__empProfileService.getEmployerByEmailId(this.email_id).then((resData: any) => {
+      this.__empProfileService.getEmployerByEmailId().then((resData: any) => {
         this.employerDetailsArr = resData[0];
         if (this.employerDetailsArr == null) {
           this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/add']);

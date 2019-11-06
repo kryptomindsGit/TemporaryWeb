@@ -36,12 +36,6 @@ export class UportSignUpComponent implements OnInit {
     this.validateData();
     this.getCountryList();
   }
-
-  hello() {
-    console.log("ind");
-
-  }
-
   /**
    * @name validateData
    * @description validate uport sign-up form data
@@ -62,11 +56,8 @@ export class UportSignUpComponent implements OnInit {
   getCountryList() {
     this.__customGlobalService.getCountryList().then((resData: any) => {
       this.countryArr = resData.responseObject;
-      console.log("countryArr:", this.countryArr);
-
     })
   }
-
   // convenience getter for easy access to form fields
   get formValidation() { return this.uportSignupForm.controls; }
 
@@ -81,8 +72,6 @@ export class UportSignUpComponent implements OnInit {
     } else {
 
       this.loading = true;
-      console.log("Inside Submit btn");
-
       const signupUportPayload = {
         email: this.uportSignupForm.controls.email.value,
         phone_no: this.uportSignupForm.controls.phone_no.value,
@@ -90,20 +79,12 @@ export class UportSignUpComponent implements OnInit {
         country: this.uportSignupForm.controls.country.value,
         flag: 'Y'
       }
-
-      console.log(signupUportPayload);
-
       const userDataPayload = {
         emialId : this.uportSignupForm.controls.email.value
       }
 
 
       this.__authService.getUserLoginData(userDataPayload).then((resData: any) => {
-        console.log("Res data :", resData == null);
-        console.log("Res data :", resData.length);
-        console.log("Res data :", resData.length > 0);
-        console.log("Res data :", resData[0]);
-
         if (resData == null || resData[0] == undefined) {
           let email = "email";
           let flag = 'y';
@@ -111,13 +92,11 @@ export class UportSignUpComponent implements OnInit {
 
           this.__authService.saveSignUpData(signupUportPayload).then((resData: any) => {
             this.loading = false;
-            console.log("uportSignup ", resData);
             this.showMsg = resData.message;
             this.__router.navigate(['/auth/auth/uport-login']);
           });
         } else {
           this.loading = false;
-          console.log("Your have signed up already with this email id please login...!!!");
           this.__router.navigate(['/auth/auth/uport-login']);
         }
       });

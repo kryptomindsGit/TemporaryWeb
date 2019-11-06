@@ -61,7 +61,6 @@ export class SignUpComponent implements OnInit {
   getCountryList() {
     this.__customGlobalService.getCountryList().then((resData: any) => {
       this.countryArr = resData.responseObject;
-      console.log("countryArr:", this.countryArr);
     })
   }
 
@@ -74,8 +73,6 @@ export class SignUpComponent implements OnInit {
    */
   onSubmit() {
     this.submitted = true;
-    console.log("Login data:", this.signupForm.value);
-
     // stop here if form is invalid
     // if (this.signupForm.invalid) {
     //   return;
@@ -108,13 +105,7 @@ export class SignUpComponent implements OnInit {
         role: this.signupForm.controls.custom_role.value,
         country: this.signupForm.controls.custom_country.value
       }
-
-      console.log("Sing up Data:", signupPayload);
-      console.log("cognito payload" , cognitoPayload );
-
       this.__authService.register(signupPayload).then((resData: any) => {
-        console.log("Res:", resData);
-
         if (resData.status == "SUCCESS") {
           setTimeout(() => {
             this.loading = false;

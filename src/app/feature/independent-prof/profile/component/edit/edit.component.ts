@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { IndeptProfileService } from '../../shared/service/profile.service';
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
@@ -30,7 +30,7 @@ export class EditComponent implements OnInit {
   public loading = false;
 
   // Variable's
-  public showMainContent: number = 3;
+  public showMainContent: number = 1;
   public isUportUser: string;
   public email: string;
   public country: string;
@@ -105,13 +105,19 @@ export class EditComponent implements OnInit {
   public educationalDoc: any = [];
   public professionalDoc: any = [];
 
+  registrationForm = this.__fb.group({
+    file: ['', Validators.required]
+  }) 
+  img: any ;
+
   constructor(
     private __fb: FormBuilder,
     private __profileService: IndeptProfileService,
     private __authService: AuthService,
     private __router: Router,
     private toastr: ToastrService,
-    private __customGlobalService: CustomGlobalService
+    private __customGlobalService: CustomGlobalService,
+    private cd: ChangeDetectorRef
   ) {
   }
 
@@ -305,7 +311,7 @@ export class EditComponent implements OnInit {
       let j = 0, k = 0, l = 0;
       for (let i = 0; i < this.docTypeArr.length; i++) {
         if (this.docTypeArr[i].masterDocDomain.domainName == 'personal') {
-          this.personalDoc[j] = this.docTypeArr[i];
+          this.personalDoc[j] = this.docTypeArr[i];          
           j++;
         }
         else if (this.docTypeArr[i].masterDocDomain.domainName == 'educational') {
@@ -372,6 +378,11 @@ export class EditComponent implements OnInit {
         availabilityForWork: this.freelancerArr.availabilityForWork
       });
 
+      this.img = atob(this.freelancerArr.photo);
+
+      this.registrationForm.patchValue({
+        file : atob(this.freelancerArr.photo)
+      });
       this.workExpDetailsForm.patchValue({
         references: this.freelancerArr.reference,
         area_of_expertise: this.freelancerArr.areaOfExpertise,
@@ -387,8 +398,6 @@ export class EditComponent implements OnInit {
   }
 
   async setFreeEducationArr() {
-    console.log("freeEducationArr", this.freeEducationArr);
-
     if (this.freeEducationArr.length > 0) {
       for (let index = 0; index < this.freeEducationArr.length; index++) {
         ;
@@ -522,9 +531,6 @@ export class EditComponent implements OnInit {
           }).value
         )
       });
-
-      console.log("documentQualArray", this.documentQualArray);
-
     } else {
       this.addDocumentEdu();
     }
@@ -550,7 +556,6 @@ export class EditComponent implements OnInit {
           })
         )
       });
-      console.log("documentWorkArray", this.documentWorkArray);
     } else {
       this.addWorkDocument();
     }
@@ -635,19 +640,16 @@ export class EditComponent implements OnInit {
    */
   setDocTypeCatID(id, i: any) {
     this.doc_cat_id = id
-    console.log("id", this.doc_cat_id);
     if (this.doc_cat_id != null || this.doc_cat_id != undefined || this.doc_cat_id != 0) {
       // if (this.documentPersonalArray[i] != null) {
       //   this.documentPersonalArray[i].documentUrl = this.documentPersonalArray[i].documentUrl;
       //   this.documentPersonalArray[i].documentTypeId = this.doc_cat_id;
-      //   console.log("Personal file id update", this.documentPersonalArray[i].documentTypeId);
       // }
       // else
       if (this.documentQualArray[i] != null) {
         {
           this.documentQualArray[i].documentUrl = this.documentQualArray[i].documentUrl;
           this.documentQualArray[i].documentTypeId = this.doc_cat_id;
-          console.log("Qual file id update", this.documentQualArray[i].documentTypeId);
         }
       }
       else
@@ -655,7 +657,6 @@ export class EditComponent implements OnInit {
           {
             this.documentWorkArray[i].documentUrl = this.documentWorkArray[i].documentUrl;
             this.documentWorkArray[i].documentTypeId = this.doc_cat_id;
-            console.log("Work Exp file id update", this.documentWorkArray[i].documentTypeId);
           }
         }
     }
@@ -858,7 +859,6 @@ export class EditComponent implements OnInit {
   }
 
   onChange(skill: string, skill_id: number, isChecked: boolean, i: any) {
-    console.log("Skill selected:", skill, skill_id, isChecked);
     if (isChecked && skill != null) {
       this.skillRateArr.push(this.__fb.group(
         {
@@ -890,8 +890,6 @@ export class EditComponent implements OnInit {
     if (event.target.files.length > 0) {
 
       this.fileName = event.target.files[0];
-      console.log("hdfhhdfhdhf file", this.fileName.name);
-
       // this.fileName = file.name.replace(" ", "");
       this.fileObj = this.fileName;
     }
@@ -904,8 +902,6 @@ export class EditComponent implements OnInit {
       if (this.fileName != null || this.fileName != undefined) {
         this.documentPersonalArray[i].documentUrl = this.fileName.name;
         this.documentPersonalArray[i].documentTypeId = this.documentPersonalArray[i].documentTypeId;
-        console.log("fileName update", this.documentPersonalArray[i].documentTypeId);
-
       }
     } else {
       this.documentPersonalArray.push(
@@ -932,22 +928,15 @@ export class EditComponent implements OnInit {
     //     'documentUrl': this.FileArrData.fileId,
     //     'documentTypeId': this.doc_cat_id
     //   });
-    // console.log(this.documentPersonalArray);
   }
 
   uploadEducationFile(i: any) {
-    console.log("value of I : ", i);
-    console.log("documentQualArray[i]: ", this.documentQualArray[i]);
     if (this.documentQualArray[i] != null) {
       if (this.fileName != null || this.fileName != undefined) {
         this.documentQualArray[i].documentUrl = this.fileName.name;
         this.documentQualArray[i].documentTypeId = this.documentQualArray[i].documentTypeId;
-        console.log("Qualfication fileName update", this.documentQualArray[i].documentTypeId);
-
       }
     } else {
-      console.log("in else");
-
       this.documentQualArray.push(
         {
           'documentUrl': this.fileName.name,
@@ -955,7 +944,6 @@ export class EditComponent implements OnInit {
           'documentId': 0
         });
     }
-    console.log("uploaded files", this.documentQualArray);
     // this.loading = true;
     // this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
     //   this.FileArrData = event;
@@ -970,19 +958,12 @@ export class EditComponent implements OnInit {
   }
 
   uploadWorkExpFile(i: any) {
-
-    console.log("value of I : ", i);
-    console.log("documentWorkArray[i]: ", this.documentWorkArray[i]);
     if (this.documentWorkArray[i] != null) {
       if (this.fileName != null || this.fileName != undefined) {
         this.documentWorkArray[i].documentUrl = this.fileName.name;
         this.documentWorkArray[i].documentTypeId = this.documentWorkArray[i].documentTypeId;
-        console.log("Qualfication fileName update", this.documentWorkArray[i].documentTypeId);
-
       }
     } else {
-      console.log("in else");
-
       this.documentWorkArray.push(
         {
           'documentUrl': this.fileName.name,
@@ -990,8 +971,6 @@ export class EditComponent implements OnInit {
           'documentId': 0
         });
     }
-    console.log("uploaded files", this.documentWorkArray);
-
     // this.loading = true;
     // this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
     //   this.FileArrData = event;
@@ -1006,7 +985,6 @@ export class EditComponent implements OnInit {
   }
 
   updatePersonalDetailForm() {
-
     const personalData = {
       emailId: this.email,
       prefix: this.personalDetailsForm.controls.prefix.value,
@@ -1022,13 +1000,12 @@ export class EditComponent implements OnInit {
       preferredPaymentMethod: this.personalDetailsForm.controls.preferredPaymentMethod.value,
       availabilityForWork: this.personalDetailsForm.controls.availabilityForWork.value,
       languagePreferred: this.personalDetailsForm.controls.languagePreferred.value.languageId,
-      freelancerDocuments: this.documentPersonalArray
+      freelancerDocuments: this.documentPersonalArray,
+      photo:this.registrationForm.value.file
     }
-    console.log("Personal Details Object:", personalData);
-
-    // this.__profileService.updateProfileInfo(personalData).then((resData: any) => {
-    //   this.loading = false;
-    // });
+    this.__profileService.updateProfileInfo(personalData).then((resData: any) => {
+      this.loading = false;
+    });
   }
 
   updateEducationDetailForm() {
@@ -1036,17 +1013,12 @@ export class EditComponent implements OnInit {
       educationDetails: this.qualificationDetailsForm.controls.qualification.value,
       freelancerDocuments: this.documentQualArray,
     }
-
-    console.log("eductionPayload", eductionPayload);
-
     this.__profileService.updateEducationDetails(eductionPayload).then((resData: any) => {
       this.loading = false;
     });
   }
 
   updateOrganizationDetailForm() {
-
-
     const orgDetailsPayload = {
       freelancerOrgDetails: this.workExpDetailsForm.controls.org_details.value,
       portfolio: this.workExpDetailsForm.controls.portfolios.value,
@@ -1055,12 +1027,9 @@ export class EditComponent implements OnInit {
       personalAttributeStrength: this.workExpDetailsForm.controls.strength.value,
       personalAttributeWeakness: this.workExpDetailsForm.controls.weakness.value,
     }
-
-    console.log("orgDetailsPayload", orgDetailsPayload);
-
-    // this.__profileService.updateWorkDetails(orgDetailsPayload).then((resData: any) => {
-    //     this.loading = false;
-    // });
+    this.__profileService.updateWorkDetails(orgDetailsPayload).then((resData: any) => {
+        this.loading = false;
+    });
   }
 
   updateSkill() {
@@ -1100,4 +1069,43 @@ export class EditComponent implements OnInit {
     this.__router.navigate(['/auth/auth/login']);
   }
 
+  imageUrl: any = 'src/';
+  editFile: boolean = true;
+  removeUpload: boolean = false;
+
+  uploadFile(event) {    
+    let reader = new FileReader(); // HTML5 FileReader API
+    let file = event.target.files[0];
+    if (event.target.files && event.target.files[0]) {
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.imageUrl = reader.result;
+        this.registrationForm.patchValue({
+          file: reader.result
+        });
+        this.editFile = false;
+        this.removeUpload = true;
+      }
+      this.cd.markForCheck();     
+    }
+  }
+
+  // Function to remove uploaded file
+  removeUploadedFile() {
+    this.imageUrl = 'https://i.pinimg.com/236x/d6/27/d9/d627d9cda385317de4812a4f7bd922e9--man--iron-man.jpg';
+    this.editFile = true;
+    this.removeUpload = false;
+    this.registrationForm.patchValue({
+      file: [null]
+    });
+  }
+  
+  // Submit Registration Form
+  onSubmit() {
+    if(!this.registrationForm.valid) {
+      alert('Please fill all the required fields to create a super hero!')
+      return false;
+    } else {
+    }
+  }
 }

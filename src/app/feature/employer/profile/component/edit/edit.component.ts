@@ -121,7 +121,7 @@ export class EditComponent implements OnInit {
    */
   async getEmplyeeDetails() {
 
-    await this.__profileService.getEmployerByEmailId(this.emailId).then((data: any) => {
+    await this.__profileService.getEmployerByEmailId().then((data: any) => {
       this.employerArr = data.responseObject;
     });
 
@@ -145,26 +145,25 @@ export class EditComponent implements OnInit {
       await this.getStateList();
       await this.getCityList();
 
-      await this.__profileService.getEmployerFileById(this.emailId).then((resData: any) => {
-        this.employerFileArr = resData;
-        console.log(this.employerFileArr);
+      // await this.__profileService.getEmployerFileById().then((resData: any) => {
+      //   this.employerFileArr = resData;
 
-        if (this.employerFileArr.length > 0) {
+      //   if (this.employerFileArr.length > 0) {
 
-          for (let index = 0; index < this.employerFileArr.length; index++) {
-            this.documentArr.push(this.__fb.group(
-              {
-                chooseFile: this.employerFileArr[index].file_name,
-                docType: this.employerFileArr[index].file_type,
-                file_id: this.employerFileArr[index].file_id,
-                part_id: this.employerFileArr[index].part_id
-              }));
-          }
-        } else {
-          this.addDocument();
-        }
+      //     for (let index = 0; index < this.employerFileArr.length; index++) {
+      //       this.documentArr.push(this.__fb.group(
+      //         {
+      //           chooseFile: this.employerFileArr[index].file_name,
+      //           docType: this.employerFileArr[index].file_type,
+      //           file_id: this.employerFileArr[index].file_id,
+      //           part_id: this.employerFileArr[index].part_id
+      //         }));
+      //     }
+      //   } else {
+      //     this.addDocument();
+      //   }
 
-      });
+      // });
     }
 
   }
@@ -268,21 +267,24 @@ async getCityList() {
 
   async uploadFile() {
 
-    this.loading = true;
-    await this.__profileService.postDocHashData(this.fileObj, this.emailId, this.fileName).then((event) => {
-      this.FileArrData = event;
-      this.loading = false;
-      if (this.FileArrData) {
-        this.toastr.success(this.fileName, "Successfully uploaded");
-      } else {
-        this.toastr.error(this.fileName, "File not uploaded");
-      }
-    });
-    // this.FileArrData = "jkdhfjkhkdjshfkjhdskjfh"
-
+    // this.loading = true;
+    // await this.__profileService.postDocHashData(this.fileObj, this.emailId, this.fileName).then((event) => {
+    //   this.FileArrData = event;
+    //   this.loading = false;
+    //   if (this.FileArrData) {
+    //     this.toastr.success(this.fileName, "Successfully uploaded");
+    //   } else {
+    //     this.toastr.error(this.fileName, "File not uploaded");
+    //   }
+    // });
+    // await this.documentFileArr.push(
+    //   {
+    //     'file_name': this.FileArrData.fileId,
+    //     'file_type': this.fileType
+    //   });
     await this.documentFileArr.push(
       {
-        'file_name': this.FileArrData.fileId,
+        'file_name': this.fileName,
         'file_type': this.fileType
       });
     console.log(this.documentFileArr);

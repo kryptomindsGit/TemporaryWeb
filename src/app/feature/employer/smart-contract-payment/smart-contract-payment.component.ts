@@ -92,7 +92,7 @@ export class SmartContractPaymentComponent implements OnInit {
   }
 
   getEmployerData() {
-    this.__profileService.getEmployerByEmailId(this.emailId).then((resData: any) => {
+    this.__profileService.getEmployerByEmailId().then((resData: any) => {
       this.empId = resData[0].cmp_reprentative;
     });
   }
@@ -103,7 +103,6 @@ export class SmartContractPaymentComponent implements OnInit {
 
   getWorkPackageData() {
     this.__workService.getWorkPackageData(this.workPackageID).then((resData: any) => {
-      console.log("response data : ", resData.responseObject);
       this.projectName = resData.responseObject.projectName;
       this.contractStatus = resData.responseObject.contractStatus;
       this.contractAddr = resData.responseObject.smartContractAddr;

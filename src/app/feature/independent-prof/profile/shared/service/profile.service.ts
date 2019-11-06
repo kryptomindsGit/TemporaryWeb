@@ -107,6 +107,9 @@ export class IndeptProfileService {
       'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
       'X-Authorization':localStorage.getItem('userAuthToken')
     })}
+
+    console.log("freelancer profile to be sent" , freelancer);
+    
     try {
       let res = await this.__http.post(`${SPRING_URL}/freelancer/profile`, freelancer, httpOptions).toPromise();
       return res;

@@ -50,7 +50,6 @@ export class ViewComponent implements OnInit {
 
     //call function's
     this.getEmployerDetails();
-    this.getEmplyeeFileDetails();
   }
 
   /**
@@ -63,12 +62,9 @@ export class ViewComponent implements OnInit {
     //   console.log(this.employerDetailsArr);
 
     // });
-    this.__profileService.getEmployerByEmailId(this.emailId).then((resData: any) => {
-      console.log("res for get " , resData);
-      
+    this.__profileService.getEmployerByEmailId().then((resData: any) => {      
       this.employerDetailsArr = resData.responseObject;
       console.log(this.employerDetailsArr);
-
     });
   }
 
@@ -76,14 +72,6 @@ export class ViewComponent implements OnInit {
    * @name getEmplyeeFileDetails
    * @description call get API for employer file details 
    */
-  getEmplyeeFileDetails() {
-    this.__profileService.getEmployerFileById(this.emailId).then((data: any) => {
-      this.employerFileArr = data;
-      console.log(this.employerFileArr);
-
-    });
-  }
-
   downloadFile(item) {
     this.loading = true;
     console.log("Download")
