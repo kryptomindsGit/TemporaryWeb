@@ -79,7 +79,16 @@
                                         src="../../../assets/images/akhshay.png" alt="sunil">
                                 </div> -->
                                 <div class="current_user_detail">
-                                    <p>{{userSelected}}</p>
+                                    <p>{{userSelected}}
+                                        <i class="fa fa-ellipsis-v video-audio-right" (click)="menuDropdown()"
+                                            aria-hidden="true"></i>
+                                        <i class="fa fa-video-camera video-audio-right" (click)="videoTab()"
+                                            aria-hidden="true"></i>
+                                        <i class="fa fa-phone video-audio-right" (click)="audioTab()"
+                                            aria-hidden="true"></i>
+
+                                    </p>
+
                                     <!-- <div *ngFor="let users of allusers"> -->
                                     <div *ngIf="activeStatus == true; else offline">
                                         <small class="greentext">Online</small>
@@ -87,6 +96,7 @@
                                     <ng-template #offline>
                                         <small class="redtext">Offline</small>
                                     </ng-template>
+
                                     <!-- </div> -->
                                 </div>
                             </div>
@@ -97,44 +107,79 @@
                 <div class="card-body">
                     <div class="mesgs">
                         <div id="msg_history">
-                            <div *ngFor="let msgs of newMessageObject; let i=index" id="sendermessageID">
-                                <div *ngIf="msgs.user == 'sender' &&  msgs.receiver == userSelected; else receiverUser">
-                                    <div class="outgoing_msg">
-                                        <div class="outgoing_msg_img">
-                                            <img style="width: 30px; height: 30px;" class="rounded-circle"
-                                                src="../../../assets/images/jothipawar.jpg" alt="sunil">
-                                        </div>
-                                        <div class="sent_msg bubble-blue you">
-                                            <p>{{msgs.senderMsg}}</p>
-                                            <p>{{msgs.receiverMsg}} </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <ng-template #receiverUser>
-                                    <div class="incoming_msg" *ngIf="msgs.sender == userSelected">
-                                        <div class="incoming_msg_img">
-                                            <img style="width: 30px; height: 30px;" class="rounded-circle"
-                                                src="../../../assets/images/akhshay.png" alt="sunil">
-                                        </div>
-                                        <div class="received_msg">
-                                            <div class="received_withd_msg bubble me">
-                                                <p>{{msgs.receiverMsg}} </p>
+                            <div *ngIf="newMessageObject">
+                                <div *ngFor="let msgs of newMessageObject; let i=index" id="sendermessageID">
+                                    <div
+                                        *ngIf="msgs.user == 'sender' &&  msgs.receiver == userSelected; else receiverUser">
+                                        <div class="outgoing_msg">
+                                            <div class="outgoing_msg_img">
+                                                <img style="width: 30px; height: 30px;" class="rounded-circle"
+                                                    src="../../../assets/images/jothipawar.jpg" alt="sunil">
+                                            </div>
+                                            <div class="sent_msg bubble-blue you">
                                                 <p>{{msgs.senderMsg}}</p>
+                                                <p>{{msgs.receiverMsg}} </p>
                                             </div>
                                         </div>
                                     </div>
-                                </ng-template>
+
+                                    <ng-template #receiverUser>
+                                        <div class="incoming_msg" *ngIf="msgs.sender == userSelected">
+                                            <div class="incoming_msg_img">
+                                                <img style="width: 30px; height: 30px;" class="rounded-circle"
+                                                    src="../../../assets/images/akhshay.png" alt="sunil">
+                                            </div>
+                                            <div class="received_msg">
+                                                <div class="received_withd_msg bubble me">
+                                                    <p>{{msgs.receiverMsg}} </p>
+                                                    <p>{{msgs.senderMsg}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </div>
                             </div>
-                        </div>
-                        <div class="type_msg">
-                            <div class="input_msg_write">
-                                <input type="text" (keydown.enter)="sendMessage($event.target.value)"
-                                    (keydown.enter)="titleInput.value=''" #titleInput class="write_msg"
-                                    placeholder="Type a message" />
-                                <button class="msg_send_btn" type="button" (click)="sendMessage(titleInput.value)"
-                                    (click)="titleInput.value=''"><i class="fa fa-paper-plane-o"
-                                        aria-hidden="true"></i></button>
+
+                            <div *ngIf="videoTabMenu == true">
+                                <webcam [height]="500" [width]="500" [trigger]="triggerObservable"
+                                    (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+                                    [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+                                    [videoOptions]="videoOptions" [imageQuality]="1"
+                                    (cameraSwitched)="cameraWasSwitched($event)" (initError)="handleInitError($event)">
+                                </webcam>
+                                <br />
+                                <button class="actionBtn" (click)="triggerSnapshot();">Take A Snapshot</button>
+                                <button class="actionBtn" (click)="toggleWebcam();">Toggle Webcam</button>
+                                <br />
+                                <button class="actionBtn" (click)="showNextWebcam(true);"
+                                    [disabled]="!multipleWebcamsAvailable">Next Webcam</button>
+                                <input id="cameraSwitchCheckbox" type="checkbox" [(ngModel)]="allowCameraSwitch"><label
+                                    for="cameraSwitchCheckbox">Allow Camera Switch</label>
+                                <br />
+                                DeviceId: <input id="deviceId" type="text" [(ngModel)]="deviceId" style="width: 500px">
+                                <button (click)="showNextWebcam(deviceId);">Activate</button>
+                            </div>
+
+                            <div class="snapshot" *ngIf="webcamImage">
+                                <h2>Nice one!</h2>
+                                <img [src]="webcamImage.imageAsDataUrl" />
+                            </div>
+
+                            <h4 *ngIf="errors.length > 0">Messages:</h4>
+                            <ul *ngFor="let error of errors">
+                                <li>{{error | json}}</li>
+                            </ul>
+                            <!-- </div> -->
+                            <!-- </div> -->
+                            <div class="type_msg">
+                                <div class="input_msg_write">
+                                    <input type="text" (keydown.enter)="sendMessage($event.target.value)"
+                                        (keydown.enter)="titleInput.value=''" #titleInput class="write_msg"
+                                        placeholder="Type a message" />
+                                    <button class="msg_send_btn" type="button" (click)="sendMessage(titleInput.value)"
+                                        (click)="titleInput.value=''"><i class="fa fa-paper-plane-o"
+                                            aria-hidden="true"></i></button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -142,4 +187,3 @@
             </div>
         </div>
     </div>
-</div>

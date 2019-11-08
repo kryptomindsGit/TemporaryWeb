@@ -8,6 +8,8 @@ import { SPRING_URL } from 'src/app/constant/constant-url';
 import { HttpHeaders } from '@angular/common/http';
 import { EventSourceService } from 'src/app/shared/service/event-source.service';
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
+import { Subject } from 'rxjs/Subject';
+import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
 
 // import { ChatWindowService } from './service/chat-window.service';
 // const headers = new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' });
@@ -29,6 +31,9 @@ export class ChatBoxComponent implements OnInit {
   public activeStatus: boolean;
   public activeUser: any;
   public deactiveUser: any;
+  public videoTabMenu: boolean = false;
+  public audioTabMenu: boolean = false;
+
 
   // Arrays
   public messageObject: any = [];
@@ -36,48 +41,26 @@ export class ChatBoxComponent implements OnInit {
   public allUserArray: any = [];
   public newMessageObject: any = [];
 
+  keyword = 'emailId';
 
+  // toggle webcam on/off
+  public showWebcam = true;
+  public allowCameraSwitch = true;
+  public multipleWebcamsAvailable = false;
+  public deviceId: string;
+  public videoOptions: MediaTrackConstraints = {
+    // width: {ideal: 1024},
+    // height: {ideal: 576}
+  };
+  public errors: WebcamInitError[] = [];
 
+  // latest snapshot
+  public webcamImage: WebcamImage = null;
 
-
-  // Message: any = [];
-  // newReceiverMessage: any = [];
-
-  // senderMessage: any = [];
-  // receiverMessage: any = [];
-  // messageDetails: any = [];
-  // public eventName: any;
-  // public URL: any;
-  // public tagId: string;
-  // receiverEmail: any;
-  // sendMsg: any;
-  // greeting: any;
-  // name: string;
-
-  // sendUser: boolean = false;
-  // receiverUser: boolean = false;
-
-  // public userRole: any;
-  // public userSelected: any = "";
-  // public activeStatus: boolean;
-  // userId: number;
-  // emailID: string;
-  // // sendMessage: any;
-  // date: Date = new Date();
-
-  // senderMessages: any = [];
-  // reciverMessages: any = [];
-  // public activeUser: any = [];
-  // public deactiveUser: any = [];
-  // public jwtData: any = [];
-
-  // userMessage: any = [];
-  // arrMessage: any = [];
-
-  // localStorageArray: any = [];
-  // public allUserArray: any = [];
-
-  keyword = 'emailId'
+  // webcam snapshot trigger
+  private trigger: Subject<void> = new Subject<void>();
+  // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
+  private nextWebcam: Subject<boolean | string> = new Subject<boolean | string>();
 
   constructor(
     private __chatboxService: ChatWindowService,
@@ -89,6 +72,11 @@ export class ChatBoxComponent implements OnInit {
     this.getServerChatEventCall();
     this.getOnlineAllUser();
     this.getAllUser();
+
+    WebcamUtil.getAvailableVideoInputs()
+      .then((mediaDevices: MediaDeviceInfo[]) => {
+        this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
+      });
   }
 
   /**
@@ -273,5 +261,56 @@ export class ChatBoxComponent implements OnInit {
     var objectsFromStorage = JSON.parse(fromStorage)
     this.newMessageObject = objectsFromStorage;
     console.log("Local storegae(Receiver) \n", this.newMessageObject);
+  }
+
+  menuDropdown() {
+    console.log("menu tab");
+  }
+
+  videoTab() {
+    this.videoTabMenu = true;
+    console.log("video tab");
+  }
+
+  audioTab() {
+    this.audioTabMenu = true;
+    console.log("audio tab");
+  }
+
+  public triggerSnapshot(): void {
+    this.trigger.next();
+  }
+
+  public toggleWebcam(): void {
+    this.showWebcam = !this.showWebcam;
+  }
+
+  public handleInitError(error: WebcamInitError): void {
+    this.errors.push(error);
+  }
+
+  public showNextWebcam(directionOrDeviceId: boolean | string): void {
+    // true => move forward through devices
+    // false => move backwards through devices
+    // string => move to device with given deviceId
+    this.nextWebcam.next(directionOrDeviceId);
+  }
+
+  public handleImage(webcamImage: WebcamImage): void {
+    console.info('received webcam image', webcamImage);
+    this.webcamImage = webcamImage;
+  }
+
+  public cameraWasSwitched(deviceId: string): void {
+    console.log('active device: ' + deviceId);
+    this.deviceId = deviceId;
+  }
+
+  public get triggerObservable(): Observable<void> {
+    return this.trigger.asObservable();
+  }
+
+  public get nextWebcamObservable(): Observable<boolean | string> {
+    return this.nextWebcam.asObservable();
   }
 }

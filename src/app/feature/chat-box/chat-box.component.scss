@@ -104,8 +104,7 @@ img {
 }
 
 .current_user_detail {
-    float: left;
-    width: 88%;
+    width: 100%;
 }
 
 .chat_ib {
@@ -406,4 +405,11 @@ a:not([href]):not([tabindex]):hover {
     color: $text-color;
     background: $bg-front-color;
     text-decoration: none;
+}
+
+.video-audio-right {
+    float: right;
+    position: relative;
+    font-size: 1rem;
+    margin-right: 1rem
 }
