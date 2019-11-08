@@ -2,17 +2,13 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { Observable } from 'rxjs';
 declare var require: any
 import decode from 'jwt-decode';
-// import { ChatboxService } from './service/chatbox.service';
 import { ChatWindowService } from './service/chat-window.service';
-import { SPRING_URL } from 'src/app/constant/constant-url';
-import { HttpHeaders } from '@angular/common/http';
-import { EventSourceService } from 'src/app/shared/service/event-source.service';
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
-import { Subject } from 'rxjs/Subject';
-import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
+import videojs from 'video.js';
+import * as RecordRTC from 'recordrtc';
+// import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
+import * as Record from 'videojs-record/dist/videojs.record.js';
 
-// import { ChatWindowService } from './service/chat-window.service';
-// const headers = new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' });
 
 @Component({
   selector: 'app-chat-box',
@@ -34,6 +30,8 @@ export class ChatBoxComponent implements OnInit {
   public videoTabMenu: boolean = false;
   public audioTabMenu: boolean = false;
 
+  public videoPlayer: any = [];
+
 
   // Arrays
   public messageObject: any = [];
@@ -43,40 +41,74 @@ export class ChatBoxComponent implements OnInit {
 
   keyword = 'emailId';
 
-  // toggle webcam on/off
-  public showWebcam = true;
-  public allowCameraSwitch = true;
-  public multipleWebcamsAvailable = false;
-  public deviceId: string;
-  public videoOptions: MediaTrackConstraints = {
-    // width: {ideal: 1024},
-    // height: {ideal: 576}
-  };
-  public errors: WebcamInitError[] = [];
 
-  // latest snapshot
-  public webcamImage: WebcamImage = null;
 
-  // webcam snapshot trigger
-  private trigger: Subject<void> = new Subject<void>();
-  // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
-  private nextWebcam: Subject<boolean | string> = new Subject<boolean | string>();
+  private videoconfig: any;
+  private player: any;
+  private plugin: any;
+
 
   constructor(
     private __chatboxService: ChatWindowService,
     private __authService: AuthService,
-  ) { }
+  ) {
+    this.player = false;
+    // save reference to plugin (so it initializes)
+    this.plugin = Record;
+
+    this.videoconfig = {
+      controls: true,
+      width: 320,
+      height: 240,
+      fluid: false,
+      plugins: {
+        record: {
+          audio: true,
+          video: true,
+          maxLength: 10,
+          debug: true
+        }
+      }
+    };
+
+
+    const audiooptions = {
+      controls: true,
+      width: 600,
+      height: 300,
+      fluid: false,
+      plugins: {
+        wavesurfer: {
+          src: 'live',
+          waveColor: '#36393b',
+          progressColor: 'black',
+          debug: true,
+          cursorWidth: 1,
+          msDisplayMax: 20,
+          hideScrollbar: true
+        },
+        record: {
+          audio: true,
+          video: false,
+          maxLength: 20,
+          debug: true
+        }
+      }
+    };
+  }
+
 
   ngOnInit() {
     this.decodeJWToken();
     this.getServerChatEventCall();
     this.getOnlineAllUser();
     this.getAllUser();
+    // this.videoRecoder();
 
-    WebcamUtil.getAvailableVideoInputs()
-      .then((mediaDevices: MediaDeviceInfo[]) => {
-        this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
-      });
+    // WebcamUtil.getAvailableVideoInputs()
+    //   .then((mediaDevices: MediaDeviceInfo[]) => {
+    //     this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
+    //   });
   }
 
   /**
@@ -263,54 +295,65 @@ export class ChatBoxComponent implements OnInit {
     console.log("Local storegae(Receiver) \n", this.newMessageObject);
   }
 
-  menuDropdown() {
-    console.log("menu tab");
-  }
-
-  videoTab() {
+  videoCall() {
     this.videoTabMenu = true;
-    console.log("video tab");
+    console.log("videoCall", this.videoTabMenu);
   }
 
-  audioTab() {
+  videoRecoder() {
+    // Video Record
+    // apply some workarounds for opera browser
+    // applyVideoWorkaround();
+    // let myVideo = document.getElementById('#myVideo');
+    // console.log("myVideo:", myVideo);
+    let el = 'myVideo'
+
+
+    this.videoPlayer = videojs(document.getElementById(el), this.videoconfig, function () {
+      // print version information at startup
+      var msg = 'Using video.js ' + videojs.VERSION +
+        ' with videojs-record ' + videojs.getPluginVersion('record') +
+        ' and recordrtc ' + RecordRTC.version;
+      videojs.log(msg);
+    });
+    // error handling
+    this.videoPlayer.on('deviceError', function () {
+      console.log('device error:', this.videoPlayer.deviceErrorCode);
+    });
+    this.videoPlayer.on('error', function (element, error) {
+      console.error(error);
+    });
+    // user clicked the record button and started recording
+    this.videoPlayer.on('startRecord', function () {
+      console.log('started recording!');
+    });
+    // user completed recording and stream is available
+    this.videoPlayer.on('finishRecord', function () {
+      // the blob object contains the recorded data that
+      // can be downloaded by the user, stored on server etc.
+      console.log('finished recording: ', this.videoPlayer.recordedData);
+    });
+
+  }
+
+  videoRecordSave() {
+
+  }
+
+  // Audio Record
+  audioCall() {
     this.audioTabMenu = true;
-    console.log("audio tab");
+    console.log("audioCall", this.audioTabMenu);
   }
 
-  public triggerSnapshot(): void {
-    this.trigger.next();
+  audioRecoder() {
+
   }
 
-  public toggleWebcam(): void {
-    this.showWebcam = !this.showWebcam;
+  audioRecordSave() {
+
   }
 
-  public handleInitError(error: WebcamInitError): void {
-    this.errors.push(error);
-  }
 
-  public showNextWebcam(directionOrDeviceId: boolean | string): void {
-    // true => move forward through devices
-    // false => move backwards through devices
-    // string => move to device with given deviceId
-    this.nextWebcam.next(directionOrDeviceId);
-  }
 
-  public handleImage(webcamImage: WebcamImage): void {
-    console.info('received webcam image', webcamImage);
-    this.webcamImage = webcamImage;
-  }
-
-  public cameraWasSwitched(deviceId: string): void {
-    console.log('active device: ' + deviceId);
-    this.deviceId = deviceId;
-  }
-
-  public get triggerObservable(): Observable<void> {
-    return this.trigger.asObservable();
-  }
-
-  public get nextWebcamObservable(): Observable<boolean | string> {
-    return this.nextWebcam.asObservable();
-  }
 }

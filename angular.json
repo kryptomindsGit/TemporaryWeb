@@ -32,12 +32,20 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/font-awesome/css/font-awesome.min.css",
               "./node_modules/swiper/dist/css/swiper.css",
-              "node_modules/ngx-toastr/toastr.css"
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/video.js/dist/video-js.min.css",
+              "node_modules/videojs-wavesurfer/dist/css/videojs.wavesurfer.min.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/popper.js/dist/umd/popper.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/video.js/dist/video.min.js",
+              "node_modules/recordrtc/RecordRTC.js",
+              "node_modules/webrtc-adapter/out/adapter.js",
+              "node_modules/wavesurfer.js/dist/wavesurfer.min.js",
+              "node_modules/wavesurfer.js/dist/plugin/wavesurfer.microphone.min.js",
+              "node_modules/videojs-wavesurfer/dist/videojs.wavesurfer.min.js"
             ]
           },
           "configurations": {

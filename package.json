@@ -40,6 +40,8 @@
     "sweetalert2": "^8.18.6",
     "swiper": "^4.5.0",
     "tslib": "^1.10.0",
+    "video.js": "^7.6.5",
+    "videojs-record": "^3.8.0",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
