@@ -45,9 +45,10 @@ export class SidebarComponent implements OnInit {
       this.email_id = localStorage.getItem("email");
       this.userRole = localStorage.getItem("role");
     }
-    if (this.userRole != 'Employer') {
+    if (this.userRole != 'Employer' ) {
       this.isEmployer = false;
     }
+    console.log("userRole" , this.userRole);
   }
 
   userRoleInfo() {
@@ -62,9 +63,11 @@ export class SidebarComponent implements OnInit {
       });
     }
     else if (this.userRole == "Employer") {
+      console.log("i am emp " );
       this.__empProfileService.getEmployerByEmailId().then((resData: any) => {
-        this.employerDetailsArr = resData.responseObject.employerEnterprise;
-        if (this.employerDetailsArr == null) {
+        console.log("emp " , resData);
+        // this.employerDetailsArr = resData.responseObject.employerEnterprise;
+        if (resData.responseObject.employerEnterprise == null) {
           this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/add']);
         } else {
           this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view']);

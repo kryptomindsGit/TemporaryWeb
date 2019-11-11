@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit {
       const databaseloginPayload = {
         emailId: this.loginForm.controls.email.value
       }
-      this.__authService.login(cognitologinPayload).subscribe((resData: any) => {
+      this.__authService.login(cognitologinPayload).subscribe((resData: any) => {        
         if (resData.status == "SUCCESS") {
           this.__authService.getUserLoginData(databaseloginPayload).then((data: any) => {
             localStorage.setItem('uid', data.responseObject.User.userId);
@@ -87,7 +87,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('email', data.responseObject.User.emailId);
             localStorage.setItem('userAuthToken', data.authtoken);
             this.loading = false;
-            if (data.responseObject.User.cognitoId == null) {
+            if (data.responseObject.User.cognitoId == null && data.responseObject.User.isUportUser == 0) {
               const cognitoUpdatePayload = {
                 cognitoId: resData.response.payload.sub
               }
@@ -96,24 +96,26 @@ export class LoginComponent implements OnInit {
             }
             if (data.responseObject.User.isLoggedIn == false) {
               const loggedInFlagPayload = {
-                isLoggedIn: 1
+                isLoggedIn: 1,
+                emailId:this.loginForm.controls.email.value
               }
               this.__authService.updateUserData(loggedInFlagPayload).then((resData: any) => {
+                console.log("2 resData" , resData);
+                
                 this.getConnectWithServer();
                 this.__router.navigate(['/feature/feature/full-layout/dashboard'])
                 var baseName = data.responseObject.User.emailId;
                 baseName = baseName.substring(0, baseName.indexOf('@'));
                 const emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1);
                 this.toastr.success(emailName, 'Welcome ');
-                this.sessionTimeOut();
+                // this.sessionTimeOut();
               });
             }
           })
-
         } else if (resData.status == "ERROR") {
           this.loading = false;
           this.toastr.error(resData.response.message);
-          this.__router.navigate(['/auth/auth/login'])
+          this.__router.navigate(['/auth/auth/uport-signup']);
         }
       })
     }
@@ -162,7 +164,8 @@ export class LoginComponent implements OnInit {
     this.__authService.getUserLoginData(databaseloginPayload).then((data: any) => {
       if (data.responseObject.User.isLoggedIn == true) {
         const loggedInFlagPayload = {
-          isLoggedIn: 0
+          isLoggedIn: 0,
+          emailId: this.emailID
         }
         this.__authService.updateUserData(loggedInFlagPayload).then((resData: any) => {
           this.__authService.logout();

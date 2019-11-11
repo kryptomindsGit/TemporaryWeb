@@ -63,7 +63,9 @@ export class HeaderComponent implements OnInit {
       });
     } else if (this.userRole == "Employer") {
       this.__empProfileService.getEmployerByEmailId().then((resData: any) => {
-        this.profile_img =atob(resData.responseObject.employerEnterprise.companyLogo);
+        if(resData != undefined){
+          this.profile_img =atob(resData.responseObject.employerEnterprise.companyLogo);
+        }
       });
     } else {
       this.profile_img = '../../../assets/images/bule_img.png';
@@ -73,8 +75,6 @@ export class HeaderComponent implements OnInit {
     if (this.userRole == "Freelancer") {
       this.__idptProfileService.getFreelancerByEmail().then((resData: any) => {
         this.freelancerDetailsArr = resData.responseObject.freelancerProfile;
-     
-        console.log();
         if (this.freelancerDetailsArr == null) {
           this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/add']);
         } else {          
@@ -84,7 +84,7 @@ export class HeaderComponent implements OnInit {
     }
     else if (this.userRole == "Employer") {
       this.__empProfileService.getEmployerByEmailId().then((resData: any) => {
-        this.employerDetailsArr = resData[0];
+        this.employerDetailsArr = resData.responseObject.employerEnterprise;
         if (this.employerDetailsArr == null) {
           this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/add']);
         } else {
@@ -110,8 +110,6 @@ export class HeaderComponent implements OnInit {
     * @description call Logout
     */
   onLogout() {
-    console.log("jdhjkghdfkgklfdkl");
-
     const databaseloginPayload = {
       emailId: this.email_id
     }
@@ -119,7 +117,8 @@ export class HeaderComponent implements OnInit {
     this.__authService.getUserLoginData(databaseloginPayload).then((data: any) => {
       if (data.responseObject.User.isLoggedIn == true) {
         const loggedInFlagPayload = {
-          isLoggedIn: 0
+          isLoggedIn: 0 ,
+          emailId: this.email_id
         }
         this.__authService.updateUserData(loggedInFlagPayload).then((resData: any) => {
           this.__authService.logout();

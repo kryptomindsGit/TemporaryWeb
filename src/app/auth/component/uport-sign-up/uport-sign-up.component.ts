@@ -65,27 +65,21 @@ export class UportSignUpComponent implements OnInit {
    * @name onSubmit
    * @description submit uport sipn-up info
    */
-  onSubmit() {
+  onSubmit() {        
     this.submitted = true;
-    if (this.uportSignupForm.invalid) {
-      return;
-    } else {
-
       this.loading = true;
       const signupUportPayload = {
-        email: this.uportSignupForm.controls.email.value,
-        phone_no: this.uportSignupForm.controls.phone_no.value,
+        emailId: this.uportSignupForm.controls.email.value,
+        contactNo: this.uportSignupForm.controls.phone_no.value,
         role: this.uportSignupForm.controls.role.value,
         country: this.uportSignupForm.controls.country.value,
-        flag: 'Y'
+        isUportUser: 1,
       }
       const userDataPayload = {
         emialId : this.uportSignupForm.controls.email.value
       }
-
-
-      this.__authService.getUserLoginData(userDataPayload).then((resData: any) => {
-        if (resData == null || resData[0] == undefined) {
+      this.__authService.getUserLoginData(userDataPayload).then((resData: any) => {        
+        if (resData.responseObject == null || resData.responseObject == undefined) {
           let email = "email";
           let flag = 'y';
           localStorage.setItem(email, this.uportSignupForm.controls.email.value);
@@ -100,6 +94,6 @@ export class UportSignUpComponent implements OnInit {
           this.__router.navigate(['/auth/auth/uport-login']);
         }
       });
-    }
+    
   }
 }

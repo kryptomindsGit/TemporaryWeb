@@ -87,7 +87,6 @@ export class SignUpComponent implements OnInit {
 
       }else{
         role = "Partner"
-
       }
       const signupPayload = {
         email: this.signupForm.controls.email.value,

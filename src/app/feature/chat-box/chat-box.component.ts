@@ -9,7 +9,6 @@ import * as RecordRTC from 'recordrtc';
 // import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
 import * as Record from 'videojs-record/dist/videojs.record.js';
 
-
 @Component({
   selector: 'app-chat-box',
   templateUrl: './chat-box.component.html',

@@ -8,7 +8,7 @@
                         <div class="container">
                             <div class="row custom-wrapper">
                                 <div class="col-md-12">
-                                    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+                                    <form [formGroup]="registrationForm" >
                                         <div class="group-gap">
                                             <div class="avatar-upload">
                                                 <div class="avatar-edit">
@@ -311,7 +311,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" class="btnNext" (click)="clickMethod(1)">Next</button>
+                            <button type="button" class="btnNext" (click)="clickMethod(1)" (click)="onSubmit()">Next</button>
                         </form>
                     </div>
                 </div>

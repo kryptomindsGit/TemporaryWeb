@@ -112,19 +112,11 @@ export class EmpProfileService {
     }
   }
 
-
-  async getEmployer() {
-    try {
-      let result = await this.__http.get(`${BASE_URL}/employers/`, httpOptions).toPromise();
-      return result;
-    } catch (error) {
-      await this.handleError(error);
-    }
-  }
-
   async getEmployerByEmailId() {
     try {
+      console.log("Res Value before");
       let res = await this.__http.get(`${SPRING_URL}/employer/profile-view`, httpOptions).toPromise();
+      console.log("Res Value after:", res);
       return res;
     } catch (error) {
       await this.handleError(error);
@@ -153,17 +145,6 @@ export class EmpProfileService {
     }
   }
 
-  async deleteEmployer(id: number) {
-    try {
-      let result = await this.__http.delete(`${BASE_URL}/employer/` + id, httpOptions).toPromise();
-      return result;
-    } catch (error) {
-      await this.handleError(error);
-    }
-  }
-
- 
-
   // Error Handler
   handleError(error) {
     let errorMessage = '';
@@ -174,7 +155,6 @@ export class EmpProfileService {
       // server-side error
       errorMessage = `Server Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    console.log(" Error : ", errorMessage);
     return throwError(errorMessage);
   }
 

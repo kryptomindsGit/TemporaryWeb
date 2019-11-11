@@ -279,7 +279,6 @@ export class AddComponent implements OnInit {
     
     // Submit Registration Form
     onPhotoSubmit() {
-      
       if(!this.registrationForm.valid) {
         alert('Please fill all the required fields to create a super hero!')
         return false;
