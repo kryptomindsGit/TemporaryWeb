@@ -30,8 +30,6 @@ export class ChatBoxComponent implements OnInit {
   public videoTabMenu: boolean = false;
   public audioTabMenu: boolean = false;
 
-  public videoPlayer: any = [];
-
 
   // Arrays
   public messageObject: any = [];
@@ -44,7 +42,7 @@ export class ChatBoxComponent implements OnInit {
 
 
   private videoconfig: any;
-  private player: any;
+  private videoPlayer: any;
   private plugin: any;
 
 
@@ -52,9 +50,9 @@ export class ChatBoxComponent implements OnInit {
     private __chatboxService: ChatWindowService,
     private __authService: AuthService,
   ) {
-    this.player = false;
+    this.videoPlayer = false;
     // save reference to plugin (so it initializes)
-    this.plugin = Record;
+    // this.plugin = Record;
 
     this.videoconfig = {
       controls: true,
