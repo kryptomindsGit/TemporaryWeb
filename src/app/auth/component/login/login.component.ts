@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit {
       const databaseloginPayload = {
         emailId: this.loginForm.controls.email.value
       }
-      this.__authService.login(cognitologinPayload).subscribe((resData: any) => {        
+      this.__authService.login(cognitologinPayload).subscribe((resData: any) => {
         if (resData.status == "SUCCESS") {
           this.__authService.getUserLoginData(databaseloginPayload).then((data: any) => {
             localStorage.setItem('uid', data.responseObject.User.userId);
@@ -89,7 +89,8 @@ export class LoginComponent implements OnInit {
             this.loading = false;
             if (data.responseObject.User.cognitoId == null && data.responseObject.User.isUportUser == 0) {
               const cognitoUpdatePayload = {
-                cognitoId: resData.response.payload.sub
+                cognitoId: resData.response.payload.sub,
+                emailId: this.emailID
               }
               this.__authService.updateUserData(cognitoUpdatePayload).then((resData: any) => {
               });
@@ -97,11 +98,11 @@ export class LoginComponent implements OnInit {
             if (data.responseObject.User.isLoggedIn == false) {
               const loggedInFlagPayload = {
                 isLoggedIn: 1,
-                emailId:this.loginForm.controls.email.value
+                emailId: this.loginForm.controls.email.value
               }
               this.__authService.updateUserData(loggedInFlagPayload).then((resData: any) => {
-                console.log("2 resData" , resData);
-                
+                console.log("2 resData", resData);
+
                 this.getConnectWithServer();
                 this.__router.navigate(['/feature/feature/full-layout/dashboard'])
                 var baseName = data.responseObject.User.emailId;
@@ -141,15 +142,15 @@ export class LoginComponent implements OnInit {
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
           confirmButtonText: 'Yes, Continue!',
-          cancelButtonText : 'Log out'
+          cancelButtonText: 'Log out'
         }).then(async (result) => {
           if (!result.value) {
             await Swal.fire(
               'Bye,See You Soon!',
             )
-            this.onLogout();     
-          }else if(result.value){
-              this.sessionTimeOut();
+            this.onLogout();
+          } else if (result.value) {
+            this.sessionTimeOut();
           }
         })
       }

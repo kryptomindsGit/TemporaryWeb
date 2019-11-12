@@ -12,7 +12,6 @@ import { FullLayoutComponent } from './full-layout/full-layout.component';
 import { PaymentSmartcontractComponent } from './payment-smartcontract/payment-smartcontract.component';
 import { ChatBoxComponent } from './chat-box/chat-box.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
-import { WebcamModule } from 'ngx-webcam';
 import { FormsModule } from '@angular/forms';
 //Components
 const COMPONENTS = [
@@ -30,7 +29,6 @@ const MODULES = [
   CommonModule,
   FeatureRoutingModule,
   AutocompleteLibModule,
-  WebcamModule,
   FormsModule
 ];
 
