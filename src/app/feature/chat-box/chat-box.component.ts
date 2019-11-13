@@ -237,7 +237,6 @@ export class ChatBoxComponent implements OnInit {
     this.videoTabMenu = true;
     console.log("videoCall", this.videoTabMenu);
     const videoCall = <HTMLVideoElement>document.getElementById('myVideo');
-    console.log("My Video:", videoCall);
 
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })
       .then(function (stream) {
@@ -250,7 +249,6 @@ export class ChatBoxComponent implements OnInit {
   }
 
   videoRecoder() {
-
 
   }
 
