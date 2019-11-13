@@ -246,7 +246,6 @@ export class ChatBoxComponent implements OnInit {
       })
       .catch(function (error) {
         console.log(`Error: ${error}`);
-
       })
   }
 

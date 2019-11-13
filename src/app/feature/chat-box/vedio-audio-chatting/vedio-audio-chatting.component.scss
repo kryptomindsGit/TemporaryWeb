@@ -1,0 +1,29 @@
+@import "../../../../assets/css/theme_colors";
+
+.local {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    width: 20vw;
+    height: 20vh;
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  .remote {
+    top: 0;
+    left: 0;
+    width: 80vw;
+    height: 80vh;
+  }
+
+  .container-fluid {
+    font: 14px "Montserrat Regular";
+    background-color: $bg-back-color;
+    color: $text-color;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    padding: 2%;
+}

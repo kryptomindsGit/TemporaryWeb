@@ -10,6 +10,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { FullLayoutComponent } from './full-layout/full-layout.component';
 import { PageNotFoundComponent } from '../page-not-found/page-not-found.component';
 import { ChatBoxComponent } from './chat-box/chat-box.component';
+import { VedioAudioChattingComponent } from './chat-box/vedio-audio-chatting/vedio-audio-chatting.component';
 
 //Routing
 const routes: Routes = [
@@ -52,6 +53,10 @@ const routes: Routes = [
           {
             path: 'chatbox',
             component: ChatBoxComponent
+          },
+          {
+            path: 'chat-vedio',
+            component: VedioAudioChattingComponent
           },
         ]
       }

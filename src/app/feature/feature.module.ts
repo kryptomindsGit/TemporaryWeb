@@ -13,6 +13,10 @@ import { PaymentSmartcontractComponent } from './payment-smartcontract/payment-s
 import { ChatBoxComponent } from './chat-box/chat-box.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { FormsModule } from '@angular/forms';
+import { VedioAudioChattingComponent } from './chat-box/vedio-audio-chatting/vedio-audio-chatting.component';
+import { NgxAgoraModule } from 'ngx-agora';
+import { environment } from 'src/environments/environment';
+
 //Components
 const COMPONENTS = [
   FeatureComponent,
@@ -35,10 +39,12 @@ const MODULES = [
 @NgModule({
   declarations: [
     ...COMPONENTS,
-    PaymentSmartcontractComponent
+    PaymentSmartcontractComponent,
+    VedioAudioChattingComponent
   ],
   imports: [
-    ...MODULES
+    ...MODULES,
+    NgxAgoraModule.forRoot({ AppID: environment.agora.appId }),
   ]
 })
 export class FeatureModule { }

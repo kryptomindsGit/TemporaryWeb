@@ -15,6 +15,8 @@ import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FullLayoutEnduserComponent } from './core/component/full-layout-enduser/full-layout-enduser.component';
 import { AuthModule } from './auth/auth.module';
+import { environment } from 'src/environments/environment';
+import { NgxAgoraModule } from 'ngx-agora';
 // import { LoginComponent } from './auth/component/login/login.component';
 
 
@@ -58,6 +60,7 @@ const MODULES = [
   ],
   imports: [
     ...MODULES,
+    NgxAgoraModule.forRoot({ AppID: environment.agora.appId }),
 
   ],
   providers: [],

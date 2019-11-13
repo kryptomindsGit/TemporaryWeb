@@ -12,6 +12,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^8.2.6",
+    "@angular/cdk": "8.2.3",
     "@angular/common": "~8.2.0",
     "@angular/compiler": "~8.2.0",
     "@angular/core": "~8.2.0",
@@ -19,6 +20,7 @@
     "@angular/platform-browser": "~8.2.0",
     "@angular/platform-browser-dynamic": "~8.2.0",
     "@angular/router": "~8.2.0",
+    "agora-rtc-sdk": "2.6.1",
     "angular-ng-autocomplete": "^1.1.14",
     "bn-ng-idle": "^1.0.1",
     "bootstrap": "^4.3.1",
@@ -28,6 +30,7 @@
     "jwt-decode": "^2.2.0",
     "ng-animate": "^0.3.4",
     "ng-pick-datetime": "^5.2.6",
+    "ngx-agora": "^1.5.14",
     "ngx-loading": "^3.0.1",
     "ngx-smart-modal": "^7.1.1",
     "ngx-toastr": "^10.2.0",
