@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { VedioAudioChattingComponent } from './chat-box/vedio-audio-chatting/vedio-audio-chatting.component';
 import { NgxAgoraModule } from 'ngx-agora';
 import { environment } from 'src/environments/environment';
-
+import { VideoAudioChatComponent } from './chat-box/video-audio-chat/video-audio-chat.component';
 //Components
 const COMPONENTS = [
   FeatureComponent,
@@ -40,7 +40,8 @@ const MODULES = [
   declarations: [
     ...COMPONENTS,
     PaymentSmartcontractComponent,
-    VedioAudioChattingComponent
+    VedioAudioChattingComponent,
+    VideoAudioChatComponent
   ],
   imports: [
     ...MODULES,

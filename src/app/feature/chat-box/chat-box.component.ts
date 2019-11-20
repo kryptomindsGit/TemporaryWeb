@@ -4,7 +4,9 @@ declare var require: any
 import decode from 'jwt-decode';
 import { ChatWindowService } from './service/chat-window.service';
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
-import { hinge } from 'ng-animate';
+import { Router } from '@angular/router';
+declare var SimplePeer: any;
+
 
 @Component({
   selector: 'app-chat-box',
@@ -26,7 +28,10 @@ export class ChatBoxComponent implements OnInit {
   public deactiveUser: any;
   public videoTabMenu: boolean = false;
   public audioTabMenu: boolean = false;
+  public peer: any;
+  public client: Object = {};
 
+  // public client: Array<string>;
 
   // Arrays
   public messageObject: any = [];
@@ -39,9 +44,9 @@ export class ChatBoxComponent implements OnInit {
   constructor(
     private __chatboxService: ChatWindowService,
     private __authService: AuthService,
+    private __router: Router
   ) {
-    const videoCall = <HTMLVideoElement>document.getElementById('myVideo');
-
+    this.peer = new SimplePeer({ initiator: true, trickle: false })
   }
 
 
@@ -236,68 +241,72 @@ export class ChatBoxComponent implements OnInit {
     console.log("Local storegae(Receiver) \n", this.newMessageObject);
   }
 
+  // videoCall() {
+  //   this.videoTabMenu = true;
+  //   console.log("videoCall", this.videoTabMenu);
+  //   const videoCall = <HTMLVideoElement>document.getElementById('myVideo');
+
+  //   navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+  //     .then(function (stream) {
+  //       videoCall.srcObject = stream;
+  //       videoCall.play();
+
+  //       // this.initPeer();
+  //       // this.makePeer();
+
+  //     })
+  //     .catch(function (error) {
+  //       console.log(`Error: ${error}`);
+  //     })
+  // }
+
+  // initPeer() {
+  //   this.peer.on('stream', (stream) => {
+  //     this.createVideo(stream);
+  //   })
+
+  //   this.peer.on('close', (stream) => {
+  //     document.getElementById("peerVideo").remove();
+  //     this.peer.destroy();
+  //   })
+  //   return this.peer
+  // }
+
+  // makePeer() {
+  //   // this.client.gotAnswer = false;
+
+  // }
+
+  // createVideo(stream) {
+
+  // }
+
+  // videoRecoder() {
+
+  // }
+
+  // videoRecordSave() {
+
+  // }
+
+  // // Audio Record
+  // audioCall() {
+  //   this.audioTabMenu = true;
+  //   console.log("audioCall", this.audioTabMenu);
+  // }
+
+  // audioRecoder() {
+
+  // }
+
+  // audioRecordSave() {
+
+  // }
+
+
   videoCall() {
-    this.videoTabMenu = true;
-    console.log("videoCall", this.videoTabMenu);
-
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-      .then(function (stream) {
-        this.videoCall.srcObject = stream;
-        this.videoCall.play();
-      })
-      .catch(function (error) {
-        console.log(`Error: ${error}`);
-      })
+    this.__router.navigate(['feature/feature/full-layout/chat-vide-audio']);
   }
-
-  imageSnapshot(){
-    const imageSnap = document.getElementById('imageSnap');
-    imageSnap.addEventListener('click', (e)=> {
-      this.takePicture();
-      e.preventDefault();
-    }, false);
-  }
-
-  takePicture(){
-    let width, height;
-    const canvas = <HTMLCanvasElement>document.getElementById('canvas');
-
-    const photos = <HTMLVideoElement>document.getElementById('video');
-
-    const context = canvas.getContext('2d');
-
-    canvas.setAttribute('width', width);
-    canvas.setAttribute('height', height)
-
-    if(width && height){
-      canvas.width = width;
-      canvas.height = height;
-      context.drawImage(photos, 0, 0, width, height);
-    }
-  }
-
-  videoRecoder() {
-
-  }
-
-  videoRecordSave() {
-
-  }
-
-  // Audio Record
-  audioCall() {
-    this.audioTabMenu = true;
-    console.log("audioCall", this.audioTabMenu);
-  }
-
-  audioRecoder() {
-
-  }
-
-  audioRecordSave() {
-
-  }
-
 
 
 }
