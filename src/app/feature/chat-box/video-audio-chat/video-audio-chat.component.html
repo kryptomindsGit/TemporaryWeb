@@ -1,13 +1,7 @@
 <div class="container">
-    <!-- <div class="jumbotron jumbotron-fluid text-center">
-      <div class="container">
-        <h1 class="display-4">{{ title }}</h1>
-        <p class="lead">{{ introline }}</p>
-      </div>
-    </div> -->
     <div class="row">
         <div class="col-md-6">
-            <table class="table table-dark table-striped">
+            <table class="table table-striped">
                 <thead>
                     <tr class="text-center">
                         <th>Client ID</th>
@@ -39,32 +33,27 @@
                     <div class="container" style="padding-top: 0;">
                         <div class="row text-center">
                             <div class="col-sm">
-                                <button type="button" class="btn btn-block"
-                                    [ngClass]="textEnable ? 'btn-info' : 'btn-secondary'" [disabled]="connected"
+                                <button type="button" class="btn btn-block" [disabled]="connected"
                                     (click)="enableText()">
                                     <i class="fa fa-font" aria-hidden="true"></i> Text </button>
                             </div>
                             <div class="col-sm">
-                                <button type="button" class="btn btn-block"
-                                    [ngClass]="fileEnable ? 'btn-info' : 'btn-secondary'" [disabled]="connected"
+                                <button type="button" class="btn btn-block" [disabled]="connected"
                                     (click)="enableFile()">
                                     <i class="fa fa-files-o" aria-hidden="true"></i> File </button>
                             </div>
                             <div class="col-sm">
-                                <button type="button" class="btn btn-block"
-                                    [ngClass]="audioEnable ? 'btn-info' : 'btn-secondary'" [disabled]="connected"
+                                <button type="button" class="btn btn-block" [disabled]="connected"
                                     (click)="enableAudio()">
                                     <i class="fa fa-volume-up" aria-hidden="true"></i> Audio </button>
                             </div>
                             <div class="col-sm">
-                                <button type="button" class="btn btn-block"
-                                    [ngClass]="videoEnable ? 'btn-info' : 'btn-secondary'" [disabled]="connected"
+                                <button type="button" class="btn btn-block" [disabled]="connected"
                                     (click)="enableVideo()">
                                     <i class="fa fa-video-camera" aria-hidden="true"></i> Video </button>
                             </div>
                             <div class="col-sm">
-                                <button type="button" class="btn btn-block"
-                                    [ngClass]="screenEnable ? 'btn-info' : 'btn-secondary'" [disabled]="connected"
+                                <button type="button" class="btn btn-block" [disabled]="connected"
                                     (click)="enableScreen()">
                                     <i class="fa fa-window-restore" aria-hidden="true"></i> Screen </button>
                             </div>
