@@ -176,6 +176,7 @@ export class ChatBoxComponent implements OnInit {
         });
         var stringToStore = JSON.stringify(this.messageObject);
         localStorage.setItem("senderObj", stringToStore);
+        localStorage.setItem("chatObj", stringToStore);
         this.getLocalStorageSenderMessage();
       }
       else {
@@ -189,6 +190,7 @@ export class ChatBoxComponent implements OnInit {
         if (eventData.eventResponse.receiver == this.emailID) {
           var stringToStore = JSON.stringify(this.messageObject);
           localStorage.setItem("receiverObj", stringToStore);
+          localStorage.setItem("chatObj", stringToStore);
           this.getLocalStorageReceiverMessage();
         }
       }
@@ -241,68 +243,16 @@ export class ChatBoxComponent implements OnInit {
     console.log("Local storegae(Receiver) \n", this.newMessageObject);
   }
 
-  // videoCall() {
-  //   this.videoTabMenu = true;
-  //   console.log("videoCall", this.videoTabMenu);
-  //   const videoCall = <HTMLVideoElement>document.getElementById('myVideo');
+  // save the chat message's in DB
+  saveChatMessage() {
+    var sendfromStorage = localStorage.getItem("senderObj");
+    var sendObjectsFromStorage = JSON.parse(sendfromStorage);
+    console.log("Send messages", sendObjectsFromStorage);
 
-  //   navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-  //     .then(function (stream) {
-  //       videoCall.srcObject = stream;
-  //       videoCall.play();
-
-  //       // this.initPeer();
-  //       // this.makePeer();
-
-  //     })
-  //     .catch(function (error) {
-  //       console.log(`Error: ${error}`);
-  //     })
-  // }
-
-  // initPeer() {
-  //   this.peer.on('stream', (stream) => {
-  //     this.createVideo(stream);
-  //   })
-
-  //   this.peer.on('close', (stream) => {
-  //     document.getElementById("peerVideo").remove();
-  //     this.peer.destroy();
-  //   })
-  //   return this.peer
-  // }
-
-  // makePeer() {
-  //   // this.client.gotAnswer = false;
-
-  // }
-
-  // createVideo(stream) {
-
-  // }
-
-  // videoRecoder() {
-
-  // }
-
-  // videoRecordSave() {
-
-  // }
-
-  // // Audio Record
-  // audioCall() {
-  //   this.audioTabMenu = true;
-  //   console.log("audioCall", this.audioTabMenu);
-  // }
-
-  // audioRecoder() {
-
-  // }
-
-  // audioRecordSave() {
-
-  // }
-
+    var recfromStorage = localStorage.getItem("receiverObj");
+    var receiveObjectsFromStorage = JSON.parse(recfromStorage);
+    console.log("Send messages", receiveObjectsFromStorage);
+  }
 
   videoCall() {
     this.__router.navigate(['feature/feature/full-layout/chat-vide-audio']);

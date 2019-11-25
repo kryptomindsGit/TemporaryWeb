@@ -99,7 +99,7 @@ export class AuthService {
     }
   }
 
-  
+
   async getAllFreelancers(): Promise<any> {
     try {
       let result = await this.__http.post(`${SPRING_URL}/auth/allFree`, httpOptions).toPromise();
@@ -121,11 +121,11 @@ export class AuthService {
 
   async updateUserData(payload: any): Promise<any> {
     console.log("******Payload********", payload);
-    
+
     const httpOptions = {
-      headers: new HttpHeaders({     
+      headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Headers': 'Content-Type', 
+        'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Allow-Methods': 'GET',
         'Access-Control-Allow-Origin': '*',
         // 'X-Authorization': localStorage.getItem('userAuthToken')
@@ -134,7 +134,7 @@ export class AuthService {
 
     try {
       let result = await this.__http.post(`${SPRING_URL}/auth/user-update`, payload, httpOptions).toPromise();
-       console.log("***************result***************\n" , result);
+      console.log("***************result***************\n", result);
       return result;
     } catch (error) {
       await this.handleError(error);

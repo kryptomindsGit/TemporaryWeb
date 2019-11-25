@@ -5,6 +5,7 @@ import { EmpProfileService } from '../employer/profile/shared/service/profile.se
 import { PartProfileService } from '../partner/profile/shared/service/profile.service';
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { CustomGlobalService } from '../shared/service/custom-global.service';
+import { DownloadFileService } from '../chat-box/service/download-file.service';
 
 @Component({
   selector: 'app-header',
@@ -26,6 +27,7 @@ export class HeaderComponent implements OnInit {
   public employerDetailsArr: any = [];
   public partnerDetailsArr: any = [];
   public freelancerDetailsArr: any = [];
+  public chatMessage: any = [];
 
   constructor(
     private __router: Router,
@@ -33,7 +35,8 @@ export class HeaderComponent implements OnInit {
     private __idptProfileService: IndeptProfileService,
     private __empProfileService: EmpProfileService,
     private __partProfileService: PartProfileService,
-    private __globalService : CustomGlobalService
+    private __globalService: CustomGlobalService,
+    private __downloadFileService: DownloadFileService
   ) { }
 
   ngOnInit() {
@@ -56,15 +59,15 @@ export class HeaderComponent implements OnInit {
     this.getHeaderInage();
   }
 
-  getHeaderInage(){
-     if (this.userRole == "Freelancer") {
+  getHeaderInage() {
+    if (this.userRole == "Freelancer") {
       this.__idptProfileService.getFreelancerByEmail().then((resData: any) => {
-        this.profile_img =atob(resData.responseObject.freelancerProfile.photo);
+        this.profile_img = atob(resData.responseObject.freelancerProfile.photo);
       });
     } else if (this.userRole == "Employer") {
       this.__empProfileService.getEmployerByEmailId().then((resData: any) => {
-        if(resData != undefined){
-          this.profile_img =atob(resData.responseObject.employerEnterprise.companyLogo);
+        if (resData != undefined) {
+          this.profile_img = atob(resData.responseObject.employerEnterprise.companyLogo);
         }
       });
     } else {
@@ -77,7 +80,7 @@ export class HeaderComponent implements OnInit {
         this.freelancerDetailsArr = resData.responseObject.freelancerProfile;
         if (this.freelancerDetailsArr == null) {
           this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/add']);
-        } else {          
+        } else {
           this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view']);
         }
       });
@@ -110,21 +113,39 @@ export class HeaderComponent implements OnInit {
     * @description call Logout
     */
   onLogout() {
+    console.log("log out");
     const databaseloginPayload = {
       emailId: this.email_id
     }
-
     this.__authService.getUserLoginData(databaseloginPayload).then((data: any) => {
       if (data.responseObject.User.isLoggedIn == true) {
         const loggedInFlagPayload = {
-          isLoggedIn: 0 ,
+          isLoggedIn: 0,
           emailId: this.email_id
         }
         this.__authService.updateUserData(loggedInFlagPayload).then((resData: any) => {
+          this.saveChatMessage();
           this.__authService.logout();
           this.__router.navigate(['/auth/auth/login']);
         });
       }
     });
+
   }
+
+  // save the chat message's in DB
+  saveChatMessage() {
+    var sendfromStorage = localStorage.getItem("chatObj");
+    var sendObjectsFromStorage = JSON.parse(sendfromStorage);
+    this.chatMessage = [...sendObjectsFromStorage];
+    console.log("chat message object:", this.chatMessage);
+    this.downloadFile();
+  }
+
+  downloadFile() {
+    this.__downloadFileService.exportToCsv('test.csv', this.chatMessage);
+  }
+
+
+
 }

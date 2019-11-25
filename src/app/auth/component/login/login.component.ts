@@ -158,6 +158,8 @@ export class LoginComponent implements OnInit {
   }
 
   onLogout() {
+    console.log("inside login");
+
     const databaseloginPayload = {
       emailId: this.emailID
     }
