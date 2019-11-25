@@ -83,7 +83,7 @@
                                         <i class="fa fa-ellipsis-v video-audio-right" data-toggle="modal"
                                             data-target="#myModalmenu" (click)="menuDropdown()" aria-hidden="true"></i>
                                         <i class="fa fa-video-camera video-audio-right" data-toggle="modal"
-                                            data-target="#myModalvideo" aria-hidden="true" (click)="videoCall()"></i>
+                                            data-target="#myModalvideo" aria-hidden="true" (click)="enableVideo()"></i>
                                         <i class="fa fa-phone video-audio-right" data-toggle="modal"
                                             data-target="#myModalaudio" (click)="audioCall()" aria-hidden="true"></i>
                                     </p>
@@ -136,7 +136,7 @@
                                 </ng-template>
                             </div>
                             <!-- </div> -->
-                            <div *ngIf="videoTabMenu == true">
+                            <div *ngIf="videoEnable">
                                 <!-- The Modal -->
                                 <div class="modal" id="myModalvideo">
                                     <div class="modal-dialog">
@@ -151,20 +151,42 @@
 
                                             <!-- Modal body -->
                                             <div class="modal-body">
-                                                <video id="myVideo" playsinline width="500" height="500"
+                                                <div class="container">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-md-6 text-center">
+                                                                    <video #videoElement class="img-border"
+                                                                        width="{{ videoWidth }}"
+                                                                        height="{{ videoHeight }}">
+                                                                        <source>
+                                                                    </video>
+                                                                </div>
+                                                                <div class="col-md-6 text-center">
+                                                                    <video #remoteVideoElement class="img-border"
+                                                                        width="{{ videoWidth }}"
+                                                                        height="{{ videoHeight }}">
+                                                                        <source>
+                                                                    </video>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- <video id="myVideo" playsinline width="500" height="500"
                                                     class="video-js vjs-default-skin"></video>
 
                                                     <div class="bottom-container">
                                                         <div id="photos"></div>
-                                                    </div>
+                                                    </div> -->
                                             </div>
 
-                                        
+
 
                                             <!-- Modal footer -->
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary" id="imageSnap" data-dismiss="modal"
-                                                    (click)="imageSnapshot()">Snapshot</button>
+                                                <button type="button" class="btn btn-primary" id="imageSnap"
+                                                    data-dismiss="modal" (click)="imageSnapshot()">Snapshot</button>
                                                 <button type="button" class="btn btn-primary" data-dismiss="modal"
                                                     (click)="videoRecoder()">Record</button>
                                                 <button type="button" class="btn btn-danger"

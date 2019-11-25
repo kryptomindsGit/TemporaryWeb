@@ -10,7 +10,7 @@ export class VideoAudioChatService {
   public socket: any;
 
   constructor() {
-    this.socket = io('http://localhost:3000', {
+    this.socket = io('http://192.168.0.10:3000', {
       reconnectionDelay: 1000,
       reconnection: true,
       reconnectionAttempts: 1,
