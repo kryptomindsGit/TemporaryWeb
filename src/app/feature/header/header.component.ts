@@ -6,6 +6,7 @@ import { PartProfileService } from '../partner/profile/shared/service/profile.se
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { CustomGlobalService } from '../shared/service/custom-global.service';
 import { DownloadFileService } from '../chat-box/service/download-file.service';
+import { empty } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -28,6 +29,7 @@ export class HeaderComponent implements OnInit {
   public partnerDetailsArr: any = [];
   public freelancerDetailsArr: any = [];
   public chatMessage: any = [];
+  public sendObjectsFromStorage: any = [];
 
   constructor(
     private __router: Router,
@@ -123,8 +125,8 @@ export class HeaderComponent implements OnInit {
           isLoggedIn: 0,
           emailId: this.email_id
         }
+        this.saveChatMessage();
         this.__authService.updateUserData(loggedInFlagPayload).then((resData: any) => {
-          this.saveChatMessage();
           this.__authService.logout();
           this.__router.navigate(['/auth/auth/login']);
         });
@@ -136,10 +138,13 @@ export class HeaderComponent implements OnInit {
   // save the chat message's in DB
   saveChatMessage() {
     var sendfromStorage = localStorage.getItem("chatObj");
-    var sendObjectsFromStorage = JSON.parse(sendfromStorage);
-    this.chatMessage = [...sendObjectsFromStorage];
-    console.log("chat message object:", this.chatMessage);
-    this.downloadFile();
+    if(sendfromStorage != null){
+      this.sendObjectsFromStorage = JSON.parse(sendfromStorage);
+      this.chatMessage = [...this.sendObjectsFromStorage];
+      console.log("chat message object:", this.chatMessage);
+      this.downloadFile();
+    }
+   
   }
 
   downloadFile() {
