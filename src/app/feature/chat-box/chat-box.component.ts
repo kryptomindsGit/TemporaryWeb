@@ -104,15 +104,28 @@ export class ChatBoxComponent implements OnInit {
     this.getAllUser();
 
     if (this.__videoAudioChatService) {
+      console.log("connecteing...........");
+      
       this.subscription = this.__videoAudioChatService.getSocketId().subscribe((message: any) => {
         this.serverStatus = true;
         this.clientId = message.clientId;
+        console.log("this.clientId:", this.clientId);
+        localStorage.setItem('clientid', this.clientId);
+
         this.fromClientId = message.clientId;
         this.socketId = message.socketId;
+        console.log("this.socketId:", this.socketId);
+        localStorage.setItem('socketId', this.socketId);
+
+
         this.subscription.unsubscribe();
       });
       this.__videoAudioChatService.getClients().subscribe((clients: any) => {
         this.clients = clients;
+        console.log("this.clients: ", this.clients);
+        localStorage.setItem('clientsArray', this.clients);
+
+        
       });
       window.RTCPeerConnection = this.getRTCPeerConnection();
       window.RTCSessionDescription = this.getRTCSessionDescription();

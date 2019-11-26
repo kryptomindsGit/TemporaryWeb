@@ -66,6 +66,7 @@ export class VideoAudioChatService {
     return Observable.create((observer: any) => {
       this.socket.on('socketid', (message: any) => {
         observer.next(message);
+        
       });
     });
   }
@@ -75,6 +76,7 @@ export class VideoAudioChatService {
     return Observable.create((observer: any) => {
       this.socket.on('clients', (clients: any) => {
         observer.next(clients);
+
       });
     });
   }
