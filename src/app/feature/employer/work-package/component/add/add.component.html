@@ -194,7 +194,7 @@
                 <div class="form-group form-input">
                   <select formControlName="budgetCurrencyCode" id="currency">
                     <option disabled value="">Currency </option>
-                    <option id="option_txt" *ngFor="let currency of currencyArr" [value]="currency">{{currency}}
+                    <option id="option_txt" *ngFor="let currency of currencyArr" [value]="currency.currency">{{currency.currency}}
                     </option>
                   </select>
 
@@ -320,7 +320,7 @@
                     <td scope="row">
                       <select formControlName="currencyCode" id="currency">
                         <option disabled value="">Currency </option>
-                        <option id="option_txt" *ngFor="let currency of currencyArr" [value]="currency">{{currency}}
+                        <option id="option_txt" *ngFor="let currency of currencyArr" [value]="currency.currency">{{currency.currency}}
                         </option>
                       </select>
 

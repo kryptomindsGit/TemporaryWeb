@@ -142,7 +142,9 @@ export class AddComponent implements OnInit {
   getCurrencyList(){
     this.__customGlobalService.getCurrencyList().then((resData: any) => {
       this.currencyArr= resData.responseObject; 
-    });
+      console.log("currency : ", this.currencyArr);
+
+    });    
   }
 
   getAllDomain() {

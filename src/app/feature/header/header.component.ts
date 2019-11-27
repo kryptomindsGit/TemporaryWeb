@@ -120,6 +120,8 @@ export class HeaderComponent implements OnInit {
       emailId: this.email_id
     }
     this.__authService.getUserLoginData(databaseloginPayload).then((data: any) => {
+      console.log("data",data);
+      
       if (data.responseObject.User.isLoggedIn == true) {
         const loggedInFlagPayload = {
           isLoggedIn: 0,
@@ -139,18 +141,15 @@ export class HeaderComponent implements OnInit {
   saveChatMessage() {
     var sendfromStorage = localStorage.getItem("chatObj");
     if(sendfromStorage != null){
-      this.sendObjectsFromStorage = JSON.parse(sendfromStorage);
+      console.log("sendfromStorage " , sendfromStorage );
+     this.sendObjectsFromStorage = JSON.parse(sendfromStorage);
       this.chatMessage = [...this.sendObjectsFromStorage];
       console.log("chat message object:", this.chatMessage);
       this.downloadFile();
     }
-   
   }
 
   downloadFile() {
     this.__downloadFileService.exportToCsv('test.csv', this.chatMessage);
   }
-
-
-
 }

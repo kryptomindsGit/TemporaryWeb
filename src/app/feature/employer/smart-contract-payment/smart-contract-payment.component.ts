@@ -93,7 +93,8 @@ export class SmartContractPaymentComponent implements OnInit {
 
   getEmployerData() {
     this.__profileService.getEmployerByEmailId().then((resData: any) => {
-      this.empId = resData[0].cmp_reprentative;
+      // log
+      // this.empId = resData.responseObject.cmp_reprentative;
     });
   }
 
@@ -103,6 +104,8 @@ export class SmartContractPaymentComponent implements OnInit {
 
   getWorkPackageData() {
     this.__workService.getWorkPackageData(this.workPackageID).then((resData: any) => {
+      console.log("resData",resData);
+      this.empId = resData.responseObject.postedByEnterpriseEmp.companyName;
       this.projectName = resData.responseObject.projectName;
       this.contractStatus = resData.responseObject.contractStatus;
       this.contractAddr = resData.responseObject.smartContractAddr;
@@ -251,10 +254,10 @@ export class SmartContractPaymentComponent implements OnInit {
      (this.milestoneForm.controls.milestoneDetails.value)[i].paymentConditionDueDate = newDueDate;
    }
     console.log("data for milstones" ,this.milestoneForm.controls.milestoneDetails.value);
-     this.__paymentService.deployContractData(payload).then((workData: any) => {
+    //  this.__paymentService.deployContractData(payload).then((workData: any) => {
     
-       this.contractAddr = workData.ContractAddress;
-      
+      //  this.contractAddr = workData.ContractAddress;
+      this.contractAddr = "AASDEWFD12343";
       this.__paymentService.postMilestoneData(this.milestoneForm.controls.milestoneDetails.value,this.workPackageID).then((workData: any) =>{
         this.toastr.success('Milestones saved Successfully!!');
         this.milestoneArr=workData.responseObject;
@@ -266,7 +269,7 @@ export class SmartContractPaymentComponent implements OnInit {
           this.loading = false;
          });
        });
-    });
+    // });
     console.log(`1.`)
 
   }
@@ -306,16 +309,16 @@ export class SmartContractPaymentComponent implements OnInit {
 
   console.log("Payload for addMilestone",payloads);
 
-    await this.__paymentService.deployMilestoneData(payload).then((workData: any) =>{
-      console.log("Data is successfully saved" ,workData);
-      this.loading = false;
+    // await this.__paymentService.deployMilestoneData(payload).then((workData: any) =>{
+    //   console.log("Data is successfully saved" ,workData);
+    //   this.loading = false;
 
-    });
+    // });
     
-    await this.__paymentService.deployMilestoneData1(payloads).then((workData: any) =>{
-      console.log("Data is successfully saved" ,workData);
-      this.loading = false;
-    });
+    // await this.__paymentService.deployMilestoneData1(payloads).then((workData: any) =>{
+    //   console.log("Data is successfully saved" ,workData);
+    //   this.loading = false;
+    // });
   }
 
   onSaveChanges() {

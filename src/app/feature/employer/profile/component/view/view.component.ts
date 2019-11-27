@@ -75,6 +75,6 @@ export class ViewComponent implements OnInit {
     })
   }
   editProfile() {
-    this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/edit/', this.emailId]);
+    this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/edit']);
   }
 }

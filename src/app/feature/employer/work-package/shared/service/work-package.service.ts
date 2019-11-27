@@ -35,7 +35,15 @@ export class WorkPackageService {
 
   async postWorkPackageData(packageData : any):Promise<any> {
     console.log("Package Data :" , packageData);
-    
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        // 'enctype': 'multipart/form-data',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+        'X-Authorization': localStorage.getItem('userAuthToken')
+      })
+    };
     try {
       let res = await this.http.post(`${SPRING_URL}/workpackage/wp-save`, packageData , httpOptions).toPromise();
       return res;
@@ -44,6 +52,15 @@ export class WorkPackageService {
     }
   }
   async postWorkPackageSkillData(packageData:any , wpId:any):Promise<any> {
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        // 'enctype': 'multipart/form-data',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+        'X-Authorization': localStorage.getItem('userAuthToken')
+      })
+    };
     console.log("Package Data :" , packageData, wpId);
     try {
       let res = await this.http.post(`${SPRING_URL}/workpackage/wp-skills/${wpId}`,packageData,httpOptions).toPromise();
@@ -56,7 +73,15 @@ export class WorkPackageService {
   //fetch using emial id latter
   async getWorkPackageData(workPackageId : number):Promise<any> {
     console.log("Package Data :" , workPackageId);
-    
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        // 'enctype': 'multipart/form-data',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+        'X-Authorization': localStorage.getItem('userAuthToken')
+      })
+    };
     try {
       let res = await this.http.get(`${SPRING_URL}/workpackage/wp-fetch/${workPackageId}`,httpOptions).toPromise();
       return res;
@@ -67,7 +92,15 @@ export class WorkPackageService {
 
   async getSkillPackageData(workPackageSkillId : any):Promise<any> {
     console.log("Package Data :" , workPackageSkillId);
-    
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        // 'enctype': 'multipart/form-data',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+        'X-Authorization': localStorage.getItem('userAuthToken')
+      })
+    };
     try {
       let res = await this.http.get(`${SPRING_URL}/workpackage/wp-skills/${workPackageSkillId}`,httpOptions).toPromise();
       console.log("data " ,res);
@@ -80,7 +113,15 @@ export class WorkPackageService {
 
   async updateContractDocument(workPackageId : any ,payload:any):Promise<any> {
     console.log("Package Data :" , workPackageId);
-    
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        // 'enctype': 'multipart/form-data',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+        'X-Authorization': localStorage.getItem('userAuthToken')
+      })
+    };
     try {
       let res = await this.http.post(`${SPRING_URL}/workpackage/uploadedContractDoc/${workPackageId}`,payload,httpOptions).toPromise();
       console.log("data " ,res);
@@ -93,7 +134,15 @@ export class WorkPackageService {
   }
 
   async updateContractAddress(workPackageId : any ,payload:any):Promise<any> {
-    
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        // 'enctype': 'multipart/form-data',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+        'X-Authorization': localStorage.getItem('userAuthToken')
+      })
+    };
     console.log("Package Data :" , workPackageId);
     
     try {
@@ -109,6 +158,15 @@ export class WorkPackageService {
 
   //get all work packages
   async getAllWorkPackageData():Promise<any> {
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        // 'enctype': 'multipart/form-data',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+        'X-Authorization': localStorage.getItem('userAuthToken')
+      })
+    };
     try {
       let res = await this.http.get(`${SPRING_URL}/workpackage/wp-all`,httpOptions).toPromise();
       console.log("data " ,res);

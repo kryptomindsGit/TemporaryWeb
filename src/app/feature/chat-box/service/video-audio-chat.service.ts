@@ -8,6 +8,7 @@ import * as io from 'socket.io-client';
 export class VideoAudioChatService {
 
   public socket: any;
+  private email:any; 
 
   constructor() {
     this.socket = io('http://localhost:3000', {
@@ -22,6 +23,7 @@ export class VideoAudioChatService {
 
   public onInit() {
     this.socket.on('connect', () => {
+      this.socket.emit('email',this.email);
       console.log('Connected to Server');
     });
     this.socket.on('connect_timeout', (timeout: any) => {

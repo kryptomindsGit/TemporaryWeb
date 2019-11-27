@@ -70,7 +70,20 @@ export class ChatBoxComponent implements OnInit {
   public audioStream: any;
   public audioTrack: AudioTrack;
   public screenStream: any;
-
+  public connected: boolean = false;
+  public textEnable: boolean = true;
+  public fileEnable: boolean = false;
+  public message: any;
+  public messages: string[] = [];
+  public receiveBuffer = [];
+  public offer: any;
+  public enableDownload: boolean = false;
+  public sendProgressValue: any = 0;
+  public receivedProgressValue: any = 0;
+  public receivedFileName: any;
+  public receivedFileSize: any;
+  public receivedFileType: any;
+  public sendFileName: any = 'Choose file';
 
   // public client: Array<string>;
 
@@ -119,13 +132,13 @@ export class ChatBoxComponent implements OnInit {
 
 
         this.subscription.unsubscribe();
+        console.log("current this.client" ,   this.clientId);
+        console.log("current this.socketId" ,   this.socketId);
       });
       this.__videoAudioChatService.getClients().subscribe((clients: any) => {
         this.clients = clients;
         console.log("this.clients: ", this.clients);
         localStorage.setItem('clientsArray', this.clients);
-
-        
       });
       window.RTCPeerConnection = this.getRTCPeerConnection();
       window.RTCSessionDescription = this.getRTCSessionDescription();
@@ -258,7 +271,7 @@ export class ChatBoxComponent implements OnInit {
    * @param messages 
    * @description send message details to spring API
    */
-  sendMessage(messages: string) {
+  sendMessageChat(messages: string) {
     this.messageDetails = {
       sourceLanguageCode: "en",
       targetLanguageCode: "hi",
@@ -500,6 +513,72 @@ export class ChatBoxComponent implements OnInit {
 
   public stopScreen() {
     this.screenStream.stop();
+  }
+
+  public async connect() {
+    this.connected = true;
+    this.dataChannel = await this.peerConnection.createDataChannel('datachannel');
+    if (this.fileEnable) {
+      this.dataChannel.binaryType = 'arraybuffer';
+    }
+    this.dataChannel.onerror = (error: any) => {
+      console.log("Data Channel Error:", error);
+    };
+    this.dataChannel.onmessage = (event: any) => {
+      if (this.textEnable) {
+        console.log("Got Data Channel Message:", JSON.parse(event.data));
+        this.messages.push(JSON.parse(event.data));
+      } else if (this.fileEnable) {
+        this.receiveBuffer.push(event.data);
+      }
+    };
+    this.dataChannel.onopen = () => {
+      console.log("Data Channel Opened");
+    };
+    this.dataChannel.onclose = () => {
+      console.log("The Data Channel is Closed");
+    };
+    this.offer = this.peerConnection.createOffer({
+      offerToReceiveAudio: 1,
+      offerToReceiveVideo: 1,
+      voiceActivityDetection: 1
+    }).then(async (offer: RTCSessionDescription) => {
+      console.log('Offer Created : ', offer);
+      await this.peerConnection.setLocalDescription(offer);
+      this.__videoAudioChatService.sendOffer({
+        from: this.fromClientId,
+        to: this.toClientId,
+        type: offer.type,
+        sdp: offer.sdp
+      });
+    });
+  }
+
+  public sendMessage() {
+    this.dataChannel.send(JSON.stringify({ clientId: this.fromClientId, data: this.message }));
+    this.messages.push(JSON.parse(JSON.stringify({ clientId: this.fromClientId, data: this.message })));
+    this.message = '';
+  }
+
+  public disconnect() {
+    try {
+      this.stopAudio();
+    } catch (e) { }
+    try {
+      this.stopVideo();
+    } catch (e) { }
+    try {
+      this.stopScreen();
+    } catch (e) { }
+    this.connected = false;
+    this.toClientId = '';
+    this.enableDownload = false;
+    this.sendProgressValue = 0;
+    this.receivedProgressValue = 0;
+    this.sendFileName = '';
+    this.receivedFileName = '';
+    this.receivedFileSize = '';
+    this.receivedFileType = '';
   }
 
 

@@ -28,7 +28,16 @@ export class SmartContractService {
 
   async postMilestoneData(milestoneData : any , id:any):Promise<any> {
     console.log("milestone Data :" , milestoneData);
-    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        // 'enctype': 'multipart/form-data',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+        'X-Authorization': localStorage.getItem('userAuthToken')
+
+      })
+    };
     try {
     let res = await this.http.post(`${SPRING_URL}/milestone/save/${id}`, milestoneData , httpOptions).toPromise();
       console.log(`response befre return: ${res}`);
@@ -41,7 +50,15 @@ export class SmartContractService {
 
   async postScheduleData(scheduleData : any):Promise<any> {
     console.log("schedule Data :" , scheduleData);
-    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        // 'enctype': 'multipart/form-data',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+        'X-Authorization': localStorage.getItem('userAuthToken')
+      })
+    };
     try {
     let res = await this.http.post(`${SPRING_URL}/payment/schedule`, scheduleData , httpOptions).toPromise();
       return res;
@@ -63,7 +80,16 @@ export class SmartContractService {
   //deploy contract 
   async deployContractData(workId : any):Promise<any> {
     console.log("deploy Data :" , workId);
-    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        // 'enctype': 'multipart/form-data',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+        'X-Authorization': localStorage.getItem('userAuthToken')
+
+      })
+    };
     try {
     let res = await this.http.post(`${DEPLOY_CONTRACT_URL}/deployContract`, workId , httpOptions).toPromise();
       return res;
@@ -74,7 +100,16 @@ export class SmartContractService {
 
   //Deploy Milestone ethereum
   async deployMilestoneData(payload : any):Promise<any> {
-    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        // 'enctype': 'multipart/form-data',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+        'X-Authorization': localStorage.getItem('userAuthToken')
+
+      })
+    };
     // console.log("schedule Data :" , payload);
     
     try {
@@ -89,7 +124,16 @@ export class SmartContractService {
   async deployMilestoneData1(payload : any):Promise<any> {
     // console.log("schedule Data :" , payload);
     // console.log("schedule Data :" , JSON.stringify(payload));
-    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        // 'enctype': 'multipart/form-data',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+        'X-Authorization': localStorage.getItem('userAuthToken')
+
+      })
+    };
     try {
     let res = await this.http.post(`${DEPLOY_CONTRACT_SAW_URL}/addmilestone`, payload,{responseType:'text'}).toPromise();
       return res;
@@ -102,9 +146,17 @@ export class SmartContractService {
   
   async getMilestoneData(workPackageId : any):Promise<any> {
     console.log("schedule Data :" , workPackageId);
-    
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        // 'enctype': 'multipart/form-data',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+        'X-Authorization': localStorage.getItem('userAuthToken')
+      })
+    };
     try {
-    let res = await this.http.get(`${SPRING_URL}/milestone/fetchAll/${workPackageId}`,{responseType:'json'}).toPromise();
+    let res = await this.http.get(`${SPRING_URL}/milestone/fetchAll/${workPackageId}`,httpOptions).toPromise();
       return res;
     } catch (error) {
       this.handleError(error);      

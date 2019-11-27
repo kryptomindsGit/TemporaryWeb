@@ -205,10 +205,10 @@
                         </div>
                         <div class="type_msg">
                             <div class="input_msg_write">
-                                <input type="text" (keydown.enter)="sendMessage($event.target.value)"
+                                <input type="text" (keydown.enter)="sendMessageChat($event.target.value)"
                                     (keydown.enter)="titleInput.value=''" #titleInput class="write_msg"
                                     placeholder="Type a message" />
-                                <button class="msg_send_btn" type="button" (click)="sendMessage(titleInput.value)"
+                                <button class="msg_send_btn" type="button" (click)="sendMessageChat(titleInput.value)"
                                     (click)="titleInput.value=''"><i class="fa fa-paper-plane-o"
                                         aria-hidden="true"></i></button>
                             </div>
