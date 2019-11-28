@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { VideoAudioChatService } from '../service/video-audio-chat.service'
+import { VideoAudioChatService } from '../service/video-audio-chat.service';
 import { Subscription } from 'rxjs';
 import adapter from 'webrtc-adapter';
 import { saveAs } from 'file-saver';
-
 
 declare global {
   interface Window {
@@ -25,8 +24,6 @@ declare global {
   styleUrls: ['./video-audio-chat.component.scss']
 })
 export class VideoAudioChatComponent implements OnInit {
-
-  /* Variable's */
 
   public browser = <any>navigator;
   public title: string = 'Angular WebRTC Project';
@@ -79,30 +76,34 @@ export class VideoAudioChatComponent implements OnInit {
   public receiveBuffer = [];
   public receivedBlob: Blob;
   public enableDownload: boolean = false;
+  public selectedUser : any;
 
-  @ViewChild('audioElement', { static: false }) audioElement: ElementRef;
-  @ViewChild('remoteAudioElement', { static: false }) remoteAudioElement: ElementRef;
-  @ViewChild('videoElement', { static: false }) videoElement: ElementRef;
-  @ViewChild('remoteVideoElement', { static: false }) remoteVideoElement: ElementRef;
-  @ViewChild('screenElement', { static: false }) screenElement: ElementRef;
-  @ViewChild('remoteScreenElement', { static: false }) remoteScreenElement: ElementRef;
+  @ViewChild('audioElement', {static: false}) audioElement: ElementRef;
+  @ViewChild('remoteAudioElement', {static: false}) remoteAudioElement: ElementRef;
+  @ViewChild('videoElement', {static: false}) videoElement: ElementRef;
+  @ViewChild('remoteVideoElement', {static: false}) remoteVideoElement: ElementRef;
+  @ViewChild('screenElement', {static: false}) screenElement: ElementRef;
+  @ViewChild('remoteScreenElement', {static: false}) remoteScreenElement: ElementRef;
 
-  constructor(
-    private __videoAudioChatService: VideoAudioChatService
-  ) { }
+  constructor(public socketservice: VideoAudioChatService) {
+   }
 
   ngOnInit(): void {
     console.log('Adapter : ', adapter);
-    if (this.__videoAudioChatService) {
-      this.subscription = this.__videoAudioChatService.getSocketId().subscribe((message: any) => {
+    console.log('this.socketservice: ' , this.socketservice);
+    if (this.socketservice) {
+      console.log("before current this.client" ,   this.clientId);
+      this.subscription = this.socketservice.getSocketId().subscribe((message: any) => {
         this.serverStatus = true;
         this.clientId = message.clientId;
         this.fromClientId = message.clientId;
         this.socketId = message.socketId;
         this.subscription.unsubscribe();
       });
-      this.__videoAudioChatService.getClients().subscribe((clients: any) => {
+    
+      this.socketservice.getClients().subscribe((clients: any) => {
         this.clients = clients;
+        console.log("this.clients" , this.clients);
       });
       window.RTCPeerConnection = this.getRTCPeerConnection();
       window.RTCSessionDescription = this.getRTCSessionDescription();
@@ -128,11 +129,11 @@ export class VideoAudioChatComponent implements OnInit {
       console.log('RTCPeerConnection : ', this.peerConnection);
       this.peerConnection.onicecandidate = (candidate: RTCIceCandidate) => {
         console.log('ICE Candidate : ', candidate);
-        this.__videoAudioChatService.sendIceCandidate({
-          from: this.fromClientId,
-          to: this.toClientId,
-          type: candidate.type,
-          candidate: candidate.candidate
+        this.socketservice.sendIceCandidate({
+          from : this.fromClientId,
+          to : this.toClientId,
+          type : candidate.type,
+          candidate : candidate.candidate
         });
       };
       this.peerConnection.oniceconnectionstatechange = (connection: RTCIceConnectionState) => {
@@ -156,7 +157,7 @@ export class VideoAudioChatComponent implements OnInit {
           console.log('Audio Track Received');
           try {
             this.remoteAudio.srcObject = event.streams[0];
-          } catch (err) {
+          } catch(err) {
             this.remoteAudio.src = window.URL.createObjectURL(event.streams[0]);
           }
           setTimeout(() => {
@@ -167,7 +168,7 @@ export class VideoAudioChatComponent implements OnInit {
           console.log('Video Track Received');
           try {
             this.remoteVideo.srcObject = event.streams[0];
-          } catch (err) {
+          } catch(err) {
             this.remoteVideo.src = window.URL.createObjectURL(event.streams[0]);
           }
           setTimeout(() => {
@@ -178,7 +179,7 @@ export class VideoAudioChatComponent implements OnInit {
           console.log('Screen Track Received');
           try {
             this.remoteScreen.srcObject = event.streams[0];
-          } catch (err) {
+          } catch(err) {
             this.remoteScreen.src = window.URL.createObjectURL(event.streams[0]);
           }
           setTimeout(() => {
@@ -186,32 +187,32 @@ export class VideoAudioChatComponent implements OnInit {
           }, 500);
         }
       };
-      this.__videoAudioChatService.receiveOffer().subscribe(async (offer: RTCSessionDescription) => {
+      this.socketservice.receiveOffer().subscribe(async (offer: RTCSessionDescription) => {
         console.log('Offer Received : ', offer);
-        await this.peerConnection.setRemoteDescription({ type: 'offer', sdp: offer.sdp });
+        await this.peerConnection.setRemoteDescription({type: 'offer', sdp: offer.sdp});
         this.toClientId = offer['from'];
         this.peerConnection.createAnswer().then(async (answer: RTCSessionDescription) => {
           console.log('Answer Created : ', answer);
           await this.peerConnection.setLocalDescription(answer);
-          this.__videoAudioChatService.sendAnswer({
-            from: this.fromClientId,
-            to: this.toClientId,
-            type: answer.type,
-            sdp: answer.sdp
+          this.socketservice.sendAnswer({
+            from : this.fromClientId,
+            to : this.toClientId,
+            type : answer.type,
+            sdp : answer.sdp
           });
         });
       });
-      this.__videoAudioChatService.receiveAnswer().subscribe(async (answer: RTCSessionDescription) => {
+      this.socketservice.receiveAnswer().subscribe(async (answer: RTCSessionDescription) => {
         console.log('Answer Received : ', answer);
-        await this.peerConnection.setRemoteDescription({ type: 'answer', sdp: answer.sdp });
+        await this.peerConnection.setRemoteDescription({type: 'answer', sdp: answer.sdp});
       });
-      this.__videoAudioChatService.receiveIceCandidate().subscribe((candidate: RTCIceCandidate) => {
+      this.socketservice.receiveIceCandidate().subscribe((candidate: RTCIceCandidate) => {
         if (candidate.candidate) {
           console.log('ICE Candidate Received : ', candidate);
           // this.peerConnection.addIceCandidate(candidate.candidate);
         }
       });
-      this.__videoAudioChatService.receiveFile().subscribe(async (file: any) => {
+      this.socketservice.receiveFile().subscribe(async (file: any) => {
         console.log('File Received : ', file);
         if (file['type'] == 'file') {
           this.receivedFileName = file['fileName'];
@@ -229,8 +230,6 @@ export class VideoAudioChatComponent implements OnInit {
       this.serverStatus = false;
     }
   }
-
-  /* End of ngOnIt() */
 
   public getRTCPeerConnection() {
     return window.RTCPeerConnection ||
@@ -259,24 +258,24 @@ export class VideoAudioChatComponent implements OnInit {
 
   public getAllUserMediaScreen() {
     if (this.browser.getDisplayMedia) {
-      return this.browser.getDisplayMedia({ video: true });
+      return this.browser.getDisplayMedia({video: true});
     } else if (this.browser.mediaDevices.getDisplayMedia) {
-      return this.browser.mediaDevices.getDisplayMedia({ video: true });
+      return this.browser.mediaDevices.getDisplayMedia({video: true});
     } else {
-      return this.browser.mediaDevices.getUserMedia({ video: { mediaSource: 'screen' } });
+      return this.browser.mediaDevices.getUserMedia({video: {mediaSource: 'screen'}});
     }
   }
 
   public enableText() {
     try {
       this.stopAudio();
-    } catch (e) { }
+    } catch(e) { }
     try {
       this.stopVideo();
-    } catch (e) { }
+    } catch(e) { }
     try {
       this.stopScreen();
-    } catch (e) { }
+    } catch(e) { }
     this.textEnable = true;
     this.fileEnable = false;
     this.audioEnable = false;
@@ -287,13 +286,13 @@ export class VideoAudioChatComponent implements OnInit {
   public enableFile() {
     try {
       this.stopAudio();
-    } catch (e) { }
+    } catch(e) { }
     try {
       this.stopVideo();
-    } catch (e) { }
+    } catch(e) { }
     try {
       this.stopScreen();
-    } catch (e) { }
+    } catch(e) { }
     this.textEnable = false;
     this.fileEnable = true;
     this.audioEnable = false;
@@ -315,12 +314,12 @@ export class VideoAudioChatComponent implements OnInit {
 
   public sendFile() {
     let oldSendProgressValue = 0;
-    this.__videoAudioChatService.sendFile({
-      from: this.fromClientId,
-      to: this.toClientId,
+    this.socketservice.sendFile({
+      from : this.fromClientId,
+      to : this.toClientId,
       type: 'file',
-      fileName: this.file['name'],
-      fileSize: this.file['size'],
+      fileName : this.file['name'],
+      fileSize : this.file['size'],
       fileType: this.file['type']
     });
     const chunkSize = 16384;
@@ -329,13 +328,13 @@ export class VideoAudioChatComponent implements OnInit {
     this.fileReader.onload = (event: any) => {
       this.dataChannel.send(event.target.result);
       offset += event.target.result.byteLength;
-      this.sendProgressValue = ((offset * 100) / this.sendProgressMax).toFixed(1);
+      this.sendProgressValue = ((offset*100)/this.sendProgressMax).toFixed(1);
       if (this.sendProgressValue !== oldSendProgressValue) {
-        this.__videoAudioChatService.sendFile({
-          from: this.fromClientId,
-          to: this.toClientId,
+        this.socketservice.sendFile({
+          from : this.fromClientId,
+          to : this.toClientId,
           type: 'file-status',
-          progressValue: this.sendProgressValue
+          progressValue : this.sendProgressValue
         });
         oldSendProgressValue = this.sendProgressValue;
       }
@@ -343,9 +342,9 @@ export class VideoAudioChatComponent implements OnInit {
         this.readSlice(offset, chunkSize);
       }
       if (this.sendProgressValue == 100.0) {
-        this.__videoAudioChatService.sendFile({
-          from: this.fromClientId,
-          to: this.toClientId,
+        this.socketservice.sendFile({
+          from : this.fromClientId,
+          to : this.toClientId,
           type: 'file-complete'
         });
       }
@@ -365,10 +364,10 @@ export class VideoAudioChatComponent implements OnInit {
   public enableAudio() {
     try {
       this.stopVideo();
-    } catch (e) { }
+    } catch(e) { }
     try {
       this.stopScreen();
-    } catch (e) { }
+    } catch(e) { }
     this.textEnable = false;
     this.fileEnable = false;
     this.audioEnable = true;
@@ -378,8 +377,8 @@ export class VideoAudioChatComponent implements OnInit {
       this.audio = this.audioElement.nativeElement;
       let constraints = { audio: true };
       this.browser.mediaDevices.getUserMedia(constraints).then((stream: any) => {
-        if (!stream.stop && stream.getTracks) {
-          stream.stop = function () {
+        if(!stream.stop && stream.getTracks) {
+          stream.stop = function(){
             this.getTracks().forEach(function (track: any) {
               track.stop();
             });
@@ -392,7 +391,7 @@ export class VideoAudioChatComponent implements OnInit {
         }
         try {
           this.audio.srcObject = this.audioStream;
-        } catch (err) {
+        } catch(err) {
           this.audio.src = window.URL.createObjectURL(this.audioStream);
         }
         stream.getTracks().forEach((track: any) => {
@@ -408,10 +407,10 @@ export class VideoAudioChatComponent implements OnInit {
   public enableVideo() {
     try {
       this.stopAudio();
-    } catch (e) { }
+    } catch(e) { }
     try {
       this.stopScreen();
-    } catch (e) { }
+    } catch(e) { }
     this.textEnable = false;
     this.fileEnable = false;
     this.audioEnable = false;
@@ -421,8 +420,8 @@ export class VideoAudioChatComponent implements OnInit {
       this.video = this.videoElement.nativeElement;
       let constraints = { audio: true, video: { minFrameRate: 60, width: 400, height: 300 } };
       this.browser.mediaDevices.getUserMedia(constraints).then((stream: any) => {
-        if (!stream.stop && stream.getTracks) {
-          stream.stop = function () {
+        if(!stream.stop && stream.getTracks) {
+          stream.stop = function(){
             this.getTracks().forEach(function (track: any) {
               track.stop();
             });
@@ -439,7 +438,7 @@ export class VideoAudioChatComponent implements OnInit {
         }
         try {
           this.video.srcObject = this.videoStream;
-        } catch (err) {
+        } catch(err) {
           this.video.src = window.URL.createObjectURL(this.videoStream);
         }
         stream.getTracks().forEach((track: any) => {
@@ -455,10 +454,10 @@ export class VideoAudioChatComponent implements OnInit {
   public enableScreen() {
     try {
       this.stopAudio();
-    } catch (e) { }
+    } catch(e) { }
     try {
       this.stopVideo();
-    } catch (e) { }
+    } catch(e) { }
     this.textEnable = false;
     this.fileEnable = false;
     this.audioEnable = false;
@@ -467,8 +466,8 @@ export class VideoAudioChatComponent implements OnInit {
     setTimeout(() => {
       this.screen = this.screenElement.nativeElement;
       this.getAllUserMediaScreen().then((stream: any) => {
-        if (!stream.stop && stream.getTracks) {
-          stream.stop = function () {
+        if(!stream.stop && stream.getTracks) {
+          stream.stop = function(){
             this.getTracks().forEach(function (track: any) {
               track.stop();
             });
@@ -481,7 +480,7 @@ export class VideoAudioChatComponent implements OnInit {
         }
         try {
           this.screen.srcObject = this.screenStream;
-        } catch (err) {
+        } catch(err) {
           this.screen.src = window.URL.createObjectURL(this.screenStream);
         }
         stream.getTracks().forEach((track: any) => {
@@ -507,6 +506,16 @@ export class VideoAudioChatComponent implements OnInit {
   }
 
   public async connect() {
+    this.selectedUser = localStorage.getItem("selectedUser");
+    console.log("this.selectedUser " , this.selectedUser );
+    
+    this.clients.forEach(client =>{
+      if(client.emailId==this.selectedUser){
+        console.log("client.clientId",client.clientId);
+        this.toClientId = client.clientId;
+      }
+    });
+        
     this.connected = true;
     this.dataChannel = await this.peerConnection.createDataChannel('datachannel');
     if (this.fileEnable) {
@@ -536,31 +545,31 @@ export class VideoAudioChatComponent implements OnInit {
     }).then(async (offer: RTCSessionDescription) => {
       console.log('Offer Created : ', offer);
       await this.peerConnection.setLocalDescription(offer);
-      this.__videoAudioChatService.sendOffer({
-        from: this.fromClientId,
-        to: this.toClientId,
-        type: offer.type,
-        sdp: offer.sdp
+      this.socketservice.sendOffer({
+        from : this.fromClientId,
+        to : this.toClientId,
+        type : offer.type,
+        sdp : offer.sdp
       });
     });
   }
 
   public sendMessage() {
-    this.dataChannel.send(JSON.stringify({ clientId: this.fromClientId, data: this.message }));
-    this.messages.push(JSON.parse(JSON.stringify({ clientId: this.fromClientId, data: this.message })));
+    this.dataChannel.send(JSON.stringify({clientId: this.fromClientId, data: this.message}));
+    this.messages.push(JSON.parse(JSON.stringify({clientId: this.fromClientId, data: this.message})));
     this.message = '';
   }
 
   public disconnect() {
     try {
       this.stopAudio();
-    } catch (e) { }
+    } catch(e) { }
     try {
       this.stopVideo();
-    } catch (e) { }
+    } catch(e) { }
     try {
       this.stopScreen();
-    } catch (e) { }
+    } catch(e) { }
     this.connected = false;
     this.toClientId = '';
     this.enableDownload = false;

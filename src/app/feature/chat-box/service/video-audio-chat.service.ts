@@ -8,21 +8,20 @@ import * as io from 'socket.io-client';
 export class VideoAudioChatService {
 
   public socket: any;
-  private email:any; 
+  public email: String;
 
   constructor() {
-    this.socket = io('http://192.168.0.7:3000', {
+    this.socket = io('http://192.168.0.10:3000', {
       reconnectionDelay: 1000,
       reconnection: true,
       reconnectionAttempts: 1,
       transports: ['websocket'], // default is ['polling', 'websocket']
-      rejectUnauthorized: false
+      rejectUnauthorized: false,
     });
-    this.email=localStorage.getItem("email");
+    this.email =  localStorage.getItem("email");
     this.onInit();
   }
-
-  public onInit() {
+  public async onInit() {
     this.socket.on('connect', () => {
       this.socket.emit('email',this.email);
       console.log('Connected to Server');
@@ -69,17 +68,15 @@ export class VideoAudioChatService {
     return Observable.create((observer: any) => {
       this.socket.on('socketid', (message: any) => {
         observer.next(message);
-        
       });
     });
   }
 
-  public getClients = () => {
+  public  getClients = () => {
     this.socket.emit('clients');
     return Observable.create((observer: any) => {
       this.socket.on('clients', (clients: any) => {
         observer.next(clients);
-
       });
     });
   }
@@ -96,8 +93,8 @@ export class VideoAudioChatService {
     });
   }
 
-  public sendAnswer = (answer: any) => {
-    this.socket.emit('answer', answer);
+  public sendAnswer =  (answer: any) => {
+     this.socket.emit('answer', answer);
   }
 
   public receiveAnswer = () => {

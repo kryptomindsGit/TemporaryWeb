@@ -405,6 +405,7 @@ export class ChatBoxComponent implements OnInit {
    */
   selectUser(selectedUser) {
     this.userSelected = selectedUser.emailId;
+    localStorage.setItem('selectedUser', this.userSelected)
     this.activeStatus = selectedUser.isLoggedIn;
   }
 
@@ -590,5 +591,7 @@ export class ChatBoxComponent implements OnInit {
     this.receivedFileType = '';
   }
 
-
+  chatVideo(){
+    this.__router.navigate(['/feature/feature/full-layout/chat-video-audio']);
+  }
 }

@@ -59,7 +59,7 @@ const routes: Routes = [
             component: VedioAudioChattingComponent
           },
           {
-            path: 'chat-vide-audio',
+            path: 'chat-video-audio',
             component: VideoAudioChatComponent
           },
         ]
