@@ -86,6 +86,7 @@ export class VideoAudioChatComponent implements OnInit {
   @ViewChild('remoteScreenElement', {static: false}) remoteScreenElement: ElementRef;
 
   constructor(public socketservice: VideoAudioChatService) {
+    this.enableVideo();
    }
 
   ngOnInit(): void {
@@ -93,18 +94,18 @@ export class VideoAudioChatComponent implements OnInit {
     console.log('this.socketservice: ' , this.socketservice);
     if (this.socketservice) {
       console.log("before current this.client" ,   this.clientId);
-      this.subscription = this.socketservice.getSocketId().subscribe((message: any) => {
-        this.serverStatus = true;
-        this.clientId = message.clientId;
-        this.fromClientId = message.clientId;
-        this.socketId = message.socketId;
-        this.subscription.unsubscribe();
-      });
-    
-      this.socketservice.getClients().subscribe((clients: any) => {
-        this.clients = clients;
-        console.log("this.clients" , this.clients);
-      });
+        this.subscription = this.socketservice.getSocketId().subscribe((message: any) => {
+          this.serverStatus = true;
+          this.clientId = message.clientId;
+          this.fromClientId = message.clientId;
+          this.socketId = message.socketId;
+          this.subscription.unsubscribe();
+        });
+      
+        this.socketservice.getClients().subscribe((clients: any) => {
+          this.clients = clients;
+          console.log("this.clients" , this.clients);
+        });         
       window.RTCPeerConnection = this.getRTCPeerConnection();
       window.RTCSessionDescription = this.getRTCSessionDescription();
       window.RTCIceCandidate = this.getRTCIceCandidate();
@@ -151,6 +152,7 @@ export class VideoAudioChatComponent implements OnInit {
           onChannelReady();
         }
       };
+   
       this.peerConnection.ontrack = (event: any) => {
         if (this.audioEnable) {
           this.remoteAudio = this.remoteAudioElement.nativeElement;
@@ -229,6 +231,7 @@ export class VideoAudioChatComponent implements OnInit {
     } else {
       this.serverStatus = false;
     }
+   
   }
 
   public getRTCPeerConnection() {
@@ -396,6 +399,8 @@ export class VideoAudioChatComponent implements OnInit {
         }
         stream.getTracks().forEach((track: any) => {
           this.peerConnection.addTrack(track, stream);
+          console.log("....................calling addTeak : 402.................");
+          
         });
         setTimeout(() => {
           this.audio.play();
@@ -405,6 +410,7 @@ export class VideoAudioChatComponent implements OnInit {
   }
 
   public enableVideo() {
+    console.log("********************inside enbleVideo:***********************",);
     try {
       this.stopAudio();
     } catch(e) { }
@@ -443,6 +449,7 @@ export class VideoAudioChatComponent implements OnInit {
         }
         stream.getTracks().forEach((track: any) => {
           this.peerConnection.addTrack(track, stream);
+          console.log("....................calling addTeak : 451.................");
         });
         setTimeout(() => {
           this.video.play();
@@ -485,6 +492,8 @@ export class VideoAudioChatComponent implements OnInit {
         }
         stream.getTracks().forEach((track: any) => {
           this.peerConnection.addTrack(track, stream);
+          console.log("....................calling addTeak : 494.................");
+
         });
         setTimeout(() => {
           this.screen.play();

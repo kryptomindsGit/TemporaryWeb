@@ -64,6 +64,8 @@ export class VideoAudioChatService {
     });
   }
 
+  
+
   public getSocketId = () => {
     return Observable.create((observer: any) => {
       this.socket.on('socketid', (message: any) => {

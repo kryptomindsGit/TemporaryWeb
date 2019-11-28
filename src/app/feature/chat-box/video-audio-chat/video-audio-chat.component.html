@@ -1,11 +1,11 @@
 <div class="container">
-    <!-- <div class="jumbotron jumbotron-fluid text-center">
+     <!-- <div class="jumbotron jumbotron-fluid text-center">
       <div class="container">
         <h1 class="display-4">{{ title }}</h1>
         <p class="lead">{{ introline }}</p>
       </div>
-    </div> -->
-    <div class="row">
+    </div>  -->
+    <!-- <div class="row">
       <div class="col-md-6">
         <table class="table table-dark table-striped">
           <thead>
@@ -31,26 +31,26 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="row">
       <div class="container">
-        <div class="col card">
+        <div class="col card"> 
           <div class="card-body">
             <div class="container" style="padding-top: 0;">
-              <div class="row text-center">
+              <!-- <div class="row text-center">
                 <div class="col-sm">
                   <button type="button" class="btn btn-block" [ngClass]="textEnable ? 'btn-info' : 'btn-secondary'" [disabled]="connected" (click)="enableText()">
                     <i class="fa fa-font" aria-hidden="true"></i> Text </button>
-                </div>
+                </div> 
                 <div class="col-sm">
                   <button type="button" class="btn btn-block" [ngClass]="fileEnable ? 'btn-info' : 'btn-secondary'" [disabled]="connected" (click)="enableFile()">
                     <i class="fa fa-files-o" aria-hidden="true"></i> File </button>
-                </div>
-                <div class="col-sm">
+                </div> 
+                 <div class="col-sm">
                   <button type="button" class="btn btn-block" [ngClass]="audioEnable ? 'btn-info' : 'btn-secondary'" [disabled]="connected" (click)="enableAudio()">
                     <i class="fa fa-volume-up" aria-hidden="true"></i> Audio </button>
-                </div>
-                <div class="col-sm">
+                </div> 
+                 <div class="col-sm">
                   <button type="button" class="btn btn-block" [ngClass]="videoEnable ? 'btn-info' : 'btn-secondary'" [disabled]="connected" (click)="enableVideo()">
                     <i class="fa fa-video-camera" aria-hidden="true"></i> Video </button>
                 </div>
@@ -58,21 +58,21 @@
                   <button type="button" class="btn btn-block" [ngClass]="screenEnable ? 'btn-info' : 'btn-secondary'" [disabled]="connected" (click)="enableScreen()">
                     <i class="fa fa-window-restore" aria-hidden="true"></i> Screen </button>
                 </div>
-              </div>
+              </div> -->
             </div>
             <br />
             <div class="btn-toolbar">
-              <div class="input-group flex-nowrap col-md-10">
+              <!-- <div class="input-group flex-nowrap col-md-10">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="addon-wrapping"> Client ID </span>
                 </div>
                 <input type="text" class="form-control" placeholder="Enter Client Id To Connect..." aria-label="toClientId" aria-describedby="addon-wrapping" [(ngModel)]="toClientId" [disabled]="connected">
-              </div>
+              </div>  -->
               <div class="btn-group col-md-2">
-                <button *ngIf="!connected" type="button" class="btn btn-success" (click)="connect()">
+                <button type="button" class="btn btn-success" (click)="connect()">
                   <i class="fa fa-compress" aria-hidden="true"></i> Connect
                 </button>
-                <button *ngIf="connected" type="button" class="btn btn-danger" (click)="disconnect()">
+                <button type="button" class="btn btn-danger" (click)="disconnect()">
                   <i class="fa fa-expand" aria-hidden="true"></i> Disconnect
                 </button>
               </div>
