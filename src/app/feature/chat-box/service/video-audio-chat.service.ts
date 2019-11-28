@@ -11,13 +11,14 @@ export class VideoAudioChatService {
   private email:any; 
 
   constructor() {
-    this.socket = io('http://localhost:3000', {
+    this.socket = io('http://192.168.0.7:3000', {
       reconnectionDelay: 1000,
       reconnection: true,
       reconnectionAttempts: 1,
       transports: ['websocket'], // default is ['polling', 'websocket']
       rejectUnauthorized: false
     });
+    this.email=localStorage.getItem("email");
     this.onInit();
   }
 

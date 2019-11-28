@@ -84,7 +84,7 @@ export class ChatBoxComponent implements OnInit {
   public receivedFileSize: any;
   public receivedFileType: any;
   public sendFileName: any = 'Choose file';
-
+  public allUsers: any = [];
   // public client: Array<string>;
 
   // Arrays
@@ -516,6 +516,15 @@ export class ChatBoxComponent implements OnInit {
   }
 
   public async connect() {
+    console.log("User selected" , this.userSelected);
+    console.log("this.clients: ", this.clients);
+    
+    for(let i=0;i<this.clients.length;i++){
+      if(this.clients[i].emailId==this.userSelected){
+        console.log("this.clientId" , this.clients[i].clientId);
+        this.toClientId = this.clients[i].clientId;
+      }
+    }    
     this.connected = true;
     this.dataChannel = await this.peerConnection.createDataChannel('datachannel');
     if (this.fileEnable) {
