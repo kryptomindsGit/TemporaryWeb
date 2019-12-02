@@ -928,7 +928,7 @@ export class ChatBoxComponent implements OnInit {
     this.audioEnable = false;
     this.videoEnable = false;
     this.screenEnable = false;
-    await this.getServerChatEventCall();
+    // await this.getServerChatEventCall();
     // await this.getOnlineAllUser();
   }
 
@@ -1338,46 +1338,46 @@ export class ChatBoxComponent implements OnInit {
    * @name getServerChatEventCall()
    * @description call API for lsten server chat message event.
    */
-  async getServerChatEventCall() {
-    console.log("Server chat event calling....");
+  // async getServerChatEventCall() {
+  //   console.log("Server chat event calling....");
     
-    await this.socketservice.getServerSentEvent().subscribe((eventData) => {
-      console.log("eventData: ", eventData);
+  //   await this.socketservice.getServerSentEvent().subscribe((eventData) => {
+  //     console.log("eventData: ", eventData);
       
-      this.senderEmail = this.messageDetails.sender;
-      if (this.senderEmail == eventData.eventResponse.sender) {
-        this.messageObject.push({
-          'senderMsg': eventData.eventResponse.originalText,
-          'receiverMsg': eventData.eventResponse.result.translatedText,
-          'user': 'sender',
-          'sender': eventData.eventResponse.sender,
-          'receiver': eventData.eventResponse.receiver,
-        });
-        var stringToStore = JSON.stringify(this.messageObject);
-        localStorage.setItem("senderObj", stringToStore);
-        localStorage.setItem("chatObj", stringToStore);
-        this.getLocalStorageSenderMessage();
-      }
-      else {
-        this.messageObject.push({
-          'senderMsg': eventData.eventResponse.originalText,
-          'receiverMsg': eventData.eventResponse.result.translatedText,
-          'user': 'receiver',
-          'receiver': eventData.eventResponse.receiver,
-          'sender': eventData.eventResponse.sender,
-        });
-        if (eventData.eventResponse.receiver == this.emailID) {
-          var stringToStore = JSON.stringify(this.messageObject);
-          localStorage.setItem("receiverObj", stringToStore);
-          localStorage.setItem("chatObj", stringToStore);
-          this.getLocalStorageReceiverMessage();
-        }
-      }
+  //     this.senderEmail = this.messageDetails.sender;
+  //     if (this.senderEmail == eventData.eventResponse.sender) {
+  //       this.messageObject.push({
+  //         'senderMsg': eventData.eventResponse.originalText,
+  //         'receiverMsg': eventData.eventResponse.result.translatedText,
+  //         'user': 'sender',
+  //         'sender': eventData.eventResponse.sender,
+  //         'receiver': eventData.eventResponse.receiver,
+  //       });
+  //       var stringToStore = JSON.stringify(this.messageObject);
+  //       localStorage.setItem("senderObj", stringToStore);
+  //       localStorage.setItem("chatObj", stringToStore);
+  //       this.getLocalStorageSenderMessage();
+  //     }
+  //     else {
+  //       this.messageObject.push({
+  //         'senderMsg': eventData.eventResponse.originalText,
+  //         'receiverMsg': eventData.eventResponse.result.translatedText,
+  //         'user': 'receiver',
+  //         'receiver': eventData.eventResponse.receiver,
+  //         'sender': eventData.eventResponse.sender,
+  //       });
+  //       if (eventData.eventResponse.receiver == this.emailID) {
+  //         var stringToStore = JSON.stringify(this.messageObject);
+  //         localStorage.setItem("receiverObj", stringToStore);
+  //         localStorage.setItem("chatObj", stringToStore);
+  //         this.getLocalStorageReceiverMessage();
+  //       }
+  //     }
 
-      // var messageBody = document.querySelector('#msg_history');
-      // messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
-    });
-  }
+  //     // var messageBody = document.querySelector('#msg_history');
+  //     // messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+  //   });
+  // }
 
   /**
    * @name selectedUser

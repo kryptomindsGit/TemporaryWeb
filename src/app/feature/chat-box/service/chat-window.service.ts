@@ -170,7 +170,7 @@ export class ChatWindowService {
     private __http: HttpClient,
     private __zone: NgZone
   ) {
-    this.socket = io('http://192.168.0.6:3040', {
+    this.socket = io('http://192.168.0.18:3040', {
       reconnectionDelay: 1000,
       reconnection: true,
       reconnectionAttempts: 1,
@@ -337,33 +337,33 @@ export class ChatWindowService {
   //   })
   // }
 
-  getServerSentEvent() {
-    // this.EVENT_URL = `${SPRING_URL}/event/chat`;
-    this.EVENT_URL = `${NODE_URL_CHAT}/event/chat`;
+  // getServerSentEvent() {
+  //   // this.EVENT_URL = `${SPRING_URL}/event/chat`;
+  //   this.EVENT_URL = `${NODE_URL_CHAT}/event/chat`;
 
-    this.eventName = 'translation';
-    return Observable.create(observer => {
-      const eventSource = new EventSource(this.EVENT_URL);
+  //   this.eventName = 'translation';
+  //   return Observable.create(observer => {
+  //     const eventSource = new EventSource(this.EVENT_URL);
 
-      eventSource.addEventListener(this.eventName, (event: any) => this.__zone.run(() => {
-        this.myData = JSON.parse(event.data);
-        observer.next(JSON.parse(event.data));
+  //     eventSource.addEventListener(this.eventName, (event: any) => this.__zone.run(() => {
+  //       this.myData = JSON.parse(event.data);
+  //       observer.next(JSON.parse(event.data));
 
-      }));
+  //     }));
 
-      eventSource.onerror = error => {
-        this.__zone.run(() => {
-          if (eventSource.readyState === eventSource.CLOSED) {
-            console.log("on error function");
-            observer.complete();
-          } else {
-            observer.error(error);
-          }
-        })
-      }
-      return () => eventSource.close();
-    })
-  }
+  //     eventSource.onerror = error => {
+  //       this.__zone.run(() => {
+  //         if (eventSource.readyState === eventSource.CLOSED) {
+  //           console.log("on error function");
+  //           observer.complete();
+  //         } else {
+  //           observer.error(error);
+  //         }
+  //       })
+  //     }
+  //     return () => eventSource.close();
+  //   })
+  // }
 
   // Error Handler
   handleError(error) {
