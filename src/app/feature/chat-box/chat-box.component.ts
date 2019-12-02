@@ -706,6 +706,7 @@ export class ChatBoxComponent implements OnInit {
   public senderEmail: any ;
   public receiverEmail: any;
   public selectedUserClientID: any ;
+  public sendMessages: any;
 
   @ViewChild('audioElement', { static: false }) audioElement: ElementRef;
   @ViewChild('remoteAudioElement', { static: false }) remoteAudioElement: ElementRef;
@@ -1173,13 +1174,22 @@ export class ChatBoxComponent implements OnInit {
     };
     this.dataChannel.onmessage = (event: any) => {
       if (this.textEnable) {
-        console.log("Got Data Channel Message:", JSON.parse(event.data));
+        let messageData = JSON.parse(event.data);
+        console.log("Got Data Channel Message:", messageData.data);
 
-        this.socketservice.callEventTranslation(event.data).then((data) =>{
-          console.log("Transalted Message response:", data);
-          
-          // this.messages.push(JSON.parse(event.data));
-        })
+    this.sendMessages = {
+      sourceLanguageCode: "en",
+      targetLanguageCode: "hi",
+      originalText: messageData.data,
+      sender: this.jwtData.email,
+      receiver: this.userSelected
+    }
+
+    this.socketservice.callEventTranslation(this.sendMessages).subscribe((messgeData: any) => {
+      console.log(" List of messages :", messgeData);
+      
+      this.getAllUser();
+    });
       } else if (this.fileEnable) {
         this.receiveBuffer.push(event.data);
       }
