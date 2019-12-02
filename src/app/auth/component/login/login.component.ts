@@ -126,9 +126,9 @@ export class LoginComponent implements OnInit {
    * @description get connect with server event to listen continuously. 
    */
   getConnectWithServer() {
-    this.__eventSourceService.getServerSentEvent().subscribe((eventData) => {
-      this.toastr.success('You can chat!!! ');
-    });
+    // this.__eventSourceService.getServerSentEvent().subscribe((eventData) => {
+    //   this.toastr.success('You can chat!!! ');
+    // });
   }
 
   sessionTimeOut() {

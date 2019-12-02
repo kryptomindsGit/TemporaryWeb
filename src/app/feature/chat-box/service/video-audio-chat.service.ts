@@ -11,7 +11,7 @@ export class VideoAudioChatService {
   public email: String;
 
   constructor() {
-    this.socket = io('http://192.168.0.10:3000', {
+    this.socket = io('http://192.168.0.3:3000', {
       reconnectionDelay: 1000,
       reconnection: true,
       reconnectionAttempts: 1,
