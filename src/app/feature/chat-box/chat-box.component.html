@@ -426,7 +426,7 @@
       <div class="row" *ngIf="textEnable">
         <!-- <div class="container"> -->
         <div class="card">
-          <div class="card-body">
+          <!-- <div class="card-body">
             <div class="inbox_chat">
               <div *ngFor="let message of messages">
                 <strong>Client-{{ message['clientId'] }} : </strong> {{ message['data'] }}
@@ -443,6 +443,32 @@
               </div>
               <div class="btn-group col-md-2">
                 <button type="button" class="btn btn-primary" (click)="sendMessageChat(titleInput.value)" [disabled]="!connected">
+                  <i class="fa fa-paper-plane-o" aria-hidden="true"></i> Send
+                </button>
+              </div>
+            </div>
+          </div> -->
+
+          <div class="card-body">
+            <div class="inbox_chat">
+              <!-- <div class="card">
+                <div class="card-body"> -->
+                  <div *ngFor="let message of messages">
+                    <strong>Client-{{ message['clientId'] }} : </strong> {{ message['data'] }}
+                  </div>
+                <!-- </div>
+              </div> -->
+            </div>
+            <br />
+            <div class="btn-toolbar">
+              <div class="input-group flex-nowrap col-md-10">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="addon-wrapping"> Message </span>
+                </div>
+                <input type="text" class="form-control" placeholder="Enter Message To Send..." aria-label="message" aria-describedby="addon-wrapping" [(ngModel)]="message" [disabled]="!connected">
+              </div>
+              <div class="btn-group col-md-2">
+                <button type="button" class="btn btn-primary" (click)="sendMessage()" [disabled]="!connected">
                   <i class="fa fa-paper-plane-o" aria-hidden="true"></i> Send
                 </button>
               </div>

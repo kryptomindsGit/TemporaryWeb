@@ -170,7 +170,7 @@ export class ChatWindowService {
     private __http: HttpClient,
     private __zone: NgZone
   ) {
-    this.socket = io('http://192.168.0.18:3040', {
+    this.socket = io(NODE_URL_CHAT, {
       reconnectionDelay: 1000,
       reconnection: true,
       reconnectionAttempts: 1,
@@ -179,7 +179,7 @@ export class ChatWindowService {
     });
   
     this.onInit();
-    this.EVENT_URL = `${NODE_URL_CHAT}/event/chat`;
+    // this.EVENT_URL = `${NODE_URL_CHAT}/event/chat`;
     // this.EVENT_URL = `${NODE_URL_CHAT}`;
 
     this.__zone = new NgZone({ enableLongStackTrace: false });

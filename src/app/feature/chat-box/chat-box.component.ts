@@ -1245,24 +1245,24 @@ export class ChatBoxComponent implements OnInit {
    * @param messages 
    * @description send message details to spring API
    */
-  sendMessageChat(messages: string) {
-    this.messageDetails = {
-      sourceLanguageCode: "en",
-      targetLanguageCode: "hi",
-      originalText: messages,
-      sender: this.jwtData.email,
-      // receiver: this.userSelected
-    };
-    console.log("this.messageDetails:", this.messageDetails);
+  // sendMessageChat(messages: string) {
+  //   this.messageDetails = {
+  //     sourceLanguageCode: "en",
+  //     targetLanguageCode: "hi",
+  //     originalText: messages,
+  //     sender: this.jwtData.email,
+  //     // receiver: this.userSelected
+  //   };
+  //   console.log("this.messageDetails:", this.messageDetails);
     
-    this.socketservice.senderUserMessage(this.messageDetails).then(
-      (resData) => {
-      },
-      error => {
-        return Observable.throw(error);
-      }
-    );
-  }
+  //   this.socketservice.senderUserMessage(this.messageDetails).then(
+  //     (resData) => {
+  //     },
+  //     error => {
+  //       return Observable.throw(error);
+  //     }
+  //   );
+  // }
 
   /**
    * @name getAllUser()
