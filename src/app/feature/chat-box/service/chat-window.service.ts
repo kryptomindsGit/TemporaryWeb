@@ -170,7 +170,7 @@ export class ChatWindowService {
     private __http: HttpClient,
     private __zone: NgZone
   ) {
-    this.socket = io('http://192.168.0.18:3040', {
+    this.socket = io('http://192.168.0.6:3040', {
       reconnectionDelay: 1000,
       reconnection: true,
       reconnectionAttempts: 1,
