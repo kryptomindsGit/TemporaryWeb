@@ -164,6 +164,7 @@ export class ChatWindowService {
   eventName: any;
   springurl: any;
   myData: any;
+  sendMessage: any;
 
  
   constructor(
@@ -302,7 +303,7 @@ export class ChatWindowService {
       let res = await this.__http.post(`${NODE_URL_CHAT}/translation`, senderMessage,httpOptions).toPromise();
 
       this.socket.on(`${NODE_URL_CHAT}/translation`, () => {
-        this.socket.emit('handshake','hello bhushan');
+        // this.socket.emit('handshake','hello bhushan');
         console.log('bhushan called');
       });
 
@@ -311,6 +312,32 @@ export class ChatWindowService {
       await this.handleError(error);
     }
   }
+
+  async callEventTranslation(eventData: any){
+    console.log("eventData:", eventData);
+
+    this.sendMessage = {
+      sourceLanguageCode: "en",
+      targetLanguageCode: "hi",
+      originalText: eventData.data,
+      // sender: this.jwtData.email,
+      // receiver: this.userSelected
+    }
+    
+    this.socket.emit('translation',this.sendMessage).toPromise();;
+    // this.translatedMessage();
+    return Observable.create((observer: any) => {
+      this.socket.on('translated', (message: any) => {
+        observer.next(message);
+        console.log("Translated Message:", message);
+      });
+    });
+  }
+
+  // translatedMessage(){
+  //   console.log("Translated Message");
+  // }
+
 
   // getOnlineUserList() {
   //   // this.EVENT_URL = `${NODE_URL_CHAT}/event/chat`;

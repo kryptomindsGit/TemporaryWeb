@@ -1174,7 +1174,12 @@ export class ChatBoxComponent implements OnInit {
     this.dataChannel.onmessage = (event: any) => {
       if (this.textEnable) {
         console.log("Got Data Channel Message:", JSON.parse(event.data));
-        this.messages.push(JSON.parse(event.data));
+
+        this.socketservice.callEventTranslation(event.data).then((data) =>{
+          console.log("Transalted Message response:", data);
+          
+          // this.messages.push(JSON.parse(event.data));
+        })
       } else if (this.fileEnable) {
         this.receiveBuffer.push(event.data);
       }
