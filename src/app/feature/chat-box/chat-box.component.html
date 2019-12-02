@@ -325,8 +325,6 @@
 
 
 
-
-
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-3">
@@ -387,7 +385,7 @@
           <div class="card-body">
             <div class="row">
               <div class="col-md-9">
-                <strong>{{ userSelected }}</strong> 
+                <strong>{{ userSelected }}</strong>
                 {{ selectedUserClientID }}
                 <!-- : {{ clientId }} -->
               </div>
@@ -426,38 +424,12 @@
       <div class="row" *ngIf="textEnable">
         <!-- <div class="container"> -->
         <div class="card">
-          <!-- <div class="card-body">
-            <div class="inbox_chat">
-              <div *ngFor="let message of messages">
-                <strong>Client-{{ message['clientId'] }} : </strong> {{ message['data'] }}
-              </div>
-            </div>
-            <br />
-            <div class="btn-toolbar">
-              <div class="input-group flex-nowrap col-md-10">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="addon-wrapping"> Message </span>
-                </div>
-                <input type="text" class="form-control" #titleInput (keydown.enter)="sendMessageChat($event.target.value)" placeholder="Enter Message To Send..." aria-label="message"
-                  aria-describedby="addon-wrapping" [(ngModel)]="message" [disabled]="!connected">
-              </div>
-              <div class="btn-group col-md-2">
-                <button type="button" class="btn btn-primary" (click)="sendMessageChat(titleInput.value)" [disabled]="!connected">
-                  <i class="fa fa-paper-plane-o" aria-hidden="true"></i> Send
-                </button>
-              </div>
-            </div>
-          </div> -->
 
           <div class="card-body">
-            <div class="inbox_chat">
-              <!-- <div class="card">
-                <div class="card-body"> -->
+            <!-- <div class="inbox_chat">
                   <div *ngFor="let message of messages">
                     <strong>Client-{{ message['clientId'] }} : </strong> {{ message['data'] }}
                   </div>
-                <!-- </div>
-              </div> -->
             </div>
             <br />
             <div class="btn-toolbar">
@@ -473,158 +445,225 @@
                 </button>
               </div>
             </div>
+          </div> -->
+          <div class="inbox_chat">
+            <div id="msg_history">
+              <div *ngFor="let msgs of newMessageObject; let i=index">
+                <div *ngIf="msgs.user == 'sender'; else receiverUser">
+                  <div class="outgoing_msg">
+                    <div class="outgoing_msg_img">
+                      <img style="width: 30px; height: 30px;" class="rounded-circle"
+                        src="../../../assets/images/jothipawar.jpg" alt="sunil">
+                    </div>
+                    <div class="sent_msg bubble-blue you">
+                      <p>{{msgs.senderMsg}}</p>
+                      <p>{{msgs.receiverMsg}} </p>
+                    </div>
+                  </div>
+                </div>
+
+                <ng-template #receiverUser>
+                  <div class="incoming_msg" *ngIf="msgs.user == 'receiver'">
+                    <div class="incoming_msg_img">
+                      <img style="width: 30px; height: 30px;" class="rounded-circle"
+                        src="../../../assets/images/akhshay.png" alt="sunil">
+                    </div>
+                    <div class="received_msg">
+                      <div class="received_withd_msg bubble me">
+                        <p>{{msgs.receiverMsg}} </p>
+                        <p>{{msgs.senderMsg}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </div>
+              </div>
+          </div>
+              <div class="type_msg">
+                <div class="row">
+                   
+                    <div class="col-md-9">
+                                <div class="input_msg_write">    
+                                    <input type="text" placeholder="Enter Message To Send..." [(ngModel)]="message"  class="write_msg" />
+                                             
+                                </div>
+                        </div>
+                        <div class="col-md-3">
+                                <!-- <button class="file_send_btn"><i class="fa fa-paperclip" aria-hidden="true" (click)="enableFile()"></i></button>
+                                <button class="file_send_btn"><i class="fa fa-microphone" aria-hidden="true" (click)="enableAudio()"></i></button> -->
+                                <button class="file_send_btn" type="button" (click)="sendMessage()"><i class="fa fa-paper-plane-o"  aria-hidden="true"></i></button> 
+                        </div>
+                    </div>
+                </div>
+              <br />
+            <!-- <div class="btn-toolbar">
+              <div class="input-group flex-nowrap col-md-10">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="addon-wrapping"> Message </span>
+                </div>
+                <input type="text" class="form-control" placeholder="Enter Message To Send..." aria-label="message" aria-describedby="addon-wrapping" [(ngModel)]="message" [disabled]="!connected">
+              </div>
+              <div class="btn-group col-md-2">
+                <button type="button" class="btn btn-primary" (click)="sendMessage()" [disabled]="!connected">
+                  <i class="fa fa-paper-plane-o" aria-hidden="true"></i> Send
+                </button>
+              </div>
+            </div> -->
+            </div>
           </div>
         </div>
-      </div>
-      <div class="row" *ngIf="fileEnable">
-        <div class="container">
-          <div class="card">
-            <div class="card-body">
-              <div class="container btn-toolbar">
-                <div class="custom-file input-group flex-nowrap col-md-10">
-                  <input type="file" class="custom-file-input" id="file" (change)="handleFileInput($event.target.files)"
-                    [disabled]="!connected">
-                  <label class="custom-file-label" for="file">{{ sendFileName }}</label>
-                </div>
-                <div class="btn-group col-md-2">
-                  <button type="button" class="btn btn-warning" (click)="sendFile()"
-                    [disabled]="sendFileName == 'Choose file' || !connected">
-                    <i class="fa fa-paper-plane-o" aria-hidden="true"></i> Send
-                  </button>
-                </div>
-              </div>
-              <br />
-              <div class="container">
-                <div class="row">
-                  <div class="col-md-2 text-center">
-                    Send Progress :
+        <div class="row" *ngIf="fileEnable">
+          <div class="container">
+            <div class="card">
+              <div class="card-body">
+                <div class="container btn-toolbar">
+                  <div class="custom-file input-group flex-nowrap col-md-10">
+                    <input type="file" class="custom-file-input" id="file"
+                      (change)="handleFileInput($event.target.files)" [disabled]="!connected">
+                    <label class="custom-file-label" for="file">{{ sendFileName }}</label>
                   </div>
-                  <div class="col-md-10">
-                    <div class="progress">
-                      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                        [style.width.%]="sendProgressValue" aria-valuenow="progressValue"
-                        aria-valuemin="sendProgressMin" aria-valuemax="sendProgressMax">
-                        <strong> {{ sendProgressValue }} %</strong>
+                  <div class="btn-group col-md-2">
+                    <button type="button" class="btn btn-warning" (click)="sendFile()"
+                      [disabled]="sendFileName == 'Choose file' || !connected">
+                      <i class="fa fa-paper-plane-o" aria-hidden="true"></i> Send
+                    </button>
+                  </div>
+                </div>
+                <br />
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-2 text-center">
+                      Send Progress :
+                    </div>
+                    <div class="col-md-10">
+                      <div class="progress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                          [style.width.%]="sendProgressValue" aria-valuenow="progressValue"
+                          aria-valuemin="sendProgressMin" aria-valuemax="sendProgressMax">
+                          <strong> {{ sendProgressValue }} %</strong>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <br />
-              <div class="row">
-                <div class="col-md-2 text-left">
-                  Received :
-                </div>
-              </div>
-              <div class="container">
+                <br />
                 <div class="row">
-                  <div class="col-md-2 text-right">
-                    File Name :
-                  </div>
-                  <div class="col-md-10">
-                    {{ receivedFileName }}
+                  <div class="col-md-2 text-left">
+                    Received :
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-2 text-right">
-                    File Type :
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-2 text-right">
+                      File Name :
+                    </div>
+                    <div class="col-md-10">
+                      {{ receivedFileName }}
+                    </div>
                   </div>
-                  <div class="col-md-10">
-                    {{ receivedFileType }}
+                  <div class="row">
+                    <div class="col-md-2 text-right">
+                      File Type :
+                    </div>
+                    <div class="col-md-10">
+                      {{ receivedFileType }}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-2 text-right">
+                      File Size :
+                    </div>
+                    <div class="col-md-10">
+                      {{ receivedFileSize }}
+                    </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-2 text-right">
-                    File Size :
-                  </div>
-                  <div class="col-md-10">
-                    {{ receivedFileSize }}
-                  </div>
-                </div>
-              </div>
-              <div class="container">
-                <div class="row">
-                  <div class="col-md-2 text-center">
-                    Receive Progress :
-                  </div>
-                  <div class="col-md-10">
-                    <div class="progress">
-                      <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar"
-                        [style.width.%]="receivedProgressValue" aria-valuenow="receivedProgressValue"
-                        aria-valuemin="receivedProgressMin" aria-valuemax="receivedProgressMax">
-                        <strong> {{ receivedProgressValue }} %</strong>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-2 text-center">
+                      Receive Progress :
+                    </div>
+                    <div class="col-md-10">
+                      <div class="progress">
+                        <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+                          role="progressbar" [style.width.%]="receivedProgressValue"
+                          aria-valuenow="receivedProgressValue" aria-valuemin="receivedProgressMin"
+                          aria-valuemax="receivedProgressMax">
+                          <strong> {{ receivedProgressValue }} %</strong>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="container">
-                <div class="text-center">
-                  <button type="button" class="btn btn-primary" (click)="downloadFile()" [disabled]="!enableDownload">
-                    <i class="fa fa-download" aria-hidden="true"></i> Download File
-                  </button>
+                <div class="container">
+                  <div class="text-center">
+                    <button type="button" class="btn btn-primary" (click)="downloadFile()" [disabled]="!enableDownload">
+                      <i class="fa fa-download" aria-hidden="true"></i> Download File
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="row" *ngIf="audioEnable">
-        <div class="container">
-          <div class="card">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-md-6 text-center">
-                  <audio #audioElement controls>
-                    <source>
-                  </audio>
-                </div>
-                <div class="col-md-6 text-center">
-                  <audio #remoteAudioElement controls>
-                    <source>
-                  </audio>
+        <div class="row" *ngIf="audioEnable">
+          <div class="container">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6 text-center">
+                    <audio #audioElement controls>
+                      <source>
+                    </audio>
+                  </div>
+                  <div class="col-md-6 text-center">
+                    <audio #remoteAudioElement controls>
+                      <source>
+                    </audio>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="row" *ngIf="videoEnable">
-        <div class="container">
-          <div class="card">
-            <div class="card-body">
-              <!-- <div class="video_chat"> -->
-              <div class="row">
-                <div class="internaldiv">
-                  <video #videoElement class="img-border">
-                    <source>
-                  </video>
+        <div class="row" *ngIf="videoEnable">
+          <div class="container">
+            <div class="card">
+              <div class="card-body">
+                <!-- <div class="video_chat"> -->
+                <div class="row">
+                  <div class="internaldiv">
+                    <video #videoElement class="img-border">
+                      <source>
+                    </video>
+                  </div>
+                  <div class="externaldiv">
+                    <video #remoteVideoElement class="img-border">
+                      <source>
+                    </video>
+                  </div>
                 </div>
-                <div class="externaldiv">
-                  <video #remoteVideoElement class="img-border">
-                    <source>
-                  </video>
-                </div>
+                <!-- </div> -->
               </div>
-              <!-- </div> -->
             </div>
           </div>
         </div>
-      </div>
-      <div class="row" *ngIf="screenEnable">
-        <div class="container">
-          <div class="card">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-md-6 text-center">
-                  <video #screenElement class="img-border" width="{{ screenWidth }}" height="{{ screenHeight }}">
-                    <source>
-                  </video>
-                </div>
-                <div class="col-md-6 text-center">
-                  <video #remoteScreenElement class="img-border" width="{{ screenWidth }}" height="{{ screenHeight }}">
-                    <source>
-                  </video>
+        <div class="row" *ngIf="screenEnable">
+          <div class="container">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6 text-center">
+                    <video #screenElement class="img-border" width="{{ screenWidth }}" height="{{ screenHeight }}">
+                      <source>
+                    </video>
+                  </div>
+                  <div class="col-md-6 text-center">
+                    <video #remoteScreenElement class="img-border" width="{{ screenWidth }}"
+                      height="{{ screenHeight }}">
+                      <source>
+                    </video>
+                  </div>
                 </div>
               </div>
             </div>
@@ -632,8 +671,7 @@
         </div>
       </div>
     </div>
+
+
+    <div class="footer"></div>
   </div>
-
-
-  <div class="footer"></div>
-</div>

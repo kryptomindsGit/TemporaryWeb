@@ -233,42 +233,42 @@
 //    * @name getServerChatEventCall()
 //    * @description call API for lsten server chat message event.
 //    */
-//   getServerChatEventCall() {
-//     this.__chatboxService.getServerSentEvent().subscribe((eventData) => {
-//       this.senderEmail = this.messageDetails.sender;
-//       if (this.senderEmail == eventData.eventResponse.sender) {
-//         this.messageObject.push({
-//           'senderMsg': eventData.eventResponse.originalText,
-//           'receiverMsg': eventData.eventResponse.result.translatedText,
-//           'user': 'sender',
-//           'sender': eventData.eventResponse.sender,
-//           'receiver': eventData.eventResponse.receiver,
-//         });
-//         var stringToStore = JSON.stringify(this.messageObject);
-//         localStorage.setItem("senderObj", stringToStore);
-//         localStorage.setItem("chatObj", stringToStore);
-//         this.getLocalStorageSenderMessage();
-//       }
-//       else {
-//         this.messageObject.push({
-//           'senderMsg': eventData.eventResponse.originalText,
-//           'receiverMsg': eventData.eventResponse.result.translatedText,
-//           'user': 'receiver',
-//           'receiver': eventData.eventResponse.receiver,
-//           'sender': eventData.eventResponse.sender,
-//         });
-//         if (eventData.eventResponse.receiver == this.emailID) {
-//           var stringToStore = JSON.stringify(this.messageObject);
-//           localStorage.setItem("receiverObj", stringToStore);
-//           localStorage.setItem("chatObj", stringToStore);
-//           this.getLocalStorageReceiverMessage();
-//         }
-//       }
+  // getServerChatEventCall() {
+  //   this.__chatboxService.getServerSentEvent().subscribe((eventData) => {
+  //     this.senderEmail = this.messageDetails.sender;
+  //     if (this.senderEmail == eventData.eventResponse.sender) {
+  //       this.messageObject.push({
+  //         'senderMsg': eventData.eventResponse.originalText,
+  //         'receiverMsg': eventData.eventResponse.result.translatedText,
+  //         'user': 'sender',
+  //         'sender': eventData.eventResponse.sender,
+  //         'receiver': eventData.eventResponse.receiver,
+  //       });
+  //       var stringToStore = JSON.stringify(this.messageObject);
+  //       localStorage.setItem("senderObj", stringToStore);
+  //       localStorage.setItem("chatObj", stringToStore);
+  //       this.getLocalStorageSenderMessage();
+  //     }
+  //     else {
+  //       this.messageObject.push({
+  //         'senderMsg': eventData.eventResponse.originalText,
+  //         'receiverMsg': eventData.eventResponse.result.translatedText,
+  //         'user': 'receiver',
+  //         'receiver': eventData.eventResponse.receiver,
+  //         'sender': eventData.eventResponse.sender,
+  //       });
+  //       if (eventData.eventResponse.receiver == this.emailID) {
+  //         var stringToStore = JSON.stringify(this.messageObject);
+  //         localStorage.setItem("receiverObj", stringToStore);
+  //         localStorage.setItem("chatObj", stringToStore);
+  //         this.getLocalStorageReceiverMessage();
+  //       }
+  //     }
 
-//       // var messageBody = document.querySelector('#msg_history');
-//       // messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
-//     });
-//   }
+  //     // var messageBody = document.querySelector('#msg_history');
+  //     // messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+  //   });
+  // }
 
 //   /**
 //    * @name selectUser
@@ -703,9 +703,9 @@ export class ChatBoxComponent implements OnInit {
   public receivedBlob: Blob;
   public enableDownload: boolean = false;
 
-  public senderEmail: any ;
+  public senderEmail: any;
   public receiverEmail: any;
-  public selectedUserClientID: any ;
+  public selectedUserClientID: any;
   public sendMessages: any;
 
   @ViewChild('audioElement', { static: false }) audioElement: ElementRef;
@@ -718,10 +718,10 @@ export class ChatBoxComponent implements OnInit {
   constructor(public socketservice: ChatWindowService,
     private __authService: AuthService,
     private __router: Router,
-  ) { 
+  ) {
     this.senderEmail = localStorage.getItem('email');
     console.log("Sender Email :", this.senderEmail);
-    
+
   }
 
   ngOnInit() {
@@ -733,7 +733,7 @@ export class ChatBoxComponent implements OnInit {
 
   async socketConnect() {
     console.log("Socket calling.....");
-    
+
     if (this.socketservice) {
       this.subscription = await this.socketservice.getSocketId().subscribe((message: any) => {
         this.serverStatus = true;
@@ -741,15 +741,15 @@ export class ChatBoxComponent implements OnInit {
         this.fromClientId = message.clientId;
         this.socketId = message.socketId;
         this.subscription.unsubscribe();
-      console.log("Current user Client ID:", this.clientId);
+        console.log("Current user Client ID:", this.clientId);
 
       });
-      
+
       await this.socketservice.getClients().subscribe((clients: any) => {
         this.clients = clients;
         this.allClients = clients
         console.log(" List of Clients :", this.allClients);
-        
+
         this.getAllUser();
       });
       window.RTCPeerConnection = this.getRTCPeerConnection();
@@ -1067,6 +1067,7 @@ export class ChatBoxComponent implements OnInit {
     this.videoEnable = true;
     this.screenEnable = false;
     setTimeout(() => {
+      this.connect();
       this.video = this.videoElement.nativeElement;
       let constraints = { audio: true, video: { minFrameRate: 60, width: 400, height: 300 } };
       this.browser.mediaDevices.getUserMedia(constraints).then((stream: any) => {
@@ -1158,8 +1159,8 @@ export class ChatBoxComponent implements OnInit {
   public async connect() {
 
     this.allClients.forEach(selectedUser => {
-      if(selectedUser.emailId == this.userSelected){
-        this.toClientId = selectedUser.clientId; 
+      if (selectedUser.emailId == this.userSelected) {
+        this.toClientId = selectedUser.clientId;
       }
     });
     console.log("to client ID:", this.toClientId);
@@ -1177,19 +1178,51 @@ export class ChatBoxComponent implements OnInit {
         let messageData = JSON.parse(event.data);
         console.log("Got Data Channel Message:", messageData.data);
 
-    this.sendMessages = {
-      sourceLanguageCode: "en",
-      targetLanguageCode: "hi",
-      originalText: messageData.data,
-      sender: this.jwtData.email,
-      receiver: this.userSelected
-    }
+        this.sendMessages = {
+          sourceLanguageCode: "en",
+          targetLanguageCode: "hi",
+          originalText: messageData.data,
+          sender: this.jwtData.email,
+          receiver: this.userSelected,
+          clientId: messageData.clientId
+        }
+        this.socketservice.callEventTranslation(this.sendMessages).subscribe((messgeData: any) => {
+          console.log(" response messages :", messgeData);
 
-    this.socketservice.callEventTranslation(this.sendMessages).subscribe((messgeData: any) => {
-      console.log(" List of messages :", messgeData);
-      
-      this.getAllUser();
-    });
+          this.senderEmail = this.sendMessages.receiver;    
+          
+      if (messgeData.receiver == this.senderEmail ) {
+
+        this.messageObject.push({
+          'senderMsg': messgeData.originalText,
+          'receiverMsg': messgeData.translatedText.TranslatedText,
+          'user': 'receiver',
+          'receiver': messgeData.receiver,
+          'sender': messgeData.sender,
+        });
+          var stringToStore = JSON.stringify(this.messageObject);
+          localStorage.setItem("receiverObj", stringToStore);
+          this.getLocalStorageReceiverMessage();
+      }
+      // else if (this.sendMessages.sender  == this.userSelected) {
+
+      //   this.messageObject.push({
+      //     'senderMsg': messgeData.originalText,
+      //     'receiverMsg': messgeData.translatedText.TranslatedText,
+      //     'user': 'sender',
+      //     'sender': messgeData.sender,
+      //     'receiver': messgeData.receiver,
+      //   });
+
+      //   var stringToStore = JSON.stringify(this.messageObject);
+      //   localStorage.setItem("senderObj", stringToStore);
+      //   this.getLocalStorageSenderMessage();
+      // }
+          // this.messages.push(JSON.parse(JSON.stringify({ clientId: messageData.clientId, data: messgeData.translatedText.TranslatedText })));
+          // console.log("Messages array:", this.messages);
+
+
+        });
       } else if (this.fileEnable) {
         this.receiveBuffer.push(event.data);
       }
@@ -1217,9 +1250,22 @@ export class ChatBoxComponent implements OnInit {
   }
 
   public sendMessage() {
+    this.messageObject.push({
+      'senderMsg': this.message,
+      'user': 'sender',
+      'sender': this.jwtData.email,
+      'receiver': this.userSelected,
+      'clientId': this.fromClientId
+    });
     this.dataChannel.send(JSON.stringify({ clientId: this.fromClientId, data: this.message }));
     this.messages.push(JSON.parse(JSON.stringify({ clientId: this.fromClientId, data: this.message })));
     this.message = '';
+
+    
+
+    var stringToStore = JSON.stringify(this.messageObject);
+    localStorage.setItem("senderObj", stringToStore);
+    this.getLocalStorageSenderMessage();
   }
 
   public disconnect() {
@@ -1269,7 +1315,7 @@ export class ChatBoxComponent implements OnInit {
   //     // receiver: this.userSelected
   //   };
   //   console.log("this.messageDetails:", this.messageDetails);
-    
+
   //   this.socketservice.senderUserMessage(this.messageDetails).then(
   //     (resData) => {
   //     },
@@ -1302,52 +1348,52 @@ export class ChatBoxComponent implements OnInit {
    * @name getActiveAllUser()
    * @description call API for get active Users from Server.
    */
-//   getActiveAllUser() {
-//     // this.allUserArray = this.allUsersArr.filter(o1 => this.clients.some(o2 => o1.emailId === o2.emailId));
-// // this.allUserArray = this.allUsersArr.filter(o1 => this.clients.some(o2 => o1.emailId === o2.emailId));
-//     this.allUsersArr.forEach(element => {
-//       if (element.isLoggedIn == true) {
-//         this.activeUser = true;
-//         this.getLocalStorageSenderMessage();
-//       }
-//       else {
-//         this.deactiveUser = false;
-//         this.getLocalStorageReceiverMessage();
-//       }
-//     });
-//   }
+  //   getActiveAllUser() {
+  //     // this.allUserArray = this.allUsersArr.filter(o1 => this.clients.some(o2 => o1.emailId === o2.emailId));
+  // // this.allUserArray = this.allUsersArr.filter(o1 => this.clients.some(o2 => o1.emailId === o2.emailId));
+  //     this.allUsersArr.forEach(element => {
+  //       if (element.isLoggedIn == true) {
+  //         this.activeUser = true;
+  //         this.getLocalStorageSenderMessage();
+  //       }
+  //       else {
+  //         this.deactiveUser = false;
+  //         this.getLocalStorageReceiverMessage();
+  //       }
+  //     });
+  //   }
 
   /**
    * @name getOnlineAllUser()
    * @description call API for get online Users from Server.
    */
-//  async getOnlineAllUser() {
-//     console.log("online user calling ...");
-    
-//     await this.socketservice.getOnlineUserList().subscribe((eventData) => {
-//       let flag = 0;
-//       if (this.userRole == 'Freelancer') {
-//         this.userId = 2;
-//       } else if (this.userRole == 'Employer') {
-//         this.userId = 1;
-//       }
+  //  async getOnlineAllUser() {
+  //     console.log("online user calling ...");
 
-//       this.allUserArray.forEach(element => {
-//         if (element.emailId == eventData.onlineUsers.emailId) {
-//           element.isLoggedIn = eventData.onlineUsers.isLoggedIn;
-//           flag = 1;
-//         }
-//       });
-//       if (flag == 0 && eventData.onlineUsers.role == this.userId) {
-//         this.allUserArray.forEach(element => {
-//           if (element.emailId == eventData.onlineUsers.emailId) {
-//             element.isLoggedIn = eventData.onlineUsers.isLoggedIn;
-//           }
-//         });
-//         this.allUserArray.push(eventData.onlineUsers);
-//       }
-//     });
-//   }
+  //     await this.socketservice.getOnlineUserList().subscribe((eventData) => {
+  //       let flag = 0;
+  //       if (this.userRole == 'Freelancer') {
+  //         this.userId = 2;
+  //       } else if (this.userRole == 'Employer') {
+  //         this.userId = 1;
+  //       }
+
+  //       this.allUserArray.forEach(element => {
+  //         if (element.emailId == eventData.onlineUsers.emailId) {
+  //           element.isLoggedIn = eventData.onlineUsers.isLoggedIn;
+  //           flag = 1;
+  //         }
+  //       });
+  //       if (flag == 0 && eventData.onlineUsers.role == this.userId) {
+  //         this.allUserArray.forEach(element => {
+  //           if (element.emailId == eventData.onlineUsers.emailId) {
+  //             element.isLoggedIn = eventData.onlineUsers.isLoggedIn;
+  //           }
+  //         });
+  //         this.allUserArray.push(eventData.onlineUsers);
+  //       }
+  //     });
+  //   }
 
   /**
    * @name getServerChatEventCall()
@@ -1355,10 +1401,10 @@ export class ChatBoxComponent implements OnInit {
    */
   // async getServerChatEventCall() {
   //   console.log("Server chat event calling....");
-    
+
   //   await this.socketservice.getServerSentEvent().subscribe((eventData) => {
   //     console.log("eventData: ", eventData);
-      
+
   //     this.senderEmail = this.messageDetails.sender;
   //     if (this.senderEmail == eventData.eventResponse.sender) {
   //       this.messageObject.push({

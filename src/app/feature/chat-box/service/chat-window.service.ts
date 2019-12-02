@@ -319,8 +319,11 @@ export class ChatWindowService {
       this.socket.emit('translation', eventData);
       return Observable.create((observer: any) => {
         this.socket.on('translation', (messageData: any) => {
+          console.log("resp from nodejs message :", messageData);
+          
           observer.next(messageData);
         });
+        // return messageData;
       });
     }
 
