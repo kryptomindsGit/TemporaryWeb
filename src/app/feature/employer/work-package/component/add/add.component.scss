@@ -61,11 +61,17 @@ CARD CSS
   background: transparent !important;
 }
 
+h6{
+  letter-spacing: $text-letter-spacing;
+  font-weight: $text-font-weight
+}
 
 .card .card-header {
   background: transparent !important;
   padding: .72rem .30rem;
-
+  background: $text-color;
+  letter-spacing: $text-letter-spacing;
+  font-weight: $text-font-weight
 }
 
 .worktable {
@@ -81,6 +87,8 @@ CARD CSS
   // background: #282b2f;
   background: $bg-front-color;
   border-top: 1px solid rgba(255, 255, 255, 0.09);
+  letter-spacing: $text-letter-spacing;
+  font-weight: $text-font-weight
 }
 
 

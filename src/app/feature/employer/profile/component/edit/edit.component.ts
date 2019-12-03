@@ -249,40 +249,30 @@ handleFileInput(event) {
   }
 }
 async uploadFile(i : any) {
-    if (this.documentFileArr[i] != null) {
-      if (this.fileName != null || this.fileName != undefined) {
-        this.documentFileArr[i].documentUrl = this.fileName;
-        this.documentFileArr[i].documentTypeId = this.documentFileArr[i].documentTypeId;
+    
+    this.loading = true;
+    await this.__profileService.postDocHashData(this.fileObj, this.emailId, this.fileName).then((event) => {
+      this.FileArrData = event;
+      this.loading = false;
+      if (this.FileArrData) {
+        this.toastr.success(this.fileName, "Successfully uploaded");
+        if (this.documentFileArr[i] != null) {
+          if (this.fileName != null || this.fileName != undefined) {
+            this.documentFileArr[i].documentUrl = this.FileArrData.fileId;
+            this.documentFileArr[i].documentTypeId = this.documentFileArr[i].documentTypeId;
+          }
+        }else{
+           this.documentFileArr.push(
+            {
+              'documentUrl': this.FileArrData.fileId,
+              'documentTypeId': this.doc_cat_id,
+              'documentId': 0
+            }); 
+        }
+      } else {
+        this.toastr.error(this.fileName, "File not uploaded");
       }
-    }else{
-      await this.documentFileArr.push(
-        {
-          'documentUrl': this.fileName,
-          'documentTypeId': this.doc_cat_id,
-          'documentId': 0
-        }); 
-    }
-    // this.loading = true;
-    // await this.__profileService.postDocHashData(this.fileObj, this.emailId, this.fileName).then((event) => {
-    //   this.FileArrData = event;
-    //   this.loading = false;
-    //   if (this.FileArrData) {
-    //     this.toastr.success(this.fileName, "Successfully uploaded");
-    //   } else {
-    //     this.toastr.error(this.fileName, "File not uploaded");
-    //   }
-    // });
-    // await this.documentFileArr.push(
-    //   {
-    //     'file_name': this.FileArrData.fileId,
-    //     'file_type': this.fileType
-    //   });
-    // await this.documentFileArr.push(
-    //   {
-    //     'documentUrl': this.fileName,
-    //     'documentTypeId': this.fileType,
-    //     'documentId': 0
-    //   });
+    });
     console.log(this.documentFileArr);
   }
 

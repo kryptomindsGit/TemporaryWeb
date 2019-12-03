@@ -891,92 +891,74 @@ export class EditComponent implements OnInit {
   }
 
 
-  uploadPersonalFile(i: any) {
+  async uploadPersonalFile(i: any) {
+
+    this.loading = true;
+    await this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
+      this.FileArrData = event;
+      this.loading = false;
+      if (this.FileArrData) {
+        this.toastr.success(this.fileName, "Successfully uploaded");
 
     if (this.documentPersonalArray[i] != null) {
       if (this.fileName != null || this.fileName != undefined) {
-        this.documentPersonalArray[i].documentUrl = this.fileName.name;
+        this.documentPersonalArray[i].documentUrl = this.FileArrData.fileId;
         this.documentPersonalArray[i].documentTypeId = this.documentPersonalArray[i].documentTypeId;
       }
     } else {
       this.documentPersonalArray.push(
         {
-          'documentUrl': this.fileName.name,
+          'documentUrl': this.FileArrData.fileId,
           'documentTypeId': this.doc_cat_id,
           'documentId': 0
         });
     }
-
-    // this.loading = true;
-    // await this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
-    //   this.FileArrData = event;
-    //   this.loading = false;
-    //   if (this.FileArrData) {
-    //     this.toastr.success(this.fileName, "Successfully uploaded");
-    //   } else {
-    //     this.toastr.error(this.fileName, "File not uploaded");
-    //   }
-    // });
-
-    // await this.documentPersonalArray.push(
-    //   {
-    //     'documentUrl': this.FileArrData.fileId,
-    //     'documentTypeId': this.doc_cat_id
-    //   });
+      } else {
+        this.toastr.error(this.fileName, "File not uploaded");
+      }
+    });
   }
 
-  uploadEducationFile(i: any) {
-    if (this.documentQualArray[i] != null) {
-      if (this.fileName != null || this.fileName != undefined) {
-        this.documentQualArray[i].documentUrl = this.fileName.name;
-        this.documentQualArray[i].documentTypeId = this.documentQualArray[i].documentTypeId;
+  uploadEducationFile(i: any) {   
+    this.loading = true;
+    this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
+      this.FileArrData = event;
+      this.loading = false;
+      if (this.documentQualArray[i] != null) {
+        if (this.fileName != null || this.fileName != undefined) {
+          this.documentQualArray[i].documentUrl = this.FileArrData.fileId;
+          this.documentQualArray[i].documentTypeId = this.documentQualArray[i].documentTypeId;
+        }
+      } else {
+        this.documentQualArray.push(
+          {
+            'documentUrl': this.FileArrData.fileId,
+            'documentTypeId': this.doc_cat_id,
+            'documentId': 0
+          });
       }
-    } else {
-      this.documentQualArray.push(
-        {
-          'documentUrl': this.fileName.name,
-          'documentTypeId': this.doc_cat_id,
-          'documentId': 0
-        });
-    }
-    // this.loading = true;
-    // this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
-    //   this.FileArrData = event;
-    //   this.loading = false;
-    // });
-
-    // this.documentQualArray.push(
-    //   {
-    //     'documentUrl': this.FileArrData.fileId,
-    //     'documentTypeId': 4
-    //   });
+    });
   }
 
   uploadWorkExpFile(i: any) {
-    if (this.documentWorkArray[i] != null) {
-      if (this.fileName != null || this.fileName != undefined) {
-        this.documentWorkArray[i].documentUrl = this.fileName.name;
-        this.documentWorkArray[i].documentTypeId = this.documentWorkArray[i].documentTypeId;
+    this.loading = true;
+    this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
+      this.FileArrData = event;
+      this.loading = false;
+      if (this.documentWorkArray[i] != null) {
+        if (this.fileName != null || this.fileName != undefined) {
+          this.documentWorkArray[i].documentUrl = this.fileName.name;
+          this.documentWorkArray[i].documentTypeId = this.documentWorkArray[i].documentTypeId;
+        }
+      } else {
+        this.documentWorkArray.push(
+          {
+            'documentUrl': this.FileArrData.fileId,
+            'documentTypeId': this.doc_cat_id,
+            'documentId': 0
+          });
       }
-    } else {
-      this.documentWorkArray.push(
-        {
-          'documentUrl': this.fileName.name,
-          'documentTypeId': this.doc_cat_id,
-          'documentId': 0
-        });
-    }
-    // this.loading = true;
-    // this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
-    //   this.FileArrData = event;
-    //   this.loading = false;
-    // });
-
-    // this.documentWorkArray.push(
-    //   {
-    //     'documentUrl': this.FileArrData.fileId,
-    //     'documentTypeId': this.doc_cat_id
-    //   });
+    });
   }
 
   updatePersonalDetailForm() {

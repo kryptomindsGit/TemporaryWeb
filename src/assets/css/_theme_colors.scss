@@ -31,18 +31,22 @@ $viewproj:#7da2db;
 // Theme global variable's
 $bg-front-color: linear-gradient(20deg, rgb(238, 238, 238), rgb(240, 240, 240));
 $bg-back-color: #FFFFFF !default;
-$text-color: #000000 !default;
 $bg-dropdown-color: #007bff !default;
 
 // Button global variable's
-$btn-bg-color: #064d86 !default;
+// $btn-bg-color: #064d86 !default;
+$btn-bg-color: #006699 !default;
 $btn-front-color: #FFFFFFFF !default;
 $btn-font-weight: 7rem !default;
 $letter-spacing: 0.1rem !default;
 $btn-border-radius: 1rem !default;
 
-// Text global variable's
-
+// Text Title and subtitle global variable's
+$text-color: #000000 !default;
+$text-title-font-size: 0.9rem !default;
+$text-subtitle-font-size: 0.7rem !default;
 $text-letter-spacing: 0.1rem !default;
+$text-font-weight: bold;
+
 
 

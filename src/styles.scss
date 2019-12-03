@@ -87,6 +87,7 @@ form {
   -ms-transition: 0.25s ease;
   color: $text-color;
   top: 1.5rem;
+  letter-spacing: $text-letter-spacing;
 }
 
 // CSS for autofill background Start
@@ -125,6 +126,8 @@ textarea {
   -ms-transition: 0.3s ease;
   padding-top: 10px;
   -webkit-appearance: none;
+  letter-spacing: $text-letter-spacing;
+  font-weight: $text-font-weight
 }
 
 select {
@@ -135,6 +138,8 @@ select {
   -ms-transition: 0.3s ease;
   padding-top: 10px;
   -webkit-appearance: 0.3s ease;
+  letter-spacing: $text-letter-spacing;
+  font-weight: $text-font-weight
 }
 
 
@@ -146,7 +151,14 @@ textarea:focus+.form-label,
 textarea:valid+.form-label {
   top: 1px;
   font-size: $font-size-label;
-  color: $blue-color;
+  // color: $blue-color;
+  color: $text-color;
+  // $text-title-font-size;
+  // $text-subtitle-font-size;
+  letter-spacing: $text-letter-spacing;
+  // $text-title-font-weight;
+  // $text-title-font-weight;
+  // $text-subtitle-font-weight;
   background: transparent !important;
 }
 

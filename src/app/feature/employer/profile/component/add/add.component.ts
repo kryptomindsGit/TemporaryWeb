@@ -176,21 +176,21 @@ export class AddComponent implements OnInit {
     }
   }
   async uploadFile() {
-    // this.loading = true;
-    // await this.__profileService.postDocHashData(this.fileObj, this.email_id, this.fileName).then((resData) => {
-    //   this.loading = false;
-    //   this.FileArrData = resData,
-    //     (error) => this.error = error
-    //   if (this.FileArrData) {
-    //     this.toastr.success(this.fileName, "Successfully uploaded");
-    //   } else {
-    //     this.toastr.error(this.fileName, "File not uploaded");
-    //   }
-    // });
-    await this.documentFileArr.push( {
-        'documentUrl': this.fileName,
-        'documentTypeId': this.doc_cat_id
-      });
+    this.loading = true;
+    await this.__profileService.postDocHashData(this.fileObj, this.email_id, this.fileName).then((resData) => {
+      this.loading = false;
+      this.FileArrData = resData,
+        (error) => this.error = error
+      if (this.FileArrData) {
+        this.toastr.success(this.fileName, "Successfully uploaded");
+        this.documentFileArr.push( {
+          'documentUrl': this.FileArrData.fileId,
+          'documentTypeId': this.doc_cat_id
+        });
+      } else {
+        this.toastr.error(this.fileName, "File not uploaded");
+      }
+    });
   }
 
   onSubmit() {

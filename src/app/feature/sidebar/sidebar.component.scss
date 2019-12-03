@@ -52,10 +52,17 @@
   background: $bg-front-color;
   color: $text-color;
   text-transform: uppercase;
-  font-size: 0.8rem;
-  letter-spacing: 0.1rem;
   cursor: pointer;
+  font-size: $text-title-font-size;
+  letter-spacing: $text-letter-spacing;
+  font-weight: $text-font-weight;
 }
+
+// a .list-group-item{
+//   font-size: $text-title-font-size;
+//   letter-spacing: $text-letter-spacing;
+//   font-weight: $text-title-font-weight;
+// }
 
 // #sidebar-wrapper .list-group-flush .list-group-item>a:hover,
 // #sidebar-wrapper .list-group-flush .list-group-item>a:focus {

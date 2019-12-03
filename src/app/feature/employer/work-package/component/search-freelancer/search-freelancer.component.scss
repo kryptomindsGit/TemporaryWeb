@@ -70,9 +70,17 @@ CARD CSS
   
   
   }
+  
+  h6{
+    letter-spacing: $text-letter-spacing;
+    font-weight: $text-font-weight
+  }
+
   .card-header {
     background: transparent !important;
     height: 5rem;
+    letter-spacing: $text-letter-spacing;
+    font-weight: $text-font-weight
   }
   
   .card-body {
@@ -83,6 +91,8 @@ CARD CSS
     background: $bg-front-color;
     border-top: 1px solid rgba(255, 255, 255, 0.09);
     padding: 1rem !important;
+    letter-spacing: $text-letter-spacing;
+    font-weight: $text-font-weight
   }
   
   .text-muted {

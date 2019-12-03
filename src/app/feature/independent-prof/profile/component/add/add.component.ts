@@ -463,69 +463,59 @@ export class AddComponent implements OnInit {
 
   async uploadPersonalFile() {
 
-    this.documentPersonalArray.push({
-      'documentUrl': this.fileName,
-      'documentTypeId': this.doc_cat_id
+    this.loading = true;
+    this.fileUploadProgress = '0%';
+    await this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
+        this.FileArrData = event;
+        this.loading = false;
+        if (this.FileArrData) {
+          this.toastr.success(this.fileName, "Successfully uploaded");
+          this.documentPersonalArray.push({
+            'documentUrl': this.FileArrData.fileId,
+            'documentTypeId': this.doc_cat_id,
+            'documentId':0
+          });
+        } else {
+          this.toastr.error(this.fileName, "File not uploaded");
+        }
     });
-    // this.loading = true;
-    // this.fileUploadProgress = '0%';
-    // await this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
-    //     this.FileArrData = event;
-    //     this.loading = false;
-    //     if (this.FileArrData) {
-    //       this.toastr.success(this.fileName, "Successfully uploaded");
-    //       this.documentPersonalArray.push({
-    //         'documentUrl': this.FileArrData.fileId,
-    //         'documentTypeId': this.doc_cat_id
-    //       });
-    //     } else {
-    //       this.toastr.error(this.fileName, "File not uploaded");
-    //     }
-    // });
   }
 
   uploadEducationFile() {
-
-    this.documentQualArray.push({
-      'documentUrl': this.fileName,
-      'documentTypeId': this.doc_cat_id
+    this.loading = true;
+    this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
+      this.FileArrData = event;
+      this.loading = false;
+      if (this.FileArrData) {
+        this.toastr.success(this.fileName, "Successfully uploaded");
+        this.documentQualArray.push({
+          'documentUrl': this.FileArrData.fileId,
+          'documentTypeId': this.doc_cat_id,
+          'documentId':0
+        });
+      } else {
+        this.toastr.error(this.fileName, "File not uploaded");
+      }
     });
-
-    // this.loading = true;
-    // this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
-    //   this.FileArrData = event;
-    //   this.loading = false;
-    //   if (this.FileArrData) {
-    //     this.toastr.success(this.fileName, "Successfully uploaded");
-    //     this.documentQualArray.push({
-    //       'documentUrl': this.FileArrData.fileId,
-    //       'documentTypeId': this.doc_cat_id
-    //     });
-    //   } else {
-    //     this.toastr.error(this.fileName, "File not uploaded");
-    //   }
-    // });
   }
 
   uploadWorkExpFile() {
-    this.documentWorkArray.push({
-      'documentUrl': this.fileName,
-      'documentTypeId': this.doc_cat_id
+  
+    this.loading = true;
+    this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
+      this.FileArrData = event;
+      this.loading = false;
+      if (this.FileArrData) {
+        this.toastr.success(this.fileName, "Successfully uploaded");
+        this.documentWorkArray.push( {
+          'documentUrl': this.FileArrData.fileId,
+          'documentTypeId': this.doc_cat_id,
+          'documentId':0
+        });
+      } else {
+        this.toastr.error(this.fileName, "File not uploaded");
+      }
     });
-    // this.loading = true;
-    // this.__profileService.postDocHashData(this.fileObj, this.email, this.fileName).then((event) => {
-    //   this.FileArrData = event;
-    //   this.loading = false;
-    //   if (this.FileArrData) {
-    //     this.toastr.success(this.fileName, "Successfully uploaded");
-    //     this.documentWorkArray.push( {
-    //       'documentUrl': this.FileArrData.fileId,
-    //       'documentTypeId': this.doc_cat_id
-    //     });
-    //   } else {
-    //     this.toastr.error(this.fileName, "File not uploaded");
-    //   }
-    // });
   }
 
   savePersonalDetailForm() {
