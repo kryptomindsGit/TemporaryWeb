@@ -94,12 +94,17 @@ form {
 
 
 .viewprofile {
-  font-size: 0.6rem;
-  color: #ffffff;
-  border-color: rgba(178, 183, 196, 0.966);
-  background: transparent !important;
+  font-size: 0.7rem;
+  // color: #ffffff;
+  // border-color: rgba(178, 183, 196, 0.966);
+  // background: transparent !important;
   width: 100%;
   margin-top: 1rem;
+  background: $btn-bg-color;
+  color: $btn-front-color !important;
+  font-weight: $btn-font-weight;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
 }
 
 .viewprofile:hover {
@@ -107,7 +112,7 @@ form {
 }
 
 .viewprofile1 {
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   // color: #ffffff;
   // border-color: rgba(178, 183, 196, 0.966);
   // background: transparent !important;
@@ -293,14 +298,19 @@ table thead tr th {
 .btnSearch {
   float: right;
   margin-top: 0.9rem;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
   // color: rgb(58, 56, 56);
-  color: $text-color;
+  // color: $text-color;
   // background: rgb(221, 181, 3);
-  background: #064d86;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  // background: #064d86;
+  // font-weight: 600;
+  // letter-spacing: 0.1em;
+  background: $btn-bg-color;
+  color: $btn-front-color !important;
+  font-weight: $btn-font-weight;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
 }
 
 .modal-header,

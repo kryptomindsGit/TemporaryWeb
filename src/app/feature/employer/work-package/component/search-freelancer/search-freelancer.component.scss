@@ -120,19 +120,24 @@ CARD CSS
   
   .viewprofile1 {
     font-size: 0.9rem;
-    color: #080000;
-    border-color: rgba(40, 150, 252, 0.966);
-    background: rgba(40, 174, 252, 0.966) !important;
+    // color: #080000;
+    // border-color: rgba(40, 150, 252, 0.966);
+    // background: rgba(40, 174, 252, 0.966) !important;
     width: 10%;
     float: right;
     margin-left: 20px;
     font-weight: 550;
     margin-top: 1rem;
+    background: $btn-bg-color;
+  color: $btn-front-color !important;
+  font-weight: $btn-font-weight;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
   }
   
-  .viewprofile1:hover {
-    border-color: rgba(61, 116, 253, 0.966);
-  }
+  // .viewprofile1:hover {
+  //   border-color: rgba(61, 116, 253, 0.966);
+  // }
   
   
   .apply-skill {
@@ -209,31 +214,41 @@ CARD CSS
   
   .viewprofile2 {
     font-size: 0.7rem;
-    color: #ffffff;
-    border-color: rgba(127, 128, 129, 0.966);
-    background: transparent !important;
+    // color: #ffffff;
+    // border-color: rgba(127, 128, 129, 0.966);
+    // background: transparent !important;
     width: 30%;
     margin-top: 1rem;
     float: left;
+    background: $btn-bg-color;
+  color: $btn-front-color !important;
+  font-weight: $btn-font-weight;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
   }
   
-  .viewprofile2:hover {
-    border-color: rgba(61, 116, 253, 0.966);
-  }
+  // .viewprofile2:hover {
+  //   border-color: rgba(61, 116, 253, 0.966);
+  // }
   
   .viewprofile {
     font-size: 0.7rem;
-    color: #ffffff;
-    border-color: rgba(127, 128, 129, 0.966);
-    background: transparent !important;
+    // color: #ffffff;
+    // border-color: rgba(127, 128, 129, 0.966);
+    // background: transparent !important;
     width: 70%;
     margin-top: 1rem;
     float: right;
+    background: $btn-bg-color;
+  color: $btn-front-color !important;
+  font-weight: $btn-font-weight;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
   }
   
-  .viewprofile:hover {
-    border-color: rgba(61, 116, 253, 0.966);
-  }
+  // .viewprofile:hover {
+  //   border-color: rgba(61, 116, 253, 0.966);
+  // }
   
   .card-body h5 {
     text-align: center;
@@ -603,10 +618,12 @@ CARD CSS
 
   .name{
     margin-top:2rem;
+    color: $text-color;
     font: 16px "Montserrat Regular";
   }
 
   .email{
+    color: $text-color;
     font: 14px "Montserrat Regular";
   }
 

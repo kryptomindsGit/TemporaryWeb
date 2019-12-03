@@ -23,20 +23,26 @@ $font-size-botton:0.9rem !default;
 
 // $bg-back-color: linear-gradient(180deg, #202226, #18191c);
 // $bg-front-color: #101820FF !default;
+$danger-color: #dc3545 !default;
+$blue-color: #05192b !default;
+$white-color: #fff;
+$viewproj:#7da2db;
 
+// Theme global variable's
 $bg-front-color: linear-gradient(20deg, rgb(238, 238, 238), rgb(240, 240, 240));
 $bg-back-color: #FFFFFF !default;
 $text-color: #000000 !default;
 $bg-dropdown-color: #007bff !default;
 
-$btn-bg-color: #007bff !default;
+// Button global variable's
+$btn-bg-color: #064d86 !default;
 $btn-front-color: #FFFFFFFF !default;
 $btn-font-weight: 7rem !default;
 $letter-spacing: 0.1rem !default;
 $btn-border-radius: 1rem !default;
 
-$danger-color: #dc3545 !default;
-$blue-color: #05192b !default;
-$white-color: #fff;
-$viewproj:#7da2db;
+// Text global variable's
+
+$text-letter-spacing: 0.1rem !default;
+
 

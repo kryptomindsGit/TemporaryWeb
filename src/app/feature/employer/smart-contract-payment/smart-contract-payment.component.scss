@@ -324,14 +324,19 @@ span {
 }
 
 .viewprofile {
-  font-size: 0.8rem;
-  color: #ffffff;
-  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  // color: #ffffff;
+  // border-radius: 0.5rem;
   margin: 1rem;
   // background: rgba(2, 41, 148, 0.966);
-  background: $btn-bg-color;
+  // background: $btn-bg-color;
   width: 18%;
   float: right;
+  background: $btn-bg-color;
+  color: $btn-front-color !important;
+  font-weight: $btn-font-weight;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
 }
 
 .deploy {

@@ -99,20 +99,25 @@ form {
 }
 
 .viewprofile1 {
-  font-size: 0.6rem;
-  color: #ffffff;
-  border-color: rgba(178, 183, 196, 0.966);
-  background: transparent !important;
-  width: 10%;
+  font-size: 0.8rem;
+  // color: #ffffff;
+  // border-color: rgba(178, 183, 196, 0.966);
+  // background: transparent !important;
+  width: 15%;
   margin-top: 1.5rem;
   float: right;
   margin-left:1rem;
+  background: $btn-bg-color;
+  color: $btn-front-color !important;
+  font-weight: $btn-font-weight;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
 
 }
 
-.viewprofile1:hover {
-  border-color: rgba(47, 105, 250, 0.966);
-}
+// .viewprofile1:hover {
+//   border-color: rgba(47, 105, 250, 0.966);
+// }
 
 
 .center {

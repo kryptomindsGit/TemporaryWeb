@@ -33,6 +33,8 @@ export class AuthService {
   ) { }
 
   login(loginPayload): any {
+    console.log("login details:", loginPayload);
+    
     return this.__http.post<{ response: string }>(`${AWS_URL}/login`, loginPayload, httpOptions)
       .pipe(
         map(result => {
