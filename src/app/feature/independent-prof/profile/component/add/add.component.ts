@@ -589,37 +589,42 @@ export class AddComponent implements OnInit {
   }
 
   clickMethod(i: any) {
-    Swal.fire({
-      title: 'Save and Proceed',
-      text: "You won't be able to revert this",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, Save it!'
-    }).then(async (result) => {
-      if (result.value) {
-        await Swal.fire(
-          'Saved!',
-          'Your data has been saved.',
-          'success'
-        )
+    // Swal.fire({
+    //   title: 'Save and Proceed',
+    //   text: "You won't be able to revert this",
+    //   type: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonColor: '#3085d6',
+    //   cancelButtonColor: '#d33',
+    //   confirmButtonText: 'Yes, Save it!'
+    // }).then(async (result) => {
+    //   if (result.value) {
+        // await Swal.fire(
+        //   'Saved!',
+        //   'Your data has been saved.',
+        //   'success'
+        // )
         this.showMainContent = i + 1;
 
-        if (i == 1)
+        if (i == 1){
           this.savePersonalDetailForm();
-        else if (i == 2)
+        }
+        else if (i == 2){
           this.saveEducationDetails();
-        else if (i == 3)
+        }
+        else if (i == 3){
           this.saveWorkDetails();
+        } 
         else if (i == 4)
+         {
           this.onSaveSkills();
-        else
+         }
+        // else
           ;
-      } else {
-        this.showMainContent = i;
-      }
-    })
+    //   } else {
+    //     this.showMainContent = i;
+    //   }
+    // })
   }
   showPrevious(i: any) {
     this.showMainContent = i;

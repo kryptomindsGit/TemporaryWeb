@@ -727,6 +727,7 @@ export class ChatBoxComponent implements OnInit {
   ngOnInit() {
     this.decodeJWToken();
     this.socketConnect();
+    this.getAllUser()
     // this.getServerChatEventCall();
     // this.getOnlineAllUser();
   }
@@ -750,7 +751,7 @@ export class ChatBoxComponent implements OnInit {
         this.allClients = clients
         console.log(" List of Clients :", this.allClients);
 
-        this.getAllUser();
+        // this.getAllUser();
       });
       window.RTCPeerConnection = this.getRTCPeerConnection();
       window.RTCSessionDescription = this.getRTCSessionDescription();
@@ -1186,7 +1187,8 @@ export class ChatBoxComponent implements OnInit {
           receiver: this.userSelected,
           clientId: messageData.clientId
         }
-        this.socketservice.callEventTranslation(this.sendMessages).subscribe((messgeData: any) => {
+        this.socketservice.callEventTranslation(this.sendMessages).subscribe((messgeData : any)=>{
+    
           console.log(" response messages :", messgeData);
 
           this.senderEmail = this.sendMessages.receiver;    

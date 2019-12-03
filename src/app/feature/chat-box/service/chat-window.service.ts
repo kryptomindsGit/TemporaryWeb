@@ -315,18 +315,20 @@ export class ChatWindowService {
 
   callEventTranslation(eventData: any){
     console.log("eventData:", eventData);
-    
       this.socket.emit('translation', eventData);
       return Observable.create((observer: any) => {
-        this.socket.on('translation', (messageData: any) => {
-          console.log("resp from nodejs message :", messageData);
-          
-          observer.next(messageData);
-        });
-        // return messageData;
-      });
+            this.socket.on('translatedData', (messageData: any) => {
+              console.log("resp from nodejs message :", messageData);
+              observer.next(messageData);
+            });
+          });
+      // this.listenTranslatedData();
+      
     }
 
+    // listenTranslatedData(){
+    //   
+    // }
 
   // getOnlineUserList() {
   //   // this.EVENT_URL = `${NODE_URL_CHAT}/event/chat`;

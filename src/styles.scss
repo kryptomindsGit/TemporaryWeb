@@ -59,10 +59,9 @@ FORM CSS
   font: $font-size-label "Montserrat Regular";
   background-color: $bg-back-color;
   color: $text-color;
-  // overflow: auto;
   font-weight: 600;
-  // width: 100%;
-  // height: 100vh;
+  letter-spacing: $text-letter-spacing;
+  font-weight: $text-font-weight
 }
 
 form {

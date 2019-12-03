@@ -177,6 +177,13 @@ img:hover {
   margin-top: 2rem;
   color: $text-color;
   text-transform: uppercase;
+  letter-spacing: $text-letter-spacing;
+  font-weight: $text-font-weight;
+}
+
+label, h6{
+  letter-spacing: $text-letter-spacing;
+  font-weight: $text-font-weight;
 }
 
 .carousel-control-next,
@@ -244,6 +251,8 @@ table thead tr th {
   color: $text-color;
   font-size: 0.7rem;
   text-transform: uppercase;
+  letter-spacing: $text-letter-spacing;
+  font-weight: $text-font-weight;
 }
 
 // #myModal {
@@ -325,3 +334,8 @@ table thead tr th {
   margin-top: 1rem;
   float: left;
 }
+
+// h6{
+//   letter-spacing: $text-letter-spacing;
+//   font-weight: $text-font-weight;
+// }

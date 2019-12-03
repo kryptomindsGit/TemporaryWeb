@@ -71,9 +71,9 @@ CARD CSS
   
   }
   
-  h6{
+  label, h6{
     letter-spacing: $text-letter-spacing;
-    font-weight: $text-font-weight
+    font-weight: $text-font-weight;
   }
 
   .card-header {
