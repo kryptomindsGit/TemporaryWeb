@@ -452,78 +452,114 @@ FORM CSS
 //     color: #000;
 //     background: $blue-color;
 // }
+.btnprimary{
+  border: none;
+  // border-radius: 2rem;
+  padding: 0.5rem 1rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: $btn-front-color;
+  float: center;
+  margin: 20px auto;
+  background: $btn-bg-color;
+  font-weight: $btn-font-weight;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
+}
 
 .btnBlue {
     border: none;
-    border-radius: 2rem;
-    padding: 0.5rem 1rem;
+    // border-radius: 2rem;
+    padding: 0.8rem;
+    // padding: 0.5rem 1rem;
     width: 6rem;
     text-transform: uppercase;
     cursor: pointer;
-    background: $btn-bg-color !important;
-    color: $text-color;
+    // background: $btn-bg-color !important;
+    // color: $text-color;
     float: center;
     margin: 20px auto;
+    background: $btn-bg-color;
+    color: $btn-front-color;
+    font-weight: $btn-font-weight;
+    letter-spacing: $letter-spacing;
+    border-radius: $btn-border-radius;
 }
 
-.btnBlue:hover {
-    color: #000;
-    background: $blue-color;
-}
+// .btnBlue:hover {
+//     color: #000;
+//     background: $blue-color;
+// }
 
 .btnadd {
     border: none;
-    border-radius: 0.5rem;
-    padding: 0.3rem;
+    // border-radius: 0.5rem;
+    padding: 0.5rem;
     width: 2.5rem;
     text-transform: uppercase;
     cursor: pointer;
-    background: $btn-bg-color !important;
-    color: $text-color;
+    // background: $btn-bg-color !important;
+    // color: $text-color;
     float: right;
     margin-left: 0.2rem;
+    background: $btn-bg-color;
+    color: $btn-front-color;
+    font-weight: $btn-font-weight;
+    letter-spacing: $letter-spacing;
+    border-radius: $btn-border-radius;
 }
 
-.btnadd:hover {
-    color: #000;
-    background: $blue-color;
-}
+// .btnadd:hover {
+//     color: #000;
+//     background: $blue-color;
+// }
 
 .btnCancel {
     border: none;
-    border-radius: 2rem;
-    padding: 1%;
+    // border-radius: 2rem;
+    padding: 0.8rem;
+    // padding: 1%;
     width: 8rem;
     text-transform: uppercase;
     cursor: pointer;
-    background: $btn-bg-color !important;
-    color: $text-color;
+    // background: $btn-bg-color !important;
+    // color: $text-color;
     float: center;
     margin: 20px auto;
+    background: $btn-bg-color;
+    color: $btn-front-color;
+    font-weight: $btn-font-weight;
+    letter-spacing: $letter-spacing;
+    border-radius: $btn-border-radius;
 }
 
-.btnCancel:hover {
-    color: #000;
-    background: $blue-color;
-}
+// .btnCancel:hover {
+//     color: #000;
+//     background: $blue-color;
+// }
 
 .btnSave {
     border: none;
-    border-radius: 2rem;
-    padding: 1%;
+    // border-radius: 2rem;
+    padding: 0.8rem;
     width: 8rem;
     text-transform: uppercase;
     cursor: pointer;
-    background: $btn-bg-color !important;
-    color: $text-color;
+    // background: $btn-bg-color !important;
+    // color: $text-color;
     float: center;
     margin: 20px auto;
+    background: $btn-bg-color;
+    color: $btn-front-color;
+    font-weight: $btn-font-weight;
+    letter-spacing: $letter-spacing;
+    border-radius: $btn-border-radius;
 }
 
-.btnSave:hover {
-    color: #000;
-    background: $blue-color;
-}
+// .btnSave:hover {
+//     color: #000;
+//     background: $blue-color;
+// }
 
 .icon-right {
     float: right;

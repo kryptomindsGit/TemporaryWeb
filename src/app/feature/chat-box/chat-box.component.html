@@ -390,11 +390,11 @@
                 <!-- : {{ clientId }} -->
               </div>
               <div class="col-md-3">
-                <i class="fa fa-envelope icon-send" aria-hidden="true" (click)="enableText()"></i>
-                <i class="fa fa-files-o icon-send" aria-hidden="true" (click)="enableFile()"></i>
-                <i class="fa fa-volume-up icon-send" aria-hidden="true" (click)="enableAudio()"></i>
-                <i class="fa fa-video-camera icon-send" aria-hidden="true" (click)="enableVideo()"></i>
-                <i class="fa fa-window-restore icon-send" aria-hidden="true" (click)="enableScreen()"></i>
+                <i class="fa fa-envelope icon-send" title="Text Chat" aria-hidden="true" (click)="enableText()"></i>
+                <i class="fa fa-files-o icon-send" title="File Share" aria-hidden="true" (click)="enableFile()"></i>
+                <i class="fa fa-volume-up icon-send" title="Audio Share" aria-hidden="true" (click)="enableAudio()"></i>
+                <i class="fa fa-video-camera icon-send" title="Video Chat" aria-hidden="true" (click)="enableVideo()"></i>
+                <i class="fa fa-window-restore icon-send"  title="Screen Share" aria-hidden="true" (click)="enableScreen()"></i>
               </div>
             </div>
             <!-- <div class="clientid">
@@ -491,7 +491,7 @@
                         <div class="col-md-3">
                                 <!-- <button class="file_send_btn"><i class="fa fa-paperclip" aria-hidden="true" (click)="enableFile()"></i></button>
                                 <button class="file_send_btn"><i class="fa fa-microphone" aria-hidden="true" (click)="enableAudio()"></i></button> -->
-                                <button class="file_send_btn" type="button" (click)="sendMessage()"><i class="fa fa-paper-plane-o"  aria-hidden="true"></i></button> 
+                                <button class="file_send_btn" title="Send Message" type="button" (click)="sendMessage()"><i class="fa fa-paper-plane-o"  aria-hidden="true"></i></button> 
                         </div>
                     </div>
                 </div>

@@ -61,20 +61,20 @@ CARD CSS
 
 .text-muted {
   font-size: 0.9rem;
-  color: #6c757d !important;
+  color: $text-color !important;
   float: left;
 }
 
 .text-muted1 {
   margin-top: 0.9rem;
   font-size: 0.9rem;
-  color: #6c757d !important;
+  color: $text-color !important;
 }
 
 .text-muted2 {
   margin-top: none !important;
   font-size: 0.9rem;
-  color: #a7aaad !important;
+  color: $text-color !important;
   margin-left: 0.6rem;
 }
 
@@ -104,9 +104,9 @@ form {
   margin-top: 1rem;
 }
 
-.viewprofile1:hover {
-  border-color: rgba(61, 116, 253, 0.966);
-}
+// .viewprofile1:hover {
+//   border-color: rgba(61, 116, 253, 0.966);
+// }
 
 
 .apply-skill {
@@ -119,21 +119,25 @@ form {
 }
 
 .apply-button1 {
-  font-size: 0.7rem;
-  color: $white-color;
-  border-color: rgba(127, 128, 129, 0.966);
-  background: transparent !important;
+  // font-size: 0.7rem;
+  // color: $text-color;
+  // border-color: rgba(127, 128, 129, 0.966);
+  // background: transparent !important;
   width: 10%;
   margin-top: 1rem;
   text-align: center;
   margin-top: 20px;
   margin-left: 35rem;
   margin-bottom: 30px;
+  background: $btn-bg-color;
+  color: $btn-front-color;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
 }
 
-.apply-button1:hover {
-  border-color: rgba(61, 116, 253, 0.966);
-}
+// .apply-button1:hover {
+//   border-color: rgba(61, 116, 253, 0.966);
+// }
 
 .options {
   font-size: 1rem;
@@ -167,18 +171,26 @@ span {
 }
 
 a {
-  color: #337ab7;
+  color: $text-color;
   text-decoration: none;
 }
 
+h5,p, h6 {
+  color: $text-color;
+}
+
 .apply-button {
-  font-size: 0.7rem;
-  color: $white-color;
-  border-color: rgba(127, 128, 129, 0.966);
-  background: transparent !important;
-  width: 30%;
+  // font-size: 0.7rem;
+  // color: $text-color;
+  // border-color: rgba(127, 128, 129, 0.966);
+  // background: transparent !important;
+  width: 40%;
   margin-top: 1rem;
   float: right;
+  background: $btn-bg-color;
+  color: $btn-front-color;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
 }
 
 .apply-button:hover {
@@ -186,13 +198,18 @@ a {
 }
 
 .viewprofile2 {
-  font-size: 0.7rem;
-  color: $white-color;
-  border-color: rgba(127, 128, 129, 0.966);
-  background: transparent !important;
-  width: 30%;
+  // font-size: 0.8rem;
+  // color: $text-color;
+  // border-color: rgba(127, 128, 129, 0.966);
+  // background: transparent !important;
+  width: 50%;
   margin-top: 1rem;
   float: left;
+  // font-weight: 1.2rem;
+  background: $btn-bg-color;
+  color: $btn-front-color;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
 }
 
 .viewprofile2:hover {
@@ -200,13 +217,17 @@ a {
 }
 
 .viewprofile {
-  font-size: 0.7rem;
-  color: $white-color;
-  border-color: rgba(127, 128, 129, 0.966);
-  background: transparent !important;
+  // font-size: 0.7rem;
+  // color: $text-color;
+  // border-color: rgba(127, 128, 129, 0.966);
+  // background: transparent !important;
   // width: 60%;
   margin-top: 1rem;
   float: right;
+  background: $btn-bg-color;
+  color: $btn-front-color;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
 }
 
 .viewprofile:hover {
@@ -330,20 +351,20 @@ input[type=checkbox] {
 }
 
 tbody {
-  color: #6c757d;
+  color: $text-color;
 }
 
 thead {
-  color: #919292;
+  color: $text-color;
 }
 
-tr:hover {
-  color: #c1c4c4 !important;
-}
+// tr:hover {
+//   color: #c1c4c4 !important;
+// }
 
 .table th,
 .table td {
-  border-bottom: 10px solid #18191c !important;
+  border-bottom: 1px solid #18191c !important;
 }
 
 .table .table-custom {

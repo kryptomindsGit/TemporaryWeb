@@ -45,6 +45,14 @@ CARD CSS
   letter-spacing: 0.1em
 }
 
+.btn-color,.btn-front-weight{
+  font-weight: $btn-font-weight;
+  color: $btn-bg-color;
+  background: $btn-front-color;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
+}
+
 /*-----------------------------------------------------------------------
 FORM CSS
 -------------------------------------------------------------------------*/

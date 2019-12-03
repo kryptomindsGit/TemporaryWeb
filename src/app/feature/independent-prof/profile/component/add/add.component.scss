@@ -327,6 +327,16 @@ a:not([href]):not([tabindex]):hover {
   min-width: 10rem;
 }
 
+
+.btn-color,.btn-front-weight{
+  font-weight: $btn-font-weight;
+  color: $btn-bg-color;
+  background: $btn-front-color; 
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
+}
+
+
 /*-----------------------------------------------------------------------
 FORM CSS
 -------------------------------------------------------------------------*/
@@ -599,7 +609,20 @@ FORM CSS
 //     float: left;
 //     margin-bottom: 20px;
 // }
-
+.btnprimary{
+  border: none;
+  // border-radius: 2rem;
+  padding: 0.5rem 1rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: $btn-front-color;
+  float: center;
+  margin: 20px auto;
+  background: $btn-bg-color;
+  font-weight: $btn-font-weight;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
+}
 .btn_add {
   background: $btn-bg-color;
 }
@@ -629,20 +652,23 @@ button:focus {
 
 .btnBlue {
   border: none;
-  border-radius: 2rem;
+  // border-radius: 2rem;
   padding: 0.5rem 1rem;
   width: 7rem;
   text-transform: uppercase;
   cursor: pointer;
-  background: $btn-bg-color;
-  color: $white-color;
   float: center;
   margin: 20px auto;
+  background: $btn-bg-color;
+  color: $btn-front-color;
+  font-weight: $btn-font-weight;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
 }
 
 .btnadd {
   border: none;
-  border-radius: 0.5rem;
+  // border-radius: 0.5rem;
   padding: 0.1rem;
   margin: 20px auto;
   width: 2rem;
@@ -650,13 +676,14 @@ button:focus {
   font-size: 1rem;
   cursor: pointer;
   background: $btn-bg-color;
-  color: $white-color;
+  color: $btn-front-color;
   float: right;
+  border-radius: $btn-border-radius;
 }
 
 .btnaddQaul {
   border: none;
-  border-radius: 0.5rem;
+  // border-radius: 0.5rem;
   padding: 0.1rem;
   // margin: 20px auto;
   width: 2rem;
@@ -664,13 +691,16 @@ button:focus {
   font-size: 1rem;
   cursor: pointer;
   background: $btn-bg-color;
-  color: $white-color;
+  color: $btn-front-color;
   float: right;
+  font-weight: $btn-font-weight;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
 }
 
 .btnaddRight {
   border: none;
-  border-radius: 0.5rem;
+  // border-radius: 0.5rem;
   padding: 0.1rem;
   margin: 20px auto;
   width: 2rem;
@@ -678,12 +708,21 @@ button:focus {
   font-size: 1rem;
   cursor: pointer;
   background: $btn-bg-color;
-  color: $white-color;
+  color: $btn-front-color;
   float: left;
+  font-weight: $btn-font-weight;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
 }
 
 .btnadd-right {
   float: right;
+}
+
+.btnNext {
+  font-weight: $btn-font-weight;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
 }
 
 // .error-msg {

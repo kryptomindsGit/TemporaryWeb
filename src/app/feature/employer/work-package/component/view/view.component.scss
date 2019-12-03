@@ -108,16 +108,21 @@ form {
 
 .viewprofile1 {
   font-size: 0.6rem;
-  color: #ffffff;
-  border-color: rgba(178, 183, 196, 0.966);
-  background: transparent !important;
+  // color: #ffffff;
+  // border-color: rgba(178, 183, 196, 0.966);
+  // background: transparent !important;
   width: 100%;
   margin-top: 1.5rem;
+  background: $btn-bg-color;
+  color: $btn-front-color !important;
+  font-weight: $btn-font-weight;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
 }
 
-.viewprofile1:hover {
-  border-color: rgba(47, 105, 250, 0.966);
-}
+// .viewprofile1:hover {
+//   border-color: rgba(47, 105, 250, 0.966);
+// }
 
 
 .center {

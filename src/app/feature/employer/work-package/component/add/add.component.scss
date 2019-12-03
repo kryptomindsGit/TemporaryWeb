@@ -37,6 +37,10 @@ hr {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+span{
+  color:  $text-color;
+}
+
 
 /*-----------------------------------------------------------------------
 CARD CSS
@@ -279,14 +283,19 @@ form {
 // Work Pacakage
 
 .calbutton {
-  font-size: 0.6rem;
-  color: $white-color;
-  width: rem;
-  height: 1.5rem;
-  background: #064d86;
-  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  // color: $white-color;
+  width: 15rem;
+  height: 1.8rem;
+  // background: #064d86;
+  // border-radius: 0.5rem;
   margin-left: 1rem;
  text-align: center;
+ background: $btn-bg-color;
+  color: $btn-front-color !important;
+  font-weight: $btn-font-weight;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
 }
 
 .margin-button{
@@ -346,17 +355,22 @@ img {
 
 .submit-button {
   float: right;
-  font-size: 0.8rem;
-  color: $white-color;
-  border-radius: 2rem;
+  font-size: 1rem;
+  // color: $white-color;
+  // border-radius: 2rem;
   text-transform: uppercase;
   // margin-left: 1rem;
   margin-top: 1rem;
   margin-bottom: 5rem;
   // background: rgba(2, 41, 148, 0.966);
-  background: #064d86;
+  // background: #064d86;
   width: 7rem;
   height: 2.5rem;
+  background: $btn-bg-color;
+  color: $btn-front-color !important;
+  font-weight: $btn-font-weight;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
 }
 
 
@@ -391,9 +405,14 @@ img {
 .increment {
   border-radius: 50%;
   // background: rgba(2, 41, 148, 0.966);
-  background: #064d86;
-  color: $white-color;
+  // background: #064d86;
+  // color: $white-color;
   margin-left: 0.3rem;
+  background: $btn-bg-color;
+  color: $btn-front-color !important;
+  font-weight: $btn-font-weight;
+  letter-spacing: $letter-spacing;
+  // border-radius: $btn-border-radius;
 }
 
 // .error-msg {

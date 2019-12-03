@@ -466,64 +466,94 @@ textarea:focus,
 button:focus {
     outline: none !important;
 }
+.btnprimary{
+  border: none;
+  // border-radius: 2rem;
+  padding: 0.5rem 1rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: $btn-front-color;
+  float: center;
+  margin: 20px auto;
+  background: $btn-bg-color;
+  font-weight: $btn-font-weight;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
+}
 
 .btnBlue {
-    border: none;
-    border-radius: 2rem;
-    padding: 0.5rem 1rem;
-    width: 7rem;
-    text-transform: uppercase;
-    cursor: pointer;
-    background: $btn-bg-color;
-    color: $white-color;
-    float: center;
-    margin: 20px auto;
+  border: none;
+  // border-radius: 2rem;
+  padding: 0.5rem 1rem;
+  width: 7rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: $btn-bg-color;
+  color: $btn-front-color;
+  float: center;
+  margin: 20px auto;
+  font-weight: $btn-font-weight;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
 }
 
 .btnadd {
-    border: none;
-    border-radius: 0.5rem;
-    padding: 0.1rem;
-    margin: 20px auto;
-    width: 2rem;
-    height: 2rem;
-    font-size: 1rem;
-    cursor: pointer;
-    background: $btn-bg-color;
-    color: $white-color;
-    float: right;
+  border: none;
+  // border-radius: 0.5rem;
+  padding: 0.1rem;
+  margin: 20px auto;
+  width: 2rem;
+  height: 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  background: $btn-bg-color;
+  color: $btn-front-color;
+  float: right;
+  border-radius: $btn-border-radius;
 }
 
 .btnaddQaul {
-    border: none;
-    border-radius: 0.5rem;
-    padding: 0.1rem;
-    // margin: 20px auto;
-    width: 2rem;
-    height: 2rem;
-    font-size: 1rem;
-    cursor: pointer;
-    background: $btn-bg-color;
-    color: $white-color;
-    float: right;
+  border: none;
+  // border-radius: 0.5rem;
+  padding: 0.1rem;
+  // margin: 20px auto;
+  width: 2rem;
+  height: 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  background: $btn-bg-color;
+  color: $btn-front-color;
+  float: right;
+  font-weight: $btn-font-weight;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
 }
 
 .btnaddRight {
-    border: none;
-    border-radius: 0.5rem;
-    padding: 0.1rem;
-    margin: 20px auto;
-    width: 2rem;
-    height: 2rem;
-    font-size: 1rem;
-    cursor: pointer;
-    background: $btn-bg-color;
-    color: $white-color;
-    float: left;
+  border: none;
+  // border-radius: 0.5rem;
+  padding: 0.1rem;
+  margin: 20px auto;
+  width: 2rem;
+  height: 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  background: $btn-bg-color;
+  color: $btn-front-color;
+  float: left;
+  font-weight: $btn-font-weight;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
 }
 
 .btnadd-right {
-    float: right;
+  float: right;
+}
+
+.btnNext {
+  font-weight: $btn-font-weight;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
 }
 
 // .error-msg {

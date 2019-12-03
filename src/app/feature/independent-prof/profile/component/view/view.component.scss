@@ -285,16 +285,18 @@ li {
 
 .btnBlue {
     border: none;
-    border-radius: 2rem;
-    padding: 0.2rem;
-    width: 8rem;
+    padding: 0.5rem;
+    width: 10rem;
     text-transform: uppercase;
     cursor: pointer;
-    background: #064d86;
-    color: #9e9d9d;
     float: center;
     font-size: 15px;
     margin-right: 1rem;
+    background: $btn-bg-color;
+    color: $btn-front-color !important;
+    font-weight: $btn-font-weight;
+    letter-spacing: $letter-spacing;
+    border-radius: $btn-border-radius;
 }
 
 .btnBlue:hover {

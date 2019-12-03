@@ -8,7 +8,7 @@
 @font-face {
   font-family: "Montserrat Regular";
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   src: url('./assets/font/montserrat-14/montserrat-v14-latin-regular.ttf');
 }
 
@@ -43,10 +43,12 @@ body {
   // overflow-x: hidden;
   font: $font-size-label "Montserrat Regular";
   background: $bg-back-color;
-  color: #898989;
+  // color: #898989;
+  color: $text-color;
+  // font-size: 18px;
   // overflow: -moz-scrollbars-vertical;
   // overflow: auto;
-  font-weight: 400;
+  font-weight: 600;
 }
 
 
@@ -58,7 +60,7 @@ FORM CSS
   background-color: $bg-back-color;
   color: $text-color;
   // overflow: auto;
-  font-weight: 400;
+  font-weight: 600;
   // width: 100%;
   // height: 100vh;
 }

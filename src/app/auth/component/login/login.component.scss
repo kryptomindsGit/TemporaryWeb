@@ -310,6 +310,14 @@ a {
   color: $text-color;
 }
 
+.btn-color,.btn-front-weight{
+  color: $btn-bg-color;
+  background: $btn-front-color;
+  font-weight: $btn-font-weight;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
+}
+
 // .error-msg {
 //   display: block;
 //   position: absolute;
