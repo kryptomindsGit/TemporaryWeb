@@ -49,7 +49,18 @@ export class EmpProfileService {
   // }
 
   async postDocHashData(fileData: any, cognitoId: any, fileName: any) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'enctype': 'multipart/form-data',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+        'X-Authorization':localStorage.getItem('userAuthToken')
+      })
+    };
+
     try {
+      
       let formData = new FormData();
       formData.append('fileData', fileData);
       formData.append('cognitoId', cognitoId);
@@ -111,6 +122,10 @@ export class EmpProfileService {
         'X-Authorization':localStorage.getItem('userAuthToken')
       })
     };
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     try {
       let res = await this.__http.get(`${BLOCKCHAIN_URL}/getHash/${id}`,
         { responseType: 'blob', observe: 'response' as 'body' }).toPromise();
@@ -170,7 +185,15 @@ export class EmpProfileService {
       })
     };
     console.log("before send data: ", employerData);
-    
+    // const httpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Access-Control-Allow-Origin': '*',
+    //     'enctype': 'multipart/form-data',
+    //     'Content-Type': 'application/json',
+    //     'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+    //     'X-Authorization':localStorage.getItem('userAuthToken')
+    //   })
+    // };
     try {
       let result = await this.__http.post(`${SPRING_URL}/employer/profile-update` , employerData, httpOptions).toPromise();
       console.log("Res Value:", result);
