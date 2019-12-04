@@ -4,9 +4,6 @@
 
 export const environment = {
   production: false,
-  agora: {
-    appId: '3c59cc883c2848de87ec5f0d14e39f81'
-  }
 };
 
 /*

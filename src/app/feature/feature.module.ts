@@ -14,7 +14,6 @@ import { ChatBoxComponent } from './chat-box/chat-box.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { FormsModule } from '@angular/forms';
 import { VedioAudioChattingComponent } from './chat-box/vedio-audio-chatting/vedio-audio-chatting.component';
-import { NgxAgoraModule } from 'ngx-agora';
 import { environment } from 'src/environments/environment';
 import { VideoAudioChatComponent } from './chat-box/video-audio-chat/video-audio-chat.component';
 //Components
@@ -45,7 +44,6 @@ const MODULES = [
   ],
   imports: [
     ...MODULES,
-    NgxAgoraModule.forRoot({ AppID: environment.agora.appId }),
   ]
 })
 export class FeatureModule { }
