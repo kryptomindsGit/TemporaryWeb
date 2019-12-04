@@ -50,14 +50,19 @@ export class HeaderComponent implements OnInit {
       this.congnitoID = user["cognito:username"];
       this.email_id = user["email"];
       this.userRole = user["custom:role"];
+      var baseName = this.email_id;
+      baseName = baseName.substring(0, baseName.indexOf('@'));
+      this.emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1);
     } else {
       this.email_id = localStorage.getItem("email");
       this.userRole = localStorage.getItem("role");
-    }
-
-    var baseName = this.email_id;
+      var baseName = this.email_id;
     baseName = baseName.substring(0, baseName.indexOf('@'));
     this.emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1);
+    }
+
+
+  
     this.getHeaderInage();
   }
 
@@ -89,8 +94,10 @@ export class HeaderComponent implements OnInit {
     }
     else if (this.userRole == "Employer") {
       this.__empProfileService.getEmployerByEmailId().then((resData: any) => {
+        console.log("emp data\n" ,resData);
+  
         this.employerDetailsArr = resData.responseObject.employerEnterprise;
-        if (this.employerDetailsArr == null) {
+        if (this.employerDetailsArr == null ) {
           this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/add']);
         } else {
           this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view']);

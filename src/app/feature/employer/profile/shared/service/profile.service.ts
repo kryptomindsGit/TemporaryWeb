@@ -102,6 +102,15 @@ export class EmpProfileService {
 
   // Blockchain GET API call
   async getDocHashData(id): Promise<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'enctype': 'multipart/form-data',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+        'X-Authorization':localStorage.getItem('userAuthToken')
+      })
+    };
     try {
       let res = await this.__http.get(`${BLOCKCHAIN_URL}/getHash/${id}`,
         { responseType: 'blob', observe: 'response' as 'body' }).toPromise();
@@ -113,6 +122,15 @@ export class EmpProfileService {
   }
 
   async getEmployerByEmailId() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'enctype': 'multipart/form-data',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+        'X-Authorization':localStorage.getItem('userAuthToken')
+      })
+    };
     try {
       console.log("Res Value before");
       let res = await this.__http.get(`${SPRING_URL}/employer/profile-view`, httpOptions).toPromise();
@@ -124,6 +142,15 @@ export class EmpProfileService {
   }
 
   async createEmployer(employerData: any) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'enctype': 'multipart/form-data',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+        'X-Authorization':localStorage.getItem('userAuthToken')
+      })
+    };
     try {
       let result = await this.__http.post(`${SPRING_URL}/employer/profile`, employerData, httpOptions).toPromise();
       return result;
@@ -133,6 +160,15 @@ export class EmpProfileService {
   }
 
   async updateEmployer( employerData: any) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'enctype': 'multipart/form-data',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+        'X-Authorization':localStorage.getItem('userAuthToken')
+      })
+    };
     console.log("before send data: ", employerData);
     
     try {

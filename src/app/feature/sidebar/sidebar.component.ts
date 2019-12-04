@@ -55,7 +55,7 @@ export class SidebarComponent implements OnInit {
     if (this.userRole == "Freelancer") {
       this.__idptProfileService.getFreelancerByEmail().then((resData: any) => {
         this.freelancerDetailsArr = resData.responseObject.freelancerProfile;
-        if (this.freelancerDetailsArr == null) {
+        if (this.freelancerDetailsArr == null || resData == undefined) {
           this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/add']);
         } else {
           this.__router.navigate(['/feature/feature/full-layout/independent/indp/profile/profile/view']);
@@ -67,17 +67,17 @@ export class SidebarComponent implements OnInit {
       this.__empProfileService.getEmployerByEmailId().then((resData: any) => {
         console.log("emp " , resData);
         // this.employerDetailsArr = resData.responseObject.employerEnterprise;
-        if (resData.responseObject.employerEnterprise == null) {
+        if (resData.responseObject.employerEnterprise == null || resData == undefined) {
           this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/add']);
         } else {
           this.__router.navigate(['/feature/feature/full-layout/employer/emp/profile/profile/view']);
         }
       });
     }
-    else if (this.userRole == "Partner") {
+    else if (this.userRole == "Partner" ) {
       this.__partProfileService.getPartnerByEmailId(this.email_id).then((resData: any) => {
         this.partnerDetailsArr = resData[0];
-        if (this.partnerDetailsArr == null) {
+        if (this.partnerDetailsArr == null || resData == undefined) {
           this.__router.navigate(['/feature/feature/full-layout/partner/part/profile/profile/add']);
         } else {
           this.__router.navigate(['/feature/feature/full-layout/partner/part/profile/profile/view']);
