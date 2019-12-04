@@ -32,7 +32,7 @@ export class ViewComponent implements OnInit {
   ) {
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     let isUportUser = localStorage.getItem("uportUser");
 
     if (isUportUser == "false") {
@@ -46,19 +46,21 @@ export class ViewComponent implements OnInit {
       this.emailId = localStorage.getItem("email");
     }
     //call function's
-    await this.getEmployerDetails();
+  this.getEmployerDetails();
   }
   /**
    * @name getEmployerDetails
    * @description call get API for employer details 
    */
   async getEmployerDetails() {
-    await this.__profileService.getEmployerByEmailId().then((resData: any) => {      
+    await this.__profileService.getEmployerByEmailId().then((resData: any) => {   
+      console.log("Employer Resp Data:", resData);
+         
       this.employerDetailsArr = resData.responseObject.employerEnterprise;
       this.employerFileArr = resData.responseObject.employerDocument;
      });
-    console.log(" this.employerDetailsArr " ,  this.employerDetailsArr );
-    console.log(" this.employerFileArr " ,  this.employerFileArr);
+    console.log(" Employer Details Data :  " ,  this.employerDetailsArr );
+    console.log(" Employer File Data :" ,  this.employerFileArr);
   }
 
   /**

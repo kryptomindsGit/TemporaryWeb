@@ -185,7 +185,7 @@ export class AddComponent implements OnInit {
         this.toastr.success(this.fileName, "Successfully uploaded");
         this.documentFileArr.push( {
           'documentUrl': this.FileArrData.fileId,
-          'documentTypeId': this.doc_cat_id
+          'docTypeId': this.doc_cat_id
         });
       } else {
         this.toastr.error(this.fileName, "File not uploaded");

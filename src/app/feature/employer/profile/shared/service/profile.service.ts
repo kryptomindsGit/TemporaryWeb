@@ -122,10 +122,6 @@ export class EmpProfileService {
         'X-Authorization':localStorage.getItem('userAuthToken')
       })
     };
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
     try {
       let res = await this.__http.get(`${BLOCKCHAIN_URL}/getHash/${id}`,
         { responseType: 'blob', observe: 'response' as 'body' }).toPromise();
