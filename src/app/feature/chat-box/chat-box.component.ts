@@ -169,12 +169,13 @@ export class ChatBoxComponent implements OnInit {
   getAllUser() {
     if (this.userRole == 'Employer') {
       this.__authService.getAllFreelancers().then((resData: any) => {
+        console.log("Employer: ", resData);
         this.allUserArray = resData.responseObject;
         this.getActiveAllUser();
-      }
-      );
+      });
     } else if (this.userRole == 'Freelancer') {
       this.__authService.getAllEmployers().then((resData: any) => {
+        console.log("Freelancer: ", resData);
         this.allUserArray = resData.responseObject;
         this.getActiveAllUser();
       }
@@ -1354,20 +1355,20 @@ export class ChatBoxComponent implements OnInit {
 //    * @name getAllUser()
 //    * @description call API for get registered Users from Server.
 //    */
-//   async getAllUser() {
-//     if (this.userRole == 'Employer') {
-//       await this.__authService.getAllFreelancers().then((resData: any) => {
-//         this.allUsersArr = resData.responseObject;
-//         console.log("Employer User list: ", this.allUsersArr);
-//         // this.getActiveAllUser();
-//       });
-//     } else if (this.userRole == 'Freelancer') {
-//       await this.__authService.getAllEmployers().then((resData: any) => {
-//         this.allUsersArr = resData.responseObject;
-//         // this.getActiveAllUser();
-//       });
-//     }
-//   }
+  // async getAllUser() {
+  //   if (this.userRole == 'Employer') {
+  //     await this.__authService.getAllFreelancers().then((resData: any) => {
+  //       this.allUsersArr = resData.responseObject;
+  //       console.log("Employer User list: ", this.allUsersArr);
+  //       // this.getActiveAllUser();
+  //     });
+  //   } else if (this.userRole == 'Freelancer') {
+  //     await this.__authService.getAllEmployers().then((resData: any) => {
+  //       this.allUsersArr = resData.responseObject;
+  //       // this.getActiveAllUser();
+  //     });
+  //   }
+  // }
 
 //   /**
 //    * @name getActiveAllUser()
