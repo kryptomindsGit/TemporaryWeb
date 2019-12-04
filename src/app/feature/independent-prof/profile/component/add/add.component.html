@@ -372,7 +372,7 @@
                                                         required />
                                                     <label for="university" class="form-label">University<span
                                                             class="redstar">*</span></label>
-                                                    <div *ngIf="submitted && qualfArr.controls[i].university.errors || qualfArr.controls[i].get('university').invalid && (qualfArr.controls[i].get('university').dirty || qualfArr.controls[i].get('university').touched)"
+                                                    <div *ngIf="submitted && qualifFormValidation[i].university.errors || qualfArr.controls[i].get('university').invalid && (qualfArr.controls[i].get('university').dirty || qualfArr.controls[i].get('university').touched)"
                                                         class="text-danger error-msg">
                                                         <div
                                                             [hidden]="!qualfArr.controls[i].get('university').errors?.required">
@@ -391,7 +391,7 @@
 
                                                     <label class="form-label" for="passingYear">Passing year<span
                                                             class="redstar">*</span></label>
-                                                    <div *ngIf="submitted && qualfArr.controls[i].passingYear.errors || qualfArr.controls[i].get('passingYear').invalid && (qualfArr.controls[i].get('passingYear').dirty || qualfArr.controls[i].get('passingYear').touched)"
+                                                    <div *ngIf="submitted && qualifFormValidation[i].passingYear.errors || qualfArr.controls[i].get('passingYear').invalid && (qualfArr.controls[i].get('passingYear').dirty || qualfArr.controls[i].get('passingYear').touched)"
                                                         class="text-danger error-msg">
                                                         <div
                                                             [hidden]="!qualfArr.controls[i].get('passingYear').errors?.required">
@@ -405,7 +405,7 @@
                                                         required />
                                                     <label for="percentage" class="form-label">Percentage<span
                                                             class="redstar">*</span></label>
-                                                    <div *ngIf="submitted && qualfArr.controls[i].percentage.errors || qualfArr.controls[i].get('percentage').invalid && (qualfArr.controls[i].get('percentage').dirty || qualfArr.controls[i].get('percentage').touched)"
+                                                    <div *ngIf="submitted && qualifFormValidation[i].percentage.errors || qualfArr.controls[i].get('percentage').invalid && (qualfArr.controls[i].get('percentage').dirty || qualfArr.controls[i].get('percentage').touched)"
                                                         class="text-danger error-msg">
                                                         <div
                                                             [hidden]="!qualfArr.controls[i].get('percentage').errors?.required">
@@ -422,7 +422,7 @@
                                                     </select>
                                                     <label class="form-label" for="grade">Grade<span
                                                             class="redstar">*</span></label>
-                                                    <div *ngIf="submitted && qualfArr.controls[i].grade.errors || qualfArr.controls[i].get('grade').invalid && (qualfArr.controls[i].get('grade').dirty || qualfArr.controls[i].get('grade').touched)"
+                                                    <div *ngIf="submitted && qualifFormValidation[i].grade.errors || qualfArr.controls[i].get('grade').invalid && (qualfArr.controls[i].get('grade').dirty || qualfArr.controls[i].get('grade').touched)"
                                                         class="text-danger error-msg">
                                                         <div
                                                             [hidden]="!qualfArr.controls[i].get('grade').errors?.required">

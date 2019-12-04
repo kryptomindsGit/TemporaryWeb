@@ -233,27 +233,27 @@ export class AddComponent implements OnInit {
     this.saveDetails();
   }
 
-  calulateAvgRate(no,position){
-    console.log(" no is  :" , no);
-    console.log("position is :" ,position);
+  calulateAvgRate(){
+    // console.log(" no is  :" , no);
+    // console.log("position is :" ,position);
   
-    let skillName : String = this.domainSkillsList[this.skillForm.controls.skillDetails.value[position].skill-1].skillName;
-    let shortCountryName : String = this.countries[this.skillForm.controls.skillDetails.value[position].country-1].countryShortName;
+    // let skillName : String = this.domainSkillsList[this.skillForm.controls.skillDetails.value[position].skill-1].skillName;
+    // let shortCountryName : String = this.countries[this.skillForm.controls.skillDetails.value[position].country-1].countryShortName;
     
-    this.__customGlobalService.getAvgRateForSkill(shortCountryName,skillName).then((resData: any) => {
-      console.log("res for avg ", resData.responseObject);
-      if(no==1){
-        this.avgRatePayscale = resData.responseObject.payscale.salary;
-        this.calculateAvgRate = this.calculateAvgRate ? false : true;
-      }else if(no == 2){
-        this.avgRateGlassdoor = resData.responseObject.payscale.salary ;
-        this.calculateAvgRate1 = this.calculateAvgRate1 ? false : true;
-      }else if(no == 3){
-        this.avgRateLinkedIn = resData.responseObject.payscale.salary ;
-        this.calculateAvgRate2 = this.calculateAvgRate2 ? false : true;
-      }else{
+    // this.__customGlobalService.getAvgRateForSkill(shortCountryName,skillName).then((resData: any) => {
+    //   console.log("res for avg ", resData.responseObject);
+    //   if(no==1){
+        this.avgRatePayscale ="$200";
+    //     this.calculateAvgRate = this.calculateAvgRate ? false : true;
+    //   }else if(no == 2){
+    //     this.avgRateGlassdoor = resData.responseObject.payscale.salary ;
+    //     this.calculateAvgRate1 = this.calculateAvgRate1 ? false : true;
+    //   }else if(no == 3){
+    //     this.avgRateLinkedIn = resData.responseObject.payscale.salary ;
+    //     this.calculateAvgRate2 = this.calculateAvgRate2 ? false : true;
+    //   }else{
   
-      }
-    })
+    //   }
+    // })
   }
 }

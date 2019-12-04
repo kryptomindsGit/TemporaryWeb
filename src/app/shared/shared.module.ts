@@ -7,7 +7,9 @@ import { ControlMessageComponent } from './control-message/control-message.compo
 
 
 @NgModule({
-  declarations: [GlobalValidationDirective, ControlMessageComponent],
+  declarations: [GlobalValidationDirective,
+     ControlMessageComponent
+    ],
   imports: [
     CommonModule,
     SharedRoutingModule

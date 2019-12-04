@@ -594,9 +594,9 @@ export class ChatBoxComponent implements OnInit {
     }
   }
 
-  chatVideo(){
-    this.__router.navigate(['/feature/feature/full-layout/chat-video-audio']);
-  }
+  // chatVideo(){
+  //   this.__router.navigate(['/feature/feature/full-layout/chat-video-audio']);
+  // }
 }
 
 

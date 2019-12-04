@@ -81,14 +81,14 @@
                                 <div class="current_user_detail">
                                     <p>{{userSelected}}
                                         <i class="fa fa-ellipsis-v video-audio-right" data-toggle="modal"
-                                            data-target="#myModalmenu" (click)="menuDropdown()" aria-hidden="true"></i>
+                                            data-target="#myModalmenu" aria-hidden="true"></i>
                                         <i class="fa fa-video-camera video-audio-right" data-toggle="modal"
-                                            data-target="#myModalvideo" aria-hidden="true" (click)="chatVideo()"></i>
+                                            data-target="#myModalvideo" aria-hidden="true"></i>
                                         <i class="fa fa-phone video-audio-right" data-toggle="modal"
-                                            data-target="#myModalaudio" (click)="audioCall()" aria-hidden="true"></i>
+                                            data-target="#myModalaudio"  aria-hidden="true"></i>
                                     </p>
 
-                                     <div *ngFor="let users of allusers"> 
+                                     <div *ngFor="let users of allUsers"> 
                                     <div *ngIf="activeStatus == true; else offline">
                                         <small class="greentext">Online</small>
                                     </div>

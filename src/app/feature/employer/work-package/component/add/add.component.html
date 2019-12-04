@@ -328,21 +328,9 @@
                     <td scope="row">
                       
                      
-                          <label *ngIf="calculateAvgRate" ><span class = "diffcolor"> from PayScale :  </span> {{ avgRatePayscale }} </label>
+                          <label *ngIf="calculateAvgRate" ><span class = "diffcolor"> </span> {{ avgRatePayscale }} </label>
                         
-                          <button type="button" class="btn calbutton "  *ngIf="!calculateAvgRate" (click)="calulateAvgRate(no=1,i)">Calculate from PayScale</button>
-                        
-                     
-                          <label *ngIf="calculateAvgRate1" ><span class = "diffcolor"> from Glassdoor :  </span> {{ avgRateGlassdoor }} </label>
-                        
-                          <button type="button" *ngIf="!calculateAvgRate1"  class="btn calbutton margin-button" (click)="calulateAvgRate(no=2,i)">Calculate from Glassdoor</button>
-                        
-
-                     
-                          <label *ngIf="calculateAvgRate2" ><span class = "diffcolor"> from LinkedIn :  </span> {{ avgRateLinkedIn }} </label>
-                        
-                          <button type="button" *ngIf="!calculateAvgRate2"  class="btn calbutton margin-button" (click)="calulateAvgRate(no=3,i)">Calculate from LinkedIn</button>
-                        
+                          <button type="button" class="btn calbutton"  *ngIf="!calculateAvgRate" (click)="calulateAvgRate()">Calculate Avg Rate</button>            
 
                     </td>
 

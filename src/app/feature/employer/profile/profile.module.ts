@@ -11,7 +11,7 @@ import { EditComponent } from './component/edit/edit.component';
 import { AddComponent } from './component/add/add.component';
 import { ViewComponent } from './component/view/view.component';
 import { ProfileComponent } from './profile.component';
-import { ControlMessageComponent } from '../../../shared/control-message/control-message.component';
+// import { ControlMessageComponent } from '../../../shared/control-message/control-message.component';
 
 
 //Component's
@@ -20,7 +20,7 @@ const COMPONENT = [
   AddComponent,
   ViewComponent,
   ProfileComponent,
-  ControlMessageComponent
+  // ControlMessageComponent
 ];
 
 //Module's

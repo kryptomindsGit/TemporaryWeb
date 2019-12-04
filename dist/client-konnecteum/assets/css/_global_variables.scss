@@ -1,0 +1,221 @@
+// colors
+$blue: #007bff;
+$indigo: #6610f2;
+$purple: #6f42c1;
+$pink: #e83e8c;
+$red: #dc3545;
+$orange: #fd7e14;
+$yellow: #ffc107;
+$green: #28a745;
+$teal: #20c997;
+$cyan: #17a2b8;
+$white: #fff;
+$gray: #6c757d;
+$gray-dark: #343a40;
+$primary: #007bff;
+$secondary: #6c757d;
+$success: #28a745;
+$info: #17a2b8;
+$warning: #ffc107;
+$danger: #dc3545;
+$light: #f8f9fa;
+$dark: #343a40;
+
+// break points
+$breakpoint-xs: 0;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+//fonts
+$font-family-sans-serif: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+$font-family-monospace: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+$font-family-montserrat: Montserrat;
+
+$font-size-01: 0.1em;
+$font-size-02: 0.2em;
+$font-size-03: 0.3em;
+$font-size-04: 0.4em;
+$font-size-05: 0.5em;
+$font-size-06: 0.6em;
+$font-size-07: 0.7em;
+$font-size-08: 0.8em;
+$font-size-09: 0.9em;
+$font-size-10em: 10.0em;
+
+$font-size-10: 1em;
+$font-size-20: 2em;
+$font-size-30: 3em;
+$font-size-40: 4em;
+$font-size-50: 5em;
+$font-size-60: 6em;
+$font-size-70: 7em;
+$font-size-80: 8em;
+$font-size-90: 9em;
+$font-size-100em: 10em;
+
+$font-weight-100: 100;
+$font-weight-200: 200;
+$font-weight-300: 300;
+$font-weight-400: 400;
+$font-weight-500: 500;
+$font-weight-bold: bold;
+
+// button size
+$btn-sm-10: 10%;
+$btn-sm-20: 20%;
+$btn-sm-30: 30%;
+$btn-sm-40: 40%;
+$btn-sm-50: 50%;
+$btn-sm-60: 60%;
+$btn-sm-70: 70%;
+$btn-sm-80: 80%;
+$btn-sm-90: 90%;
+$btn-sm-100: 100%;
+
+$btn-md-110: 110%;
+$btn-md-120: 120%;
+$btn-md-130: 130%;
+$btn-md-140: 140%;
+$btn-md-150: 150%;
+$btn-md-160: 160%;
+$btn-md-170: 170%;
+$btn-md-180: 180%;
+$btn-md-190: 190%;
+$btn-md-200: 200%;
+
+$btn-lg-210: 210%;
+$btn-lg-220: 220%;
+$btn-lg-230: 230%;
+$btn-lg-240: 240%;
+$btn-lg-250: 250%;
+$btn-lg-260: 260%;
+$btn-lg-270: 270%;
+$btn-lg-280: 280%;
+$btn-lg-290: 290%;
+$btn-lg-200: 200%;
+
+// button color
+$btn-blue: #007bff;
+$btn-indigo: #6610f2;
+$btn-purple: #6f42c1;
+$btn-pink: #e83e8c;
+$btn-red: #dc3545;
+$btn-orange: #fd7e14;
+$btn-yellow: #ffc107;
+$btn-green: #28a745;
+$btn-teal: #20c997;
+$btn-cyan: #17a2b8;
+$btn-white: #fff;
+$btn-gray: #6c757d;
+$btn-gray-dark: #343a40;
+$btn-primary: #007bff;
+$btn-secondary: #6c757d;
+$btn-success: #28a745;
+$btn-info: #17a2b8;
+$btn-warning: #ffc107;
+$btn-danger: #dc3545;
+$btn-light: #f8f9fa;
+$btn-dark: #343a40;
+
+// button background color
+
+$btn-bg-blue: #007bff;
+$btn-bg-indigo: #6610f2;
+$btn-bg-purple: #6f42c1;
+$btn-bg-pink: #e83e8c;
+$btn-bg-red: #dc3545;
+$btn-bg-orange: #fd7e14;
+$btn-bg-yellow: #ffc107;
+$btn-bg-green: #28a745;
+$btn-bg-teal: #20c997;
+$btn-bg-cyan: #17a2b8;
+$btn-bg-white: #fff;
+$btn-bg-gray: #6c757d;
+$btn-bg-gray-dark: #343a40;
+$btn-bg-primary: #007bff;
+$btn-bg-secondary: #6c757d;
+$btn-bg-success: #28a745;
+$btn-bg-info: #17a2b8;
+$btn-bg-warning: #ffc107;
+$btn-bg-danger: #dc3545;
+$btn-bg-light: #f8f9fa;
+$btn-bg-dark: #343a40;
+
+// links
+
+  $a-link: red;
+  $a-visited: green;
+  $a-hover: hotpink;
+  $a-active: blue;
+
+// padding
+
+$padding-sm-10: 10%;
+$padding-sm-20: 20%;
+$padding-sm-30: 30%;
+$padding-sm-40: 40%;
+$padding-sm-50: 50%;
+$padding-sm-60: 60%;
+$padding-sm-70: 70%;
+$padding-sm-80: 80%;
+$padding-sm-90: 90%;
+$padding-sm-100: 100%;
+
+$padding-md-110: 110%;
+$padding-md-120: 120%;
+$padding-md-130: 130%;
+$padding-md-140: 140%;
+$padding-md-150: 150%;
+$padding-md-160: 160%;
+$padding-md-170: 170%;
+$padding-md-180: 180%;
+$padding-md-190: 190%;
+$padding-md-200: 200%;
+
+$padding-lg-210: 210%;
+$padding-lg-220: 220%;
+$padding-lg-230: 230%;
+$padding-lg-240: 240%;
+$padding-lg-250: 250%;
+$padding-lg-260: 260%;
+$padding-lg-270: 270%;
+$padding-lg-280: 280%;
+$padding-lg-290: 290%;
+$padding-lg-200: 200%;
+
+//margin
+
+$margin-sm-10: 10%;
+$margin-sm-20: 20%;
+$margin-sm-30: 30%;
+$margin-sm-40: 40%;
+$margin-sm-50: 50%;
+$margin-sm-60: 60%;
+$margin-sm-70: 70%;
+$margin-sm-80: 80%;
+$margin-sm-90: 90%;
+$margin-sm-100: 100%;
+
+$margin-md-110: 110%;
+$margin-md-120: 120%;
+$margin-md-130: 130%;
+$margin-md-140: 140%;
+$margin-md-150: 150%;
+$margin-md-160: 160%;
+$margin-md-170: 170%;
+$margin-md-180: 180%;
+$margin-md-190: 190%;
+$margin-md-200: 200%;
+
+$margin-lg-210: 210%;
+$margin-lg-220: 220%;
+$margin-lg-230: 230%;
+$margin-lg-240: 240%;
+$margin-lg-250: 250%;
+$margin-lg-260: 260%;
+$margin-lg-270: 270%;
+$margin-lg-280: 280%;
+$margin-lg-290: 290%;
+$margin-lg-200: 200%;
