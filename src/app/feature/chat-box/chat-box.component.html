@@ -1,4 +1,4 @@
-<!-- <div class="container-fluid">
+<div class="container-fluid">
     <div class="row">
         <div class="col-4">
             <p>Recent User</p>
@@ -22,7 +22,7 @@
                                             <div [innerHTML]="notFound"></div>
                                         </ng-template>
                                     </div>
-                                     <input type="text" class="search-bar" placeholder="Search"> 
+                                     <!-- <input type="text" class="search-bar" placeholder="Search">  -->
                                 </div>
                             </div>
                         </div>
@@ -136,7 +136,7 @@
                                 </ng-template>
                             </div>
                              </div> 
-                            <div *ngIf="videoEnable">
+                            <!-- <div *ngIf="videoEnable">
                                  The Modal 
                                 <div class="modal" id="myModalvideo">
                                     <div class="modal-dialog">
@@ -201,11 +201,10 @@
                                     </div>
                                 </div>
                                 End The Modal 
-                            </div>
-                        </div>
+                            </div> -->
+                        <!-- </div> -->
                         <div class="type_msg">
                         <div class="row">
-                           
                             <div class="col-md-9">
                                         <div class="input_msg_write">    
                                             <input type="text" (keydown.enter)="sendMessageChat($event.target.value)"
@@ -215,8 +214,8 @@
                                         </div>
                                 </div>
                                 <div class="col-md-3">
-                                        <button class="file_send_btn"><i class="fa fa-paperclip" aria-hidden="true" (click)="enableFile()"></i></button>
-                                        <button class="file_send_btn"><i class="fa fa-microphone" aria-hidden="true" (click)="enableAudio()"></i></button>
+                                        <!-- <button class="file_send_btn"><i class="fa fa-paperclip" aria-hidden="true" (click)="enableFile()"></i></button>
+                                        <button class="file_send_btn"><i class="fa fa-microphone" aria-hidden="true" (click)="enableAudio()"></i></button> -->
                                         <button class="file_send_btn" type="button" (click)="sendMessageChat(titleInput.value)" (click)="titleInput.value=''"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button> 
                                 </div>
                             </div>
@@ -226,8 +225,9 @@
             </div>
         </div>
     </div>
+</div>
 
-    <div class="row" *ngIf="fileEnable">
+    <!-- <div class="row" *ngIf="fileEnable">
             <div class="container">
               <div class="card">
                 <div class="card-body">
@@ -325,7 +325,7 @@
 
 
 
-<div class="container-fluid">
+<!-- <div class="container-fluid">
   <div class="row">
     <div class="col-md-3">
       <div class="card">
@@ -333,7 +333,6 @@
           <p>Recent User</p>
         </div>
         <div class="card-body">
-          <!-- <div class="chat_users"> -->
           <div *ngFor="let users of allUsersArr; let i=index">
             <hr *ngIf="i>0">
             <div class="chat_list" (click)="selectedUser(users)">
@@ -374,8 +373,6 @@
               </ng-template>
             </div>
           </div>
-
-          <!-- </div> -->
         </div>
       </div>
     </div>
@@ -387,7 +384,6 @@
               <div class="col-md-9">
                 <strong>{{ userSelected }}</strong>
                 {{ selectedUserClientID }}
-                <!-- : {{ clientId }} -->
               </div>
               <div class="col-md-3">
                 <i class="fa fa-envelope icon-send" title="Text Chat" aria-hidden="true" (click)="enableText()"></i>
@@ -397,55 +393,15 @@
                 <i class="fa fa-window-restore icon-send"  title="Screen Share" aria-hidden="true" (click)="enableScreen()"></i>
               </div>
             </div>
-            <!-- <div class="clientid">
-              <div class="btn-toolbar">
-                <div class="input-group flex-nowrap col-md-9">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text" id="addon-wrapping"> Client ID </span>
-                  </div>
-                  <input type="text" class="form-control" placeholder="Enter Client Id To Connect..."
-                    aria-label="toClientId" aria-describedby="addon-wrapping" [(ngModel)]="toClientId"
-                    [disabled]="connected">
-                </div>
-                <div class="btn-group col-md-3">
-                  <button *ngIf="!connected" type="button" class="btn btn-success" (click)="connect()">
-                    <i class="fa fa-compress" aria-hidden="true"></i> Connect
-                  </button>
-                  <button *ngIf="connected" type="button" class="btn btn-danger" (click)="disconnect()">
-                    <i class="fa fa-expand" aria-hidden="true"></i> Disconnect
-                  </button>
-                </div>
-              </div>
-            </div> -->
+            
           </div>
         </div>
       </div>
-      <!-- <div class="row"> -->
       <div class="row" *ngIf="textEnable">
-        <!-- <div class="container"> -->
         <div class="card">
 
           <div class="card-body">
-            <!-- <div class="inbox_chat">
-                  <div *ngFor="let message of messages">
-                    <strong>Client-{{ message['clientId'] }} : </strong> {{ message['data'] }}
-                  </div>
-            </div>
-            <br />
-            <div class="btn-toolbar">
-              <div class="input-group flex-nowrap col-md-10">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="addon-wrapping"> Message </span>
-                </div>
-                <input type="text" class="form-control" placeholder="Enter Message To Send..." aria-label="message" aria-describedby="addon-wrapping" [(ngModel)]="message" [disabled]="!connected">
-              </div>
-              <div class="btn-group col-md-2">
-                <button type="button" class="btn btn-primary" (click)="sendMessage()" [disabled]="!connected">
-                  <i class="fa fa-paper-plane-o" aria-hidden="true"></i> Send
-                </button>
-              </div>
-            </div>
-          </div> -->
+            
           <div class="inbox_chat">
             <div id="msg_history">
               <div *ngFor="let msgs of newMessageObject; let i=index">
@@ -489,26 +445,13 @@
                                 </div>
                         </div>
                         <div class="col-md-3">
-                                <!-- <button class="file_send_btn"><i class="fa fa-paperclip" aria-hidden="true" (click)="enableFile()"></i></button>
-                                <button class="file_send_btn"><i class="fa fa-microphone" aria-hidden="true" (click)="enableAudio()"></i></button> -->
+                                
                                 <button class="file_send_btn" title="Send Message" type="button" (click)="sendMessage()"><i class="fa fa-paper-plane-o"  aria-hidden="true"></i></button> 
                         </div>
                     </div>
                 </div>
               <br />
-            <!-- <div class="btn-toolbar">
-              <div class="input-group flex-nowrap col-md-10">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="addon-wrapping"> Message </span>
-                </div>
-                <input type="text" class="form-control" placeholder="Enter Message To Send..." aria-label="message" aria-describedby="addon-wrapping" [(ngModel)]="message" [disabled]="!connected">
-              </div>
-              <div class="btn-group col-md-2">
-                <button type="button" class="btn btn-primary" (click)="sendMessage()" [disabled]="!connected">
-                  <i class="fa fa-paper-plane-o" aria-hidden="true"></i> Send
-                </button>
-              </div>
-            </div> -->
+            
             </div>
           </div>
         </div>
@@ -630,7 +573,6 @@
           <div class="container">
             <div class="card">
               <div class="card-body">
-                <!-- <div class="video_chat"> -->
                 <div class="row">
                   <div class="internaldiv">
                     <video #videoElement class="img-border">
@@ -643,7 +585,6 @@
                     </video>
                   </div>
                 </div>
-                <!-- </div> -->
               </div>
             </div>
           </div>
@@ -674,4 +615,4 @@
 
 
     <div class="footer"></div>
-  </div>
+  </div> -->

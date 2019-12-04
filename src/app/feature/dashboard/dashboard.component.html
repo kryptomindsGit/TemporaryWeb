@@ -1,5 +1,5 @@
-<div class="container">
-    <!-- <div class="row">
+<!-- <div class="container">
+    <div class="row">
         <div class="col-6">
             <h6>Technology-wise available jobs </h6>
             <div class="card">
@@ -76,10 +76,10 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-6" style="color:cornflowerblue">
+                        <div class="col-5" style="color:cornflowerblue">
                             Project Name
                         </div>
-                        <div class="col-3" style="color:cornflowerblue">
+                        <div class="col-4" style="color:cornflowerblue">
                             Payment Date
                         </div>
                         <div class="col-3" style="color:cornflowerblue">
@@ -120,27 +120,60 @@
                 </div>
                    
         </div>
-    </div> -->
+    </div>
+</div> -->
 
-    <div class="row">
-        <div class="col-4 ">
-            <img class="space-right" src="../../../assets/images/Active job.jpg">
+<div class="container">
+    <ng-container *ngIf="userRole == 'Freelancer'; then freeDashboard; else empDashboard">
+    </ng-container>
+
+    <ng-template #freeDashboard>
+        <div class="row">
+            <div class="col-md-3 ">
+                <img class="space-right" src="../../../assets/images/Active job.jpg">
+            </div>
+            <div class="col-md-3 " >
+                <img   class="space-right" src="../../../assets/images/completed jobs.jpg">
+            </div>
+            <div class="col-md-3">
+                <img  class="space-right" src="../../../assets/images/Saved Jobs.jpg">
+            </div>
+            <div class="col-md-3">
+                <img  class="space-right" src="../../../assets/images/Total Earning.jpg">
+            </div>
         </div>
-        <div class="col-4 " >
-            <img   class="space-right" src="../../../assets/images/completed jobs.jpg">
+        <div class="row">
+            <div class="col-md-4">
+                <img class="space-right1" src="../../../assets/images/calender - Copy (2).jpg">
+            </div>
+            <div class="col-md-8">
+                <img class="space-right2" src="../../../assets/images/graph1-page-001.jpg">
+            </div>
         </div>
-        <div class="col-4">
-            <img  class="space-right" src="../../../assets/images/Saved Jobs.jpg">
+    </ng-template>
+
+    <ng-template #empDashboard>
+        <div class="row">
+            <div class="col-md-3 ">
+                <img class="space-right" src="../../../assets/images/Active job.jpg">
+            </div>
+            <div class="col-md-3 " >
+                <img   class="space-right" src="../../../assets/images/completed jobs.jpg">
+            </div>
+            <div class="col-md-3">
+                <img  class="space-right" src="../../../assets/images/Saved Jobs.jpg">
+            </div>
+            <div class="col-md-3">
+                <img  class="space-right" src="../../../assets/images/Total Earning.jpg">
+            </div>
         </div>
-       
-    </div>
-    <div class="row">
-        <div class="col-4">
-            <img  class="space-right" src="../../../assets/images/Total Earning.jpg">
+        <div class="row">
+            <div class="col-md-4">
+                <img class="space-right1" src="../../../assets/images/calender - Copy (2).jpg">
+            </div>
+            <div class="col-md-8">
+                <img class="space-right2" src="../../../assets/images/graph1-page-001.jpg">
+            </div>
         </div>
-        <div class="col-6">
-            <img class="space-right1" src="../../../assets/images/calender - Copy (2).jpg">
-        </div>
-    </div>
-    
+    </ng-template>
 </div>
