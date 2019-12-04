@@ -179,7 +179,15 @@ export class WorkPackageService {
 
   //get all skills
 async getAllSkills():Promise<any> {
-    
+  let httpOptions = {
+    headers: new HttpHeaders({
+      'Access-Control-Allow-Origin': '*',
+      // 'enctype': 'multipart/form-data',
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+      'X-Authorization': localStorage.getItem('userAuthToken')
+    })
+  };
     try {
       let res = await this.http.get(`${BASE_URL}/freelancer/skills`,httpOptions).toPromise();
       console.log("data " ,res);
