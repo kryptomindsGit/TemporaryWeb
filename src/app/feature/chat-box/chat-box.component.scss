@@ -846,22 +846,38 @@ a:not([href]):not([tabindex]):hover {
     overflow-y: auto !important;
 }
 
-.modal-dialog {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
+.full_modal-dialog {
+  width: 98% !important;
+  height: 98% !important;
+  min-width: 98% !important;
+  min-height: 98% !important;
+  max-width: 98% !important;
+  max-height: 98% !important;
+  padding: 0 !important;
 }
 
-.modal-content {
-  height: 100%;
-  width: 100%;
-//   min-height: 100%;
-  border-radius: 0;
-background: $bg-front-color;
-color: $text-color;
-font-size: 12px;
+.full_modal-content {
+  height: 99% !important;
+  min-height: 99% !important;
+  max-height: 99% !important;
 }
+
+// .modal-dialog {
+//   width: 100%;
+//   height: 100%;
+//   margin: 0;
+//   padding: 0;
+// }
+
+// .modal-content {
+//   height: 100%;
+//   width: 100%;
+// //   min-height: 100%;
+//   border-radius: 0;
+// background: $bg-front-color;
+// color: $text-color;
+// font-size: 12px;
+// }
 
 // .modal .modal-dialog .modal-content {
 //     background: $bg-front-color;
