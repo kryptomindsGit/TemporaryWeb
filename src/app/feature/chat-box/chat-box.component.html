@@ -1,233 +1,162 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-4">
-            <p>Recent User</p>
-            <div class="card">
-                <div class="inbox_people">
-                    <div class="card-header">
-                        <div class="headind_srch">
-                            <p>Search</p>
-                            <div class="srch_bar">
-                                <div class="stylish-input-group">
-                                    <div class="ng-autocomplete">
-                                        <ng-autocomplete [data]="allUserArray" [searchKeyword]="keyword"
-                                            (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)'
-                                            (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate"
-                                            [notFoundTemplate]="notFoundTemplate">
-                                        </ng-autocomplete>
-                                        <ng-template #itemTemplate let-item>
-                                            <a [innerHTML]="item.emailId"></a>
-                                        </ng-template>
-                                        <ng-template #notFoundTemplate let-notFound>
-                                            <div [innerHTML]="notFound"></div>
-                                        </ng-template>
-                                    </div>
-                                     <!-- <input type="text" class="search-bar" placeholder="Search">  -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="inbox_chat">
-                            <div *ngFor="let users of allUserArray; let i=index">
-                                <hr *ngIf="i>0">
-                                <div class="chat_list" (click)="selectUser(users)">
-                                    <div class="chat_people" *ngIf="users.isLoggedIn == true ; else deactiveUser">
-                                        <div class="chat_img">
-
-                                            <img class="rounded-circle" style="width: 50px; height: 40px;"
-                                                src="../../../assets/images/akhshay.png" alt="sunil">
-                                            <span class="greendot"></span>
-                                        </div>
-                                        <div class="chat_ib">
-                                            <h5>{{users.emailId}}</h5>
-                                            <span class="time_date"> {{users.creationdate | date:'shortTime'}}</span>
-                                        </div>
-                                    </div>
-
-                                    <ng-template #deactiveUser>
-                                        <div class="chat_img">
-
-                                            <img class="rounded-circle" style="width: 50px; height: 40px;"
-                                                src="../../../assets/images/akhshay.png" alt="sunil">
-                                            <span class="reddot"></span>
-                                        </div>
-                                        <div class="chat_ib">
-                                            <h5>{{users.emailId}}</h5>
-                                            <span class="time_date"> {{users.creationdate | date:'shortTime'}}</span>
-                                        </div>
-                                    </ng-template>
-                                </div>
-                                 <br>
-                                <br> 
-                            </div>
-
-                        </div>
-                    </div>
+<!-- <div class="container-fluid">
+  <div class="row">
+    <div class="col-4">
+      <p>Recent User</p>
+      <div class="card">
+        <div class="inbox_people">
+          <div class="card-header">
+            <div class="headind_srch">
+              <p>Search</p>
+              <div class="srch_bar">
+                <div class="stylish-input-group">
+                  <div class="ng-autocomplete">
+                    <ng-autocomplete [data]="allUserArray" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+                      (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                      [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+                    </ng-autocomplete>
+                    <ng-template #itemTemplate let-item>
+                      <a [innerHTML]="item.emailId"></a>
+                    </ng-template>
+                    <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                  </div>
                 </div>
+              </div>
             </div>
-        </div>
-        <div *ngIf="userSelected" class="col-8">
-            <p>Message History</p>
-            <div class="card">
-                <div class="card-header">
-                    <div class="current_user">
-                        <div class="input_msg_write">
-                            <div class="chat_people">
-                                 <div class="chat_img">
-                                    <img class="rounded-circle" style="width: 40px; height: 40px;"
-                                        src="../../../assets/images/akhshay.png" alt="sunil">
-                                </div> 
-                                <div class="current_user_detail">
-                                    <p>{{userSelected}}
-                                        <i class="fa fa-ellipsis-v video-audio-right" data-toggle="modal"
-                                            data-target="#myModalmenu" aria-hidden="true"></i>
-                                        <i class="fa fa-video-camera video-audio-right" data-toggle="modal"
-                                            data-target="#myModalvideo" aria-hidden="true"></i>
-                                        <i class="fa fa-phone video-audio-right" data-toggle="modal"
-                                            data-target="#myModalaudio"  aria-hidden="true"></i>
-                                    </p>
+          </div>
+          <div class="card-body">
+            <div class="inbox_chat">
+              <div *ngFor="let users of allUserArray; let i=index">
+                <hr *ngIf="i>0">
+                <div class="chat_list" (click)="selectUser(users)">
+                  <div class="chat_people" *ngIf="users.isLoggedIn == true ; else deactiveUser">
+                    <div class="chat_img">
 
-                                     <div *ngFor="let users of allUsers"> 
-                                    <div *ngIf="activeStatus == true; else offline">
-                                        <small class="greentext">Online</small>
-                                    </div>
-                                    <ng-template #offline>
-                                        <small class="redtext">Offline</small>
-                                    </ng-template>
-
-                                     </div> 
-                                </div>
-                            </div>
-                        </div>
+                      <img class="rounded-circle" style="width: 50px; height: 40px;"
+                        src="../../../assets/images/akhshay.png" alt="sunil">
+                      <span class="greendot"></span>
                     </div>
-                </div>
-
-                <div class="card-body">
-                    <div class="mesgs">
-                        <div id="msg_history">
-                            <div *ngFor="let msgs of newMessageObject; let i=index">
-                                <div *ngIf="msgs.user == 'sender' &&  msgs.receiver == userSelected; else receiverUser">
-                                    <div class="outgoing_msg">
-                                        <div class="outgoing_msg_img">
-                                            <img style="width: 30px; height: 30px;" class="rounded-circle"
-                                                src="../../../assets/images/jothipawar.jpg" alt="sunil">
-                                        </div>
-                                        <div class="sent_msg bubble-blue you">
-                                            <p>{{msgs.senderMsg}}</p>
-                                            <p>{{msgs.receiverMsg}} </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <ng-template #receiverUser>
-                                    <div class="incoming_msg" *ngIf="msgs.sender == userSelected">
-                                        <div class="incoming_msg_img">
-                                            <img style="width: 30px; height: 30px;" class="rounded-circle"
-                                                src="../../../assets/images/akhshay.png" alt="sunil">
-                                        </div>
-                                        <div class="received_msg">
-                                            <div class="received_withd_msg bubble me">
-                                                <p>{{msgs.receiverMsg}} </p>
-                                                <p>{{msgs.senderMsg}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ng-template>
-                            </div>
-                             </div> 
-                            <!-- <div *ngIf="videoEnable">
-                                 The Modal 
-                                <div class="modal" id="myModalvideo">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-
-                                             Modal Header 
-                                             <div class="modal-header">
-                                                <h6 class="modal-title">Video Call Record</h6>
-                                                <button type="button" class="close"
-                                                    data-dismiss="modal">&times;</button>
-                                            </div> 
-
-                                             Modal body 
-                                            <div class="modal-body">
-                                                <div class="row">
-                                                    <div class="container">
-                                                        <div class="card">
-                                                            <div class="card-body">
-                                                                <div class="row">
-                                                                    <div class="col-md-6 text-center">
-                                                                        <video #videoElement class="img-border"
-                                                                            width="{{ videoWidth }}"
-                                                                            height="{{ videoHeight }}">
-                                                                            <source>
-                                                                        </video>
-                                                                    </div>
-                                                                    <div class="col-md-6 text-center">
-                                                                        <video #remoteVideoElement class="img-border"
-                                                                            width="{{ videoWidth }}"
-                                                                            height="{{ videoHeight }}">
-                                                                            <source>
-                                                                        </video>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                 <video id="myVideo" playsinline width="500" height="500"
-                                                    class="video-js vjs-default-skin"></video>
-
-                                                    <div class="bottom-container">
-                                                        <div id="photos"></div>
-                                                    </div> 
-                                            </div>
-
-
-
-                                             Modal footer 
-                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary" id="imageSnap"
-                                                    data-dismiss="modal" (click)="imageSnapshot()">Snapshot</button>
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                                    (click)="videoRecoder()">Record</button>
-                                                <button type="button" class="btn btn-danger"
-                                                    data-dismiss="modal">Close</button>
-                                                <canvas id="canvas"></canvas>
-                                            </div> 
-
-                                        </div>
-                                    </div>
-                                </div>
-                                End The Modal 
-                            </div> -->
-                        <!-- </div> -->
-                        <div class="type_msg">
-                        <div class="row">
-                            <div class="col-md-9">
-                                        <div class="input_msg_write">    
-                                            <input type="text" (keydown.enter)="sendMessageChat($event.target.value)"
-                                                (keydown.enter)="titleInput.value=''" #titleInput class="write_msg"
-                                                placeholder="Type a message"/>
-                                                     
-                                        </div>
-                                </div>
-                                <div class="col-md-3">
-                                        <!-- <button class="file_send_btn"><i class="fa fa-paperclip" aria-hidden="true" (click)="enableFile()"></i></button>
-                                        <button class="file_send_btn"><i class="fa fa-microphone" aria-hidden="true" (click)="enableAudio()"></i></button> -->
-                                        <button class="file_send_btn" type="button" (click)="sendMessageChat(titleInput.value)" (click)="titleInput.value=''"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button> 
-                                </div>
-                            </div>
-                        </div>
+                    <div class="chat_ib">
+                      <h5>{{users.emailId}}</h5>
+                      <span class="time_date"> {{users.creationdate | date:'shortTime'}}</span>
                     </div>
+                  </div>
+
+                  <ng-template #deactiveUser>
+                    <div class="chat_img">
+
+                      <img class="rounded-circle" style="width: 50px; height: 40px;"
+                        src="../../../assets/images/akhshay.png" alt="sunil">
+                      <span class="reddot"></span>
+                    </div>
+                    <div class="chat_ib">
+                      <h5>{{users.emailId}}</h5>
+                      <span class="time_date"> {{users.creationdate | date:'shortTime'}}</span>
+                    </div>
+                  </ng-template>
                 </div>
+                <br>
+                <br>
+              </div>
+
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+    <div *ngIf="userSelected" class="col-8">
+      <p>Message History</p>
+      <div class="card">
+        <div class="card-header">
+          <div class="current_user">
+            <div class="input_msg_write">
+              <div class="chat_people">
+                <div class="chat_img">
+                  <img class="rounded-circle" style="width: 40px; height: 40px;"
+                    src="../../../assets/images/akhshay.png" alt="sunil">
+                </div>
+                <div class="current_user_detail">
+                  <p>{{userSelected}}
+                    <i class="fa fa-ellipsis-v video-audio-right" data-toggle="modal" data-target="#myModalmenu"
+                      aria-hidden="true"></i>
+                    <i class="fa fa-video-camera video-audio-right" data-toggle="modal" data-target="#myModalvideo"
+                      aria-hidden="true"></i>
+                    <i class="fa fa-phone video-audio-right" data-toggle="modal" data-target="#myModalaudio"
+                      aria-hidden="true"></i>
+                  </p>
 
-    <!-- <div class="row" *ngIf="fileEnable">
+                  <div *ngFor="let users of allUsers">
+                    <div *ngIf="activeStatus == true; else offline">
+                      <small class="greentext">Online</small>
+                    </div>
+                    <ng-template #offline>
+                      <small class="redtext">Offline</small>
+                    </ng-template>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="mesgs">
+            <div id="msg_history">
+              <div *ngFor="let msgs of newMessageObject; let i=index">
+                <div *ngIf="msgs.user == 'sender' &&  msgs.receiver == userSelected; else receiverUser">
+                  <div class="outgoing_msg">
+                    <div class="outgoing_msg_img">
+                      <img style="width: 30px; height: 30px;" class="rounded-circle"
+                        src="../../../assets/images/jothipawar.jpg" alt="sunil">
+                    </div>
+                    <div class="sent_msg bubble-blue you">
+                      <p>{{msgs.senderMsg}}</p>
+                      <p>{{msgs.receiverMsg}} </p>
+                    </div>
+                  </div>
+                </div>
+
+                <ng-template #receiverUser>
+                  <div class="incoming_msg" *ngIf="msgs.sender == userSelected">
+                    <div class="incoming_msg_img">
+                      <img style="width: 30px; height: 30px;" class="rounded-circle"
+                        src="../../../assets/images/akhshay.png" alt="sunil">
+                    </div>
+                    <div class="received_msg">
+                      <div class="received_withd_msg bubble me">
+                        <p>{{msgs.receiverMsg}} </p>
+                        <p>{{msgs.senderMsg}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+            <div class="type_msg">
+              <div class="row">
+                <div class="col-md-9">
+                  <div class="input_msg_write">
+                    <input type="text" (keydown.enter)="sendMessageChat($event.target.value)"
+                      (keydown.enter)="titleInput.value=''" #titleInput class="write_msg"
+                      placeholder="Type a message" />
+
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <button class="file_send_btn" type="button" (click)="sendMessageChat(titleInput.value)"
+                    (click)="titleInput.value=''"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="fileEnable">
             <div class="container">
               <div class="card">
                 <div class="card-body">
@@ -317,20 +246,30 @@
 </div>  -->
 
 
-
-
-
-
-
-
-
-
-<!-- <div class="container-fluid">
+<div class="container-fluid">
   <div class="row">
     <div class="col-md-3">
       <div class="card">
         <div class="card-header">
-          <p>Recent User</p>
+          <div class="headind_srch">
+            <p>Seach User</p>
+            <div class="srch_bar">
+              <div class="stylish-input-group">
+                <div class="ng-autocomplete">
+                  <ng-autocomplete [data]="allUsersArr" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+                    (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                    [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+                  </ng-autocomplete>
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.emailId"></a>
+                  </ng-template>
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="card-body">
           <div *ngFor="let users of allUsersArr; let i=index">
@@ -338,14 +277,14 @@
             <div class="chat_list" (click)="selectedUser(users)">
               <div class="chat_people" *ngIf="users.isLoggedIn == true ; else deactiveUser">
                 <div class="row">
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                     <div class="chat_img">
                       <img class="rounded-circle" style="width: 50px; height: 40px;"
                         src="../../../assets/images/akhshay.png" alt="sunil">
                       <span class="greendot"></span>
                     </div>
                   </div>
-                  <div class="col-md-8">
+                  <div class="col-md-9">
                     <div class="chat_ib">
                       <h6>{{users.emailId}}</h6>
                       <span class="time_date"> {{users.creationdate | date:'shortTime'}}</span>
@@ -356,14 +295,14 @@
 
               <ng-template #deactiveUser>
                 <div class="row">
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                     <div class="chat_img">
                       <img class="rounded-circle" style="width: 50px; height: 40px;"
                         src="../../../assets/images/akhshay.png" alt="sunil">
                       <span class="reddot"></span>
                     </div>
                   </div>
-                  <div class="col-md-8">
+                  <div class="col-md-9">
                     <div class="chat_ib">
                       <h6>{{users.emailId}}</h6>
                       <span class="time_date"> {{users.creationdate | date:'shortTime'}}</span>
@@ -379,240 +318,315 @@
     <div class="col-md-9">
       <div class="row">
         <div class="card">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-9">
-                <strong>{{ userSelected }}</strong>
-                {{ selectedUserClientID }}
-              </div>
-              <div class="col-md-3">
-                <i class="fa fa-envelope icon-send" title="Text Chat" aria-hidden="true" (click)="enableText()"></i>
-                <i class="fa fa-files-o icon-send" title="File Share" aria-hidden="true" (click)="enableFile()"></i>
-                <i class="fa fa-volume-up icon-send" title="Audio Share" aria-hidden="true" (click)="enableAudio()"></i>
-                <i class="fa fa-video-camera icon-send" title="Video Chat" aria-hidden="true" (click)="enableVideo()"></i>
-                <i class="fa fa-window-restore icon-send"  title="Screen Share" aria-hidden="true" (click)="enableScreen()"></i>
+          <div class="card-header">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-9">
+                  <strong>{{ userSelected }}</strong>
+                  {{ selectedUserClientID }}
+                </div>
+                <div class="col-md-3">
+                  <div class="float-right">
+                    <i class="fa fa-envelope icon-send" title="Text Chat" aria-hidden="true" (click)="enableText()"></i>
+                    <i class="fa fa-files-o icon-send" title="File Share" aria-hidden="true" (click)="enableFile()"></i>
+                    <i class="fa fa-volume-up icon-send" title="Audio Share" aria-hidden="true"
+                      (click)="enableAudio()"></i>
+                    <i class="fa fa-video-camera icon-send" title="Video Chat" aria-hidden="true"
+                       (click)="enableVideo()" data-toggle="modal" data-target="#exampleModalCenter"></i>
+                    <i class="fa fa-window-restore icon-send" title="Screen Share" aria-hidden="true"
+                      (click)="enableScreen()"></i>
+                  </div>
+                </div>
               </div>
             </div>
-            
           </div>
         </div>
-      </div>
-      <div class="row" *ngIf="textEnable">
-        <div class="card">
+        <!-- <div class="card-body"> -->
+        <div class="col-md-12">
+          <div class="row" *ngIf="textEnable">
+            <div class="card">
+              <div class="card-body">
+                <div class="inbox_chat">
+                  <div id="msg_history">
+                    <div *ngFor="let msgs of messages; let i=index">
+                      <p>{{msgs.clientId}}</p>
+                      <p>{{msgs.data}} </p>
+                      <!-- <div *ngIf="msgs.user == 'sender'; else receiverUser">
+                        <div class="outgoing_msg">
+                          <div class="outgoing_msg_img">
+                            <img style="width: 30px; height: 30px;" class="rounded-circle"
+                              src="../../../assets/images/jothipawar.jpg" alt="sunil">
+                          </div>
+                          <div class="sent_msg bubble-blue you">
+                            <p>{{msgs.clientId}}</p>
+                            <p>{{msgs.data}} </p>
+                          </div>
+                        </div>
+                      </div> -->
 
-          <div class="card-body">
-            
-          <div class="inbox_chat">
-            <div id="msg_history">
-              <div *ngFor="let msgs of newMessageObject; let i=index">
-                <div *ngIf="msgs.user == 'sender'; else receiverUser">
-                  <div class="outgoing_msg">
-                    <div class="outgoing_msg_img">
-                      <img style="width: 30px; height: 30px;" class="rounded-circle"
-                        src="../../../assets/images/jothipawar.jpg" alt="sunil">
-                    </div>
-                    <div class="sent_msg bubble-blue you">
-                      <p>{{msgs.senderMsg}}</p>
-                      <p>{{msgs.receiverMsg}} </p>
+                      <!-- <ng-template #receiverUser>
+                        <div class="incoming_msg" *ngIf="msgs.user == 'receiver'">
+                          <div class="incoming_msg_img">
+                            <img style="width: 30px; height: 30px;" class="rounded-circle"
+                              src="../../../assets/images/akhshay.png" alt="sunil">
+                          </div>
+                          <div class="received_msg">
+                            <div class="received_withd_msg bubble me">
+                              <p>{{msgs.receiverMsg}} </p>
+                              <p>{{msgs.senderMsg}}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-template> -->
                     </div>
                   </div>
                 </div>
-
-                <ng-template #receiverUser>
-                  <div class="incoming_msg" *ngIf="msgs.user == 'receiver'">
-                    <div class="incoming_msg_img">
-                      <img style="width: 30px; height: 30px;" class="rounded-circle"
-                        src="../../../assets/images/akhshay.png" alt="sunil">
-                    </div>
-                    <div class="received_msg">
-                      <div class="received_withd_msg bubble me">
-                        <p>{{msgs.receiverMsg}} </p>
-                        <p>{{msgs.senderMsg}}</p>
-                      </div>
-                    </div>
-                  </div>
-                </ng-template>
               </div>
-              </div>
-          </div>
-              <div class="type_msg">
-                <div class="row">
-                   
+              <div class="card-footer">
+                <div class="type_msg">
+                  <div class="row">
                     <div class="col-md-9">
-                                <div class="input_msg_write">    
-                                    <input type="text" placeholder="Enter Message To Send..." [(ngModel)]="message"  class="write_msg" />
-                                             
-                                </div>
-                        </div>
-                        <div class="col-md-3">
-                                
-                                <button class="file_send_btn" title="Send Message" type="button" (click)="sendMessage()"><i class="fa fa-paper-plane-o"  aria-hidden="true"></i></button> 
-                        </div>
+                      <div class="input_msg_write">
+                        <input type="text" placeholder="Enter Message To Send..." [(ngModel)]="message"
+                          class="write_msg" />
+                      </div>
                     </div>
+                    <div class="col-md-3">
+                      <button class="file_send_btn" title="Send Message" type="button" (click)="sendMessage()"><i
+                          class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                    </div>
+                  </div>
                 </div>
-              <br />
+              </div>
+            </div>
+            <!-- </div> -->
+          </div>
+          <div class="row" *ngIf="fileEnable">
+            <!-- <div class="container"> -->
+              <div class="card">
+                <div class="card-body">
+                  <div class="btn-toolbar">
+                    <div class="custom-file input-group flex-nowrap col-md-10">
+                      <input type="file" class="custom-file-input" id="file"
+                        (change)="handleFileInput($event.target.files)" [disabled]="!connected">
+                      <label class="custom-file-label" for="file">{{ sendFileName }}</label>
+                    </div>
+                    <div class="btn-group col-md-2">
+                      <button type="button" class="btn btn-warning" (click)="sendFile()"
+                        [disabled]="sendFileName == 'Choose file' || !connected">
+                        <i class="fa fa-paper-plane-o" aria-hidden="true"></i> Send
+                      </button>
+                    </div>
+                  </div>
+                  <br />
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-md-4 text-center">
+                        Send Progress :
+                      </div>
+                      <div class="col-md-8">
+                        <div class="progress">
+                          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                            [style.width.%]="sendProgressValue" aria-valuenow="progressValue"
+                            aria-valuemin="sendProgressMin" aria-valuemax="sendProgressMax">
+                            <strong> {{ sendProgressValue }} %</strong>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  <div class="row">
+                    <div class="col-md-4 text-center">
+                      Received :
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-md-4 text-right">
+                        File Name :
+                      </div>
+                      <div class="col-md-8">
+                        {{ receivedFileName }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4 text-right">
+                        File Type :
+                      </div>
+                      <div class="col-md-8">
+                        {{ receivedFileType }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4 text-right">
+                        File Size :
+                      </div>
+                      <div class="col-md-8">
+                        {{ receivedFileSize }}
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-md-4 text-center">
+                        Receive Progress :
+                      </div>
+                      <div class="col-md-8">
+                        <div class="progress">
+                          <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+                            role="progressbar" [style.width.%]="receivedProgressValue"
+                            aria-valuenow="receivedProgressValue" aria-valuemin="receivedProgressMin"
+                            aria-valuemax="receivedProgressMax">
+                            <strong> {{ receivedProgressValue }} %</strong>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="container">
+                    <div class="text-center">
+                      <button type="button" class="btn btn-primary" (click)="downloadFile()"
+                        [disabled]="!enableDownload">
+                        <i class="fa fa-download" aria-hidden="true"></i> Download File
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <!-- </div> -->
+          </div>
+          <div class="row" *ngIf="audioEnable">
+            <!-- <div class="container"> -->
             
-            </div>
-          </div>
-        </div>
-        <div class="row" *ngIf="fileEnable">
-          <div class="container">
-            <div class="card">
-              <div class="card-body">
-                <div class="container btn-toolbar">
-                  <div class="custom-file input-group flex-nowrap col-md-10">
-                    <input type="file" class="custom-file-input" id="file"
-                      (change)="handleFileInput($event.target.files)" [disabled]="!connected">
-                    <label class="custom-file-label" for="file">{{ sendFileName }}</label>
-                  </div>
-                  <div class="btn-group col-md-2">
-                    <button type="button" class="btn btn-warning" (click)="sendFile()"
-                      [disabled]="sendFileName == 'Choose file' || !connected">
-                      <i class="fa fa-paper-plane-o" aria-hidden="true"></i> Send
-                    </button>
-                  </div>
-                </div>
-                <br />
-                <div class="container">
-                  <div class="row">
-                    <div class="col-md-2 text-center">
-                      Send Progress :
+              <div class="card">
+                <div class="card-body">
+                <br>
+                <br>
+                <br>
+                  <div class="row text-center">
+                    <div class="col-md-6 text-center">
+                      <audio #audioElement controls>
+                        <source>
+                      </audio>
                     </div>
-                    <div class="col-md-10">
-                      <div class="progress">
-                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                          [style.width.%]="sendProgressValue" aria-valuenow="progressValue"
-                          aria-valuemin="sendProgressMin" aria-valuemax="sendProgressMax">
-                          <strong> {{ sendProgressValue }} %</strong>
-                        </div>
-                      </div>
+                    <div class="col-md-6 text-center">
+                      <audio #remoteAudioElement controls>
+                        <source>
+                      </audio>
                     </div>
-                  </div>
-                </div>
-                <br />
-                <div class="row">
-                  <div class="col-md-2 text-left">
-                    Received :
-                  </div>
-                </div>
-                <div class="container">
-                  <div class="row">
-                    <div class="col-md-2 text-right">
-                      File Name :
-                    </div>
-                    <div class="col-md-10">
-                      {{ receivedFileName }}
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-2 text-right">
-                      File Type :
-                    </div>
-                    <div class="col-md-10">
-                      {{ receivedFileType }}
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-2 text-right">
-                      File Size :
-                    </div>
-                    <div class="col-md-10">
-                      {{ receivedFileSize }}
-                    </div>
-                  </div>
-                </div>
-                <div class="container">
-                  <div class="row">
-                    <div class="col-md-2 text-center">
-                      Receive Progress :
-                    </div>
-                    <div class="col-md-10">
-                      <div class="progress">
-                        <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
-                          role="progressbar" [style.width.%]="receivedProgressValue"
-                          aria-valuenow="receivedProgressValue" aria-valuemin="receivedProgressMin"
-                          aria-valuemax="receivedProgressMax">
-                          <strong> {{ receivedProgressValue }} %</strong>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="container">
-                  <div class="text-center">
-                    <button type="button" class="btn btn-primary" (click)="downloadFile()" [disabled]="!enableDownload">
-                      <i class="fa fa-download" aria-hidden="true"></i> Download File
-                    </button>
                   </div>
                 </div>
               </div>
-            </div>
+            <!-- </div> -->
           </div>
-        </div>
-        <div class="row" *ngIf="audioEnable">
-          <div class="container">
-            <div class="card">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-md-6 text-center">
-                    <audio #audioElement controls>
-                      <source>
-                    </audio>
-                  </div>
-                  <div class="col-md-6 text-center">
-                    <audio #remoteAudioElement controls>
-                      <source>
-                    </audio>
-                  </div>
+          <div class="row" *ngIf="videoEnable">
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <!-- <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> -->
+      <div class="modal-body">
+      <!-- <p>
+     Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+
+The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham
+Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+
+The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham
+      </p> -->
+        <!-- <div class="card">
+            <div class="card-body"> -->
+              <!-- <div class="row">
+                <div class="internaldiv">
+                  <video #videoElement class="img-border">
+                    <source>
+                  </video>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row" *ngIf="videoEnable">
-          <div class="container">
-            <div class="card">
-              <div class="card-body">
-                <div class="row">
-                  <div class="internaldiv">
-                    <video #videoElement class="img-border">
-                      <source>
-                    </video>
-                  </div>
-                  <div class="externaldiv">
-                    <video #remoteVideoElement class="img-border">
-                      <source>
-                    </video>
-                  </div>
+                <div class="externaldiv">
+                  <video #remoteVideoElement class="img-border">
+                    <source>
+                  </video>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row" *ngIf="screenEnable">
-          <div class="container">
-            <div class="card">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-md-6 text-center">
-                    <video #screenElement class="img-border" width="{{ screenWidth }}" height="{{ screenHeight }}">
-                      <source>
-                    </video>
-                  </div>
-                  <div class="col-md-6 text-center">
-                    <video #remoteScreenElement class="img-border" width="{{ screenWidth }}"
-                      height="{{ screenHeight }}">
-                      <source>
-                    </video>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+              </div> -->
+            <!-- </div>
+          </div> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
+  </div>
+</div>
+            <!-- <div class="container"> -->
+              <!-- <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="internaldiv">
+                      <video #videoElement class="img-border">
+                        <source>
+                      </video>
+                    </div>
+                    <div class="externaldiv">
+                      <video #remoteVideoElement class="img-border">
+                        <source>
+                      </video>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+            <!-- </div> -->
+          </div>
+          <div class="row" *ngIf="screenEnable">
+            <!-- <div class="container"> -->
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6 text-center">
+                      <video #screenElement class="img-border" width="{{ screenWidth }}" height="{{ screenHeight }}">
+                        <source>
+                      </video>
+                    </div>
+                    <div class="col-md-6 text-center">
+                      <video #remoteScreenElement class="img-border" width="{{ screenWidth }}"
+                        height="{{ screenHeight }}">
+                        <source>
+                      </video>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <!-- </div> -->
+          </div>
+        </div>
+        <!-- </div> -->
+        <!-- <div class="card-footer">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-9">
+                  <div class="input_msg_write">
+                    <input type="text" placeholder="Enter Message To Send..." [(ngModel)]="message" class="write_msg" />
 
-
-    <div class="footer"></div>
-  </div> -->
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <button class="file_send_btn" title="Send Message" type="button" (click)="sendMessage()"><i
+                      class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </div> -->
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+  <div class="footer"></div>
+</div>
