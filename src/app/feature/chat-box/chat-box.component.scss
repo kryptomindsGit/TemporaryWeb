@@ -979,14 +979,17 @@ a:not([href]):not([tabindex]):hover {
     display: inline-block;
     opacity: 1;
     position: absolute;
-    top: 75%;
+    top: 80%;
     right: 1%;
     bottom: 1%;
-    left: 75%;
+    left: 80%;
     z-index: 50;
     transition: 0.5s;
-    border: 0.5px solid #000;
-    
+    border: none;
+
+    .img-border{
+        border-radius: 0.2rem;
+    }
 }
 
 

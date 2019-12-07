@@ -333,8 +333,8 @@
                       (click)="enableAudio()"></i>
                     <i class="fa fa-video-camera icon-send" title="Video Chat" aria-hidden="true"
                       (click)="enableVideo()" data-toggle="modal" data-target="#exampleModalCenter"></i>
-                    <i class="fa fa-window-restore icon-send" title="Screen Share" aria-hidden="true"
-                      (click)="enableScreen()"></i>
+                    <!-- <i class="fa fa-window-restore icon-send" title="Screen Share" aria-hidden="true"
+                      (click)="enableScreen()"></i> -->
                   </div>
                 </div>
               </div>
@@ -551,7 +551,7 @@
                           <button class="call-end">
                             <i class="fa fa-phone" aria-hidden="true"></i>
                           </button>
-                          <button class="screen-share">
+                          <button class="screen-share" (click)="enableScreen()" data-toggle="modal" data-target="#screenshareModel">
                             <i class="fa fa-window-restore" aria-hidden="true"></i>
                           </button>
                         </div>
@@ -594,8 +594,7 @@
             <!-- </div> -->
           </div>
           <div class="row" *ngIf="screenEnable">
-            <!-- <div class="container"> -->
-            <div class="card">
+            <!-- <div class="card">
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-6 text-center">
@@ -611,28 +610,54 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <!-- </div> -->
-          </div>
-        </div>
-        <!-- </div> -->
-        <!-- <div class="card-footer">
-            <div class="col-md-12">
-              <div class="row">
-                <div class="col-md-9">
-                  <div class="input_msg_write">
-                    <input type="text" placeholder="Enter Message To Send..." [(ngModel)]="message" class="write_msg" />
+            </div> -->
 
+            <div class="modal fade" id="screenshareModel" tabindex="-1" role="dialog"
+              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog full_modal-dialog" role="document">
+                <div class="modal-content full_modal-content">
+                  <div class="internaldiv">
+                      <video #remoteScreenElement class="img-border" width="{{ screenWidth }}"
+                      height="{{ screenHeight }}">
+                      <source>
+                    </video>
+                      <!-- <video #remoteVideoElement class="img-border">
+                          <source>
+                        </video> -->
+                    <div class="overlay">
+                      <div class="row">
+                        <div class="col-md-12 text-right icon-center">
+                          <button class="call-start">
+                            <i class="fa fa-phone" aria-hidden="true"></i>
+                          </button>
+                          <button class="call-end">
+                            <i class="fa fa-phone" aria-hidden="true"></i>
+                          </button>
+                          <button class="screen-share" (click)="enableScreen()">
+                            <i class="fa fa-window-restore" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="overlay-video">
+                      <div class="row">
+                        <div class="col-md-12">
+                            <video #screenElement class="img-border" width="{{ screenWidth }}" height="{{ screenHeight }}">
+                                <source>
+                              </video>
+                            <!-- <video #videoElement class="img-border">
+                                <source>
+                              </video> -->
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-3">
-                  <button class="file_send_btn" title="Send Message" type="button" (click)="sendMessage()"><i
-                      class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                 </div>
               </div>
             </div>
-          </div> -->
-        <!-- </div> -->
+          </div>
+        </div>
       </div>
     </div>
   </div>

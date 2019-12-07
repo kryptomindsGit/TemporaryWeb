@@ -731,6 +731,8 @@ export class ChatBoxComponent implements OnInit {
   public receiverEmail: any;
   public selectedUserClientID: any;
   public sendMessages: any;
+  public selectedUserInfo: any;
+  public selectUser: any;
 
   @ViewChild('audioElement', { static: false }) audioElement: ElementRef;
   @ViewChild('remoteAudioElement', { static: false }) remoteAudioElement: ElementRef;
@@ -1084,6 +1086,7 @@ export class ChatBoxComponent implements OnInit {
   }
 
   public enableVideo() {
+    this.connect();
     try {
       this.stopAudio();
     } catch (e) { }
@@ -1096,8 +1099,8 @@ export class ChatBoxComponent implements OnInit {
     this.videoEnable = true;
     this.screenEnable = false;
     setTimeout(() => {
-      this.connect();
       this.video = this.videoElement.nativeElement;
+      // this.connect();
       let constraints = { audio: true, video: { minFrameRate: 60, width: 400, height: 300 } };
       this.browser.mediaDevices.getUserMedia(constraints).then((stream: any) => {
         if (!stream.stop && stream.getTracks) {
@@ -1132,6 +1135,7 @@ export class ChatBoxComponent implements OnInit {
   }
 
   public enableScreen() {
+    this.connect();
     try {
       this.stopAudio();
     } catch (e) { }
@@ -1144,6 +1148,7 @@ export class ChatBoxComponent implements OnInit {
     this.videoEnable = false;
     this.screenEnable = true;
     setTimeout(() => {
+      // this.connect();
       this.screen = this.screenElement.nativeElement;
       this.getAllUserMediaScreen().then((stream: any) => {
         if (!stream.stop && stream.getTracks) {
@@ -1186,11 +1191,22 @@ export class ChatBoxComponent implements OnInit {
   }
 
   public async connect() {
+
+    this.selectUser = JSON.stringify(localStorage.getItem('selectedUserInfo'));
+    console.log("select User:", this.selectUser);
+    
     this.allClients.forEach(selectedUser => {
-      if (selectedUser.emailId == this.userSelected) {
-        this.toClientId = selectedUser.clientId;
+      if(this.userSelected != ''){
+        if (selectedUser.emailId == this.userSelected) {
+          this.toClientId = selectedUser.clientId;
+        }
+    }else{
+        if(selectedUser.emailId == this.selectUser){
+          this.toClientId = selectedUser.clientId;
+        }
       }
     });
+
     console.log("to client ID:", this.toClientId);
     this.connected = true;
     console.log("this.connected:", this.connected);
@@ -1311,9 +1327,6 @@ export class ChatBoxComponent implements OnInit {
     this.dataChannel.send(JSON.stringify({ clientId: this.fromClientId, data: this.message }));
     this.messages.push(JSON.parse(JSON.stringify({ clientId: this.fromClientId, data: this.message })));
     this.message = '';
-
-
-
     var stringToStore = JSON.stringify(this.messageObject);
     localStorage.setItem("senderObj", stringToStore);
     this.getLocalStorageSenderMessage();
@@ -1499,10 +1512,10 @@ export class ChatBoxComponent implements OnInit {
    * @description select user
    */
   async selectedUser(selectUser) {
+    this.selectedUserInfo = JSON.stringify(selectUser);
+    localStorage.setItem('selectedUserInfo', this.selectedUserInfo)
     this.userSelected = selectUser.emailId;
-    // localStorage.setItem('selectedUser', this.userSelected)
     this.activeStatus = selectUser.isLoggedIn;
-
     this.connect();
   }
 
