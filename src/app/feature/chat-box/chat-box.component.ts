@@ -872,7 +872,10 @@ export class ChatBoxComponent implements OnInit {
         }
       };
       this.socketservice.receiveOffer().subscribe(async (offer: RTCSessionDescription) => {
+        console.log("Receive Offer :", offer);
+        window.alert(offer['email']);
         await this.peerConnection.setRemoteDescription({ type: 'offer', sdp: offer.sdp });
+        
         this.toClientId = offer['from'];
         this.peerConnection.createAnswer().then(async (answer: RTCSessionDescription) => {
           ;
@@ -886,6 +889,8 @@ export class ChatBoxComponent implements OnInit {
         });
       });
       this.socketservice.receiveAnswer().subscribe(async (answer: RTCSessionDescription) => {
+        console.log("Receive Answer :", answer);
+
         await this.peerConnection.setRemoteDescription({ type: 'answer', sdp: answer.sdp });
       });
       this.socketservice.receiveIceCandidate().subscribe((candidate: RTCIceCandidate) => {
@@ -1311,13 +1316,23 @@ export class ChatBoxComponent implements OnInit {
       offerToReceiveVideo: 1,
       voiceActivityDetection: 1
     }).then(async (offer: RTCSessionDescription) => {
-      console.log('Offer Created : ', offer);
+      console.log('Offer Send : ', offer);
       await this.peerConnection.setLocalDescription(offer);
+
+      // this.allClients.forEach(selectedUser => {
+
+      //     if (selectedUser.emailId == this.userSelected) {
+      //       this.toClientId = selectedUser.clientId;
+      //     }
+          
+      // });
+
       this.socketservice.sendOffer({
         from: this.fromClientId,
         to: this.toClientId,
         type: offer.type,
-        sdp: offer.sdp
+        sdp: offer.sdp,
+        email:this.senderEmail
       });
     });
   }
