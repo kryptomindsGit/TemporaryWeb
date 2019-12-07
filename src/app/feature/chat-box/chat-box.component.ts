@@ -733,6 +733,12 @@ export class ChatBoxComponent implements OnInit {
   public sendMessages: any;
   public selectedUserInfo: any;
   public selectUser: any;
+  public is_chats :boolean = true ;
+  public is_rooms :boolean = false ;
+  public is_room_created :boolean = false ;
+
+
+
 
   @ViewChild('audioElement', { static: false }) audioElement: ElementRef;
   @ViewChild('remoteAudioElement', { static: false }) remoteAudioElement: ElementRef;
@@ -1559,4 +1565,15 @@ export class ChatBoxComponent implements OnInit {
     var receiveObjectsFromStorage = JSON.parse(recfromStorage);
   }
 
+  
+  showChats(){
+    this.is_chats = true; 
+    this.is_rooms = false;
+  }
+
+  showRooms(){
+    this.is_rooms = true;
+    this.is_chats = false;
+    this.is_room_created = true;
+  }
 }

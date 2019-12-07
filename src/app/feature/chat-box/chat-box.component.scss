@@ -1029,3 +1029,15 @@ a:not([href]):not([tabindex]):hover {
     background-color: $text-color;
     border-radius: .25rem;
 }
+
+.text-faint{
+    color: gray;
+}   
+
+.text-big{
+  font-size: 1.5rem;
+}   
+
+.msg-box{
+    border: 0.1px #a3a3a3 solid;
+}

@@ -269,9 +269,75 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div><br>
+          <!-- <div class="row">
+            <div class="col-2">
+              <i class="fa fa-comments-o icons-left" title="Screen Share" aria-hidden="true"
+              (click)="createRoom()"></i>
+            </div>
+            <div class="col-3"> 
+              <i class="fa fa-users icons-left" title="Screen Share" aria-hidden="true"
+              (click)="createRoom()"></i>
+            </div>
+            <div class="col-5"> 
+              <i class="fa fa-bell icons-left" title="Screen Share" aria-hidden="true"
+              (click)="createRoom()"></i>
+            </div>
+          </div> -->
+          <!-- <div class="col-md-12"> -->
+              <div class="row">
+                  <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <i class="fa fa-comments icons-left" title="Screen Share" aria-hidden="true"
+                            (click)="showChats()"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <label>Chat</label>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                      <div class="row">
+                          <div class="col-md-12 text-center">
+                              <i class="fa fa-users icons-left" title="Screen Share" aria-hidden="true"
+                              (click)="showRooms()"></i>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-12 text-center">
+                              <label>Room</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <i class="fa fa-bell icons-left" title="Screen Share" aria-hidden="true"
+                                (click)="createRoom()"></i>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <label>Notification</label>
+                            </div>
+                        </div>
+                      </div>
+                  <!-- <div class="col-2">  
+                    <label>Chat</label>
+                  </div>
+                  <div class="col-3"> 
+                    <label>Rooms</label>
+                  </div>
+                  <div class="col-5"> 
+                    <label>Notifications</label>
+                  </div> -->
+                </div>
+          <!-- </div> -->
         </div>
-        <div class="card-body">
+        <div class="card-body" *ngIf="is_chats==true">
           <div *ngFor="let users of allUsersArr; let i=index">
             <hr *ngIf="i>0">
             <div class="chat_list" (click)="selectedUser(users)">
@@ -313,6 +379,49 @@
             </div>
           </div>
         </div>
+        <div class="card-body " *ngIf="is_rooms==true">
+            <div class="col-md-12 text-center">
+                <i class="fa fa-plus-circle text-big" title="Screen Share" aria-hidden="true"
+                data-toggle="modal" data-target="#exampleModalCenter"></i>
+            </div>
+            <div class="col-md-12 text-center">
+                <label for="create"> Create Room</label>
+            </div>
+            <hr>
+            <div class="card-body " *ngIf="is_room_created==true">
+                <div class="msg-box text-center py-4">
+                    Currently no rooms are available.
+                </div>
+            </div>
+
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header text-center">
+                      <h5 class="modal-title " id="exampleModalLongTitle">Create Room</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row">
+                        <div class="col-5">
+                            <label>Enter Room Name</label>
+                        </div>
+                        <div class="col-7">
+                            <input type="text">
+                          </div>
+                      </div>
+                      
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
       </div>
     </div>
     <div class="col-md-9">
@@ -333,8 +442,12 @@
                       (click)="enableAudio()"></i>
                     <i class="fa fa-video-camera icon-send" title="Video Chat" aria-hidden="true"
                       (click)="enableVideo()" data-toggle="modal" data-target="#exampleModalCenter"></i>
-                    <!-- <i class="fa fa-window-restore icon-send" title="Screen Share" aria-hidden="true"
-                      (click)="enableScreen()"></i> -->
+                    <i class="fa fa-window-restore icon-send" title="Screen Share" aria-hidden="true"
+                      (click)="enableScreen()"></i>
+                    <i class="fa fa-user-plus icon-send" title="Screen Share" aria-hidden="true"
+                      (click)="createRoom()"></i>
+                    <i class="fa fa-users icon-send" title="Screen Share" aria-hidden="true"
+                      (click)="createRoom()"></i>
                   </div>
                 </div>
               </div>
