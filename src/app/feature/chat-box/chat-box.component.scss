@@ -847,20 +847,86 @@ a:not([href]):not([tabindex]):hover {
 }
 
 .full_modal-dialog {
-  width: 98% !important;
-  height: 98% !important;
-  min-width: 98% !important;
-  min-height: 98% !important;
-  max-width: 98% !important;
-  max-height: 98% !important;
+  width: 90% !important;
+  height: 90% !important;
+  min-width: 90% !important;
+  min-height: 90% !important;
+  max-width: 90% !important;
+  max-height: 90% !important;
   padding: 0 !important;
 }
 
 .full_modal-content {
-  height: 99% !important;
-  min-height: 99% !important;
-  max-height: 99% !important;
+  height: 90% !important;
+  min-height: 90% !important;
+  max-height: 90% !important;
 }
+
+.internaldiv {
+    position: relative;
+//     // width: 100% !important;
+//     // height: 100% !important;
+//     // min-width: 100% !important;
+//     // min-height: 100% !important;
+}
+
+.img-border{
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
+}
+
+.overlay{
+    display: inline-block;
+    opacity: 1;
+    position: absolute;
+    top: 90%;
+    right: 40%;
+    bottom: 5%;
+    left: 40%;
+    z-index: 50;
+    transition: 0.5s;
+
+    .call-start, .call-end{
+        height: 4rem;
+        width: 4rem;
+        border: none;
+        border-radius: 50%;
+        background: $bg-front-color;
+    }
+    
+    .call-start:hover{
+        background: green;
+        transition: 0.5s;
+        .fa{
+            color: #fff;
+        }
+    
+    }
+    
+    .call-end:hover{
+        background: red;
+        transition: 0.5s;
+        .fa{
+            color: #fff;
+        }
+    }
+    
+    
+    .call-start, .call-end{
+        .fa{
+            cursor: pointer;
+            height: 2rem;
+            width: 2rem;
+            font-size: 32px;
+            color: #000;
+            border: none;
+        }
+    }
+}
+
+
 
 // .modal-dialog {
 //   width: 100%;
