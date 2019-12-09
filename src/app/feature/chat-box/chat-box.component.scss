@@ -442,13 +442,21 @@
     overflow-x: hidden;
 }
 
+.card-footer {
+    padding: .75rem 1.25rem;
+    background-color: transparent !important;
+    border-top: none;
+}
+
 img {
     width: 100%;
 }
 
 .float-right .fa {
     margin-right: 0.3rem;
-    font-size: 1rem;
+    font-size: 1.2rem;
+    height: 20%;
+
 }
 
 .float-right .fa:hover {
@@ -528,6 +536,31 @@ img {
     // width: 100%;
     margin-right:0.1rem;
     position: relative;
+}
+
+.card-margin{
+    margin-top:  50px;
+}
+
+.current_user_img{
+    margin: auto;
+    img {
+        width: 100px;
+        height: 100px;
+        margin: 10px;
+    }
+}
+
+.btn-color,
+.btn-front-weight {
+  color:$btn-front-color;
+  background:$btn-bg-color;
+  font-weight: bold;
+  letter-spacing: $letter-spacing;
+  border-radius: $btn-border-radius;
+  display: inline-block;
+  text-align: center;
+  padding: 1%;
 }
 
 .current_user_detail {
@@ -635,11 +668,36 @@ img {
 }
 
 .type_msg {
-    // border-top: 1px solid #c4c4c4;
     position: relative;
     color: $text-color;
     height: 100%;
+    border: 0.5px solid #000;
+    border-radius: 35px;
+    padding: 0px 10px;
 }
+
+
+.fileShare, .audioShare{
+    height: 50%;
+    font-size: 22px;
+    border: 0.8px solid #000;
+    border-radius: 50%;
+    width: 40%;
+    padding: 9%;
+    margin-right: auto;
+    text-align: center;
+}
+    
+// .audioShare{
+//     height: 50%;
+//     font-size: 22px;
+//     border: 0.8px solid #000;
+//     border-radius: 50%;
+//     width: 40%;
+//     padding: 9%;
+//     margin-right: auto;
+//     text-align: center;
+// }
 
 .file_send_btn {
     float: right;
@@ -761,6 +819,15 @@ img {
     position: absolute;
     height: 0.5rem;
     width: 0.5rem;
+    background-color: rgba(255, 42, 4, 0.651);
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.redDotCurrentUser{
+    position: absolute;
+    height: 1rem;
+    width: 1rem;
     background-color: rgba(255, 42, 4, 0.651);
     border-radius: 50%;
     display: inline-block;

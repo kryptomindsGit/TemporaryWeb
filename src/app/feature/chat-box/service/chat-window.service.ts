@@ -173,7 +173,7 @@ export class ChatWindowService {
   ) {
     console.log("Node chat IP:", NODE_URL_CHAT);
 
-    this.socket = io('http://192.168.0.7:3040', {
+    this.socket = io('http://192.168.0.9:3040', {
       reconnectionDelay: 1000,
       reconnection: true,
       reconnectionAttempts: 1,

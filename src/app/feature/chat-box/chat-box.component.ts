@@ -738,6 +738,9 @@ export class ChatBoxComponent implements OnInit {
   public is_room_created :boolean = false ;
 
 
+  public userselect: boolean = false;
+
+
 
 
   @ViewChild('audioElement', { static: false }) audioElement: ElementRef;
@@ -976,6 +979,7 @@ export class ChatBoxComponent implements OnInit {
   }
 
   public enableFile() {
+    this.connect();
     try {
       this.stopAudio();
     } catch (e) { }
@@ -1054,6 +1058,7 @@ export class ChatBoxComponent implements OnInit {
   }
 
   public enableAudio() {
+    this.connect();
     try {
       this.stopVideo();
     } catch (e) { }
@@ -1533,6 +1538,7 @@ export class ChatBoxComponent implements OnInit {
    * @description select user
    */
   async selectedUser(selectUser) {
+    this.userselect = true;
     this.selectedUserInfo = JSON.stringify(selectUser);
     localStorage.setItem('selectedUserInfo', this.selectedUserInfo)
     this.userSelected = selectUser.emailId;
