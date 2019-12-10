@@ -338,7 +338,7 @@
         <div class="card-body" *ngIf="is_chats==true">
           <div *ngFor="let users of allUsersArr; let i=index">
             <hr *ngIf="i>0">
-            <div class="chat_list" (click)="selectedUser(users)">
+            <div class="chat_list" (click)="selectedUser(users)" data-toggle="modal" data-target="#langModel">
               <div class="chat_people" *ngIf="users.isLoggedIn == true ; else deactiveUser">
                 <div class="row">
                   <div class="col-md-3">
@@ -423,45 +423,88 @@
         </div>
       </div>
     </div>
-    <div class="col-md-9 text-center card-margin" *ngIf="!userselect; else isUserSelected">
-          <h4 style="font-size: 25px; font-weight:400">Welcome, Khemraj</h4>
-          <div class="current_user_img">  
-              <img class="rounded-circle"
-                src="../../../assets/images/akhshay.png" alt="sunil">
-                <span class="redDotCurrentUser"></span>
-            </div>
-            <br>
-            <br>
-            <br><br><br>
-            <b>You are signed in as <i>{{senderEmail}}</i></b>
-            <p>Try switching accounts if you cannot see your contacts or conversation history.</p>
-            <button class="btn btn-color btn-front-weight">
-             <b> Learn More </b>
-            </button>
+    <div class="col-md-9 text-center card-margin" *ngIf="!userselect; else isULangSelected">
+      <h4 style="font-size: 25px; font-weight:400">Welcome, Khemraj</h4>
+      <div class="current_user_img">
+        <img class="rounded-circle" src="../../../assets/images/akhshay.png" alt="sunil">
+        <span class="redDotCurrentUser"></span>
+      </div>
+      <br>
+      <br>
+      <br><br><br>
+      <b>You are signed in as <i>{{senderEmail}}</i></b>
+      <p>Try switching accounts if you cannot see your contacts or conversation history.</p>
+      <button class="btn btn-color btn-front-weight">
+        <b> Learn More </b>
+      </button>
     </div>
-    <ng-template #isUserSelected>
-        <div class="col-md-9">
+
+
+    <ng-template #isULangSelected>
+      <!-- <div *ngIf="langSelect; else isUserSelected"> -->
+          <div class="modal fade" id="langModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <!-- <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div> -->
+              <div class="modal-body">
+                       <form [formGroup]="langForm">
+                        <h5 tyle="font-weight: bold">Select languages for communicate</h5>
+                        <div class="row">
+                          <div class="col-6">
+                            <h6 style="font-weight: bold">Source Language</h6>
+                            <select formControlName="sourceLang" (change)="sourceLanguages()">
+                                <option disabled>Sourcce Language</option>
+                                <option [ngValue]="sourceLang.lang_code" *ngFor="let sourceLang of selectLanguage">{{sourceLang.language}}</option>
+                              </select>
+                          </div>
+                          <div class="col-6">
+                            <h6 tyle="font-weight: bold">Target Language</h6>
+                              <select formControlName="targetLang" (change)="targetLanguages()">
+                                  <option disabled>Target Language</option>
+                                  <option [ngValue]="targetLang.lang_code" *ngFor="let targetLang of selectLanguage">{{targetLang.language}}</option>
+                                </select>
+                          </div>
+                        </div>
+                       </form>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+          </div>
+          <!-- </div> -->
+      <!-- <ng-template #isUserSelected> -->
+          <div class="col-md-9">
             <div class="row">
               <div class="card">
                 <div class="card-header">
                   <div class="col-md-12">
                     <div class="row">
                       <div class="col-md-9">
-                          <!-- <div class="chat_img">  
-                              <img class="rounded-circle"
-                                src="../../../assets/images/akhshay.png" alt="sunil">
-                                <span class="greendot"></span>
-                            </div> -->
+                        <!-- <div class="chat_img">  
+                                  <img class="rounded-circle"
+                                    src="../../../assets/images/akhshay.png" alt="sunil">
+                                    <span class="greendot"></span>
+                                </div> -->
                         <strong>{{ userSelected }}</strong>
                         {{ selectedUserClientID }}
                       </div>
                       <div class="col-md-3">
                         <div class="float-right">
-                          <i class="fa fa-envelope icon-send" title="Text Chat" aria-hidden="true" (click)="enableText()"></i>
-                          
+                          <i class="fa fa-envelope icon-send" title="Text Chat" aria-hidden="true"
+                            (click)="enableText()"></i>
+    
                           <i class="fa fa-video-camera icon-send" title="Video Chat" aria-hidden="true"
                             (click)="enableVideo()" data-toggle="modal" data-target="#exampleModalCenter"></i>
-                          
+    
                         </div>
                       </div>
                     </div>
@@ -470,50 +513,50 @@
               </div>
               <div class="col-md-12">
                 <div class="row" *ngIf="textEnable">
-                  <div class="card">
-                    <div class="card-body">
-                      <div class="inbox_chat">
-                        <div id="msg_history">
-                          <div *ngFor="let msgs of messages; let i=index">
-                            <p>{{msgs.clientId}}</p>
-                            <p>{{msgs.data}} </p>
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="inbox_chat">
+                          <div id="msg_history">
+                            <div *ngFor="let msgs of messages; let i=index">
+                              <p>{{msgs.clientId}}</p>
+                              <p>{{msgs.data}} </p>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="card-footer">
-                      <div class="row">
-                        <div class="col-md-10">
-                          <div class="type_msg">
-                            <div class="row">
-                              <div class="col-md-10">
-                                <div class="input_msg_write">
-                                  <input type="text" placeholder="Enter Message To Send..." [(ngModel)]="message"
-                                    class="write_msg" />
+                      <div class="card-footer">
+                        <div class="row">
+                          <div class="col-md-10">
+                            <div class="type_msg">
+                              <div class="row">
+                                <div class="col-md-10">
+                                  <div class="input_msg_write">
+                                    <input type="text" placeholder="Enter Message To Send..." [(ngModel)]="message"
+                                      class="write_msg" />
+                                  </div>
+                                </div>
+                                <div class="col-md-2">
+                                  <button class="file_send_btn" title="Send Message" type="button"
+                                    (click)="sendMessage()"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                                 </div>
                               </div>
-                              <div class="col-md-2">
-                                <button class="file_send_btn" title="Send Message" type="button" (click)="sendMessage()"><i
-                                    class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div class="col-md-2">
-                          <div class="row fileShareAudio">
-                            <div class="audioShare">
-                              <i class="fa fa-volume-up icon-send" title="Audio Share" aria-hidden="true"
-                                (click)="enableAudio()"></i>
-                            </div>
-                            <div class="fileShare">
-                              <i class="fa fa-files-o icon-send" title="File Share" aria-hidden="true"
-                                (click)="enableFile()"></i>
+                          <div class="col-md-2">
+                            <div class="row fileShareAudio">
+                              <div class="audioShare">
+                                <i class="fa fa-volume-up icon-send" title="Audio Share" aria-hidden="true"
+                                  (click)="enableAudio()"></i>
+                              </div>
+                              <div class="fileShare">
+                                <i class="fa fa-files-o icon-send" title="File Share" aria-hidden="true"
+                                  (click)="enableFile()"></i>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
                 </div>
                 <div class="row" *ngIf="fileEnable">
                   <div class="card">
@@ -601,7 +644,8 @@
                       <br>
                       <div class="container">
                         <div class="text-center">
-                          <button type="button" class="btn btn-primary" (click)="downloadFile()" [disabled]="!enableDownload">
+                          <button type="button" class="btn btn-primary" (click)="downloadFile()"
+                            [disabled]="!enableDownload">
                             <i class="fa fa-download" aria-hidden="true"></i> Download File
                           </button>
                         </div>
@@ -610,7 +654,7 @@
                   </div>
                 </div>
                 <div class="row" *ngIf="audioEnable">
-      
+    
                   <div class="card">
                     <div class="card-body">
                       <br>
@@ -632,7 +676,7 @@
                   </div>
                 </div>
                 <div class="row" *ngIf="videoEnable">
-      
+    
                   <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog full_modal-dialog" role="document">
@@ -657,7 +701,7 @@
                               </div>
                             </div>
                           </div>
-      
+    
                           <div class="overlay-video">
                             <div class="row">
                               <div class="col-md-12">
@@ -673,7 +717,7 @@
                   </div>
                 </div>
                 <div class="row" *ngIf="screenEnable">
-      
+    
                   <div class="modal fade" id="screenshareModel" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog full_modal-dialog" role="document">
@@ -698,7 +742,7 @@
                               </div>
                             </div>
                           </div>
-      
+    
                           <div class="overlay-video">
                             <div class="row">
                               <div class="col-md-12">
@@ -717,8 +761,10 @@
               </div>
             </div>
           </div>
+        <!-- </ng-template> -->
+         
     </ng-template>
-   
+
   </div>
   <div class="footer"></div>
 </div>

@@ -12,7 +12,7 @@ import { FullLayoutComponent } from './full-layout/full-layout.component';
 import { PaymentSmartcontractComponent } from './payment-smartcontract/payment-smartcontract.component';
 import { ChatBoxComponent } from './chat-box/chat-box.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VedioAudioChattingComponent } from './chat-box/vedio-audio-chatting/vedio-audio-chatting.component';
 import { environment } from 'src/environments/environment';
 import { VideoAudioChatComponent } from './chat-box/video-audio-chat/video-audio-chat.component';
@@ -32,7 +32,8 @@ const MODULES = [
   CommonModule,
   FeatureRoutingModule,
   AutocompleteLibModule,
-  FormsModule
+  FormsModule,
+  ReactiveFormsModule
 ];
 
 @NgModule({

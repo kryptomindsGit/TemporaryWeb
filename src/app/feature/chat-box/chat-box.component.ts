@@ -631,6 +631,7 @@ import { saveAs } from 'file-saver';
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { Router } from '@angular/router';
 import decode from 'jwt-decode';
+import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 
 declare global {
   interface Window {
@@ -652,6 +653,8 @@ declare global {
   styleUrls: ['./chat-box.component.scss']
 })
 export class ChatBoxComponent implements OnInit {
+
+  public langForm: FormGroup;
 
   public emailID: any;
   public jwtData: any;
@@ -739,8 +742,194 @@ export class ChatBoxComponent implements OnInit {
 
 
   public userselect: boolean = false;
+  public langSelect: boolean = false;
 
 
+  public selectLanguage: any = [
+    {
+      'language': 'Afrikaans',
+      'lang_code': 'af'
+    },
+    {
+      'language': 'Albanian',  	
+      'lang_code': 'sq'
+    },
+    {
+      'language': 'Amharic',
+      'lang_code': 'am'
+    },
+    {
+      'language': 'Arabic',
+      'lang_code': 'ar'
+    },
+    {
+      'language': 'Azerbaijani',
+      'lang_code': 'az'
+    },
+    {
+      'language': 'Bengali',
+      'lang_code': 'bn'
+    },
+    {
+      'language': 'Bosnian',
+      'lang_code': 'bs'
+    },
+    {
+      'language': 'Bulgarian',
+      'lang_code': 'bg'
+    },
+    {
+      'language': 'Chinese (Simplified)',
+      'lang_code': 'zh'
+    },
+    {
+      'language': 'Chinese (Traditional)',
+      'lang_code': 'zh-TW'
+    },
+    {
+      'language': 'Croatian',
+      'lang_code': 'hr'
+    },
+    {
+      'language': 'Czech',
+      'lang_code': 'cs'
+    },
+    {
+      'language': 'Danish',
+      'lang_code': 'da'
+    },{
+      'language': 'Dari',
+      'lang_code': 'fa-AF'
+    },
+    {
+      'language': 'Dutch',
+      'lang_code': 'nl'
+    },
+    {
+      'language': 'English',
+      'lang_code': 'en'
+    },
+    {
+      'language': 'Estonian',
+      'lang_code': 'et'
+    },
+    {
+      'language': 'Finnish',
+      'lang_code': 'fi'
+    },
+    {
+      'language': 'French',
+      'lang_code': 'fr'
+    },
+    {
+      'language': 'French (Canadian)',
+      'lang_code': 'fr-CAf'
+    },
+    {
+      'language': 'Georgian',
+      'lang_code': 'ka'
+    },
+    {
+      'language': 'German',
+      'lang_code': 'de'
+    },
+    {
+      'language': 'Greek',
+      'lang_code': 'el'
+    },
+    {
+      'language': 'Hausa',
+      'lang_code': 'ha'
+    },
+    {
+      'language': 'Hebrew',
+      'lang_code': 'he'
+    },
+    {
+      'language': 'Hindi',
+      'lang_code': 'hi'
+    },
+    {
+      'language': 'Hungarian',
+      'lang_code': 'hu'
+    },
+    {
+      'language': 'Indonesian',
+      'lang_code': 'id'
+    },
+    {
+      'language': 'Italian',
+      'lang_code': 'it'
+    }, 
+    {
+      'language': 'Japanese',
+      'lang_code': 'ja'
+    },
+    {
+      'language': 'Korean',
+      'lang_code': 'ko'
+    },
+    {
+      'language': 'Latvian',
+      'lang_code': 'lv'
+    },
+    {
+      'language': 'Malay',
+      'lang_code': 'ms'
+    },
+    {
+      'language': 'Norwegian',
+      'lang_code': 'no'
+    },
+    {
+      'language': 'Persian',
+      'lang_code': 'fa'
+    },
+    {
+      'language': 'Pashto',
+      'lang_code': 'ps'
+    },
+    {
+      'language': 'Polish',
+      'lang_code': 'pl'
+    },
+    {
+      'language': 'Portuguese',
+      'lang_code': 'pt'
+    },
+    {
+      'language': 'Romanian',
+      'lang_code': 'ro'
+    },
+    {
+      'language': 'Russian',
+      'lang_code': 'ru'
+    },
+    {
+      'language': 'Serbian',
+      'lang_code': 'sr'
+    },
+    {
+      'language': 'Slovak',
+      'lang_code': 'sk'
+    },
+    {
+      'language': 'Slovenian',
+      'lang_code': 'sl'
+    },
+    {
+      'language': 'Somali',
+      'lang_code': 'so'
+    },
+    {
+      'language': 'Spanish',
+      'lang_code': 'es'
+    },
+    {
+      'language': 'Swahili',
+      'lang_code': 'af'
+    }
+  ]
 
 
   @ViewChild('audioElement', { static: false }) audioElement: ElementRef;
@@ -753,9 +942,13 @@ export class ChatBoxComponent implements OnInit {
   constructor(public socketservice: ChatWindowService,
     private __authService: AuthService,
     private __router: Router,
+    private __fb:FormBuilder
   ) {
     this.senderEmail = localStorage.getItem('email');
     console.log("Sender Email :", this.senderEmail);
+
+    console.log("lanfguadskjskjd:", this.langSelect);
+    
 
   }
 
@@ -765,6 +958,28 @@ export class ChatBoxComponent implements OnInit {
     this.getAllUser();
     // this.getServerChatEventCall();
     // this.getOnlineAllUser();
+
+  }
+
+  /**
+   * @name valLanguage
+   * @description validate login form data
+   */
+  valLanguage() {
+    this.langForm = this.__fb.group({
+      sourceLang: new FormControl(),
+      targetLang: new FormControl()
+    });
+  }
+
+  sourceLanguages(){
+    console.log("Selected sourceLang Lang:", this.langForm.controls.sourceLang.value);
+    // this.langSelect = false;
+  }
+
+  targetLanguages(){
+    console.log("Selected targetLang Lang:", this.langForm.controls.targetLang.value);
+    // this.langSelect = false;
   }
 
   async socketConnect() {
@@ -1543,6 +1758,8 @@ export class ChatBoxComponent implements OnInit {
     localStorage.setItem('selectedUserInfo', this.selectedUserInfo)
     this.userSelected = selectUser.emailId;
     this.activeStatus = selectUser.isLoggedIn;
+    this.langSelect = true;
+
     this.connect();
   }
 
