@@ -944,6 +944,120 @@ a:not([href]):not([tabindex]):hover {
     min-height: 100% !important;
 }
 
+.overlayAudio{
+    display: inline-block;
+    opacity: 1;
+    position: absolute;
+    top: 90%;
+    right: 40%;
+    bottom: 5%;
+    left: 32%;
+    z-index: 50;
+    transition: 0.5s;
+    .icon-center{
+        padding-right: 20%;
+    }
+
+    .call-start{
+        height: 4rem;
+        width: 4rem;
+        border: none;
+        border-radius: 50%;
+        background: green;
+        margin-right: 2%;
+        .fa{
+            cursor: pointer;
+            height: 2rem;
+            width: 2rem;
+            font-size: 32px;
+            color: #fff;
+            border: none;
+        }
+    }
+
+
+    .call-end{
+        height: 4rem;
+        width: 4rem;
+        border: none;
+        border-radius: 50%;
+        background: red;
+        margin-right: 2%;
+        .fa{
+            cursor: pointer;
+            height: 2rem;
+            width: 2rem;
+            font-size: 32px;
+            color: #fff;
+            border: none;
+        }
+    }
+
+
+    .screen-share{
+        height: 4rem;
+        width: 4rem;
+        border: 0.5px solid #000;
+        border-radius: 50%;
+        background: transparent;
+        margin-right: 2%;
+        .fa{
+            cursor: pointer;
+            height: 1.2rem;
+            width: 1.2rem;
+            font-size: 25px;
+            color: #fff;
+            border: none;
+        }
+    }
+    
+    // .call-start:hover{
+    //     background: green;
+    //     transition: 0.5s;
+    //     .fa{
+    //         color: #fff;
+    //     }
+    
+    // }
+    
+    // .call-end:hover{
+    //     background: red;
+    //     transition: 0.5s;
+    //     .fa{
+    //         color: #fff;
+    //     }
+    // }
+    
+    
+    // .call-start, .call-end{
+    //     .fa{
+    //         cursor: pointer;
+    //         height: 2rem;
+    //         width: 2rem;
+    //         font-size: 32px;
+    //         color: #000;
+    //         border: none;
+    //     }
+    // }
+}
+
+.overlay-audio{
+    display: inline-block;
+    opacity: 1;
+    position: absolute;
+    top: 80%;
+    right: 1%;
+    bottom: 1%;
+    left: 80%;
+    z-index: 50;
+    transition: 0.5s;
+    border: none;
+
+    .img-border{
+        border-radius: 0.2rem;
+    }
+}
+
 .overlay{
     display: inline-block;
     opacity: 1;

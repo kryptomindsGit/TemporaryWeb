@@ -689,6 +689,7 @@ export class ChatBoxComponent implements OnInit {
   public textEnable: boolean = true;
   public fileEnable: boolean = false;
   public audioEnable: boolean = false;
+  public audioCallEnable: boolean = false;
   public videoEnable: boolean = false;
   public screenEnable: boolean = false;
   public connected: boolean = false;
@@ -701,10 +702,14 @@ export class ChatBoxComponent implements OnInit {
   public messages: string[] = [];
   public audio: any;
   public remoteAudio: any;
+  public remoteAudioCall: any;
   public audioStream: any;
   public audioTrack: AudioTrack;
+  public audioCallTrack: AudioTrack;
   public videoTrack: VideoTrack;
   public video: any;
+  public audioCall: any;
+  public audioCallStream: any;
   public remoteVideo: any;
   public videoStream: any;
   public videoWidth: number = 400;
@@ -934,6 +939,8 @@ export class ChatBoxComponent implements OnInit {
 
   @ViewChild('audioElement', { static: false }) audioElement: ElementRef;
   @ViewChild('remoteAudioElement', { static: false }) remoteAudioElement: ElementRef;
+  @ViewChild('audioCallElement', { static: false }) audioCallElement: ElementRef;
+  @ViewChild('remoteAudioCallElement', { static: false }) remoteAudioCallElement: ElementRef;
   @ViewChild('videoElement', { static: false }) videoElement: ElementRef;
   @ViewChild('remoteVideoElement', { static: false }) remoteVideoElement: ElementRef;
   @ViewChild('screenElement', { static: false }) screenElement: ElementRef;
@@ -1065,7 +1072,18 @@ export class ChatBoxComponent implements OnInit {
           setTimeout(() => {
             this.remoteAudio.play();
           }, 500);
-        } else if (this.videoEnable) {
+        }else if (this.audioCallEnable) {
+          this.remoteAudioCall = this.remoteAudioCallElement.nativeElement;
+          console.log('Audio Track Received');
+          try {
+            this.remoteAudioCall.srcObject = event.streams[0];
+          } catch (err) {
+            this.remoteAudioCall.src = window.URL.createObjectURL(event.streams[0]);
+          }
+          setTimeout(() => {
+            this.remoteAudioCall.play();
+          }, 500);
+        }else if (this.videoEnable) {
           this.remoteVideo = this.remoteVideoElement.nativeElement;
           console.log('Video Track Received');
           try {
@@ -1187,6 +1205,7 @@ export class ChatBoxComponent implements OnInit {
     this.textEnable = true;
     this.fileEnable = false;
     this.audioEnable = false;
+    this.audioCallEnable = false;
     this.videoEnable = false;
     this.screenEnable = false;
     // await this.getServerChatEventCall();
@@ -1207,6 +1226,7 @@ export class ChatBoxComponent implements OnInit {
     this.textEnable = false;
     this.fileEnable = true;
     this.audioEnable = false;
+    this.audioCallEnable = false;
     this.videoEnable = false;
     this.screenEnable = false;
   }
@@ -1283,6 +1303,7 @@ export class ChatBoxComponent implements OnInit {
     this.textEnable = false;
     this.fileEnable = false;
     this.audioEnable = true;
+    this.audioCallEnable = false;
     this.videoEnable = false;
     this.screenEnable = false;
     setTimeout(() => {
@@ -1316,6 +1337,56 @@ export class ChatBoxComponent implements OnInit {
     }, 1000);
   }
 
+  public enableAudioCall() {
+    this.connect();
+    try {
+      this.stopVideo();
+    } catch (e) { }
+    try {
+      this.stopScreen();
+    } catch (e) { }
+    this.textEnable = false;
+    this.fileEnable = false;
+    this.audioEnable = false;
+    this.audioCallEnable = true;
+    this.videoEnable = false;
+    this.screenEnable = false;
+    setTimeout(() => {
+      this.audioCall = this.audioCallElement.nativeElement;
+      // this.connect();
+      let constraints = { audio: true };
+      this.browser.mediaDevices.getUserMedia(constraints).then((stream: any) => {
+        if (!stream.stop && stream.getTracks) {
+          stream.stop = function () {
+            this.getTracks().forEach(function (track: any) {
+              track.stop();
+            });
+          };
+        }
+        this.audioCallStream = stream;
+        // this.videoTrack = stream.getVideoTracks();
+        this.audioCallTrack = stream.getAudioTracks();
+        // if (this.videoTrack) {
+        //   console.log('Using video device: ' + this.videoTrack[0].label);
+        // }
+        if (this.audioCallTrack) {
+          console.log('Using audio call device: ' + this.audioCallTrack[0].label);
+        }
+        try {
+          this.audioCall.srcObject = this.audioCallStream;
+        } catch (err) {
+          this.audioCall.src = window.URL.createObjectURL(this.audioCallStream);
+        }
+        stream.getTracks().forEach((track: any) => {
+          this.peerConnection.addTrack(track, stream);
+        });
+        setTimeout(() => {
+          this.audioCall.play();
+        }, 500);
+      });
+    }, 1000);
+  }
+
   public enableVideo() {
     this.connect();
     try {
@@ -1327,6 +1398,7 @@ export class ChatBoxComponent implements OnInit {
     this.textEnable = false;
     this.fileEnable = false;
     this.audioEnable = false;
+    this.audioCallEnable = false;
     this.videoEnable = true;
     this.screenEnable = false;
     setTimeout(() => {
@@ -1376,6 +1448,7 @@ export class ChatBoxComponent implements OnInit {
     this.textEnable = false;
     this.fileEnable = false;
     this.audioEnable = false;
+    this.audioCallEnable = false;
     this.videoEnable = false;
     this.screenEnable = true;
     setTimeout(() => {

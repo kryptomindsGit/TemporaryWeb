@@ -460,7 +460,8 @@
                     <div class="float-right">
                       <i class="fa fa-envelope icon-send" title="Text Chat" aria-hidden="true"
                         (click)="enableText()"></i>
-
+                        <i class="fa fa-phone icon-send" title="Text Chat" aria-hidden="true"
+                        (click)="enableAudioCall()" data-toggle="modal" data-target="#audioCallModel"></i>
                       <i class="fa fa-video-camera icon-send" title="Video Chat" aria-hidden="true"
                         (click)="enableVideo()" data-toggle="modal" data-target="#exampleModalCenter"></i>
 
@@ -629,6 +630,46 @@
                       <audio #remoteAudioElement controls>
                         <source>
                       </audio>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="audioCallEnable">
+              <div class="modal fade" id="audioCallModel" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog full_modal-dialog" role="document">
+                  <div class="modal-content full_modal-content">
+                    <div class="internaldiv">
+                      <audio #remoteAudioCallElement class="img-border">
+                        <source>
+                      </audio>
+                      <div class="overlayAudio">
+                        <div class="row">
+                          <div class="col-md-12 text-right icon-center">
+                            <button class="call-start">
+                              <i class="fa fa-phone" aria-hidden="true"></i>
+                            </button>
+                            <button class="call-end">
+                              <i class="fa fa-phone" aria-hidden="true"></i>
+                            </button>
+                            <!-- <button class="screen-share" (click)="enableScreen()" data-toggle="modal"
+                              data-target="#screenshareModel">
+                              <i class="fa fa-window-restore" aria-hidden="true"></i>
+                            </button> -->
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="overlay-audio">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <audio #audioCallElement class="img-border">
+                              <source>
+                            </audio>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
