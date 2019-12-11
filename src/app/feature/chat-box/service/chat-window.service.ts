@@ -425,6 +425,17 @@ export class ChatWindowService {
   //   })
   // }
 
+
+  createRoom(data:any){
+    console.log("Inside Create Room");
+    this.socket.emit("create-room",data);
+    return new Observable(observer => {
+      this.socket.on('create-room', (data) => {
+        observer.next(data);
+      });
+    })
+  }
+
   // Error Handler
   handleError(error) {
     let errorMessage = '';

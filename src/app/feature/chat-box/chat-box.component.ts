@@ -1834,6 +1834,7 @@ export class ChatBoxComponent implements OnInit {
     this.langSelect = true;
 
     this.connect();
+    this.createIndependentChat();
   }
 
 
@@ -1886,5 +1887,25 @@ export class ChatBoxComponent implements OnInit {
     this.is_rooms = true;
     this.is_chats = false;
     this.is_room_created = true;
+  }
+
+  createIndependentChat(){
+    const roomData = {
+      roomName : this.selectedUser+this.emailID,
+      roomId : 0,
+      creationDate: new Date(),
+      admin: this.selectedUser,
+      setOfUsers: this.selectedUser
+    }
+
+    console.log("**********Room data end for room creation********* \n ",roomData);
+    
+    this.socketservice.createRoom(roomData).subscribe((res:any)=>{
+      console.log("response for create");
+    });
+  }
+
+  createGroupChat(){
+
   }
 }
