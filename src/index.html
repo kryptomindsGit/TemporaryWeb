@@ -15,6 +15,43 @@
     if (global === undefined) {
       var global = window;
     }
+
+    // window.onunload = WindowCloseHanlder;
+    // window.onbeforeunload = Alert;
+    // window.close = WindowClose;
+
+
+    // function WindowCloseHanlder() {
+    //   window.alert('My Window is closing');
+    //   // localStorage.clear();
+    // }
+
+    // function WindowClose() {
+    //   window.alert('My Window is closing');
+    //   localStorage.clear();
+    // }
+
+    // window.onbeforeunload = function (e) {
+    //   // window.onunload = function () {
+    //     // localStorage.clear();
+    //     // window.localStorage.isMySessionActive = "false";
+    //   // }
+    //   return undefined;
+    // };
+
+    window.close = function () {
+      console.log("Calling closed function");
+      
+     localStorage.clear();
+    };
+
+    // window.onbeforeunload = check;
+    // function check() {
+    //   localStorage.clear();
+    //   return "Are you sure you want to exit this page?";
+    //   //or put whatever function you need to call when a user closes the web //browser.
+    // }
+
   </script>
 </head>
 

@@ -551,6 +551,15 @@ img {
     }
 }
 
+.current_user_audiocall_img{
+    margin: auto;
+    img {
+        width: 150px;
+        height: 150px;
+        margin-top: 200px;
+    }
+}
+
 .btn-color,
 .btn-front-weight {
   color:$btn-front-color;
@@ -924,10 +933,17 @@ a:not([href]):not([tabindex]):hover {
 }
 
 .full_modal-content {
-  height: 90% !important;
+//   height: 90% ;
   min-height: 90% !important;
   max-height: 90% !important;
 }
+
+// .modal-content .full-modal-audiocall-content{
+// height: 90% !important;
+//   min-height: 90% !important;
+//   max-height: 90% !important;
+//   background-color: #495057 !important;
+// }
 
 .internaldiv {
     position: relative;
@@ -943,15 +959,23 @@ a:not([href]):not([tabindex]):hover {
     min-width: 100% !important;
     min-height: 100% !important;
 }
+.audiocall-border{
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
+}
+.modal-content-audiocall{
+    background: #001 !important;
 
-.overlayAudio{
+.internaldiv .overlayAudio{
     display: inline-block;
     opacity: 1;
     position: absolute;
-    top: 90%;
+    top: 500px;
     right: 40%;
     bottom: 5%;
-    left: 32%;
+    left: 40%;
     z-index: 50;
     transition: 0.5s;
     .icon-center{
@@ -959,12 +983,15 @@ a:not([href]):not([tabindex]):hover {
     }
 
     .call-start{
-        height: 4rem;
-        width: 4rem;
+        height: 3.5rem;
+        width: 3.5rem;
         border: none;
+        // border: 0.5px solid #fff;
         border-radius: 50%;
-        background: green;
-        margin-right: 2%;
+        background: rgb(190, 189, 189);
+        // background: transparent;
+        margin-right: 5%;
+        
         .fa{
             cursor: pointer;
             height: 2rem;
@@ -973,16 +1000,24 @@ a:not([href]):not([tabindex]):hover {
             color: #fff;
             border: none;
         }
+
+        :hover {
+            background: red !important;
+        }
     }
+
+    
 
 
     .call-end{
-        height: 4rem;
-        width: 4rem;
+        height: 3.5rem;
+        width: 3.5rem;
+        // border: 0.5px solid #fff;
         border: none;
         border-radius: 50%;
-        background: red;
-        margin-right: 2%;
+        background: rgb(190, 189, 189);
+        // background: transparent;
+        margin-right: 5%;
         .fa{
             cursor: pointer;
             height: 2rem;
@@ -995,17 +1030,19 @@ a:not([href]):not([tabindex]):hover {
 
 
     .screen-share{
-        height: 4rem;
-        width: 4rem;
-        border: 0.5px solid #000;
+        height: 3.5rem;
+        width: 3.5rem;
+        // border: 0.5px solid #fff;
+        border: none;
         border-radius: 50%;
-        background: transparent;
-        margin-right: 2%;
+        background: rgb(190, 189, 189);
+        // background: transparent;
+        margin-right: 5%;
         .fa{
             cursor: pointer;
-            height: 1.2rem;
-            width: 1.2rem;
-            font-size: 25px;
+            height: 2rem;
+            width: 2rem;
+            font-size: 32px;
             color: #fff;
             border: none;
         }
@@ -1040,24 +1077,83 @@ a:not([href]):not([tabindex]):hover {
     //     }
     // }
 }
+}
 
 .overlay-audio{
     display: inline-block;
     opacity: 1;
     position: absolute;
-    top: 80%;
+    top: 500px;
     right: 1%;
     bottom: 1%;
-    left: 80%;
+    left: 70%;
     z-index: 50;
     transition: 0.5s;
     border: none;
 
-    .img-border{
-        border-radius: 0.2rem;
+    .icon-center{
+        padding-right: 20%;
+    }
+
+    .call-start{
+        height: 2.5rem;
+        width: 2.5rem;
+        border: 0.5px solid #fff;
+        border-radius: 50%;
+        background: rgb(190, 189, 189);
+        // background: transparent;
+        margin-right: 2%;
+        .fa{
+            cursor: pointer;
+            height: 1.5rem;
+            width: 1.5rem;
+            font-size: 18px;
+            color: #fff;
+            border: none;
+        }
+    }
+
+
+    .call-end{
+        height: 2.5rem;
+        width: 2.5rem;
+        border: 0.5px solid #fff;
+        border-radius: 50%;
+        background: rgb(190, 189, 189);
+        // background: transparent;
+        margin-right: 2%;
+        .fa{
+            cursor: pointer;
+            height: 1.5rem;
+            width: 1.5rem;
+            font-size: 18px;
+            color: #fff;
+            border: none;
+        }
+    }
+
+
+    .screen-share{
+        height: 2.5rem;
+        width: 2.5rem;
+        border: 0.5px solid #fff;
+        border-radius: 50%;
+        background: rgb(190, 189, 189);
+        // background: transparent;
+        margin-right: 2%;
+        .fa{
+            cursor: pointer;
+            height: 1.5rem;
+            width: 1.5rem;
+            font-size: 18px;
+            color: #fff;
+            border: none;
+        }
     }
 }
 
+.modal-content-videocall{
+    background: #001 !important;
 .overlay{
     display: inline-block;
     opacity: 1;
@@ -1065,7 +1161,7 @@ a:not([href]):not([tabindex]):hover {
     top: 90%;
     right: 40%;
     bottom: 5%;
-    left: 32%;
+    left: 40%;
     z-index: 50;
     transition: 0.5s;
     .icon-center{
@@ -1111,7 +1207,7 @@ a:not([href]):not([tabindex]):hover {
     .screen-share{
         height: 4rem;
         width: 4rem;
-        border: 0.5px solid #000;
+        border: 0.5px solid #fff;
         border-radius: 50%;
         background: transparent;
         margin-right: 2%;
@@ -1153,6 +1249,7 @@ a:not([href]):not([tabindex]):hover {
     //         border: none;
     //     }
     // }
+}
 }
 
 
