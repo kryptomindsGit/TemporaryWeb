@@ -1890,19 +1890,21 @@ export class ChatBoxComponent implements OnInit {
   }
 
   createIndependentChat(){
-    const roomData = {
-      roomName : this.selectedUser+this.emailID,
-      roomId : 0,
-      creationDate: new Date(),
-      admin: this.selectedUser,
-      setOfUsers: this.selectedUser
+    if(this.userRole == "Employer"){
+      const roomData = {
+        roomName : this.emailID+"&"+this.userSelected,
+        roomId : 0,
+        roomCreator: this.emailID ,
+        participant: this.userSelected ,
+        role:this.userRole
+      }
+  
+      console.log("**********Room data end for room creation********* \n ",roomData);
+      
+      this.socketservice.createRoom(roomData).subscribe((res:any)=>{
+        console.log("response for create");
+      });
     }
-
-    console.log("**********Room data end for room creation********* \n ",roomData);
-    
-    this.socketservice.createRoom(roomData).subscribe((res:any)=>{
-      console.log("response for create");
-    });
   }
 
   createGroupChat(){
