@@ -990,7 +990,7 @@ export class ChatBoxComponent implements OnInit {
   }
 
   async socketConnect() {
-    console.log("Socket calling.....");
+    console.log("Socket Connect");
 
     if (this.socketservice) {
       this.subscription = await this.socketservice.getSocketId().subscribe((message: any) => {
@@ -1051,8 +1051,12 @@ export class ChatBoxComponent implements OnInit {
         console.log('ICE Connection State : ', this.peerConnection.iceConnectionState);
       };
       this.peerConnection.ondatachannel = (event: any) => {
+    console.log("peerConnection Connected");
+
         const onChannelReady = () => {
           this.dataChannel = event.channel;
+    console.log("peerConnection datachannel opended");
+          
         };
         if (event.channel.readyState !== 'open') {
           event.channel.onopen = onChannelReady;
@@ -1155,6 +1159,7 @@ export class ChatBoxComponent implements OnInit {
   }
 
   public getRTCPeerConnection() {
+    console.log("RTC Connected");
 
     return window.RTCPeerConnection ||
       window.mozRTCPeerConnection ||
@@ -1210,6 +1215,7 @@ export class ChatBoxComponent implements OnInit {
     this.screenEnable = false;
     // await this.getServerChatEventCall();
     // await this.getOnlineAllUser();
+    // this.enableFile();
   }
 
   public enableFile() {
@@ -1232,18 +1238,23 @@ export class ChatBoxComponent implements OnInit {
   }
 
   public handleFileInput(files: FileList) {
+    console.log("File Handle method calling...");
+
     if (files[0]) {
       this.file = files[0];
       this.sendFileName = this.file['name'];
       console.log(this.file);
       this.sendProgressMin = 0;
       this.sendProgressMax = this.file.size;
+      this.sendFile();
     } else {
       this.sendFileName = 'Choose file';
     }
   }
 
   public sendFile() {
+    console.log("Send file method calling...");
+    
     let oldSendProgressValue = 0;
     this.socketservice.sendFile({
       from: this.fromClientId,
@@ -1289,6 +1300,8 @@ export class ChatBoxComponent implements OnInit {
   }
 
   public downloadFile() {
+    console.log("Download file method calling...");
+    
     saveAs(this.receivedBlob, this.receivedFileName);
   }
 
@@ -1523,6 +1536,7 @@ export class ChatBoxComponent implements OnInit {
     };
     this.dataChannel.onmessage = (event: any) => {
       if (this.textEnable) {
+        
         let messageData = JSON.parse(event.data);
         console.log("Got Data Channel Message:", messageData.data);
 
@@ -1537,6 +1551,8 @@ export class ChatBoxComponent implements OnInit {
 
         this.socketservice.callEventTranslation(this.sendMessages).then((messgeData1: any) => {
           console.log("Send Message component Data:", messgeData1);
+          this.messages.push(JSON.parse(JSON.stringify({ clientId: messgeData1.clientId, data: messgeData1.translatedText.TranslatedText })));
+
         });
 
         //Event listing chat recieve response 
@@ -1595,6 +1611,8 @@ export class ChatBoxComponent implements OnInit {
 
         // });
       } else if (this.fileEnable) {
+        let filerecivedData = event.data;
+        console.log("File Received:", filerecivedData);
         this.receiveBuffer.push(event.data);
       }
     };
@@ -1639,7 +1657,7 @@ export class ChatBoxComponent implements OnInit {
       'clientId': this.fromClientId
     });
     this.dataChannel.send(JSON.stringify({ clientId: this.fromClientId, data: this.message }));
-    this.messages.push(JSON.parse(JSON.stringify({ clientId: this.fromClientId, data: this.message })));
+    this.messages.push(JSON.parse(JSON.stringify({ clientId: this.fromClientId,user: 'sender', data: this.message })));
     this.message = '';
     var stringToStore = JSON.stringify(this.messageObject);
     localStorage.setItem("senderObj", stringToStore);
@@ -1834,7 +1852,7 @@ export class ChatBoxComponent implements OnInit {
     this.langSelect = true;
 
     this.connect();
-    this.createIndependentChat();
+    // this.createIndependentChat();
   }
 
 
@@ -1907,7 +1925,7 @@ export class ChatBoxComponent implements OnInit {
     }
   }
 
-  createGroupChat(){
+  // createGroupChat(){
 
-  }
+  // }
 }

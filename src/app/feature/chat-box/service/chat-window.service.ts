@@ -327,6 +327,8 @@ export class ChatWindowService {
     try {
       console.log("service side messages: ", senderMessage);
 
+      // this.socket.emit('translation', senderMessage);
+
       let res = await this.__http.post(`${NODE_URL_CHAT}/translation`, senderMessage, httpOptions).toPromise();
 
       // this.socket.on(`${NODE_URL_CHAT}/translation`, () => {

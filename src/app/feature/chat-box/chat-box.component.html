@@ -246,6 +246,23 @@
 </div>  -->
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-3">
@@ -477,11 +494,54 @@
                   <div class="card-body">
                     <div class="inbox_chat">
                       <div id="msg_history">
-                        <div *ngFor="let msgs of messages; let i=index">
+                        <!-- <div *ngFor="let msgs of messages; let i=index">
                           <p>{{msgs.clientId}}</p>
                           <p>{{msgs.data}} </p>
-                        </div>
+                        </div> -->
+
+
+                        <div *ngFor="let msgs of messages; let i=index">
+                            <div *ngIf="msgs.user == 'sender'; else receiverUser">
+                              <div class="outgoing_msg">
+                                <div class="outgoing_msg_img">
+                                  <img style="width: 30px; height: 30px;" class="rounded-circle"
+                                    src="../../../assets/images/jothipawar.jpg" alt="sunil">
+                                </div>
+                                <div class="sent_msg bubble-blue you">
+                                  <p>{{msgs.data}}</p>
+                                  <!-- <p>{{msgs.receiverMsg}} </p> -->
+                                </div>
+                              </div>
+                            </div>
+            
+                            <ng-template #receiverUser>
+                              <div class="incoming_msg">
+                                <div class="incoming_msg_img">
+                                  <img style="width: 30px; height: 30px;" class="rounded-circle"
+                                    src="../../../assets/images/akhshay.png" alt="sunil">
+                                </div>
+                                <div class="received_msg">
+                                  <div class="received_withd_msg bubble me">
+                                    <p>{{msgs.data}} </p>
+                                    <!-- <p>{{msgs.senderMsg}}</p> -->
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-template>
+                          </div>
                       </div>
+
+                      <!-- <div *ngIf="!sendFileName">
+                              <p>{{clientId}}</p>
+                            <p>{{sendFileName}}</p>
+                          </div>
+                      <div *ngIf="!receivedFileName">
+                              <p>{{clientId}}</p>
+                            <p>{{receivedFileName}}</p>
+                            <button (click)="downloadFile()" [disabled]="!enableDownload">
+                                <i class="fa fa-download" aria-hidden="true"></i>
+                            </button>
+                          </div> -->
                     </div>
                   </div>
                   <div class="card-footer">
@@ -509,16 +569,22 @@
                               (click)="enableAudio()"></i>
                           </div>
                           <div class="fileShare">
-                            <i class="fa fa-files-o icon-send" title="File Share" aria-hidden="true"
-                              (click)="enableFile()"></i>
+                              <i class="fa fa-files-o icon-send" title="File Share" aria-hidden="true"></i>
+                              <!-- <input type="file" class="custom-file-input" id="file"
+                              (change)="handleFileInput($event.target.files)"> -->
                           </div>
+                          <!-- <div class="fileShare" (click)="enableFile()">
+                              <i class="fa fa-files-o icon-send" title="File Share" aria-hidden="true"></i>
+                              <input type="file" class="custom-file-input" id="file"
+                              (change)="handleFileInput($event.target.files)">
+                          </div> -->
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
             </div>
-            <div class="row" *ngIf="fileEnable">
+            <!-- <div class="row" *ngIf="fileEnable">
               <div class="card">
                 <div class="card-body">
                   <div class="btn-toolbar">
@@ -612,7 +678,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
             <div class="row" *ngIf="audioEnable">
               <div class="card">
                 <div class="card-body">
@@ -641,7 +707,6 @@
                   <div class="modal-content-audiocall full_modal-content">
                     <div class="internaldiv">
                         <audio #remoteAudioCallElement class="audiocall-border">
-                          
                             <source>
                           </audio>
 
@@ -659,11 +724,10 @@
                               <button class="call-start">
                                 <i class="fa fa-volume-off" title="Voice Mute" aria-hidden="true"></i>
                               </button>
-                              <button class="call-end">
+                              <button class="call-end" (click)="enableVideo()" data-toggle="modal" data-target="#exampleModalCenter">
                                 <i class="fa fa-video-camera" title="Disabled Video" aria-hidden="true"></i>
                               </button>
-                              <button class="screen-share" (click)="enableScreen()" data-toggle="modal"
-                                data-target="#screenshareModel">
+                              <button class="screen-share">
                                 <i class="fa fa-phone" title="Call End" aria-hidden="true"></i>
                               </button>
                             </div>
