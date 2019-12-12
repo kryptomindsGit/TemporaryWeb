@@ -294,6 +294,8 @@ export class ChatWindowService {
   }
 
   public sendFile = (file: any) => {
+    console.log("File in Service:", file);
+
     this.socket.emit('file', file);
   }
 

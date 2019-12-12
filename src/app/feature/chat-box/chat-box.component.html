@@ -434,7 +434,7 @@
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                   <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
-              </div>  
+              </div>
             </div>
           </div>
         </div>
@@ -477,8 +477,8 @@
                     <div class="float-right">
                       <i class="fa fa-envelope icon-send" title="Text Chat" aria-hidden="true"
                         (click)="enableText()"></i>
-                        <i class="fa fa-phone icon-send" title="Audio Chat" aria-hidden="true"
-                        (click)="enableAudioCall()" data-toggle="modal" data-target="#audioCallModel"></i>
+                      <i class="fa fa-phone icon-send" title="Audio Chat" aria-hidden="true" (click)="enableAudioCall()"
+                        data-toggle="modal" data-target="#audioCallModel"></i>
                       <i class="fa fa-video-camera icon-send" title="Video Chat" aria-hidden="true"
                         (click)="enableVideo()" data-toggle="modal" data-target="#exampleModalCenter"></i>
 
@@ -490,102 +490,154 @@
           </div>
           <div class="col-md-12">
             <div class="row" *ngIf="textEnable">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="inbox_chat">
-                      <div id="msg_history">
-                        <!-- <div *ngFor="let msgs of messages; let i=index">
+              <div class="card">
+                <div class="card-body">
+                  <div class="inbox_chat">
+                    <div id="msg_history">
+                      <!-- <div *ngFor="let msgs of messages; let i=index">
                           <p>{{msgs.clientId}}</p>
                           <p>{{msgs.data}} </p>
                         </div> -->
 
 
-                        <div *ngFor="let msgs of messages; let i=index">
-                            <div *ngIf="msgs.user == 'sender'; else receiverUser">
-                              <div class="outgoing_msg">
-                                <div class="outgoing_msg_img">
-                                  <img style="width: 30px; height: 30px;" class="rounded-circle"
-                                    src="../../../assets/images/jothipawar.jpg" alt="sunil">
-                                </div>
-                                <div class="sent_msg bubble-blue you">
-                                  <p>{{msgs.data}}</p>
-                                  <!-- <p>{{msgs.receiverMsg}} </p> -->
-                                </div>
+                      <div *ngFor="let msgs of messages; let i=index">
+                        <div *ngIf="msgs.user == 'sender'; else receiverUser">
+                          <div class="outgoing_msg" *ngIf="msgs.data; else sendFile">
+                            <div class="outgoing_msg_img">
+                              <img style="width: 30px; height: 30px;" class="rounded-circle"
+                                src="../../../assets/images/jothipawar.jpg" alt="sunil">
+                            </div>
+                            <div class="sent_msg bubble-blue you">
+                              <p>{{msgs.data}}</p>
+                            </div>
+
+                          </div>
+                          <ng-template #sendFile>
+                            <!-- <div class="outgoing_msg">
+                              <div class="outgoing_msg_img">
+                                <img style="width: 30px; height: 30px;" class="rounded-circle"
+                                  src="../../../assets/images/jothipawar.jpg" alt="sunil">
+                              </div>
+                                <div class="sendedFile">
+                                  <p>{{msgs.senderFile}}</p>
+                              </div>
+                            </div> -->
+
+                             <div class="sendedFile">
+                               <div class="row">
+                              <!-- <p>{{sendFileName}}</p>  -->
+                              <p>{{msgs.senderFile}}</p>
                               </div>
                             </div>
-            
-                            <ng-template #receiverUser>
-                              <div class="incoming_msg">
-                                <div class="incoming_msg_img">
-                                  <img style="width: 30px; height: 30px;" class="rounded-circle"
-                                    src="../../../assets/images/akhshay.png" alt="sunil">
-                                </div>
-                                <div class="received_msg">
-                                  <div class="received_withd_msg bubble me">
-                                    <p>{{msgs.data}} </p>
-                                    <!-- <p>{{msgs.senderMsg}}</p> -->
-                                  </div>
-                                </div>
-                              </div>
-                            </ng-template>
-                          </div>
-                      </div>
+                          </ng-template>
 
-                      <!-- <div *ngIf="!sendFileName">
-                              <p>{{clientId}}</p>
-                            <p>{{sendFileName}}</p>
+                          <!-- <div *ngIf="sendFileName" class="sendedFile">
+                              <p>{{sendFileName}}</p> 
+                              <p>{{msgs.senderFile}}</p>
+
+                            </div> -->
+                        </div>
+
+                        <ng-template #receiverUser>
+                          <div class="incoming_msg" *ngIf="msgs.data; else receiveFile">
+                            <div class="incoming_msg_img">
+                              <img style="width: 30px; height: 30px;" class="rounded-circle"
+                                src="../../../assets/images/akhshay.png" alt="sunil">
+                            </div>
+                            <div class="received_msg">
+                              <div class="received_withd_msg bubble me">
+                                <p>{{msgs.data}} </p>
+                                <p>{{msgs.originalText}}</p>
+                              </div>
+                            </div>
                           </div>
-                      <div *ngIf="!receivedFileName">
-                              <p>{{clientId}}</p>
-                            <p>{{receivedFileName}}</p>
-                            <button (click)="downloadFile()" [disabled]="!enableDownload">
+                          <ng-template #receiveFile>
+                            <div class="receivedFile">
+                              <div class="row">
+                                  <p>{{msgs.receivedFile}}</p>
+                                  <button class="fileDownload" title="Download" (click)="downloadFile(msgs.receivedFile)">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                  </button>
+                              </div>
+                            </div>
+                            <!-- <div class="incoming_msg">
+                              <div class="incoming_msg_img">
+                                <img style="width: 30px; height: 30px;" class="rounded-circle"
+                                  src="../../../assets/images/akhshay.png" alt="sunil">
+                              </div>
+                              <div class="receivedFile">
+                                  <p>{{msgs.receivedFile}}</p>
+                              </div>
+                            </div> -->
+                          </ng-template>
+
+
+                          <!-- <div *ngIf="receivedFileName" class="receivedFile">
+                              <div class="row">
+                                  <p>{{msgs.receivedFile}}</p>
+                                  <button class="fileDownload" title="Download" (click)="downloadFile()">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                  </button>
+                              </div>
+                            </div> -->
+                        </ng-template>
+                      </div>
+                      <!-- <div *ngIf="sendFileName" class="sendedFile">
+                          <p>{{sendFileName}}</p>
+                        </div>
+                        <div *ngIf="receivedFileName" class="receivedFile">
+                          <div class="row">
+                              <p>{{receivedFileName}}</p>
+                              <button class="fileDownload" title="Download" (click)="downloadFile()">
                                 <i class="fa fa-download" aria-hidden="true"></i>
-                            </button>
-                          </div> -->
+                              </button>
+                          </div>
+                        </div> -->
+
                     </div>
                   </div>
-                  <div class="card-footer">
-                    <div class="row">
-                      <div class="col-md-10">
-                        <div class="type_msg">
-                          <div class="row">
-                            <div class="col-md-10">
-                              <div class="input_msg_write">
-                                <input type="text" placeholder="Enter Message To Send..." [(ngModel)]="message"
-                                  class="write_msg" />
-                              </div>
+                </div>
+                <div class="card-footer">
+                  <div class="row">
+                    <div class="col-md-10">
+                      <div class="type_msg">
+                        <div class="row">
+                          <div class="col-md-10">
+                            <div class="input_msg_write">
+                              <input type="text" placeholder="Enter Message To Send..." [(ngModel)]="message"
+                                class="write_msg" />
                             </div>
-                            <div class="col-md-2">
-                              <button class="file_send_btn" title="Send Message" type="button"
-                                (click)="sendMessage()"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-                            </div>
+                          </div>
+                          <div class="col-md-2">
+                            <button class="file_send_btn" title="Send Message" type="button" (click)="sendMessage()"><i
+                                class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-2">
-                        <div class="row fileShareAudio">
-                          <div class="audioShare">
-                            <i class="fa fa-volume-up icon-send" title="Audio Share" aria-hidden="true"
-                              (click)="enableAudio()"></i>
-                          </div>
-                          <div class="fileShare">
+                    </div>
+                    <div class="col-md-2">
+                      <div class="row fileShareAudio">
+                        <div class="audioShare">
+                          <i class="fa fa-volume-up icon-send" title="Audio Share" aria-hidden="true"
+                            (click)="enableAudio()"></i>
+                        </div>
+                        <!-- <div class="fileShare">
                               <i class="fa fa-files-o icon-send" title="File Share" aria-hidden="true"></i>
-                              <!-- <input type="file" class="custom-file-input" id="file"
-                              (change)="handleFileInput($event.target.files)"> -->
-                          </div>
-                          <!-- <div class="fileShare" (click)="enableFile()">
-                              <i class="fa fa-files-o icon-send" title="File Share" aria-hidden="true"></i>
-                              <input type="file" class="custom-file-input" id="file"
-                              (change)="handleFileInput($event.target.files)">
                           </div> -->
+                        <div class="fileShare">
+                          <i class="fa fa-files-o icon-send" title="File Share" aria-hidden="true">
+                            <input type="file" id="file" class="custom-file-input"
+                              (change)="handleFileInput($event.target.files)">
+                          </i>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
             </div>
-            <!-- <div class="row" *ngIf="fileEnable">
-              <div class="card">
+            <!-- <div class="row" *ngIf="fileEnable"> -->
+            <!-- <div class="card">
                 <div class="card-body">
                   <div class="btn-toolbar">
                     <div class="custom-file input-group flex-nowrap col-md-10">
@@ -677,8 +729,8 @@
                     </div>
                   </div>
                 </div>
-              </div>
-            </div> -->
+              </div> -->
+            <!-- </div> -->
             <div class="row" *ngIf="audioEnable">
               <div class="card">
                 <div class="card-body">
@@ -706,35 +758,36 @@
                 <div class="modal-dialog full_modal-dialog" role="document">
                   <div class="modal-content-audiocall full_modal-content">
                     <div class="internaldiv">
-                        <audio #remoteAudioCallElement class="audiocall-border">
-                            <source>
-                          </audio>
+                      <audio #remoteAudioCallElement class="audiocall-border">
+                        <source>
+                      </audio>
 
-                          <div class="current_user_audiocall_img text-center">
-                              <img class="rounded-circle" src="../../../assets/images/akhshay.png" alt="sunil">
-                              <!-- <span class="redDotCurrentUser"></span> -->
-                            </div>
+                      <div class="current_user_audiocall_img text-center">
+                        <img class="rounded-circle" src="../../../assets/images/akhshay.png" alt="sunil">
+                        <!-- <span class="redDotCurrentUser"></span> -->
+                      </div>
 
-                          <audio #audioCallElement class="audiocall-border">
-                              <source>
-                            </audio>
-                        <div class="overlayAudio">
-                          <div class="row">
-                            <div class="col-md-12 text-right icon-center">
-                              <button class="call-start">
-                                <i class="fa fa-volume-off" title="Voice Mute" aria-hidden="true"></i>
-                              </button>
-                              <button class="call-end" (click)="enableVideo()" data-toggle="modal" data-target="#exampleModalCenter">
-                                <i class="fa fa-video-camera" title="Disabled Video" aria-hidden="true"></i>
-                              </button>
-                              <button class="screen-share">
-                                <i class="fa fa-phone" title="Call End" aria-hidden="true"></i>
-                              </button>
-                            </div>
+                      <audio #audioCallElement class="audiocall-border">
+                        <source>
+                      </audio>
+                      <div class="overlayAudio">
+                        <div class="row">
+                          <div class="col-md-12 text-right icon-center">
+                            <button class="call-start">
+                              <i class="fa fa-volume-off" title="Voice Mute" aria-hidden="true"></i>
+                            </button>
+                            <button class="call-end" (click)="enableVideo()" data-toggle="modal"
+                              data-target="#exampleModalCenter">
+                              <i class="fa fa-video-camera" title="Disabled Video" aria-hidden="true"></i>
+                            </button>
+                            <button class="screen-share">
+                              <i class="fa fa-phone" title="Call End" aria-hidden="true"></i>
+                            </button>
                           </div>
                         </div>
-  
-                        <!-- <div class="overlay-audio">
+                      </div>
+
+                      <!-- <div class="overlay-audio">
                           <div class="row">
                             <div class="col-md-12">
                                   <div class="col-md-12 text-right icon-center">
@@ -749,7 +802,7 @@
                             </div>
                           </div>
                         </div> -->
-                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -840,7 +893,7 @@
           </div>
         </div>
       </div>
-         
+
     </ng-template>
 
   </div>

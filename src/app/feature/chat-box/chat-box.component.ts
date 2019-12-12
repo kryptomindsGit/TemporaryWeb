@@ -721,7 +721,8 @@ export class ChatBoxComponent implements OnInit {
   public screenHeight: number = 400;
   public file: File;
   public fileReader: FileReader;
-  public sendFileName: any = 'Choose file';
+  public sendFileName: any;
+  public senderFileName: any;
   public sendProgressMin: number = 0;
   public sendProgressMax: number = 0;
   public sendProgressValue: any = 0;
@@ -1113,7 +1114,7 @@ export class ChatBoxComponent implements OnInit {
       };
       this.socketservice.receiveOffer().subscribe(async (offer: RTCSessionDescription) => {
         console.log("Receive Offer :", offer);
-        window.alert(offer['email']);
+        // window.alert(offer['email']);
         await this.peerConnection.setRemoteDescription({ type: 'offer', sdp: offer.sdp });
         
         this.toClientId = offer['from'];
@@ -1142,6 +1143,8 @@ export class ChatBoxComponent implements OnInit {
         console.log('File Received : ', file);
         if (file['type'] == 'file') {
           this.receivedFileName = file['fileName'];
+      this.messages.push(JSON.parse(JSON.stringify({ receivedFile: this.receivedFileName })));
+
           this.receivedFileSize = file['fileSize'] + ' bytes';
           this.receivedFileType = file['fileType'];
           this.receivedProgressValue = 0;
@@ -1215,7 +1218,7 @@ export class ChatBoxComponent implements OnInit {
     this.screenEnable = false;
     // await this.getServerChatEventCall();
     // await this.getOnlineAllUser();
-    // this.enableFile();
+    this.enableFile();
   }
 
   public enableFile() {
@@ -1229,8 +1232,8 @@ export class ChatBoxComponent implements OnInit {
     try {
       this.stopScreen();
     } catch (e) { }
-    this.textEnable = false;
-    this.fileEnable = true;
+    this.textEnable = true;
+    this.fileEnable = false;
     this.audioEnable = false;
     this.audioCallEnable = false;
     this.videoEnable = false;
@@ -1239,16 +1242,19 @@ export class ChatBoxComponent implements OnInit {
 
   public handleFileInput(files: FileList) {
     console.log("File Handle method calling...");
-
+    // this.enableFile();
     if (files[0]) {
       this.file = files[0];
       this.sendFileName = this.file['name'];
+      // this.senderFileName = this.file['name'];
       console.log(this.file);
       this.sendProgressMin = 0;
       this.sendProgressMax = this.file.size;
+      this.messages.push(JSON.parse(JSON.stringify({ senderFile: this.file['name'], user: 'sender'})));
+
       this.sendFile();
     } else {
-      this.sendFileName = 'Choose file';
+      this.sendFileName = 'Choose File';
     }
   }
 
@@ -1262,7 +1268,9 @@ export class ChatBoxComponent implements OnInit {
       type: 'file',
       fileName: this.file['name'],
       fileSize: this.file['size'],
-      fileType: this.file['type']
+      fileType: this.file['type'],
+      sender: this.jwtData.email,
+      receiver: this.userSelected,
     });
     const chunkSize = 16384;
     let offset = 0;
@@ -1289,6 +1297,8 @@ export class ChatBoxComponent implements OnInit {
           to: this.toClientId,
           type: 'file-complete'
         });
+        console.log("Send file details:", this.messages);
+        
       }
     }
     this.readSlice(offset, chunkSize);
@@ -1299,10 +1309,10 @@ export class ChatBoxComponent implements OnInit {
     this.fileReader.readAsArrayBuffer(slice);
   }
 
-  public downloadFile() {
+  public downloadFile(downloadFile) {
     console.log("Download file method calling...");
     
-    saveAs(this.receivedBlob, this.receivedFileName);
+    saveAs(this.receivedBlob, downloadFile);
   }
 
   public enableAudio() {
@@ -1535,6 +1545,7 @@ export class ChatBoxComponent implements OnInit {
       console.log("Data Channel Error:", error);
     };
     this.dataChannel.onmessage = (event: any) => {
+
       if (this.textEnable) {
         
         let messageData = JSON.parse(event.data);
@@ -1551,7 +1562,7 @@ export class ChatBoxComponent implements OnInit {
 
         this.socketservice.callEventTranslation(this.sendMessages).then((messgeData1: any) => {
           console.log("Send Message component Data:", messgeData1);
-          this.messages.push(JSON.parse(JSON.stringify({ clientId: messgeData1.clientId, data: messgeData1.translatedText.TranslatedText })));
+          this.messages.push(JSON.parse(JSON.stringify({ clientId: messgeData1.clientId,originalText:messgeData1.originalText, data: messgeData1.translatedText.TranslatedText })));
 
         });
 
@@ -1612,7 +1623,7 @@ export class ChatBoxComponent implements OnInit {
         // });
       } else if (this.fileEnable) {
         let filerecivedData = event.data;
-        console.log("File Received:", filerecivedData);
+        console.log("File sending :", filerecivedData);
         this.receiveBuffer.push(event.data);
       }
     };
