@@ -1863,7 +1863,7 @@ export class ChatBoxComponent implements OnInit {
     this.langSelect = true;
 
     this.connect();
-    // this.createIndependentChat();
+    this.createOrJoinIndependentChat();
   }
 
 
@@ -1918,22 +1918,46 @@ export class ChatBoxComponent implements OnInit {
     this.is_room_created = true;
   }
 
-  createIndependentChat(){
-    if(this.userRole == "Employer"){
-      const roomData = {
-        roomName : this.emailID+"&"+this.userSelected,
-        roomId : 0,
-        roomCreator: this.emailID ,
-        participant: this.userSelected ,
-        role:this.userRole
-      }
-  
-      console.log("**********Room data end for room creation********* \n ",roomData);
-      
-      this.socketservice.createRoom(roomData).subscribe((res:any)=>{
-        console.log("response for create");
-      });
+  createOrJoinIndependentChat(){
+    var setOfParticipants:any=[];
+    setOfParticipants.push({'username':this.emailID , 'role':'Employer','type':'Owner'});
+    setOfParticipants.push({'username':this.userSelected,'role':'Freelancer','type':'participant'});
+    
+    const roomData = {
+      roomName : this.emailID+"&"+this.userSelected,
+      participant: setOfParticipants
     }
+
+    this.socketservice.isRoomAvailable(this.emailID+"&"+this.userSelected).subscribe((joinRes:any)=>{
+    console.log("response for create",joinRes);
+      let roomId=0;
+      if(this.userRole == "Employer"){
+        this.socketservice.createRoom(roomData).subscribe((createRes:any)=>{
+          console.log("response for create room",createRes);
+          roomId = createRes.roomId;
+          let dataForJoiningRoom = {
+            roomId : createRes.roomId,
+            roomName : createRes.roomName,
+            userName : this.emailID
+          }
+          this.socketservice.joinRoom(dataForJoiningRoom).subscribe((joinRes:any)=>{
+            console.log("response for create",joinRes);
+          });
+        });
+      }else if(this.userRole == "Freelancer"){
+        const roomData = {
+          roomName : this.emailID+"&"+this.userSelected,
+          roomId : roomId,
+          roomCreator: this.emailID ,
+          participant: this.userSelected ,
+          role:this.userRole
+        }
+        console.log("**********Room data end for room joining********* \n ",roomData);
+        this.socketservice.joinRoom(roomData).subscribe((res:any)=>{
+          console.log("response for create");
+        });
+      }
+    });
   }
 
   // createGroupChat(){

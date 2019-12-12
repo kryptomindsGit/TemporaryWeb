@@ -173,7 +173,7 @@ export class ChatWindowService {
   ) {
     console.log("Node chat IP:", NODE_URL_CHAT);
 
-    this.socket = io('http://192.168.0.3:3040', {
+    this.socket = io('http://192.168.0.18:3040', {
       reconnectionDelay: 1000,
       reconnection: true,
       reconnectionAttempts: 1,
@@ -432,9 +432,29 @@ export class ChatWindowService {
 
   createRoom(data:any){
     console.log("Inside Create Room");
-    this.socket.emit("create-room",data);
+    this.socket.emit('create-room',data);
     return new Observable(observer => {
       this.socket.on('create-room', (data) => {
+        observer.next(data);
+      });
+    })
+  }
+
+  joinRoom(data:any){
+    console.log("Inside Create Room");
+    this.socket.emit('join-room',data);
+    return new Observable(observer => {
+      this.socket.on('join-room', (data) => {
+        observer.next(data);
+      });
+    })
+  }
+
+  isRoomAvailable(data:any){
+    console.log("Inside Create Room");
+    this.socket.emit('room-available',data);
+    return new Observable(observer => {
+      this.socket.on('room-available', (data) => {
         observer.next(data);
       });
     })
