@@ -324,19 +324,18 @@ export class ChatWindowService {
   //   }
   // }
 
+
+  
+
   async callEventTranslation(senderMessage: any) {
     console.log("senderMessage:", senderMessage);
     try {
       console.log("service side messages: ", senderMessage);
-
       // this.socket.emit('translation', senderMessage);
-
       let res = await this.__http.post(`${NODE_URL_CHAT}/translation`, senderMessage, httpOptions).toPromise();
-
       // this.socket.on(`${NODE_URL_CHAT}/translation`, () => {
       //   console.log('bhushan called');
       // });
-
       return res;
     } catch (error) {
       await this.handleError(error);
@@ -441,9 +440,9 @@ export class ChatWindowService {
   }
 
   joinRoom(data:any){
-    console.log("Inside Create Room");
+    console.log("Inside Join Room");
     this.socket.emit('join-room',data);
-    return new Observable(observer => {
+    return  new Observable(observer => {
       this.socket.on('join-room', (data) => {
         observer.next(data);
       });
@@ -451,10 +450,21 @@ export class ChatWindowService {
   }
 
   isRoomAvailable(data:any){
-    console.log("Inside Create Room");
+    console.log("Inside Is Room available");
     this.socket.emit('room-available',data);
     return new Observable(observer => {
       this.socket.on('room-available', (data) => {
+        observer.next(data);
+      });
+    })
+  }
+
+
+  sendMessageToCasssandra(data:any){
+    console.log("Inside Send msg to  cassendra");
+    this.socket.emit('save-msg',data);
+    return new Observable(observer => {
+      this.socket.on('save-msg', (data) => {
         observer.next(data);
       });
     })
