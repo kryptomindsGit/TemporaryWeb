@@ -116,7 +116,7 @@ export class LoginComponent implements OnInit {
         } else if (resData.status == "ERROR") {
           this.loading = false;
           this.toastr.error(resData.response.message);
-          this.__router.navigate(['/auth/auth/uport-signup']);
+          this.__router.navigate(['/auth/auth/sign-up']);
         }
       })
     }

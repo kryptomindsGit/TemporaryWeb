@@ -181,7 +181,7 @@ export class ChatWindowService {
       rejectUnauthorized: false
     });
 
-    this.onInit();
+    // this.onInit();
     // this.EVENT_URL = `${NODE_URL_CHAT}/event/chat`;
     // this.EVENT_URL = `${NODE_URL_CHAT}`;
 

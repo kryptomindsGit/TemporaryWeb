@@ -1379,6 +1379,8 @@ export class ChatBoxComponent implements OnInit {
       // this.connect();
       let constraints = { audio: true };
       this.browser.mediaDevices.getUserMedia(constraints).then((stream: any) => {
+        // this.audioCall.autoplay = true;
+        // this.audioCall.muted = true;
         if (!stream.stop && stream.getTracks) {
           stream.stop = function () {
             this.getTracks().forEach(function (track: any) {
@@ -1429,6 +1431,7 @@ export class ChatBoxComponent implements OnInit {
       // this.connect();
       let constraints = { audio: true, video: { minFrameRate: 60, width: 400, height: 300 } };
       this.browser.mediaDevices.getUserMedia(constraints).then((stream: any) => {
+        
         if (!stream.stop && stream.getTracks) {
           stream.stop = function () {
             this.getTracks().forEach(function (track: any) {
