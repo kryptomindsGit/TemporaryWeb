@@ -181,7 +181,7 @@ export class ChatWindowService {
       rejectUnauthorized: false
     });
 
-    // this.onInit();
+    this.onInit();
     // this.EVENT_URL = `${NODE_URL_CHAT}/event/chat`;
     // this.EVENT_URL = `${NODE_URL_CHAT}`;
 
@@ -454,6 +454,17 @@ export class ChatWindowService {
     this.socket.emit('room-available',data);
     return new Observable(observer => {
       this.socket.on('room-available', (data) => {
+        observer.next(data);
+      });
+    })
+  }
+
+
+  showRoomAvailable(selectedUserEmail){
+    console.log("Inside Show Room available", selectedUserEmail);
+    this.socket.emit('show-rooms', selectedUserEmail);
+    return new Observable(observer => {
+      this.socket.on('show-rooms', (data) => {
         observer.next(data);
       });
     })

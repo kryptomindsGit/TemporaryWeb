@@ -319,7 +319,7 @@
             <div class="col-md-3">
               <div class="row">
                 <div class="col-md-12 text-center">
-                  <i class="fa fa-users icons-left" title="Screen Share" aria-hidden="true" (click)="showRooms()"></i>
+                  <i class="fa fa-users icons-left" title="Screen Share" aria-hidden="true" (click)="showAvailableRooms()"></i>
                 </div>
               </div>
               <div class="row">
@@ -397,42 +397,119 @@
         <div class="card-body " *ngIf="is_rooms==true">
           <div class="col-md-12 text-center">
             <i class="fa fa-plus-circle text-big" title="Screen Share" aria-hidden="true" data-toggle="modal"
-              data-target="#exampleModalCenter"></i>
+              data-target="#roomCreateModel"></i>
           </div>
           <div class="col-md-12 text-center">
             <label for="create"> Create Room</label>
           </div>
           <hr>
-          <div class="card-body " *ngIf="is_room_created==true">
+          <div class="card-body " *ngIf="is_room_created==true; else isRoomAvailable">
             <div class="msg-box text-center py-4">
               Currently no rooms are available.
             </div>
           </div>
+          <ng-template #isRoomAvailable>
+              <div class="card-body">
+                  <div class="msg-box text-center py-4">
+                    Available Rooms are here...
+                  </div>
+                </div>
+          </ng-template>
 
-          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal fade" id="roomCreateModel" tabindex="-1" role="dialog"
+            aria-labelledby="roomCreateModelTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header text-center">
-                  <h5 class="modal-title " id="exampleModalLongTitle">Create Room</h5>
+                  <h5 class="modal-title " id="roomCreateModelTitle">Create Room</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="modal-body">
+                <div class="model-body">
+                  <form [formGroup]="selectedGroupUserForm">
+                      <div class="row">
+                          <!-- <div class="col-md-offset-2"></div> -->
+                          <div class="col-md-12">
+                              <div class="form-group form-input">
+                                  <input type="text" name="groupName" formControlName="groupName" id="groupName" value="" required />
+                                  <label for="groupName" class="form-label">Group Name</label>
+                              </div>
+          
+                              <div class="form-group form-input">
+                                  <select  id="userList" required class="selectpicker" formControlName="groupUserName" multiple data-live-search="true" data-max-options="2">
+                                      <option></option>
+                                      <option *ngFor="let users of allUsersArr" [ngValue]="users.emailId">
+                                          {{users.emailId}}
+                                      </option>
+                                  </select>
+                                  <label class="form-label" for="userList">User List</label>
+                              </div>
+                          </div>
+                          <!-- <div class="col-md-offset-2"></div> -->
+                        </div>
+                  </form>
+                </div>
+                <!-- <div class="modal-body">
                   <div class="row">
-                    <div class="col-5">
-                      <label>Enter Room Name</label>
+                    <div class="col-md-5">
+                      <label>Room Name :</label>
                     </div>
-                    <div class="col-7">
+                    <div class="col-md-7">
                       <input type="text">
                     </div>
                   </div>
 
-                </div>
+                  <div class="row">
+                    
+                      <div class="col-md-5">
+                        <label>User select :</label>
+                      </div>
+                      <div *ngFor="let users of allUsersArr; let i=index">
+                          <hr *ngIf="i>0">
+                          <div class="chat_list" (click)="selectedUser(users)" data-toggle="modal" data-target="#langModel">
+                            <div class="chat_people" *ngIf="users.isLoggedIn == true ; else deactiveUser">
+                              <div class="row">
+                                <div class="col-md-3">
+                                  <div class="chat_img">
+                                    <img class="rounded-circle" style="width: 50px; height: 40px;"
+                                      src="../../../assets/images/akhshay.png" alt="sunil">
+                                    <span class="greendot"></span>
+                                  </div>
+                                </div>
+                                <div class="col-md-12">
+                                  <div class="chat_ib">
+                                    <h6>{{users.emailId}}</h6>
+                                    <span class="time_date"> {{users.creationdate | date:'shortTime'}}</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+              
+                            <ng-template #deactiveUser>
+                              <div class="row">
+                                <div class="col-md-3">
+                                  <div class="chat_img">
+                                    <img class="rounded-circle" style="width: 50px; height: 40px;"
+                                      src="../../../assets/images/akhshay.png" alt="sunil">
+                                    <span class="reddot"></span>
+                                  </div>
+                                </div>
+                                <div class="col-md-9">
+                                  <div class="chat_ib">
+                                    <h6>{{users.emailId}}</h6>
+                                    <span class="time_date"> {{users.creationdate | date:'shortTime'}}</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-template>
+                          </div>
+                        </div>
+                    </div>
+                </div> -->
                 <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" (click)="selectedGroupUsers()">Save & Create Group</button>
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
               </div>
             </div>
@@ -605,7 +682,9 @@
                           <div class="col-md-10">
                             <div class="input_msg_write">
                               <input type="text" placeholder="Enter Message To Send..." [(ngModel)]="message"
-                                class="write_msg" />
+                                class="form-control write_msg" />
+                                <!-- <input type="text" class="form-control" placeholder="Enter Message To Send..." aria-label="message" aria-describedby="addon-wrapping" [(ngModel)]="message" [disabled]="!connected"> -->
+
                             </div>
                           </div>
                           <div class="col-md-2">

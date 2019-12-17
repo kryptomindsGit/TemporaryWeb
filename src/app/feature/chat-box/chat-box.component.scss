@@ -1384,6 +1384,9 @@ a:not([href]):not([tabindex]):hover {
     font-size: 14px;
 }
 
+.model-body {
+    margin:1rem 3rem !important;
+}
 .progress {
     display: flex;
     height: 1rem;
@@ -1404,3 +1407,4 @@ a:not([href]):not([tabindex]):hover {
 .msg-box{
     border: 0.1px #a3a3a3 solid;
 }
+
