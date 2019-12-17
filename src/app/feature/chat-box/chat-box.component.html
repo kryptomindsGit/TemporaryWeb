@@ -1,271 +1,6 @@
-<!-- <div class="container-fluid">
-  <div class="row">
-    <div class="col-4">
-      <p>Recent User</p>
-      <div class="card">
-        <div class="inbox_people">
-          <div class="card-header">
-            <div class="headind_srch">
-              <p>Search</p>
-              <div class="srch_bar">
-                <div class="stylish-input-group">
-                  <div class="ng-autocomplete">
-                    <ng-autocomplete [data]="allUserArray" [searchKeyword]="keyword" (selected)='selectEvent($event)'
-                      (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
-                      [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
-                    </ng-autocomplete>
-                    <ng-template #itemTemplate let-item>
-                      <a [innerHTML]="item.emailId"></a>
-                    </ng-template>
-                    <ng-template #notFoundTemplate let-notFound>
-                      <div [innerHTML]="notFound"></div>
-                    </ng-template>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="inbox_chat">
-              <div *ngFor="let users of allUserArray; let i=index">
-                <hr *ngIf="i>0">
-                <div class="chat_list" (click)="selectUser(users)">
-                  <div class="chat_people" *ngIf="users.isLoggedIn == true ; else deactiveUser">
-                    <div class="chat_img">
-
-                      <img class="rounded-circle" style="width: 50px; height: 40px;"
-                        src="../../../assets/images/akhshay.png" alt="sunil">
-                      <span class="greendot"></span>
-                    </div>
-                    <div class="chat_ib">
-                      <h5>{{users.emailId}}</h5>
-                      <span class="time_date"> {{users.creationdate | date:'shortTime'}}</span>
-                    </div>
-                  </div>
-
-                  <ng-template #deactiveUser>
-                    <div class="chat_img">
-
-                      <img class="rounded-circle" style="width: 50px; height: 40px;"
-                        src="../../../assets/images/akhshay.png" alt="sunil">
-                      <span class="reddot"></span>
-                    </div>
-                    <div class="chat_ib">
-                      <h5>{{users.emailId}}</h5>
-                      <span class="time_date"> {{users.creationdate | date:'shortTime'}}</span>
-                    </div>
-                  </ng-template>
-                </div>
-                <br>
-                <br>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div *ngIf="userSelected" class="col-8">
-      <p>Message History</p>
-      <div class="card">
-        <div class="card-header">
-          <div class="current_user">
-            <div class="input_msg_write">
-              <div class="chat_people">
-                <div class="chat_img">
-                  <img class="rounded-circle" style="width: 40px; height: 40px;"
-                    src="../../../assets/images/akhshay.png" alt="sunil">
-                </div>
-                <div class="current_user_detail">
-                  <p>{{userSelected}}
-                    <i class="fa fa-ellipsis-v video-audio-right" data-toggle="modal" data-target="#myModalmenu"
-                      aria-hidden="true"></i>
-                    <i class="fa fa-video-camera video-audio-right" data-toggle="modal" data-target="#myModalvideo"
-                      aria-hidden="true"></i>
-                    <i class="fa fa-phone video-audio-right" data-toggle="modal" data-target="#myModalaudio"
-                      aria-hidden="true"></i>
-                  </p>
-
-                  <div *ngFor="let users of allUsers">
-                    <div *ngIf="activeStatus == true; else offline">
-                      <small class="greentext">Online</small>
-                    </div>
-                    <ng-template #offline>
-                      <small class="redtext">Offline</small>
-                    </ng-template>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card-body">
-          <div class="mesgs">
-            <div id="msg_history">
-              <div *ngFor="let msgs of newMessageObject; let i=index">
-                <div *ngIf="msgs.user == 'sender' &&  msgs.receiver == userSelected; else receiverUser">
-                  <div class="outgoing_msg">
-                    <div class="outgoing_msg_img">
-                      <img style="width: 30px; height: 30px;" class="rounded-circle"
-                        src="../../../assets/images/jothipawar.jpg" alt="sunil">
-                    </div>
-                    <div class="sent_msg bubble-blue you">
-                      <p>{{msgs.senderMsg}}</p>
-                      <p>{{msgs.receiverMsg}} </p>
-                    </div>
-                  </div>
-                </div>
-
-                <ng-template #receiverUser>
-                  <div class="incoming_msg" *ngIf="msgs.sender == userSelected">
-                    <div class="incoming_msg_img">
-                      <img style="width: 30px; height: 30px;" class="rounded-circle"
-                        src="../../../assets/images/akhshay.png" alt="sunil">
-                    </div>
-                    <div class="received_msg">
-                      <div class="received_withd_msg bubble me">
-                        <p>{{msgs.receiverMsg}} </p>
-                        <p>{{msgs.senderMsg}}</p>
-                      </div>
-                    </div>
-                  </div>
-                </ng-template>
-              </div>
-            </div>
-            <div class="type_msg">
-              <div class="row">
-                <div class="col-md-9">
-                  <div class="input_msg_write">
-                    <input type="text" (keydown.enter)="sendMessageChat($event.target.value)"
-                      (keydown.enter)="titleInput.value=''" #titleInput class="write_msg"
-                      placeholder="Type a message" />
-
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <button class="file_send_btn" type="button" (click)="sendMessageChat(titleInput.value)"
-                    (click)="titleInput.value=''"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row" *ngIf="fileEnable">
-            <div class="container">
-              <div class="card">
-                <div class="card-body">
-                  <div class="container btn-toolbar">
-                    <div class="custom-file input-group flex-nowrap col-md-10">
-                      <input type="file" class="custom-file-input" id="file" (change)="handleFileInput($event.target.files)" >
-                      <label class="custom-file-label" for="file">{{ sendFileName }}</label>
-                    </div>
-                    <div class="btn-group col-md-2">
-                      <button type="button" class="btn btn-warning" (click)="sendFile()" >
-                        <i class="fa fa-paper-plane-o" aria-hidden="true"></i> Send
-                      </button>
-                    </div>
-                  </div>
-                  <br />
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-md-2 text-center">
-                        Send Progress :
-                      </div>
-                      <div class="col-md-10">
-                        <div class="progress">
-                          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" [style.width.%]="sendProgressValue" aria-valuenow="progressValue" aria-valuemin="sendProgressMin" aria-valuemax="sendProgressMax">
-                            <strong> {{ sendProgressValue }} %</strong>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <br />
-                  <div class="row">
-                    <div class="col-md-2 text-left">
-                      Received :
-                    </div>
-                  </div>
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-md-2 text-right">
-                        File Name :
-                      </div>
-                      <div class="col-md-10">
-                        {{ receivedFileName }}
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-2 text-right">
-                        File Type :
-                      </div>
-                      <div class="col-md-10">
-                        {{ receivedFileType }}
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-2 text-right">
-                        File Size :
-                      </div>
-                      <div class="col-md-10">
-                        {{ receivedFileSize }}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-md-2 text-center">
-                        Receive Progress :
-                      </div>
-                      <div class="col-md-10">
-                        <div class="progress">
-                          <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" [style.width.%]="receivedProgressValue" aria-valuenow="receivedProgressValue" aria-valuemin="receivedProgressMin" aria-valuemax="receivedProgressMax">
-                            <strong> {{ receivedProgressValue }} %</strong>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="container">
-                    <div class="text-center">
-                      <button type="button" class="btn btn-primary" (click)="downloadFile()" [disabled]="!enableDownload">
-                        <i class="fa fa-download" aria-hidden="true"></i> Download File
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-</div>  -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-4">
       <div class="card">
         <div class="card-header">
           <div class="headind_srch">
@@ -287,27 +22,11 @@
               </div>
             </div>
           </div><br>
-          <!-- <div class="row">
-            <div class="col-2">
-              <i class="fa fa-comments-o icons-left" title="Screen Share" aria-hidden="true"
-              (click)="createRoom()"></i>
-            </div>
-            <div class="col-3"> 
-              <i class="fa fa-users icons-left" title="Screen Share" aria-hidden="true"
-              (click)="createRoom()"></i>
-            </div>
-            <div class="col-5"> 
-              <i class="fa fa-bell icons-left" title="Screen Share" aria-hidden="true"
-              (click)="createRoom()"></i>
-            </div>
-          </div> -->
-          <!-- <div class="col-md-12"> -->
           <div class="row">
             <div class="col-md-3">
               <div class="row">
                 <div class="col-md-12 text-center">
-                  <i class="fa fa-comments icons-left" title="Screen Share" aria-hidden="true"
-                    (click)="showChats()"></i>
+                  <i class="fa fa-comments icons-left" title="Chat" aria-hidden="true" (click)="showChatUser()"></i>
                 </div>
               </div>
               <div class="row">
@@ -319,7 +38,8 @@
             <div class="col-md-3">
               <div class="row">
                 <div class="col-md-12 text-center">
-                  <i class="fa fa-users icons-left" title="Screen Share" aria-hidden="true" (click)="showAvailableRooms()"></i>
+                  <i class="fa fa-users icons-left" title="Group Chat" aria-hidden="true"
+                    (click)="showAvailableRooms()"></i>
                 </div>
               </div>
               <div class="row">
@@ -328,29 +48,33 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
               <div class="row">
                 <div class="col-md-12 text-center">
-                  <i class="fa fa-bell icons-left" title="Screen Share" aria-hidden="true" (click)="createRoom()"></i>
+                  <i class="fa fa-address-book icons-left" title="Favourite" aria-hidden="true"
+                    (click)="showChatContacts()"></i>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-12 text-center">
-                  <label>Notification</label>
+                  <label>Contact</label>
                 </div>
               </div>
             </div>
-            <!-- <div class="col-2">  
-                    <label>Chat</label>
-                  </div>
-                  <div class="col-3"> 
-                    <label>Rooms</label>
-                  </div>
-                  <div class="col-5"> 
-                    <label>Notifications</label>
-                  </div> -->
+            <div class="col-md-3">
+              <div class="row">
+                <div class="col-md-12 text-center">
+                  <i class="fa fa-star icons-left" title="Favourite" aria-hidden="true"
+                    (click)="showChatsFavourite()"></i>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 text-center">
+                  <label>Favourite</label>
+                </div>
+              </div>
+            </div>
           </div>
-          <!-- </div> -->
         </div>
         <div class="card-body" *ngIf="is_chats==true">
           <div *ngFor="let users of allUsersArr; let i=index">
@@ -400,20 +124,20 @@
               data-target="#roomCreateModel"></i>
           </div>
           <div class="col-md-12 text-center">
-            <label for="create"> Create Room</label>
+            <label for="create"> Create a New Room</label>
           </div>
           <hr>
           <div class="card-body " *ngIf="is_room_created==true; else isRoomAvailable">
             <div class="msg-box text-center py-4">
-              Currently no rooms are available.
+              Currently no Rooms are available.
             </div>
           </div>
           <ng-template #isRoomAvailable>
-              <div class="card-body">
-                  <div class="msg-box text-center py-4">
-                    Available Rooms are here...
-                  </div>
-                </div>
+            <div class="card-body">
+              <div class="msg-box text-center py-4">
+                Available Rooms are here...
+              </div>
+            </div>
           </ng-template>
 
           <div class="modal fade" id="roomCreateModel" tabindex="-1" role="dialog"
@@ -428,26 +152,27 @@
                 </div>
                 <div class="model-body">
                   <form [formGroup]="selectedGroupUserForm">
-                      <div class="row">
-                          <!-- <div class="col-md-offset-2"></div> -->
-                          <div class="col-md-12">
-                              <div class="form-group form-input">
-                                  <input type="text" name="groupName" formControlName="groupName" id="groupName" value="" required />
-                                  <label for="groupName" class="form-label">Group Name</label>
-                              </div>
-          
-                              <div class="form-group form-input">
-                                  <select  id="userList" required class="selectpicker" formControlName="groupUserName" multiple data-live-search="true" data-max-options="2">
-                                      <option></option>
-                                      <option *ngFor="let users of allUsersArr" [ngValue]="users.emailId">
-                                          {{users.emailId}}
-                                      </option>
-                                  </select>
-                                  <label class="form-label" for="userList">User List</label>
-                              </div>
-                          </div>
-                          <!-- <div class="col-md-offset-2"></div> -->
+                    <div class="row">
+                      <!-- <div class="col-md-offset-2"></div> -->
+                      <div class="col-md-12">
+                        <div class="form-group form-input">
+                          <input type="text" name="groupName" formControlName="groupName" id="groupName" value=""
+                            required />
+                          <label for="groupName" class="form-label">Group Name</label>
                         </div>
+
+                        <div class="form-group form-input">
+                          <select id="userList" required class="selectpicker" formControlName="groupUserName" multiple
+                            data-live-search="true" data-max-options="2">
+                            <option></option>
+                            <option *ngFor="let users of allUsersArr" [ngValue]="users.emailId">
+                              {{users.emailId}}
+                            </option>
+                          </select>
+                          <label class="form-label" for="userList">User List</label>
+                        </div>
+                      </div>
+                    </div>
                   </form>
                 </div>
                 <!-- <div class="modal-body">
@@ -508,7 +233,8 @@
                     </div>
                 </div> -->
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" (click)="selectedGroupUsers()">Save & Create Group</button>
+                  <button type="button" class="btn btn-primary" (click)="selectedGroupUsers()">Save & Create
+                    Group</button>
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
               </div>
@@ -517,7 +243,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-9 text-center card-margin" *ngIf="!userselect; else isULangSelected">
+    <div class="col-md-8 text-center card-margin" *ngIf="!userselect; else isULangSelected">
       <h4 style="font-size: 25px; font-weight:400">Welcome, Khemraj</h4>
       <div class="current_user_img">
         <img class="rounded-circle" src="../../../assets/images/akhshay.png" alt="sunil">
@@ -535,13 +261,13 @@
 
 
     <ng-template #isULangSelected>
-      <div class="col-md-9">
+      <div class="col-md-8">
         <div class="row">
           <div class="card">
             <div class="card-header">
               <div class="col-md-12">
                 <div class="row">
-                  <div class="col-md-9">
+                  <div class="col-md-4">
                     <!-- <div class="chat_img">  
                               <img class="rounded-circle"
                                 src="../../../assets/images/akhshay.png" alt="sunil">
@@ -549,6 +275,19 @@
                             </div> -->
                     <strong>{{ userSelected }}</strong>
                     {{ selectedUserClientID }}
+                  </div>
+                  <div class="col-md-5">
+                    <form [formGroup]="langForm">
+                      <div class="form-group form-input col">
+                        <select class="formStyle" formControlName="sourceLanguageCode" id="language" required
+                         (change)="selectPreferedLanguage($event.target.value)">
+                          <option *ngFor="let language of selectLanguage" [value]="language.languageCode">
+                            {{language.language}}
+                          </option>
+                        </select>
+                        <label for="language" class="form-label">Prefered Language </label>
+                      </div>
+                    </form>
                   </div>
                   <div class="col-md-3">
                     <div class="float-right">
@@ -600,10 +339,10 @@
                               </div>
                             </div> -->
 
-                             <div class="sendedFile">
-                               <div class="row">
-                              <!-- <p>{{sendFileName}}</p>  -->
-                              <p>{{msgs.senderFile}}</p>
+                            <div class="sendedFile">
+                              <div class="row">
+                                <!-- <p>{{sendFileName}}</p>  -->
+                                <p>{{msgs.senderFile}}</p>
                               </div>
                             </div>
                           </ng-template>
@@ -631,10 +370,10 @@
                           <ng-template #receiveFile>
                             <div class="receivedFile">
                               <div class="row">
-                                  <p>{{msgs.receivedFile}}</p>
-                                  <button class="fileDownload" title="Download" (click)="downloadFile(msgs.receivedFile)">
-                                    <i class="fa fa-download" aria-hidden="true"></i>
-                                  </button>
+                                <p>{{msgs.receivedFile}}</p>
+                                <button class="fileDownload" title="Download" (click)="downloadFile(msgs.receivedFile)">
+                                  <i class="fa fa-download" aria-hidden="true"></i>
+                                </button>
                               </div>
                             </div>
                             <!-- <div class="incoming_msg">
@@ -683,7 +422,7 @@
                             <div class="input_msg_write">
                               <input type="text" placeholder="Enter Message To Send..." [(ngModel)]="message"
                                 class="form-control write_msg" />
-                                <!-- <input type="text" class="form-control" placeholder="Enter Message To Send..." aria-label="message" aria-describedby="addon-wrapping" [(ngModel)]="message" [disabled]="!connected"> -->
+                              <!-- <input type="text" class="form-control" placeholder="Enter Message To Send..." aria-label="message" aria-describedby="addon-wrapping" [(ngModel)]="message" [disabled]="!connected"> -->
 
                             </div>
                           </div>
