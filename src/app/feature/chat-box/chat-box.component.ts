@@ -120,7 +120,7 @@ export class ChatBoxComponent implements OnInit {
   public is_chats: boolean = true;
   public is_rooms: boolean = false;
   public is_room_created: boolean = false;
-
+  public roomId : String ;
 
   public userselect: boolean = false;
   public langSelect: boolean = false;
@@ -950,15 +950,14 @@ export class ChatBoxComponent implements OnInit {
   
           this.sendMessages = {
             sourceLanguageCode: preferedSourceLanguageCode,
-            targetLanguageCode: preferedTargetLanguageCode,
+            targetLanguageCode: "ar",
             originalText: messageData.data,
             sender: this.jwtData.email,
             receiver: this.userSelected,
             clientId: messageData.clientId,
-            messageId: messageData.messageId
           }
   
-          this.socketservice.callEventTranslation(this.sendMessages).then((messgeData1: any) => {
+          this.socketservice.translantionMessage(this.sendMessages).then((messgeData1: any) => {
             console.log("Send Message component Data:", messgeData1);
             this.messages.push(JSON.parse(JSON.stringify({ clientId: messgeData1.clientId, originalText: messgeData1.originalText, data: messgeData1.translatedText.TranslatedText })));
   
@@ -971,17 +970,16 @@ export class ChatBoxComponent implements OnInit {
           var preferedTargetLanguageCode = localStorage.getItem('preferedTargetLanguageCode');
         console.log("prefered Data channel freelancer Target Language Code", preferedTargetLanguageCode);
   
-          this.sendMessages = {
-            sourceLanguageCode: preferedSourceLanguageCode,
-            targetLanguageCode: preferedTargetLanguageCode,
-            originalText: messageData.data,
-            sender: this.jwtData.email,
-            receiver: this.userSelected,
-            clientId: messageData.clientId,
-            messageId: messageData.messageId
-          }
+        this.sendMessages = {
+          sourceLanguageCode: "en",
+          targetLanguageCode: preferedSourceLanguageCode,
+          originalText: messageData.data,
+          sender: this.jwtData.email,
+          receiver: this.userSelected,
+          clientId: messageData.clientId,
+        } 
   
-          this.socketservice.callEventTranslation(this.sendMessages).then((messgeData1: any) => {
+          this.socketservice.translantionMessage(this.sendMessages).then((messgeData1: any) => {
             console.log("Send Message component Data:", messgeData1);
             this.messages.push(JSON.parse(JSON.stringify({ clientId: messgeData1.clientId, originalText: messgeData1.originalText, data: messgeData1.translatedText.TranslatedText })));
   
@@ -1037,8 +1035,10 @@ export class ChatBoxComponent implements OnInit {
             console.log("Join room details get from Local storage:", joinRoomDetails);
       
       this.messageObject = {
-        'sessionId': joinRoomDetails.responseObject.sessionId,
-        'roomId': joinRoomDetails.responseObject.roomId,
+        // 'sessionId': "d6c0461dcc47e08bb577081d9093415d2b2dfe2b",
+        // 'roomId': "3f93c281daa55a6d3c343cd5a692666980884047",
+        'sessionId': joinRoomDetails[0].users[0].sessionId,
+        'roomId': joinRoomDetails[0].roomId,
         'sender': this.jwtData.email,
         'receiver': this.userSelected,
         'senderRole': this.userRole,
@@ -1061,8 +1061,10 @@ export class ChatBoxComponent implements OnInit {
       console.log("Join Room Details for send message:", joinRoomDetails);
       
       this.messageObject = {
-        'sessionId': joinRoomDetails.responseObject.sessionId,
-        'roomId': joinRoomDetails.responseObject.roomId,
+        'sessionId': joinRoomDetails[0].users[0].sessionId,
+        'roomId': joinRoomDetails[0].roomId,
+        // 'sessionId': "d6c0461dcc47e08bb577081d9093415d2b2dfe2b",
+        // 'roomId': "3f93c281daa55a6d3c343cd5a692666980884047",
         'sender': this.jwtData.email,
         'receiver': this.userSelected,
         'senderRole': this.userRole,
@@ -1346,7 +1348,7 @@ export class ChatBoxComponent implements OnInit {
     this.is_chats = false;
     this.is_room_created = true;
 
-    await this.socketservice.showRoomAvailable(this.emailID).subscribe((showRoomsAvailable: any) => {
+    await this.socketservice.showRoomAvailable(this.emailID).then((showRoomsAvailable: any) => {
       console.log("Show rooms already available by current user email:", JSON.stringify(showRoomsAvailable.responseObject));
     });
   }
@@ -1371,10 +1373,14 @@ export class ChatBoxComponent implements OnInit {
       }
     }
 
-    console.log("Room  Data : ", roomData);
-    await this.socketservice.isRoomAvailable(roomData.roomName).subscribe((isRoomAvailableRes: any) => {
-      console.log("response for room available", isRoomAvailableRes);
-      var roomId = 0;
+    var roomAvailableData = {
+      roomName : roomData.roomName
+    }
+
+    console.log("One to One Room  Data : ", roomData);
+    await this.socketservice.isRoomAvailable(roomAvailableData).then((isRoomAvailableRes: any) => {
+      console.log("response from is room available", isRoomAvailableRes);
+    //  this.roomId = isRoomAvailableRes.responseObject[0].room_id;
       if (this.userRole == "Employer") {
         if (isRoomAvailableRes.message == "True") {
           let dataForJoiningRoom = {
@@ -1382,21 +1388,26 @@ export class ChatBoxComponent implements OnInit {
             roomName: isRoomAvailableRes.responseObject[0].room_name,
             userName: this.emailID
           }
-          this.socketservice.joinRoom(dataForJoiningRoom).subscribe((joinRes: any) => {
-            console.log("response for join", JSON.stringify(joinRes));
+
+          console.log("Employer is room available object to join room :", dataForJoiningRoom);
+          
+          this.socketservice.joinRoom(dataForJoiningRoom).then((joinRes: any) => {
+            console.log("Employer response from join room :", JSON.stringify(joinRes));
             localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
           });
         } else if (isRoomAvailableRes.message == "False") {
-          this.socketservice.createRoom(roomData).subscribe((createRes: any) => {
-            console.log("response for create room", createRes);
-            roomId = createRes.roomId;
+          this.socketservice.createRoom(roomData).then((createRoomRespData: any) => {
+            console.log("response for create room", createRoomRespData.responseObject);
+            // this.roomId = createRoomRespData.roomId;
             let dataForJoiningRoom = {
-              roomId: createRes.roomId,
-              roomName: createRes.roomName,
+              roomId: createRoomRespData.responseObject.roomId,
+              roomName: createRoomRespData.responseObject.roomName,
               userName: this.emailID
             }
-            this.socketservice.joinRoom(dataForJoiningRoom).subscribe((joinRes: any) => {
-              console.log("response for join", joinRes);
+          console.log("Employer : is room available object to join room :", dataForJoiningRoom);
+            
+            this.socketservice.joinRoom(dataForJoiningRoom).then((joinRes: any) => {
+              console.log("Employer: response from join room :", joinRes);
               localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
 
             });
@@ -1413,7 +1424,7 @@ export class ChatBoxComponent implements OnInit {
             roomName: isRoomAvailableRes.responseObject[0].room_name,
             userName: this.emailID
           }
-          this.socketservice.joinRoom(dataForJoiningRoom).subscribe((joinRes: any) => {
+          this.socketservice.joinRoom(dataForJoiningRoom).then((joinRes: any) => {
             console.log("response for join", joinRes);
             localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
 
@@ -1426,9 +1437,6 @@ export class ChatBoxComponent implements OnInit {
     });
   }
 
-  
-
-  
 
   async createOrJoinGroupRoomChat(){
     console.log("Callinng Group room chat");
@@ -1460,13 +1468,15 @@ export class ChatBoxComponent implements OnInit {
   
       console.log("Room  Data : ", roomData);
 
-      await this.socketservice.isRoomAvailable(roomData.roomName).subscribe((isRoomAvailableRes: any) => {
+      await this.socketservice.isRoomAvailable(roomData.roomName).then((isRoomAvailableRes: any) => {
         console.log("response for room available", isRoomAvailableRes);
-        var roomId = 0;
+        
+        this.roomId = isRoomAvailableRes.responseObject[0].room_id;
+        
         if (this.userRole == "Employer") {
           if (isRoomAvailableRes.message == "True") {
             let dataForJoiningRoom = {
-              roomId: isRoomAvailableRes.responseObject[0].room_id,
+              roomId: this.roomId,
               roomName: isRoomAvailableRes.responseObject[0].room_name,
               userName: [{
                     users:roomData.participant
@@ -1474,25 +1484,25 @@ export class ChatBoxComponent implements OnInit {
             }
             console.log("Joining Room user:", dataForJoiningRoom);
             
-            this.socketservice.joinRoom(dataForJoiningRoom).subscribe((joinRes: any) => {
+            this.socketservice.joinRoom(dataForJoiningRoom).then((joinRes: any) => {
               console.log("response form join room", JSON.stringify(joinRes));
               localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
             });
           } 
           else if (isRoomAvailableRes.message == "False") {
-            this.socketservice.createRoom(roomData).subscribe((createRes: any) => {
+            this.socketservice.createRoom(roomData).then((createRes: any) => {
               console.log("response form create room", createRes);
-              roomId = createRes.roomId;
+              this.roomId = createRes.roomId;
               let dataForJoiningRoom = {
-                roomId: createRes.roomId,
+                roomId: this.roomId,
                 roomName: this.selectedGroupUserForm.value.groupName,
                 userName: [{
                   users:roomData.participant
-            }]
+                }]
               }
               console.log("Create room user:", dataForJoiningRoom);
               
-              this.socketservice.joinRoom(dataForJoiningRoom).subscribe((joinRes: any) => {
+              this.socketservice.joinRoom(dataForJoiningRoom).then((joinRes: any) => {
                 console.log("response form join room in create room:", joinRes);
                 localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
               });
@@ -1511,15 +1521,15 @@ export class ChatBoxComponent implements OnInit {
                 users:roomData.participant
           }]
             }
-            this.socketservice.joinRoom(dataForJoiningRoom).subscribe((joinRes: any) => {
+            this.socketservice.joinRoom(dataForJoiningRoom).then((joinRes: any) => {
               console.log("response for join", joinRes);
               localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
             });
           } 
           else if (isRoomAvailableRes.message == "False") {
-            this.socketservice.createRoom(roomData).subscribe((createRes: any) => {
+            this.socketservice.createRoom(roomData).then((createRes: any) => {
               console.log("response form create room", createRes);
-              roomId = createRes.roomId;
+              this.roomId = createRes.roomId;
               let dataForJoiningRoom = {
                 roomId: createRes.roomId,
                 roomName: this.selectedGroupUserForm.value.groupName,
@@ -1529,7 +1539,7 @@ export class ChatBoxComponent implements OnInit {
               }
               console.log("Create room user:", dataForJoiningRoom);
               
-              this.socketservice.joinRoom(dataForJoiningRoom).subscribe((joinRes: any) => {
+              this.socketservice.joinRoom(dataForJoiningRoom).then((joinRes: any) => {
                 console.log("response form join room in create room:", joinRes);
                 localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
               });

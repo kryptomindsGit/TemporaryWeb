@@ -162,8 +162,7 @@
                         </div>
 
                         <div class="form-group form-input">
-                          <select id="userList" required class="selectpicker" formControlName="groupUserName" multiple
-                            data-live-search="true" data-max-options="2">
+                          <select id="userList" required formControlName="groupUserName" class="selectpicker" multiple id="number" data-container="body" data-live-search="true" title="Select a number" data-hide-disabled="true" >
                             <option></option>
                             <option *ngFor="let users of allUsersArr" [ngValue]="users.emailId">
                               {{users.emailId}}
@@ -279,13 +278,13 @@
                   <div class="col-md-5">
                     <form [formGroup]="langForm">
                       <div class="form-group form-input col">
-                        <select class="formStyle" formControlName="sourceLanguageCode" id="language" required
+                        <select class="formStyle" formControlName="sourceLanguageCode" id="sourceLanguage" required
                          (change)="selectPreferedLanguage($event.target.value)">
                           <option *ngFor="let language of selectLanguage" [value]="language.languageCode">
                             {{language.language}}
                           </option>
                         </select>
-                        <label for="language" class="form-label">Prefered Language </label>
+                        <label for="sourceLanguage" class="form-label">Prefered Language </label>
                       </div>
                     </form>
                   </div>
@@ -454,101 +453,6 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="row" *ngIf="fileEnable"> -->
-            <!-- <div class="card">
-                <div class="card-body">
-                  <div class="btn-toolbar">
-                    <div class="custom-file input-group flex-nowrap col-md-10">
-                      <input type="file" class="custom-file-input" id="file"
-                        (change)="handleFileInput($event.target.files)" [disabled]="!connected">
-                      <label class="custom-file-label" for="file">{{ sendFileName }}</label>
-                    </div>
-                    <div class="btn-group col-md-2">
-                      <button type="button" class="btn btn-warning" (click)="sendFile()"
-                        [disabled]="sendFileName == 'Choose file' || !connected">
-                        <i class="fa fa-paper-plane-o" aria-hidden="true"></i> Send
-                      </button>
-                    </div>
-                  </div>
-                  <br />
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-md-4 text-center">
-                        Send Progress :
-                      </div>
-                      <div class="col-md-8">
-                        <div class="progress">
-                          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                            [style.width.%]="sendProgressValue" aria-valuenow="progressValue"
-                            aria-valuemin="sendProgressMin" aria-valuemax="sendProgressMax">
-                            <strong> {{ sendProgressValue }} %</strong>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <br />
-                  <div class="row">
-                    <div class="col-md-4 text-center">
-                      Received :
-                    </div>
-                  </div>
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-md-4 text-right">
-                        File Name :
-                      </div>
-                      <div class="col-md-8">
-                        {{ receivedFileName }}
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-4 text-right">
-                        File Type :
-                      </div>
-                      <div class="col-md-8">
-                        {{ receivedFileType }}
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-4 text-right">
-                        File Size :
-                      </div>
-                      <div class="col-md-8">
-                        {{ receivedFileSize }}
-                      </div>
-                    </div>
-                  </div>
-                  <br>
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-md-4 text-center">
-                        Receive Progress :
-                      </div>
-                      <div class="col-md-8">
-                        <div class="progress">
-                          <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
-                            role="progressbar" [style.width.%]="receivedProgressValue"
-                            aria-valuenow="receivedProgressValue" aria-valuemin="receivedProgressMin"
-                            aria-valuemax="receivedProgressMax">
-                            <strong> {{ receivedProgressValue }} %</strong>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <br>
-                  <div class="container">
-                    <div class="text-center">
-                      <button type="button" class="btn btn-primary" (click)="downloadFile()"
-                        [disabled]="!enableDownload">
-                        <i class="fa fa-download" aria-hidden="true"></i> Download File
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
-            <!-- </div> -->
             <div class="row" *ngIf="audioEnable">
               <div class="card">
                 <div class="card-body">

@@ -1,147 +1,9 @@
-// import { Injectable, NgZone } from '@angular/core';
-// import { HttpHeaders, HttpClient, HttpEventType } from '@angular/common/http';
-// import { Observable, throwError } from 'rxjs';
-// // Constan URL's call
-// import { SPRING_URL } from '../../../constant/constant-url';
-
-// //CORS Handler
-
-
-// // const httpOptions = {
-// //   headers: new HttpHeaders({
-// //     'Access-Control-Allow-Origin': '*',
-// //     'enctype': 'multipart/form-data',
-// //     'Content-Type': 'application/json',
-// //     'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
-// //     'X-Autherization': localStorage.getItem('userAuthToken')
-// //   })
-// // }
-
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-
-// export class ChatWindowService {
-
-//   tokenAuth: any;
-//   EVENT_URL: any;
-//   eventName: any;
-//   springurl: any;
-//   myData: any;
-
-//   constructor(
-//     private __http: HttpClient,
-//     private __zone: NgZone
-//   ) {
-
-//     this.EVENT_URL = `${SPRING_URL}/event/chat`;
-//     this.__zone = new NgZone({ enableLongStackTrace: false });
-//     this.tokenAuth = localStorage.getItem('userAuthToken');
-//   }
-
-//   // POST API call
-//   async senderUserMessage(senderMessage: any) {
-//     try {
-//       let res = await this.__http.post(`${SPRING_URL}/translation?`, senderMessage).toPromise();
-//       return res;
-//     } catch (error) {
-//       await this.handleError(error);
-//     }
-//   }
-
-//   getOnlineUserList() {
-//     this.EVENT_URL = `${SPRING_URL}/event/chat`;
-//     return Observable.create(observer => {
-//       const eventSource = new EventSource(this.EVENT_URL);
-//       eventSource.addEventListener('loggedIn', (event: any) => this.__zone.run(() => {
-//         console.log("listening online users", event.data);
-//         observer.next(JSON.parse(event.data));
-//       }));
-
-//       eventSource.onerror = error => {
-//         this.__zone.run(() => {
-//           if (eventSource.readyState === eventSource.CLOSED) {
-//             console.log("on error function");
-//             observer.complete();
-//           } else {
-//             observer.error(error);
-//           }
-//         })
-//       }
-//       return () => eventSource.close();
-//     })
-//   }
-
-//   getServerSentEvent() {
-//     this.EVENT_URL = `${SPRING_URL}/event/chat`;
-//     this.eventName = 'translation';
-//     return Observable.create(observer => {
-//       const eventSource = new EventSource(this.EVENT_URL);
-
-//       eventSource.addEventListener(this.eventName, (event: any) => this.__zone.run(() => {
-//         // this.myData = JSON.parse(event.data);
-//         observer.next(JSON.parse(event.data));
-//         // observer.next(event.data);
-//         // eventSource.close();
-
-//       }));
-
-//       // eventSource.onmessage = (event: any) => {
-//       //   this.__zone.run(() => {
-//       //     console.log("on message function", event.data);
-//       //     observer.next(event);
-//       //     // observer.next(JSON.parse(event.data));
-//       //     // eventSource.close();
-//       //   })
-//       // }
-
-//       // eventSource.onopen = (event: any) => {
-//       //   this.__zone.run(() => {
-//       //     observer.next(event);
-//       //     // observer.next(JSON.parse(event.data));
-//       //     eventSource.close();
-//       //     console.log("on open function", event);
-//       //   })
-//       // }
-
-//       eventSource.onerror = error => {
-//         this.__zone.run(() => {
-//           if (eventSource.readyState === eventSource.CLOSED) {
-//             console.log("on error function");
-//             // eventSource.close();
-//             observer.complete();
-//           } else {
-//             observer.error(error);
-//           }
-//         })
-//       }
-//       return () => eventSource.close();
-//     })
-//   }
-
-//   // Error Handler
-//   handleError(error) {
-//     let errorMessage = '';
-//     if (error.error instanceof ErrorEvent) {
-//       // client-side error
-//       errorMessage = `Client Error: ${error.error.message}`;
-//     } else {
-//       // server-side error
-//       errorMessage = `Server Error Code: ${error.status}\nMessage: ${error.message}`;
-//     }
-//     console.log(" Error : ", errorMessage);
-//     return throwError(errorMessage);
-//   }
-// }
-
-
 import { Injectable, NgZone } from '@angular/core';
 import { Observable, Observer, throwError } from 'rxjs';
 import * as io from 'socket.io-client';
 import { HttpHeaders, HttpClient, HttpEventType } from '@angular/common/http';
-import { NODE_URL_CHAT } from '../../../constant/constant-url';
-
+// import { NODE_URL_CHAT } from '../../../constant/constant-url';
+import { NODE_URL_CHAT_WEB_RTC } from '../../../constant/constant-url';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -171,7 +33,7 @@ export class ChatWindowService {
     private __http: HttpClient,
     private __zone: NgZone
   ) {
-    console.log("Node chat IP:", NODE_URL_CHAT);
+    console.log("Node chat IP:", NODE_URL_CHAT_WEB_RTC);
 
     this.socket = io('http://192.168.0.18:3040', {
       reconnectionDelay: 1000,
@@ -307,168 +169,71 @@ export class ChatWindowService {
     });
   }
 
-  // POST API call
-  // async senderUserMessage(senderMessage: any) {
-  //   try {
-  //     console.log("service side messages: ", senderMessage);
-
-  //     let res = await this.__http.post(`${NODE_URL_CHAT}/translation`, senderMessage, httpOptions).toPromise();
-
-  //     // this.socket.on(`${NODE_URL_CHAT}/translation`, () => {
-  //     //   console.log('bhushan called');
-  //     // });
-
-  //     return res;
-  //   } catch (error) {
-  //     await this.handleError(error);
-  //   }
-  // }
-
-
-  
-
-  async callEventTranslation(senderMessage: any) {
+  // API's calls 
+  async translantionMessage(senderMessage: any) {
     console.log("senderMessage:", senderMessage);
     try {
       console.log("service side messages: ", senderMessage);
-      // this.socket.emit('translation', senderMessage);
-      let res = await this.__http.post(`${NODE_URL_CHAT}/translation`, senderMessage, httpOptions).toPromise();
-      // this.socket.on(`${NODE_URL_CHAT}/translation`, () => {
-      //   console.log('bhushan called');
-      // });
+      let res = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/translation`, senderMessage, httpOptions).toPromise();
       return res;
     } catch (error) {
       await this.handleError(error);
     }
   }
 
-  gettingResult() {
-    console.log("listeing traslated message");
-
-    return new Observable(observer => {
-      this.socket.on('translated', (data) => {
-        observer.next(data);
-      });
-      return () => {
-        this.socket.disconnect();
-      };
-    });
-  }
-
   // gettingResult() {
-  //   // let res = this.socket.on('translated', (messageData: any) => {
-  //   //   console.log("resp from nodejs message :", messageData);
-  //   // });
-  //   // return res;
-
-  //   return Observable.create((observer: any) => {
-  //     this.socket.on('translated', (data: any) => {
+  //   console.log("listeing traslated message");
+  //   return new Observable(observer => {
+  //     this.socket.on('translated', (data) => {
   //       observer.next(data);
   //     });
-  //     this.socket.off('translated', (data: any) => {
-  //       observer.next(data);
-  //     });
+  //     return () => {
+  //       this.socket.disconnect();
+  //     };
   //   });
   // }
 
-  // listenTranslatedData() {
 
-  // }
-
-  // getOnlineUserList() {
-  //   // this.EVENT_URL = `${NODE_URL_CHAT}/event/chat`;
-  //   // this.EVENT_URL = `${NODE_URL_CHAT}`;
-
-  //   return Observable.create(observer => {
-  //     const eventSource = new EventSource(this.EVENT_URL);
-  //     eventSource.addEventListener('loggedIn', (event: any) => this.__zone.run(() => {
-  //       console.log("listening online users", event.data);
-  //       observer.next(JSON.parse(event.data));
-  //     }));
-
-  //     eventSource.onerror = error => {
-  //       this.__zone.run(() => {
-  //         if (eventSource.readyState === eventSource.CLOSED) {
-  //           console.log("on error function");
-  //           observer.complete();
-  //         } else {
-  //           observer.error(error);
-  //         }
-  //       })
-  //     }
-  //     return () => eventSource.close();
+  // createRoom(data:any){
+  //   // console.log("Inside Create Room");
+  //   this.socket.emit('create-room',data);
+  //   return new Observable(observer => {
+  //     this.socket.on('create-room', (data) => {
+  //       observer.next(data);
+  //     });
   //   })
   // }
 
-  // getServerSentEvent() {
-  //   // this.EVENT_URL = `${SPRING_URL}/event/chat`;
-  //   this.EVENT_URL = `${NODE_URL_CHAT}/event/chat`;
+  // joinRoom(data:any){
+  //   console.log("Inside Join Room - Service", data);
+  //   this.socket.emit('join-room',data);
+  //   return  new Observable(observer => {
+  //     this.socket.on('join-room', (data) => {
+  //       observer.next(data);
+  //     });
+  //   })
+  // }
 
-  //   this.eventName = 'translation';
-  //   return Observable.create(observer => {
-  //     const eventSource = new EventSource(this.EVENT_URL);
-
-  //     eventSource.addEventListener(this.eventName, (event: any) => this.__zone.run(() => {
-  //       this.myData = JSON.parse(event.data);
-  //       observer.next(JSON.parse(event.data));
-
-  //     }));
-
-  //     eventSource.onerror = error => {
-  //       this.__zone.run(() => {
-  //         if (eventSource.readyState === eventSource.CLOSED) {
-  //           console.log("on error function");
-  //           observer.complete();
-  //         } else {
-  //           observer.error(error);
-  //         }
-  //       })
-  //     }
-  //     return () => eventSource.close();
+  // isRoomAvailable(data:any){
+  //   // console.log("Inside Is Room available");
+  //   this.socket.emit('room-available',data);
+  //   return new Observable(observer => {
+  //     this.socket.on('room-available', (data) => {
+  //       observer.next(data);
+  //     });
   //   })
   // }
 
 
-  createRoom(data:any){
-    console.log("Inside Create Room");
-    this.socket.emit('create-room',data);
-    return new Observable(observer => {
-      this.socket.on('create-room', (data) => {
-        observer.next(data);
-      });
-    })
-  }
-
-  joinRoom(data:any){
-    console.log("Inside Join Room");
-    this.socket.emit('join-room',data);
-    return  new Observable(observer => {
-      this.socket.on('join-room', (data) => {
-        observer.next(data);
-      });
-    })
-  }
-
-  isRoomAvailable(data:any){
-    console.log("Inside Is Room available");
-    this.socket.emit('room-available',data);
-    return new Observable(observer => {
-      this.socket.on('room-available', (data) => {
-        observer.next(data);
-      });
-    })
-  }
-
-
-  showRoomAvailable(selectedUserEmail){
-    console.log("Inside Show Room available", selectedUserEmail);
-    this.socket.emit('show-rooms', selectedUserEmail);
-    return new Observable(observer => {
-      this.socket.on('show-rooms', (data) => {
-        observer.next(data);
-      });
-    })
-  }
+  // showRoomAvailable(selectedUserEmail){
+  //   console.log("Inside Show Room available", selectedUserEmail);
+  //   this.socket.emit('show-rooms', selectedUserEmail);
+  //   return new Observable(observer => {
+  //     this.socket.on('show-rooms', (data) => {
+  //       observer.next(data);
+  //     });
+  //   })
+  // }
 
 
   sendMessageToCasssandra(data:any){
@@ -480,6 +245,83 @@ export class ChatWindowService {
       });
     })
   }
+
+  // API's for Cassendra and room creations
+
+  /**
+   * @name createRoom
+   * @param createRoomData 
+   */
+  async createRoom(createRoomData:any) {
+    console.log("Data of create room:", createRoomData);
+    try {
+      let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/create-room'`, createRoomData, httpOptions).toPromise();
+      return result;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
+
+  /**
+   * @name isRoomAvailable
+   * @param isRoomAvailableData 
+   */
+  async isRoomAvailable(isRoomAvailableData:any) {
+    console.log("Data of is room available:", isRoomAvailableData);
+    try {
+      let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/room-available`, isRoomAvailableData, httpOptions).toPromise();
+      console.log("Result of Romm available:", result);
+      
+      return result;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
+
+   /**
+   * @name joinRoom
+   * @param joinRoomData 
+   */
+  async joinRoom(joinRoomData:any) {
+    console.log("Data of Join room:", joinRoomData);
+    try {
+      let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/join-room`, joinRoomData, httpOptions).toPromise();
+      return result;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
+  /**
+   * @name showRoomAvailable
+   * @param showRoomAvailableData 
+   */
+  async showRoomAvailable(showRoomAvailableData:any) {
+    console.log("Data of Join room:", showRoomAvailableData);
+    try {
+      let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/show-rooms`, showRoomAvailableData, httpOptions).toPromise();
+      return result;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
+
+  /**
+   * @name sendMessageToCasssandra
+   * @param sendMessageToCasssandraData 
+   */
+  // async sendMessageToCasssandra(sendMessageToCasssandraData:any) {
+  //   console.log("Data of Join room:", sendMessageToCasssandraData);
+  //   try {
+  //     let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/message-to-cassandra`, sendMessageToCasssandraData, httpOptions).toPromise();
+  //     return result;
+  //   } catch (error) {
+  //     await this.handleError(error);
+  //   }
+  // }
 
   // Error Handler
   handleError(error) {
