@@ -35,7 +35,7 @@ export class ChatWindowService {
   ) {
     console.log("Node chat IP:", NODE_URL_CHAT_WEB_RTC);
 
-    this.socket = io('http://192.168.0.18:3040', {
+    this.socket = io(`${NODE_URL_CHAT_WEB_RTC}`, {
       reconnectionDelay: 1000,
       reconnection: true,
       reconnectionAttempts: 1,
@@ -204,15 +204,15 @@ export class ChatWindowService {
   //   })
   // }
 
-  // joinRoom(data:any){
-  //   console.log("Inside Join Room - Service", data);
-  //   this.socket.emit('join-room',data);
-  //   return  new Observable(observer => {
-  //     this.socket.on('join-room', (data) => {
-  //       observer.next(data);
-  //     });
-  //   })
-  // }
+  joinRoom(data:any){
+    console.log("Inside Join Room - Service", data);
+    this.socket.emit('join-room',data);
+    return  new Observable(observer => {
+      this.socket.on('join-room', (data) => {
+        observer.next(data);
+      });
+    })
+  }
 
   // isRoomAvailable(data:any){
   //   // console.log("Inside Is Room available");
@@ -255,7 +255,7 @@ export class ChatWindowService {
   async createRoom(createRoomData:any) {
     console.log("Data of create room:", createRoomData);
     try {
-      let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/create-room'`, createRoomData, httpOptions).toPromise();
+      let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/create-room`, createRoomData, httpOptions).toPromise();
       return result;
     } catch (error) {
       await this.handleError(error);
@@ -284,15 +284,15 @@ export class ChatWindowService {
    * @name joinRoom
    * @param joinRoomData 
    */
-  async joinRoom(joinRoomData:any) {
-    console.log("Data of Join room:", joinRoomData);
-    try {
-      let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/join-room`, joinRoomData, httpOptions).toPromise();
-      return result;
-    } catch (error) {
-      await this.handleError(error);
-    }
-  }
+  // async joinRoom(joinRoomData:any) {
+  //   console.log("Data of Join room:", joinRoomData);
+  //   try {
+  //     let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/join-room`, joinRoomData, httpOptions).toPromise();
+  //     return result;
+  //   } catch (error) {
+  //     await this.handleError(error);
+  //   }
+  // }
 
   /**
    * @name showRoomAvailable
