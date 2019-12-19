@@ -78,18 +78,14 @@
         </div>
         <div class="card-body" *ngIf="is_chats == true">
           <div class="card-body " *ngIf="isShowRoomAvailable==true; else isShowRoomNotAvailable">
-              <!-- <div class="text-left py-1" *ngFor="let ShowChatRooms of showRoomsForChatRespData.responseObject; let i=index">
-                <p (click)="selectedUser(ShowChatRooms.room_name)">{{ShowChatRooms.room_name}}</p>
-                <hr>
-                </div> -->
 
-                <div class="text-left py-1" *ngFor="let ShowChatRooms of showRoomsForChatRespData.responseObject; let i=index">
+                <div class="text-left py-1" *ngFor="let ShowChatRooms of showRoomsAvailableArray; let i=index">
                 
-                <div *ngIf="ShowChatRooms.room_type == Individual">
+                <!-- <div *ngIf="ShowChatRooms.room_type === 'Individual'"> -->
                     <p (click)="selectedUser(ShowChatRooms.room_name)">
                         {{ShowChatRooms.room_name}}
                       </p>
-                 </div>
+                 <!-- </div> -->
                 <hr>
                 </div>
             </div>
@@ -112,7 +108,7 @@
           <hr>
           <div class="card-body " *ngIf="isShowRoomAvailable==true; else isShowRoomNotAvailable">
               <div class="text-left py-1" *ngFor="let ShowChatRooms of showRoomsForChatRespData.responseObject; let i=index">
-                 <div *ngIf="ShowChatRooms.room_type == Group">
+                 <div *ngIf="ShowChatRooms.room_type === 'Group'">
                     {{ShowChatRooms.room_name}}
                  </div>
                  <hr>

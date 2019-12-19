@@ -1354,23 +1354,20 @@ export class ChatBoxComponent implements OnInit {
     console.log(" Current user email ID in Show rooms:", this.currentUserEmailID);
     
     await this.socketservice.showRoomAvailable(this.currentUserEmailID).then((showRoomsAvailable: any) => {
-      console.log("Show rooms already available by current user email:", JSON.stringify(showRoomsAvailable));
-      this.showRoomsForChatRespData = JSON.stringify(showRoomsAvailable);
-      // showRoomsAvailable.responseObject.forEach(element => {
-      //   this.showRoomsAvailableArray = element.room_name.split("&", ".com"); 
-      //   console.log("showRoomsAvailableArray :", this.showRoomsAvailableArray); 
-      // });
-
-      if(!this.showRoomsForChatRespData.responseObject){
-        this.showRoomsForChatRespData = showRoomsAvailable;
-        console.log("this.showRoomsForChatRespData:", this.showRoomsForChatRespData.message);
+      console.log("Show rooms already available by current user email:", showRoomsAvailable);
+      if(showRoomsAvailable.responseObject != null){
+        console.log("showRoomsAvailable:", showRoomsAvailable.message);
         this.isShowRoomAvailable = true;
-        console.log("isShowRoomAvailable:", this.isShowRoomAvailable);
-        this.showRoomsAvailableArray = this.showRoomsForChatRespData.responseObject;
+          if(showRoomsAvailable.responseObject.room_type == "Individual"){
+          console.log("Inside Individual");
+
+            this.showRoomsAvailableArray = showRoomsAvailable.responseObject;
+            console.log("showRoomsAvailableArray :", this.showRoomsAvailableArray); 
+          }
       }
       else{
-        this.showRoomsForChatRespData = showRoomsAvailable;
-        console.log("this.showRoomsForChatRespData:", this.showRoomsForChatRespData.message);
+        // this.showRoomsForChatRespData = showRoomsAvailable;
+        console.log("this.showRoomsForChatRespData:", showRoomsAvailable.message);
         this.isShowRoomAvailable = false;
         console.log("isShowRoomAvailable:", this.isShowRoomAvailable);
       }
@@ -1379,23 +1376,21 @@ export class ChatBoxComponent implements OnInit {
 
   async showGroupChatRoomAvailable(){
     await this.socketservice.showRoomAvailable(this.currentUserEmailID).then((showRoomsAvailable: any) => {
-      console.log("Show Group rooms already available by current user email:", JSON.stringify(showRoomsAvailable));
-      this.showRoomsForChatRespData = JSON.stringify(showRoomsAvailable);
-
-      // showRoomsAvailable.responseObject.forEach(element => {
-      // this.showRoomsAvailableArray = element.room_name.split("&");        
-      // console.log("showRoomsAvailableArray :", this.showRoomsAvailableArray);  
-    // });
-      if(!this.showRoomsForChatRespData.responseObject){
-        this.showRoomsForChatRespData = showRoomsAvailable;
-        console.log("this.showRoomsForChatRespData:", this.showRoomsForChatRespData.message);
+      console.log("Show Group rooms already available by current user email:", showRoomsAvailable);
+      // this.showRoomsForChatRespData = JSON.stringify(showRoomsAvailable);
+      if(showRoomsAvailable.responseObject != null){
+        console.log("showRoomsAvailable:", showRoomsAvailable.message);
         this.isShowRoomAvailable = true;
         console.log("isShowRoomAvailable:", this.isShowRoomAvailable);
-        // this.showRoomsAvailableArray = this.showRoomsForChatRespData.responseObject;
+        if(showRoomsAvailable.responseObject.room_type == "Group"){
+          console.log("Inside Group");
+          
+          this.showRoomsAvailableArray = showRoomsAvailable.responseObject;
+          console.log("showRoomsAvailableArray :", this.showRoomsAvailableArray); 
+        }
       }
       else{
-        this.showRoomsForChatRespData = showRoomsAvailable;
-        console.log("this.showRoomsForChatRespData:", this.showRoomsForChatRespData.message);
+        console.log("showRoomsAvailable:", showRoomsAvailable.message);
         this.isShowRoomAvailable = false;
         console.log("isShowRoomAvailable:", this.isShowRoomAvailable);
       }
