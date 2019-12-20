@@ -236,15 +236,15 @@ export class ChatWindowService {
   // }
 
 
-  sendMessageToCasssandra(data:any){
-    console.log("Inside Send msg to  cassendra");
-    this.socket.emit('save-msg',data);
-    return new Observable(observer => {
-      this.socket.on('save-msg', (data) => {
-        observer.next(data);
-      });
-    })
-  }
+  // sendMessageToCasssandra(data:any){
+  //   console.log("Inside Send msg to  cassendra");
+  //   this.socket.emit('save-msg',data);
+  //   return new Observable(observer => {
+  //     this.socket.on('save-msg', (data) => {
+  //       observer.next(data);
+  //     });
+  //   })
+  // }
 
   // API's for Cassendra and room creations
 
@@ -326,15 +326,29 @@ export class ChatWindowService {
    * @name sendMessageToCasssandra
    * @param sendMessageToCasssandraData 
    */
-  // async sendMessageToCasssandra(sendMessageToCasssandraData:any) {
-  //   console.log("Data of Join room:", sendMessageToCasssandraData);
-  //   try {
-  //     let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/message-to-cassandra`, sendMessageToCasssandraData, httpOptions).toPromise();
-  //     return result;
-  //   } catch (error) {
-  //     await this.handleError(error);
-  //   }
-  // }
+  async postMessageToCassandra(sendMessageToCasssandraData:any) {
+    console.log("Data of send message to cassandra:", sendMessageToCasssandraData);
+    try {
+      let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/save-msg`, sendMessageToCasssandraData, httpOptions).toPromise();
+      return result;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
+  /**
+   * @name getMessageFromCasssandra
+   * @param getMessageFromCasssandraData 
+   */
+  async getMessageFromCassandra(emailId:any) {
+    console.log("Data of get message from cassandra:", emailId);
+    try {
+      let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/get-msg`, emailId, httpOptions).toPromise();
+      return result;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
 
   // Error Handler
   handleError(error) {

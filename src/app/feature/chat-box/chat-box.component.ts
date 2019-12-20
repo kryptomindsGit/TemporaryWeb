@@ -971,9 +971,15 @@ export class ChatBoxComponent implements OnInit {
             receiver: this.userSelected,
             clientId: messageData.clientId,
           }
+
+          // this.socketservice.getMessageFromCassandra(this.emailID).then((respGetMsgCassandra: any) => {
+          //   console.log("Get Message Data from Cassandra:", respGetMsgCassandra);
+          //   this.messages.push(JSON.parse(JSON.stringify({ clientId: respGetMsgCassandra.clientId, originalText: respGetMsgCassandra.originalText, data: respGetMsgCassandra.translatedText.TranslatedText })));
+  
+          // });
   
           this.socketservice.translantionMessage(this.sendMessages).then((messgeData1: any) => {
-            console.log("Send Message component Data:", messgeData1);
+            console.log("Translated Data :", messgeData1);
             this.messages.push(JSON.parse(JSON.stringify({ clientId: messgeData1.clientId, originalText: messgeData1.originalText, data: messgeData1.translatedText.TranslatedText })));
   
           });
@@ -994,6 +1000,11 @@ export class ChatBoxComponent implements OnInit {
           clientId: messageData.clientId,
         } 
   
+        // this.socketservice.getMessageFromCassandra(this.emailID).then((respGetMsgCassandra: any) => {
+        //   console.log("Get Message Data from Cassandra:", respGetMsgCassandra);
+        //   this.messages.push(JSON.parse(JSON.stringify({ clientId: respGetMsgCassandra.clientId, originalText: respGetMsgCassandra.originalText, data: respGetMsgCassandra.translatedText.TranslatedText })));
+        // });
+
           this.socketservice.translantionMessage(this.sendMessages).then((messgeData1: any) => {
             console.log("Send Message component Data:", messgeData1);
             this.messages.push(JSON.parse(JSON.stringify({ clientId: messgeData1.clientId, originalText: messgeData1.originalText, data: messgeData1.translatedText.TranslatedText })));
@@ -1063,7 +1074,7 @@ export class ChatBoxComponent implements OnInit {
       };
       console.log("Message for send to receiver:", this.messageObject);
 
-      this.socketservice.sendMessageToCasssandra(this.messageObject).subscribe((msgRes: any) => {
+      this.socketservice.postMessageToCassandra(this.messageObject).then((msgRes: any) => {
         console.log("response emp from casendra msg", msgRes);
       //  localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
       });
@@ -1088,14 +1099,11 @@ export class ChatBoxComponent implements OnInit {
         'originalMsg': this.message
       };
       console.log("Message for send to receiver:", this.messageObject);
-      this.socketservice.sendMessageToCasssandra(this.messageObject).subscribe((msgRes: any) => {
+      this.socketservice.postMessageToCassandra(this.messageObject).then((msgRes: any) => {
         console.log("response free from casendra msg", msgRes);
       //  localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
       });
-     
-      
     }
-
 
     this.dataChannel.send(JSON.stringify({ clientId: this.fromClientId, data: this.message }));
     this.messages.push(JSON.parse(JSON.stringify({ clientId: this.fromClientId, user: 'sender', data: this.message })));
@@ -1391,19 +1399,11 @@ export class ChatBoxComponent implements OnInit {
               this.allRoomInformationArray.push(roomdata);
               console.log("Show all room info Array: ",  this.allRoomInformationArray);
               
-              
+             
             });
             }
         });
-        this.allRoomInformationArray.forEach(allRoom => {
-          allRoom.participants.forEach(participant => {
-          
-            if(participant.participant_name != this.emailID){
-              this.individualRoomArray.push(participant);
-            }
-          });
-        });
-        console.log("Individual Room array :", this.individualRoomArray);
+        
         // this.allRoomInformationArray.forEach(room => {
         //   this.roomIdData ={
         //     roomId: room.room_id
@@ -1414,6 +1414,19 @@ export class ChatBoxComponent implements OnInit {
         //   });
 
         // });
+        this.allRoomInformationArray.forEach(allRoom => {
+          allRoom.participants.forEach(participant => {
+             console.log("*****************part name *****************",participant.participant_name); 
+            if(participant.participant_name != this.emailID){
+              console.log("*****************part name *****************",participant.participant_name); 
+              const found =  this.individualRoomArray.some(participant1=>participant1 === participant);
+              if(!found){
+                this.individualRoomArray.push(participant);
+              }
+            }
+          });
+        });
+        console.log("Individual Room array :", this.individualRoomArray);
       }
       else{
         this.isShowRoomAvailable = false;
