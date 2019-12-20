@@ -128,14 +128,17 @@ export class ChatBoxComponent implements OnInit {
   public currentUserEmailID: any;
   public showRoomsForChatRespData: any = [];
   public isShowRoomAvailable: boolean = false;
-  public showRoomsAvailableArray: any = [];
+  public allRoomInformationArray: any = [];
+  public showGroupRoomsAvailableArray: any = [];
   public showAvbRoomsArray: any = [];
+  public individualRoomArray: any = [];
 
   public userselect: boolean = false;
   public langSelect: boolean = false;
   public selectedUserGroupName: any ;
 
   public roomData: any;
+  public roomIdData: any;
 
 
   public selectLanguage: any = [
@@ -1355,19 +1358,64 @@ export class ChatBoxComponent implements OnInit {
     
     await this.socketservice.showRoomAvailable(this.currentUserEmailID).then((showRoomsAvailable: any) => {
       console.log("Show rooms already available by current user email:", showRoomsAvailable);
-      if(showRoomsAvailable.responseObject != null){
-        console.log("showRoomsAvailable:", showRoomsAvailable.message);
+      console.log("showRoomsAvailable:", showRoomsAvailable.status);
+      if(showRoomsAvailable.status == 'Available'){
         this.isShowRoomAvailable = true;
-          if(showRoomsAvailable.responseObject.room_type == "Individual"){
-          console.log("Inside Individual");
+        showRoomsAvailable.responseObject.forEach(room => {
+          if(room.room_type == "Individual"){
+            // console.log("Inside Individual");
+            //   this.showRoomsAvailableArray.push(room);
+            //   console.log("showRoomsAvailableArray :", this.showRoomsAvailableArray); 
+            this.roomIdData ={
+                  roomId: room.room_id
+                }
+            this.socketservice.getRoomInfo(this.roomIdData).then((getRoomInfoResp: any) => {
+              console.log(" Get room info:", getRoomInfoResp.responseObject);
+              let roomdata={
+                room_name : room.room_name,
+                room_id: room.room_id,
+                room_creation_date: room.room_creation_date,
+                participants : [{
+                  participant_name: getRoomInfoResp.responseObject[0].participant,
+                  role: getRoomInfoResp.responseObject[0].role,
+                  type: getRoomInfoResp.responseObject[0].participant_type,
+                },
+                {
+                  participant_name: getRoomInfoResp.responseObject[1].participant,
+                  role: getRoomInfoResp.responseObject[1].role,
+                  type: getRoomInfoResp.responseObject[1].participant_type,
+                }]
+              }
+              console.log("roomdata :", roomdata);
+              
+              this.allRoomInformationArray.push(roomdata);
+              console.log("Show all room info Array: ",  this.allRoomInformationArray);
+              
+              
+            });
+            }
+        });
+        this.allRoomInformationArray.forEach(allRoom => {
+          allRoom.participants.forEach(participant => {
+          
+            if(participant.participant_name != this.emailID){
+              this.individualRoomArray.push(participant);
+            }
+          });
+        });
+        console.log("Individual Room array :", this.individualRoomArray);
+        // this.allRoomInformationArray.forEach(room => {
+        //   this.roomIdData ={
+        //     roomId: room.room_id
+        //   }
+        //   this.socketservice.getRoomInfo(this.roomIdData).then((getRoomInfoResp: any) => {
+        //     console.log(" Get room info:", getRoomInfoResp);
+            
+        //   });
 
-            this.showRoomsAvailableArray = showRoomsAvailable.responseObject;
-            console.log("showRoomsAvailableArray :", this.showRoomsAvailableArray); 
-          }
+        // });
       }
       else{
-        // this.showRoomsForChatRespData = showRoomsAvailable;
-        console.log("this.showRoomsForChatRespData:", showRoomsAvailable.message);
         this.isShowRoomAvailable = false;
         console.log("isShowRoomAvailable:", this.isShowRoomAvailable);
       }
@@ -1377,17 +1425,17 @@ export class ChatBoxComponent implements OnInit {
   async showGroupChatRoomAvailable(){
     await this.socketservice.showRoomAvailable(this.currentUserEmailID).then((showRoomsAvailable: any) => {
       console.log("Show Group rooms already available by current user email:", showRoomsAvailable);
-      // this.showRoomsForChatRespData = JSON.stringify(showRoomsAvailable);
-      if(showRoomsAvailable.responseObject != null){
-        console.log("showRoomsAvailable:", showRoomsAvailable.message);
+      console.log("showRoomsAvailable:", showRoomsAvailable.status);
+      if(showRoomsAvailable.status == 'Available'){
         this.isShowRoomAvailable = true;
-        console.log("isShowRoomAvailable:", this.isShowRoomAvailable);
-        if(showRoomsAvailable.responseObject.room_type == "Group"){
-          console.log("Inside Group");
-          
-          this.showRoomsAvailableArray = showRoomsAvailable.responseObject;
-          console.log("showRoomsAvailableArray :", this.showRoomsAvailableArray); 
-        }
+        showRoomsAvailable.responseObject.forEach(room => {
+          if(room.room_type == "Group"){
+            console.log("Inside Group");
+              this.showGroupRoomsAvailableArray.push(room);
+
+              console.log("showGroupRoomsAvailableArray :", this.showGroupRoomsAvailableArray); 
+            }
+        });
       }
       else{
         console.log("showRoomsAvailable:", showRoomsAvailable.message);

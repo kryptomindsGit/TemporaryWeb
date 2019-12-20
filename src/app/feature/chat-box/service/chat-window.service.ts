@@ -308,6 +308,19 @@ export class ChatWindowService {
     }
   }
 
+  /**
+ * @name getRoomInfo
+   * @param getRoomAvailableData 
+   */
+  async getRoomInfo(getRoomAvailableData:any) {
+    console.log("Data of Join room:", getRoomAvailableData);
+    try {
+      let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/get-room`, getRoomAvailableData, httpOptions).toPromise();
+      return result;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
 
   /**
    * @name sendMessageToCasssandra
