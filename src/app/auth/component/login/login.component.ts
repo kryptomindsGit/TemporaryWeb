@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
   public indepUserDetails: any = [];
   public empUserDetails: any = [];
   public partUserDetails: any = [];
+  public allRoomInformationArray : any = [];
 
   constructor(
 
@@ -39,8 +40,9 @@ export class LoginComponent implements OnInit {
     private __authService: AuthService,
     private __router: Router,
     private toastr: ToastrService,
-    private __eventSourceService: ChatWindowService,
+    private __chatService: ChatWindowService,
     private bnIdle: BnNgIdleService,
+    
   ) { }
 
   ngOnInit() {
@@ -104,6 +106,7 @@ export class LoginComponent implements OnInit {
                 console.log("2 resData", resData);
 
                 this.getConnectWithServer();
+                this.getAvailableChatRooms();
                 this.__router.navigate(['/feature/feature/full-layout/dashboard'])
                 var baseName = data.responseObject.User.emailId;
                 baseName = baseName.substring(0, baseName.indexOf('@'));
@@ -175,6 +178,34 @@ export class LoginComponent implements OnInit {
           this.__router.navigate(['/auth/auth/login']);
         });
       }
+    });
+  }
+
+/******************************Fetching all available room data from Cassandra**************************************/ 
+  
+  getAvailableChatRooms(){
+    this.__chatService.showRoomAvailable(this.emailID).then((roomData : any) =>{
+      console.log("*********List of available rooms are : ********** \n", roomData);
+      let roomIdData ={
+        roomId: roomData.room_id
+      }
+      this.__chatService.getRoomInfo(roomIdData).then((getRoomInfoResp: any) => {
+        let roomdata = {
+          room_name : roomData.room_name,
+          room_id: roomData.room_id,
+          room_creation_date: roomData.room_creation_date,
+          participants : []
+        }
+        getRoomInfoResp.responseObject.forEach( roomParticipant =>{
+          roomdata.participants.push({ 
+                                        participant_name : roomParticipant.participant,
+                                        role : roomParticipant.role,
+                                        type : roomParticipant.participant_type
+                                      });
+        });
+        this.allRoomInformationArray.push(roomdata);
+        localStorage.setItem("all-rooms", JSON.stringify(this.allRoomInformationArray));
+      });
     });
   }
 }

@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { Router } from '@angular/router';
 import decode from 'jwt-decode';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
+import { async } from 'q';
 
 declare global {
   interface Window {
@@ -1051,7 +1052,6 @@ export class ChatBoxComponent implements OnInit {
   }
 
   public sendMessage() {
-    
     if (this.userRole == 'Employer') {
       var preferedSourceLanguageCode = localStorage.getItem('preferedSourceLanguageCode');
       console.log("prefered employer lang code", preferedSourceLanguageCode);
@@ -1102,9 +1102,14 @@ export class ChatBoxComponent implements OnInit {
       this.socketservice.postMessageToCassandra(this.messageObject).then((msgRes: any) => {
         console.log("response free from casendra msg", msgRes);
       //  localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
+<<<<<<< Updated upstream
       });
     }
 
+=======
+      }); 
+    }
+>>>>>>> Stashed changes
     this.dataChannel.send(JSON.stringify({ clientId: this.fromClientId, data: this.message }));
     this.messages.push(JSON.parse(JSON.stringify({ clientId: this.fromClientId, user: 'sender', data: this.message })));
     this.message = '';
@@ -1293,10 +1298,11 @@ export class ChatBoxComponent implements OnInit {
    * @description select user
    */
   async selectedUser(selectUser) {
+    console.log("selectedUser",selectUser);
     this.userselect = true;
     this.selectedUserInfo = JSON.stringify(selectUser);
     localStorage.setItem('selectedUserInfo', this.selectedUserInfo)
-    this.userSelected = selectUser.emailId;
+    this.userSelected = selectUser.emailId || selectUser;
     this.activeStatus = selectUser.isLoggedIn;
     this.langSelect = true;
 
@@ -1352,8 +1358,13 @@ export class ChatBoxComponent implements OnInit {
     // this.showAvailableRooms(this.selectedUserGroupName);
   }
 
- 
-  async showChatUser(){
+  showChatUserWindow(){
+  this.is_contact = false;
+  this.is_groupRooms = false;
+  this.is_favouriteContacts = false;
+  this.is_chats = true
+ }
+ async showChatUser(){
     this.is_contact = false;
     this.is_groupRooms = false;
     this.is_favouriteContacts = false;
@@ -1363,21 +1374,17 @@ export class ChatBoxComponent implements OnInit {
       emailId: this.emailID
     }
     console.log(" Current user email ID in Show rooms:", this.currentUserEmailID);
-    
-    await this.socketservice.showRoomAvailable(this.currentUserEmailID).then((showRoomsAvailable: any) => {
+     await this.socketservice.showRoomAvailable(this.currentUserEmailID).then((showRoomsAvailable: any) => {
       console.log("Show rooms already available by current user email:", showRoomsAvailable);
       console.log("showRoomsAvailable:", showRoomsAvailable.status);
       if(showRoomsAvailable.status == 'Available'){
         this.isShowRoomAvailable = true;
-        showRoomsAvailable.responseObject.forEach(room => {
+       showRoomsAvailable.responseObject.forEach(room => {
           if(room.room_type == "Individual"){
-            // console.log("Inside Individual");
-            //   this.showRoomsAvailableArray.push(room);
-            //   console.log("showRoomsAvailableArray :", this.showRoomsAvailableArray); 
             this.roomIdData ={
                   roomId: room.room_id
                 }
-            this.socketservice.getRoomInfo(this.roomIdData).then((getRoomInfoResp: any) => {
+          this.socketservice.getRoomInfo(this.roomIdData).then((getRoomInfoResp: any) => {
               console.log(" Get room info:", getRoomInfoResp.responseObject);
               let roomdata={
                 room_name : room.room_name,
@@ -1395,13 +1402,19 @@ export class ChatBoxComponent implements OnInit {
                 }]
               }
               console.log("roomdata :", roomdata);
-              
               this.allRoomInformationArray.push(roomdata);
+              localStorage.setItem("all-rooms", JSON.stringify(this.allRoomInformationArray));
               console.log("Show all room info Array: ",  this.allRoomInformationArray);
-              
-             
+              this.allRoomInformationArray.forEach(allRoom => {
+                allRoom.participants.forEach(participant => {
+                  if(participant.participant_name != this.emailID ){
+                    this.individualRoomArray.push(participant);
+                  }
+                });
+                console.log("Individual Room array :", this.individualRoomArray);
+              });
             });
-            }
+            }  
         });
         
         // this.allRoomInformationArray.forEach(room => {
@@ -1414,20 +1427,8 @@ export class ChatBoxComponent implements OnInit {
         //   });
 
         // });
-        this.allRoomInformationArray.forEach(allRoom => {
-          allRoom.participants.forEach(participant => {
-             console.log("*****************part name *****************",participant.participant_name); 
-            if(participant.participant_name != this.emailID){
-              console.log("*****************part name *****************",participant.participant_name); 
-              const found =  this.individualRoomArray.some(participant1=>participant1 === participant);
-              if(!found){
-                this.individualRoomArray.push(participant);
-              }
-            }
-          });
-        });
-        console.log("Individual Room array :", this.individualRoomArray);
       }
+      
       else{
         this.isShowRoomAvailable = false;
         console.log("isShowRoomAvailable:", this.isShowRoomAvailable);
@@ -1445,10 +1446,33 @@ export class ChatBoxComponent implements OnInit {
           if(room.room_type == "Group"){
             console.log("Inside Group");
               this.showGroupRoomsAvailableArray.push(room);
-
-              console.log("showGroupRoomsAvailableArray :", this.showGroupRoomsAvailableArray); 
+              // console.log("showGroupRoomsAvailableArray :", this.showGroupRoomsAvailableArray); 
+              this.roomIdData ={
+                roomId: room.room_id
+              }
+          this.socketservice.getRoomInfo(this.roomIdData).then((getRoomInfoResp: any) => {
+            console.log(" Get room info:", getRoomInfoResp.responseObject);
+            let roomdata={
+              room_name : room.room_name,
+              room_id: room.room_id,
+              room_creation_date: room.room_creation_date,
+              participants : []
             }
-        });
+            getRoomInfoResp.responseObject.forEach( roomParticipant =>{
+              roomdata.participants.push({ 
+                                            participant_name : roomParticipant.participant,
+                                            role : roomParticipant.role,
+                                            type : roomParticipant.participant_type
+                                          });
+            });
+
+            console.log("roomdata :", roomdata);
+            this.allRoomInformationArray.push(roomdata);
+            localStorage.setItem("all-rooms", JSON.stringify(this.allRoomInformationArray));
+            console.log("Show all room info Array: ",  this.allRoomInformationArray);
+          });
+        }
+      });
       }
       else{
         console.log("showRoomsAvailable:", showRoomsAvailable.message);
@@ -1485,8 +1509,6 @@ export class ChatBoxComponent implements OnInit {
 
   async createOrJoinIndependentChat() {
     var setOfParticipants: any = [];
-
-    // this.roomData: any;
     if (this.userRole == "Freelancer") {
       setOfParticipants.push({ 'username': this.userSelected, 'role': 'Employer', 'type': 'Initiator' });
       setOfParticipants.push({ 'username': this.emailID, 'role': 'Freelancer', 'type': 'participant' });
