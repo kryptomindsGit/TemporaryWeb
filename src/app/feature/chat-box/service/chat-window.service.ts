@@ -299,12 +299,13 @@ export class ChatWindowService {
    * @param showRoomAvailableData 
    */
   async showRoomAvailable(showRoomAvailableData:any) {
-    console.log("Data of Join room:", showRoomAvailableData);
+    console.log("Data to get room details:", showRoomAvailableData);
     try {
       let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/show-rooms`, showRoomAvailableData, httpOptions).toPromise();
+      console.log("result for show-rooms" , result);
       return result;
     } catch (error) {
-      await this.handleError(error);
+      this.handleError(error);
     }
   }
 

@@ -102,12 +102,11 @@ export class LoginComponent implements OnInit {
                 isLoggedIn: 1,
                 emailId: this.loginForm.controls.email.value
               }
-              this.__authService.updateUserData(loggedInFlagPayload).then((resData: any) => {
+              this.__authService.updateUserData(loggedInFlagPayload).then(async (resData: any) => {
                 console.log("2 resData", resData);
 
                 this.getConnectWithServer();
                 this.getAvailableChatRooms();
-                this.__router.navigate(['/feature/feature/full-layout/dashboard'])
                 var baseName = data.responseObject.User.emailId;
                 baseName = baseName.substring(0, baseName.indexOf('@'));
                 const emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1);
@@ -185,27 +184,35 @@ export class LoginComponent implements OnInit {
   
   getAvailableChatRooms(){
     console.log("Inside getAvailableChatRooms");
-    this.__chatService.showRoomAvailable(this.emailID).then((roomData : any) =>{
-      console.log("*********List of available rooms are : ********** \n", roomData);
-      let roomIdData ={
-        roomId: roomData.room_id
+    let sendData = {
+        emailId : this.emailID
       }
-      this.__chatService.getRoomInfo(roomIdData).then((getRoomInfoResp: any) => {
-        let roomdata = {
-          room_name : roomData.room_name,
-          room_id: roomData.room_id,
-          room_creation_date: roomData.room_creation_date,
-          participants : []
+    
+    this.__chatService.showRoomAvailable(sendData).then((roomData : any) =>{
+      console.log("*********List of available rooms are : ********** \n", roomData);
+      roomData.responseObject.forEach((room)=> {
+        let roomIdData ={
+          roomId: room.room_id
         }
-        getRoomInfoResp.responseObject.forEach( roomParticipant =>{
-          roomdata.participants.push({ 
-                                        participant_name : roomParticipant.participant,
-                                        role : roomParticipant.role,
-                                        type : roomParticipant.participant_type
-                                      });
+      this.__chatService.getRoomInfo(roomIdData).then((getRoomInfoResp: any) => {
+        console.log("*********List of info of available rooms are : ********** \n", getRoomInfoResp);
+          let roomdata = {
+            room_name : room.room_name,
+            room_id: room.room_id,
+            room_creation_date: room.room_creation_date,
+            participants : []
+          }
+          getRoomInfoResp.responseObject.forEach( roomParticipant =>{
+            roomdata.participants.push({ 
+                                          participant_name : roomParticipant.participant,
+                                          role : roomParticipant.role,
+                                          type : roomParticipant.participant_type
+                                        });
+          });
+          this.allRoomInformationArray.push(roomdata);
+          localStorage.setItem("all-rooms", JSON.stringify(this.allRoomInformationArray));
+          this.__router.navigate(['/feature/feature/full-layout/dashboard'])
         });
-        this.allRoomInformationArray.push(roomdata);
-        localStorage.setItem("all-rooms", JSON.stringify(this.allRoomInformationArray));
       });
     });
   }
