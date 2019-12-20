@@ -956,7 +956,6 @@ export class ChatBoxComponent implements OnInit {
       if (this.textEnable) {
         console.log("Calling Data channel on message");
         let messageData = JSON.parse(event.data);
-        console.log("Got Data Channel Message:", messageData);
 
         if(this.userRole == 'Employer'){
           var preferedSourceLanguageCode = localStorage.getItem('preferedSourceLanguageCode');
@@ -966,7 +965,7 @@ export class ChatBoxComponent implements OnInit {
   
           this.sendMessages = {
             sourceLanguageCode: preferedSourceLanguageCode,
-            targetLanguageCode: "ar",
+            targetLanguageCode: "hi",
             originalText: messageData.data,
             sender: this.jwtData.email,
             receiver: this.userSelected,
