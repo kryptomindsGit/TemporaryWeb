@@ -184,6 +184,7 @@ export class LoginComponent implements OnInit {
 /******************************Fetching all available room data from Cassandra**************************************/ 
   
   getAvailableChatRooms(){
+    console.log("Inside getAvailableChatRooms");
     this.__chatService.showRoomAvailable(this.emailID).then((roomData : any) =>{
       console.log("*********List of available rooms are : ********** \n", roomData);
       let roomIdData ={

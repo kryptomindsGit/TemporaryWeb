@@ -1102,14 +1102,8 @@ export class ChatBoxComponent implements OnInit {
       this.socketservice.postMessageToCassandra(this.messageObject).then((msgRes: any) => {
         console.log("response free from casendra msg", msgRes);
       //  localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
-<<<<<<< Updated upstream
-      });
-    }
-
-=======
       }); 
     }
->>>>>>> Stashed changes
     this.dataChannel.send(JSON.stringify({ clientId: this.fromClientId, data: this.message }));
     this.messages.push(JSON.parse(JSON.stringify({ clientId: this.fromClientId, user: 'sender', data: this.message })));
     this.message = '';
