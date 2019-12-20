@@ -27,8 +27,6 @@ export class ChatWindowService {
   springurl: any;
   myData: any;
 
-
-
   constructor(
     private __http: HttpClient,
     private __zone: NgZone
@@ -204,10 +202,10 @@ export class ChatWindowService {
   //   })
   // }
 
-  joinRoom(data:any){
+  joinRoom(data: any) {
     console.log("Inside Join Room - Service", data);
-    this.socket.emit('join-room',data);
-    return  new Observable(observer => {
+    this.socket.emit('join-room', data);
+    return new Observable(observer => {
       this.socket.on('join-room', (data) => {
         observer.next(data);
       });
@@ -252,7 +250,7 @@ export class ChatWindowService {
    * @name createRoom
    * @param createRoomData 
    */
-  async createRoom(createRoomData:any) {
+  async createRoom(createRoomData: any) {
     console.log("Data of create room:", createRoomData);
     try {
       let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/create-room`, createRoomData, httpOptions).toPromise();
@@ -267,12 +265,12 @@ export class ChatWindowService {
    * @name isRoomAvailable
    * @param isRoomAvailableData 
    */
-  async isRoomAvailable(isRoomAvailableData:any) {
+  async isRoomAvailable(isRoomAvailableData: any) {
     console.log("Data of is room available:", isRoomAvailableData);
     try {
       let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/room-available`, isRoomAvailableData, httpOptions).toPromise();
-      console.log("Result of Romm available:", result);
-      
+      console.log("Result of Room available:", result);
+
       return result;
     } catch (error) {
       await this.handleError(error);
@@ -280,10 +278,10 @@ export class ChatWindowService {
   }
 
 
-   /**
-   * @name joinRoom
-   * @param joinRoomData 
-   */
+  /**
+  * @name joinRoom
+  * @param joinRoomData 
+  */
   // async joinRoom(joinRoomData:any) {
   //   console.log("Data of Join room:", joinRoomData);
   //   try {
@@ -312,7 +310,7 @@ export class ChatWindowService {
   /**
  * @name getRoomInfo
    * @param getRoomAvailableData 
-   */
+    */
   async getRoomInfo(getRoomAvailableData:any) {
     console.log("Data of Join room:", getRoomAvailableData);
     try {
@@ -327,29 +325,29 @@ export class ChatWindowService {
    * @name sendMessageToCasssandra
    * @param sendMessageToCasssandraData 
    */
-  async postMessageToCassandra(sendMessageToCasssandraData:any) {
-    console.log("Data of send message to cassandra:", sendMessageToCasssandraData);
-    try {
-      let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/save-msg`, sendMessageToCasssandraData, httpOptions).toPromise();
-      return result;
-    } catch (error) {
-      await this.handleError(error);
-    }
-  }
+  // async postMessageToCassandra(sendMessageToCasssandraData:any) {
+  //   console.log("Data of send message to cassandra:", sendMessageToCasssandraData);
+  //   try {
+  //     let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/save-msg`, sendMessageToCasssandraData, httpOptions).toPromise();
+  //     return result;
+  //   } catch (error) {
+  //     await this.handleError(error);
+  //   }
+  // }
 
   /**
    * @name getMessageFromCasssandra
    * @param getMessageFromCasssandraData 
    */
-  async getMessageFromCassandra(emailId:any) {
-    console.log("Data of get message from cassandra:", emailId);
-    try {
-      let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/get-msg`, emailId, httpOptions).toPromise();
-      return result;
-    } catch (error) {
-      await this.handleError(error);
-    }
-  }
+  // async getMessageFromCassandra(emailId:any) {
+  //   console.log("Data of get message from cassandra:", emailId);
+  //   try {
+  //     let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/get-msg`, emailId, httpOptions).toPromise();
+  //     return result;
+  //   } catch (error) {
+  //     await this.handleError(error);
+  //   }
+  // }
 
   // Error Handler
   handleError(error) {

@@ -13,9 +13,9 @@ import { PaymentSmartcontractComponent } from './payment-smartcontract/payment-s
 import { ChatBoxComponent } from './chat-box/chat-box.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { VedioAudioChattingComponent } from './chat-box/vedio-audio-chatting/vedio-audio-chatting.component';
+// import { VedioAudioChattingComponent } from './chat-box/vedio-audio-chatting/vedio-audio-chatting.component';
 import { environment } from 'src/environments/environment';
-import { VideoAudioChatComponent } from './chat-box/video-audio-chat/video-audio-chat.component';
+// import { VideoAudioChatComponent } from './chat-box/video-audio-chat/video-audio-chat.component';
 //Components
 const COMPONENTS = [
   FeatureComponent,
@@ -40,8 +40,8 @@ const MODULES = [
   declarations: [
     ...COMPONENTS,
     PaymentSmartcontractComponent,
-    VedioAudioChattingComponent,
-    VideoAudioChatComponent
+    // VedioAudioChattingComponent,
+    // VideoAudioChatComponent
   ],
   imports: [
     ...MODULES,
