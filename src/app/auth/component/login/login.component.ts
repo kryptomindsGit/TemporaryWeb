@@ -180,7 +180,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-/******************************Fetching all available room data from Cassandra**************************************/ 
+/******************************Fetching all available rooms-data from Cassandra**************************************/ 
   
   getAvailableChatRooms(){
     console.log("Inside getAvailableChatRooms");
@@ -189,31 +189,38 @@ export class LoginComponent implements OnInit {
       }
     
     this.__chatService.showRoomAvailable(sendData).then((roomData : any) =>{
-      console.log("*********List of available rooms are : ********** \n", roomData);
-      roomData.responseObject.forEach((room)=> {
-        let roomIdData ={
-          roomId: room.room_id
-        }
-      this.__chatService.getRoomInfo(roomIdData).then((getRoomInfoResp: any) => {
-        console.log("*********List of info of available rooms are : ********** \n", getRoomInfoResp);
-          let roomdata = {
-            room_name : room.room_name,
-            room_id: room.room_id,
-            room_creation_date: room.room_creation_date,
-            participants : []
-          }
-          getRoomInfoResp.responseObject.forEach( roomParticipant =>{
-            roomdata.participants.push({ 
-                                          participant_name : roomParticipant.participant,
-                                          role : roomParticipant.role,
-                                          type : roomParticipant.participant_type
-                                        });
+      console.log("roomData" ,  roomData);
+      if(roomData != 'undefined'){
+        if(roomData.status == "Not-available"){
+          localStorage.setItem("all-rooms", "");
+          this.__router.navigate(['/feature/feature/full-layout/dashboard'])        
+        }else{
+          roomData.responseObject.forEach((room)=> {
+            let roomIdData ={
+              roomId: room.room_id
+            }
+          this.__chatService.getRoomInfo(roomIdData).then((getRoomInfoResp: any) => {
+              let roomdata = {
+                room_name : room.room_name,
+                room_id: room.room_id,
+                room_creation_date: room.room_creation_date,
+                room_type : room.room_type,
+                participants : []
+              }
+              getRoomInfoResp.responseObject.forEach( roomParticipant =>{
+                roomdata.participants.push({ 
+                                              participant_name : roomParticipant.participant,
+                                              role : roomParticipant.role,
+                                              type : roomParticipant.participant_type
+                                            });
+              });
+              this.allRoomInformationArray.push(roomdata);
+              localStorage.setItem("all-rooms", JSON.stringify(this.allRoomInformationArray));
+              this.__router.navigate(['/feature/feature/full-layout/dashboard'])
+            });
           });
-          this.allRoomInformationArray.push(roomdata);
-          localStorage.setItem("all-rooms", JSON.stringify(this.allRoomInformationArray));
-          this.__router.navigate(['/feature/feature/full-layout/dashboard'])
-        });
-      });
+        }
+      }
     });
   }
 }
