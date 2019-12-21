@@ -254,7 +254,9 @@ export class ChatWindowService {
     console.log("Data of create room:", createRoomData);
     try {
       let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/create-room`, createRoomData, httpOptions).toPromise();
+      console.log("result of create room:", result);
       return result;
+
     } catch (error) {
       await this.handleError(error);
     }

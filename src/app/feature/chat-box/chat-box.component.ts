@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import decode from 'jwt-decode';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { async } from 'q';
+import { group } from '@angular/animations';
+
 
 declare global {
   interface Window {
@@ -125,7 +127,7 @@ export class ChatBoxComponent implements OnInit {
   public is_groupRooms: boolean = false;
   public is_room_created: boolean = false;
 
-  public roomId: String;
+  // public roomId: String;
   public currentUserEmailID: any;
   public showRoomsForChatRespData: any = [];
   public allRoomInformationArray: any = [];
@@ -141,6 +143,10 @@ export class ChatBoxComponent implements OnInit {
   public roomIdData: any;
 
 
+  public roomId = "";
+  public roomName = "";
+  public dataForJoinRoom : any;
+  public dataForCreateRoom : any;
   public chatNamesArray = [];
   public groupNamesArray = [];
   public allRoomsInformation = [];
@@ -1303,213 +1309,6 @@ export class ChatBoxComponent implements OnInit {
     this.is_chats = false;
   }
 
-  // async createOrJoinIndependentChat() {
-  //   var setOfParticipants: any = [];
-  //   if (this.userRole == "Freelancer") {
-  //     setOfParticipants.push({ 'username': this.userSelected, 'role': 'Employer', 'type': 'Initiator' });
-  //     setOfParticipants.push({ 'username': this.emailID, 'role': 'Freelancer', 'type': 'participant' });
-  //     this.roomData = {
-  //       roomName: this.userSelected + "&" + this.emailID,
-  //       participants: setOfParticipants,
-  //       roomType: "Individual"
-  //     }
-  //   } else if (this.userRole == "Employer") {
-  //     setOfParticipants.push({ 'username': this.emailID, 'role': 'Employer', 'type': 'Initiator' });
-  //     setOfParticipants.push({ 'username': this.userSelected, 'role': 'Freelancer', 'type': 'participant' });
-  //     this.roomData = {
-  //       roomName: this.emailID + "&" + this.userSelected,
-  //       participants: setOfParticipants,
-  //       roomType: "Individual"
-  //     }
-  //   }
-
-  //   let showAllRoomInfoData = localStorage.getItem("all-rooms");
-  //   console.log("Show all room info data:", showAllRoomInfoData);
-    
-  //   // var roomAvailableData = {
-  //   //   roomName: this.roomData.roomName
-  //   // }
-
-  //   // console.log("One to One Room  Data : ", this.roomData);
-  //   // await this.socketservice.isRoomAvailable(roomAvailableData).then((isRoomAvailableRes: any) => {
-  //     // console.log("response of isRoomAvailable", isRoomAvailableRes);
-  //     //  this.roomId = isRoomAvailableRes.responseObject[0].room_id;
-  //     if (this.userRole == "Employer") {
-  //       // if (isRoomAvailableRes.message == "True") {
-          
-  //       console.log("Create or Join Data:", setOfParticipants);
-        
-  //         let dataForJoiningRoom = {
-  //             // roomId: isRoomAvailableRes.responseObject[0].room_id,
-  //             // roomName: isRoomAvailableRes.responseObject[0].room_name,
-  //             // userName: this.emailID
-  //         }
-
-  //         // console.log("Employer is room available object to join room :", dataForJoiningRoom);
-
-  //         this.socketservice.joinRoom(dataForJoiningRoom).subscribe((joinRes: any) => {
-  //           console.log("Response of join room :", JSON.stringify(joinRes));
-  //           localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
-  //         });
-  //       // } 
-
-  //       // else {
-  //         // this.socketservice.createRoom(this.roomData).then((createRoomRespData: any) => {
-  //         //   console.log("response of create room", createRoomRespData.responseObject);
-  //         //   let dataForJoiningRoom = {
-  //         //     roomId: createRoomRespData.responseObject[0].roomId,
-  //         //     roomName: createRoomRespData.responseObject[0].roomName,
-  //         //     userName: this.emailID
-  //         //   }
-  //         //   console.log("Is room available object to join room :", dataForJoiningRoom);
-
-  //         //   this.socketservice.joinRoom(dataForJoiningRoom).subscribe((joinRes: any) => {
-  //         //     console.log("Response of join room :", joinRes);
-  //         //     localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
-
-  //         //   });
-  //         // });
-  //       // }
-       
-
-  //     }
-  //     else if (this.userRole == "Freelancer") {
-  //       // console.log("isRoomAvailableRes.responseObject : ", isRoomAvailableRes.responseObject);
-  //       // if (isRoomAvailableRes.message == "True") {
-  //         let dataForJoiningRoom = {
-  //           // roomId: isRoomAvailableRes.responseObject[0].room_id,
-  //           // roomName: isRoomAvailableRes.responseObject[0].room_name,
-  //           // userName: this.emailID
-  //         }
-  //         this.socketservice.joinRoom(dataForJoiningRoom).subscribe((joinRes: any) => {
-  //           console.log("response of join", joinRes);
-  //           localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
-
-  //         });
-
-  //       } 
-  //       // else if (isRoomAvailableRes.message == "False") {
-
-  //       // }
-  //     // }
-  //   // });
-  // }
-
-
-
-  async createOrJoinGroupRoomChat() {
-    console.log("Callinng Group room chat");
-
-    var setOfParticipants: any = [];
-    if (this.userRole == "Freelancer") {
-      setOfParticipants.push({ 'username': this.userSelected, 'role': 'Employer', 'type': 'Initiator' });
-      this.selectedGroupUserForm.value.groupUserName.forEach(element => {
-        setOfParticipants.push({ 'username': element, 'role': 'Freelancer', 'type': 'participant' });
-      });
-      this.roomData = {
-        roomName: this.selectedGroupUserForm.value.groupName,
-        participants: setOfParticipants,
-        roomType: "Group"
-      }
-    } else if (this.userRole == "Employer") {
-      setOfParticipants.push({ 'username': this.emailID, 'role': 'Employer', 'type': 'Initiator' });
-      this.selectedGroupUserForm.value.groupUserName.forEach(element => {
-        setOfParticipants.push({ 'username': element, 'role': 'Freelancer', 'type': 'participant' });
-      });
-      this.roomData = {
-        roomName: this.selectedGroupUserForm.value.groupName,
-        participants: setOfParticipants,
-        roomType: "Group"
-      }
-    }
-
-    let showAllRoomInfoData = localStorage.getItem("all-rooms");
-    console.log("Show group room info data:", showAllRoomInfoData);
-
-    console.log("Group Room Data : ", this.roomData);
-    var roomAvailableData = {
-      roomName: this.roomData.roomName
-    }
-
-    await this.socketservice.isRoomAvailable(roomAvailableData).then((isRoomAvailableRes: any) => {
-      console.log("response of Group is room available", isRoomAvailableRes);
-
-      if (this.userRole == "Employer") {
-        if (isRoomAvailableRes.message == "True") {
-          let dataForJoiningRoom = {
-            roomId: isRoomAvailableRes.responseObject[0].room_id,
-            roomName: isRoomAvailableRes.responseObject[0].room_name,
-            userName: [{
-              users: this.roomData.participant
-            }]
-          }
-          console.log("Group: Joining Room user:", dataForJoiningRoom);
-
-          this.socketservice.joinRoom(dataForJoiningRoom).subscribe((joinRes: any) => {
-            console.log("response Group: form join room", JSON.stringify(joinRes));
-            localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
-          });
-        }
-        else if (isRoomAvailableRes.message == "False") {
-          this.socketservice.createRoom(this.roomData).then((createRoomRespData: any) => {
-            console.log("response Group: form create room", createRoomRespData);
-            let dataForJoiningRoom = {
-              roomId: createRoomRespData.responseObject[0].roomId,
-              roomName: createRoomRespData.responseObject[0].roomName,
-              userName: [{
-                users: this.roomData.participant
-              }]
-            }
-            console.log("Create room user:", dataForJoiningRoom);
-
-            this.socketservice.joinRoom(dataForJoiningRoom).subscribe((joinRes: any) => {
-              console.log("response Group: form join room in create room:", joinRes);
-              localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
-            });
-
-          });
-        }
-
-      }
-      else if (this.userRole == "Freelancer") {
-        console.log("isRoomAvailableRes.responseObject : ", isRoomAvailableRes.responseObject);
-        if (isRoomAvailableRes.message == "True") {
-          let dataForJoiningRoom = {
-            roomId: isRoomAvailableRes.responseObject[0].room_id,
-            roomName: isRoomAvailableRes.responseObject[0].room_name,
-            userName: [{
-              users: this.roomData.participant
-            }]
-          }
-          this.socketservice.joinRoom(dataForJoiningRoom).subscribe((joinRes: any) => {
-            console.log("response Group: for join", joinRes);
-            localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
-          });
-        }
-        else if (isRoomAvailableRes.message == "False") {
-          // this.socketservice.createRoom(this.roomData).then((createRes: any) => {
-          //   console.log("response form create room", createRes);
-          //   this.roomId = createRes.roomId;
-          //   let dataForJoiningRoom = {
-          //     roomId: createRes.roomId,
-          //     roomName: this.selectedGroupUserForm.value.groupName,
-          //     userName: [{
-          //       users:this.roomData.participant
-          // }]
-          //   }
-          //   console.log("Create room user:", dataForJoiningRoom);
-
-          //   this.socketservice.joinRoom(dataForJoiningRoom).subscribe((joinRes: any) => {
-          //     console.log("response form join room in create room:", joinRes);
-          //     localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
-          //   });
-
-          // });
-        }
-      }
-    });
-  }
-  
   /********************Sorting Names of Individual and Group chat rooms*********************/
   /**
    * @author Shefali Bhavekar
@@ -1543,69 +1342,151 @@ export class ChatBoxComponent implements OnInit {
     }
   }
 
-  /********************Join Or Create Independent Chat Rooms*********************/   
+  /**********************************Join Or Create Independent Chat Room*******************************/   
   /**
    * @author Shefali Bhavekar
    * @date 21/12/2019
    * @name createOrJoinIndependentChat
    */
   createOrJoinIndependentChat(){
-    let roomId = "";
-    let roomName = "";
-    let dataForJoinRoom : any;
-    let dataForCreateRoom : any;
-
+ 
     this.allIndependentChatRooms.forEach((independentRoom)=>{
       independentRoom.participants.forEach(participant => {
         if(participant.participant_name == this.userSelected){
           console.log("independentRoom",independentRoom);
-          roomId = independentRoom.room_id,
-          roomName = independentRoom.room_name
+          this.roomId = independentRoom.room_id,
+          this.roomName = independentRoom.room_name
         }
       });
     });
 
-    dataForJoinRoom = {
-      roomId: roomId,
-      roomName: roomName,
+    this.dataForJoinRoom = {
+      roomId: this.roomId,
+      roomName: this.roomName,
       userName: this.emailID
     }
 
    if(this.userRole == "Freelancer"){
     console.log("dataForJoinRoom for direct joining");
-    this.socketservice.joinRoom(dataForJoinRoom).subscribe((joinRes: any) => {
+    this.socketservice.joinRoom(this.dataForJoinRoom).subscribe((joinRes: any) => {
       localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
     });
    }else if(this.userRole == "Employer"){
-    if(roomId == "" && roomName == ""){
+    if(this.roomId == "" && this.roomName == ""){
+      this.setOfParticipants = [];
       this.setOfParticipants.push({ 'username': this.emailID, 'role': 'Employer', 'type': 'Initiator' });
       this.setOfParticipants.push({ 'username': this.userSelected, 'role': 'Freelancer', 'type': 'participant' });
     
-      dataForCreateRoom = {
+      this.dataForCreateRoom = {
         roomName: this.emailID + "&" + this.userSelected,
         participants: this.setOfParticipants,
         roomType: "Individual"
       }
-      console.log("dataForCreateRoom for create room" , dataForCreateRoom);
-      this.socketservice.createRoom(dataForCreateRoom).then((createRoomRespData: any) => {
+      this.socketservice.createRoom(this.dataForCreateRoom).then((createRoomRespData: any) => {
         let dataForJoinRoom = {
-          roomId: createRoomRespData.responseObject[0].roomId,
+          roomId: createRoomRespData.responseObject[0].this.roomId,
           roomName: createRoomRespData.responseObject[0].roomName,
           userName: this.emailID
         }
-        this.allRoomsInformation.push(createRoomRespData);
+        this.setOfParticipants = [];
+        this.setOfParticipants.push({ 'participant_name': this.emailID, 'role': 'Employer', 'type': 'Initiator' });
+        this.setOfParticipants.push({ 'participant_name': this.userSelected, 'role': 'Freelancer', 'type': 'participant' });
+        let pushData = {
+          room_id :createRoomRespData.responseObject[0].roomId,
+          room_name :createRoomRespData.responseObject[0].roomName,
+          room_type : "Individual",
+          participants : this.setOfParticipants
+        }
+        this.allRoomsInformation.push(pushData);
         localStorage.setItem("all-rooms", JSON.stringify(this.allRoomsInformation));
-        console.log("dataForJoinRoom for joining room" , dataForJoinRoom);
+        this.showChatAndGroupName();
+        localStorage.setItem("all-rooms", JSON.stringify(this.allRoomsInformation));
         this.socketservice.joinRoom(dataForJoinRoom).subscribe((joinRes: any) => {
           localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
         });
       });
      }else{
-      console.log("dataForJoinRoom for direct joining : ",dataForJoinRoom);
-      this.socketservice.joinRoom(dataForJoinRoom).subscribe((joinRes: any) => {
+      this.socketservice.joinRoom(this.dataForJoinRoom).subscribe((joinRes: any) => {
         localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
       });
      }
     }
+  }
+
+  /**********************************Join Or Create "Group" Chat Room**************************************/   
+  /**
+   * @author Shefali Bhavekar
+   * @date 21/12/2019
+   * @name createOrJoinIndependentChat
+   */
+
+  createOrJoinGroupRoomChat(){
+    console.log("Inside createOrJoinGroupRoomChat");
+      this.groupNamesArray.forEach((groupRoom)=>{
+        groupRoom.participants.forEach(participant => {
+          if(participant.participant_name == this.userSelected){
+            console.log("groupRoom",groupRoom);
+            this.roomId = groupRoom.room_id,
+            this.roomName = groupRoom.room_name
+          }
+        });
+      });
+
+      this.dataForJoinRoom = {
+      roomId: this.roomId,
+      roomName: this.roomName,
+      userName: this.emailID
+      }
+  
+      if(this.userRole == "Freelancer"){
+        console.log("dataForJoinRoom for direct joining");
+        this.socketservice.joinRoom(this.dataForJoinRoom).subscribe((joinRes: any) => {
+          localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
+        });
+      }else if(this.userRole == "Employer"){
+        if(this.roomId == "" && this.roomName == ""){
+          this.setOfParticipants = [];
+          this.setOfParticipants.push({ 'username': this.emailID, 'role': 'Employer', 'type': 'Initiator' });
+          this.selectedGroupUserForm.value.groupUserName.forEach(element => {
+            this.setOfParticipants.push({ 'username': element, 'role': 'Freelancer', 'type': 'participant' });
+          });
+
+          this.dataForCreateRoom = {
+            roomName: this.selectedGroupUserForm.value.groupName,
+            participants: this.setOfParticipants,
+            roomType: "Group"
+          }
+          console.log("creating room" , this.dataForCreateRoom );
+          this.socketservice.createRoom(this.dataForCreateRoom).then((createRoomRespData: any) => {
+            let dataForJoinRoom = {
+              roomId: createRoomRespData.responseObject[0].roomId,
+              roomName: createRoomRespData.responseObject[0].roomName,
+              userName: this.emailID
+            }
+            console.log("joining room" , createRoomRespData);
+            this.setOfParticipants = [];
+            this.setOfParticipants.push({ 'participant_name': this.emailID, 'role': 'Employer', 'type': 'Initiator' });
+            this.selectedGroupUserForm.value.groupUserName.forEach(element => {
+            this.setOfParticipants.push({ 'participant_name': element, 'role': 'Freelancer', 'type': 'participant' });
+            });
+            let pushData = {
+              room_id :createRoomRespData.responseObject[0].roomId,
+              room_name :createRoomRespData.responseObject[0].roomName,
+              room_type : "Group",
+              participants : this.setOfParticipants
+            }
+            this.allRoomsInformation.push(pushData);
+            localStorage.setItem("all-rooms", JSON.stringify(this.allRoomsInformation));
+            this.showChatAndGroupName();
+            this.socketservice.joinRoom(dataForJoinRoom).subscribe((joinRes: any) => {
+              localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
+            });
+          });
+        }else{
+          this.socketservice.joinRoom(this.dataForJoinRoom).subscribe((joinRes: any) => {
+            localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
+          });
+        }
+      }
   }
 }
