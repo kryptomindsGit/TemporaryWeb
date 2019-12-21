@@ -168,7 +168,7 @@ export class ChatWindowService {
   }
 
   // API's calls 
-  async translantionMessage(senderMessage: any) {
+  async messageToTranslantion(senderMessage: any) {
     console.log("senderMessage:", senderMessage);
     try {
       console.log("service side messages: ", senderMessage);
@@ -327,18 +327,32 @@ export class ChatWindowService {
    * @name sendMessageToCasssandra
    * @param sendMessageToCasssandraData 
    */
-  // async postMessageToCassandra(sendMessageToCasssandraData:any) {
-  //   console.log("Data of send message to cassandra:", sendMessageToCasssandraData);
-  //   try {
-  //     let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/save-msg`, sendMessageToCasssandraData, httpOptions).toPromise();
-  //     return result;
-  //   } catch (error) {
-  //     await this.handleError(error);
-  //   }
-  // }
+  async sendMessageToCassandra(sendMessageToCasssandraData:any) {
+    console.log("Data of send message to cassandra:", sendMessageToCasssandraData);
+    try {
+      let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/save-msg`, sendMessageToCasssandraData, httpOptions).toPromise();
+      return result;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
 
   /**
-   * @name getMessageFromCasssandra
+   * @name sendMessageToReceivedMessageCassandra
+   * @param sendMessage 
+   */
+  async sendMessageToReceivedMessageCassandra(sendMessage:any) {
+    console.log("Data of get message from cassandra:", sendMessage);
+    try {
+      let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/received-msg`, sendMessage, httpOptions).toPromise();
+      return result;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
+/**
+   * @name getsentMessages
    * @param data 
    */
   async getsentMessages(data:any) {

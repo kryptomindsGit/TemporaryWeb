@@ -117,7 +117,8 @@ export class ChatBoxComponent implements OnInit {
   public senderEmail: any;
   public receiverEmail: any;
   public selectedUserClientID: any;
-  public sendMessages: any;
+  public sendMessagesObject: any;
+  public receivedMessageObject: any;
   public selectedUserInfo: any;
   public selectUser: any;
 
@@ -145,16 +146,22 @@ export class ChatBoxComponent implements OnInit {
 
   public roomId = "";
   public roomName = "";
-  public dataForJoinRoom : any;
-  public dataForCreateRoom : any;
+  public dataForJoinRoom: any;
+  public dataForCreateRoom: any;
   public chatNamesArray = [];
   public groupNamesArray = [];
   public allRoomsInformation = [];
-  public allIndependentChatRooms= [];
+  public allIndependentChatRooms = [];
   public setOfParticipants = [];
   public isChatRoomAvailable: boolean = false;
   public isGroupRoomAvailable: boolean = false;
 
+
+  public translateMessage: boolean = false;
+  public sendMessageResp: any = [];
+  public getSendMessageResp: any = [];
+
+  public sourceLangCode: any = 'en'
 
   public selectLanguage: any = [
     {
@@ -373,42 +380,6 @@ export class ChatBoxComponent implements OnInit {
     this.showChatAndGroupName();
     // this.showGroupChatRoomAvailable();
   }
-
-  /**
-   * @name getValidateLanguage
-   * @description validate language form data
-   */
-  getValidateLanguage() {
-    this.langForm = this.__fb.group({
-      sourceLanguageCode: new FormControl(),
-      sourceLanguage: new FormControl()
-    });
-  }
-
-  /**
-   * @name getValidateGroupUser
-   * @description validate group room form data
-   */
-  getValidateGroupUser() {
-    this.selectedGroupUserForm = this.__fb.group({
-      groupName: new FormControl(),
-      groupUserName: new FormControl()
-    });
-  }
-
-  selectPreferedLanguage(languageCode) {
-    console.log("Prefered Language is:", languageCode)
-    var selectUser = JSON.stringify(localStorage.getItem('selectedUserInfo'));
-    console.log("Selected User Info:", selectUser);
-
-    if (selectUser) {
-      localStorage.setItem("preferedSourceLanguageCode", languageCode)
-    }
-    else if (this.userSelected) {
-      localStorage.setItem("preferedTargetLanguageCode", languageCode)
-    }
-  }
-
   async socketConnect() {
     console.log("Socket Connect");
 
@@ -966,38 +937,75 @@ export class ChatBoxComponent implements OnInit {
     this.dataChannel.onerror = (error: any) => {
       console.log("Data Channel Error:", error);
     };
-    this.dataChannel.onmessage = (event: any) => {
+    this.dataChannel.onmessage = async (event: any) => {
 
       if (this.textEnable) {
         console.log("Calling Data channel on message");
         let messageData = JSON.parse(event.data);
-
+        console.log("Data channel before send message to translate:", messageData);
         if (this.userRole == 'Employer') {
+
           var preferedSourceLanguageCode = localStorage.getItem('preferedSourceLanguageCode');
           console.log("prefered Data channel Employer Source Language Code ", preferedSourceLanguageCode);
           var preferedTargetLanguageCode = localStorage.getItem('preferedTargetLanguageCode');
           console.log("prefered Data channel Employer Target Language Code ", preferedTargetLanguageCode);
 
-          this.sendMessages = {
-            sourceLanguageCode: preferedSourceLanguageCode,
-            targetLanguageCode: "hi",
-            originalText: messageData.data,
-            sender: this.jwtData.email,
-            receiver: this.userSelected,
-            clientId: messageData.clientId,
+          /* If prefered language if bydefault English */
+          if (preferedTargetLanguageCode == null) {
+
+            this.receivedMessageObject = {
+              clientId: messageData.clientId,
+              roomId: messageData.roomId,
+              sessionId: messageData.sessionId,
+              messageId: messageData.messageId,
+              receiverName: this.userSelected,
+              receiverRole: "Employer",
+              translateMessage: messageData.data,
+            }
+            this.messages.push(JSON.parse(JSON.stringify({ clientId: messageData.clientId, originalText: messageData.data, data: messageData.data })));
+            console.log("Translated data send to cassandra:", this.receivedMessageObject);
+
+            /* Call Received API's with Translated message data*/
+            this.socketservice.sendMessageToReceivedMessageCassandra(this.receivedMessageObject).then((respGetMsgCassandra: any) => {
+              console.log("Get Message Data from Cassandra:", respGetMsgCassandra);
+            });
+
           }
+          else {
+            this.sendMessagesObject = {
+              sourceLanguageCode: preferedSourceLanguageCode,
+              targetLanguageCode: preferedTargetLanguageCode,
+              originalText: messageData.data,
+              sender: this.jwtData.email,
+              receiverName: this.userSelected,
+              clientId: messageData.clientId,
+            }
 
-          // this.socketservice.getMessageFromCassandra(this.emailID).then((respGetMsgCassandra: any) => {
-          //   console.log("Get Message Data from Cassandra:", respGetMsgCassandra);
-          //   this.messages.push(JSON.parse(JSON.stringify({ clientId: respGetMsgCassandra.clientId, originalText: respGetMsgCassandra.originalText, data: respGetMsgCassandra.translatedText.TranslatedText })));
+            await this.socketservice.messageToTranslantion(this.sendMessagesObject).then((translatedRespData: any) => {
+              console.log("Translated Resp Data :", translatedRespData.translatedText.TranslatedText);
+              if (translatedRespData != undefined) {
+                /* create object with Translated message data to call received API for Cassandra*/
 
-          // });
+                this.receivedMessageObject = {
+                  clientId: messageData.clientId,
+                  roomId: messageData.roomId,
+                  sessionId: messageData.sessionId,
+                  messageId: messageData.messageId,
+                  receiverName: translatedRespData.sender,
+                  receiverRole: "Employer",
+                  translateMessage: translatedRespData.translatedText.TranslatedText
+                }
+                this.messages.push(JSON.parse(JSON.stringify({ clientId: translatedRespData.clientId, originalText: translatedRespData.originalText, data: translatedRespData.translatedText.TranslatedText })));
+                console.log("Translated data send to cassandra:", this.receivedMessageObject);
 
-          this.socketservice.translantionMessage(this.sendMessages).then((messgeData1: any) => {
-            console.log("Translated Data :", messgeData1);
-            this.messages.push(JSON.parse(JSON.stringify({ clientId: messgeData1.clientId, originalText: messgeData1.originalText, data: messgeData1.translatedText.TranslatedText })));
+                /* Call Received API's with Translated message data*/
+                this.socketservice.sendMessageToReceivedMessageCassandra(this.receivedMessageObject).then((respGetMsgCassandra: any) => {
+                  console.log("Get Message Data from Cassandra:", respGetMsgCassandra);
+                });
+              } /* End IF */
+            });
 
-          });
+          }
         }
         else if (this.userRole == 'Freelancer') {
 
@@ -1006,25 +1014,77 @@ export class ChatBoxComponent implements OnInit {
           var preferedTargetLanguageCode = localStorage.getItem('preferedTargetLanguageCode');
           console.log("prefered Data channel freelancer Target Language Code", preferedTargetLanguageCode);
 
-          this.sendMessages = {
-            sourceLanguageCode: "en",
-            targetLanguageCode: preferedSourceLanguageCode,
-            originalText: messageData.data,
-            sender: this.jwtData.email,
-            receiver: this.userSelected,
-            clientId: messageData.clientId,
+          /* If prefered language if bydefault English */
+          if (preferedTargetLanguageCode == null) {
+
+            this.receivedMessageObject = {
+              clientId: messageData.clientId,
+              roomId: messageData.roomId,
+              sessionId: messageData.sessionId,
+              messageId: messageData.messageId,
+              receiverName: this.userSelected,
+              receiverRole: "Freelancer",
+              translateMessage: messageData.data,
+            }
+
+            this.messages.push(JSON.parse(JSON.stringify({ clientId: messageData.clientId, originalText: messageData.data, data: messageData.data })));
+
+            console.log("Translated data send to cassandra:", this.receivedMessageObject);
+
+
+            /* Call Received API's with Translated message data*/
+            this.socketservice.sendMessageToReceivedMessageCassandra(this.receivedMessageObject).then((respGetMsgCassandra: any) => {
+              console.log("Get Message Data from Cassandra:", respGetMsgCassandra);
+            });
+          }
+          else {
+
+            this.sendMessagesObject = {
+              sourceLanguageCode: preferedSourceLanguageCode,
+              targetLanguageCode: preferedTargetLanguageCode,
+              originalText: messageData.data,
+              sender: this.jwtData.email,
+              receiver: this.userSelected,
+              clientId: messageData.clientId,
+            }
+
+            this.socketservice.messageToTranslantion(this.sendMessagesObject).then((translatedRespData: any) => {
+              console.log("Send Message component Data:", translatedRespData);
+              if (translatedRespData != undefined) {
+                /* create object with Translated message data to call received API for Cassandra*/
+
+                this.receivedMessageObject = {
+                  clientId: messageData.clientId,
+                  roomId: messageData.roomId,
+                  sessionId: messageData.sessionId,
+                  messageId: messageData.messageId,
+                  receiverName: translatedRespData.sender,
+                  receiverRole: "Freelancer",
+                  translateMessage: translatedRespData.translatedText.TranslatedText
+                }
+
+                console.log("Translated data send to cassandra:", this.receivedMessageObject);
+
+
+                /* Call Received API's with Translated message data*/
+                this.socketservice.sendMessageToReceivedMessageCassandra(this.receivedMessageObject).then((respGetMsgCassandra: any) => {
+                  console.log("Get Message Data from Cassandra:", respGetMsgCassandra);
+                  // this.messages.push(JSON.parse(JSON.stringify(
+                  //   { 
+                  //     clientId: respGetMsgCassandra.clientId, 
+                  //     originalText: respGetMsgCassandra.originalText, 
+                  //     data: respGetMsgCassandra.translatedText.TranslatedText 
+                  //   })));
+                });
+
+              } /* End IF */
+
+              this.messages.push(JSON.parse(JSON.stringify({ clientId: translatedRespData.clientId, originalText: translatedRespData.originalText, data: translatedRespData.translatedText.TranslatedText })));
+
+            });
+
           }
 
-          // this.socketservice.getMessageFromCassandra(this.emailID).then((respGetMsgCassandra: any) => {
-          //   console.log("Get Message Data from Cassandra:", respGetMsgCassandra);
-          //   this.messages.push(JSON.parse(JSON.stringify({ clientId: respGetMsgCassandra.clientId, originalText: respGetMsgCassandra.originalText, data: respGetMsgCassandra.translatedText.TranslatedText })));
-          // });
-
-          this.socketservice.translantionMessage(this.sendMessages).then((messgeData1: any) => {
-            console.log("Send Message component Data:", messgeData1);
-            this.messages.push(JSON.parse(JSON.stringify({ clientId: messgeData1.clientId, originalText: messgeData1.originalText, data: messgeData1.translatedText.TranslatedText })));
-
-          });
         }
 
       } else if (this.fileEnable) {
@@ -1065,66 +1125,6 @@ export class ChatBoxComponent implements OnInit {
     });
   }
 
-  public sendMessage() {
-    if (this.userRole == 'Employer') {
-      var preferedSourceLanguageCode = localStorage.getItem('preferedSourceLanguageCode');
-      console.log("prefered employer lang code", preferedSourceLanguageCode);
-
-
-      var joinRoomDetails = JSON.parse(localStorage.getItem('joinRoomDetails'));
-      console.log("Join room details get from Local storage:", joinRoomDetails);
-
-      this.messageObject = {
-        // 'sessionId': "d6c0461dcc47e08bb577081d9093415d2b2dfe2b",
-        // 'roomId': "3f93c281daa55a6d3c343cd5a692666980884047",
-        'sessionId': joinRoomDetails[0].users[0].sessionId,
-        'roomId': joinRoomDetails[0].roomId,
-        'sender': this.jwtData.email,
-        'receiver': this.userSelected,
-        'senderRole': this.userRole,
-        'recieverRole': 'Freelancer',
-        'sourceLanguageCode': preferedSourceLanguageCode,
-        'originalMsg': this.message
-      };
-      console.log("Message for send to receiver:", this.messageObject);
-
-      // this.socketservice.postMessageToCassandra(this.messageObject).then((msgRes: any) => {
-      //   console.log("response emp from casendra msg", msgRes);
-      //   //  localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
-      // });
-
-    } else if (this.userRole == 'Freelancer') {
-      var preferedSourceLanguageCode = localStorage.getItem('preferedSourceLanguageCode');
-      console.log("prefered freelancer lang code", preferedSourceLanguageCode);
-
-      let joinRoomDetails = JSON.parse(localStorage.getItem('joinRoomDetails'));
-      console.log("Join Room Details for send message:", joinRoomDetails);
-
-      this.messageObject = {
-        'sessionId': joinRoomDetails[0].users[0].sessionId,
-        'roomId': joinRoomDetails[0].roomId,
-        // 'sessionId': "d6c0461dcc47e08bb577081d9093415d2b2dfe2b",
-        // 'roomId': "3f93c281daa55a6d3c343cd5a692666980884047",
-        'sender': this.jwtData.email,
-        'receiver': this.userSelected,
-        'senderRole': this.userRole,
-        'recieverRole': 'Employer',
-        'sourceLanguageCode': preferedSourceLanguageCode,
-        'originalMsg': this.message
-      };
-      console.log("Message for send to receiver:", this.messageObject);
-      // this.socketservice.postMessageToCassandra(this.messageObject).then((msgRes: any) => {
-      //   console.log("response free from casendra msg", msgRes);
-      //   //  localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
-      // });
-    }
-    this.dataChannel.send(JSON.stringify({ clientId: this.fromClientId, data: this.message }));
-    this.messages.push(JSON.parse(JSON.stringify({ clientId: this.fromClientId, user: 'sender', data: this.message })));
-    this.message = '';
-    var stringToStore = JSON.stringify(this.messageObject);
-    localStorage.setItem("senderObj", stringToStore);
-    this.getLocalStorageSenderMessage();
-  }
 
   public disconnect() {
     try {
@@ -1157,6 +1157,43 @@ export class ChatBoxComponent implements OnInit {
     this.jwtData = decode(token);
     this.userRole = this.jwtData['custom:role'];
     this.emailID = this.jwtData['email'];
+  }
+
+  /**
+   * @name getValidateLanguage
+   * @description validate language form data
+   */
+  getValidateLanguage() {
+    this.langForm = this.__fb.group({
+      sourceLanguageCode: new FormControl(),
+      sourceLanguage: new FormControl()
+    });
+  }
+
+  /**
+   * @name getValidateGroupUser
+   * @description validate group room form data
+   */
+  getValidateGroupUser() {
+    this.selectedGroupUserForm = this.__fb.group({
+      groupName: new FormControl(),
+      groupUserName: new FormControl()
+    });
+  }
+
+  selectPreferedLanguage(languageCode) {
+    console.log("Prefered Language is:", languageCode)
+    var selectUser = JSON.stringify(localStorage.getItem('selectedUserInfo'));
+    console.log("Selected User Info:", selectUser);
+
+    if (selectUser) {
+      // this.sourceLangCode = languageCode;
+      localStorage.setItem("preferedSourceLanguageCode", languageCode)
+    }
+    else if (this.userSelected) {
+      // this.sourceLangCode = languageCode;
+      localStorage.setItem("preferedTargetLanguageCode", languageCode)
+    }
   }
 
   /**
@@ -1212,17 +1249,17 @@ export class ChatBoxComponent implements OnInit {
     // do something when input is focused
   }
 
-  getLocalStorageSenderMessage() {
-    var fromStorage = localStorage.getItem("senderObj");
-    var objectsFromStorage = JSON.parse(fromStorage)
-    this.newMessageObject = objectsFromStorage;
-  }
+  // getLocalStorageSenderMessage() {
+  //   var fromStorage = localStorage.getItem("senderObj");
+  //   var objectsFromStorage = JSON.parse(fromStorage)
+  //   this.newMessageObject = objectsFromStorage;
+  // }
 
-  getLocalStorageReceiverMessage() {
-    var fromStorage = localStorage.getItem("receiverObj");
-    var objectsFromStorage = JSON.parse(fromStorage)
-    this.newMessageObject = objectsFromStorage;
-  }
+  // getLocalStorageReceiverMessage() {
+  //   var fromStorage = localStorage.getItem("receiverObj");
+  //   var objectsFromStorage = JSON.parse(fromStorage)
+  //   this.newMessageObject = objectsFromStorage;
+  // }
 
   // save the chat message's in DB
   saveChatMessage() {
@@ -1236,7 +1273,7 @@ export class ChatBoxComponent implements OnInit {
   selectedGroupUsers() {
     console.log("Selected Group Users:", this.selectedGroupUserForm.value);
     this.selectedUserGroupName = this.selectedGroupUserForm.value.groupName;
-    this.createOrJoinGroupRoomChat();
+    // this.createOrJoinGroupRoomChat();
   }
 
   showChatUserWindow() {
@@ -1277,47 +1314,47 @@ export class ChatBoxComponent implements OnInit {
    * @date 20/12/2019
    * @name showChatAndGroupNames
    */
-  showChatAndGroupName(){
+  showChatAndGroupName() {
     this.is_contact = false;
     this.is_groupRooms = false;
     this.is_favouriteContacts = false;
     this.is_chats = true;
     this.allRoomsInformation = JSON.parse(localStorage.getItem("all-rooms"));
-    this.allRoomsInformation.forEach((room)=>{
-      if(room.room_type == "Group"){
+    this.allRoomsInformation.forEach((room) => {
+      if (room.room_type == "Group") {
         this.groupNamesArray.push(room);
       }
       room.participants.forEach(participant => {
-        if(participant.participant_name != this.emailID){
-          if(room.room_type == "Individual"){
+        if (participant.participant_name != this.emailID) {
+          if (room.room_type == "Individual") {
             this.chatNamesArray.push(participant);
             this.allIndependentChatRooms.push(room);
           }
         }
       });
-    }); 
-    if(this.chatNamesArray.length != 0){
+    });
+    if (this.chatNamesArray.length != 0) {
       this.isChatRoomAvailable = true;
     }
-    if(this.groupNamesArray.length != 0){
-      this.isGroupRoomAvailable = true;  
+    if (this.groupNamesArray.length != 0) {
+      this.isGroupRoomAvailable = true;
     }
   }
 
-  /**********************************Join Or Create Independent Chat Room*******************************/   
+  /**********************************Join Or Create Independent Chat Room*******************************/
   /**
    * @author Shefali Bhavekar
    * @date 21/12/2019
    * @name createOrJoinIndependentChat
    */
-  createOrJoinIndependentChat(){
- 
-    this.allIndependentChatRooms.forEach((independentRoom)=>{
+  createOrJoinIndependentChat() {
+
+    this.allIndependentChatRooms.forEach((independentRoom) => {
       independentRoom.participants.forEach(participant => {
-        if(participant.participant_name == this.userSelected){
-          console.log("independentRoom",independentRoom);
+        if (participant.participant_name == this.userSelected) {
+          console.log("independentRoom", independentRoom);
           this.roomId = independentRoom.room_id,
-          this.roomName = independentRoom.room_name
+            this.roomName = independentRoom.room_name
         }
       });
     });
@@ -1328,127 +1365,221 @@ export class ChatBoxComponent implements OnInit {
       userName: this.emailID
     }
 
-   if(this.userRole == "Freelancer"){
-    console.log("dataForJoinRoom for direct joining");
-    this.socketservice.joinRoom(this.dataForJoinRoom).subscribe((joinRes: any) => {
-      localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
-    });
-   }else if(this.userRole == "Employer"){
-    if(this.roomId == "" && this.roomName == ""){
-      this.setOfParticipants = [];
-      this.setOfParticipants.push({ 'username': this.emailID, 'role': 'Employer', 'type': 'Initiator' });
-      this.setOfParticipants.push({ 'username': this.userSelected, 'role': 'Freelancer', 'type': 'participant' });
-    
-      this.dataForCreateRoom = {
-        roomName: this.emailID + "&" + this.userSelected,
-        participants: this.setOfParticipants,
-        roomType: "Individual"
-      }
-      this.socketservice.createRoom(this.dataForCreateRoom).then((createRoomRespData: any) => {
-        let dataForJoinRoom = {
-          roomId: createRoomRespData.responseObject[0].this.roomId,
-          roomName: createRoomRespData.responseObject[0].roomName,
-          userName: this.emailID
-        }
-        this.setOfParticipants = [];
-        this.setOfParticipants.push({ 'participant_name': this.emailID, 'role': 'Employer', 'type': 'Initiator' });
-        this.setOfParticipants.push({ 'participant_name': this.userSelected, 'role': 'Freelancer', 'type': 'participant' });
-        let pushData = {
-          room_id :createRoomRespData.responseObject[0].roomId,
-          room_name :createRoomRespData.responseObject[0].roomName,
-          room_type : "Individual",
-          participants : this.setOfParticipants
-        }
-        this.allRoomsInformation.push(pushData);
-        localStorage.setItem("all-rooms", JSON.stringify(this.allRoomsInformation));
-        this.showChatAndGroupName();
-        localStorage.setItem("all-rooms", JSON.stringify(this.allRoomsInformation));
-        this.socketservice.joinRoom(dataForJoinRoom).subscribe((joinRes: any) => {
-          localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
-        });
-      });
-     }else{
+    if (this.userRole == "Freelancer") {
+      console.log("dataForJoinRoom for direct joining");
       this.socketservice.joinRoom(this.dataForJoinRoom).subscribe((joinRes: any) => {
         localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
       });
-     }
+    } else if (this.userRole == "Employer") {
+      if (this.roomId == "" && this.roomName == "") {
+        this.setOfParticipants = [];
+        this.setOfParticipants.push({ 'username': this.emailID, 'role': 'Employer', 'type': 'Initiator' });
+        this.setOfParticipants.push({ 'username': this.userSelected, 'role': 'Freelancer', 'type': 'participant' });
+
+        this.dataForCreateRoom = {
+          roomName: this.emailID + "&" + this.userSelected,
+          participants: this.setOfParticipants,
+          roomType: "Individual"
+        }
+        this.socketservice.createRoom(this.dataForCreateRoom).then((createRoomRespData: any) => {
+          let dataForJoinRoom = {
+            roomId: createRoomRespData.responseObject[0].this.roomId,
+            roomName: createRoomRespData.responseObject[0].roomName,
+            userName: this.emailID
+          }
+          this.setOfParticipants = [];
+          this.setOfParticipants.push({ 'participant_name': this.emailID, 'role': 'Employer', 'type': 'Initiator' });
+          this.setOfParticipants.push({ 'participant_name': this.userSelected, 'role': 'Freelancer', 'type': 'participant' });
+          let pushData = {
+            room_id: createRoomRespData.responseObject[0].roomId,
+            room_name: createRoomRespData.responseObject[0].roomName,
+            room_type: "Individual",
+            participants: this.setOfParticipants
+          }
+          this.allRoomsInformation.push(pushData);
+          localStorage.setItem("all-rooms", JSON.stringify(this.allRoomsInformation));
+          this.showChatAndGroupName();
+          localStorage.setItem("all-rooms", JSON.stringify(this.allRoomsInformation));
+          this.socketservice.joinRoom(dataForJoinRoom).subscribe((joinRes: any) => {
+            localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
+          });
+        });
+      }
+      else{
+        this.socketservice.joinRoom(this.dataForJoinRoom).subscribe((joinRes: any) => {
+          localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
+        });
+       }
     }
   }
 
-  /**********************************Join Or Create "Group" Chat Room**************************************/   
+
+
+  /**
+   * @author Irshad ahmed
+   * @method sendMessage
+   * @description send the message and save into cassandra db
+   */
+
+  async sendMessage() {
+
+    if (this.userRole == 'Employer') {
+      var preferedSourceLanguageCode = localStorage.getItem('preferedSourceLanguageCode');
+      console.log("prefered employer lang code", preferedSourceLanguageCode);
+
+      var joinRoomDetails = JSON.parse(localStorage.getItem('joinRoomDetails'));
+      console.log("Join room details get from Local storage:", joinRoomDetails);
+
+      this.messageObject = {
+        'sessionId': joinRoomDetails[0].users[0].sessionId,
+        'roomId': joinRoomDetails[0].roomId,
+        'sender': this.jwtData.email,
+        'senderRole': this.userRole,
+        'sourceLanguageCode': preferedSourceLanguageCode,
+        'originalMsg': this.message
+      };
+
+      console.log("send Message (before) to cassandra:", this.messageObject);
+
+      await this.socketservice.sendMessageToCassandra(this.messageObject).then((msgRes: any) => {
+        console.log("response of emp from casendra msg", msgRes);
+        localStorage.setItem("sendMessageResp", JSON.stringify(msgRes));
+      });
+
+      this.sendMessageResp = localStorage.getItem('sendMessageResp');
+      console.log("this.sendMessageResp :", JSON.parse(this.sendMessageResp));
+      this.getSendMessageResp = JSON.parse(this.sendMessageResp);
+
+      /* Send Cassandra Reapsone data with MessageId to DataChannel */
+      await this.dataChannel.send(JSON.stringify(
+        {
+          clientId: this.fromClientId,
+          data: this.message,
+          sessionId: joinRoomDetails[0].users[0].sessionId,
+          roomId: joinRoomDetails[0].roomId,
+          messageId: this.getSendMessageResp.responseObject.messageId
+        }
+      ));
+
+    } else if (this.userRole == 'Freelancer') {
+      var preferedSourceLanguageCode = localStorage.getItem('preferedSourceLanguageCode');
+      console.log("prefered freelancer lang code", preferedSourceLanguageCode);
+
+      let joinRoomDetails = JSON.parse(localStorage.getItem('joinRoomDetails'));
+      console.log("Join Room Details for send message:", joinRoomDetails);
+
+      this.messageObject = {
+        'sessionId': joinRoomDetails[0].users[0].sessionId,
+        'roomId': joinRoomDetails[0].roomId,
+        'sender': this.jwtData.email,
+        'senderRole': this.userRole,
+        'sourceLanguageCode': preferedSourceLanguageCode,
+        'originalMsg': this.message
+      };
+      console.log("send Message (before) to cassandra:", this.messageObject);
+
+      await this.socketservice.sendMessageToCassandra(this.messageObject).then((msgRes: any) => {
+        console.log("response of free from casendra msg", msgRes);
+        localStorage.setItem("sendMessageResp", JSON.stringify(msgRes));
+      });
+
+      this.sendMessageResp = localStorage.getItem('sendMessageResp');
+      console.log("this.sendMessageResp :", JSON.parse(this.sendMessageResp));
+      this.getSendMessageResp = JSON.parse(this.sendMessageResp);
+
+      /* Send Cassandra Reapsone data with MessageId to DataChannel */
+      await this.dataChannel.send(JSON.stringify(
+        {
+          clientId: this.fromClientId,
+          data: this.message,
+          sessionId: joinRoomDetails[0].users[0].sessionId,
+          roomId: joinRoomDetails[0].roomId,
+          messageId: this.getSendMessageResp.responseObject.messageId
+        }
+      ));
+    }
+
+    this.messages.push(JSON.parse(JSON.stringify({ clientId: this.fromClientId, user: 'sender', data: this.message })));
+    this.message = '';
+    var stringToStore = JSON.stringify(this.messageObject);
+    localStorage.setItem("senderObj", stringToStore);
+    // this.getLocalStorageSenderMessage();
+  }
+
+  /**********************************Join Or Create "Group" Chat Room**************************************/
   /**
    * @author Shefali Bhavekar
    * @date 21/12/2019
    * @name createOrJoinIndependentChat
    */
 
-  createOrJoinGroupRoomChat(){
+  createOrJoinGroupRoomChat() {
     console.log("Inside createOrJoinGroupRoomChat");
-      this.groupNamesArray.forEach((groupRoom)=>{
-        groupRoom.participants.forEach(participant => {
-          if(participant.participant_name == this.userSelected){
-            console.log("groupRoom",groupRoom);
-            this.roomId = groupRoom.room_id,
+    this.groupNamesArray.forEach((groupRoom) => {
+      groupRoom.participants.forEach(participant => {
+        if (participant.participant_name == this.userSelected) {
+          console.log("groupRoom", groupRoom);
+          this.roomId = groupRoom.room_id,
             this.roomName = groupRoom.room_name
-          }
-        });
+        }
       });
+    });
 
-      this.dataForJoinRoom = {
+    this.dataForJoinRoom = {
       roomId: this.roomId,
       roomName: this.roomName,
       userName: this.emailID
-      }
-  
-      if(this.userRole == "Freelancer"){
-        console.log("dataForJoinRoom for direct joining");
+    }
+
+    if (this.userRole == "Freelancer") {
+      console.log("dataForJoinRoom for direct joining");
+      this.socketservice.joinRoom(this.dataForJoinRoom).subscribe((joinRes: any) => {
+        localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
+      });
+    } else if (this.userRole == "Employer") {
+      if (this.roomId == "" && this.roomName == "") {
+        this.setOfParticipants = [];
+        this.setOfParticipants.push({ 'username': this.emailID, 'role': 'Employer', 'type': 'Initiator' });
+        this.selectedGroupUserForm.value.groupUserName.forEach(element => {
+          this.setOfParticipants.push({ 'username': element, 'role': 'Freelancer', 'type': 'participant' });
+        });
+
+        this.dataForCreateRoom = {
+          roomName: this.selectedGroupUserForm.value.groupName,
+          participants: this.setOfParticipants,
+          roomType: "Group"
+        }
+        console.log("creating room", this.dataForCreateRoom);
+        this.socketservice.createRoom(this.dataForCreateRoom).then((createRoomRespData: any) => {
+          let dataForJoinRoom = {
+            roomId: createRoomRespData.responseObject[0].roomId,
+            roomName: createRoomRespData.responseObject[0].roomName,
+            userName: this.emailID
+          }
+          console.log("joining room", createRoomRespData);
+          this.setOfParticipants = [];
+          this.setOfParticipants.push({ 'participant_name': this.emailID, 'role': 'Employer', 'type': 'Initiator' });
+          this.selectedGroupUserForm.value.groupUserName.forEach(element => {
+            this.setOfParticipants.push({ 'participant_name': element, 'role': 'Freelancer', 'type': 'participant' });
+          });
+          let pushData = {
+            room_id: createRoomRespData.responseObject[0].roomId,
+            room_name: createRoomRespData.responseObject[0].roomName,
+            room_type: "Group",
+            participants: this.setOfParticipants
+          }
+          this.allRoomsInformation.push(pushData);
+          localStorage.setItem("all-rooms", JSON.stringify(this.allRoomsInformation));
+          this.showChatAndGroupName();
+          this.socketservice.joinRoom(dataForJoinRoom).subscribe((joinRes: any) => {
+            localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
+          });
+        });
+      } else {
         this.socketservice.joinRoom(this.dataForJoinRoom).subscribe((joinRes: any) => {
           localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
         });
-      }else if(this.userRole == "Employer"){
-        if(this.roomId == "" && this.roomName == ""){
-          this.setOfParticipants = [];
-          this.setOfParticipants.push({ 'username': this.emailID, 'role': 'Employer', 'type': 'Initiator' });
-          this.selectedGroupUserForm.value.groupUserName.forEach(element => {
-            this.setOfParticipants.push({ 'username': element, 'role': 'Freelancer', 'type': 'participant' });
-          });
-
-          this.dataForCreateRoom = {
-            roomName: this.selectedGroupUserForm.value.groupName,
-            participants: this.setOfParticipants,
-            roomType: "Group"
-          }
-          console.log("creating room" , this.dataForCreateRoom );
-          this.socketservice.createRoom(this.dataForCreateRoom).then((createRoomRespData: any) => {
-            let dataForJoinRoom = {
-              roomId: createRoomRespData.responseObject[0].roomId,
-              roomName: createRoomRespData.responseObject[0].roomName,
-              userName: this.emailID
-            }
-            console.log("joining room" , createRoomRespData);
-            this.setOfParticipants = [];
-            this.setOfParticipants.push({ 'participant_name': this.emailID, 'role': 'Employer', 'type': 'Initiator' });
-            this.selectedGroupUserForm.value.groupUserName.forEach(element => {
-            this.setOfParticipants.push({ 'participant_name': element, 'role': 'Freelancer', 'type': 'participant' });
-            });
-            let pushData = {
-              room_id :createRoomRespData.responseObject[0].roomId,
-              room_name :createRoomRespData.responseObject[0].roomName,
-              room_type : "Group",
-              participants : this.setOfParticipants
-            }
-            this.allRoomsInformation.push(pushData);
-            localStorage.setItem("all-rooms", JSON.stringify(this.allRoomsInformation));
-            this.showChatAndGroupName();
-            this.socketservice.joinRoom(dataForJoinRoom).subscribe((joinRes: any) => {
-              localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
-            });
-          });
-        }else{
-          this.socketservice.joinRoom(this.dataForJoinRoom).subscribe((joinRes: any) => {
-            localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
-          });
-        }
       }
+    }
   }
 }
