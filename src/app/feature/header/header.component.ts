@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { CustomGlobalService } from '../shared/service/custom-global.service';
 import { DownloadFileService } from '../chat-box/service/download-file.service';
 import { empty } from 'rxjs';
+import { ChatWindowService } from '../chat-box/service/chat-window.service';
 
 @Component({
   selector: 'app-header',
@@ -30,6 +31,13 @@ export class HeaderComponent implements OnInit {
   public freelancerDetailsArr: any = [];
   public chatMessage: any = [];
   public sendObjectsFromStorage: any = [];
+  public allChatRooms:any = [];
+  public allSentMessages:any = [];
+  public allRecievedMessages:any = [];
+  public sentMsgCount = 0;
+  public receivedMsgcount = 0;
+  public unReadMsgCount = 0;
+
 
   constructor(
     private __router: Router,
@@ -38,7 +46,8 @@ export class HeaderComponent implements OnInit {
     private __empProfileService: EmpProfileService,
     private __partProfileService: PartProfileService,
     private __globalService: CustomGlobalService,
-    private __downloadFileService: DownloadFileService
+    private __downloadFileService: DownloadFileService,
+    private __chatService: ChatWindowService,
   ) { }
 
   ngOnInit() {
@@ -61,9 +70,13 @@ export class HeaderComponent implements OnInit {
     this.emailName = baseName.charAt(0).toUpperCase() + baseName.substring(1);
     }
 
-
-  
     this.getHeaderInage();
+    setTimeout(() => {
+      this.getAvailableMessages();
+    }, 2000);
+    setTimeout(() => {
+      this.getCount();
+    }, 4000);
   }
 
   getHeaderInage() {
@@ -77,8 +90,10 @@ export class HeaderComponent implements OnInit {
           this.profile_img = atob(resData.responseObject.employerEnterprise.companyLogo);
         }
       });
+      
     } else {
       this.profile_img = '../../../assets/images/bule_img.png';
+      
     }
   }
   userRoleInfo() {
@@ -158,5 +173,42 @@ export class HeaderComponent implements OnInit {
 
   downloadFile() {
     this.__downloadFileService.exportToCsv('test.csv', this.chatMessage);
+  }
+
+  /******************************Fetching all available rooms-data from Cassandra**************************************/ 
+  /**
+   * @author Shefali Bhavekar
+   * @date 20/12/2019
+   * @name getAvailableMessages
+  */
+  
+  async getAvailableMessages(){
+    this.allChatRooms = JSON.parse(localStorage.getItem("all-rooms"));
+    console.log("this.allChatRooms from header : " , this.allChatRooms);
+    
+    this.allChatRooms.forEach(async room => {
+      let getMsgRequest = {
+        roomId : room.room_id
+      }
+      await this.__chatService.getsentMessages(getMsgRequest).then((msgs : any)=>{
+        this.allSentMessages.push(msgs);
+      });
+      await this.__chatService.getRecievedMessages(getMsgRequest).then((msgs : any)=>{
+        this.allRecievedMessages.push(msgs);
+      });
+    });
+  }
+
+  async getCount(){
+    console.log("**************Countring***************");
+
+    this.allSentMessages.forEach(sentMsg => {
+      this.sentMsgCount += sentMsg.responseObject.length;
+    });
+    this.allRecievedMessages.forEach(sentMsg => {
+      this.receivedMsgcount += sentMsg.responseObject.length;
+    });
+    this.unReadMsgCount = this.sentMsgCount - this.receivedMsgcount ;
+    console.log("this.unReadMsgCount" , this.unReadMsgCount);
   }
 }

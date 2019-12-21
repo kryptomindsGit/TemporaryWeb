@@ -1246,44 +1246,6 @@ export class ChatBoxComponent implements OnInit {
     this.is_chats = true
   }
 
- 
-  // async showGroupChatRoomAvailable() {
-  //   await this.socketservice.showRoomAvailable(this.currentUserEmailID).then((showRoomsAvailable: any) => {
-  //     console.log("showRoomsAvailable:", showRoomsAvailable.status);
-  //     if (showRoomsAvailable.status == 'Available') {
-  //       this.isShowRoomAvailable = true;
-  //       showRoomsAvailable.responseObject.forEach(room => {
-  //         if (room.room_type == "Group") {
-  //           this.showGroupRoomsAvailableArray.push(room);
-  //           this.roomIdData = {
-  //             roomId: room.room_id
-  //           }
-  //           this.socketservice.getRoomInfo(this.roomIdData).then((getRoomInfoResp: any) => {
-  //             let roomdata = {
-  //               room_name: room.room_name,
-  //               room_id: room.room_id,
-  //               room_creation_date: room.room_creation_date,
-  //               participants: []
-  //             }
-  //             getRoomInfoResp.responseObject.forEach(roomParticipant => {
-  //               roomdata.participants.push({
-  //                 participant_name: roomParticipant.participant,
-  //                 role: roomParticipant.role,
-  //                 type: roomParticipant.participant_type
-  //               });
-  //             });
-  //             this.allRoomInformationArray.push(roomdata);
-  //             localStorage.setItem("all-rooms", JSON.stringify(this.allRoomInformationArray));
-  //           });
-  //         }
-  //       });
-  //     }
-  //     else {
-  //       this.isShowRoomAvailable = false;
-  //     }
-  //   });
-  // }
-
   showChatContacts() {
     this.is_contact = true;
     this.is_groupRooms = false;
@@ -1319,7 +1281,7 @@ export class ChatBoxComponent implements OnInit {
     this.is_contact = false;
     this.is_groupRooms = false;
     this.is_favouriteContacts = false;
-    this.is_chats = true
+    this.is_chats = true;
     this.allRoomsInformation = JSON.parse(localStorage.getItem("all-rooms"));
     this.allRoomsInformation.forEach((room)=>{
       if(room.room_type == "Group"){

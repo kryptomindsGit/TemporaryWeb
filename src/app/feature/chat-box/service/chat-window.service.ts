@@ -339,17 +339,37 @@ export class ChatWindowService {
 
   /**
    * @name getMessageFromCasssandra
-   * @param getMessageFromCasssandraData 
+   * @param data 
    */
-  // async getMessageFromCassandra(emailId:any) {
-  //   console.log("Data of get message from cassandra:", emailId);
-  //   try {
-  //     let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/get-msg`, emailId, httpOptions).toPromise();
-  //     return result;
-  //   } catch (error) {
-  //     await this.handleError(error);
-  //   }
-  // }
+  async getsentMessages(data:any) {
+    console.log("Data of get message from cassandra:", data);
+    try {
+      let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/get-msg`, data, httpOptions).toPromise();
+      return result;
+    } catch (error) {
+      await this.handleError(error);
+    }
+  }
+
+
+  /************************Fetching Messages from Recived-Msg Table(Cassandra)************************** */
+ /**
+ * @name getRecievedMessage
+ * @author Shefali Bhavekar
+ * @date 21-12-2019
+ */
+
+  async getRecievedMessages(data: any){
+    console.log("Data of get received-message from cassandra:", data);
+    try {
+      let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/get-received-msg`, data, httpOptions).toPromise();
+      return result;
+    } catch (error) { 
+      await this.handleError(error);
+    }
+  }
+
+
 
   // Error Handler
   handleError(error) {

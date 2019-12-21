@@ -181,7 +181,12 @@ export class LoginComponent implements OnInit {
   }
 
 /******************************Fetching all available rooms-data from Cassandra**************************************/ 
-  
+/**
+ * @author Shefali Bhavekar
+ * @date 20/12/2019
+ * @name getAvailableChatRooms
+ */
+
   getAvailableChatRooms(){
     console.log("Inside getAvailableChatRooms");
     let sendData = {
