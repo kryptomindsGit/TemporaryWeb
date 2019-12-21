@@ -2,7 +2,6 @@ import { Injectable, NgZone } from '@angular/core';
 import { Observable, Observer, throwError } from 'rxjs';
 import * as io from 'socket.io-client';
 import { HttpHeaders, HttpClient, HttpEventType } from '@angular/common/http';
-// import { NODE_URL_CHAT } from '../../../constant/constant-url';
 import { NODE_URL_CHAT_WEB_RTC } from '../../../constant/constant-url';
 
 const httpOptions = {
@@ -42,9 +41,6 @@ export class ChatWindowService {
     });
 
     this.onInit();
-    // this.EVENT_URL = `${NODE_URL_CHAT}/event/chat`;
-    // this.EVENT_URL = `${NODE_URL_CHAT}`;
-
     this.__zone = new NgZone({ enableLongStackTrace: false });
     this.tokenAuth = localStorage.getItem('userAuthToken');
   }
@@ -179,29 +175,6 @@ export class ChatWindowService {
     }
   }
 
-  // gettingResult() {
-  //   console.log("listeing traslated message");
-  //   return new Observable(observer => {
-  //     this.socket.on('translated', (data) => {
-  //       observer.next(data);
-  //     });
-  //     return () => {
-  //       this.socket.disconnect();
-  //     };
-  //   });
-  // }
-
-
-  // createRoom(data:any){
-  //   // console.log("Inside Create Room");
-  //   this.socket.emit('create-room',data);
-  //   return new Observable(observer => {
-  //     this.socket.on('create-room', (data) => {
-  //       observer.next(data);
-  //     });
-  //   })
-  // }
-
   joinRoom(data: any) {
     console.log("Inside Join Room - Service", data);
     this.socket.emit('join-room', data);
@@ -212,46 +185,12 @@ export class ChatWindowService {
     })
   }
 
-  // isRoomAvailable(data:any){
-  //   // console.log("Inside Is Room available");
-  //   this.socket.emit('room-available',data);
-  //   return new Observable(observer => {
-  //     this.socket.on('room-available', (data) => {
-  //       observer.next(data);
-  //     });
-  //   })
-  // }
-
-
-  // showRoomAvailable(selectedUserEmail){
-  //   console.log("Inside Show Room available", selectedUserEmail);
-  //   this.socket.emit('show-rooms', selectedUserEmail);
-  //   return new Observable(observer => {
-  //     this.socket.on('show-rooms', (data) => {
-  //       observer.next(data);
-  //     });
-  //   })
-  // }
-
-
-  // sendMessageToCasssandra(data:any){
-  //   console.log("Inside Send msg to  cassendra");
-  //   this.socket.emit('save-msg',data);
-  //   return new Observable(observer => {
-  //     this.socket.on('save-msg', (data) => {
-  //       observer.next(data);
-  //     });
-  //   })
-  // }
-
-  // API's for Cassendra and room creations
-
   /**
    * @name createRoom
    * @param createRoomData 
    */
   async createRoom(createRoomData: any) {
-    console.log("Data of create room:", createRoomData);
+    // console.log("Data of create room:", createRoomData);
     try {
       let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/create-room`, createRoomData, httpOptions).toPromise();
       console.log("result of create room:", result);
@@ -268,7 +207,7 @@ export class ChatWindowService {
    * @param isRoomAvailableData 
    */
   async isRoomAvailable(isRoomAvailableData: any) {
-    console.log("Data of is room available:", isRoomAvailableData);
+    // console.log("Data of is room available:", isRoomAvailableData);
     try {
       let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/room-available`, isRoomAvailableData, httpOptions).toPromise();
       console.log("Result of Room available:", result);
@@ -279,30 +218,15 @@ export class ChatWindowService {
     }
   }
 
-
-  /**
-  * @name joinRoom
-  * @param joinRoomData 
-  */
-  // async joinRoom(joinRoomData:any) {
-  //   console.log("Data of Join room:", joinRoomData);
-  //   try {
-  //     let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/join-room`, joinRoomData, httpOptions).toPromise();
-  //     return result;
-  //   } catch (error) {
-  //     await this.handleError(error);
-  //   }
-  // }
-
   /**
    * @name showRoomAvailable
    * @param showRoomAvailableData 
    */
-  async showRoomAvailable(showRoomAvailableData:any) {
-    console.log("Data to get room details:", showRoomAvailableData);
+  async showRoomAvailable(showRoomAvailableData: any) {
+    // console.log("Data to get room details:", showRoomAvailableData);
     try {
       let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/show-rooms`, showRoomAvailableData, httpOptions).toPromise();
-      console.log("result for show-rooms" , result);
+      console.log("result for show-rooms", result);
       return result;
     } catch (error) {
       this.handleError(error);
@@ -310,11 +234,11 @@ export class ChatWindowService {
   }
 
   /**
- * @name getRoomInfo
-   * @param getRoomAvailableData 
-    */
-  async getRoomInfo(getRoomAvailableData:any) {
-    console.log("Data of Join room:", getRoomAvailableData);
+  * @name getRoomInfo
+  * @param getRoomAvailableData 
+  */
+  async getRoomInfo(getRoomAvailableData: any) {
+    // console.log("Data of Join room:", getRoomAvailableData);
     try {
       let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/get-room`, getRoomAvailableData, httpOptions).toPromise();
       return result;
@@ -327,8 +251,8 @@ export class ChatWindowService {
    * @name sendMessageToCasssandra
    * @param sendMessageToCasssandraData 
    */
-  async sendMessageToCassandra(sendMessageToCasssandraData:any) {
-    console.log("Data of send message to cassandra:", sendMessageToCasssandraData);
+  async sendMessageToCassandra(sendMessageToCasssandraData: any) {
+    // console.log("Data of send message to cassandra:", sendMessageToCasssandraData);
     try {
       let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/save-msg`, sendMessageToCasssandraData, httpOptions).toPromise();
       return result;
@@ -341,8 +265,8 @@ export class ChatWindowService {
    * @name sendMessageToReceivedMessageCassandra
    * @param sendMessage 
    */
-  async sendMessageToReceivedMessageCassandra(sendMessage:any) {
-    console.log("Data of get message from cassandra:", sendMessage);
+  async sendMessageToReceivedMessageCassandra(sendMessage: any) {
+    // console.log("Data of get message from cassandra:", sendMessage);
     try {
       let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/received-msg`, sendMessage, httpOptions).toPromise();
       return result;
@@ -351,12 +275,12 @@ export class ChatWindowService {
     }
   }
 
-/**
-   * @name getsentMessages
-   * @param data 
-   */
-  async getsentMessages(data:any) {
-    console.log("Data of get message from cassandra:", data);
+  /**
+    * @name getsentMessages
+    * @param data 
+    */
+  async getsentMessages(data: any) {
+    // console.log("Data of get message from cassandra:", data);
     try {
       let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/get-msg`, data, httpOptions).toPromise();
       return result;
@@ -367,18 +291,18 @@ export class ChatWindowService {
 
 
   /************************Fetching Messages from Recived-Msg Table(Cassandra)************************** */
- /**
- * @name getRecievedMessage
- * @author Shefali Bhavekar
- * @date 21-12-2019
- */
+  /**
+  * @name getRecievedMessage
+  * @author Shefali Bhavekar
+  * @date 21-12-2019
+  */
 
-  async getRecievedMessages(data: any){
-    console.log("Data of get received-message from cassandra:", data);
+  async getRecievedMessages(data: any) {
+    // console.log("Data of get received-message from cassandra:", data);
     try {
       let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/get-received-msg`, data, httpOptions).toPromise();
       return result;
-    } catch (error) { 
+    } catch (error) {
       await this.handleError(error);
     }
   }

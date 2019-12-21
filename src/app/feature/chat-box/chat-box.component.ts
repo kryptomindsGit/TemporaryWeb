@@ -593,6 +593,7 @@ export class ChatBoxComponent implements OnInit {
   }
 
   public async enableText() {
+    // this.connect();
     try {
       this.stopAudio();
     } catch (e) { }
@@ -1147,7 +1148,6 @@ export class ChatBoxComponent implements OnInit {
     this.receivedFileType = '';
   }
 
-
   /**
    * @name decodeJWToken()
    * @description decode the JWT
@@ -1188,11 +1188,15 @@ export class ChatBoxComponent implements OnInit {
 
     if (selectUser) {
       // this.sourceLangCode = languageCode;
-      localStorage.setItem("preferedSourceLanguageCode", languageCode)
+      localStorage.setItem("preferedSourceLanguageCode", "en")
+
+      localStorage.setItem("preferedTargetLanguageCode", languageCode)
     }
     else if (this.userSelected) {
       // this.sourceLangCode = languageCode;
+      localStorage.setItem("preferedSourceLanguageCode", "en")
       localStorage.setItem("preferedTargetLanguageCode", languageCode)
+
     }
   }
 
