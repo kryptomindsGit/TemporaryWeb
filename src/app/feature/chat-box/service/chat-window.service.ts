@@ -275,12 +275,14 @@ export class ChatWindowService {
     }
   }
 
-  /**
-    * @name getsentMessages
-    * @param data 
-    */
-  async getsentMessages(data: any) {
-    // console.log("Data of get message from cassandra:", data);
+
+/************************Fetching Messages from chat-Msg Table(Cassandra)************************** */
+ /**
+ * @name getMessageFromCasssandra
+ * @author Shefali Bhavekar
+ * @date 21-12-2019
+ */
+  async getSentMessages(data:any) {
     try {
       let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/get-msg`, data, httpOptions).toPromise();
       return result;
@@ -291,14 +293,13 @@ export class ChatWindowService {
 
 
   /************************Fetching Messages from Recived-Msg Table(Cassandra)************************** */
-  /**
-  * @name getRecievedMessage
-  * @author Shefali Bhavekar
-  * @date 21-12-2019
-  */
+ /**
+ * @name getRecievedMessage
+ * @author Shefali Bhavekar
+ * @date 21-12-2019
+ */
 
-  async getRecievedMessages(data: any) {
-    // console.log("Data of get received-message from cassandra:", data);
+  async getRecievedMessages(data: any){
     try {
       let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/get-received-msg`, data, httpOptions).toPromise();
       return result;

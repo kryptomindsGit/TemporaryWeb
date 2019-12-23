@@ -72,7 +72,7 @@ export class HeaderComponent implements OnInit {
 
     this.getHeaderInage();
     setTimeout(() => {
-      this.getAvailableMessages();
+      this.getAllMessages();
     }, 2000);
     setTimeout(() => {
       this.getCount();
@@ -179,10 +179,10 @@ export class HeaderComponent implements OnInit {
   /**
    * @author Shefali Bhavekar
    * @date 20/12/2019
-   * @name getAvailableMessages
+   * @name getAllMessages
   */
   
-  async getAvailableMessages(){
+  async getAllMessages(){
     this.allChatRooms = JSON.parse(localStorage.getItem("all-rooms"));
     console.log("this.allChatRooms from header : " , this.allChatRooms);
     
@@ -190,7 +190,7 @@ export class HeaderComponent implements OnInit {
       let getMsgRequest = {
         roomId : room.room_id
       }
-      await this.__chatService.getsentMessages(getMsgRequest).then((msgs : any)=>{
+      await this.__chatService.getSentMessages(getMsgRequest).then((msgs : any)=>{
         this.allSentMessages.push(msgs);
       });
       await this.__chatService.getRecievedMessages(getMsgRequest).then((msgs : any)=>{

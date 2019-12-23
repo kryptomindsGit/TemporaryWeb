@@ -153,6 +153,8 @@ export class ChatBoxComponent implements OnInit {
   public allRoomsInformation = [];
   public allIndependentChatRooms = [];
   public setOfParticipants = [];
+  public allSentMessages = [];
+  public allRecievedMessages = [];
   public isChatRoomAvailable: boolean = false;
   public isGroupRoomAvailable: boolean = false;
 
@@ -388,12 +390,14 @@ export class ChatBoxComponent implements OnInit {
         console.log("Socket Message:", message);
 
         this.serverStatus = true;
-        this.clientId = message.clientId;
-        this.fromClientId = message.clientId;
+        this.clientId = message.emailId;
+        this.fromClientId = message.emailId;
         this.socketId = message.socketId;
         this.subscription.unsubscribe();
         console.log("Current user Client ID:", this.clientId);
-
+        localStorage.setItem("socket_id", this.socketId);
+        localStorage.setItem("client_id",this.clientId);
+        
       });
 
       await this.socketservice.getClients().subscribe((clients: any) => {
@@ -506,7 +510,7 @@ export class ChatBoxComponent implements OnInit {
         console.log("Receive Offer :", offer);
         // window.alert(offer['email']);
         await this.peerConnection.setRemoteDescription({ type: 'offer', sdp: offer.sdp });
-
+        console.log("********************from type in setRemoteDescription()***********************\n" , offer['from'] );
         this.toClientId = offer['from'];
         this.peerConnection.createAnswer().then(async (answer: RTCSessionDescription) => {
           ;
@@ -549,8 +553,6 @@ export class ChatBoxComponent implements OnInit {
     } else {
       this.serverStatus = false;
     }
-
-
   }
 
   public getRTCPeerConnection() {
@@ -686,7 +688,7 @@ export class ChatBoxComponent implements OnInit {
         this.socketservice.sendFile({
           from: this.fromClientId,
           to: this.toClientId,
-          type: 'file-complete'
+          type: 'file-complete' 
         });
         console.log("Send file details:", this.messages);
 
@@ -919,11 +921,11 @@ export class ChatBoxComponent implements OnInit {
     this.allClients.forEach(selectedUser => {
       if (this.userSelected != '') {
         if (selectedUser.emailId == this.userSelected) {
-          this.toClientId = selectedUser.clientId;
+          this.toClientId = selectedUser.emailId;
         }
       } else {
         if (selectedUser.emailId == this.selectUser) {
-          this.toClientId = selectedUser.clientId;
+          this.toClientId = selectedUser.emailId;
         }
       }
     });
@@ -1107,6 +1109,8 @@ export class ChatBoxComponent implements OnInit {
     }).then(async (offer: RTCSessionDescription) => {
       console.log('Offer Send : ', offer);
       await this.peerConnection.setLocalDescription(offer);
+      console.log("this.toClientId" , this.toClientId);
+      console.log("this.fromClientId" , this.fromClientId);
 
       // this.allClients.forEach(selectedUser => {
 
@@ -1343,6 +1347,7 @@ export class ChatBoxComponent implements OnInit {
     if (this.groupNamesArray.length != 0) {
       this.isGroupRoomAvailable = true;
     }
+    this.getAllMessages();
   }
 
   /**********************************Join Or Create Independent Chat Room*******************************/
@@ -1585,5 +1590,29 @@ export class ChatBoxComponent implements OnInit {
         });
       }
     }
+  }
+
+  /**********************************get all messages**************************************/   
+  /**
+   * @author Shefali Bhavekar
+   * @date 21/12/2019
+   * @name getAllMessages()
+   */
+
+  getAllMessages(){  
+    console.log("inside getAllMessages" );
+    this.allRoomsInformation.forEach(room => {
+      let getMsgRequest = {
+        roomId : room.room_id
+      }
+      this.socketservice.getSentMessages(getMsgRequest).then((msgs : any)=>{
+        this.allSentMessages.push(msgs);
+      });
+      this.socketservice.getRecievedMessages(getMsgRequest).then((msgs : any)=>{
+        this.allRecievedMessages.push(msgs);
+      });
+    });
+    console.log("this.allSentMessages" , this.allSentMessages);
+    console.log("this.allRecievedMessages", this.allRecievedMessages);
   }
 }
