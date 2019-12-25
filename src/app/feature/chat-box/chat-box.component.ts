@@ -370,6 +370,8 @@ export class ChatBoxComponent implements OnInit {
     private __fb: FormBuilder
   ) {
     this.senderEmail = localStorage.getItem('email');
+    console.log("Sender Email ID:", this.senderEmail);
+    
   }
 
   ngOnInit() {

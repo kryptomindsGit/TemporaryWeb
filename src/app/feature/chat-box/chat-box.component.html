@@ -323,9 +323,7 @@
                           </ng-template>
                         </ng-template>
                       </div> -->
-                      <!-- <div *ngFor="let message of allGroupMessages.messages; let i=index"> -->
-                          <div *ngFor="let message of allGroupMessages ; let i=index">
-                            <!-- <div *ngIf="message.roomId == currentRoom.room_id"> -->
+                          <!-- <div *ngFor="let message of allGroupMessages ; let i=index">
                               <div *ngIf="message.recieverName == null">
                                 <div class="showRight">
                                     <strong>{{message.senderName}}: </strong>{{message.originalMessage}}<br>
@@ -342,55 +340,37 @@
                                       </div>
                                   </div>
                                 </div>
-                            <!-- </div>   -->
-                          <p>
-                            <!-- {{msgs.message.senderName}} : {{msgs.message.originalMessage}}
-                            {{msgs.message.receiverName}} : {{msgs.message.translatedMessage}} -->
-
-                          </p>
-                          <!-- <div *ngIf="msgs.user == 'sender'; else receiverUser">
-                            <div class="outgoing_msg" *ngIf="msgs.data; else sendFile">
-                              <div class="outgoing_msg_img">
-                                <img style="width: 30px; height: 30px;" class="rounded-circle"
-                                  src="../../../assets/images/jothipawar.jpg" alt="sunil">
+                        </div> -->
+                        <!-- START - To display the sender and receiver messages -->
+                        <div *ngFor="let message of allGroupMessages ; let i=index">
+                          <div *ngIf="message.senderName == senderEmail; else receiverMessage">
+                              <div class="showRight">
+                             {{message.originalMessage}}<strong>: {{message.senderName}}</strong><br>
+                              <div *ngIf="sourceLangCode != message.sourceLanguageCode">
+                                  <strong>{{message.receiverName}}:</strong>{{message.translatedMessage}} <br>
                               </div>
-                              <div class="sent_msg bubble-blue you">
-                                <p>{{msgs.data}}</p>
                               </div>
+                              <br>
+                          </div>
+                          <ng-template #receiverMessage>
+                            <div class="showLeft" *ngIf="sourceLangCode == message.sourceLanguageCode; else langDifferent">
+                                <strong>{{message.senderName}}: </strong>{{message.originalMessage}}<br>
                             </div>
-                            <ng-template #sendFile>
-                              <div class="sendedFile">
-                                <div class="row">
-                                  <p>{{msgs.senderFile}}</p>
-                                </div>
-                              </div>
+                            <ng-template #langDifferent>
+                                <strong>{{message.receiverName}}:</strong>{{message.translatedMessage}} <br>
                             </ng-template>
-                          </div> -->
-                          <!-- <ng-template #receiverUser>
-                            <div class="incoming_msg" *ngIf="msgs.data; else receiveFile">
-                              <div class="incoming_msg_img">
-                                <img style="width: 30px; height: 30px;" class="rounded-circle"
-                                  src="../../../assets/images/akhshay.png" alt="sunil">
-                              </div>
-                              <div class="received_msg">
-                                <div class="received_withd_msg bubble me">
-                                  <p>{{msgs.data}} </p>
-                                  <p>{{msgs.originalMessage}}</p>
-                                </div>
-                              </div>
+                              <!-- <div class="showLeft" *ngIf="sourceLangCode == message.sourceLanguageCode">
+                              <strong>{{message.senderName}}: </strong>{{message.originalMessage}}<br>
                             </div>
-                            <ng-template #receiveFile>
-                              <div class="receivedFile">
-                                <div class="row">
-                                  <p>{{msgs.receivedFile}}</p>
-                                  <button class="fileDownload" title="Download" (click)="downloadFile(msgs.receivedFile)">
-                                    <i class="fa fa-download" aria-hidden="true"></i>
-                                  </button>
-                                </div>
-                              </div>
-                            </ng-template>
-                          </ng-template> -->
+                            <br>
+                              <div class="showLeft" *ngIf="sourceLangCode != message.sourceLanguageCode">
+                                  <strong>{{message.receiverName}}:</strong>{{message.translatedMessage}} <br>
+                              </div> -->
+    
+                              <br>
+                          </ng-template>
                         </div>
+                        <!-- END - To display the sender and receiver messages -->
                     </div>
                   </div>
                 </div>
@@ -405,10 +385,6 @@
                                 class="form-control write_msg" ng-virtual-keyboard/>
                             </div>
                           </div>
-                          <!-- <div class="col-md-2">
-                            <button class="file_send_btn" title="Send Message" type="button" (click)="sendMessage()" ><i
-                                class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-                          </div> -->
                           <div class="col-md-2">
                               <button class="file_send_btn" title="Send Message" type="button" (click)="sendGroupMessages()" ><i
                                   class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
