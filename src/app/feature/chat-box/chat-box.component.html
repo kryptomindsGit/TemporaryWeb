@@ -279,77 +279,17 @@
                 <div class="card-body">
                   <div class="inbox_chat">
                     <div id="msg_history">
-                      <!-- <div *ngFor="let msgs of messages; let i=index">
-                        <div *ngIf="msgs.user == 'sender'; else receiverUser">
-                          <div class="outgoing_msg" *ngIf="msgs.data; else sendFile">
-                            <div class="outgoing_msg_img">
-                              <img style="width: 30px; height: 30px;" class="rounded-circle"
-                                src="../../../assets/images/jothipawar.jpg" alt="sunil">
-                            </div>
-                            <div class="sent_msg bubble-blue you">
-                              <p>{{msgs.data}}</p>
-                            </div>
-                          </div>
-                          <ng-template #sendFile>
-                            <div class="sendedFile">
-                              <div class="row">
-                                <p>{{msgs.senderFile}}</p>
-                              </div>
-                            </div>
-                          </ng-template>
-                        </div>
-                        <ng-template #receiverUser>
-                          <div class="incoming_msg" *ngIf="msgs.data; else receiveFile">
-                            <div class="incoming_msg_img">
-                              <img style="width: 30px; height: 30px;" class="rounded-circle"
-                                src="../../../assets/images/akhshay.png" alt="sunil">
-                            </div>
-                            <div class="received_msg">
-                              <div class="received_withd_msg bubble me">
-                                <p>{{msgs.data}} </p>
-                                <p>{{msgs.originalMessage}}</p>
-                              </div>
-                            </div>
-                          </div>
-                          <ng-template #receiveFile>
-                            <div class="receivedFile">
-                              <div class="row">
-                                <p>{{msgs.receivedFile}}</p>
-                                <button class="fileDownload" title="Download" (click)="downloadFile(msgs.receivedFile)">
-                                  <i class="fa fa-download" aria-hidden="true"></i>
-                                </button>
-                              </div>
-                            </div>
-                          </ng-template>
-                        </ng-template>
-                      </div> -->
-                          <!-- <div *ngFor="let message of allGroupMessages ; let i=index">
-                              <div *ngIf="message.recieverName == null">
-                                <div class="showRight">
-                                    <strong>{{message.senderName}}: </strong>{{message.originalMessage}}<br>
-                                    <div *ngIf="sourceLangCode != message.sourceLanguageCode">
-                                        <strong>{{message.receiverName}}:</strong>{{message.translatedMessage}}
-                                    </div>
-                                </div>
-                              </div>
-                              <div *ngIf="message.recieverName != null">
-                                  <div class="showLeft">
-                                      <strong>{{message.senderName}}: </strong>{{message.originalMessage}}<br>
-                                      <div *ngIf="sourceLangCode != message.sourceLanguageCode">
-                                          <strong>{{message.receiverName}}:</strong>{{message.translatedMessage}}
-                                      </div>
-                                  </div>
-                                </div>
-                        </div> -->
                         <!-- START - To display the sender and receiver messages -->
                         <div *ngFor="let message of allGroupMessages ; let i=index">
                           <div *ngIf="message.senderName == senderEmail; else receiverMessage">
-                              <div class="showRight">
+                              <div class="showRight" *ngIf="sourceLangCode != message.sourceLanguageCode; else senderlangDifferent">
                              {{message.originalMessage}}<strong>: {{message.senderName}}</strong><br>
-                              <div *ngIf="sourceLangCode != message.sourceLanguageCode">
-                                  <strong>{{message.receiverName}}:</strong>{{message.translatedMessage}} <br>
                               </div>
-                              </div>
+                              <ng-template #senderlangDifferent>
+                                  <div *ngIf="sourceLangCode != message.sourceLanguageCode">
+                                      <strong>{{message.receiverName}}:</strong>{{message.translatedMessage}} <br>
+                                  </div>
+                              </ng-template>
                               <br>
                           </div>
                           <ng-template #receiverMessage>
@@ -358,7 +298,9 @@
                             </div>
                             <br>
                             <ng-template #langDifferent>
+                                <div class="showLeft" *ngIf="sourceLangCode == message.sourceLanguageCode; else langDifferent">
                                 <strong>{{message.senderName}}:</strong>{{message.translatedMessage}} <br>
+                                </div>
                             </ng-template>
                               <br>
                           </ng-template>
@@ -469,7 +411,7 @@
                 <div class="modal-dialog full_modal-dialog" role="document">
                   <div class="modal-content-videocall full_modal-content">
                     <div class="internaldiv">
-                      <video #remoteVideoElement class="img-border">
+                      <video #remoteVideoElement class="img-border" autoplay>
                         <source>
                       </video>
                       <div class="overlay">
@@ -492,7 +434,7 @@
                       <div class="overlay-video">
                         <div class="row">
                           <div class="col-md-12">
-                            <video #videoElement class="img-border">
+                            <video #videoElement class="img-border" >
                               <source>
                             </video>
                           </div>
