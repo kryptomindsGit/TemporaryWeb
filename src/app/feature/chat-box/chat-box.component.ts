@@ -754,7 +754,10 @@ export class ChatBoxComponent implements OnInit {
       this.audioCall = this.audioCallElement.nativeElement;
       // this.connect();
       let constraints = { audio: true };
+      console.log("Browser Media for Get User Media:", this.browser);
+      
       this.browser.mediaDevices.getUserMedia(constraints).then((stream: any) => {
+
         // this.audioCall.autoplay = true;
         // this.audioCall.muted = true;
         if (!stream.stop && stream.getTracks) {
@@ -805,6 +808,8 @@ export class ChatBoxComponent implements OnInit {
     setTimeout(() => {
       this.video = this.videoElement.nativeElement;
       // this.connect();
+      console.log("Browser Media for Get User Media:", this.browser);
+
       let constraints = { audio: true, video: { minFrameRate: 60, width: 400, height: 300 } };
       this.browser.mediaDevices.getUserMedia(constraints).then((stream: any) => {
 

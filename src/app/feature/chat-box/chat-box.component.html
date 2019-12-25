@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-header">
           <div class="headind_srch">
-            <p>Search User</p>
+            <p>Search</p>
             <div class="srch_bar">
               <div class="stylish-input-group">
                 <div class="ng-autocomplete">
@@ -31,7 +31,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12 text-center">
-                  <label>Chat</label>
+                  <label>Chats</label>
                 </div>
               </div>
             </div>
@@ -44,7 +44,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12 text-center">
-                  <label>Group</label>
+                  <label>Groups</label>
                 </div>
               </div>
             </div>
@@ -57,7 +57,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12 text-center">
-                  <label>Contact</label>
+                  <label>Contacts</label>
                 </div>
               </div>
             </div>
@@ -70,7 +70,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12 text-center">
-                  <label>Favourite</label>
+                  <label>Favourites</label>
                 </div>
               </div>
             </div>
@@ -356,17 +356,10 @@
                             <div class="showLeft" *ngIf="sourceLangCode == message.sourceLanguageCode; else langDifferent">
                                 <strong>{{message.senderName}}: </strong>{{message.originalMessage}}<br>
                             </div>
-                            <ng-template #langDifferent>
-                                <strong>{{message.receiverName}}:</strong>{{message.translatedMessage}} <br>
-                            </ng-template>
-                              <!-- <div class="showLeft" *ngIf="sourceLangCode == message.sourceLanguageCode">
-                              <strong>{{message.senderName}}: </strong>{{message.originalMessage}}<br>
-                            </div>
                             <br>
-                              <div class="showLeft" *ngIf="sourceLangCode != message.sourceLanguageCode">
-                                  <strong>{{message.receiverName}}:</strong>{{message.translatedMessage}} <br>
-                              </div> -->
-    
+                            <ng-template #langDifferent>
+                                <strong>{{message.senderName}}:</strong>{{message.translatedMessage}} <br>
+                            </ng-template>
                               <br>
                           </ng-template>
                         </div>
