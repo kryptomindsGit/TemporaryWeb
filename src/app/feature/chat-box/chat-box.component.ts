@@ -1593,12 +1593,16 @@ export class ChatBoxComponent implements OnInit {
    */
 
   getAllMessages(){
+    console.log("***********getting all messages to show history********************");
     this.allRoomsInformation.forEach(room => {
       let getMsgRequest = {
         roomId : room.room_id
       }
+      console.log("***********getMsgRequest for getting all messages to show history********************",getMsgRequest);
       this.socketservice.getAllMessages(getMsgRequest).then((msgs : any)=>{
         this.allHistoryMessages.push(msgs);
+        console.log("***********allHistoryMessages********************",this.allHistoryMessages);
+
       });
     });
   }
@@ -1607,28 +1611,80 @@ export class ChatBoxComponent implements OnInit {
   /**
    * @author Shefali Bhavekar
    * @date 21/12/2019
-   * @name getAllMessages()
+   * @name showIndependentHistoryMessages()
    */
-  showHistoryMessages(){
+
+  showIndependentHistoryMessages(){
+    console.log("*******************Inside showIndependentHistoryMessages*****************");
     this.allIndependentChatRooms.forEach((independentRoom) => {
       independentRoom.participants.forEach(participant => {
         if (participant.participant_name == this.userSelected) {
           this.allHistoryMessages.forEach((history) =>{
+            console.log("*******************Inside allHistoryMessages*****************",history);
+            console.log("*******************history.customResponseObject.roomId*****************",history.customResponseObject.roomId);
+            console.log("*******************independentRoom.room_id*****************",independentRoom.room_id);
             if(history.customResponseObject.roomId == independentRoom.room_id){
               this.allHistoryMessagesOfRoom.push(history.responseObject);
+              console.log("*******************this.allHistoryMessagesOfRoom*****************",this.allHistoryMessagesOfRoom);
               history.responseObject.forEach(element => {
                 // if(this.userSelected == element.senderName || this.userSelected == element.ReceiverName){
-                  console.log("*****************history.responseObject***********" , element.senderName);
-                  if(element.senderName == this.emailID){
-                    this.messages.push(JSON.parse(JSON.stringify({ emailId: this.fromEmailId, user: 'sender', data: element.originalMessage })));
-                  }else{
-                    this.messages.push(JSON.parse(JSON.stringify({ emailId: element.senderName,data: element.originalMessage})));
-                  }
-                // }
+                  console.log("*****************history.responseObject***********" , element);
+                    let msg = {
+                      roomId : element.roomId,
+                      sessionId : element.sessionId,
+                      receiverName : element.receiverData.receiverName ,
+                      receiverRole : element.receiverData.receiverRole,
+                      messageId : element.messageId,
+                      sourceLanguageCode : element.sourceLanguageCode,
+                      targetLanguageCode : element.receiverData.targetLanguageCode,
+                      senderName : element.senderName,
+                      senderRole:element.senderRole,
+                      originalMessage : element.originalMessage,
+                      translatedMessage :  element.receiverData.translatedMessage,
+                      sendDate : element.sendDate,
+                      receiveDate : element.receiverData.recievedDate,
+                     }
+                     this.allGroupMessages.push(msg);
               });
             }
           });
         }
+      });
+    });
+  }
+ /************************sender and receiver wise sorting of messages to show history**************************************/   
+  /**
+   * @author Shefali Bhavekar
+   * @date 25/12/2019
+   * @name showGroupHistoryMessages()
+   */
+
+   
+  showGroupHistoryMessages(){
+    console.log("*******************Inside showGroupHistoryMessages*****************");
+    this.groupNamesArray.forEach((groupRoom)=>{
+        this.allHistoryMessages.forEach((history)=>{
+          if(history.customResponseObject.roomId == groupRoom.room_id){
+            this.allHistoryMessagesOfRoom.push(history.responseObject);
+            history.responseObject.forEach(element => {
+              let msg = {
+                roomId : element.roomId,
+                sessionId : element.sessionId,
+                receiverName : element.receiverData.receiverName ,
+                receiverRole : element.receiverData.receiverRole,
+                messageId : element.messageId,
+                sourceLanguageCode : element.sourceLanguageCode,
+                targetLanguageCode : element.receiverData.targetLanguageCode,
+                senderName : element.senderName,
+                senderRole:element.senderRole,
+                originalMessage : element.originalMessage,
+                translatedMessage :  element.receiverData.translatedMessage,
+                sendDate : element.sendDate,
+                receiveDate : element.receiverData.recievedDate,
+               }
+               this.allGroupMessages.push(msg);
+            });
+          }
       });
     });
   }

@@ -76,10 +76,11 @@
             </div>
           </div>
         </div>
+        
         <div class="card-body" *ngIf="is_chats == true">
           <div class="card-body " *ngIf="isChatRoomAvailable == true; else isShowRoomNotAvailable">
                 <div class="text-left py-1" *ngFor="let chatName of chatNamesArray; let i=index">
-                    <p (click)="independentChatSelected(chatName.participant_name)">
+                    <p (click)="independentChatSelected(chatName.participant_name)" (click)="showIndependentHistoryMessages()">
                         {{chatName.participant_name}}
                     </p>
                 <hr>
@@ -104,7 +105,7 @@
           <hr>
           <div class="card-body " *ngIf="isGroupRoomAvailable == true; else isShowRoomNotAvailable">
               <div class="text-left py-1" *ngFor="let group of groupNamesArray; let i=index">
-                  <p (click)="groupSelected(i)">
+                  <p (click)="groupSelected(i)" (click)="showIndependentHistoryMessages()">
                       {{group.room_name}}
                     </p>
                  <hr>
