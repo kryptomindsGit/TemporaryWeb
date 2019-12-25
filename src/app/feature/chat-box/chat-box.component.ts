@@ -1,14 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ChatWindowService } from './service/chat-window.service';
 import { Subscription, Observable } from 'rxjs';
-import adapter from 'webrtc-adapter';
 import { saveAs } from 'file-saver';
 import { AuthService } from 'src/app/auth/shared/service/auth.service';
 import { Router } from '@angular/router';
 import decode from 'jwt-decode';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
-import { async } from 'q';
-import { group } from '@angular/animations';
+import { all } from 'q';
 
 
 declare global {
@@ -60,10 +58,10 @@ export class ChatBoxComponent implements OnInit {
   public introline: string = '(Web Real-Time Communication using Socket.IO)';
   public subscription: Subscription;
   public serverStatus: boolean;
-  public clientId: any = '';
+  public emailId: any = '';
   public socketId: any = '';
   public clients: any = [];
-  public allClients; any = [];
+  public allClients: any = [];
   public textEnable: boolean = true;
   public fileEnable: boolean = false;
   public audioEnable: boolean = false;
@@ -71,8 +69,8 @@ export class ChatBoxComponent implements OnInit {
   public videoEnable: boolean = false;
   public screenEnable: boolean = false;
   public connected: boolean = false;
-  public fromClientId: any;
-  public toClientId: any;
+  public fromEmailId: any;
+  public toEmailId: any;
   public peerConnection: any;
   public dataChannel: any;
   public offer: any;
@@ -116,7 +114,7 @@ export class ChatBoxComponent implements OnInit {
 
   public senderEmail: any;
   public receiverEmail: any;
-  public selectedUserClientID: any;
+  public selectedUseremailId: any;
   public sendMessagesObject: any;
   public receivedMessageObject: any;
   public selectedUserInfo: any;
@@ -154,17 +152,22 @@ export class ChatBoxComponent implements OnInit {
   public allIndependentChatRooms = [];
   public setOfParticipants = [];
   public allSentMessages = [];
-  public allRecievedMessages = [];
+  public allHistoryMessages = [];
+  public allHistoryMessagesOfRoom = [];
+  public allReceivedMessages = [];
   public isChatRoomAvailable: boolean = false;
   public isGroupRoomAvailable: boolean = false;
-
-
+  public showLanguageSelection : boolean = false;
+  public isGroupSelected : boolean = false;
+  public currentRoom : any;
+  public allGroupMessages : any = [];
+  public roomfound : boolean = false;
   public translateMessage: boolean = false;
   public sendMessageResp: any = [];
   public getSendMessageResp: any = [];
 
-  public sourceLangCode: any = 'en'
-
+  public sourceLangCode: any = 'en';
+  public sourceLanguage:any = "English";
   public selectLanguage: any = [
     {
       'language': 'Afrikaans',
@@ -367,9 +370,6 @@ export class ChatBoxComponent implements OnInit {
     private __fb: FormBuilder
   ) {
     this.senderEmail = localStorage.getItem('email');
-    console.log("Sender Email :", this.senderEmail);
-
-    console.log("lanfguadskjskjd:", this.langSelect);
   }
 
   ngOnInit() {
@@ -378,41 +378,29 @@ export class ChatBoxComponent implements OnInit {
     this.getAllUser();
     this.getValidateLanguage();
     this.getValidateGroupUser();
-    // this.showChatUser();
     this.showChatAndGroupName();
-    // this.showGroupChatRoomAvailable();
+    this.getGroupMessages();
   }
-  async socketConnect() {
-    console.log("Socket Connect");
 
+  /******************************** Socket Connection *****************************************/
+
+  async socketConnect() {
     if (this.socketservice) {
       this.subscription = await this.socketservice.getSocketId().subscribe((message: any) => {
-        console.log("Socket Message:", message);
-
         this.serverStatus = true;
-        this.clientId = message.emailId;
-        this.fromClientId = message.emailId;
+        this.fromEmailId = message.emailId;
         this.socketId = message.socketId;
-        this.subscription.unsubscribe();
-        console.log("Current user Client ID:", this.clientId);
-        localStorage.setItem("socket_id", this.socketId);
-        localStorage.setItem("client_id",this.clientId);
-        
+        this.subscription.unsubscribe();        
       });
-
       await this.socketservice.getClients().subscribe((clients: any) => {
         this.clients = clients;
-        console.log("Clients:", clients);
-
         this.allClients = clients;
-        console.log(" List of Clients :", this.allClients);
-
-        // this.getAllUser();
       });
       window.RTCPeerConnection = this.getRTCPeerConnection();
       window.RTCSessionDescription = this.getRTCSessionDescription();
       window.RTCIceCandidate = this.getRTCIceCandidate();
       this.browser.getUserMedia = this.getAllUserMedia();
+
       this.peerConnection = new RTCPeerConnection({
         "iceServers": [
           // {
@@ -433,25 +421,20 @@ export class ChatBoxComponent implements OnInit {
 
       this.peerConnection.onicecandidate = (candidate: RTCIceCandidate) => {
         this.socketservice.sendIceCandidate({
-          from: this.fromClientId,
-          to: this.toClientId,
+          from: this.fromEmailId,
+          to: this.toEmailId,
           type: candidate.type,
           candidate: candidate.candidate
         });
       };
-      console.log("To user Client ID:", this.toClientId);
 
       this.peerConnection.oniceconnectionstatechange = (connection: RTCIceConnectionState) => {
-        console.log('ICE Connection : ', connection);
-        console.log('ICE Connection State : ', this.peerConnection.iceConnectionState);
+
       };
       this.peerConnection.ondatachannel = (event: any) => {
-        console.log("peerConnection Connected");
-
         const onChannelReady = () => {
           this.dataChannel = event.channel;
           console.log("peerConnection datachannel opended");
-
         };
         if (event.channel.readyState !== 'open') {
           event.channel.onopen = onChannelReady;
@@ -510,14 +493,14 @@ export class ChatBoxComponent implements OnInit {
         console.log("Receive Offer :", offer);
         // window.alert(offer['email']);
         await this.peerConnection.setRemoteDescription({ type: 'offer', sdp: offer.sdp });
-        console.log("********************from type in setRemoteDescription()***********************\n" , offer['from'] );
-        this.toClientId = offer['from'];
+        this.toEmailId = offer['from'];
+        console.log("offer['from'] : " , offer['from']);
         this.peerConnection.createAnswer().then(async (answer: RTCSessionDescription) => {
-          ;
           await this.peerConnection.setLocalDescription(answer);
+          console.log("from client id after set local description" , this.fromEmailId);
           this.socketservice.sendAnswer({
-            from: this.fromClientId,
-            to: this.toClientId,
+            from: this.fromEmailId,
+            to: this.toEmailId,
             type: answer.type,
             sdp: answer.sdp
           });
@@ -525,12 +508,11 @@ export class ChatBoxComponent implements OnInit {
       });
       this.socketservice.receiveAnswer().subscribe(async (answer: RTCSessionDescription) => {
         console.log("Receive Answer :", answer);
-
         await this.peerConnection.setRemoteDescription({ type: 'answer', sdp: answer.sdp });
       });
       this.socketservice.receiveIceCandidate().subscribe((candidate: RTCIceCandidate) => {
         if (candidate.candidate) {
-          // this.peerConnection.addIceCandidate(candidate.candidate);
+          this.peerConnection.addIceCandidate(candidate.candidate);
         }
       });
       this.socketservice.receiveFile().subscribe(async (file: any) => {
@@ -571,7 +553,6 @@ export class ChatBoxComponent implements OnInit {
   }
 
   public getRTCIceCandidate() {
-
     return window.RTCIceCandidate ||
       window.mozRTCIceCandidate ||
       window.webkitRTCIceCandidate;
@@ -656,8 +637,8 @@ export class ChatBoxComponent implements OnInit {
 
     let oldSendProgressValue = 0;
     this.socketservice.sendFile({
-      from: this.fromClientId,
-      to: this.toClientId,
+      from: this.fromEmailId,
+      to: this.toEmailId,
       type: 'file',
       fileName: this.file['name'],
       fileSize: this.file['size'],
@@ -674,8 +655,8 @@ export class ChatBoxComponent implements OnInit {
       this.sendProgressValue = ((offset * 100) / this.sendProgressMax).toFixed(1);
       if (this.sendProgressValue !== oldSendProgressValue) {
         this.socketservice.sendFile({
-          from: this.fromClientId,
-          to: this.toClientId,
+          from: this.fromEmailId,
+          to: this.toEmailId,
           type: 'file-status',
           progressValue: this.sendProgressValue
         });
@@ -686,8 +667,8 @@ export class ChatBoxComponent implements OnInit {
       }
       if (this.sendProgressValue == 100.0) {
         this.socketservice.sendFile({
-          from: this.fromClientId,
-          to: this.toClientId,
+          from: this.fromEmailId,
+          to: this.toEmailId,
           type: 'file-complete' 
         });
         console.log("Send file details:", this.messages);
@@ -917,20 +898,21 @@ export class ChatBoxComponent implements OnInit {
 
     this.selectUser = JSON.stringify(localStorage.getItem('selectedUserInfo'));
     console.log("select User:", this.selectUser);
-
     this.allClients.forEach(selectedUser => {
       if (this.userSelected != '') {
         if (selectedUser.emailId == this.userSelected) {
-          this.toClientId = selectedUser.emailId;
+          this.toEmailId = selectedUser.emailId;
+          console.log("selected user set as toEmailId" ,  this.toEmailId);
         }
       } else {
         if (selectedUser.emailId == this.selectUser) {
-          this.toClientId = selectedUser.emailId;
+          this.toEmailId = selectedUser.emailId;
+          console.log("selected user set as toEmailId" ,  this.toEmailId);
         }
       }
     });
 
-    console.log("to client ID:", this.toClientId);
+    console.log("to client ID:", this.toEmailId);
     this.connected = true;
     console.log("this.connected:", this.connected);
     this.dataChannel = await this.peerConnection.createDataChannel('datachannel');
@@ -957,15 +939,15 @@ export class ChatBoxComponent implements OnInit {
           if (preferedTargetLanguageCode == null) {
 
             this.receivedMessageObject = {
-              clientId: messageData.clientId,
+              emailId: messageData.emailId,
               roomId: messageData.roomId,
               sessionId: messageData.sessionId,
               messageId: messageData.messageId,
               receiverName: this.userSelected,
               receiverRole: "Employer",
-              translateMessage: messageData.data,
+              translatedMessage: messageData.data,
             }
-            this.messages.push(JSON.parse(JSON.stringify({ clientId: messageData.clientId, originalText: messageData.data, data: messageData.data })));
+            this.messages.push(JSON.parse(JSON.stringify({ emailId: messageData.emailId, originalMessage: messageData.data, data: messageData.data })));
             console.log("Translated data send to cassandra:", this.receivedMessageObject);
 
             /* Call Received API's with Translated message data*/
@@ -975,30 +957,33 @@ export class ChatBoxComponent implements OnInit {
 
           }
           else {
+         
             this.sendMessagesObject = {
               sourceLanguageCode: preferedSourceLanguageCode,
               targetLanguageCode: preferedTargetLanguageCode,
-              originalText: messageData.data,
+              originalMessage: messageData.data,
               sender: this.jwtData.email,
               receiverName: this.userSelected,
-              clientId: messageData.clientId,
+              emailId: messageData.emailId,
             }
 
+            console.log("this.sendMessagesObject" , this.sendMessagesObject);
+
             await this.socketservice.messageToTranslantion(this.sendMessagesObject).then((translatedRespData: any) => {
-              console.log("Translated Resp Data :", translatedRespData.translatedText.TranslatedText);
+              console.log("Translated Resp Data :", translatedRespData.translatedMessage.TranslatedText);
               if (translatedRespData != undefined) {
                 /* create object with Translated message data to call received API for Cassandra*/
 
                 this.receivedMessageObject = {
-                  clientId: messageData.clientId,
+                  emailId: messageData.emailId,
                   roomId: messageData.roomId,
                   sessionId: messageData.sessionId,
                   messageId: messageData.messageId,
                   receiverName: translatedRespData.sender,
                   receiverRole: "Employer",
-                  translateMessage: translatedRespData.translatedText.TranslatedText
+                  translateMessage: translatedRespData.translatedMessage.TranslatedText
                 }
-                this.messages.push(JSON.parse(JSON.stringify({ clientId: translatedRespData.clientId, originalText: translatedRespData.originalText, data: translatedRespData.translatedText.TranslatedText })));
+                this.messages.push(JSON.parse(JSON.stringify({ emailId: translatedRespData.emailId, originalMessage: translatedRespData.originalMessage, data: translatedRespData.translatedMessage.TranslatedText })));
                 console.log("Translated data send to cassandra:", this.receivedMessageObject);
 
                 /* Call Received API's with Translated message data*/
@@ -1021,16 +1006,16 @@ export class ChatBoxComponent implements OnInit {
           if (preferedTargetLanguageCode == null) {
 
             this.receivedMessageObject = {
-              clientId: messageData.clientId,
+              emailId: messageData.emailId,
               roomId: messageData.roomId,
               sessionId: messageData.sessionId,
               messageId: messageData.messageId,
               receiverName: this.userSelected,
               receiverRole: "Freelancer",
-              translateMessage: messageData.data,
+              translatedMessage: messageData.data,
             }
 
-            this.messages.push(JSON.parse(JSON.stringify({ clientId: messageData.clientId, originalText: messageData.data, data: messageData.data })));
+            this.messages.push(JSON.parse(JSON.stringify({ emailId: messageData.emailId, originalMessage: messageData.data, data: messageData.data })));
 
             console.log("Translated data send to cassandra:", this.receivedMessageObject);
 
@@ -1045,10 +1030,10 @@ export class ChatBoxComponent implements OnInit {
             this.sendMessagesObject = {
               sourceLanguageCode: preferedSourceLanguageCode,
               targetLanguageCode: preferedTargetLanguageCode,
-              originalText: messageData.data,
+              originalMessage: messageData.data,
               sender: this.jwtData.email,
               receiver: this.userSelected,
-              clientId: messageData.clientId,
+              emailId: messageData.emailId,
             }
 
             this.socketservice.messageToTranslantion(this.sendMessagesObject).then((translatedRespData: any) => {
@@ -1057,13 +1042,14 @@ export class ChatBoxComponent implements OnInit {
                 /* create object with Translated message data to call received API for Cassandra*/
 
                 this.receivedMessageObject = {
-                  clientId: messageData.clientId,
+                  emailId: messageData.emailId,
                   roomId: messageData.roomId,
                   sessionId: messageData.sessionId,
                   messageId: messageData.messageId,
                   receiverName: translatedRespData.sender,
                   receiverRole: "Freelancer",
-                  translateMessage: translatedRespData.translatedText.TranslatedText
+                  translatedMessage: translatedRespData.translatedMessage.TranslatedText,
+                  targetLanguageCode : preferedTargetLanguageCode
                 }
 
                 console.log("Translated data send to cassandra:", this.receivedMessageObject);
@@ -1074,15 +1060,15 @@ export class ChatBoxComponent implements OnInit {
                   console.log("Get Message Data from Cassandra:", respGetMsgCassandra);
                   // this.messages.push(JSON.parse(JSON.stringify(
                   //   { 
-                  //     clientId: respGetMsgCassandra.clientId, 
-                  //     originalText: respGetMsgCassandra.originalText, 
+                  //     emailId: respGetMsgCassandra.emailId, 
+                  //     originalMessage: respGetMsgCassandra.originalMessage, 
                   //     data: respGetMsgCassandra.translatedText.TranslatedText 
                   //   })));
                 });
 
               } /* End IF */
 
-              this.messages.push(JSON.parse(JSON.stringify({ clientId: translatedRespData.clientId, originalText: translatedRespData.originalText, data: translatedRespData.translatedText.TranslatedText })));
+              this.messages.push(JSON.parse(JSON.stringify({ emailId: translatedRespData.emailId, originalMessage: translatedRespData.originalMessage, data: translatedRespData.translatedMessage.TranslatedText })));
 
             });
 
@@ -1109,20 +1095,20 @@ export class ChatBoxComponent implements OnInit {
     }).then(async (offer: RTCSessionDescription) => {
       console.log('Offer Send : ', offer);
       await this.peerConnection.setLocalDescription(offer);
-      console.log("this.toClientId" , this.toClientId);
-      console.log("this.fromClientId" , this.fromClientId);
+      console.log("this.toEmailId" , this.toEmailId);
+      console.log("this.fromEmailId" , this.fromEmailId);
 
       // this.allClients.forEach(selectedUser => {
 
       //     if (selectedUser.emailId == this.userSelected) {
-      //       this.toClientId = selectedUser.clientId;
+      //       this.toEmailId = selectedUser.emailId;
       //     }
 
       // });
 
       this.socketservice.sendOffer({
-        from: this.fromClientId,
-        to: this.toClientId,
+        from: this.fromEmailId,
+        to: this.toEmailId,
         type: offer.type,
         sdp: offer.sdp,
         email: this.senderEmail
@@ -1142,7 +1128,7 @@ export class ChatBoxComponent implements OnInit {
       this.stopScreen();
     } catch (e) { }
     this.connected = false;
-    this.toClientId = '';
+    this.toEmailId = '';
     this.enableDownload = false;
     this.sendProgressValue = 0;
     this.receivedProgressValue = 0;
@@ -1186,6 +1172,13 @@ export class ChatBoxComponent implements OnInit {
   }
 
   selectPreferedLanguage(languageCode) {
+    this.selectLanguage.forEach((lang)=>{
+      if(lang.languageCode == languageCode){
+        this.sourceLanguage =lang.language;
+        this.sourceLangCode =lang.languageCode 
+        this.showLanguageSelection = false;
+      }
+    });
     console.log("Prefered Language is:", languageCode)
     var selectUser = JSON.stringify(localStorage.getItem('selectedUserInfo'));
     console.log("Selected User Info:", selectUser);
@@ -1226,18 +1219,18 @@ export class ChatBoxComponent implements OnInit {
    * @param selectedUser 
    * @description select user
    */
-  async selectedUser(selectUser) {
-    console.log("selected User Information :", selectUser);
-    this.userselect = true;
-    this.selectedUserInfo = JSON.stringify(selectUser);
-    localStorage.setItem('selectedUserInfo', this.selectedUserInfo)
-    this.userSelected = selectUser.emailId || selectUser;
-    this.activeStatus = selectUser.isLoggedIn;
-    this.langSelect = true;
+  // async selectedUser(selectUser) {
+  //   console.log("selected User Information :", selectUser);
+  //   this.userselect = true;
+  //   // this.selectedUserInfo = JSON.stringify(selectUser);
+  //   // localStorage.setItem('selectedUserInfo', this.selectedUserInfo)
+  //   // this.userSelected = selectUser.emailId || selectUser;
+  //   // this.activeStatus = selectUser.isLoggedIn;
+  //   // this.langSelect = true;
 
-    this.connect();
-    this.createOrJoinIndependentChat();
-  }
+  //   // this.connect();
+  //   this.createOrJoinIndependentChat();
+  // }
 
   /**
    * @name selectEvent()
@@ -1281,7 +1274,7 @@ export class ChatBoxComponent implements OnInit {
   selectedGroupUsers() {
     console.log("Selected Group Users:", this.selectedGroupUserForm.value);
     this.selectedUserGroupName = this.selectedGroupUserForm.value.groupName;
-    // this.createOrJoinGroupRoomChat();
+    this.createOrJoinGroupRoomChat();
   }
 
   showChatUserWindow() {
@@ -1423,7 +1416,7 @@ export class ChatBoxComponent implements OnInit {
   }
 
 
-
+  /**********************************Send the message and save into cassandra db**************************************/
   /**
    * @author Irshad ahmed
    * @method sendMessage
@@ -1445,7 +1438,7 @@ export class ChatBoxComponent implements OnInit {
         'sender': this.jwtData.email,
         'senderRole': this.userRole,
         'sourceLanguageCode': preferedSourceLanguageCode,
-        'originalMsg': this.message
+        'originalMessage': this.message
       };
 
       console.log("send Message (before) to cassandra:", this.messageObject);
@@ -1462,7 +1455,7 @@ export class ChatBoxComponent implements OnInit {
       /* Send Cassandra Reapsone data with MessageId to DataChannel */
       await this.dataChannel.send(JSON.stringify(
         {
-          clientId: this.fromClientId,
+          emailId: this.fromEmailId,
           data: this.message,
           sessionId: joinRoomDetails[0].users[0].sessionId,
           roomId: joinRoomDetails[0].roomId,
@@ -1483,7 +1476,7 @@ export class ChatBoxComponent implements OnInit {
         'sender': this.jwtData.email,
         'senderRole': this.userRole,
         'sourceLanguageCode': preferedSourceLanguageCode,
-        'originalMsg': this.message
+        'originalMessage': this.message
       };
       console.log("send Message (before) to cassandra:", this.messageObject);
 
@@ -1499,7 +1492,7 @@ export class ChatBoxComponent implements OnInit {
       /* Send Cassandra Reapsone data with MessageId to DataChannel */
       await this.dataChannel.send(JSON.stringify(
         {
-          clientId: this.fromClientId,
+          emailId: this.fromEmailId,
           data: this.message,
           sessionId: joinRoomDetails[0].users[0].sessionId,
           roomId: joinRoomDetails[0].roomId,
@@ -1508,7 +1501,7 @@ export class ChatBoxComponent implements OnInit {
       ));
     }
 
-    this.messages.push(JSON.parse(JSON.stringify({ clientId: this.fromClientId, user: 'sender', data: this.message })));
+    this.messages.push(JSON.parse(JSON.stringify({ emailId: this.fromEmailId, user: 'sender', data: this.message })));
     this.message = '';
     var stringToStore = JSON.stringify(this.messageObject);
     localStorage.setItem("senderObj", stringToStore);
@@ -1526,7 +1519,7 @@ export class ChatBoxComponent implements OnInit {
     console.log("Inside createOrJoinGroupRoomChat");
     this.groupNamesArray.forEach((groupRoom) => {
       groupRoom.participants.forEach(participant => {
-        if (participant.participant_name == this.userSelected) {
+        if (participant.participant_name == this.userSelected || this.userSelected == groupRoom.room_name){
           console.log("groupRoom", groupRoom);
           this.roomId = groupRoom.room_id,
             this.roomName = groupRoom.room_name
@@ -1599,20 +1592,265 @@ export class ChatBoxComponent implements OnInit {
    * @name getAllMessages()
    */
 
-  getAllMessages(){  
-    console.log("inside getAllMessages" );
+  getAllMessages(){
     this.allRoomsInformation.forEach(room => {
       let getMsgRequest = {
         roomId : room.room_id
       }
-      this.socketservice.getSentMessages(getMsgRequest).then((msgs : any)=>{
-        this.allSentMessages.push(msgs);
-      });
-      this.socketservice.getRecievedMessages(getMsgRequest).then((msgs : any)=>{
-        this.allRecievedMessages.push(msgs);
+      this.socketservice.getAllMessages(getMsgRequest).then((msgs : any)=>{
+        this.allHistoryMessages.push(msgs);
       });
     });
-    console.log("this.allSentMessages" , this.allSentMessages);
-    console.log("this.allRecievedMessages", this.allRecievedMessages);
+  }
+
+ /************************sender and receiver wise sorting of messages to show history**************************************/   
+  /**
+   * @author Shefali Bhavekar
+   * @date 21/12/2019
+   * @name getAllMessages()
+   */
+  showHistoryMessages(){
+    this.allIndependentChatRooms.forEach((independentRoom) => {
+      independentRoom.participants.forEach(participant => {
+        if (participant.participant_name == this.userSelected) {
+          this.allHistoryMessages.forEach((history) =>{
+            if(history.customResponseObject.roomId == independentRoom.room_id){
+              this.allHistoryMessagesOfRoom.push(history.responseObject);
+              history.responseObject.forEach(element => {
+                // if(this.userSelected == element.senderName || this.userSelected == element.ReceiverName){
+                  console.log("*****************history.responseObject***********" , element.senderName);
+                  if(element.senderName == this.emailID){
+                    this.messages.push(JSON.parse(JSON.stringify({ emailId: this.fromEmailId, user: 'sender', data: element.originalMessage })));
+                  }else{
+                    this.messages.push(JSON.parse(JSON.stringify({ emailId: element.senderName,data: element.originalMessage})));
+                  }
+                // }
+              });
+            }
+          });
+        }
+      });
+    });
+  }
+
+ /************************************Changing Language for traslation**************************************/   
+  /**
+   * @author Shefali Bhavekar
+   * @date 24/12/2019
+   * @name changeLanguage()
+   */
+  changeLanguage(event : any){
+   if(event ==  true){
+    this.showLanguageSelection = true;
+   }else{
+    this.showLanguageSelection = false;
+   }
+  }
+
+
+  /************************************Group selection**************************************/   
+  /**
+   * @author Shefali Bhavekar
+   * @date 24/12/2019
+   * @name groupSelected()
+   */
+  groupSelected(i : any){
+    this.isGroupSelected = true;
+    this.textEnable = true;
+    this.userselect = true;
+    this.userSelected=this.groupNamesArray[i].room_name;
+    this.currentRoom = this.groupNamesArray[i];
+    // if(this.allGroupMessages.length == 0){
+    //   let data = {
+    //     roomId : this.currentRoom.room_id,
+    //     messages : []
+    //   }
+    //   this.allGroupMessages.push(data);
+    // }else{
+    //   this.allGroupMessages.forEach( room => {
+    //     if(room.roomId == this.currentRoom.room_id){
+    //       this.roomfound == true;
+    //     }
+    //   });
+    //   if(!this.roomfound){
+    //     let data = {
+    //       roomId : this.currentRoom.room_id,
+    //       messages : []
+    //     }
+    //     this.allGroupMessages.push(data);
+    //   }
+    // }
+    this.createOrJoinGroupRoomChat();
+  }
+
+
+  independentChatSelected(independentUser : any){
+    this.userSelected=independentUser;
+    this.textEnable = true;
+    this.userselect = true;
+    this.allIndependentChatRooms.forEach((independentRoom : any)=>{
+     independentRoom.participants.forEach((participant : any) => {
+        if(participant.participant_name == independentUser){
+          this.currentRoom = independentRoom;
+          console.log("**************currentRoom************",this.currentRoom);
+        }
+     });  
+    });
+    this.createOrJoinIndependentChat();
+  }
+  /************************************Send Group messages**************************************/   
+  /**
+   * @author Shefali Bhavekar
+   * @date 24/12/2019
+   * @name sendGroupMessages()
+   */
+
+  sendGroupMessages(){
+    let currentJoinRoom : any;
+    let joinRoomDetails : any = [];
+    let sendMessageData : any;
+    
+    joinRoomDetails = JSON.parse(localStorage.getItem('joinRoomDetails'));
+
+    joinRoomDetails.forEach(room => {
+      if(this.currentRoom.room_id == room.roomId){
+        currentJoinRoom = room;
+        console.log("*******currentJoinRoom*****" , currentJoinRoom);
+        room.users.forEach((user)=>{
+          if(user.userName == this.emailID){
+            sendMessageData = {
+              originalMessage : this.message,
+              roomId :  currentJoinRoom.roomId,
+              sessionId : user.sessionId,
+              sender : this.emailID,
+              senderRole : this.userRole,
+              sourceLanguageCode : this.sourceLangCode,
+            }
+            this.socketservice.sendMessageToCassandra(sendMessageData).then((msgRes : any)=>{
+              console.log("################****msgRes*****#################" , msgRes);
+              if(msgRes.status == "Success"){
+                sendMessageData = {
+                  originalMessage : this.message,
+                  roomId :  currentJoinRoom.roomId,
+                  sessionId : user.sessionId,
+                  senderName : this.emailID,
+                  senderRole : this.userRole,
+                  sourceLanguageCode : this.sourceLangCode,
+                  messageId:msgRes.responseObject.messageId,
+                  sendDate:msgRes.responseObject.sendDate
+                }
+                this.socketservice.sendMessagestoGroup(msgRes.responseObject);
+                this.allGroupMessages.push(sendMessageData);
+                console.log("********** allGroupMessages data************", this.allGroupMessages );
+                // this.allGroupMessages.forEach((msgRoom)=>{
+                //   if(msgRoom.roomId == msgRes.responseObject.roomId){
+                //     msgRoom.messages.push(sendMessageData);
+                //     console.log("************this.allGroupMessages after pushing****************" , this.allGroupMessages);
+                //   }
+                // });
+                
+              }
+            });
+          }
+        });
+      }
+    });
+  }
+
+  /************************************get Group messages**************************************/   
+  /**
+   * @author Shefali Bhavekar
+   * @date 24/12/2019
+   * @name sendGroupMessages()
+   */
+  async getGroupMessages(){
+    let msg : any ;
+    // let sessionId : any;
+    await this.socketservice.getGroupMessages().subscribe((messages: any) => {
+     if(this.sourceLangCode == messages.sourceLanguageCode){
+      console.log("**********All data from all group chats**********" , this.allGroupMessages);
+      msg = {
+        roomId : messages.roomId,
+        sessionId : messages.sessionId,
+        receiverName : this.emailID ,
+        receiverRole : this.userRole,
+        messageId : messages.messageId
+       }
+       this.socketservice.sendMessageToReceivedMessageCassandra(msg).then((saveReceivedMsgRes : any) => {
+          console.log("*************saveReceivedMsgRes without traslation***********", saveReceivedMsgRes.responseObject.recievedDate);
+          msg = {
+            roomId : messages.roomId,
+            sessionId : messages.sessionId,
+            receiverName : this.emailID ,
+            receiverRole : this.userRole,
+            messageId : messages.messageId,
+            sourceLanguageCode : messages.sourceLanguageCode,
+            targetLanguageCode : "",
+            senderName : messages.sender,
+            originalMessage : messages.originalMessage,
+            translatedMessage : "",
+            sendDate : messages.sendDate,
+            receiveDate : saveReceivedMsgRes.responseObject.recievedDate,
+           }
+          // this.allGroupMessages.forEach((msgRoom)=>{
+          //   if(msgRoom.roomId == messages.roomId){
+          //     msgRoom.messages.push(msg);
+          //     console.log("************this.allGroupMessages after pushing****************" , this.allGroupMessages);
+          //   }
+          // });
+          this.allGroupMessages.push(msg);
+       });
+     }else{
+      console.log("**********All data from all group chats**********" , this.allGroupMessages);
+      msg = {
+        roomId : messages.roomId,
+        sessionId : messages.sessionId,
+        receiverName : this.emailID ,
+        receiverRole : this.userRole,
+        messageId : messages.messageId,
+        sourceLanguageCode : messages.sourceLanguageCode,
+        targetLanguageCode : this.sourceLangCode,
+        senderName : messages.sender,
+        originalMessage : messages.originalMessage
+       }
+       
+       this.socketservice.messageToTranslantion(msg).then((translationRes : any)=>{
+        console.log("**********************translationRes***********************", translationRes);
+        msg = {
+          roomId : messages.roomId,
+          sessionId : messages.sessionId,
+          receiverName : this.emailID ,
+          receiverRole : this.userRole,
+          messageId : messages.messageId,
+          targetLanguageCode : this.sourceLangCode,
+          translatedMessage : translationRes.translatedMessage.TranslatedText
+         }
+         this.socketservice.sendMessageToReceivedMessageCassandra(msg).then((saveReceivedMsgRes : any) => {
+            console.log("*************saveReceivedMsgRes with traslation***********", saveReceivedMsgRes.responseObject.recievedDate);
+            msg = {
+              roomId : messages.roomId,
+              sessionId : messages.sessionId,
+              receiverName : this.emailID ,
+              receiverRole : this.userRole,
+              messageId : messages.messageId,
+              sourceLanguageCode : messages.sourceLanguageCode,
+              targetLanguageCode : this.sourceLangCode,
+              senderName : messages.sender,
+              originalMessage : messages.originalMessage,
+              sendDate : messages.sendDate,
+              receiveDate : saveReceivedMsgRes.responseObject.recievedDate,
+              translatedMessage : translationRes.translatedMessage.TranslatedText
+             }
+             this.allGroupMessages.push(msg);
+            // this.allGroupMessages.forEach((msgRoom)=>{
+            //   if(msgRoom.roomId == messages.roomId){
+            //     msgRoom.messages.push(msg);
+            //   }
+            //   console.log("*******************allGroupMessages after receiveing traslation**************", this.allGroupMessages);
+            // });
+         });
+       });
+     }
+    });
   }
 }

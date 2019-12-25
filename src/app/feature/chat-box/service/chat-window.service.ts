@@ -4,6 +4,7 @@ import * as io from 'socket.io-client';
 import { HttpHeaders, HttpClient, HttpEventType } from '@angular/common/http';
 import { NODE_URL_CHAT_WEB_RTC } from '../../../constant/constant-url';
 
+
 const httpOptions = {
   headers: new HttpHeaders({
     'Access-Control-Allow-Origin': '*',
@@ -13,7 +14,6 @@ const httpOptions = {
     'X-Autherization': localStorage.getItem('userAuthToken')
   })
 }
-
 @Injectable({
   providedIn: 'root'
 })
@@ -35,7 +35,8 @@ export class ChatWindowService {
     this.socket = io(`${NODE_URL_CHAT_WEB_RTC}`, {
       reconnectionDelay: 1000,
       reconnection: true,
-      reconnectionAttempts: 1,
+      reconnectionAttempts: Infinity,
+      reconnectionDelayMax : 5000,
       transports: ['websocket'], // default is ['polling', 'websocket']
       rejectUnauthorized: false
     });
@@ -185,6 +186,35 @@ export class ChatWindowService {
     })
   }
 
+
+ /************************************send messages to group**************************************/   
+  /**
+   * @author Shefali Bhavekar
+   * @date 24/12/2019
+   * @name sendMessagestoGroup()
+   */
+  sendMessagestoGroup(data:any){
+    console.log("*********Inside sendMessagestoGroup - Service************", data);
+    this.socket.emit('send-group-msg', data);
+  }
+
+  /************************************get messages of group**************************************/   
+  /**
+   * @author Shefali Bhavekar
+   * @date 24/12/2019
+   * @name getGroupMessages()
+   */
+  public getGroupMessages = () => {
+    // this.socket.emit('get-group-messages');
+    return Observable.create((observer: any) => {
+      this.socket.on('get-group-messages', (groupMessage: any) => {
+        console.log("get-group-messages", groupMessage);
+        observer.next(groupMessage);
+      });
+    });
+  }
+
+
   /**
    * @name createRoom
    * @param createRoomData 
@@ -223,7 +253,7 @@ export class ChatWindowService {
    * @param showRoomAvailableData 
    */
   async showRoomAvailable(showRoomAvailableData: any) {
-    // console.log("Data to get room details:", showRoomAvailableData);
+    console.log("Data to get room details:", showRoomAvailableData);
     try {
       let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/show-rooms`, showRoomAvailableData, httpOptions).toPromise();
       console.log("result for show-rooms", result);
@@ -232,7 +262,7 @@ export class ChatWindowService {
       this.handleError(error);
     }
   }
-
+  
   /**
   * @name getRoomInfo
   * @param getRoomAvailableData 
@@ -308,6 +338,21 @@ export class ChatWindowService {
     }
   }
 
+ /************************Fetching Messages from Recived-Msg Table(Cassandra)************************** */
+ /**
+ * @name getAllMessages
+ * @author Shefali Bhavekar
+ * @date 23-12-2019
+ */
+
+async getAllMessages(data: any){
+  try {
+    let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/messages`, data, httpOptions).toPromise();
+    return result;
+  } catch (error) {
+    await this.handleError(error);
+  }
+}
 
 
   // Error Handler

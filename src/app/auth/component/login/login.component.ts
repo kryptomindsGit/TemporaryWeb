@@ -192,10 +192,11 @@ export class LoginComponent implements OnInit {
     let sendData = {
         emailId : this.emailID
       }
+    console.log("sendData", sendData);
     
     this.__chatService.showRoomAvailable(sendData).then((roomData : any) =>{
       console.log("roomData" ,  roomData);
-      if(roomData != 'undefined'){
+      if(roomData != 'undefined' ){
         if(roomData.status == "Not-available"){
           localStorage.setItem("all-rooms", "");
           this.__router.navigate(['/feature/feature/full-layout/dashboard'])        

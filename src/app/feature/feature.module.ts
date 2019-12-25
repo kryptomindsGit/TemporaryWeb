@@ -15,6 +15,8 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { VedioAudioChattingComponent } from './chat-box/vedio-audio-chatting/vedio-audio-chatting.component';
 import { environment } from 'src/environments/environment';
+import Keyboard from 'simple-keyboard';
+// import SimpleKeyboardLayout from '../../../node_modules/simple-keyboard-layouts';
 // import { VideoAudioChatComponent } from './chat-box/video-audio-chat/video-audio-chat.component';
 //Components
 const COMPONENTS = [

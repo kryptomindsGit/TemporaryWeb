@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-header">
           <div class="headind_srch">
-            <p>Seach User</p>
+            <p>Search User</p>
             <div class="srch_bar">
               <div class="stylish-input-group">
                 <div class="ng-autocomplete">
@@ -78,14 +78,10 @@
         </div>
         <div class="card-body" *ngIf="is_chats == true">
           <div class="card-body " *ngIf="isChatRoomAvailable == true; else isShowRoomNotAvailable">
-
                 <div class="text-left py-1" *ngFor="let chatName of chatNamesArray; let i=index">
-                
-                <!-- <div *ngIf="ShowChatRooms.room_type === 'Individual'"> -->
-                    <p (click)="selectedUser(chatName.participant_name)">
+                    <p (click)="independentChatSelected(chatName.participant_name)">
                         {{chatName.participant_name}}
-                      </p>
-                 <!-- </div> -->
+                    </p>
                 <hr>
                 </div>
             </div>
@@ -108,7 +104,7 @@
           <hr>
           <div class="card-body " *ngIf="isGroupRoomAvailable == true; else isShowRoomNotAvailable">
               <div class="text-left py-1" *ngFor="let group of groupNamesArray; let i=index">
-                  <p>
+                  <p (click)="groupSelected(i)">
                       {{group.room_name}}
                     </p>
                  <hr>
@@ -141,12 +137,6 @@
                             required />
                           <label for="groupName" class="form-label">Group Name</label>
                         </div>
-
-                        <!-- <select class="selectpicker">
-                            <option>Mustard</option>
-                            <option>Ketchup</option>
-                            <option>Barbecue</option>
-                          </select> -->
                         <div class="form-group form-input">
                           <select id="userList" required formControlName="groupUserName" class="selectpicker" multiple
                             id="number" data-container="body" data-live-search="true" title="Select a number"
@@ -229,9 +219,7 @@
       <br><br><br>
       <b>You are signed in as <i>{{senderEmail}}</i></b>
       <p>Try switching accounts if you cannot see your contacts or conversation history.</p>
-      
     </div>
-
 
     <ng-template #isULangSelected>
       <div class="col-md-8">
@@ -240,27 +228,9 @@
             <div class="card-header">
               <div class="col-md-12">
                 <div class="row">
-                  <div class="col-md-4">
-                    <!-- <div class="chat_img">  
-                              <img class="rounded-circle"
-                                src="../../../assets/images/akhshay.png" alt="sunil">
-                                <span class="greendot"></span>
-                            </div> -->
+                  <div class="col-md-6">
                     <strong>{{ userSelected }}</strong>
                     {{ selectedUserClientID }}
-                  </div>
-                  <div class="col-md-5">
-                    <form [formGroup]="langForm">
-                      <div class="form-group form-input col">
-                        <select class="formStyle" formControlName="sourceLanguageCode" id="sourceLanguage" required
-                          (change)="selectPreferedLanguage($event.target.value)">
-                          <option *ngFor="let language of selectLanguage" [value]="language.languageCode">
-                            {{language.language}}
-                          </option>
-                        </select>
-                        <label for="sourceLanguage" class="form-label">Prefered Language </label>
-                      </div>
-                    </form>
                   </div>
                   <div class="col-md-3">
                     <div class="float-right">
@@ -270,26 +240,45 @@
                         data-toggle="modal" data-target="#audioCallModel"></i>
                       <i class="fa fa-video-camera icon-send" title="Video Chat" aria-hidden="true"
                         (click)="enableVideo()" data-toggle="modal" data-target="#exampleModalCenter"></i>
-
                     </div>
                   </div>
+                </div>
+                <div class="row">
+                  <div>
+                      <label>Default Language selected for Chating : <strong>{{sourceLanguage}}</strong></label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" (change)="changeLanguage($event.target.checked)" class="custom-control-input" id="defaultUnchecked">
+                    <label class="custom-control-label" for="defaultUnchecked">Change preffered language for chatting to use Traslation service</label>
+                  </div> 
+                </div>
+                <div class="row">
+                  <div class="col-8">
+                      <form [formGroup]="langForm"  *ngIf="showLanguageSelection == true">
+                        <div class="form-group form-input col">
+                          <select class="formStyle" formControlName="sourceLanguageCode" id="sourceLanguage" required
+                            (change)="selectPreferedLanguage($event.target.value)">
+                            <option *ngFor="let language of selectLanguage" [value]="language.languageCode">
+                              {{language.language}}
+                            </option>
+                          </select>
+                          <label for="sourceLanguage" class="form-label">Prefered Language </label>
+                        </div>
+                      </form> 
+                  </div>                
                 </div>
               </div>
             </div>
           </div>
           <div class="col-md-12">
-            <div class="row" *ngIf="textEnable">
+            <div class="row" *ngIf="textEnable" >
               <div class="card">
                 <div class="card-body">
                   <div class="inbox_chat">
                     <div id="msg_history">
                       <!-- <div *ngFor="let msgs of messages; let i=index">
-                          <p>{{msgs.clientId}}</p>
-                          <p>{{msgs.data}} </p>
-                        </div> -->
-
-
-                      <div *ngFor="let msgs of messages; let i=index">
                         <div *ngIf="msgs.user == 'sender'; else receiverUser">
                           <div class="outgoing_msg" *ngIf="msgs.data; else sendFile">
                             <div class="outgoing_msg_img">
@@ -299,34 +288,15 @@
                             <div class="sent_msg bubble-blue you">
                               <p>{{msgs.data}}</p>
                             </div>
-
                           </div>
                           <ng-template #sendFile>
-                            <!-- <div class="outgoing_msg">
-                              <div class="outgoing_msg_img">
-                                <img style="width: 30px; height: 30px;" class="rounded-circle"
-                                  src="../../../assets/images/jothipawar.jpg" alt="sunil">
-                              </div>
-                                <div class="sendedFile">
-                                  <p>{{msgs.senderFile}}</p>
-                              </div>
-                            </div> -->
-
                             <div class="sendedFile">
                               <div class="row">
-                                <!-- <p>{{sendFileName}}</p>  -->
                                 <p>{{msgs.senderFile}}</p>
                               </div>
                             </div>
                           </ng-template>
-
-                          <!-- <div *ngIf="sendFileName" class="sendedFile">
-                              <p>{{sendFileName}}</p> 
-                              <p>{{msgs.senderFile}}</p>
-
-                            </div> -->
                         </div>
-
                         <ng-template #receiverUser>
                           <div class="incoming_msg" *ngIf="msgs.data; else receiveFile">
                             <div class="incoming_msg_img">
@@ -336,7 +306,7 @@
                             <div class="received_msg">
                               <div class="received_withd_msg bubble me">
                                 <p>{{msgs.data}} </p>
-                                <p>{{msgs.originalText}}</p>
+                                <p>{{msgs.originalMessage}}</p>
                               </div>
                             </div>
                           </div>
@@ -349,40 +319,77 @@
                                 </button>
                               </div>
                             </div>
-                            <!-- <div class="incoming_msg">
+                          </ng-template>
+                        </ng-template>
+                      </div> -->
+                      <!-- <div *ngFor="let message of allGroupMessages.messages; let i=index"> -->
+                          <div *ngFor="let message of allGroupMessages ; let i=index">
+                            <!-- <div *ngIf="message.roomId == currentRoom.room_id"> -->
+                              <div *ngIf="message.recieverName == null">
+                                <div class="showRight">
+                                    <strong>{{message.senderName}}: </strong>{{message.originalMessage}}<br>
+                                    <div *ngIf="sourceLangCode != message.sourceLanguageCode">
+                                        <strong>{{message.receiverName}}:</strong>{{message.translatedMessage}}
+                                    </div>
+                                </div>
+                              </div>
+                              <div *ngIf="message.recieverName != null">
+                                  <div class="showLeft">
+                                      <strong>{{message.senderName}}: </strong>{{message.originalMessage}}<br>
+                                      <div *ngIf="sourceLangCode != message.sourceLanguageCode">
+                                          <strong>{{message.receiverName}}:</strong>{{message.translatedMessage}}
+                                      </div>
+                                  </div>
+                                </div>
+                            <!-- </div>   -->
+                          <p>
+                            <!-- {{msgs.message.senderName}} : {{msgs.message.originalMessage}}
+                            {{msgs.message.receiverName}} : {{msgs.message.translatedMessage}} -->
+
+                          </p>
+                          <!-- <div *ngIf="msgs.user == 'sender'; else receiverUser">
+                            <div class="outgoing_msg" *ngIf="msgs.data; else sendFile">
+                              <div class="outgoing_msg_img">
+                                <img style="width: 30px; height: 30px;" class="rounded-circle"
+                                  src="../../../assets/images/jothipawar.jpg" alt="sunil">
+                              </div>
+                              <div class="sent_msg bubble-blue you">
+                                <p>{{msgs.data}}</p>
+                              </div>
+                            </div>
+                            <ng-template #sendFile>
+                              <div class="sendedFile">
+                                <div class="row">
+                                  <p>{{msgs.senderFile}}</p>
+                                </div>
+                              </div>
+                            </ng-template>
+                          </div> -->
+                          <!-- <ng-template #receiverUser>
+                            <div class="incoming_msg" *ngIf="msgs.data; else receiveFile">
                               <div class="incoming_msg_img">
                                 <img style="width: 30px; height: 30px;" class="rounded-circle"
                                   src="../../../assets/images/akhshay.png" alt="sunil">
                               </div>
-                              <div class="receivedFile">
-                                  <p>{{msgs.receivedFile}}</p>
+                              <div class="received_msg">
+                                <div class="received_withd_msg bubble me">
+                                  <p>{{msgs.data}} </p>
+                                  <p>{{msgs.originalMessage}}</p>
+                                </div>
                               </div>
-                            </div> -->
-                          </ng-template>
-
-
-                          <!-- <div *ngIf="receivedFileName" class="receivedFile">
-                              <div class="row">
+                            </div>
+                            <ng-template #receiveFile>
+                              <div class="receivedFile">
+                                <div class="row">
                                   <p>{{msgs.receivedFile}}</p>
-                                  <button class="fileDownload" title="Download" (click)="downloadFile()">
+                                  <button class="fileDownload" title="Download" (click)="downloadFile(msgs.receivedFile)">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                   </button>
+                                </div>
                               </div>
-                            </div> -->
-                        </ng-template>
-                      </div>
-                      <!-- <div *ngIf="sendFileName" class="sendedFile">
-                          <p>{{sendFileName}}</p>
+                            </ng-template>
+                          </ng-template> -->
                         </div>
-                        <div *ngIf="receivedFileName" class="receivedFile">
-                          <div class="row">
-                              <p>{{receivedFileName}}</p>
-                              <button class="fileDownload" title="Download" (click)="downloadFile()">
-                                <i class="fa fa-download" aria-hidden="true"></i>
-                              </button>
-                          </div>
-                        </div> -->
-
                     </div>
                   </div>
                 </div>
@@ -394,15 +401,17 @@
                           <div class="col-md-10">
                             <div class="input_msg_write">
                               <input type="text" placeholder="Enter Message To Send..." [(ngModel)]="message"
-                                class="form-control write_msg" />
-                              <!-- <input type="text" class="form-control" placeholder="Enter Message To Send..." aria-label="message" aria-describedby="addon-wrapping" [(ngModel)]="message" [disabled]="!connected"> -->
-
+                                class="form-control write_msg" ng-virtual-keyboard/>
                             </div>
                           </div>
-                          <div class="col-md-2">
-                            <button class="file_send_btn" title="Send Message" type="button" (click)="sendMessage()"><i
+                          <!-- <div class="col-md-2">
+                            <button class="file_send_btn" title="Send Message" type="button" (click)="sendMessage()" ><i
                                 class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-                          </div>
+                          </div> -->
+                          <div class="col-md-2">
+                              <button class="file_send_btn" title="Send Message" type="button" (click)="sendGroupMessages()" ><i
+                                  class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                            </div>
                         </div>
                       </div>
                     </div>
@@ -412,9 +421,6 @@
                           <i class="fa fa-volume-up icon-send" title="Audio Share" aria-hidden="true"
                             (click)="enableAudio()"></i>
                         </div>
-                        <!-- <div class="fileShare">
-                              <i class="fa fa-files-o icon-send" title="File Share" aria-hidden="true"></i>
-                          </div> -->
                         <div class="fileShare">
                           <i class="fa fa-files-o icon-send" title="File Share" aria-hidden="true">
                             <input type="file" id="file" class="custom-file-input"
@@ -460,7 +466,6 @@
 
                       <div class="current_user_audiocall_img text-center">
                         <img class="rounded-circle" src="../../../assets/images/akhshay.png" alt="sunil">
-                        <!-- <span class="redDotCurrentUser"></span> -->
                       </div>
 
                       <audio #audioCallElement class="audiocall-border">
@@ -482,22 +487,6 @@
                           </div>
                         </div>
                       </div>
-
-                      <!-- <div class="overlay-audio">
-                          <div class="row">
-                            <div class="col-md-12">
-                                  <div class="col-md-12 text-right icon-center">
-                                      <button class="call-start">
-                                        <i class="fa far fa-comment-alt" title="Text Chat" aria-hidden="true"></i>
-                                      </button>
-                                      <button class="screen-share" (click)="enableScreen()" data-toggle="modal"
-                                        data-target="#screenshareModel">
-                                        <i class="fa fa-window-restore" title="Screen Share" aria-hidden="true"></i>
-                                      </button>
-                                    </div>
-                            </div>
-                          </div>
-                        </div> -->
                     </div>
                   </div>
                 </div>
@@ -589,9 +578,7 @@
           </div>
         </div>
       </div>
-
     </ng-template>
-
   </div>
   <div class="footer"></div>
 </div>
