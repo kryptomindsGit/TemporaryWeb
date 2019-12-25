@@ -76,7 +76,7 @@
             </div>
           </div>
         </div>
-        
+
         <div class="card-body" *ngIf="is_chats == true">
           <div class="card-body " *ngIf="isChatRoomAvailable == true; else isShowRoomNotAvailable">
                 <div class="text-left py-1" *ngFor="let chatName of chatNamesArray; let i=index">
@@ -394,7 +394,7 @@
                         <div class="fileShare">
                           <i class="fa fa-files-o icon-send" title="File Share" aria-hidden="true">
                             <input type="file" id="file" class="custom-file-input"
-                              (change)="handleFileInput($event.target.files)">
+                              (change)="sendBase64File($event.target.files)">
                           </i>
                         </div>
                       </div>

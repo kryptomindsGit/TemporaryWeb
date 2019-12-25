@@ -165,6 +165,7 @@ export class ChatBoxComponent implements OnInit {
   public translateMessage: boolean = false;
   public sendMessageResp: any = [];
   public getSendMessageResp: any = [];
+  public fileBase64 : any;
 
   public sourceLangCode: any = 'en';
   public sourceLanguage:any = "English";
@@ -401,6 +402,7 @@ export class ChatBoxComponent implements OnInit {
       window.RTCPeerConnection = this.getRTCPeerConnection();
       window.RTCSessionDescription = this.getRTCSessionDescription();
       window.RTCIceCandidate = this.getRTCIceCandidate();
+      console.log("**************this.browser****************",this.browser);
       this.browser.getUserMedia = this.getAllUserMedia();
 
       this.peerConnection = new RTCPeerConnection({
@@ -616,23 +618,54 @@ export class ChatBoxComponent implements OnInit {
     this.screenEnable = false;
   }
 
-  public handleFileInput(files: FileList) {
-    console.log("File Handle method calling...");
-    // this.enableFile();
-    if (files[0]) {
-      this.file = files[0];
-      this.sendFileName = this.file['name'];
-      // this.senderFileName = this.file['name'];
-      console.log(this.file);
-      this.sendProgressMin = 0;
-      this.sendProgressMax = this.file.size;
-      this.messages.push(JSON.parse(JSON.stringify({ senderFile: this.file['name'], user: 'sender' })));
+  // public handleFileInput(files: FileList) {
+  //   console.log("File Handle method calling...");
+  //   // this.enableFile();
+  //   if (files[0]) {
+  //     this.file = files[0];
+  //     this.sendFileName = this.file['name'];
+  //     // this.senderFileName = this.file['name'];
+  //     console.log(this.file);
+  //     this.sendProgressMin = 0;
+  //     this.sendProgressMax = this.file.size;
+  //     this.messages.push(JSON.parse(JSON.stringify({ senderFile: this.file['name'], user: 'sender' })));
 
-      this.sendFile();
-    } else {
-      this.sendFileName = 'Choose File';
-    }
+  //     this.sendFile();
+  //   } else {
+  //     this.sendFileName = 'Choose File';
+  //   }
+  // }
+
+   /************************convert file object to base 64 **************************************/   
+  /**
+   * @author Shefali Bhavekar
+   * @date 25/12/2019
+   * @name sendBase64File()
+   */
+
+  sendBase64File(files : FileList){
+    console.log("******************file*******************", files[0]);
+    let file =  files[0];
+    let reader = new FileReader();
+    
+
+    reader.readAsDataURL(file);
+   reader.onload = function () {
+     //me.modelvalue = reader.result;
+     console.log("*********************file : base 64**************", reader.result);
+     let fileBase64 = reader.result;
+     let filedata = {
+       file : fileBase64,
+       fileName : files[0].name
+     }
+     
+
+   };
+   reader.onerror = function (error) {
+     console.log('Error: ', error);
+   };
   }
+
 
   public sendFile() {
     console.log("Send file method calling...");
@@ -708,6 +741,7 @@ export class ChatBoxComponent implements OnInit {
     setTimeout(() => {
       this.audio = this.audioElement.nativeElement;
       let constraints = { audio: true };
+      console.log("*********this.browser.mediaDevices*************",this.browser);
       this.browser.mediaDevices.getUserMedia(constraints).then((stream: any) => {
         if (!stream.stop && stream.getTracks) {
           stream.stop = function () {

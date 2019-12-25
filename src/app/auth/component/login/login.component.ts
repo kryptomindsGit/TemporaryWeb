@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../shared/service/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ChatWindowService } from 'src/app/feature/chat-box/service/chat-window.service';
 import { BnNgIdleService } from 'bn-ng-idle';
 import Swal from 'sweetalert2';
 
@@ -40,7 +39,6 @@ export class LoginComponent implements OnInit {
     private __authService: AuthService,
     private __router: Router,
     private toastr: ToastrService,
-    private __chatService: ChatWindowService,
     private bnIdle: BnNgIdleService,
     
   ) { }
@@ -194,7 +192,7 @@ export class LoginComponent implements OnInit {
       }
     console.log("sendData", sendData);
     
-    this.__chatService.showRoomAvailable(sendData).then((roomData : any) =>{
+    this.__authService.showRoomAvailable(sendData).then((roomData : any) =>{
       console.log("roomData" ,  roomData);
       if(roomData != 'undefined' ){
         if(roomData.status == "Not-available"){
@@ -205,7 +203,7 @@ export class LoginComponent implements OnInit {
             let roomIdData ={
               roomId: room.room_id
             }
-          this.__chatService.getRoomInfo(roomIdData).then((getRoomInfoResp: any) => {
+          this.__authService.getRoomInfo(roomIdData).then((getRoomInfoResp: any) => {
               let roomdata = {
                 room_name : room.room_name,
                 room_id: room.room_id,

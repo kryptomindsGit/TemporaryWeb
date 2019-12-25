@@ -11,7 +11,7 @@ import { BASE_URL } from '../../../constant/constant-url';
 import { UPORT_URL } from '../../../constant/constant-url';
 import { AWS_URL } from '../../../constant/constant-url';
 import { SPRING_URL } from '../../../constant/constant-url';
-
+import {NODE_URL_CHAT_WEB_RTC }  from '../../../constant/constant-url';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
@@ -142,6 +142,36 @@ export class AuthService {
       await this.handleError(error);
     }
   }
+
+
+  /**
+   * @name showRoomAvailable
+   * @param showRoomAvailableData 
+   */
+  async showRoomAvailable(showRoomAvailableData: any) {
+    console.log("Data to get room details:", showRoomAvailableData);
+    try {
+      let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/show-rooms`, showRoomAvailableData, httpOptions).toPromise();
+      console.log("result for show-rooms", result);
+      return result;
+    } catch (error) {
+      this.handleError(error);
+    }
+  } 
+
+   /**
+  * @name getRoomInfo
+  * @param getRoomAvailableData 
+  */
+ async getRoomInfo(getRoomAvailableData: any) {
+  // console.log("Data of Join room:", getRoomAvailableData);
+  try {
+    let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/get-room`, getRoomAvailableData, httpOptions).toPromise();
+    return result;
+  } catch (error) {
+    await this.handleError(error);
+  }
+}
 
 
   async getSecurityToken(payload: any): Promise<any> {
