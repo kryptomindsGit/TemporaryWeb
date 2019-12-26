@@ -1458,7 +1458,7 @@ export class ChatBoxComponent implements OnInit {
    */
 
   createOrJoinGroupRoomChat() {
-    console.log("Inside createOrJoinGroupRoomChat");
+    console.log("Inside createOrJoinGroupRoomChat", this.groupNamesArray);
     this.groupNamesArray.forEach((groupRoom) => {
       groupRoom.participants.forEach(participant => {
         if (participant.participant_name == this.userSelected || this.userSelected == groupRoom.room_name) {
@@ -1775,7 +1775,7 @@ export class ChatBoxComponent implements OnInit {
   handleFileSelect(evt){
     var files = evt.target.files;
     this.file = files[0];
-
+    
   if (files && this.file) {
       var reader = new FileReader();
       reader.onload =this._handleReaderLoaded.bind(this);
@@ -1787,6 +1787,8 @@ _handleReaderLoaded(readerEvt) {
    var binaryString = readerEvt.target.result;
           this.base64textString= btoa(binaryString);
           console.log(btoa(binaryString));
+          let fileNameDisplay;
+          fileNameDisplay = this.file['name'];
           this.sendFile(this.file['name']);
   }
 
