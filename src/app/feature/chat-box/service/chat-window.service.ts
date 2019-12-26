@@ -262,20 +262,37 @@ export class ChatWindowService {
       this.handleError(error);
     }
   }
-  
+
+
+  /************************************send file to db**************************************/   
   /**
-  * @name getRoomInfo
-  * @param getRoomAvailableData 
-  */
-  async getRoomInfo(getRoomAvailableData: any) {
-    // console.log("Data of Join room:", getRoomAvailableData);
+   * @author Shefali Bhavekar
+   * @date 24/12/2019
+   * @name getGroupMessages()
+   */
+  async sendFileToCassandra(fileData: any) {
+    let formData = new FormData();
+    formData.append('fileData', fileData);
+    console.log("***************************Sending file to cassandra**************************",formData);
     try {
-      let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/get-room`, getRoomAvailableData, httpOptions).toPromise();
+      let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/save-file`, formData, httpOptions).toPromise();
       return result;
     } catch (error) {
       await this.handleError(error);
     }
   }
+
+
+ async getRoomInfo(getRoomAvailableData: any) {
+  // console.log("Data of Join room:", getRoomAvailableData);
+  try {
+    let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/get-room`, getRoomAvailableData, httpOptions).toPromise();
+    return result;
+  } catch (error) {
+    await this.handleError(error);
+  }
+}
+
 
   /**
    * @name sendMessageToCasssandra

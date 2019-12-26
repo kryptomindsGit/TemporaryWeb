@@ -643,75 +643,63 @@ export class ChatBoxComponent implements OnInit {
    * @name sendBase64File()
    */
 
-  sendBase64File(files : FileList){
+  sendFile(files : FileList){
     console.log("******************file*******************", files[0]);
-    let file =  files[0];
-    let reader = new FileReader();
-    
-
-    reader.readAsDataURL(file);
-   reader.onload = function () {
-     //me.modelvalue = reader.result;
-     console.log("*********************file : base 64**************", reader.result);
-     let fileBase64 = reader.result;
-     let filedata = {
-       file : fileBase64,
-       fileName : files[0].name
-     }
-     
-
-   };
-   reader.onerror = function (error) {
-     console.log('Error: ', error);
-   };
-  }
-
-
-  public sendFile() {
-    console.log("Send file method calling...");
-
-    let oldSendProgressValue = 0;
-    this.socketservice.sendFile({
-      from: this.fromEmailId,
-      to: this.toEmailId,
-      type: 'file',
-      fileName: this.file['name'],
-      fileSize: this.file['size'],
-      fileType: this.file['type'],
-      sender: this.jwtData.email,
-      receiver: this.userSelected,
-    });
-    const chunkSize = 16384;
-    let offset = 0;
-    this.fileReader = new FileReader();
-    this.fileReader.onload = (event: any) => {
-      this.dataChannel.send(event.target.result);
-      offset += event.target.result.byteLength;
-      this.sendProgressValue = ((offset * 100) / this.sendProgressMax).toFixed(1);
-      if (this.sendProgressValue !== oldSendProgressValue) {
-        this.socketservice.sendFile({
-          from: this.fromEmailId,
-          to: this.toEmailId,
-          type: 'file-status',
-          progressValue: this.sendProgressValue
-        });
-        oldSendProgressValue = this.sendProgressValue;
-      }
-      if (offset < this.file.size) {
-        this.readSlice(offset, chunkSize);
-      }
-      if (this.sendProgressValue == 100.0) {
-        this.socketservice.sendFile({
-          from: this.fromEmailId,
-          to: this.toEmailId,
-          type: 'file-complete' 
-        });
-        console.log("Send file details:", this.messages);
-
-      }
+    let file =  {
+      fileData:files[0]
     }
-    this.readSlice(offset, chunkSize);
+    this.socketservice.sendFileToCassandra(file).then((fileRes : any)=>{
+      console.log("********************fileRes**************" , fileRes);
+    });
+
   }
+
+
+  // public sendFile() {
+  //   console.log("Send file method calling...");
+
+  //   let oldSendProgressValue = 0;
+  //   this.socketservice.sendFile({
+  //     from: this.fromEmailId,
+  //     to: this.toEmailId,
+  //     type: 'file',
+  //     fileName: this.file['name'],
+  //     fileSize: this.file['size'],
+  //     fileType: this.file['type'],
+  //     sender: this.jwtData.email,
+  //     receiver: this.userSelected,
+  //   });
+  //   const chunkSize = 16384;
+  //   let offset = 0;
+  //   this.fileReader = new FileReader();
+  //   this.fileReader.onload = (event: any) => {
+  //     this.dataChannel.send(event.target.result);
+  //     offset += event.target.result.byteLength;
+  //     this.sendProgressValue = ((offset * 100) / this.sendProgressMax).toFixed(1);
+  //     if (this.sendProgressValue !== oldSendProgressValue) {
+  //       this.socketservice.sendFile({
+  //         from: this.fromEmailId,
+  //         to: this.toEmailId,
+  //         type: 'file-status',
+  //         progressValue: this.sendProgressValue
+  //       });
+  //       oldSendProgressValue = this.sendProgressValue;
+  //     }
+  //     if (offset < this.file.size) {
+  //       this.readSlice(offset, chunkSize);
+  //     }
+  //     if (this.sendProgressValue == 100.0) {
+  //       this.socketservice.sendFile({
+  //         from: this.fromEmailId,
+  //         to: this.toEmailId,
+  //         type: 'file-complete' 
+  //       });
+  //       console.log("Send file details:", this.messages);
+
+  //     }
+  //   }
+  //   this.readSlice(offset, chunkSize);
+  // }
 
   public readSlice(offset: any, chunkSize: any) {
     const slice = this.file.slice(offset, offset + chunkSize);
