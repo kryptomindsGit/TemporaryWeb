@@ -26,7 +26,8 @@
             <div class="col-md-3">
               <div class="row">
                 <div class="col-md-12 text-center">
-                  <i class="fa fa-comments icons-left" title="Chat" aria-hidden="true" (click)="showChatUserWindow()"></i>
+                  <i class="fa fa-comments icons-left" title="Chat" aria-hidden="true"
+                    (click)="showChatUserWindow()"></i>
                 </div>
               </div>
               <div class="row">
@@ -79,20 +80,21 @@
 
         <div class="card-body" *ngIf="is_chats == true">
           <div class="card-body " *ngIf="isChatRoomAvailable == true; else isShowRoomNotAvailable">
-                <div class="text-left py-1" *ngFor="let chatName of chatNamesArray; let i=index">
-                    <p (click)="independentChatSelected(chatName.participant_name)" (click)="showIndependentHistoryMessages()">
-                        {{chatName.participant_name}}
-                    </p>
-                <hr>
-                </div>
+            <div class="text-left py-1" *ngFor="let chatName of chatNamesArray; let i=index">
+              <p (click)="independentChatSelected(chatName.participant_name)"
+                (click)="showIndependentHistoryMessages()">
+                {{chatName.participant_name}}
+              </p>
+              <hr>
             </div>
-            <ng-template #isShowRoomNotAvailable>
-              <div class="card-body">
-                <div class="msg-box text-center py-4">
-                    <p>Room is not available</p>
-                  </div>
+          </div>
+          <ng-template #isShowRoomNotAvailable>
+            <div class="card-body">
+              <div class="msg-box text-center py-4">
+                <p>Room is not available</p>
               </div>
-            </ng-template>
+            </div>
+          </ng-template>
         </div>
         <div class="card-body" *ngIf="is_groupRooms == true">
           <div class="col-md-12 text-center">
@@ -104,20 +106,20 @@
           </div>
           <hr>
           <div class="card-body " *ngIf="isGroupRoomAvailable == true; else isShowRoomNotAvailable">
-              <div class="text-left py-1" *ngFor="let group of groupNamesArray; let i=index">
-                  <p (click)="groupSelected(i)" (click)="showIndependentHistoryMessages()">
-                      {{group.room_name}}
-                    </p>
-                 <hr>
-                </div>
+            <div class="text-left py-1" *ngFor="let group of groupNamesArray; let i=index">
+              <p (click)="groupSelected(i)" (click)="showIndependentHistoryMessages()">
+                {{group.room_name}}
+              </p>
+              <hr>
             </div>
-            <ng-template #isShowRoomNotAvailable>
-              <div class="card-body">
-                <div class="msg-box text-center py-4">
-                    <p>Room is not available</p>
-                  </div>
+          </div>
+          <ng-template #isShowRoomNotAvailable>
+            <div class="card-body">
+              <div class="msg-box text-center py-4">
+                <p>Room is not available</p>
               </div>
-            </ng-template>
+            </div>
+          </ng-template>
 
           <div class="modal fade" id="roomCreateModel" tabindex="-1" role="dialog"
             aria-labelledby="roomCreateModelTitle" aria-hidden="true">
@@ -246,68 +248,111 @@
                 </div>
                 <div class="row">
                   <div>
-                      <label>Default Language selected for Chating : <strong>{{sourceLanguage}}</strong></label>
+                    <label>Default Language selected for Chating : <strong>{{sourceLanguage}}</strong></label>
                   </div>
                 </div>
                 <div class="row">
                   <div class="custom-control custom-checkbox">
-                    <input type="checkbox" (change)="changeLanguage($event.target.checked)" class="custom-control-input" id="defaultUnchecked">
-                    <label class="custom-control-label" for="defaultUnchecked">Change preffered language for chatting to use Traslation service</label>
-                  </div> 
+                    <input type="checkbox" (change)="changeLanguage($event.target.checked)" class="custom-control-input"
+                      id="defaultUnchecked">
+                    <label class="custom-control-label" for="defaultUnchecked">Change preffered language for chatting to
+                      use Traslation service</label>
+                  </div>
                 </div>
                 <div class="row">
                   <div class="col-8">
-                      <form [formGroup]="langForm"  *ngIf="showLanguageSelection == true">
-                        <div class="form-group form-input col">
-                          <select class="formStyle" formControlName="sourceLanguageCode" id="sourceLanguage" required
-                            (change)="selectPreferedLanguage($event.target.value)">
-                            <option *ngFor="let language of selectLanguage" [value]="language.languageCode">
-                              {{language.language}}
-                            </option>
-                          </select>
-                          <label for="sourceLanguage" class="form-label">Prefered Language </label>
-                        </div>
-                      </form> 
-                  </div>                
+                    <form [formGroup]="langForm" *ngIf="showLanguageSelection == true">
+                      <div class="form-group form-input col">
+                        <select class="formStyle" formControlName="sourceLanguageCode" id="sourceLanguage" required
+                          (change)="selectPreferedLanguage($event.target.value)">
+                          <option *ngFor="let language of selectLanguage" [value]="language.languageCode">
+                            {{language.language}}
+                          </option>
+                        </select>
+                        <label for="sourceLanguage" class="form-label">Prefered Language </label>
+                      </div>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="col-md-12">
-            <div class="row" *ngIf="textEnable" >
+            <div class="row" *ngIf="textEnable">
               <div class="card">
                 <div class="card-body">
                   <div class="inbox_chat">
                     <div id="msg_history">
-                        <!-- START - To display the sender and receiver messages -->
-                        <div *ngFor="let message of allGroupMessages ; let i=index">
-                          <div *ngIf="message.roomId == currentRoom.room_id">
-                              <div *ngIf="message.senderName == senderEmail; else receiverMessage">
-                                  <div class="showRight" *ngIf="sourceLangCode == message.sourceLanguageCode; else senderlangDifferent">
-                                 {{message.originalMessage}}<strong>: {{message.senderName}}</strong><br>
-                                  </div>
-                                  <ng-template #senderlangDifferent>
-                                      <div *ngIf="sourceLangCode != message.sourceLanguageCode">
-                                          <strong>{{message.receiverName}}:</strong>{{message.translatedMessage}} <br>
-                                      </div>
-                                  </ng-template>
-                                  <br>
+                      <!-- START - To display the sender and receiver messages -->
+                      <div *ngFor="let message of allGroupMessages ; let i=index">
+                        <div *ngIf="message.roomId == currentRoom.room_id">
+                          <div *ngIf="historyMessage == false; else historyMessageChat">
+                            <div *ngIf="message.senderName == senderEmail; else receiverMessage">
+                              <div class="showRight"
+                                *ngIf="sourceLangCode == message.sourceLanguageCode; else senderlangDifferent">
+                                {{message.originalMessage}}<strong>: {{message.senderName}}</strong><br>
                               </div>
-                              <ng-template #receiverMessage>
-                                <div class="showLeft" *ngIf="sourceLangCode == message.sourceLanguageCode; else langDifferent">
-                                    <strong>{{message.senderName}}: </strong>{{message.originalMessage}}<br>
+                              <ng-template #senderlangDifferent>
+                                <div *ngIf="sourceLangCode != message.sourceLanguageCode">
+                                  <strong>{{message.receiverName}}:</strong>{{message.translatedMessage}} <br>
+                                </div>
+                              </ng-template>
+                              <br>
+                            </div>
+                            <ng-template #receiverMessage>
+                              <div class="showLeft" *ngIf="sourceLangCode == message.sourceLanguageCode; else langDifferent">
+                                <strong>{{message.senderName}}: </strong>{{message.originalMessage}}<br>
+                              </div>
+                              <br>
+                              <ng-template #langDifferent>
+                                <div class="showLeft" *ngIf="sourceLangCode != message.sourceLanguageCode">
+                                  <strong>{{message.senderName}}:</strong>{{message.translatedMessage}} <br>
                                 </div>
                                 <br>
-                                <ng-template #langDifferent>
-                                    <div class="showLeft" *ngIf="sourceLangCode != message.sourceLanguageCode; else langDifferent">
-                                    <strong>{{message.senderName}}:</strong>{{message.translatedMessage}} <br>
-                                    </div>
-                                </ng-template>
-                                  <br>
                               </ng-template>
+                              <br>
+                            </ng-template>
                           </div>
+
+                          <ng-template #historyMessageChat>
+                              <div *ngIf="message.senderName == senderEmail; else receiverMessageHistory">
+                                  <div class="showRight" *ngIf="originalMessage !== 'undefined'; else senderlangDifferentHistory">
+                                    {{message.originalMessage}}<strong>: {{message.senderName}}</strong>
+                                  </div>
+                                  <br>
+                                    <span class="textSmallSize" style="float: right">{{message.sendDate | date:'short'}}</span>
+                                  <br>
+                                  <ng-template #senderlangDifferentHistory>
+                                    <div class="showLeft">
+                                        <strong>{{message.receiverName}}:</strong>{{message.translatedMessage}}
+                                    </div>
+                                    <br>
+                                        <span class="textSmallSize" style="float: left">{{message.sendDate | date:'short'}}</span> 
+                                    <br>
+                                  </ng-template>
+                                  <br>
+                                </div>
+                                <ng-template #receiverMessageHistory>
+                                  <div class="showLeft" *ngIf="originalMessage !== 'undefined'; else langDifferentHistory">
+                                    <strong>{{message.senderName}}: </strong>{{message.originalMessage}}
+                                  </div>
+                                  <br>
+                                    <span class="textSmallSize" style="float: left">{{message.sendDate | date:'short'}}</span>
+                                  <br>
+                                  <ng-template #langDifferentHistory>
+                                    <div class="showRight">
+                                        <strong>{{message.senderName}}:</strong>{{message.translatedMessage}}
+                                    </div>
+                                    <br>
+                                        <span class="textSmallSize" style="float: right">{{message.sendDate | date:'short'}}</span>
+                                    <br>
+                                  </ng-template>
+                                  <br>
+                                </ng-template>
+                          </ng-template>
                         </div>
-                        <!-- END - To display the sender and receiver messages -->
+                      </div>
+                      <!-- END - To display the sender and receiver messages -->
                     </div>
                   </div>
                 </div>
@@ -319,13 +364,14 @@
                           <div class="col-md-10">
                             <div class="input_msg_write">
                               <input type="text" placeholder="Enter Message To Send..." [(ngModel)]="message"
-                                class="form-control write_msg" ng-virtual-keyboard/>
+                                class="form-control write_msg" ng-virtual-keyboard />
                             </div>
                           </div>
                           <div class="col-md-2">
-                              <button class="file_send_btn" title="Send Message" type="button" (click)="sendGroupMessages()" ><i
-                                  class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-                            </div>
+                            <button class="file_send_btn" title="Send Message" type="button"
+                              (click)="sendGroupMessages()"><i class="fa fa-paper-plane-o"
+                                aria-hidden="true"></i></button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -436,7 +482,7 @@
                       <div class="overlay-video">
                         <div class="row">
                           <div class="col-md-12">
-                            <video #videoElement class="img-border" >
+                            <video #videoElement class="img-border">
                               <source>
                             </video>
                           </div>

@@ -157,11 +157,11 @@ export class ChatBoxComponent implements OnInit {
   public allReceivedMessages = [];
   public isChatRoomAvailable: boolean = false;
   public isGroupRoomAvailable: boolean = false;
-  public showLanguageSelection : boolean = false;
-  public isGroupSelected : boolean = false;
-  public currentRoom : any;
-  public allGroupMessages : any = [];
-  public roomfound : boolean = false;
+  public showLanguageSelection: boolean = false;
+  public isGroupSelected: boolean = false;
+  public currentRoom: any;
+  public allGroupMessages: any = [];
+  public roomfound: boolean = false;
   public translateMessage: boolean = false;
   public sendMessageResp: any = [];
   public getSendMessageResp: any = [];
@@ -169,7 +169,7 @@ export class ChatBoxComponent implements OnInit {
 
   public joinRoomDetails: any = [];
   public sourceLangCode: any = 'en';
-  public sourceLanguage:any = "English";
+  public sourceLanguage: any = "English";
   public selectLanguage: any = [
     {
       'language': 'Afrikaans',
@@ -373,7 +373,7 @@ export class ChatBoxComponent implements OnInit {
   ) {
     this.senderEmail = localStorage.getItem('email');
     console.log("Sender Email ID:", this.senderEmail);
-    
+
   }
 
   ngOnInit() {
@@ -386,15 +386,15 @@ export class ChatBoxComponent implements OnInit {
     this.getGroupMessages();
   }
 
- 
-/* START - Socket Connection */
+
+  /* START - Socket Connection */
   async socketConnect() {
     if (this.socketservice) {
       this.subscription = await this.socketservice.getSocketId().subscribe((message: any) => {
         this.serverStatus = true;
         this.fromEmailId = message.emailId;
         this.socketId = message.socketId;
-        this.subscription.unsubscribe();        
+        this.subscription.unsubscribe();
       });
       await this.socketservice.getClients().subscribe((clients: any) => {
         this.clients = clients;
@@ -403,7 +403,7 @@ export class ChatBoxComponent implements OnInit {
       window.RTCPeerConnection = this.getRTCPeerConnection();
       window.RTCSessionDescription = this.getRTCSessionDescription();
       window.RTCIceCandidate = this.getRTCIceCandidate();
-      console.log("**************this.browser****************",this.browser);
+      console.log("**************this.browser****************", this.browser);
       this.browser.getUserMedia = this.getAllUserMedia();
 
       this.peerConnection = new RTCPeerConnection({
@@ -499,10 +499,10 @@ export class ChatBoxComponent implements OnInit {
         // window.alert(offer['email']);
         await this.peerConnection.setRemoteDescription({ type: 'offer', sdp: offer.sdp });
         this.toEmailId = offer['from'];
-        console.log("offer['from'] : " , offer['from']);
+        console.log("offer['from'] : ", offer['from']);
         this.peerConnection.createAnswer().then(async (answer: RTCSessionDescription) => {
           await this.peerConnection.setLocalDescription(answer);
-          console.log("from client id after set local description" , this.fromEmailId);
+          console.log("from client id after set local description", this.fromEmailId);
           this.socketservice.sendAnswer({
             from: this.fromEmailId,
             to: this.toEmailId,
@@ -579,9 +579,9 @@ export class ChatBoxComponent implements OnInit {
       return this.browser.mediaDevices.getUserMedia({ video: { mediaSource: 'screen' } });
     }
   }
-/* END - Socket Connection */
+  /* END - Socket Connection */
 
-/* START - Enable the Text */
+  /* START - Enable the Text */
   public async enableText() {
     // this.connect();
     try {
@@ -601,9 +601,9 @@ export class ChatBoxComponent implements OnInit {
     this.screenEnable = false;
     this.enableFile();
   }
-/* END - Enable the Text */
+  /* END - Enable the Text */
 
-/* START - Enable the File */
+  /* START - Enable the File */
   public enableFile() {
     this.connect();
     try {
@@ -640,7 +640,7 @@ export class ChatBoxComponent implements OnInit {
     setTimeout(() => {
       this.audio = this.audioElement.nativeElement;
       let constraints = { audio: true };
-      console.log("*********this.browser.mediaDevices*************",this.browser);
+      console.log("*********this.browser.mediaDevices*************", this.browser);
       this.browser.mediaDevices.getUserMedia(constraints).then((stream: any) => {
         if (!stream.stop && stream.getTracks) {
           stream.stop = function () {
@@ -668,9 +668,9 @@ export class ChatBoxComponent implements OnInit {
       });
     }, 1000);
   }
-/* END - Enable the Audio file */
+  /* END - Enable the Audio file */
 
-/* START - Enable the Audio Call */
+  /* START - Enable the Audio Call */
   public enableAudioCall() {
     this.connect();
     try {
@@ -690,7 +690,7 @@ export class ChatBoxComponent implements OnInit {
       // this.connect();
       let constraints = { audio: true };
       console.log("Browser Media for Get User Media:", this.browser);
-      
+
       this.browser.mediaDevices.getUserMedia(constraints).then((stream: any) => {
 
         // this.audioCall.autoplay = true;
@@ -706,7 +706,7 @@ export class ChatBoxComponent implements OnInit {
         // this.videoTrack = stream.getVideoTracks();
         this.audioCallTrack = stream.getAudioTracks();
         // if (this.videoTrack) {
-          // console.log('Using video device: ' + this.videoTrack[0].label);
+        // console.log('Using video device: ' + this.videoTrack[0].label);
         // }
         if (this.audioCallTrack) {
           console.log('Using audio call device: ' + this.audioCallTrack[0].label);
@@ -725,9 +725,9 @@ export class ChatBoxComponent implements OnInit {
       });
     }, 1000);
   }
-/* END - Enable the Audio Call */
+  /* END - Enable the Audio Call */
 
-/* START - Enable the video call */
+  /* START - Enable the video call */
   public enableVideo() {
     this.connect();
     try {
@@ -780,9 +780,9 @@ export class ChatBoxComponent implements OnInit {
       });
     }, 1000);
   }
-/* END - Enable the video call */
+  /* END - Enable the video call */
 
-/* START - Enable the Screen share */
+  /* START - Enable the Screen share */
 
   public enableScreen() {
     this.connect();
@@ -829,7 +829,7 @@ export class ChatBoxComponent implements OnInit {
     }, 1000);
   }
 
-/* END - Enable the Screen share */
+  /* END - Enable the Screen share */
 
   public stopAudio() {
     this.audioStream.stop();
@@ -843,7 +843,7 @@ export class ChatBoxComponent implements OnInit {
     this.screenStream.stop();
   }
 
-/* START - Connect the Peer to Peer */
+  /* START - Connect the Peer to Peer */
   public async connect() {
 
     this.selectUser = JSON.stringify(localStorage.getItem('selectedUserInfo'));
@@ -852,12 +852,12 @@ export class ChatBoxComponent implements OnInit {
       if (this.userSelected != '') {
         if (selectedUser.emailId == this.userSelected) {
           this.toEmailId = selectedUser.emailId;
-          console.log("selected user set as toEmailId" ,  this.toEmailId);
+          console.log("selected user set as toEmailId", this.toEmailId);
         }
       } else {
         if (selectedUser.emailId == this.selectUser) {
           this.toEmailId = selectedUser.emailId;
-          console.log("selected user set as toEmailId" ,  this.toEmailId);
+          console.log("selected user set as toEmailId", this.toEmailId);
         }
       }
     });
@@ -907,7 +907,7 @@ export class ChatBoxComponent implements OnInit {
 
           }
           else {
-         
+
             this.sendMessagesObject = {
               sourceLanguageCode: preferedSourceLanguageCode,
               targetLanguageCode: preferedTargetLanguageCode,
@@ -917,7 +917,7 @@ export class ChatBoxComponent implements OnInit {
               emailId: messageData.emailId,
             }
 
-            console.log("this.sendMessagesObject" , this.sendMessagesObject);
+            console.log("this.sendMessagesObject", this.sendMessagesObject);
 
             await this.socketservice.messageToTranslantion(this.sendMessagesObject).then((translatedRespData: any) => {
               console.log("Translated Resp Data :", translatedRespData.translatedMessage.TranslatedText);
@@ -999,7 +999,7 @@ export class ChatBoxComponent implements OnInit {
                   receiverName: translatedRespData.sender,
                   receiverRole: "Freelancer",
                   translatedMessage: translatedRespData.translatedMessage.TranslatedText,
-                  targetLanguageCode : preferedTargetLanguageCode
+                  targetLanguageCode: preferedTargetLanguageCode
                 }
 
                 console.log("Translated data send to cassandra:", this.receivedMessageObject);
@@ -1045,8 +1045,8 @@ export class ChatBoxComponent implements OnInit {
     }).then(async (offer: RTCSessionDescription) => {
       console.log('Offer Send : ', offer);
       await this.peerConnection.setLocalDescription(offer);
-      console.log("this.toEmailId" , this.toEmailId);
-      console.log("this.fromEmailId" , this.fromEmailId);
+      console.log("this.toEmailId", this.toEmailId);
+      console.log("this.fromEmailId", this.fromEmailId);
 
       // this.allClients.forEach(selectedUser => {
 
@@ -1065,11 +1065,11 @@ export class ChatBoxComponent implements OnInit {
       });
     });
   }
-/* End - Connect the Peer to Peer */
+  /* End - Connect the Peer to Peer */
 
 
 
-/* START - Disconnect the Peer to Peer */
+  /* START - Disconnect the Peer to Peer */
   public disconnect() {
     try {
       this.stopAudio();
@@ -1090,7 +1090,7 @@ export class ChatBoxComponent implements OnInit {
     this.receivedFileSize = '';
     this.receivedFileType = '';
   }
-/* END - Disconnect the Peer to Peer */
+  /* END - Disconnect the Peer to Peer */
 
 
   /**
@@ -1136,10 +1136,10 @@ export class ChatBoxComponent implements OnInit {
    * @description select the prefered language
    */
   selectPreferedLanguage(languageCode) {
-    this.selectLanguage.forEach((lang)=>{
-      if(lang.languageCode == languageCode){
-        this.sourceLanguage =lang.language;
-        this.sourceLangCode =lang.languageCode 
+    this.selectLanguage.forEach((lang) => {
+      if (lang.languageCode == languageCode) {
+        this.sourceLanguage = lang.language;
+        this.sourceLangCode = lang.languageCode
         this.showLanguageSelection = false;
       }
     });
@@ -1318,12 +1318,12 @@ export class ChatBoxComponent implements OnInit {
         }
         this.socketservice.createRoom(this.dataForCreateRoom).then((createRoomRespData: any) => {
           let sendInvitationData = {
-            toEmails : this.userSelected,
-            fromEmail : this.emailID
+            toEmails: this.userSelected,
+            fromEmail: this.emailID
           }
-          
-          this.socketservice.sendInvitaionByEmail(sendInvitationData).then((invitaionsRes:any)=>{
-            console.log("*******************invitaionsRes*********************",invitaionsRes);
+
+          this.socketservice.sendInvitaionByEmail(sendInvitationData).then((invitaionsRes: any) => {
+            console.log("*******************invitaionsRes*********************", invitaionsRes);
           });
 
           let dataForJoinRoom = {
@@ -1349,11 +1349,11 @@ export class ChatBoxComponent implements OnInit {
           });
         });
       }
-      else{
+      else {
         this.socketservice.joinRoom(this.dataForJoinRoom).subscribe((joinRes: any) => {
           localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
         });
-       }
+      }
     }
   }
 
@@ -1461,7 +1461,7 @@ export class ChatBoxComponent implements OnInit {
     console.log("Inside createOrJoinGroupRoomChat");
     this.groupNamesArray.forEach((groupRoom) => {
       groupRoom.participants.forEach(participant => {
-        if (participant.participant_name == this.userSelected || this.userSelected == groupRoom.room_name){
+        if (participant.participant_name == this.userSelected || this.userSelected == groupRoom.room_name) {
           console.log("groupRoom", groupRoom);
           this.roomId = groupRoom.room_id,
             this.roomName = groupRoom.room_name
@@ -1481,8 +1481,8 @@ export class ChatBoxComponent implements OnInit {
         localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
       });
     } else if (this.userRole == "Employer") {
-      console.log("******************this.roomId******************",this.roomId);
-      console.log("******************this.roomName******************",this.roomName);
+      console.log("******************this.roomId******************", this.roomId);
+      console.log("******************this.roomName******************", this.roomName);
 
       if (this.roomId == "" && this.roomName == "") {
         this.setOfParticipants = [];
@@ -1500,12 +1500,12 @@ export class ChatBoxComponent implements OnInit {
         this.socketservice.createRoom(this.dataForCreateRoom).then((createRoomRespData: any) => {
           console.log("*******************Room created*********************");
           let sendInvitationData = {
-            toEmails : this.selectedGroupUserForm.value.groupUserName,
-            fromEmail : this.emailID
+            toEmails: this.selectedGroupUserForm.value.groupUserName,
+            fromEmail: this.emailID
           }
-          
-          this.socketservice.sendInvitaionByEmail(sendInvitationData).then((invitaionsRes:any)=>{
-            console.log("*******************invitaionsRes*********************",invitaionsRes);
+
+          this.socketservice.sendInvitaionByEmail(sendInvitationData).then((invitaionsRes: any) => {
+            console.log("*******************invitaionsRes*********************", invitaionsRes);
           });
 
           let dataForJoinRoom = {
@@ -1513,7 +1513,7 @@ export class ChatBoxComponent implements OnInit {
             roomName: createRoomRespData.responseObject[0].roomName,
             userName: this.emailID
           }
-          
+
           console.log("joining room", createRoomRespData);
           this.setOfParticipants = [];
           this.setOfParticipants.push({ 'participant_name': this.emailID, 'role': 'Employer', 'type': 'Initiator' });
@@ -1541,7 +1541,7 @@ export class ChatBoxComponent implements OnInit {
     }
   }
 
-  /**********************************get all messages**************************************/   
+  /**********************************get all messages**************************************/
   /**
    * @author Shefali Bhavekar
    * @date 21/12/2019
@@ -1551,7 +1551,7 @@ export class ChatBoxComponent implements OnInit {
   getAllMessages(){
     this.allRoomsInformation.forEach(room => {
       let getMsgRequest = {
-        roomId : room.room_id
+        roomId: room.room_id
       }
       this.socketservice.getAllMessages(getMsgRequest).then((msgs : any)=>{
         this.allHistoryMessages.push(msgs);
@@ -1562,59 +1562,60 @@ export class ChatBoxComponent implements OnInit {
     });
   }
 
- /************************sender and receiver wise sorting of messages to show history**************************************/   
+  /************************sender and receiver wise sorting of messages to show history**************************************/
   /**
    * @author Shefali Bhavekar
    * @date 21/12/2019
    * @name showIndependentHistoryMessages()
    */
 
-  showIndependentHistoryMessages(){
+  showIndependentHistoryMessages() {
     // console.log("*******************Inside showIndependentHistoryMessages*****************");
-    if(this.allIndependentChatRooms != undefined){
+    if (this.allIndependentChatRooms != undefined) {
       this.allIndependentChatRooms.forEach((independentRoom) => {
         independentRoom.participants.forEach(participant => {
           if (participant.participant_name == this.userSelected) {
             console.log("allHistoryMessages values:", this.allHistoryMessages);
-            if(this.allHistoryMessages != undefined){
-              this.allHistoryMessages.forEach((history) =>{
-                console.log("history values:",history);
-                  if(history.customResponseObject.roomId == independentRoom.room_id){
-                    this.allHistoryMessagesOfRoom.push(history.responseObject);
-                    history.responseObject.forEach(element => {
-                      console.log("Element:", element);
-                      
-                      // if(this.userSelected == element.senderName || this.userSelected == element.ReceiverName){
-                        // console.log("*****************history.responseObject***********" , element);
-                          let msg = {
-                            roomId : history.customResponseObject.roomId,
-                            sessionId : element.sessionId,
-                            receiverName : element.receiverData.receiverName ,
-                            receiverRole : element.receiverData.receiverRole,
-                            messageId : element.messageId,
-                            sourceLanguageCode : element.sourceLanguageCode,
-                            targetLanguageCode : element.receiverData.targetLanguageCode,
-                            senderName : element.senderName,
-                            senderRole:element.senderRole,
-                            originalMessage : element.originalMessage,
-                            translatedMessage :  element.receiverData.translatedMessage,
-                            sendDate : element.sendDate,
-                            receiveDate : element.receiverData.recievedDate,
-                           }
-                           console.log("Get all messages:", msg);
-      
-                           this.allGroupMessages.push(msg);
-             
-      
-                    });
-                  }
-                });
+            if (this.allHistoryMessages != undefined) {
+              this.allHistoryMessages.forEach((history) => {
+                console.log("history values:", history);
+                if (history.customResponseObject.roomId == independentRoom.room_id) {
+                  this.allHistoryMessagesOfRoom.push(history.responseObject);
+                  history.responseObject.forEach(element => {
+                    console.log("Element:", element);
+
+                    // if(this.userSelected == element.senderName || this.userSelected == element.ReceiverName){
+                    // console.log("*****************history.responseObject***********" , element);
+                    let msg = {
+                      historyMessage:true,
+                      roomId: history.customResponseObject.roomId,
+                      sessionId: element.sessionId,
+                      receiverName: element.receiverData.receiverName,
+                      receiverRole: element.receiverData.receiverRole,
+                      messageId: element.messageId,
+                      sourceLanguageCode: element.sourceLanguageCode,
+                      targetLanguageCode: element.receiverData.targetLanguageCode,
+                      senderName: element.senderName,
+                      senderRole: element.senderRole,
+                      originalMessage: element.originalMessage,
+                      translatedMessage: element.receiverData.translatedMessage,
+                      sendDate: element.sendDate,
+                      receiveDate: element.receiverData.recievedDate,
+                    }
+                    console.log("Get all messages:", msg);
+
+                    this.allGroupMessages.push(msg);
+
+
+                  });
+                }
+              });
             }
           }
         });
       });
     }
-   
+
   }
 
  /************************sender and receiver wise sorting of messages to show history**************************************/   
@@ -1623,121 +1624,132 @@ export class ChatBoxComponent implements OnInit {
    * @date 25/12/2019
    * @name showGroupHistoryMessages()
    */
-  showGroupHistoryMessages(){
-    this.groupNamesArray.forEach((groupRoom)=>{
-        this.allHistoryMessages.forEach((history)=>{
-          if(history.customResponseObject.roomId == groupRoom.room_id){
-            this.allHistoryMessagesOfRoom.push(history.responseObject);
-            history.responseObject.forEach(element => {
-              let msg = {
-                roomId : element.roomId,
-                sessionId : element.sessionId,
-                receiverName : element.receiverData.receiverName ,
-                receiverRole : element.receiverData.receiverRole,
-                messageId : element.messageId,
-                sourceLanguageCode : element.sourceLanguageCode,
-                targetLanguageCode : element.receiverData.targetLanguageCode,
-                senderName : element.senderName,
-                senderRole:element.senderRole,
-                originalMessage : element.originalMessage,
-                translatedMessage :  element.receiverData.translatedMessage,
-                sendDate : element.sendDate,
-                receiveDate : element.receiverData.recievedDate,
-               }
-               this.allGroupMessages.push(msg);
-        console.log("Get all Group previous messages :", this.allGroupMessages);
 
-            });
-          }
+  showGroupHistoryMessages() {
+    // console.log("*******************Inside showGroupHistoryMessages*****************");
+    console.log("In group History message");
+    
+    if(this.groupNamesArray !== undefined){
+      this.groupNamesArray.forEach((groupRoom) => {
+        if(this.allHistoryMessages !== undefined){
+          console.log("History group message:", this.allHistoryMessages );
+          
+          this.allHistoryMessages.forEach((history) => {
+            if (history.customResponseObject.roomId == groupRoom.room_id) {
+              this.allHistoryMessagesOfRoom.push(history.responseObject);
+              history.responseObject.forEach(element => {
+                let msg = {
+                  historyMessage:true,
+                  roomId: element.roomId,
+                  sessionId: element.sessionId,
+                  receiverName: element.receiverData.receiverName,
+                  receiverRole: element.receiverData.receiverRole,
+                  messageId: element.messageId,
+                  sourceLanguageCode: element.sourceLanguageCode,
+                  targetLanguageCode: element.receiverData.targetLanguageCode,
+                  senderName: element.senderName,
+                  senderRole: element.senderRole,
+                  originalMessage: element.originalMessage,
+                  translatedMessage: element.receiverData.translatedMessage,
+                  sendDate: element.sendDate,
+                  receiveDate: element.receiverData.recievedDate,
+                }
+                this.allGroupMessages.push(msg);
+                console.log("Get all Group previous messages :", this.allGroupMessages);
+    
+              });
+            }
+          });
+        }
       });
-    });
+    }
   }
 
- /************************************Changing Language for traslation**************************************/   
+  /************************************Changing Language for traslation**************************************/
   /**
    * @author Shefali Bhavekar
    * @date 24/12/2019
    * @name changeLanguage()
    */
-  changeLanguage(event : any){
-   if(event ==  true){
-    this.showLanguageSelection = true;
-   }else{
-    this.showLanguageSelection = false;
-   }
+  changeLanguage(event: any) {
+    if (event == true) {
+      this.showLanguageSelection = true;
+    } else {
+      this.showLanguageSelection = false;
+    }
   }
 
 
-  /************************************Group selection**************************************/   
+  /************************************Group selection**************************************/
   /**
    * @author Shefali Bhavekar
    * @date 24/12/2019
    * @name groupSelected()
    */
-  groupSelected(i : any){
+  groupSelected(i: any) {
     this.isGroupSelected = true;
     this.textEnable = true;
     this.userselect = true;
-    this.userSelected=this.groupNamesArray[i].room_name;
+    this.userSelected = this.groupNamesArray[i].room_name;
     this.currentRoom = this.groupNamesArray[i];
     this.joinRoomDetails = localStorage.getItem('joinRoomDetails');
     this.createOrJoinGroupRoomChat();
   }
 
 
-  independentChatSelected(independentUser : any){
-    this.userSelected=independentUser;
+  independentChatSelected(independentUser: any) {
+    this.userSelected = independentUser;
     this.textEnable = true;
     this.userselect = true;
-    this.allIndependentChatRooms.forEach((independentRoom : any)=>{
-     independentRoom.participants.forEach((participant : any) => {
-        if(participant.participant_name == independentUser){
+    this.allIndependentChatRooms.forEach((independentRoom: any) => {
+      independentRoom.participants.forEach((participant: any) => {
+        if (participant.participant_name == independentUser) {
           this.currentRoom = independentRoom;
         }
-     });  
+      });
     });
     this.createOrJoinIndependentChat();
   }
-  /************************************Send Group messages**************************************/   
+  /************************************Send Group messages**************************************/
   /**
    * @author Shefali Bhavekar
    * @date 24/12/2019
    * @name sendGroupMessages()
    */
 
-  sendGroupMessages(){
-    let currentJoinRoom : any;
-    let joinRoomDetails : any = [];
-    let sendMessageData : any;
-    
+  sendGroupMessages() {
+    let currentJoinRoom: any;
+    let joinRoomDetails: any = [];
+    let sendMessageData: any;
+
     joinRoomDetails = JSON.parse(localStorage.getItem('joinRoomDetails'));
 
     joinRoomDetails.forEach(room => {
-      if(this.currentRoom.room_id == room.roomId){
+      if (this.currentRoom.room_id == room.roomId) {
         currentJoinRoom = room;
-        console.log("*******currentJoinRoom*****" , currentJoinRoom);
-        room.users.forEach((user)=>{
-          if(user.userName == this.emailID){
+        console.log("*******currentJoinRoom*****", currentJoinRoom);
+        room.users.forEach((user) => {
+          if (user.userName == this.emailID) {
             sendMessageData = {
-              originalMessage : this.message,
-              roomId :  currentJoinRoom.roomId,
-              sessionId : user.sessionId,
-              sender : this.emailID,
-              senderRole : this.userRole,
-              sourceLanguageCode : this.sourceLangCode,
+              originalMessage: this.message,
+              roomId: currentJoinRoom.roomId,
+              sessionId: user.sessionId,
+              sender: this.emailID,
+              senderRole: this.userRole,
+              sourceLanguageCode: this.sourceLangCode,
             }
-            this.socketservice.sendMessageToCassandra(sendMessageData).then((msgRes : any)=>{
-              console.log("################****msgRes*****#################" , msgRes);
-              if(msgRes.status == "Success"){
+            this.socketservice.sendMessageToCassandra(sendMessageData).then((msgRes: any) => {
+              console.log("################****msgRes*****#################", msgRes);
+              if (msgRes.status == "Success") {
                 sendMessageData = {
-                  originalMessage : this.message,
-                  roomId :  currentJoinRoom.roomId,
-                  sessionId : user.sessionId,
-                  senderName : this.emailID,
-                  senderRole : this.userRole,
-                  sourceLanguageCode : this.sourceLangCode,
-                  messageId:msgRes.responseObject.messageId,
-                  sendDate:msgRes.responseObject.sendDate
+                  originalMessage: this.message,
+                  roomId: currentJoinRoom.roomId,
+                  sessionId: user.sessionId,
+                  senderName: this.emailID,
+                  senderRole: this.userRole,
+                  sourceLanguageCode: this.sourceLangCode,
+                  messageId: msgRes.responseObject.messageId,
+                  sendDate: msgRes.responseObject.sendDate
                 }
                 this.socketservice.sendMessagestoGroup(msgRes.responseObject);
                 this.allGroupMessages.push(sendMessageData);
