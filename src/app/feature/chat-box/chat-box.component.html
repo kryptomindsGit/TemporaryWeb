@@ -91,7 +91,7 @@
           <ng-template #isShowRoomNotAvailable>
             <div class="card-body">
               <div class="msg-box text-center py-4">
-                <p>Room is not available</p>
+                <p>No chats available</p>
               </div>
             </div>
           </ng-template>
@@ -320,14 +320,14 @@
                                     {{message.originalMessage}}<strong>: {{message.senderName}}</strong>
                                   </div>
                                   <br>
-                                    <span class="textSmallSize" style="float: right">{{message.sendDate | date:'short'}}</span>
+                                    <span class="textSmallSize" style="float: right">{{message.sendDate | date:'d/M/yy, h:mm a'}}</span>
                                   <br>
                                   <ng-template #senderlangDifferentHistory>
                                     <div class="showLeft">
                                         <strong>{{message.receiverName}}:</strong>{{message.translatedMessage}}
                                     </div>
                                     <br>
-                                        <span class="textSmallSize" style="float: left">{{message.sendDate | date:'short'}}</span> 
+                                        <span class="textSmallSize" style="float: left">{{message.sendDate | date:'d/M/yy, h:mm a'}}</span> 
                                     <br>
                                   </ng-template>
                                   <br>
@@ -337,14 +337,14 @@
                                     <strong>{{message.senderName}}: </strong>{{message.originalMessage}}
                                   </div>
                                   <br>
-                                    <span class="textSmallSize" style="float: left">{{message.sendDate | date:'short'}}</span>
+                                    <span class="textSmallSize" style="float: left">{{message.sendDate | date:'d/M/yy, h:mm a'}}</span>
                                   <br>
                                   <ng-template #langDifferentHistory>
                                     <div class="showRight">
                                         <strong>{{message.senderName}}:</strong>{{message.translatedMessage}}
                                     </div>
                                     <br>
-                                        <span class="textSmallSize" style="float: right">{{message.sendDate | date:'short'}}</span>
+                                        <span class="textSmallSize" style="float: right">{{message.sendDate | date:'d/M/yy, h:mm a'}}</span>
                                     <br>
                                   </ng-template>
                                   <br>
@@ -364,7 +364,7 @@
                           <div class="col-md-10">
                             <div class="input_msg_write">
                               <input type="text" placeholder="Enter Message To Send..." [(ngModel)]="message"
-                                class="form-control write_msg" ng-virtual-keyboard />
+                                class="form-control write_msg" ng-virtual-keyboard (keyup.enter)="sendGroupMessages()" id="resetInputMessage" />
                             </div>
                           </div>
                           <div class="col-md-2">

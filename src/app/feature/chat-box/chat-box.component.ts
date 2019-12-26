@@ -1753,6 +1753,7 @@ export class ChatBoxComponent implements OnInit {
                 }
                 this.socketservice.sendMessagestoGroup(msgRes.responseObject);
                 this.allGroupMessages.push(sendMessageData);
+                this.message = "";
                 console.log("********** allGroupMessages data************", this.allGroupMessages );
               }
             });
@@ -1837,6 +1838,7 @@ _handleReaderLoaded(readerEvt) {
   }
 
   public downloadFile(downloadFile: any) {
+    console.log("Download file methos called : ", downloadFile)
     let sliceSize=512;
     const byteArrays = [];
     let contentType='';
@@ -1871,9 +1873,11 @@ _handleReaderLoaded(readerEvt) {
   async getGroupMessages(){
     let msg : any ;
     await this.socketservice.getGroupMessages().subscribe((messages: any) => {
+      console.log("Response of file :", messages)
     if(messages.sendingFileFlag == true){
+
       console.log("*********************incomming file messges*************************",messages);
-      // this.downloadFile(messages);
+      this.downloadFile(messages);
 
       msg = {
           roomId : messages.roomId,
