@@ -371,6 +371,14 @@ async getAllMessages(data: any){
   }
 }
 
+async sendInvitaionByEmail(data : any) {
+  try{
+    let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/group-invitations`,data,httpOptions).toPromise();
+  }catch(error){
+    await this.handleError(error);
+  }
+}
+
 
   // Error Handler
   handleError(error) {

@@ -1418,6 +1418,15 @@ export class ChatBoxComponent implements OnInit {
           roomType: "Individual"
         }
         this.socketservice.createRoom(this.dataForCreateRoom).then((createRoomRespData: any) => {
+          let sendInvitationData = {
+            toEmails : this.userSelected,
+            fromEmail : this.emailID
+          }
+          
+          this.socketservice.sendInvitaionByEmail(sendInvitationData).then((invitaionsRes:any)=>{
+            console.log("*******************invitaionsRes*********************",invitaionsRes);
+          });
+
           let dataForJoinRoom = {
             roomId: createRoomRespData.responseObject[0].this.roomId,
             roomName: createRoomRespData.responseObject[0].roomName,
@@ -1573,6 +1582,9 @@ export class ChatBoxComponent implements OnInit {
         localStorage.setItem('joinRoomDetails', JSON.stringify(joinRes));
       });
     } else if (this.userRole == "Employer") {
+      console.log("******************this.roomId******************",this.roomId);
+      console.log("******************this.roomName******************",this.roomName);
+
       if (this.roomId == "" && this.roomName == "") {
         this.setOfParticipants = [];
         this.setOfParticipants.push({ 'username': this.emailID, 'role': 'Employer', 'type': 'Initiator' });
@@ -1587,11 +1599,22 @@ export class ChatBoxComponent implements OnInit {
         }
         console.log("creating room", this.dataForCreateRoom);
         this.socketservice.createRoom(this.dataForCreateRoom).then((createRoomRespData: any) => {
+          console.log("*******************Room created*********************");
+          let sendInvitationData = {
+            toEmails : this.selectedGroupUserForm.value.groupUserName,
+            fromEmail : this.emailID
+          }
+          
+          this.socketservice.sendInvitaionByEmail(sendInvitationData).then((invitaionsRes:any)=>{
+            console.log("*******************invitaionsRes*********************",invitaionsRes);
+          });
+
           let dataForJoinRoom = {
             roomId: createRoomRespData.responseObject[0].roomId,
             roomName: createRoomRespData.responseObject[0].roomName,
             userName: this.emailID
           }
+          
           console.log("joining room", createRoomRespData);
           this.setOfParticipants = [];
           this.setOfParticipants.push({ 'participant_name': this.emailID, 'role': 'Employer', 'type': 'Initiator' });
