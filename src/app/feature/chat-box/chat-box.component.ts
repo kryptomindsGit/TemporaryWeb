@@ -167,6 +167,7 @@ export class ChatBoxComponent implements OnInit {
   public getSendMessageResp: any = [];
   public fileBase64 : any;
 
+  public joinRoomDetails: any = [];
   public sourceLangCode: any = 'en';
   public sourceLanguage:any = "English";
   public selectLanguage: any = [
@@ -385,8 +386,8 @@ export class ChatBoxComponent implements OnInit {
     this.getGroupMessages();
   }
 
-  /******************************** Socket Connection *****************************************/
-
+ 
+/* START - Socket Connection */
   async socketConnect() {
     if (this.socketservice) {
       this.subscription = await this.socketservice.getSocketId().subscribe((message: any) => {
@@ -578,7 +579,9 @@ export class ChatBoxComponent implements OnInit {
       return this.browser.mediaDevices.getUserMedia({ video: { mediaSource: 'screen' } });
     }
   }
+/* END - Socket Connection */
 
+/* START - Enable the Text */
   public async enableText() {
     // this.connect();
     try {
@@ -598,7 +601,9 @@ export class ChatBoxComponent implements OnInit {
     this.screenEnable = false;
     this.enableFile();
   }
+/* END - Enable the Text */
 
+/* START - Enable the File */
   public enableFile() {
     this.connect();
     try {
@@ -618,14 +623,17 @@ export class ChatBoxComponent implements OnInit {
     this.screenEnable = false;
   }
 
+/* END - Enable the File */
+
+
   // public handleFileInput(files: FileList) {
-  //   console.log("File Handle method calling...");
+    // console.log("File Handle method calling...");
   //   // this.enableFile();
   //   if (files[0]) {
   //     this.file = files[0];
   //     this.sendFileName = this.file['name'];
   //     // this.senderFileName = this.file['name'];
-  //     console.log(this.file);
+      // console.log(this.file);
   //     this.sendProgressMin = 0;
   //     this.sendProgressMax = this.file.size;
   //     this.messages.push(JSON.parse(JSON.stringify({ senderFile: this.file['name'], user: 'sender' })));
@@ -636,12 +644,13 @@ export class ChatBoxComponent implements OnInit {
   //   }
   // }
 
-   /************************convert file object to base 64 **************************************/   
-  /**
+   /**
    * @author Shefali Bhavekar
    * @date 25/12/2019
    * @name sendBase64File()
+   * @description convert file object to base 64
    */
+/* START - convert file object to base 64 */
 
   sendFile(files : FileList){
     console.log("******************file*******************", files[0]);
@@ -653,6 +662,7 @@ export class ChatBoxComponent implements OnInit {
     });
 
   }
+/* END - convert file object to base 64 */
 
 
   // public sendFile() {
@@ -711,7 +721,9 @@ export class ChatBoxComponent implements OnInit {
 
     saveAs(this.receivedBlob, downloadFile);
   }
+/* END - Send file */
 
+/* START - Enable the Audio File*/
   public enableAudio() {
     this.connect();
     try {
@@ -757,7 +769,9 @@ export class ChatBoxComponent implements OnInit {
       });
     }, 1000);
   }
+/* END - Enable the Audio file */
 
+/* START - Enable the Audio Call */
   public enableAudioCall() {
     this.connect();
     try {
@@ -793,7 +807,7 @@ export class ChatBoxComponent implements OnInit {
         // this.videoTrack = stream.getVideoTracks();
         this.audioCallTrack = stream.getAudioTracks();
         // if (this.videoTrack) {
-        //   console.log('Using video device: ' + this.videoTrack[0].label);
+          // console.log('Using video device: ' + this.videoTrack[0].label);
         // }
         if (this.audioCallTrack) {
           console.log('Using audio call device: ' + this.audioCallTrack[0].label);
@@ -812,7 +826,9 @@ export class ChatBoxComponent implements OnInit {
       });
     }, 1000);
   }
+/* END - Enable the Audio Call */
 
+/* START - Enable the video call */
   public enableVideo() {
     this.connect();
     try {
@@ -865,6 +881,9 @@ export class ChatBoxComponent implements OnInit {
       });
     }, 1000);
   }
+/* END - Enable the video call */
+
+/* START - Enable the Screen share */
 
   public enableScreen() {
     this.connect();
@@ -911,6 +930,8 @@ export class ChatBoxComponent implements OnInit {
     }, 1000);
   }
 
+/* END - Enable the Screen share */
+
   public stopAudio() {
     this.audioStream.stop();
   }
@@ -923,6 +944,7 @@ export class ChatBoxComponent implements OnInit {
     this.screenStream.stop();
   }
 
+/* START - Connect the Peer to Peer */
   public async connect() {
 
     this.selectUser = JSON.stringify(localStorage.getItem('selectedUserInfo'));
@@ -1144,8 +1166,11 @@ export class ChatBoxComponent implements OnInit {
       });
     });
   }
+/* End - Connect the Peer to Peer */
 
 
+
+/* START - Disconnect the Peer to Peer */
   public disconnect() {
     try {
       this.stopAudio();
@@ -1166,10 +1191,13 @@ export class ChatBoxComponent implements OnInit {
     this.receivedFileSize = '';
     this.receivedFileType = '';
   }
+/* END - Disconnect the Peer to Peer */
+
 
   /**
+   * @author Irshad Ahmed
    * @name decodeJWToken()
-   * @description decode the JWT
+   * @description decode the JWT Token
    */
   decodeJWToken() {
     let token = localStorage.getItem('access_token');
@@ -1179,6 +1207,7 @@ export class ChatBoxComponent implements OnInit {
   }
 
   /**
+   * @author Irshad Ahmed
    * @name getValidateLanguage
    * @description validate language form data
    */
@@ -1190,6 +1219,7 @@ export class ChatBoxComponent implements OnInit {
   }
 
   /**
+   * @author Irshad Ahmed
    * @name getValidateGroupUser
    * @description validate group room form data
    */
@@ -1200,6 +1230,12 @@ export class ChatBoxComponent implements OnInit {
     });
   }
 
+  /**
+   * @author Irshad Ahmed
+   * @name selectPreferedLanguage
+   * @param languageCode
+   * @description select the prefered language
+   */
   selectPreferedLanguage(languageCode) {
     this.selectLanguage.forEach((lang)=>{
       if(lang.languageCode == languageCode){
@@ -1227,6 +1263,7 @@ export class ChatBoxComponent implements OnInit {
   }
 
   /**
+   * @author Irshad Ahmed
    * @name getAllUser()
    * @description call API for get registered Users from Server.
    */
@@ -1241,25 +1278,6 @@ export class ChatBoxComponent implements OnInit {
       });
     }
   }
-
-
-  /**
-   * @name selectedUser
-   * @param selectedUser 
-   * @description select user
-   */
-  // async selectedUser(selectUser) {
-  //   console.log("selected User Information :", selectUser);
-  //   this.userselect = true;
-  //   // this.selectedUserInfo = JSON.stringify(selectUser);
-  //   // localStorage.setItem('selectedUserInfo', this.selectedUserInfo)
-  //   // this.userSelected = selectUser.emailId || selectUser;
-  //   // this.activeStatus = selectUser.isLoggedIn;
-  //   // this.langSelect = true;
-
-  //   // this.connect();
-  //   this.createOrJoinIndependentChat();
-  // }
 
   /**
    * @name selectEvent()
@@ -1279,26 +1297,13 @@ export class ChatBoxComponent implements OnInit {
     // do something when input is focused
   }
 
-  // getLocalStorageSenderMessage() {
-  //   var fromStorage = localStorage.getItem("senderObj");
-  //   var objectsFromStorage = JSON.parse(fromStorage)
-  //   this.newMessageObject = objectsFromStorage;
-  // }
-
-  // getLocalStorageReceiverMessage() {
-  //   var fromStorage = localStorage.getItem("receiverObj");
-  //   var objectsFromStorage = JSON.parse(fromStorage)
-  //   this.newMessageObject = objectsFromStorage;
-  // }
-
   // save the chat message's in DB
-  saveChatMessage() {
-    var sendfromStorage = localStorage.getItem("senderObj");
-    var sendObjectsFromStorage = JSON.parse(sendfromStorage);
-    var recfromStorage = localStorage.getItem("receiverObj");
-    var receiveObjectsFromStorage = JSON.parse(recfromStorage);
-  }
-
+  // saveChatMessage() {
+  //   var sendfromStorage = localStorage.getItem("senderObj");
+  //   var sendObjectsFromStorage = JSON.parse(sendfromStorage);
+  //   var recfromStorage = localStorage.getItem("receiverObj");
+  //   var receiveObjectsFromStorage = JSON.parse(recfromStorage);
+  // }
 
   selectedGroupUsers() {
     console.log("Selected Group Users:", this.selectedGroupUserForm.value);
@@ -1533,7 +1538,7 @@ export class ChatBoxComponent implements OnInit {
     this.messages.push(JSON.parse(JSON.stringify({ emailId: this.fromEmailId, user: 'sender', data: this.message })));
     this.message = '';
     var stringToStore = JSON.stringify(this.messageObject);
-    localStorage.setItem("senderObj", stringToStore);
+    // localStorage.setItem("senderObj", stringToStore);
     // this.getLocalStorageSenderMessage();
   }
 
@@ -1622,15 +1627,17 @@ export class ChatBoxComponent implements OnInit {
    */
 
   getAllMessages(){
-    console.log("***********getting all messages to show history********************");
+    // console.log("***********getting all messages to show history********************");
     this.allRoomsInformation.forEach(room => {
       let getMsgRequest = {
         roomId : room.room_id
       }
-      console.log("***********getMsgRequest for getting all messages to show history********************",getMsgRequest);
+      // console.log("***********getMsgRequest for getting all messages to show history********************",getMsgRequest);
       this.socketservice.getAllMessages(getMsgRequest).then((msgs : any)=>{
         this.allHistoryMessages.push(msgs);
-        console.log("***********allHistoryMessages********************",this.allHistoryMessages);
+        console.log("Get All previous messages :", this.allHistoryMessages);
+        
+        // console.log("***********allHistoryMessages********************",this.allHistoryMessages);
 
       });
     });
@@ -1644,20 +1651,20 @@ export class ChatBoxComponent implements OnInit {
    */
 
   showIndependentHistoryMessages(){
-    console.log("*******************Inside showIndependentHistoryMessages*****************");
+    // console.log("*******************Inside showIndependentHistoryMessages*****************");
     this.allIndependentChatRooms.forEach((independentRoom) => {
       independentRoom.participants.forEach(participant => {
         if (participant.participant_name == this.userSelected) {
           this.allHistoryMessages.forEach((history) =>{
-            console.log("*******************Inside allHistoryMessages*****************",history);
-            console.log("*******************history.customResponseObject.roomId*****************",history.customResponseObject.roomId);
-            console.log("*******************independentRoom.room_id*****************",independentRoom.room_id);
+            // console.log("*******************Inside allHistoryMessages*****************",history);
+            // console.log("*******************history.customResponseObject.roomId*****************",history.customResponseObject.roomId);
+            // console.log("*******************independentRoom.room_id*****************",independentRoom.room_id);
             if(history.customResponseObject.roomId == independentRoom.room_id){
               this.allHistoryMessagesOfRoom.push(history.responseObject);
-              console.log("*******************this.allHistoryMessagesOfRoom*****************",this.allHistoryMessagesOfRoom);
+              // console.log("*******************this.allHistoryMessagesOfRoom*****************",this.allHistoryMessagesOfRoom);
               history.responseObject.forEach(element => {
                 // if(this.userSelected == element.senderName || this.userSelected == element.ReceiverName){
-                  console.log("*****************history.responseObject***********" , element);
+                  // console.log("*****************history.responseObject***********" , element);
                     let msg = {
                       roomId : element.roomId,
                       sessionId : element.sessionId,
@@ -1690,7 +1697,7 @@ export class ChatBoxComponent implements OnInit {
 
    
   showGroupHistoryMessages(){
-    console.log("*******************Inside showGroupHistoryMessages*****************");
+    // console.log("*******************Inside showGroupHistoryMessages*****************");
     this.groupNamesArray.forEach((groupRoom)=>{
         this.allHistoryMessages.forEach((history)=>{
           if(history.customResponseObject.roomId == groupRoom.room_id){
@@ -1745,6 +1752,12 @@ export class ChatBoxComponent implements OnInit {
     this.userselect = true;
     this.userSelected=this.groupNamesArray[i].room_name;
     this.currentRoom = this.groupNamesArray[i];
+
+    this.joinRoomDetails = localStorage.getItem('joinRoomDetails');
+    console.log("Join room details :", this.joinRoomDetails);
+    console.log("Join room details :", this.joinRoomDetails.roomId);
+    console.log("Seleted User Room ID: ", this.groupNamesArray[i].room_id);
+    
     // if(this.allGroupMessages.length == 0){
     //   let data = {
     //     roomId : this.currentRoom.room_id,
@@ -1777,7 +1790,7 @@ export class ChatBoxComponent implements OnInit {
      independentRoom.participants.forEach((participant : any) => {
         if(participant.participant_name == independentUser){
           this.currentRoom = independentRoom;
-          console.log("**************currentRoom************",this.currentRoom);
+          // console.log("**************currentRoom************",this.currentRoom);
         }
      });  
     });
@@ -1830,7 +1843,7 @@ export class ChatBoxComponent implements OnInit {
                 // this.allGroupMessages.forEach((msgRoom)=>{
                 //   if(msgRoom.roomId == msgRes.responseObject.roomId){
                 //     msgRoom.messages.push(sendMessageData);
-                //     console.log("************this.allGroupMessages after pushing****************" , this.allGroupMessages);
+                    // console.log("************this.allGroupMessages after pushing****************" , this.allGroupMessages);
                 //   }
                 // });
                 
@@ -1880,7 +1893,7 @@ export class ChatBoxComponent implements OnInit {
           // this.allGroupMessages.forEach((msgRoom)=>{
           //   if(msgRoom.roomId == messages.roomId){
           //     msgRoom.messages.push(msg);
-          //     console.log("************this.allGroupMessages after pushing****************" , this.allGroupMessages);
+              // console.log("************this.allGroupMessages after pushing****************" , this.allGroupMessages);
           //   }
           // });
           this.allGroupMessages.push(msg);
@@ -1931,7 +1944,7 @@ export class ChatBoxComponent implements OnInit {
             //   if(msgRoom.roomId == messages.roomId){
             //     msgRoom.messages.push(msg);
             //   }
-            //   console.log("*******************allGroupMessages after receiveing traslation**************", this.allGroupMessages);
+              // console.log("*******************allGroupMessages after receiveing traslation**************", this.allGroupMessages);
             // });
          });
        });

@@ -281,29 +281,31 @@
                     <div id="msg_history">
                         <!-- START - To display the sender and receiver messages -->
                         <div *ngFor="let message of allGroupMessages ; let i=index">
-                          <div *ngIf="message.senderName == senderEmail; else receiverMessage">
-                              <div class="showRight" *ngIf="sourceLangCode != message.sourceLanguageCode; else senderlangDifferent">
-                             {{message.originalMessage}}<strong>: {{message.senderName}}</strong><br>
-                              </div>
-                              <ng-template #senderlangDifferent>
-                                  <div *ngIf="sourceLangCode != message.sourceLanguageCode">
-                                      <strong>{{message.receiverName}}:</strong>{{message.translatedMessage}} <br>
+                          <div *ngIf="message.roomId == currentRoom.room_id">
+                              <div *ngIf="message.senderName == senderEmail; else receiverMessage">
+                                  <div class="showRight" *ngIf="sourceLangCode == message.sourceLanguageCode; else senderlangDifferent">
+                                 {{message.originalMessage}}<strong>: {{message.senderName}}</strong><br>
                                   </div>
-                              </ng-template>
-                              <br>
-                          </div>
-                          <ng-template #receiverMessage>
-                            <div class="showLeft" *ngIf="sourceLangCode == message.sourceLanguageCode; else langDifferent">
-                                <strong>{{message.senderName}}: </strong>{{message.originalMessage}}<br>
-                            </div>
-                            <br>
-                            <ng-template #langDifferent>
+                                  <ng-template #senderlangDifferent>
+                                      <div *ngIf="sourceLangCode != message.sourceLanguageCode">
+                                          <strong>{{message.receiverName}}:</strong>{{message.translatedMessage}} <br>
+                                      </div>
+                                  </ng-template>
+                                  <br>
+                              </div>
+                              <ng-template #receiverMessage>
                                 <div class="showLeft" *ngIf="sourceLangCode == message.sourceLanguageCode; else langDifferent">
-                                <strong>{{message.senderName}}:</strong>{{message.translatedMessage}} <br>
+                                    <strong>{{message.senderName}}: </strong>{{message.originalMessage}}<br>
                                 </div>
-                            </ng-template>
-                              <br>
-                          </ng-template>
+                                <br>
+                                <ng-template #langDifferent>
+                                    <div class="showLeft" *ngIf="sourceLangCode != message.sourceLanguageCode; else langDifferent">
+                                    <strong>{{message.senderName}}:</strong>{{message.translatedMessage}} <br>
+                                    </div>
+                                </ng-template>
+                                  <br>
+                              </ng-template>
+                          </div>
                         </div>
                         <!-- END - To display the sender and receiver messages -->
                     </div>
