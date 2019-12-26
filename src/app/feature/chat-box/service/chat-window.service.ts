@@ -25,13 +25,14 @@ export class ChatWindowService {
   eventName: any;
   springurl: any;
   myData: any;
-
+  emailID : any;
+  joinRoomInfo : any = [];
   constructor(
     private __http: HttpClient,
-    private __zone: NgZone
+    private __zone: NgZone,
   ) {
     console.log("Node chat IP:", NODE_URL_CHAT_WEB_RTC);
-
+    this.emailID = localStorage.getItem('email');
     this.socket = io(`${NODE_URL_CHAT_WEB_RTC}`, {
       reconnectionDelay: 1000,
       reconnection: true,
@@ -68,6 +69,20 @@ export class ChatWindowService {
     });
     this.socket.on('reconnect', (attemptNumber: any) => {
       console.log('Socket Server Successfully Reconnected with attempt : ', attemptNumber);
+      this.emailID = localStorage.getItem('email');
+      this.joinRoomInfo =  JSON.parse(localStorage.getItem("joinRoomDetails"));
+      console.log('************rejoining rooms************** : ', this.joinRoomInfo.length);
+      console.log('************rejoining email************** : ', this.emailID);
+      if(this.joinRoomInfo != null){
+        
+        this.joinRoomInfo.forEach(room => {
+          let data = {
+            roomId:room.roomId,
+            userName : this.emailID
+          }
+          this.joinRoom(data);
+        });
+      } 
     });
     this.socket.on('reconnect_attempt', (attemptNumber: any) => {
       console.log('Reconnect Attempt : ', attemptNumber);

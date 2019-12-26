@@ -1862,17 +1862,45 @@ _handleReaderLoaded(readerEvt) {
   /**
    * @author Shefali Bhavekar
    * @date 24/12/2019
-   * @name sendGroupMessages()
+   * @name getGroupMessages()
+   * @description This function get messages from socket and save to the cassandra 
+   *              after receiving the messages.
+   *              It also use traslation if needed.
+   * @lastmodefied 26/12/2019
    */
   async getGroupMessages(){
     let msg : any ;
     await this.socketservice.getGroupMessages().subscribe((messages: any) => {
     if(messages.sendingFileFlag == true){
       console.log("*********************incomming file messges*************************",messages);
-      this.downloadFile(messages);
+      // this.downloadFile(messages);
+
+      msg = {
+          roomId : messages.roomId,
+          sessionId : messages.sessionId,
+          receiverName : this.emailID ,
+          receiverRole : this.userRole,
+          messageId : messages.messageId
+         }
+         this.socketservice.sendMessageToReceivedMessageCassandra(msg).then((saveReceivedMsgRes : any) => {
+            msg = {
+              roomId : messages.roomId,
+              sessionId : messages.sessionId,
+              receiverName : this.emailID ,
+              receiverRole : this.userRole,
+              messageId : messages.messageId,
+              senderName : messages.sender,
+              sendDate : messages.sendDate,
+              receiveDate : saveReceivedMsgRes.responseObject.recievedDate,
+              fileName : messages.fileName,
+              fileData : messages.fileData,
+              recievedFileFlag : true
+             }
+            this.allGroupMessages.push(msg);
+         });
+
     }else{
       if(this.sourceLangCode == messages.sourceLanguageCode){
-        console.log("**********All data from all group chats**********" , this.allGroupMessages);
         msg = {
           roomId : messages.roomId,
           sessionId : messages.sessionId,
@@ -1881,7 +1909,6 @@ _handleReaderLoaded(readerEvt) {
           messageId : messages.messageId
          }
          this.socketservice.sendMessageToReceivedMessageCassandra(msg).then((saveReceivedMsgRes : any) => {
-            console.log("*************saveReceivedMsgRes without traslation***********", saveReceivedMsgRes.responseObject.recievedDate);
             msg = {
               roomId : messages.roomId,
               sessionId : messages.sessionId,
@@ -1898,6 +1925,7 @@ _handleReaderLoaded(readerEvt) {
              }
             this.allGroupMessages.push(msg);
          });
+
        }else{
         msg = {
           roomId : messages.roomId,
