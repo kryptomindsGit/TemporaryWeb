@@ -205,7 +205,6 @@ export class ChatWindowService {
    * @name getGroupMessages()
    */
   public getGroupMessages = () => {
-    // this.socket.emit('get-group-messages');
     return Observable.create((observer: any) => {
       this.socket.on('get-group-messages', (groupMessage: any) => {
         console.log("get-group-messages", groupMessage);
@@ -271,11 +270,10 @@ export class ChatWindowService {
    * @name getGroupMessages()
    */
   async sendFileToCassandra(fileData: any) {
-    let formData = new FormData();
-    formData.append('fileData', fileData);
-    console.log("***************************Sending file to cassandra**************************",formData);
+    console.log("file sending..........................................wait");
     try {
-      let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/save-file`, formData, httpOptions).toPromise();
+      let result = await this.__http.post(`${NODE_URL_CHAT_WEB_RTC}/save-file`, fileData).toPromise();
+      console.log("done..........................................res : ",result);
       return result;
     } catch (error) {
       await this.handleError(error);

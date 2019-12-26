@@ -165,7 +165,7 @@ export class ChatBoxComponent implements OnInit {
   public translateMessage: boolean = false;
   public sendMessageResp: any = [];
   public getSendMessageResp: any = [];
-  public fileBase64 : any;
+  public base64textString : any;
 
   public joinRoomDetails: any = [];
   public sourceLangCode: any = 'en';
@@ -623,107 +623,6 @@ export class ChatBoxComponent implements OnInit {
     this.screenEnable = false;
   }
 
-/* END - Enable the File */
-
-
-  // public handleFileInput(files: FileList) {
-    // console.log("File Handle method calling...");
-  //   // this.enableFile();
-  //   if (files[0]) {
-  //     this.file = files[0];
-  //     this.sendFileName = this.file['name'];
-  //     // this.senderFileName = this.file['name'];
-      // console.log(this.file);
-  //     this.sendProgressMin = 0;
-  //     this.sendProgressMax = this.file.size;
-  //     this.messages.push(JSON.parse(JSON.stringify({ senderFile: this.file['name'], user: 'sender' })));
-
-  //     this.sendFile();
-  //   } else {
-  //     this.sendFileName = 'Choose File';
-  //   }
-  // }
-
-   /**
-   * @author Shefali Bhavekar
-   * @date 25/12/2019
-   * @name sendBase64File()
-   * @description convert file object to base 64
-   */
-/* START - convert file object to base 64 */
-
-  sendFile(files : FileList){
-    console.log("******************file*******************", files[0]);
-    let file =  {
-      fileData:files[0]
-    }
-    this.socketservice.sendFileToCassandra(file).then((fileRes : any)=>{
-      console.log("********************fileRes**************" , fileRes);
-    });
-
-  }
-/* END - convert file object to base 64 */
-
-
-  // public sendFile() {
-  //   console.log("Send file method calling...");
-
-  //   let oldSendProgressValue = 0;
-  //   this.socketservice.sendFile({
-  //     from: this.fromEmailId,
-  //     to: this.toEmailId,
-  //     type: 'file',
-  //     fileName: this.file['name'],
-  //     fileSize: this.file['size'],
-  //     fileType: this.file['type'],
-  //     sender: this.jwtData.email,
-  //     receiver: this.userSelected,
-  //   });
-  //   const chunkSize = 16384;
-  //   let offset = 0;
-  //   this.fileReader = new FileReader();
-  //   this.fileReader.onload = (event: any) => {
-  //     this.dataChannel.send(event.target.result);
-  //     offset += event.target.result.byteLength;
-  //     this.sendProgressValue = ((offset * 100) / this.sendProgressMax).toFixed(1);
-  //     if (this.sendProgressValue !== oldSendProgressValue) {
-  //       this.socketservice.sendFile({
-  //         from: this.fromEmailId,
-  //         to: this.toEmailId,
-  //         type: 'file-status',
-  //         progressValue: this.sendProgressValue
-  //       });
-  //       oldSendProgressValue = this.sendProgressValue;
-  //     }
-  //     if (offset < this.file.size) {
-  //       this.readSlice(offset, chunkSize);
-  //     }
-  //     if (this.sendProgressValue == 100.0) {
-  //       this.socketservice.sendFile({
-  //         from: this.fromEmailId,
-  //         to: this.toEmailId,
-  //         type: 'file-complete' 
-  //       });
-  //       console.log("Send file details:", this.messages);
-
-  //     }
-  //   }
-  //   this.readSlice(offset, chunkSize);
-  // }
-
-  public readSlice(offset: any, chunkSize: any) {
-    const slice = this.file.slice(offset, offset + chunkSize);
-    this.fileReader.readAsArrayBuffer(slice);
-  }
-
-  public downloadFile(downloadFile) {
-    console.log("Download file method calling...");
-
-    saveAs(this.receivedBlob, downloadFile);
-  }
-/* END - Send file */
-
-/* START - Enable the Audio File*/
   public enableAudio() {
     this.connect();
     try {
@@ -1650,12 +1549,10 @@ export class ChatBoxComponent implements OnInit {
    */
 
   getAllMessages(){
-    // console.log("***********getting all messages to show history********************");
     this.allRoomsInformation.forEach(room => {
       let getMsgRequest = {
         roomId : room.room_id
       }
-      // console.log("***********getMsgRequest for getting all messages to show history********************",getMsgRequest);
       this.socketservice.getAllMessages(getMsgRequest).then((msgs : any)=>{
         this.allHistoryMessages.push(msgs);
         console.log("this.allHistoryMessages:" , this.allHistoryMessages);
@@ -1719,16 +1616,14 @@ export class ChatBoxComponent implements OnInit {
     }
    
   }
+
  /************************sender and receiver wise sorting of messages to show history**************************************/   
   /**
    * @author Shefali Bhavekar
    * @date 25/12/2019
    * @name showGroupHistoryMessages()
    */
-
-   
   showGroupHistoryMessages(){
-    // console.log("*******************Inside showGroupHistoryMessages*****************");
     this.groupNamesArray.forEach((groupRoom)=>{
         this.allHistoryMessages.forEach((history)=>{
           if(history.customResponseObject.roomId == groupRoom.room_id){
@@ -1785,32 +1680,7 @@ export class ChatBoxComponent implements OnInit {
     this.userselect = true;
     this.userSelected=this.groupNamesArray[i].room_name;
     this.currentRoom = this.groupNamesArray[i];
-
     this.joinRoomDetails = localStorage.getItem('joinRoomDetails');
-    console.log("Join room details :", this.joinRoomDetails);
-    console.log("Join room details :", this.joinRoomDetails.roomId);
-    console.log("Seleted User Room ID: ", this.groupNamesArray[i].room_id);
-    
-    // if(this.allGroupMessages.length == 0){
-    //   let data = {
-    //     roomId : this.currentRoom.room_id,
-    //     messages : []
-    //   }
-    //   this.allGroupMessages.push(data);
-    // }else{
-    //   this.allGroupMessages.forEach( room => {
-    //     if(room.roomId == this.currentRoom.room_id){
-    //       this.roomfound == true;
-    //     }
-    //   });
-    //   if(!this.roomfound){
-    //     let data = {
-    //       roomId : this.currentRoom.room_id,
-    //       messages : []
-    //     }
-    //     this.allGroupMessages.push(data);
-    //   }
-    // }
     this.createOrJoinGroupRoomChat();
   }
 
@@ -1823,7 +1693,6 @@ export class ChatBoxComponent implements OnInit {
      independentRoom.participants.forEach((participant : any) => {
         if(participant.participant_name == independentUser){
           this.currentRoom = independentRoom;
-          // console.log("**************currentRoom************",this.currentRoom);
         }
      });  
     });
@@ -1873,13 +1742,6 @@ export class ChatBoxComponent implements OnInit {
                 this.socketservice.sendMessagestoGroup(msgRes.responseObject);
                 this.allGroupMessages.push(sendMessageData);
                 console.log("********** allGroupMessages data************", this.allGroupMessages );
-                // this.allGroupMessages.forEach((msgRoom)=>{
-                //   if(msgRoom.roomId == msgRes.responseObject.roomId){
-                //     msgRoom.messages.push(sendMessageData);
-                    // console.log("************this.allGroupMessages after pushing****************" , this.allGroupMessages);
-                //   }
-                // });
-                
               }
             });
           }
@@ -1887,6 +1749,102 @@ export class ChatBoxComponent implements OnInit {
       }
     });
   }
+
+  /************************************Sending file to save in cassandra********************************************/
+   /**
+   * @author Shefali Bhavekar
+   * @date 25/12/2019
+   * @name handleFileSelect()
+   * @name _handleReaderLoaded()
+   * @name sendFile()
+   * @description convert file object to base 64
+   */
+  handleFileSelect(evt){
+    var files = evt.target.files;
+    this.file = files[0];
+
+  if (files && this.file) {
+      var reader = new FileReader();
+      reader.onload =this._handleReaderLoaded.bind(this);
+      reader.readAsBinaryString(this.file);
+  }
+}
+
+_handleReaderLoaded(readerEvt) {
+   var binaryString = readerEvt.target.result;
+          this.base64textString= btoa(binaryString);
+          console.log(btoa(binaryString));
+          this.sendFile(this.file['name']);
+  }
+
+  sendFile(fileName : any){
+    let currentJoinRoom : any;
+    let joinRoomDetails : any = [];
+    let sendFileData : any;
+    
+    joinRoomDetails = JSON.parse(localStorage.getItem('joinRoomDetails'));
+
+    joinRoomDetails.forEach(room => {
+      if(this.currentRoom.room_id == room.roomId){
+        currentJoinRoom = room;
+        console.log("*******currentJoinRoom*****" , currentJoinRoom);
+        room.users.forEach((user)=>{
+          if(user.userName == this.emailID){
+            sendFileData = {
+              fileName : fileName,
+              fileData : this.base64textString,
+              roomId :  currentJoinRoom.roomId,
+              sessionId : user.sessionId,
+              sender : this.emailID,
+              senderRole : this.userRole,
+            }
+            this.socketservice.sendFileToCassandra(sendFileData).then((msgRes : any)=>{
+              console.log("################****msgRes*****#################" , msgRes);
+              if(msgRes.status == "Success"){
+                sendFileData = {
+                  fileName : fileName,
+                  fileData : this.base64textString,
+                  roomId :  currentJoinRoom.roomId,
+                  sessionId : user.sessionId,
+                  senderName : this.emailID,
+                  senderRole : this.userRole,
+                  sourceLanguageCode : this.sourceLangCode,
+                  messageId:msgRes.responseObject.messageId,
+                  sendDate:msgRes.responseObject.sendDate,
+                  sendingFileFlag : true
+                }
+                this.socketservice.sendMessagestoGroup(sendFileData);
+                this.allGroupMessages.push(sendFileData);
+                console.log("********** allGroupMessages data************", this.allGroupMessages );
+              } 
+            });
+          }
+        });
+      }
+    });
+  }
+
+  public downloadFile(downloadFile: any) {
+    let sliceSize=512;
+    const byteArrays = [];
+    let contentType='';
+    let incommingFile = atob(downloadFile.fileData);
+    for (let offset = 0; offset < incommingFile.length; offset += sliceSize) {
+      const slice = incommingFile.slice(offset, offset + sliceSize);
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+    const fileBlob = new Blob(byteArrays, {type: contentType});
+    console.log("********incomming file after converting atob()**********",incommingFile);
+    console.log("Download file method calling...");
+    saveAs(fileBlob, downloadFile.fileName);
+  }
+
+
 
   /************************************get Group messages**************************************/   
   /**
@@ -1896,68 +1854,22 @@ export class ChatBoxComponent implements OnInit {
    */
   async getGroupMessages(){
     let msg : any ;
-    // let sessionId : any;
     await this.socketservice.getGroupMessages().subscribe((messages: any) => {
-     if(this.sourceLangCode == messages.sourceLanguageCode){
-      console.log("**********All data from all group chats**********" , this.allGroupMessages);
-      msg = {
-        roomId : messages.roomId,
-        sessionId : messages.sessionId,
-        receiverName : this.emailID ,
-        receiverRole : this.userRole,
-        messageId : messages.messageId
-       }
-       this.socketservice.sendMessageToReceivedMessageCassandra(msg).then((saveReceivedMsgRes : any) => {
-          console.log("*************saveReceivedMsgRes without traslation***********", saveReceivedMsgRes.responseObject.recievedDate);
-          msg = {
-            roomId : messages.roomId,
-            sessionId : messages.sessionId,
-            receiverName : this.emailID ,
-            receiverRole : this.userRole,
-            messageId : messages.messageId,
-            sourceLanguageCode : messages.sourceLanguageCode,
-            targetLanguageCode : "",
-            senderName : messages.sender,
-            originalMessage : messages.originalMessage,
-            translatedMessage : "",
-            sendDate : messages.sendDate,
-            receiveDate : saveReceivedMsgRes.responseObject.recievedDate,
-           }
-          // this.allGroupMessages.forEach((msgRoom)=>{
-          //   if(msgRoom.roomId == messages.roomId){
-          //     msgRoom.messages.push(msg);
-              // console.log("************this.allGroupMessages after pushing****************" , this.allGroupMessages);
-          //   }
-          // });
-          this.allGroupMessages.push(msg);
-       });
-     }else{
-      console.log("**********All data from all group chats**********" , this.allGroupMessages);
-      msg = {
-        roomId : messages.roomId,
-        sessionId : messages.sessionId,
-        receiverName : this.emailID ,
-        receiverRole : this.userRole,
-        messageId : messages.messageId,
-        sourceLanguageCode : messages.sourceLanguageCode,
-        targetLanguageCode : this.sourceLangCode,
-        senderName : messages.sender,
-        originalMessage : messages.originalMessage
-       }
-       
-       this.socketservice.messageToTranslantion(msg).then((translationRes : any)=>{
-        console.log("**********************translationRes***********************", translationRes);
+    if(messages.sendingFileFlag == true){
+      console.log("*********************incomming file messges*************************",messages);
+      this.downloadFile(messages);
+    }else{
+      if(this.sourceLangCode == messages.sourceLanguageCode){
+        console.log("**********All data from all group chats**********" , this.allGroupMessages);
         msg = {
           roomId : messages.roomId,
           sessionId : messages.sessionId,
           receiverName : this.emailID ,
           receiverRole : this.userRole,
-          messageId : messages.messageId,
-          targetLanguageCode : this.sourceLangCode,
-          translatedMessage : translationRes.translatedMessage.TranslatedText
+          messageId : messages.messageId
          }
          this.socketservice.sendMessageToReceivedMessageCassandra(msg).then((saveReceivedMsgRes : any) => {
-            console.log("*************saveReceivedMsgRes with traslation***********", saveReceivedMsgRes.responseObject.recievedDate);
+            console.log("*************saveReceivedMsgRes without traslation***********", saveReceivedMsgRes.responseObject.recievedDate);
             msg = {
               roomId : messages.roomId,
               sessionId : messages.sessionId,
@@ -1965,23 +1877,58 @@ export class ChatBoxComponent implements OnInit {
               receiverRole : this.userRole,
               messageId : messages.messageId,
               sourceLanguageCode : messages.sourceLanguageCode,
-              targetLanguageCode : this.sourceLangCode,
+              targetLanguageCode : "",
               senderName : messages.sender,
               originalMessage : messages.originalMessage,
+              translatedMessage : "",
               sendDate : messages.sendDate,
               receiveDate : saveReceivedMsgRes.responseObject.recievedDate,
-              translatedMessage : translationRes.translatedMessage.TranslatedText
              }
-             this.allGroupMessages.push(msg);
-            // this.allGroupMessages.forEach((msgRoom)=>{
-            //   if(msgRoom.roomId == messages.roomId){
-            //     msgRoom.messages.push(msg);
-            //   }
-              // console.log("*******************allGroupMessages after receiveing traslation**************", this.allGroupMessages);
-            // });
+            this.allGroupMessages.push(msg);
          });
-       });
-     }
+       }else{
+        msg = {
+          roomId : messages.roomId,
+          sessionId : messages.sessionId,
+          receiverName : this.emailID ,
+          receiverRole : this.userRole,
+          messageId : messages.messageId,
+          sourceLanguageCode : messages.sourceLanguageCode,
+          targetLanguageCode : this.sourceLangCode,
+          senderName : messages.sender,
+          originalMessage : messages.originalMessage
+         }
+         
+         this.socketservice.messageToTranslantion(msg).then((translationRes : any)=>{
+          msg = {
+            roomId : messages.roomId,
+            sessionId : messages.sessionId,
+            receiverName : this.emailID ,
+            receiverRole : this.userRole,
+            messageId : messages.messageId,
+            targetLanguageCode : this.sourceLangCode,
+            translatedMessage : translationRes.translatedMessage.TranslatedText
+           }
+           this.socketservice.sendMessageToReceivedMessageCassandra(msg).then((saveReceivedMsgRes : any) => {
+              msg = {
+                roomId : messages.roomId,
+                sessionId : messages.sessionId,
+                receiverName : this.emailID ,
+                receiverRole : this.userRole,
+                messageId : messages.messageId,
+                sourceLanguageCode : messages.sourceLanguageCode,
+                targetLanguageCode : this.sourceLangCode,
+                senderName : messages.sender,
+                originalMessage : messages.originalMessage,
+                sendDate : messages.sendDate,
+                receiveDate : saveReceivedMsgRes.responseObject.recievedDate,
+                translatedMessage : translationRes.translatedMessage.TranslatedText
+               }
+               this.allGroupMessages.push(msg);
+           });
+         });
+       }
+      }
     });
   }
 }
