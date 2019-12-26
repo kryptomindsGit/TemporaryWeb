@@ -1658,8 +1658,7 @@ export class ChatBoxComponent implements OnInit {
       // console.log("***********getMsgRequest for getting all messages to show history********************",getMsgRequest);
       this.socketservice.getAllMessages(getMsgRequest).then((msgs : any)=>{
         this.allHistoryMessages.push(msgs);
-        console.log("Get All previous messages :", this.allHistoryMessages);
-        
+        console.log("this.allHistoryMessages:" , this.allHistoryMessages);
         // console.log("***********allHistoryMessages********************",this.allHistoryMessages);
 
       });
@@ -1675,41 +1674,50 @@ export class ChatBoxComponent implements OnInit {
 
   showIndependentHistoryMessages(){
     // console.log("*******************Inside showIndependentHistoryMessages*****************");
-    this.allIndependentChatRooms.forEach((independentRoom) => {
-      independentRoom.participants.forEach(participant => {
-        if (participant.participant_name == this.userSelected) {
-          this.allHistoryMessages.forEach((history) =>{
-            // console.log("*******************Inside allHistoryMessages*****************",history);
-            // console.log("*******************history.customResponseObject.roomId*****************",history.customResponseObject.roomId);
-            // console.log("*******************independentRoom.room_id*****************",independentRoom.room_id);
-            if(history.customResponseObject.roomId == independentRoom.room_id){
-              this.allHistoryMessagesOfRoom.push(history.responseObject);
-              // console.log("*******************this.allHistoryMessagesOfRoom*****************",this.allHistoryMessagesOfRoom);
-              history.responseObject.forEach(element => {
-                // if(this.userSelected == element.senderName || this.userSelected == element.ReceiverName){
-                  // console.log("*****************history.responseObject***********" , element);
-                    let msg = {
-                      roomId : element.roomId,
-                      sessionId : element.sessionId,
-                      receiverName : element.receiverData.receiverName ,
-                      receiverRole : element.receiverData.receiverRole,
-                      messageId : element.messageId,
-                      sourceLanguageCode : element.sourceLanguageCode,
-                      targetLanguageCode : element.receiverData.targetLanguageCode,
-                      senderName : element.senderName,
-                      senderRole:element.senderRole,
-                      originalMessage : element.originalMessage,
-                      translatedMessage :  element.receiverData.translatedMessage,
-                      sendDate : element.sendDate,
-                      receiveDate : element.receiverData.recievedDate,
-                     }
-                     this.allGroupMessages.push(msg);
-              });
+    if(this.allIndependentChatRooms != undefined){
+      this.allIndependentChatRooms.forEach((independentRoom) => {
+        independentRoom.participants.forEach(participant => {
+          if (participant.participant_name == this.userSelected) {
+            console.log("allHistoryMessages values:", this.allHistoryMessages);
+            if(this.allHistoryMessages != undefined){
+              this.allHistoryMessages.forEach((history) =>{
+                console.log("history values:",history);
+                  if(history.customResponseObject.roomId == independentRoom.room_id){
+                    this.allHistoryMessagesOfRoom.push(history.responseObject);
+                    history.responseObject.forEach(element => {
+                      console.log("Element:", element);
+                      
+                      // if(this.userSelected == element.senderName || this.userSelected == element.ReceiverName){
+                        // console.log("*****************history.responseObject***********" , element);
+                          let msg = {
+                            roomId : history.customResponseObject.roomId,
+                            sessionId : element.sessionId,
+                            receiverName : element.receiverData.receiverName ,
+                            receiverRole : element.receiverData.receiverRole,
+                            messageId : element.messageId,
+                            sourceLanguageCode : element.sourceLanguageCode,
+                            targetLanguageCode : element.receiverData.targetLanguageCode,
+                            senderName : element.senderName,
+                            senderRole:element.senderRole,
+                            originalMessage : element.originalMessage,
+                            translatedMessage :  element.receiverData.translatedMessage,
+                            sendDate : element.sendDate,
+                            receiveDate : element.receiverData.recievedDate,
+                           }
+                           console.log("Get all messages:", msg);
+      
+                           this.allGroupMessages.push(msg);
+             
+      
+                    });
+                  }
+                });
             }
-          });
-        }
+          }
+        });
       });
-    });
+    }
+   
   }
  /************************sender and receiver wise sorting of messages to show history**************************************/   
   /**
@@ -1742,6 +1750,8 @@ export class ChatBoxComponent implements OnInit {
                 receiveDate : element.receiverData.recievedDate,
                }
                this.allGroupMessages.push(msg);
+        console.log("Get all Group previous messages :", this.allGroupMessages);
+
             });
           }
       });
