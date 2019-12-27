@@ -373,8 +373,6 @@ export class ChatBoxComponent implements OnInit {
     private __fb: FormBuilder
   ) {
     this.senderEmail = localStorage.getItem('email');
-    console.log("Sender Email ID:", this.senderEmail);
-
   }
 
   ngOnInit() {
@@ -497,7 +495,6 @@ export class ChatBoxComponent implements OnInit {
       };
       this.socketservice.receiveOffer().subscribe(async (offer: RTCSessionDescription) => {
         console.log("Receive Offer :", offer);
-        // window.alert(offer['email']);
         await this.peerConnection.setRemoteDescription({ type: 'offer', sdp: offer.sdp });
         this.toEmailId = offer['from'];
         console.log("offer['from'] : ", offer['from']);
@@ -521,22 +518,6 @@ export class ChatBoxComponent implements OnInit {
           this.peerConnection.addIceCandidate(candidate.candidate);
         }
       });
-      this.socketservice.receiveFile().subscribe(async (file: any) => {
-        console.log('File Received : ', file);
-        if (file['type'] == 'file') {
-          this.receivedFileName = file['fileName'];
-          this.messages.push(JSON.parse(JSON.stringify({ receivedFile: this.receivedFileName })));
-          this.receivedFileSize = file['fileSize'] + ' bytes';
-          this.receivedFileType = file['fileType'];
-          this.receivedProgressValue = 0;
-        } else if (file['type'] == 'file-status') {
-          this.receivedProgressValue = file['progressValue'];
-        } else if (file['type'] == 'file-complete') {
-          this.receivedBlob = new Blob(this.receiveBuffer, { type: this.receivedFileType });
-          this.enableDownload = true;
-        }
-      });
-
     } else {
       this.serverStatus = false;
     }
@@ -845,192 +826,22 @@ export class ChatBoxComponent implements OnInit {
 
   /* START - Connect the Peer to Peer */
   public async connect() {
-
-    this.selectUser = JSON.stringify(localStorage.getItem('selectedUserInfo'));
-    console.log("select User:", this.selectUser);
-    this.allClients.forEach(selectedUser => {
-      if (this.userSelected != '') {
-        if (selectedUser.emailId == this.userSelected) {
-          this.toEmailId = selectedUser.emailId;
-          console.log("selected user set as toEmailId", this.toEmailId);
-        }
-      } else {
-        if (selectedUser.emailId == this.selectUser) {
-          this.toEmailId = selectedUser.emailId;
-          console.log("selected user set as toEmailId", this.toEmailId);
-        }
+    console.log("************Current Room**************",this.currentRoom);
+    let allJoinedRooms = JSON.parse(localStorage.getItem("joinRoomDetails"));
+    let  currentJoinRoom : any;
+    allJoinedRooms.forEach((room)=>{
+      if(room.roomId == this.currentRoom.room_id){
+        currentJoinRoom = room;
       }
     });
 
-    console.log("to client ID:", this.toEmailId);
     this.connected = true;
-    console.log("this.connected:", this.connected);
     this.dataChannel = await this.peerConnection.createDataChannel('datachannel');
     if (this.fileEnable) {
       this.dataChannel.binaryType = 'arraybuffer';
     }
     this.dataChannel.onerror = (error: any) => {
       console.log("Data Channel Error:", error);
-    };
-    this.dataChannel.onmessage = async (event: any) => {
-
-      if (this.textEnable) {
-        console.log("Calling Data channel on message");
-        let messageData = JSON.parse(event.data);
-        console.log("Data channel before send message to translate:", messageData);
-        if (this.userRole == 'Employer') {
-
-          var preferedSourceLanguageCode = localStorage.getItem('preferedSourceLanguageCode');
-          console.log("prefered Data channel Employer Source Language Code ", preferedSourceLanguageCode);
-          var preferedTargetLanguageCode = localStorage.getItem('preferedTargetLanguageCode');
-          console.log("prefered Data channel Employer Target Language Code ", preferedTargetLanguageCode);
-
-          /* If prefered language if bydefault English */
-          if (preferedTargetLanguageCode == null) {
-
-            this.receivedMessageObject = {
-              emailId: messageData.emailId,
-              roomId: messageData.roomId,
-              sessionId: messageData.sessionId,
-              messageId: messageData.messageId,
-              receiverName: this.userSelected,
-              receiverRole: "Employer",
-              translatedMessage: messageData.data,
-            }
-            this.messages.push(JSON.parse(JSON.stringify({ emailId: messageData.emailId, originalMessage: messageData.data, data: messageData.data })));
-            console.log("Translated data send to cassandra:", this.receivedMessageObject);
-
-            /* Call Received API's with Translated message data*/
-            this.socketservice.sendMessageToReceivedMessageCassandra(this.receivedMessageObject).then((respGetMsgCassandra: any) => {
-              console.log("Get Message Data from Cassandra:", respGetMsgCassandra);
-            });
-
-          }
-          else {
-
-            this.sendMessagesObject = {
-              sourceLanguageCode: preferedSourceLanguageCode,
-              targetLanguageCode: preferedTargetLanguageCode,
-              originalMessage: messageData.data,
-              sender: this.jwtData.email,
-              receiverName: this.userSelected,
-              emailId: messageData.emailId,
-            }
-
-            console.log("this.sendMessagesObject", this.sendMessagesObject);
-
-            await this.socketservice.messageToTranslantion(this.sendMessagesObject).then((translatedRespData: any) => {
-              console.log("Translated Resp Data :", translatedRespData.translatedMessage.TranslatedText);
-              if (translatedRespData != undefined) {
-                /* create object with Translated message data to call received API for Cassandra*/
-
-                this.receivedMessageObject = {
-                  emailId: messageData.emailId,
-                  roomId: messageData.roomId,
-                  sessionId: messageData.sessionId,
-                  messageId: messageData.messageId,
-                  receiverName: translatedRespData.sender,
-                  receiverRole: "Employer",
-                  translateMessage: translatedRespData.translatedMessage.TranslatedText
-                }
-                this.messages.push(JSON.parse(JSON.stringify({ emailId: translatedRespData.emailId, originalMessage: translatedRespData.originalMessage, data: translatedRespData.translatedMessage.TranslatedText })));
-                console.log("Translated data send to cassandra:", this.receivedMessageObject);
-
-                /* Call Received API's with Translated message data*/
-                this.socketservice.sendMessageToReceivedMessageCassandra(this.receivedMessageObject).then((respGetMsgCassandra: any) => {
-                  console.log("Get Message Data from Cassandra:", respGetMsgCassandra);
-                });
-              } /* End IF */
-            });
-
-          }
-        }
-        else if (this.userRole == 'Freelancer') {
-
-          var preferedSourceLanguageCode = localStorage.getItem('preferedSourceLanguageCode');
-          console.log("prefered Data channel freelancer Source Language Code", preferedSourceLanguageCode);
-          var preferedTargetLanguageCode = localStorage.getItem('preferedTargetLanguageCode');
-          console.log("prefered Data channel freelancer Target Language Code", preferedTargetLanguageCode);
-
-          /* If prefered language if bydefault English */
-          if (preferedTargetLanguageCode == null) {
-
-            this.receivedMessageObject = {
-              emailId: messageData.emailId,
-              roomId: messageData.roomId,
-              sessionId: messageData.sessionId,
-              messageId: messageData.messageId,
-              receiverName: this.userSelected,
-              receiverRole: "Freelancer",
-              translatedMessage: messageData.data,
-            }
-
-            this.messages.push(JSON.parse(JSON.stringify({ emailId: messageData.emailId, originalMessage: messageData.data, data: messageData.data })));
-
-            console.log("Translated data send to cassandra:", this.receivedMessageObject);
-
-
-            /* Call Received API's with Translated message data*/
-            this.socketservice.sendMessageToReceivedMessageCassandra(this.receivedMessageObject).then((respGetMsgCassandra: any) => {
-              console.log("Get Message Data from Cassandra:", respGetMsgCassandra);
-            });
-          }
-          else {
-
-            this.sendMessagesObject = {
-              sourceLanguageCode: preferedSourceLanguageCode,
-              targetLanguageCode: preferedTargetLanguageCode,
-              originalMessage: messageData.data,
-              sender: this.jwtData.email,
-              receiver: this.userSelected,
-              emailId: messageData.emailId,
-            }
-
-            this.socketservice.messageToTranslantion(this.sendMessagesObject).then((translatedRespData: any) => {
-              console.log("Send Message component Data:", translatedRespData);
-              if (translatedRespData != undefined) {
-                /* create object with Translated message data to call received API for Cassandra*/
-
-                this.receivedMessageObject = {
-                  emailId: messageData.emailId,
-                  roomId: messageData.roomId,
-                  sessionId: messageData.sessionId,
-                  messageId: messageData.messageId,
-                  receiverName: translatedRespData.sender,
-                  receiverRole: "Freelancer",
-                  translatedMessage: translatedRespData.translatedMessage.TranslatedText,
-                  targetLanguageCode: preferedTargetLanguageCode
-                }
-
-                console.log("Translated data send to cassandra:", this.receivedMessageObject);
-
-
-                /* Call Received API's with Translated message data*/
-                this.socketservice.sendMessageToReceivedMessageCassandra(this.receivedMessageObject).then((respGetMsgCassandra: any) => {
-                  console.log("Get Message Data from Cassandra:", respGetMsgCassandra);
-                  // this.messages.push(JSON.parse(JSON.stringify(
-                  //   { 
-                  //     emailId: respGetMsgCassandra.emailId, 
-                  //     originalMessage: respGetMsgCassandra.originalMessage, 
-                  //     data: respGetMsgCassandra.translatedText.TranslatedText 
-                  //   })));
-                });
-
-              } /* End IF */
-
-              this.messages.push(JSON.parse(JSON.stringify({ emailId: translatedRespData.emailId, originalMessage: translatedRespData.originalMessage, data: translatedRespData.translatedMessage.TranslatedText })));
-
-            });
-
-          }
-
-        }
-
-      } else if (this.fileEnable) {
-        let filerecivedData = event.data;
-        console.log("File sending :", filerecivedData);
-        this.receiveBuffer.push(event.data);
-      }
     };
     this.dataChannel.onopen = () => {
       console.log("Data Channel Opened");
@@ -1043,25 +854,17 @@ export class ChatBoxComponent implements OnInit {
       offerToReceiveVideo: 1,
       voiceActivityDetection: 1
     }).then(async (offer: RTCSessionDescription) => {
-      console.log('Offer Send : ', offer);
       await this.peerConnection.setLocalDescription(offer);
-      console.log("this.toEmailId", this.toEmailId);
-      console.log("this.fromEmailId", this.fromEmailId);
 
-      // this.allClients.forEach(selectedUser => {
-
-      //     if (selectedUser.emailId == this.userSelected) {
-      //       this.toEmailId = selectedUser.emailId;
-      //     }
-
-      // });
-
-      this.socketservice.sendOffer({
-        from: this.fromEmailId,
-        to: this.toEmailId,
-        type: offer.type,
-        sdp: offer.sdp,
-        email: this.senderEmail
+      currentJoinRoom.users.forEach((user)=>{
+        if(user.userName != this.emailID){
+          this.socketservice.sendOffer({
+            from: this.fromEmailId,
+            to: user.userName,
+            type: offer.type,
+            sdp: offer.sdp,
+          });
+        }  
       });
     });
   }
