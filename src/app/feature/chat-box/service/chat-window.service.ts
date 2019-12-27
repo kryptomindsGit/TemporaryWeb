@@ -158,6 +158,8 @@ export class ChatWindowService {
   }
 
   public sendIceCandidate = (candidate: any) => {
+    console.log("Service - sendIceCandidate", candidate);
+    
     this.socket.emit('icecandidate', candidate);
   }
 

@@ -424,9 +424,12 @@ export class ChatBoxComponent implements OnInit {
       });
 
       this.peerConnection.onicecandidate = (candidate: RTCIceCandidate) => {
+        console.log("Called onicecandidate");
+        
         this.socketservice.sendIceCandidate({
           from: this.fromEmailId,
-          to: this.toEmailId,
+          roomId: this.currentRoom.room_id,
+          // to: this.toEmailId,
           type: candidate.type,
           candidate: candidate.candidate
         });
@@ -449,7 +452,7 @@ export class ChatBoxComponent implements OnInit {
       this.peerConnection.ontrack = (event: any) => {
         if (this.audioEnable) {
           this.remoteAudio = this.remoteAudioElement.nativeElement;
-          console.log('Audio Track Received');
+          console.log('Audio File Track Received');
           try {
             this.remoteAudio.srcObject = event.streams[0];
           } catch (err) {
@@ -460,7 +463,7 @@ export class ChatBoxComponent implements OnInit {
           }, 500);
         } else if (this.audioCallEnable) {
           this.remoteAudioCall = this.remoteAudioCallElement.nativeElement;
-          console.log('Audio Track Received');
+          console.log('Audio Call Track Received');
           try {
             this.remoteAudioCall.srcObject = event.streams[0];
           } catch (err) {
@@ -471,7 +474,7 @@ export class ChatBoxComponent implements OnInit {
           }, 500);
         } else if (this.videoEnable) {
           this.remoteVideo = this.remoteVideoElement.nativeElement;
-          console.log('Video Track Received');
+          console.log('Video call Track Received');
           try {
             this.remoteVideo.srcObject = event.streams[0];
           } catch (err) {
@@ -482,7 +485,7 @@ export class ChatBoxComponent implements OnInit {
           }, 500);
         } else if (this.screenEnable) {
           this.remoteScreen = this.remoteScreenElement.nativeElement;
-          console.log('Screen Track Received');
+          console.log('Screen Share Track Received');
           try {
             this.remoteScreen.srcObject = event.streams[0];
           } catch (err) {
@@ -494,23 +497,25 @@ export class ChatBoxComponent implements OnInit {
         }
       };
       this.socketservice.receiveOffer().subscribe(async (offer: RTCSessionDescription) => {
-        console.log("Receive Offer :", offer);
+        console.log("Received Offer broadcasted Room :", offer);
         await this.peerConnection.setRemoteDescription({ type: 'offer', sdp: offer.sdp });
         this.toEmailId = offer['from'];
-        console.log("offer['from'] : ", offer['from']);
+        // console.log("offer['from'] : ", offer['from']);
         this.peerConnection.createAnswer().then(async (answer: RTCSessionDescription) => {
           await this.peerConnection.setLocalDescription(answer);
-          console.log("from client id after set local description", this.fromEmailId);
+          // console.log("from client id after set local description", this.fromEmailId);
           this.socketservice.sendAnswer({
             from: this.fromEmailId,
-            to: this.toEmailId,
+            // to: this.toEmailId,
+            roomId: this.currentRoom.room_id,
             type: answer.type,
             sdp: answer.sdp
           });
         });
       });
       this.socketservice.receiveAnswer().subscribe(async (answer: RTCSessionDescription) => {
-        console.log("Receive Answer :", answer);
+        console.log("Receive answer broadcasted Room :", answer);
+
         await this.peerConnection.setRemoteDescription({ type: 'answer', sdp: answer.sdp });
       });
       this.socketservice.receiveIceCandidate().subscribe((candidate: RTCIceCandidate) => {
@@ -856,15 +861,16 @@ export class ChatBoxComponent implements OnInit {
     }).then(async (offer: RTCSessionDescription) => {
       await this.peerConnection.setLocalDescription(offer);
 
-      currentJoinRoom.users.forEach((user)=>{
-        if(user.userName != this.emailID){
+      // currentJoinRoom.users.forEach((user)=>{
+      //   if(user.userName != this.emailID){
           this.socketservice.sendOffer({
             from: this.fromEmailId,
-            to: user.userName,
+            // to: this.toEmailId,
+            roomId: this.currentRoom.room_id,
             type: offer.type,
             sdp: offer.sdp,
-          });
-        }  
+          // });
+        // }  
       });
     });
   }
