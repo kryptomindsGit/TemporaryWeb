@@ -497,6 +497,7 @@ export class ChatBoxComponent implements OnInit {
         }
       };
       this.socketservice.receiveOffer().subscribe(async (offer: RTCSessionDescription) => {
+        
         console.log("Received Offer broadcasted Room :", offer);
         await this.peerConnection.setRemoteDescription({ type: 'offer', sdp: offer.sdp });
         this.toEmailId = offer['from'];
