@@ -526,7 +526,6 @@ export class ChatBoxComponent implements OnInit {
         if (file['type'] == 'file') {
           this.receivedFileName = file['fileName'];
           this.messages.push(JSON.parse(JSON.stringify({ receivedFile: this.receivedFileName })));
-
           this.receivedFileSize = file['fileSize'] + ' bytes';
           this.receivedFileType = file['fileType'];
           this.receivedProgressValue = 0;

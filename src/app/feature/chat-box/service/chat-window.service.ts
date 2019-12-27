@@ -76,11 +76,15 @@ export class ChatWindowService {
       if(this.joinRoomInfo != null){
         
         this.joinRoomInfo.forEach(room => {
-          let data = {
-            roomId:room.roomId,
-            userName : this.emailID
-          }
-          this.joinRoom(data);
+          room.users.forEach((user : any)=>{
+            if(user.userName == this.emailID){
+              let data = {
+                roomId:room.roomId,
+                userName : this.emailID
+              }
+              this.joinRoom(data);
+            }
+          });
         });
       } 
     });
