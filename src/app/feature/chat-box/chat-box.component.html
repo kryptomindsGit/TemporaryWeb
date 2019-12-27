@@ -288,118 +288,165 @@
                         <div *ngIf="message.roomId == currentRoom.room_id">
                           <div *ngIf="historyMessage == false; else historyMessageChat">
                             <div *ngIf="message.senderName == senderEmail; else receiverMessage">
-                              <div *ngIf="message.fileName; else receiverFile">
-                                {{message.fileName}}
+                             <!--START - File Display -->
+                              <div class="showRight"*ngIf="message.fileName; else fileNotData">
+                                {{message.fileName}}<strong>: {{message.senderName}}</strong><br>
                               </div>
-                              <ng-template #receiverFile>
+                              <!-- <ng-template #receiverFile>
                                   {{message.fileName}}
-                              </ng-template>
-                              <div class="showRight"
+                              </ng-template> -->
+                             <!--END - File Display -->
+                             <ng-template #fileNotData>
+                                <div class="showRight"
                                 *ngIf="sourceLangCode == message.sourceLanguageCode; else senderlangDifferent">
                                 {{message.originalMessage}}<strong>: {{message.senderName}}</strong><br>
                               </div>
+
                               <ng-template #senderlangDifferent>
-                                  <div *ngIf="message.fileName; else receiverFile">
-                                      {{message.fileName}}
+                             <!--START - File Display -->
+                                <!-- <p>Hello im receiver</p> -->
+                                  <div class="showRight" *ngIf="message.fileName; else fileNotData">
+                                      <strong>{{message.receiverName}}:</strong> {{message.fileName}}<br>
                                     </div>
-                                    <ng-template #receiverFile>
-                                        {{message.fileName}}
-                                    </ng-template>
+                             <!--END - File Display -->
+                             <ng-template #fileNotData>
                                 <div *ngIf="sourceLangCode != message.sourceLanguageCode">
-                                  <strong>{{message.receiverName}}:</strong>{{message.translatedMessage}} <br>
-                                </div>
+                                    <strong>{{message.receiverName}}:</strong>{{message.translatedMessage}} <br>
+                                  </div>
+                              </ng-template>
                               </ng-template>
                               <br>
+                              </ng-template>
+
+                              
                             </div>
                             <ng-template #receiverMessage>
-                                <div *ngIf="message.fileName; else receiverFile">
-                                    {{message.fileName}}
+                             <!--START - File Display -->
+                                <div class="showLeft" *ngIf="message.fileName; else fileNotData">
+                                    <strong>{{message.senderName}}: </strong>{{receivedFile}}<i class="fa fa-download" (click)="downloadFile(receivedFile)" aria-hidden="true"></i>
+                                    <br>
                                   </div>
-                                  <ng-template #receiverFile>
+                                  <!-- <ng-template #receiverFile>
                                       {{message.fileName}}
-                                  </ng-template>
-
-                              <div class="showLeft" *ngIf="sourceLangCode == message.sourceLanguageCode; else langDifferent">
-                                <strong>{{message.senderName}}: </strong>{{message.originalMessage}}<br>
-                              </div>
-                              <br>
-                              <ng-template #langDifferent>
-                                  <div *ngIf="message.fileName; else receiverFile">
-                                      {{message.fileName}}
+                                  </ng-template> -->
+                             <!--END - File Display -->
+                              <ng-template #fileNotData>
+                                  <div class="showLeft" *ngIf="sourceLangCode == message.sourceLanguageCode; else langDifferent">
+                                      <strong>{{message.senderName}}: </strong>{{message.originalMessage}}<br>
                                     </div>
-                                    <ng-template #receiverFile>
-                                        {{message.fileName}}
-                                    </ng-template>
+                                    <br>
+                                    <ng-template #langDifferent>
+                                   <!--START - File Display -->
+                                <!-- <p>Hello im receiver</p> -->
 
-                                <div class="showLeft" *ngIf="sourceLangCode != message.sourceLanguageCode">
-                                  <strong>{{message.senderName}}:</strong>{{message.translatedMessage}} <br>
-                                </div>
-                                <br>
-                              </ng-template>
-                              <br>
+                                        <div class="showLeft" *ngIf="message.fileName; else fileNotData">
+                                            <strong>{{message.senderName}}:</strong>{{receivedFile}}<i class="fa fa-download" (click)="downloadFile(receivedFile)" aria-hidden="true"></i>
+                                            <br>
+                                          </div>
+                                          <!-- <ng-template #receiverFile>
+                                              {{message.fileName}}
+                                          </ng-template> -->
+                                   <!--END - File Display -->
+                                   <ng-template #fileNotData>
+                                      <div class="showLeft" *ngIf="sourceLangCode != message.sourceLanguageCode">
+                                          <strong>{{message.senderName}}:</strong>{{message.translatedMessage}} <br>
+                                        </div>
+                                        <br>
+                                    </ng-template>
+                                     
+                                    </ng-template>
+                                    <br>
+                                </ng-template>
+                              
                             </ng-template>
                           </div>
 
                           <ng-template #historyMessageChat>
                               <div *ngIf="message.senderName == senderEmail; else receiverMessageHistory">
-                                  <div *ngIf="message.fileName; else receiverFile">
-                                      {{message.fileName}}
+                             <!--START - File Display -->                                  
+                                <div class="showRight" *ngIf="message.fileName;else fileNotData">
+                                    {{message.fileName}}<strong>: {{message.senderName}}</strong>
+                                    <br>
                                     </div>
-                                    <ng-template #receiverFile>
+                                    <!-- <ng-template #receiverFile>
                                         {{message.fileName}}
-                                    </ng-template>
+                                    </ng-template> -->
+                             <!--END - File Display -->
+                            
+                              <ng-template #fileNotData>
+                                  <div class="showRight" *ngIf="originalMessage !== 'undefined'; else senderlangDifferentHistory">
+                                      {{message.originalMessage}}<strong>: {{message.senderName}}</strong>
+                                    </div>
+                                    <br>
+                                      <span class="textSmallSize" style="float: right">{{message.sendDate | date:'d/M/yy, h:mm a'}}</span>
+                                    <br>
+                                    <ng-template #senderlangDifferentHistory>
+                               <!--START - File Display -->
+                               <!-- <p>Hello im receiver</p> -->
 
-                                <div class="showRight" *ngIf="originalMessage !== 'undefined'; else senderlangDifferentHistory">
-                                    {{message.originalMessage}}<strong>: {{message.senderName}}</strong>
+                                        <div class="showLeft" *ngIf="message.fileName; else fileNotData">
+                                            <strong>{{message.receiverName}}:</strong>{{receivedFile}}<i class="fa fa-download" (click)="downloadFile(receivedFile)" aria-hidden="true"></i>
+                                            <br>
+                                          </div>
+                                          <!-- <ng-template #receiverFile>
+                                              {{message.fileName}}
+                                          </ng-template> -->
+                               <!--END - File Display -->
+                               <ng-template #fileNotData>
+                                  <div class="showLeft">
+                                      <strong>{{message.receiverName}}:</strong>{{message.translatedMessage}}
+                                      <br>
                                   </div>
                                   <br>
-                                    <span class="textSmallSize" style="float: right">{{message.sendDate | date:'d/M/yy, h:mm a'}}</span>
+                                      <span class="textSmallSize" style="float: left">{{message.sendDate | date:'d/M/yy, h:mm a'}}</span> 
                                   <br>
-                                  <ng-template #senderlangDifferentHistory>
-                                      <div *ngIf="message.fileName; else receiverFile">
-                                          {{message.fileName}}
-                                        </div>
-                                        <ng-template #receiverFile>
-                                            {{message.fileName}}
-                                        </ng-template>
-
-                                    <div class="showLeft">
-                                        <strong>{{message.receiverName}}:</strong>{{message.translatedMessage}}
-                                    </div>
+                                </ng-template>
+                                      
+                                    </ng-template>
                                     <br>
-                                        <span class="textSmallSize" style="float: left">{{message.sendDate | date:'d/M/yy, h:mm a'}}</span> 
-                                    <br>
-                                  </ng-template>
-                                  <br>
+                                </ng-template>
+                                
                                 </div>
                                 <ng-template #receiverMessageHistory>
-                                    <div *ngIf="message.fileName; else receiverFile">
-                                        {{message.fileName}}
+                             <!--START - File Display -->
+                                    <div class="showLeft"*ngIf="message.fileName; else fileNotData">
+                                        <strong>{{message.senderName}}: </strong>{{receivedFile}}<i class="fa fa-download" (click)="downloadFile(receivedFile)" aria-hidden="true"></i><br>
                                       </div>
-                                      <ng-template #receiverFile>
+                                      <!-- <ng-template #receiverFile>
                                           {{message.fileName}}
-                                      </ng-template>
-                                  <div class="showLeft" *ngIf="originalMessage !== 'undefined'; else langDifferentHistory">
+                                      </ng-template> -->
+                             <!--END - File Display -->
+                             <ng-template #fileNotData>
+                                <div class="showLeft" *ngIf="originalMessage !== 'undefined'; else langDifferentHistory">
                                     <strong>{{message.senderName}}: </strong>{{message.originalMessage}}
                                   </div>
                                   <br>
                                     <span class="textSmallSize" style="float: left">{{message.sendDate | date:'d/M/yy, h:mm a'}}</span>
                                   <br>
                                   <ng-template #langDifferentHistory>
-                                      <div *ngIf="message.fileName; else receiverFile">
-                                          {{message.fileName}}
+                             <!--START - File Display -->
+                             <p>Hello im receiver</p>
+
+                                      <div class="showRight" *ngIf="message.fileName; else fileNotData">
+                                          <strong>{{message.senderName}}: </strong>{{message.fileName}} <br>
                                         </div>
-                                        <ng-template #receiverFile>
+                                        <!-- <ng-template #receiverFile>
                                             {{message.fileName}}
-                                        </ng-template>
-                                    <div class="showRight">
-                                        <strong>{{message.senderName}}:</strong>{{message.translatedMessage}}
-                                    </div>
-                                    <br>
-                                        <span class="textSmallSize" style="float: right">{{message.sendDate | date:'d/M/yy, h:mm a'}}</span>
-                                    <br>
+                                        </ng-template> -->
+                             <!--END - File Display -->
+                             <ng-template #fileNotData>
+                                <div class="showRight">
+                                    <strong>{{message.senderName}}:</strong>{{message.translatedMessage}}
+                                </div>
+                                <br>
+                                    <span class="textSmallSize" style="float: right">{{message.sendDate | date:'d/M/yy, h:mm a'}}</span>
+                                <br>
+                             </ng-template>
+                                   
                                   </ng-template>
                                   <br>
+                              </ng-template>
+                                  
                                 </ng-template>
                           </ng-template>
 

@@ -166,7 +166,8 @@ export class ChatBoxComponent implements OnInit {
   public sendMessageResp: any = [];
   public getSendMessageResp: any = [];
   public base64textString : any;
-
+  public receivedFile: any;
+  public receiveFileData: any;
   public joinRoomDetails: any = [];
   public sourceLangCode: any = 'en';
   public sourceLanguage: any = "English";
@@ -1840,24 +1841,29 @@ _handleReaderLoaded(readerEvt) {
   }
 
   public downloadFile(downloadFile: any) {
-    console.log("Download file methos called : ", downloadFile)
-    let sliceSize=512;
-    const byteArrays = [];
-    let contentType='';
-    let incommingFile = atob(downloadFile.fileData);
-    for (let offset = 0; offset < incommingFile.length; offset += sliceSize) {
-      const slice = incommingFile.slice(offset, offset + sliceSize);
-      const byteNumbers = new Array(slice.length);
-      for (let i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
+    if(this.receiveFileData !== 'undefined' || this.receiveFileData !== ''){
+      if(this.receiveFileData.fileName == downloadFile){
+        console.log("Download file method called : ", downloadFile)
+        let sliceSize=512;
+        const byteArrays = [];
+        let contentType='';
+        let incommingFile = atob(this.receiveFileData.fileData);
+        for (let offset = 0; offset < incommingFile.length; offset += sliceSize) {
+          const slice = incommingFile.slice(offset, offset + sliceSize);
+          const byteNumbers = new Array(slice.length);
+          for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+          }
+          const byteArray = new Uint8Array(byteNumbers);
+          byteArrays.push(byteArray);
+        }
+        const fileBlob = new Blob(byteArrays, {type: contentType});
+        console.log("********incomming file after converting atob()**********",incommingFile);
+        console.log("Download file method calling...");
+        saveAs(fileBlob, downloadFile);
       }
-      const byteArray = new Uint8Array(byteNumbers);
-      byteArrays.push(byteArray);
     }
-    const fileBlob = new Blob(byteArrays, {type: contentType});
-    console.log("********incomming file after converting atob()**********",incommingFile);
-    console.log("Download file method calling...");
-    saveAs(fileBlob, downloadFile.fileName);
+   
   }
 
 
@@ -1879,7 +1885,14 @@ _handleReaderLoaded(readerEvt) {
     if(messages.sendingFileFlag == true){
 
       console.log("*********************incomming file messges*************************",messages);
-      this.downloadFile(messages);
+      // this.downloadFile(messages);
+      console.log("Download file is:", messages.fileName);
+      this.receiveFileData = messages;
+      this.receivedFile = messages.fileName;
+      console.log("Download file name:", this.receivedFile);
+      
+      
+
 
       msg = {
           roomId : messages.roomId,
