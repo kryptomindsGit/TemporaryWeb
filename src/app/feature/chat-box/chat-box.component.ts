@@ -163,14 +163,18 @@ export class ChatBoxComponent implements OnInit {
   public allGroupMessages: any = [];
   public roomfound: boolean = false;
   public translateMessage: boolean = false;
+  public incomingCallOffer: boolean = false;
   public sendMessageResp: any = [];
   public getSendMessageResp: any = [];
-  public base64textString : any;
+  public base64textString: any;
   public receivedFile: any;
   public receiveFileData: any;
   public joinRoomDetails: any = [];
   public sourceLangCode: any = 'en';
   public sourceLanguage: any = "English";
+  public calltype: any;
+  public callTypeOffer: any;
+  public callReceived: boolean = false;
   public selectLanguage: any = [
     {
       'language': 'Afrikaans',
@@ -425,7 +429,7 @@ export class ChatBoxComponent implements OnInit {
 
       this.peerConnection.onicecandidate = (candidate: RTCIceCandidate) => {
         console.log("Called onicecandidate");
-        
+
         this.socketservice.sendIceCandidate({
           from: this.fromEmailId,
           roomId: this.currentRoom.room_id,
@@ -497,22 +501,29 @@ export class ChatBoxComponent implements OnInit {
         }
       };
       this.socketservice.receiveOffer().subscribe(async (offer: RTCSessionDescription) => {
-        
+
         console.log("Received Offer broadcasted Room :", offer);
         await this.peerConnection.setRemoteDescription({ type: 'offer', sdp: offer.sdp });
         this.toEmailId = offer['from'];
+        this.callTypeOffer = offer['callType'];
+        let answerCall = confirm(this.toEmailId + " is calling");
+        console.log("Calling answer:", answerCall);
+        this.callReceived = true;
+        if (answerCall) {
+          if (this.callTypeOffer == 'audio') {
+            this.enableAudioCall();
+            this.createAndSendAnswerForIncomingCalls();
+
+          } else if (this.callTypeOffer == 'video') {
+            this.enableVideo();
+            this.createAndSendAnswerForIncomingCalls();
+          }
+        }
+        // this.incomingCallOffer = true;
+        // console.log("incomingCallOffer:", this.incomingCallOffer);
+
         // console.log("offer['from'] : ", offer['from']);
-        this.peerConnection.createAnswer().then(async (answer: RTCSessionDescription) => {
-          await this.peerConnection.setLocalDescription(answer);
-          // console.log("from client id after set local description", this.fromEmailId);
-          this.socketservice.sendAnswer({
-            from: this.fromEmailId,
-            // to: this.toEmailId,
-            roomId: this.currentRoom.room_id,
-            type: answer.type,
-            sdp: answer.sdp
-          });
-        });
+
       });
       this.socketservice.receiveAnswer().subscribe(async (answer: RTCSessionDescription) => {
         console.log("Receive answer broadcasted Room :", answer);
@@ -527,6 +538,19 @@ export class ChatBoxComponent implements OnInit {
     } else {
       this.serverStatus = false;
     }
+  }
+
+  public createAndSendAnswerForIncomingCalls() {
+    console.log("Inside createAndSendAnswerForIncomingCalls");
+    this.peerConnection.createAnswer().then(async (answer: RTCSessionDescription) => {
+      await this.peerConnection.setLocalDescription(answer);
+      this.socketservice.sendAnswer({
+        from: this.fromEmailId,
+        roomId: this.currentRoom.room_id,
+        type: answer.type,
+        sdp: answer.sdp
+      });
+    });
   }
 
   public getRTCPeerConnection() {
@@ -832,11 +856,11 @@ export class ChatBoxComponent implements OnInit {
 
   /* START - Connect the Peer to Peer */
   public async connect() {
-    console.log("************Current Room**************",this.currentRoom);
+    console.log("************Current Room**************", this.currentRoom);
     let allJoinedRooms = JSON.parse(localStorage.getItem("joinRoomDetails"));
-    let  currentJoinRoom : any;
-    allJoinedRooms.forEach((room)=>{
-      if(room.roomId == this.currentRoom.room_id){
+    let currentJoinRoom: any;
+    allJoinedRooms.forEach((room) => {
+      if (room.roomId == this.currentRoom.room_id) {
         currentJoinRoom = room;
       }
     });
@@ -855,25 +879,42 @@ export class ChatBoxComponent implements OnInit {
     this.dataChannel.onclose = () => {
       console.log("The Data Channel is Closed");
     };
-    this.offer = this.peerConnection.createOffer({
-      offerToReceiveAudio: 1,
-      offerToReceiveVideo: 1,
-      voiceActivityDetection: 1
-    }).then(async (offer: RTCSessionDescription) => {
-      await this.peerConnection.setLocalDescription(offer);
 
-      // currentJoinRoom.users.forEach((user)=>{
-      //   if(user.userName != this.emailID){
-          this.socketservice.sendOffer({
-            from: this.fromEmailId,
-            // to: this.toEmailId,
-            roomId: this.currentRoom.room_id,
-            type: offer.type,
-            sdp: offer.sdp,
+    // if(!this.callReceived){
+      this.offer = this.peerConnection.createOffer({        
+        offerToReceiveAudio: 1,
+        offerToReceiveVideo: 1,
+        voiceActivityDetection: 1
+      }).then(async (offer: RTCSessionDescription) => {``
+        await this.peerConnection.setLocalDescription(offer);
+        console.log("Inside CreateOffer");
+
+        if (this.audioCallEnable) {
+          this.calltype = "audio";
+  
+        } else if (this.videoEnable) {
+          this.calltype = "video"
+        }
+  
+        // console.log("Call type:", this.calltype);
+  
+        // currentJoinRoom.users.forEach((user)=>{
+        //   if(user.userName != this.emailID){
+        // console.log("offer.type:",offer.type);
+  
+        this.socketservice.sendOffer({
+          from: this.fromEmailId,
+          // to: this.toEmailId,
+          roomId: this.currentRoom.room_id,
+          type: offer.type,
+          sdp: offer.sdp,
+          callType: this.calltype
           // });
-        // }  
+          // }  
+        });
       });
-    });
+    // }
+    
   }
   /* End - Connect the Peer to Peer */
 
@@ -1358,14 +1399,14 @@ export class ChatBoxComponent implements OnInit {
    * @name getAllMessages()
    */
 
-  getAllMessages(){
+  getAllMessages() {
     this.allRoomsInformation.forEach(room => {
       let getMsgRequest = {
         roomId: room.room_id
       }
-      this.socketservice.getAllMessages(getMsgRequest).then((msgs : any)=>{
+      this.socketservice.getAllMessages(getMsgRequest).then((msgs: any) => {
         this.allHistoryMessages.push(msgs);
-        console.log("this.allHistoryMessages:" , this.allHistoryMessages);
+        console.log("this.allHistoryMessages:", this.allHistoryMessages);
         // console.log("***********allHistoryMessages********************",this.allHistoryMessages);
 
       });
@@ -1397,7 +1438,7 @@ export class ChatBoxComponent implements OnInit {
                     // if(this.userSelected == element.senderName || this.userSelected == element.ReceiverName){
                     // console.log("*****************history.responseObject***********" , element);
                     let msg = {
-                      historyMessage:true,
+                      historyMessage: true,
                       roomId: history.customResponseObject.roomId,
                       sessionId: element.sessionId,
                       receiverName: element.receiverData.receiverName,
@@ -1428,7 +1469,7 @@ export class ChatBoxComponent implements OnInit {
 
   }
 
- /************************sender and receiver wise sorting of messages to show history**************************************/   
+  /************************sender and receiver wise sorting of messages to show history**************************************/
   /**
    * @author Shefali Bhavekar
    * @date 25/12/2019
@@ -1438,18 +1479,18 @@ export class ChatBoxComponent implements OnInit {
   showGroupHistoryMessages() {
     // console.log("*******************Inside showGroupHistoryMessages*****************");
     console.log("In group History message");
-    
-    if(this.groupNamesArray !== undefined){
+
+    if (this.groupNamesArray !== undefined) {
       this.groupNamesArray.forEach((groupRoom) => {
-        if(this.allHistoryMessages !== undefined){
-          console.log("History group message:", this.allHistoryMessages );
-          
+        if (this.allHistoryMessages !== undefined) {
+          console.log("History group message:", this.allHistoryMessages);
+
           this.allHistoryMessages.forEach((history) => {
             if (history.customResponseObject.roomId == groupRoom.room_id) {
               this.allHistoryMessagesOfRoom.push(history.responseObject);
               history.responseObject.forEach(element => {
                 let msg = {
-                  historyMessage:true,
+                  historyMessage: true,
                   roomId: element.roomId,
                   sessionId: element.sessionId,
                   receiverName: element.receiverData.receiverName,
@@ -1466,7 +1507,7 @@ export class ChatBoxComponent implements OnInit {
                 }
                 this.allGroupMessages.push(msg);
                 console.log("Get all Group previous messages :", this.allGroupMessages);
-    
+
               });
             }
           });
@@ -1564,7 +1605,7 @@ export class ChatBoxComponent implements OnInit {
                 this.socketservice.sendMessagestoGroup(msgRes.responseObject);
                 this.allGroupMessages.push(sendMessageData);
                 this.message = "";
-                console.log("********** allGroupMessages data************", this.allGroupMessages );
+                console.log("********** allGroupMessages data************", this.allGroupMessages);
               }
             });
           }
@@ -1574,74 +1615,74 @@ export class ChatBoxComponent implements OnInit {
   }
 
   /************************************Sending file to save in cassandra********************************************/
-   /**
-   * @author Shefali Bhavekar
-   * @date 25/12/2019
-   * @name handleFileSelect()
-   * @name _handleReaderLoaded()
-   * @name sendFile()
-   * @description convert file object to base 64
-   */
-  handleFileSelect(evt){
+  /**
+  * @author Shefali Bhavekar
+  * @date 25/12/2019
+  * @name handleFileSelect()
+  * @name _handleReaderLoaded()
+  * @name sendFile()
+  * @description convert file object to base 64
+  */
+  handleFileSelect(evt) {
     var files = evt.target.files;
     this.file = files[0];
-    
-  if (files && this.file) {
+
+    if (files && this.file) {
       var reader = new FileReader();
-      reader.onload =this._handleReaderLoaded.bind(this);
+      reader.onload = this._handleReaderLoaded.bind(this);
       reader.readAsBinaryString(this.file);
-  }
-}
-
-_handleReaderLoaded(readerEvt) {
-   var binaryString = readerEvt.target.result;
-          this.base64textString= btoa(binaryString);
-          console.log(btoa(binaryString));
-          let fileNameDisplay;
-          fileNameDisplay = this.file['name'];
-          this.sendFile(this.file['name']);
+    }
   }
 
-  sendFile(fileName : any){
-    let currentJoinRoom : any;
-    let joinRoomDetails : any = [];
-    let sendFileData : any;
-    
+  _handleReaderLoaded(readerEvt) {
+    var binaryString = readerEvt.target.result;
+    this.base64textString = btoa(binaryString);
+    console.log(btoa(binaryString));
+    let fileNameDisplay;
+    fileNameDisplay = this.file['name'];
+    this.sendFile(this.file['name']);
+  }
+
+  sendFile(fileName: any) {
+    let currentJoinRoom: any;
+    let joinRoomDetails: any = [];
+    let sendFileData: any;
+
     joinRoomDetails = JSON.parse(localStorage.getItem('joinRoomDetails'));
 
     joinRoomDetails.forEach(room => {
-      if(this.currentRoom.room_id == room.roomId){
+      if (this.currentRoom.room_id == room.roomId) {
         currentJoinRoom = room;
-        console.log("*******currentJoinRoom*****" , currentJoinRoom);
-        room.users.forEach((user)=>{
-          if(user.userName == this.emailID){
+        console.log("*******currentJoinRoom*****", currentJoinRoom);
+        room.users.forEach((user) => {
+          if (user.userName == this.emailID) {
             sendFileData = {
-              fileName : fileName,
-              fileData : this.base64textString,
-              roomId :  currentJoinRoom.roomId,
-              sessionId : user.sessionId,
-              sender : this.emailID,
-              senderRole : this.userRole,
+              fileName: fileName,
+              fileData: this.base64textString,
+              roomId: currentJoinRoom.roomId,
+              sessionId: user.sessionId,
+              sender: this.emailID,
+              senderRole: this.userRole,
             }
-            this.socketservice.sendFileToCassandra(sendFileData).then((msgRes : any)=>{
-              console.log("################****msgRes*****#################" , msgRes);
-              if(msgRes.status == "Success"){
+            this.socketservice.sendFileToCassandra(sendFileData).then((msgRes: any) => {
+              console.log("################****msgRes*****#################", msgRes);
+              if (msgRes.status == "Success") {
                 sendFileData = {
-                  fileName : fileName,
-                  fileData : this.base64textString,
-                  roomId :  currentJoinRoom.roomId,
-                  sessionId : user.sessionId,
-                  senderName : this.emailID,
-                  senderRole : this.userRole,
-                  sourceLanguageCode : this.sourceLangCode,
-                  messageId:msgRes.responseObject.messageId,
-                  sendDate:msgRes.responseObject.sendDate,
-                  sendingFileFlag : true
+                  fileName: fileName,
+                  fileData: this.base64textString,
+                  roomId: currentJoinRoom.roomId,
+                  sessionId: user.sessionId,
+                  senderName: this.emailID,
+                  senderRole: this.userRole,
+                  sourceLanguageCode: this.sourceLangCode,
+                  messageId: msgRes.responseObject.messageId,
+                  sendDate: msgRes.responseObject.sendDate,
+                  sendingFileFlag: true
                 }
                 this.socketservice.sendMessagestoGroup(sendFileData);
                 this.allGroupMessages.push(sendFileData);
-                console.log("********** allGroupMessages data************", this.allGroupMessages );
-              } 
+                console.log("********** allGroupMessages data************", this.allGroupMessages);
+              }
             });
           }
         });
@@ -1650,12 +1691,12 @@ _handleReaderLoaded(readerEvt) {
   }
 
   public downloadFile(downloadFile: any) {
-    if(this.receiveFileData !== 'undefined' || this.receiveFileData !== ''){
-      if(this.receiveFileData.fileName == downloadFile){
+    if (this.receiveFileData !== 'undefined' || this.receiveFileData !== '') {
+      if (this.receiveFileData.fileName == downloadFile) {
         console.log("Download file method called : ", downloadFile)
-        let sliceSize=512;
+        let sliceSize = 512;
         const byteArrays = [];
-        let contentType='';
+        let contentType = '';
         let incommingFile = atob(this.receiveFileData.fileData);
         for (let offset = 0; offset < incommingFile.length; offset += sliceSize) {
           const slice = incommingFile.slice(offset, offset + sliceSize);
@@ -1666,18 +1707,18 @@ _handleReaderLoaded(readerEvt) {
           const byteArray = new Uint8Array(byteNumbers);
           byteArrays.push(byteArray);
         }
-        const fileBlob = new Blob(byteArrays, {type: contentType});
-        console.log("********incomming file after converting atob()**********",incommingFile);
+        const fileBlob = new Blob(byteArrays, { type: contentType });
+        console.log("********incomming file after converting atob()**********", incommingFile);
         console.log("Download file method calling...");
         saveAs(fileBlob, downloadFile);
       }
     }
-   
+
   }
 
 
 
-  /************************************get Group messages**************************************/   
+  /************************************get Group messages**************************************/
   /**
    * @author Shefali Bhavekar
    * @date 24/12/2019
@@ -1687,115 +1728,115 @@ _handleReaderLoaded(readerEvt) {
    *              It also use traslation if needed.
    * @lastmodefied 26/12/2019
    */
-  async getGroupMessages(){
-    let msg : any ;
+  async getGroupMessages() {
+    let msg: any;
     await this.socketservice.getGroupMessages().subscribe((messages: any) => {
       console.log("Response of file :", messages)
-    if(messages.sendingFileFlag == true){
+      if (messages.sendingFileFlag == true) {
 
-      console.log("*********************incomming file messges*************************",messages);
-      // this.downloadFile(messages);
-      console.log("Download file is:", messages.fileName);
-      this.receiveFileData = messages;
-      this.receivedFile = messages.fileName;
-      console.log("Download file name:", this.receivedFile);
-      
-      
+        console.log("*********************incomming file messges*************************", messages);
+        // this.downloadFile(messages);
+        console.log("Download file is:", messages.fileName);
+        this.receiveFileData = messages;
+        this.receivedFile = messages.fileName;
+        console.log("Download file name:", this.receivedFile);
 
 
-      msg = {
-          roomId : messages.roomId,
-          sessionId : messages.sessionId,
-          receiverName : this.emailID ,
-          receiverRole : this.userRole,
-          messageId : messages.messageId
-         }
-         this.socketservice.sendMessageToReceivedMessageCassandra(msg).then((saveReceivedMsgRes : any) => {
-            msg = {
-              roomId : messages.roomId,
-              sessionId : messages.sessionId,
-              receiverName : this.emailID ,
-              receiverRole : this.userRole,
-              messageId : messages.messageId,
-              senderName : messages.sender,
-              sendDate : messages.sendDate,
-              receiveDate : saveReceivedMsgRes.responseObject.recievedDate,
-              fileName : messages.fileName,
-              fileData : messages.fileData,
-              recievedFileFlag : true
-             }
-            this.allGroupMessages.push(msg);
-         });
 
-    }else{
-      if(this.sourceLangCode == messages.sourceLanguageCode){
+
         msg = {
-          roomId : messages.roomId,
-          sessionId : messages.sessionId,
-          receiverName : this.emailID ,
-          receiverRole : this.userRole,
-          messageId : messages.messageId
-         }
-         this.socketservice.sendMessageToReceivedMessageCassandra(msg).then((saveReceivedMsgRes : any) => {
-            msg = {
-              roomId : messages.roomId,
-              sessionId : messages.sessionId,
-              receiverName : this.emailID ,
-              receiverRole : this.userRole,
-              messageId : messages.messageId,
-              sourceLanguageCode : messages.sourceLanguageCode,
-              targetLanguageCode : "",
-              senderName : messages.sender,
-              originalMessage : messages.originalMessage,
-              translatedMessage : "",
-              sendDate : messages.sendDate,
-              receiveDate : saveReceivedMsgRes.responseObject.recievedDate,
-             }
-            this.allGroupMessages.push(msg);
-         });
-
-       }else{
-        msg = {
-          roomId : messages.roomId,
-          sessionId : messages.sessionId,
-          receiverName : this.emailID ,
-          receiverRole : this.userRole,
-          messageId : messages.messageId,
-          sourceLanguageCode : messages.sourceLanguageCode,
-          targetLanguageCode : this.sourceLangCode,
-          senderName : messages.sender,
-          originalMessage : messages.originalMessage
-         }
-         
-         this.socketservice.messageToTranslantion(msg).then((translationRes : any)=>{
+          roomId: messages.roomId,
+          sessionId: messages.sessionId,
+          receiverName: this.emailID,
+          receiverRole: this.userRole,
+          messageId: messages.messageId
+        }
+        this.socketservice.sendMessageToReceivedMessageCassandra(msg).then((saveReceivedMsgRes: any) => {
           msg = {
-            roomId : messages.roomId,
-            sessionId : messages.sessionId,
-            receiverName : this.emailID ,
-            receiverRole : this.userRole,
-            messageId : messages.messageId,
-            targetLanguageCode : this.sourceLangCode,
-            translatedMessage : translationRes.translatedMessage.TranslatedText
-           }
-           this.socketservice.sendMessageToReceivedMessageCassandra(msg).then((saveReceivedMsgRes : any) => {
+            roomId: messages.roomId,
+            sessionId: messages.sessionId,
+            receiverName: this.emailID,
+            receiverRole: this.userRole,
+            messageId: messages.messageId,
+            senderName: messages.sender,
+            sendDate: messages.sendDate,
+            receiveDate: saveReceivedMsgRes.responseObject.recievedDate,
+            fileName: messages.fileName,
+            fileData: messages.fileData,
+            recievedFileFlag: true
+          }
+          this.allGroupMessages.push(msg);
+        });
+
+      } else {
+        if (this.sourceLangCode == messages.sourceLanguageCode) {
+          msg = {
+            roomId: messages.roomId,
+            sessionId: messages.sessionId,
+            receiverName: this.emailID,
+            receiverRole: this.userRole,
+            messageId: messages.messageId
+          }
+          this.socketservice.sendMessageToReceivedMessageCassandra(msg).then((saveReceivedMsgRes: any) => {
+            msg = {
+              roomId: messages.roomId,
+              sessionId: messages.sessionId,
+              receiverName: this.emailID,
+              receiverRole: this.userRole,
+              messageId: messages.messageId,
+              sourceLanguageCode: messages.sourceLanguageCode,
+              targetLanguageCode: "",
+              senderName: messages.sender,
+              originalMessage: messages.originalMessage,
+              translatedMessage: "",
+              sendDate: messages.sendDate,
+              receiveDate: saveReceivedMsgRes.responseObject.recievedDate,
+            }
+            this.allGroupMessages.push(msg);
+          });
+
+        } else {
+          msg = {
+            roomId: messages.roomId,
+            sessionId: messages.sessionId,
+            receiverName: this.emailID,
+            receiverRole: this.userRole,
+            messageId: messages.messageId,
+            sourceLanguageCode: messages.sourceLanguageCode,
+            targetLanguageCode: this.sourceLangCode,
+            senderName: messages.sender,
+            originalMessage: messages.originalMessage
+          }
+
+          this.socketservice.messageToTranslantion(msg).then((translationRes: any) => {
+            msg = {
+              roomId: messages.roomId,
+              sessionId: messages.sessionId,
+              receiverName: this.emailID,
+              receiverRole: this.userRole,
+              messageId: messages.messageId,
+              targetLanguageCode: this.sourceLangCode,
+              translatedMessage: translationRes.translatedMessage.TranslatedText
+            }
+            this.socketservice.sendMessageToReceivedMessageCassandra(msg).then((saveReceivedMsgRes: any) => {
               msg = {
-                roomId : messages.roomId,
-                sessionId : messages.sessionId,
-                receiverName : this.emailID ,
-                receiverRole : this.userRole,
-                messageId : messages.messageId,
-                sourceLanguageCode : messages.sourceLanguageCode,
-                targetLanguageCode : this.sourceLangCode,
-                senderName : messages.sender,
-                originalMessage : messages.originalMessage,
-                sendDate : messages.sendDate,
-                receiveDate : saveReceivedMsgRes.responseObject.recievedDate,
-                translatedMessage : translationRes.translatedMessage.TranslatedText
-               }
-               this.allGroupMessages.push(msg);
-           });
-         });
-       }
+                roomId: messages.roomId,
+                sessionId: messages.sessionId,
+                receiverName: this.emailID,
+                receiverRole: this.userRole,
+                messageId: messages.messageId,
+                sourceLanguageCode: messages.sourceLanguageCode,
+                targetLanguageCode: this.sourceLangCode,
+                senderName: messages.sender,
+                originalMessage: messages.originalMessage,
+                sendDate: messages.sendDate,
+                receiveDate: saveReceivedMsgRes.responseObject.recievedDate,
+                translatedMessage: translationRes.translatedMessage.TranslatedText
+              }
+              this.allGroupMessages.push(msg);
+            });
+          });
+        }
       }
     });
   }

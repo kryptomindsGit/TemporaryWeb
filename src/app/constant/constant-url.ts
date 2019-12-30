@@ -4,10 +4,10 @@
 ///*
 export const BASE_URL = 'http://192.168.0.18:3060'; //(shefali - Node Server)
 export const BLOCKCHAIN_URL = 'http://54.84.126.44:5000'; //(Khemraj - Python Server)
-export const AWS_URL = "http://192.168.0.6:3030"; // (Bhushan - local cognito AWS server)
+export const AWS_URL = "http://192.168.0.5:3030"; // (Bhushan - local cognito AWS server)
 export const UPORT_URL = 'http://192.168.0.18:3000'; // (Bhushan - local uport Node server)
 // export const SPRING_URL = "http://192.168.0.13:8090";  // (Bhushan - local Spring server)
-export const SPRING_URL = "http://192.168.0.6:8090";  // (Bhushan - local Spring server)
+export const SPRING_URL = "http://192.168.0.5:8090";  // (Bhushan - local Spring server)
 // export const NODE_URL_CHAT = "http://192.168.0.18:3040";  // (Bhushan - local Spring server)
 export const NODE_URL_CHAT_WEB_RTC = "http://192.168.0.13:3040";  // (Bhushan -local Node -chat web-RTC)
 export const DEPLOY_CONTRACT_URL = "http://34.228.6.88:5001";
