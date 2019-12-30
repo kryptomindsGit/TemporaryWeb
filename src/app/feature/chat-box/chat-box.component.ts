@@ -481,6 +481,8 @@ export class ChatBoxComponent implements OnInit {
           console.log('Video call Track Received');
           try {
             this.remoteVideo.srcObject = event.streams[0];
+            console.log("Remote Video stream:", this.remoteVideo.srcObject);
+            
           } catch (err) {
             this.remoteVideo.src = window.URL.createObjectURL(event.streams[0]);
           }
@@ -541,8 +543,7 @@ export class ChatBoxComponent implements OnInit {
 
   public createAndSendAnswerForIncomingCalls() {
     console.log("Inside createAndSendAnswerForIncomingCalls");
-    this.incomingCallOffer = false;
-
+    // this.incomingCallOffer = false;
     this.peerConnection.createAnswer().then(async (answer: RTCSessionDescription) => {
       await this.peerConnection.setLocalDescription(answer);
       
