@@ -62,7 +62,7 @@ export class ChatBoxComponent implements OnInit {
   public socketId: any = '';
   public clients: any = [];
   public allClients: any = [];
-  public textEnable: boolean = true;
+  public textEnable: boolean = false;
   public fileEnable: boolean = false;
   public audioEnable: boolean = false;
   public audioCallEnable: boolean = false;
@@ -506,21 +506,20 @@ export class ChatBoxComponent implements OnInit {
         await this.peerConnection.setRemoteDescription({ type: 'offer', sdp: offer.sdp });
         this.toEmailId = offer['from'];
         this.callTypeOffer = offer['callType'];
-        let answerCall = confirm(this.toEmailId + " is calling");
-        console.log("Calling answer:", answerCall);
-        this.callReceived = true;
-        if (answerCall) {
-          if (this.callTypeOffer == 'audio') {
-            this.enableAudioCall();
+        // this.incomingCallOffer = true;
+        // let answerCall = confirm(this.toEmailId + " is calling");
+        // console.log("Calling answer:", answerCall);
+        // this.callReceived = true;
+        if (this.toEmailId != this.emailID) {
+        this.incomingCallOffer = true;
+        }
+        else {
+          if (this.incomingCallOffer == false) {
             this.createAndSendAnswerForIncomingCalls();
-
-          } else if (this.callTypeOffer == 'video') {
-            this.enableVideo();
-            this.createAndSendAnswerForIncomingCalls();
-          }
+          } 
         }
         // this.incomingCallOffer = true;
-        // console.log("incomingCallOffer:", this.incomingCallOffer);
+        console.log("incomingCallOffer:", this.incomingCallOffer);
 
         // console.log("offer['from'] : ", offer['from']);
 
@@ -542,14 +541,18 @@ export class ChatBoxComponent implements OnInit {
 
   public createAndSendAnswerForIncomingCalls() {
     console.log("Inside createAndSendAnswerForIncomingCalls");
+    this.incomingCallOffer = false;
+
     this.peerConnection.createAnswer().then(async (answer: RTCSessionDescription) => {
       await this.peerConnection.setLocalDescription(answer);
+      
       this.socketservice.sendAnswer({
         from: this.fromEmailId,
         roomId: this.currentRoom.room_id,
         type: answer.type,
         sdp: answer.sdp
       });
+      // this.enableAudioCall();
     });
   }
 
@@ -683,6 +686,7 @@ export class ChatBoxComponent implements OnInit {
 
   /* START - Enable the Audio Call */
   public enableAudioCall() {
+    console.log("*************inside audio call********************")
     this.connect();
     try {
       this.stopVideo();
@@ -740,6 +744,8 @@ export class ChatBoxComponent implements OnInit {
 
   /* START - Enable the video call */
   public enableVideo() {
+    console.log("*************inside Video call********************")
+
     this.connect();
     try {
       this.stopAudio();
@@ -881,40 +887,41 @@ export class ChatBoxComponent implements OnInit {
     };
 
     // if(!this.callReceived){
-      this.offer = this.peerConnection.createOffer({        
-        offerToReceiveAudio: 1,
-        offerToReceiveVideo: 1,
-        voiceActivityDetection: 1
-      }).then(async (offer: RTCSessionDescription) => {``
-        await this.peerConnection.setLocalDescription(offer);
-        console.log("Inside CreateOffer");
+    this.offer = this.peerConnection.createOffer({
+      offerToReceiveAudio: 1,
+      offerToReceiveVideo: 1,
+      voiceActivityDetection: 1
+    }).then(async (offer: RTCSessionDescription) => {
+      ``
+      await this.peerConnection.setLocalDescription(offer);
+      console.log("Inside CreateOffer");
 
-        if (this.audioCallEnable) {
-          this.calltype = "audio";
-  
-        } else if (this.videoEnable) {
-          this.calltype = "video"
-        }
-  
-        // console.log("Call type:", this.calltype);
-  
-        // currentJoinRoom.users.forEach((user)=>{
-        //   if(user.userName != this.emailID){
-        // console.log("offer.type:",offer.type);
-  
-        this.socketservice.sendOffer({
-          from: this.fromEmailId,
-          // to: this.toEmailId,
-          roomId: this.currentRoom.room_id,
-          type: offer.type,
-          sdp: offer.sdp,
-          callType: this.calltype
-          // });
-          // }  
-        });
+      if (this.audioCallEnable) {
+        this.calltype = "audio";
+
+      } else if (this.videoEnable) {
+        this.calltype = "video"
+      }
+
+      // console.log("Call type:", this.calltype);
+
+      // currentJoinRoom.users.forEach((user)=>{
+      //   if(user.userName != this.emailID){
+      // console.log("offer.type:",offer.type);
+
+      this.socketservice.sendOffer({
+        from: this.fromEmailId,
+        // to: this.toEmailId,
+        roomId: this.currentRoom.room_id,
+        type: offer.type,
+        sdp: offer.sdp,
+        callType: this.calltype
+        // });
+        // }  
       });
+    });
     // }
-    
+
   }
   /* End - Connect the Peer to Peer */
 

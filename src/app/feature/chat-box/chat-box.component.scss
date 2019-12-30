@@ -360,6 +360,7 @@ img {
     border: 0.5px solid #000;
     border-radius: 35px;
     padding: 4px 25px;
+    margin-top:1.5%;
 }
 
 
@@ -1026,5 +1027,26 @@ a:not([href]):not([tabindex]):hover {
 
 .msg-box{
     border: 0.1px #a3a3a3 solid;
+}
+
+
+//Model
+.bg-model{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    opacity: 0.7;
+    position: absolute;
+    top:0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .modal-content{
+        width: 500px;
+        height: 300px;
+        background-color: white;
+        opacity: 1;
+    }
 }
 

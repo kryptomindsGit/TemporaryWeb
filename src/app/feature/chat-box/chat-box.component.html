@@ -223,36 +223,6 @@
       <b>You are signed in as <i>{{senderEmail}}</i></b>
       <p>Try switching accounts if you cannot see your contacts or conversation history.</p>
     </div>
-
-     <!-- <div *ngIf="incomingCallOffer == true" data-toggle="modal" data-target="#answerIncomingCalls">
-       <button ></button> 
-     </div> -->
-     <div *ngIf="incomingCallOffer == true">
-     <!--START Modal -->
-        <div class="modal fade" id="answerIncomingCalls" tabindex="-1" role="dialog"
-        aria-labelledby="answerIncomingCallsTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Incoming Call</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <p>{{toEmailId}} is calling...</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" (click)="createAndSendAnswerForIncomingCalls()">Accept</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Reject</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--END Modal -->
-     </div>
-     
-
     <ng-template #isULangSelected>
       <div class="col-md-8">
         <div class="row">
@@ -306,7 +276,34 @@
               </div>
             </div>
           </div>
+
           <div class="col-md-12">
+
+            <!-- <div class="row" *ngIf="incomingCallOffer" data-toggle="modal" data-target="#answerIncomingCalls"> -->
+            <!--START Modal -->
+            <!-- <div class="modal fade" id="answerIncomingCalls" tabindex="-1" role="dialog"
+                aria-labelledby="answerIncomingCallsTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Incoming Call</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p>{{toEmailId}} is calling...</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary"
+                        (click)="createAndSendAnswerForIncomingCalls()">Accept</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Reject</button>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+            <!--END Modal -->
+            <!-- </div> -->
             <div class="row" *ngIf="textEnable">
               <div class="card">
                 <div class="card-body">
@@ -679,6 +676,20 @@
         </div>
       </div>
     </ng-template>
+    <div class="row" *ngIf="incomingCallOffer" class="bg-model">
+      <div class="modal-content">
+        <div class="card-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Incoming Call</h5>
+        </div>
+        <div class="card-body">
+          <p>{{toEmailId}} is calling...</p>
+        </div>
+        <div class="card-footer">
+          <button type="button" class="btn btn-primary" (click)="createAndSendAnswerForIncomingCalls()" (click)="enableAudioCall()" data-toggle="modal" data-target="#audioCallModel">Accept</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Reject</button>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="footer"></div>
 </div>
