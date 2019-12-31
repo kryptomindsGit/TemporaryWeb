@@ -134,6 +134,8 @@ export class ChatWindowService {
   }
 
   public sendOffer = (offer: any) => {
+    console.log("Send offer object values:", offer);
+    
     this.socket.emit('offer', offer);
   }
 
