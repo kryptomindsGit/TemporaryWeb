@@ -566,8 +566,8 @@ export class ChatBoxComponent implements OnInit {
       await this.peerConnection.setLocalDescription(answer);
 
       this.socketservice.sendAnswer({
-        from: this.fromEmailId,
-        to:this.toEmailId,
+        from:this.toEmailId,
+        to:this.fromEmailId,
         roomId: this.currentRoom.room_id,
         type: answer.type,
         sdp: answer.sdp
@@ -788,6 +788,7 @@ export class ChatBoxComponent implements OnInit {
       console.log("Browser Media for Get User Media:", this.browser);
 
       let constraints = { audio: true, video: { minFrameRate: 60, width: 400, height: 300 } };
+      console.log("Contstraints of Video:", constraints)
       this.browser.mediaDevices.getUserMedia(constraints).then((stream: any) => {
 
         if (!stream.stop && stream.getTracks) {

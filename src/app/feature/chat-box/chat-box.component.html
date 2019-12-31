@@ -596,9 +596,15 @@
                 <div class="modal-dialog full_modal-dialog" role="document">
                   <div class="modal-content-videocall full_modal-content">
                     <div class="internaldiv">
-                      <video #remoteVideoElement class="img-border" autoplay>
-                        <source>
-                      </video>
+                        <video #remoteVideoElement class="img-border" autoplay>
+                      <div *ngFor="let vitem of answeredparticipant; let i = index">
+                        <div {{i}}>
+                            <source>
+                        </div>
+                      </div>
+                    </video>
+
+
                       <div class="overlay">
                         <div class="row">
                           <div class="col-md-12 text-right icon-center">
@@ -685,7 +691,8 @@
           <p>{{toEmailId}} is calling...</p>
         </div>
         <div class="card-footer">
-          <button type="button" class="btn btn-primary" (click)="createAndSendAnswerForIncomingCalls()" (click)="enableVideo()" data-toggle="modal" data-target="#exampleModalCenter">Accept</button>
+          <button type="button" class="btn btn-primary" (click)="createAndSendAnswerForIncomingCalls()"
+            (click)="enableVideo()" data-toggle="modal" data-target="#exampleModalCenter">Accept</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Reject</button>
         </div>
       </div>
