@@ -148,12 +148,15 @@ export class ChatWindowService {
   }
 
   public sendAnswer = (answer: any) => {
+    console.log("Send answer user's:", answer);
     this.socket.emit('answer', answer);
   }
 
   public receiveAnswer = () => {
     return Observable.create((observer: any) => {
       this.socket.on('answer', (answer: any) => {
+    console.log("Received answers user's:", answer);
+
         observer.next(answer);
       });
     });

@@ -506,30 +506,25 @@ export class ChatBoxComponent implements OnInit {
       };
       this.socketservice.receiveOffer().subscribe(async (offer: RTCSessionDescription) => {
         console.log("Received Offer broadcasted Room :", offer);
+
         await this.peerConnection.setRemoteDescription({ type: 'offer', sdp: offer.sdp });
         this.fromEmailId = offer['from'];
         this.toEmailId = offer['to'];
+
         console.log("this.toEmailId:", this.toEmailId);
 
         this.callTypeOffer = offer['callType'];
         console.log("Current user email:", this.emailID);
-        
+
         if (this.fromEmailId != this.emailID) {
           this.incomingCallOffer = true;
-        console.log("incomingCallOffer:", this.incomingCallOffer);
+          console.log("incomingCallOffer:", this.incomingCallOffer);
 
         }
         else {
-          // if(this.incomingCallOffer = false){
-            // this.enableVideo();
           this.createAndSendAnswerForIncomingCalls();
-        console.log("incomingCallOffer:", this.incomingCallOffer);
-
-          // }
+          console.log("incomingCallOffer:", this.incomingCallOffer);
         }
-        // this.incomingCallOffer = true;
-
-        // console.log("offer['from'] : ", offer['from']);
 
       });
       this.socketservice.receiveAnswer().subscribe(async (answer: RTCSessionDescription) => {
@@ -537,11 +532,11 @@ export class ChatBoxComponent implements OnInit {
         // if (this.fromEmailId != this.toEmailId) {
         this.answeredparticipant.push({
           from: answer['from'],
-          to:answer['to'],
+          to: answer['to'],
           roomId: this.currentRoom.room_id,
           type: answer.type
         });
-      // }
+        // }
         console.log("Answered Participants are:", this.answeredparticipant);
 
 
@@ -562,12 +557,14 @@ export class ChatBoxComponent implements OnInit {
     // this.incomingCallOffer = false;
     this.peerConnection.createAnswer().then(async (answer: RTCSessionDescription) => {
       console.log("Answer of Create Answer :", answer);
-      
+
       await this.peerConnection.setLocalDescription(answer);
 
+      localStorage.setItem('userConnected', 'connected');
+
       this.socketservice.sendAnswer({
-        from:this.toEmailId,
-        to:this.fromEmailId,
+        from: this.toEmailId,
+        to: this.fromEmailId,
         roomId: this.currentRoom.room_id,
         type: answer.type,
         sdp: answer.sdp
@@ -707,7 +704,7 @@ export class ChatBoxComponent implements OnInit {
   /* START - Enable the Audio Call */
   public enableAudioCall() {
     console.log("*************inside audio call********************")
-    this.connect();    
+    this.connect();
     try {
       this.stopVideo();
     } catch (e) { }
@@ -765,9 +762,9 @@ export class ChatBoxComponent implements OnInit {
   /* START - Enable the video call */
   public enableVideo() {
     console.log("*************inside Video call********************")
-    if(this.incomingCallOffer = false){
+    if (this.incomingCallOffer = false) {
       this.connect();
-    }else{
+    } else {
       this.connect();
     }
     try {
@@ -928,10 +925,14 @@ export class ChatBoxComponent implements OnInit {
       }
       this.currentRoom.participants.forEach(element => {
         console.log("Current Room Participants:", element.participant_name);
-        console.log("Current User to Name:",this.emailID);
+        console.log("Current User to Name:", this.emailID);
+
+        let userConnected = localStorage.getItem('userConnected');
+        console.log("User Connected :", userConnected)
 
 
-        if (element.participant_name != this.emailID ) {
+        if (element.participant_name != this.emailID) {
+
           this.socketservice.sendOffer({
             from: this.emailID,
             to: element.participant_name,
