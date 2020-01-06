@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import decode from 'jwt-decode';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { all } from 'q';
+import { EmpProfileService } from '../employer/profile/shared/service/profile.service';
 
 
 declare global {
@@ -125,6 +126,9 @@ export class ChatBoxComponent implements OnInit {
   public is_favouriteContacts: boolean = false;
   public is_groupRooms: boolean = false;
   public is_room_created: boolean = false;
+  public recievedOffer: boolean = false;
+  public createdOffer: boolean = false;
+
 
   // public roomId: String;
   public currentUserEmailID: any;
@@ -376,7 +380,8 @@ export class ChatBoxComponent implements OnInit {
   constructor(public socketservice: ChatWindowService,
     private __authService: AuthService,
     private __router: Router,
-    private __fb: FormBuilder
+    private __fb: FormBuilder,
+    private __profileService : EmpProfileService
   ) {
     this.senderEmail = localStorage.getItem('email');
   }
@@ -390,7 +395,6 @@ export class ChatBoxComponent implements OnInit {
     this.showChatAndGroupName();
     this.getGroupMessages();
   }
-
 
   /* START - Socket Connection */
   async socketConnect() {
@@ -527,6 +531,7 @@ export class ChatBoxComponent implements OnInit {
         }
 
       });
+
       this.socketservice.receiveAnswer().subscribe(async (answer: RTCSessionDescription) => {
         console.log("Receive answer broadcasted Room :", answer);
         // if (this.fromEmailId != this.toEmailId) {
@@ -1645,24 +1650,25 @@ export class ChatBoxComponent implements OnInit {
   }
 
   /************************************Sending file to save in cassandra********************************************/
-  /**
-  * @author Shefali Bhavekar
-  * @date 25/12/2019
-  * @name handleFileSelect()
-  * @name _handleReaderLoaded()
-  * @name sendFile()
-  * @description convert file object to base 64
-  */
-  handleFileSelect(evt) {
+   /**
+   * @author Shefali Bhavekar
+   * @date 25/12/2019
+   * @name handleFileSelect()
+   * @name _handleReaderLoaded()
+   * @name sendFile()
+   * @description convert file object to base 64
+   */
+handleFileSelect(evt){
     var files = evt.target.files;
     this.file = files[0];
-
-    if (files && this.file) {
-      var reader = new FileReader();
-      reader.onload = this._handleReaderLoaded.bind(this);
-      reader.readAsBinaryString(this.file);
-    }
-  }
+    this.sendFileName = this.file['name'];
+  // if (files && this.file) {
+  //     var reader = new FileReader();
+  //     reader.onload =this._handleReaderLoaded.bind(this);
+  //     reader.readAsBinaryString(this.file);
+  // }
+  this.sendFile(this.sendFileName);
+}
 
   _handleReaderLoaded(readerEvt) {
     var binaryString = readerEvt.target.result;
@@ -1674,6 +1680,7 @@ export class ChatBoxComponent implements OnInit {
   }
 
   sendFile(fileName: any) {
+    console.log("*******************sending file*****************");
     let currentJoinRoom: any;
     let joinRoomDetails: any = [];
     let sendFileData: any;
@@ -1683,36 +1690,37 @@ export class ChatBoxComponent implements OnInit {
     joinRoomDetails.forEach(room => {
       if (this.currentRoom.room_id == room.roomId) {
         currentJoinRoom = room;
-        console.log("*******currentJoinRoom*****", currentJoinRoom);
-        room.users.forEach((user) => {
-          if (user.userName == this.emailID) {
-            sendFileData = {
-              fileName: fileName,
-              fileData: this.base64textString,
-              roomId: currentJoinRoom.roomId,
-              sessionId: user.sessionId,
-              sender: this.emailID,
-              senderRole: this.userRole,
-            }
-            this.socketservice.sendFileToCassandra(sendFileData).then((msgRes: any) => {
-              console.log("################****msgRes*****#################", msgRes);
-              if (msgRes.status == "Success") {
-                sendFileData = {
-                  fileName: fileName,
-                  fileData: this.base64textString,
-                  roomId: currentJoinRoom.roomId,
-                  sessionId: user.sessionId,
-                  senderName: this.emailID,
-                  senderRole: this.userRole,
-                  sourceLanguageCode: this.sourceLangCode,
-                  messageId: msgRes.responseObject.messageId,
-                  sendDate: msgRes.responseObject.sendDate,
-                  sendingFileFlag: true
-                }
-                this.socketservice.sendMessagestoGroup(sendFileData);
-                this.allGroupMessages.push(sendFileData);
-                console.log("********** allGroupMessages data************", this.allGroupMessages);
+        console.log("*******currentJoinRoom*****" , currentJoinRoom);
+        room.users.forEach((user)=>{
+          if(user.userName == this.emailID){
+            this.__profileService.postDocHashData(this.file,this.emailID,this.sendFileName).then((fileRes : any)=>{
+              console.log("################****fileRes*****#################" , fileRes);
+              sendFileData = {
+                fileName : fileRes.fileId,
+                roomId :  currentJoinRoom.roomId,
+                sessionId : user.sessionId,
+                sender : this.emailID,
+                senderRole : this.userRole,
               }
+              this.socketservice.sendFileToCassandra(sendFileData).then((msgRes:any)=>{
+                if(msgRes.status == "Success"){
+                  sendFileData = {
+                    fileName : fileName,
+                    fileData : this.base64textString,
+                    roomId :  currentJoinRoom.roomId,
+                    sessionId : user.sessionId,
+                    senderName : this.emailID,
+                    senderRole : this.userRole,
+                    sourceLanguageCode : this.sourceLangCode,
+                    messageId:msgRes.responseObject.messageId,
+                    sendDate:msgRes.responseObject.sendDate,
+                    sendingFileFlag : true
+                  }
+                  this.socketservice.sendMessagestoGroup(sendFileData);
+                  this.allGroupMessages.push(sendFileData);
+                  console.log("********** allGroupMessages data************", this.allGroupMessages );
+                } 
+              });
             });
           }
         });
